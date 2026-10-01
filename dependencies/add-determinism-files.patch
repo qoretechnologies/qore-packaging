@@ -1,0 +1,132 @@
+diff --git a/src/add_det/handlers/mod.rs b/src/add_det/handlers/mod.rs
+index 5560139..6aba3e0 100644
+--- a/src/add_det/handlers/mod.rs
++++ b/src/add_det/handlers/mod.rs
+@@ -461,11 +461,12 @@ impl<'a> InputOutputHelper<'a> {
+             );
+ 
+             if self.check {
+-                NamedTempFile::with_prefix(prefix)?
++                tempfile::Builder::new().prefix(&prefix).suffix(".tmp").tempfile()?
+             } else {
+                 // We need to create the temporary file in the same
+                 // location as the real file so that rename works.
+-                NamedTempFile::with_prefix_in(prefix, self.input_path.parent().unwrap())?
++                tempfile::Builder::new().prefix(&prefix).suffix(".tmp")
++                    .tempfile_in(self.input_path.parent().unwrap())?
+             }
+         };
+ 
+diff --git a/src/linkdupes/linkfiles.rs b/src/linkdupes/linkfiles.rs
+index 16c535f..dd0fc95 100644
+--- a/src/linkdupes/linkfiles.rs
++++ b/src/linkdupes/linkfiles.rs
+@@ -7,7 +7,7 @@ use std::cell::RefCell;
+ use std::cmp::{min, Ordering};
+ use std::fs;
+ use std::hash::{DefaultHasher, Hasher};
+-use std::io::{self, Read};
++use std::io::{self, Read, Seek, SeekFrom};
+ use std::os::unix::fs::{MetadataExt, PermissionsExt};
+ use std::path::{Path, PathBuf};
+ 
+@@ -60,7 +60,7 @@ impl Stats {
+ #[derive(Debug)]
+ enum FileState {
+     None,
+-    Open(fs::File),
++    Position(u64),
+     Error,
+     Closed,
+ }
+@@ -291,28 +291,11 @@ impl FileInfo {
+         // try to calculate the next hash
+         let mut file_state = self.file_state.borrow_mut();
+ 
+-        match *file_state {
+-            FileState::None => {
+-                // Open file, store the error if encountered.
+-                match fs::File::open(&self.path) {
+-                    Ok(f) => {
+-                        *file_state = FileState::Open(f);
+-                    }
+-                    Err(e) => {
+-                        warn!("{}: open failed: {}", self.path.display(), e);
+-                        *file_state = FileState::Error;
+-                        return Err(e.into());
+-                    }
+-                }
+-            }
++        let position = match *file_state {
++            FileState::None => 0,
++            FileState::Position(position) => position,
+             FileState::Error => { bail!("{} is unreadable", self.path.display()); }
+             FileState::Closed => { return Ok(None); }
+-            _ => {}
+-        };
+-
+-        let file = match *file_state {
+-            FileState::Open(ref f) => { f }
+-            _ => { panic!() }
+         };
+ 
+         let mut hashes = self.hashes.borrow_mut();
+@@ -320,7 +303,14 @@ impl FileInfo {
+ 
+         let mut buffer = Vec::new();
+ 
+-        let count = match file.take(chunk_size).read_to_end(&mut buffer) {
++        // Sorting may compare thousands of files by their first chunk only.
++        // Retain the offset, not an open descriptor for every such file.
++        let read_result = (|| -> io::Result<usize> {
++            let mut file = fs::File::open(&self.path)?;
++            file.seek(SeekFrom::Start(position))?;
++            file.take(chunk_size).read_to_end(&mut buffer)
++        })();
++        let count = match read_result {
+             Ok(count) => count,
+             Err(e) => {
+                 warn!("{}: read failed: {}", self.path.display(), e);
+@@ -329,9 +319,11 @@ impl FileInfo {
+             }
+         };
+ 
+-        if (count as u64) < chunk_size {
+-            *file_state = FileState::Closed;
+-        }
++        *file_state = if (count as u64) < chunk_size {
++            FileState::Closed
++        } else {
++            FileState::Position(position + count as u64)
++        };
+ 
+         if count == 0 {
+             return Ok(None);
+diff --git a/tests/test_add_det.rs b/tests/test_add_det.rs
+index 864de50..e0a6a9d 100644
+--- a/tests/test_add_det.rs
++++ b/tests/test_add_det.rs
+@@ -109,3 +109,23 @@ fn test_invocation_check2() {
+     let c = invoke(["--check", "--handler=ar", dir.path().to_str().unwrap()]);
+     assert!(c.status.success());
+ }
++
++// Copyright (C) 2026 Qore Technologies, s.r.o.
++#[test]
++fn test_pending_output_is_excluded_from_walk() {
++    use add_determinism::add_det::handlers::{InputOutputHelper, process_file_or_dir};
++    let dir = common::empty_dir().unwrap();
++    let input = dir.path().join("document.html");
++    std::fs::write(&input, b"unchanged document").unwrap();
++    for check in [false, true] {
++        let (mut io, _reader) = InputOutputHelper::open(&input, check, false).unwrap();
++        io.open_output(true).unwrap();
++        let stats = process_file_or_dir(&[], &mut std::collections::HashMap::new(),
++                                       dir.path(), None);
++        assert_eq!(stats.errors, 0);
++        assert_eq!(stats.files, 1, "temporary output must not enter the file walk");
++        drop(io);
++        assert_eq!(std::fs::read_dir(dir.path()).unwrap().count(), 1);
++        assert_eq!(std::fs::read(&input).unwrap(), b"unchanged document");
++    }
++}

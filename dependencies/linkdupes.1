@@ -1,0 +1,48 @@
+.\" Copyright (C) 2026 Qore Technologies, s.r.o.
+.\" SPDX-License-Identifier: MIT
+.TH LINKDUPES 1 "October 2026" "add-determinism 0.7.3" "User Commands"
+.SH NAME
+linkdupes \- replace identical files with hard links
+.SH SYNOPSIS
+.B linkdupes
+.RI [ options ] " path ..."
+.SH DESCRIPTION
+Compare file content and metadata recursively and hardlink matching files.
+Ownership, permissions, timestamps and SELinux contexts are checked by default.
+Symbolic links are not followed.
+.SH OPTIONS
+.TP
+.B --brp
+Use RPM build root checks and treat processing errors as fatal.
+.TP
+.BR -n , " --dry-run"
+Report the links that would be created without modifying files.
+.TP
+.B --ignore-mtime
+Allow files with different modification times to be linked.
+.TP
+.B --ignore-mode
+Allow files with different access modes to be linked.
+.TP
+.B --ignore-owner
+Allow files with different owners or groups to be linked.
+.TP
+.B --ignore-selinux-context
+Disable SELinux context comparisons.
+.TP
+.B --print-selinux-contexts
+Print SELinux contexts.
+.TP
+.BR -v , " --verbose"
+Increase diagnostic output. May be repeated.
+.TP
+.BR -V , " --version"
+Print the version and exit.
+.TP
+.BR -h , " --help"
+Print command help and exit.
+.SH ENVIRONMENT
+RPM_BUILD_ROOT identifies the build root when --brp is used.
+SOURCE_DATE_EPOCH clamps timestamps for comparison when set.
+.SH SEE ALSO
+.BR add-det (1)

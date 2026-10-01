@@ -229,5 +229,28 @@
     "extra_sources": [
       "apache-arrow-runtime-sse42.patch"
     ]
+  },
+  "add-determinism": {
+    "version": "0.7.3",
+    "url": "https://github.com/keszybz/add-determinism/archive/refs/tags/v0.7.3.tar.gz",
+    "archive": "add-determinism-0.7.3.tar.gz",
+    "sha256": "d1f5eac303807fa31e25b4f8ccb08fed23d15f4ffdbe3bb4ee35a29504c766b2",
+    "source_date_epoch": 1790812800,
+    "extra_sources": [
+      "add-determinism-files.patch",
+      "add-determinism-Cargo.lock",
+      "add-determinism-regression.py",
+      "add-determinism-vendor-licenses.json",
+      "add-determinism.1",
+      "linkdupes.1"
+    ],
+    "components": [
+      {
+        "archive": "add-determinism-0.7.3-vendor.tar.xz",
+        "url": "https://github.com/qoretechnologies/qore-packaging/blob/main/dependencies/add-determinism-Cargo.lock",
+        "sha256": "4cac78241179d8e33bb86c34c0a62239e907fb17dadc9ab16ce47a7287e1ee20",
+        "generated": "cargo vendor --locked with the committed Cargo.lock; see dependencies/add-determinism.rst"
+      }
+    ]
   }
 }

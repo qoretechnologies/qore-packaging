@@ -1,0 +1,43 @@
+.\" Copyright (C) 2026 Qore Technologies, s.r.o.
+.\" SPDX-License-Identifier: MIT
+.TH ADD-DET 1 "October 2026" "add-determinism 0.7.3" "User Commands"
+.SH NAME
+add-det, add-determinism \- normalize files for reproducible package builds
+.SH SYNOPSIS
+.B add-det
+.RI [ options ] " path ..."
+.SH DESCRIPTION
+Recursively normalize timestamps and other variable metadata in archives,
+Python byte code and generated documentation. Symbolic links are not followed.
+.SH OPTIONS
+.TP
+.B --brp
+Use RPM build root checks. RPM_BUILD_ROOT must identify the build root.
+.TP
+.BI --handler= names
+Select handlers, using a leading minus to disable a handler. Use list to list them.
+.TP
+.B --check
+Check without changing the input and fail if normalization would change files.
+.TP
+.B --ignore-extension
+Try handlers regardless of file name extension.
+.TP
+.BR -j [ N ]
+Use worker processes. An optional number selects the worker count.
+.TP
+.BR -p , " --print"
+Print the parsed contents of supported files.
+.TP
+.BR -v , " --verbose"
+Show diagnostic output.
+.TP
+.BR -V , " --version"
+Print the version and exit.
+.TP
+.BR -h , " --help"
+Print command help and exit.
+.SH ENVIRONMENT
+SOURCE_DATE_EPOCH supplies the reproducible timestamp, in seconds since the Unix epoch.
+.SH SEE ALSO
+.BR linkdupes (1)

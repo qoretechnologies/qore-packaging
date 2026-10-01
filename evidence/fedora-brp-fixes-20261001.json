@@ -1,0 +1,170 @@
+{
+  "schema": 1,
+  "date": "2026-10-01",
+  "build": {
+    "schema": 1,
+    "image": "sha256:4c3ce661c69dc4943fe2222d28f2c1e7f8ea4f85265f28e69a574110a8f62f7e",
+    "source": {
+      "schema": 1,
+      "name": "add-determinism",
+      "version": "0.7.3",
+      "commit": null,
+      "source_date_epoch": 1790812800,
+      "spec": "add-determinism.spec",
+      "upstream": {
+        "url": "https://github.com/keszybz/add-determinism/archive/refs/tags/v0.7.3.tar.gz",
+        "sha256": "d1f5eac303807fa31e25b4f8ccb08fed23d15f4ffdbe3bb4ee35a29504c766b2"
+      },
+      "sources": {
+        "add-determinism-0.7.3-vendor.tar.xz": "4cac78241179d8e33bb86c34c0a62239e907fb17dadc9ab16ce47a7287e1ee20",
+        "add-determinism-0.7.3.tar.gz": "d1f5eac303807fa31e25b4f8ccb08fed23d15f4ffdbe3bb4ee35a29504c766b2",
+        "add-determinism-Cargo.lock": "7acf9c9ae6285fee291b99f591505dc6beb7eed12cefccaf8425dd6d2eba16f8",
+        "add-determinism-files.patch": "f928f53adc512216a800d5ff6bf866a1ee70ead7444933f23c8580f5d1499f2f",
+        "add-determinism-regression.py": "3b79ce4095f3478ed8542efd53ff6cf8fece04af69f467cdc5cf52b13d2875f5",
+        "add-determinism-vendor-licenses.json": "9c0c58587df3584572ec0607bc7b9482fca512bea5ab85a08c6445328d0fdb5d",
+        "add-determinism.1": "790914f717bc1d2425faa6b5bfc95d797919169d92561e4622bca49c5bf28a44",
+        "add-determinism.spec": "c04e7af190fc06fcb70530fa4a4a78eab874e12861cfb30d5667bf70dfb180da",
+        "linkdupes.1": "cd427cd3c19d9edd53e2ba7eceb1a6f7d0345db95fc6a29a9272ef2a229671f9"
+      },
+      "candidate": true,
+      "components": [
+        {
+          "archive": "add-determinism-0.7.3-vendor.tar.xz",
+          "url": "https://github.com/qoretechnologies/qore-packaging/blob/main/dependencies/add-determinism-Cargo.lock",
+          "sha256": "4cac78241179d8e33bb86c34c0a62239e907fb17dadc9ab16ce47a7287e1ee20",
+          "generated": "cargo vendor --locked with the committed Cargo.lock; see dependencies/add-determinism.rst"
+        }
+      ]
+    },
+    "jobs": 2,
+    "network": "none",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "--hostname",
+      "qore-rpm-builder",
+      "--user",
+      "1019:100",
+      "-e",
+      "HOME=/work/home",
+      "-e",
+      "SOURCE_DATE_EPOCH=1790812800",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/add-determinism-candidate-4:/sources:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/fedora-add-determinism-build-4:/work",
+      "sha256:4c3ce661c69dc4943fe2222d28f2c1e7f8ea4f85265f28e69a574110a8f62f7e",
+      "sh",
+      "-c",
+      "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+      "build-local",
+      "-ba",
+      "--define",
+      "_topdir /work/rpmbuild",
+      "--define",
+      "_sourcedir /sources",
+      "--define",
+      "_smp_build_ncpus 2",
+      "--define",
+      "_buildhost qore-rpm-builder",
+      "/sources/add-determinism.spec"
+    ],
+    "source_only": false,
+    "exit_code": 0,
+    "artifacts": {
+      "rpmbuild/RPMS/noarch/build-reproducibility-srpm-macros-0.7.3-3.qore.fc44.noarch.rpm": "1cdec1322f62136b4c5851e224f502c70afc09507d3ed514054f718e0f926e69",
+      "rpmbuild/RPMS/x86_64/add-determinism-0.7.3-3.qore.fc44.x86_64.rpm": "7fe8f621c9f1ee231bcc0107548a43647ae0cfc5f71d819635d2828938a2c3d6",
+      "rpmbuild/RPMS/x86_64/add-determinism-debuginfo-0.7.3-3.qore.fc44.x86_64.rpm": "6f138b42cd4ff2165ea9fcffdddaaf92c9265936eff2039c1e87d53422def6f9",
+      "rpmbuild/RPMS/x86_64/add-determinism-debugsource-0.7.3-3.qore.fc44.x86_64.rpm": "4417f08db7d1e88c52b7fb38ecd66ba2046b4ce9927fb56e2eadd13b515e5300",
+      "rpmbuild/RPMS/x86_64/linkdupes-0.7.3-3.qore.fc44.x86_64.rpm": "b45a617473e1e7b97b325aa7195337d9e99bf2aa8eeebfbad956ed15ae7f8f23",
+      "rpmbuild/RPMS/x86_64/linkdupes-debuginfo-0.7.3-3.qore.fc44.x86_64.rpm": "91df5d018cb537f3e983a5ec30948fea3001b54c0e3d669cf7c4b2171c44e523",
+      "rpmbuild/SRPMS/add-determinism-0.7.3-3.qore.fc44.src.rpm": "5c68901a62cb06f65c8ad69fa587c6bb895c8d8801c271ad33001daa59bf58c9"
+    }
+  },
+  "installed": {
+    "schema": 1,
+    "image": "sha256:c67d1e7069be3f50814404febc309729ab3fa8dacd39656484ac41161e10013f",
+    "exit_code": 0,
+    "source": {
+      "schema": 1,
+      "name": "add-determinism",
+      "version": "0.7.3",
+      "commit": null,
+      "source_date_epoch": 1790812800,
+      "spec": "add-determinism.spec",
+      "upstream": {
+        "url": "https://github.com/keszybz/add-determinism/archive/refs/tags/v0.7.3.tar.gz",
+        "sha256": "d1f5eac303807fa31e25b4f8ccb08fed23d15f4ffdbe3bb4ee35a29504c766b2"
+      },
+      "sources": {
+        "add-determinism-0.7.3-vendor.tar.xz": "4cac78241179d8e33bb86c34c0a62239e907fb17dadc9ab16ce47a7287e1ee20",
+        "add-determinism-0.7.3.tar.gz": "d1f5eac303807fa31e25b4f8ccb08fed23d15f4ffdbe3bb4ee35a29504c766b2",
+        "add-determinism-Cargo.lock": "7acf9c9ae6285fee291b99f591505dc6beb7eed12cefccaf8425dd6d2eba16f8",
+        "add-determinism-files.patch": "f928f53adc512216a800d5ff6bf866a1ee70ead7444933f23c8580f5d1499f2f",
+        "add-determinism-regression.py": "3b79ce4095f3478ed8542efd53ff6cf8fece04af69f467cdc5cf52b13d2875f5",
+        "add-determinism-vendor-licenses.json": "9c0c58587df3584572ec0607bc7b9482fca512bea5ab85a08c6445328d0fdb5d",
+        "add-determinism.1": "790914f717bc1d2425faa6b5bfc95d797919169d92561e4622bca49c5bf28a44",
+        "add-determinism.spec": "c04e7af190fc06fcb70530fa4a4a78eab874e12861cfb30d5667bf70dfb180da",
+        "linkdupes.1": "cd427cd3c19d9edd53e2ba7eceb1a6f7d0345db95fc6a29a9272ef2a229671f9"
+      },
+      "candidate": true,
+      "components": [
+        {
+          "archive": "add-determinism-0.7.3-vendor.tar.xz",
+          "url": "https://github.com/qoretechnologies/qore-packaging/blob/main/dependencies/add-determinism-Cargo.lock",
+          "sha256": "4cac78241179d8e33bb86c34c0a62239e907fb17dadc9ab16ce47a7287e1ee20",
+          "generated": "cargo vendor --locked with the committed Cargo.lock; see dependencies/add-determinism.rst"
+        }
+      ]
+    },
+    "artifacts": {
+      "rpmbuild/RPMS/noarch/build-reproducibility-srpm-macros-0.7.3-3.qore.fc44.noarch.rpm": "1cdec1322f62136b4c5851e224f502c70afc09507d3ed514054f718e0f926e69",
+      "rpmbuild/RPMS/x86_64/add-determinism-0.7.3-3.qore.fc44.x86_64.rpm": "7fe8f621c9f1ee231bcc0107548a43647ae0cfc5f71d819635d2828938a2c3d6",
+      "rpmbuild/RPMS/x86_64/add-determinism-debuginfo-0.7.3-3.qore.fc44.x86_64.rpm": "6f138b42cd4ff2165ea9fcffdddaaf92c9265936eff2039c1e87d53422def6f9",
+      "rpmbuild/RPMS/x86_64/add-determinism-debugsource-0.7.3-3.qore.fc44.x86_64.rpm": "4417f08db7d1e88c52b7fb38ecd66ba2046b4ce9927fb56e2eadd13b515e5300",
+      "rpmbuild/RPMS/x86_64/linkdupes-0.7.3-3.qore.fc44.x86_64.rpm": "b45a617473e1e7b97b325aa7195337d9e99bf2aa8eeebfbad956ed15ae7f8f23",
+      "rpmbuild/RPMS/x86_64/linkdupes-debuginfo-0.7.3-3.qore.fc44.x86_64.rpm": "91df5d018cb537f3e983a5ec30948fea3001b54c0e3d669cf7c4b2171c44e523",
+      "rpmbuild/SRPMS/add-determinism-0.7.3-3.qore.fc44.src.rpm": "5c68901a62cb06f65c8ad69fa587c6bb895c8d8801c271ad33001daa59bf58c9"
+    },
+    "hard_fd_limit": 64,
+    "parallel_workers": 4
+  },
+  "tests": {
+    "upstream": [
+      "17 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s",
+      "3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "841 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.78s",
+      "0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+    ],
+    "rpm_helper_tests_each_target": 27,
+    "orchestration": 71,
+    "qore_doc_files": 162636,
+    "hard_descriptor_limit": 64,
+    "normalizer_workers": 4
+  },
+  "logs": {
+    "add-determinism-tools-tests.log": "b17045e6089f80d7419786a209330bf31486cd6a2315cdc71c34d663c249f891",
+    "add-determinism-real-qore-docs-4.log": "f5c6ed3de2aee0465762278a674d60e7a8f6cca5569a06f5634c3d6f081ce075",
+    "add-determinism-rpmlint-4.log": "30316c2a32041b91d6c6b97937a9979c409ce99ce7f130551ffea0f2b1880e08",
+    "qore-fedora-brp-rpm-tests-2.log": "bc446192d107618fbdf9997376f18b10869b50636c2d6fcf3022eec31c787424",
+    "qore-leap-brp-rpm-tests.log": "3acb8ca4a8e12a5e27f422f302bf407b6cbb1bcda9d78dd12cd717b403622b64",
+    "qore-el10-brp-rpm-tests.log": "453e66df0c64cc5fdf3c9cd47b9b86a51776b8e0d75b14f83f45f12be32aa695",
+    "add-determinism-temp-regression-before.log": "e2acf5ce363f772bbb3b5e951068bb42d494bc3652e0008154d54b5cebf7f8a4",
+    "linkdupes-fd-regression-before.log": "f6a8f52d078932ca276c134cdaa984fe069d93cbb486b060d7330ec75ec7840c"
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": [
+      "The standard RPM macro file is intentionally non-binary under /usr/lib/rpm/macros.d.",
+      "Source1 is a locally generated, lockfile-pinned offline vendor archive; generation and checksum are documented."
+    ]
+  },
+  "publication": false
+}
