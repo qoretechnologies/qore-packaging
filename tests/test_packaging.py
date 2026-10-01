@@ -42,6 +42,27 @@ class CatalogTests(unittest.TestCase):
             self.assertEqual(target["qualified"], [])
 
 
+class RecipeSourceTests(unittest.TestCase):
+    def test_local_sources_urls_renamed_downloads_and_patches(self):
+        manifest = {"name": "probe", "version": "1.2", "sources": {
+            "probe-1.2.tar.xz": "digest", "vendor.tar.gz": "digest", "fix.patch": "digest"}}
+        packaging.validate_recipe_sources(
+            "Source0: %{name}-%{version}.tar.xz\n"
+            "Source1: https://example.invalid/releases/vendor.tar.gz\n"
+            "Source2: https://example.invalid/archive/1.2#/%{name}-%{version}.tar.xz\n"
+            "Patch: fix.patch\n# Source3: ignored.tar\n", manifest)
+
+    def test_missing_source_and_patch_are_rejected(self):
+        for tag in ("Source", "Source1", "Patch", "Patch12"):
+            with self.subTest(tag=tag), self.assertRaisesRegex(ValueError, "missing.*absent.tar"):
+                packaging.validate_recipe_sources(tag + ": absent.tar\n", {"sources": {}})
+
+    def test_unknown_macros_are_never_evaluated(self):
+        for value in ("%{vendor}.tar", "%(touch /tmp/unsafe).tar", "https://example.invalid/a%20b"):
+            with self.subTest(value=value), self.assertRaisesRegex(ValueError, "Unsupported source macro"):
+                packaging.validate_recipe_sources("Source0: " + value + "\n", {"sources": {}})
+
+
 class SourceFixture(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -70,6 +91,17 @@ class SourceFixture(unittest.TestCase):
 
 
 class SourceTests(SourceFixture):
+    def test_missing_recipe_source_leaves_no_output_or_temporary_files(self):
+        recipe = self.repo / "qore-test-module.spec"
+        recipe.write_text("Name: qore-test-module\nVersion: 1.0.0\n"
+                          "Source0: %{name}-%{version}.tar.xz\nSource1: vendor.tar.xz\n")
+        self.git("add", recipe.name)
+        self.git("commit", "-qm", "recipe requiring vendor source")
+        with self.assertRaisesRegex(ValueError, "missing.*vendor.tar.xz"):
+            self.prepare(spec_path=recipe.name)
+        self.assertFalse((self.root / "result").exists())
+        self.assertEqual(list(self.root.glob(".qore-source-*")), [])
+
     def test_clean_reproducible_archive(self):
         (self.repo / "source.txt").write_text("uncommitted\n")
         (self.repo / "untracked").write_text("secret\n")
@@ -199,6 +231,17 @@ class VendorBundleTests(SourceFixture):
         options = dict(vendor_manifest="rpm/vendor-sources.json", cache=self.cache)
         options.update(overrides)
         return self.prepare(output, **options)
+
+    def test_declared_vendor_source_is_present_in_complete_bundle(self):
+        recipe = self.repo / "qore-test-module.spec"
+        recipe.write_text("Name: qore-test-module\nVersion: 1.0.0\n"
+                          "Source0: %{name}-%{version}.tar.xz\nSource1: vendor-1.tar.xz\n")
+        self.git("add", recipe.name)
+        self.git("commit", "-qm", "recipe requiring pinned vendor source")
+        manifest = self.bundle(spec_path=recipe.name)
+        self.assertIn("vendor-1.tar.xz", manifest["sources"])
+        packaging.verify_download(self.root / "bundle/vendor-1.tar.xz",
+                                  manifest["sources"]["vendor-1.tar.xz"])
 
     def test_pinned_vendor_bundle_is_reproducible_and_ignores_dirty_manifest(self):
         (self.repo / "rpm/vendor-sources.json").write_text("uncommitted invalid data")

@@ -35,6 +35,7 @@ def verify_bundle(directory):
         if source.is_symlink() or not source.is_file():
             raise ValueError("Manifest sources must be regular files")
         packaging.verify_download(source, digest)
+    packaging.validate_recipe_sources((directory / manifest["spec"]).read_text(), manifest)
     return manifest
 
 

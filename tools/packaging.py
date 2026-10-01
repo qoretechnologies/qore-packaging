@@ -14,10 +14,28 @@ import subprocess
 import tarfile
 import tempfile
 import urllib.request
+import urllib.parse
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def validate_recipe_sources(recipe, manifest):
+    """Require every declared Source/Patch to be present in an offline bundle.
+
+    Recipes use literal filenames or the pinned name/version macros. Refuse
+    other expansion instead of silently creating an incomplete OBS upload.
+    """
+    for value in re.findall(r"^\s*(?:Source|Patch)\d*:\s*(\S+)", recipe, re.M | re.I):
+        for key in ("name", "version"):
+            value = value.replace("%{" + key + "}", manifest.get(key, ""))
+        if "%" in value:
+            raise ValueError("Unsupported source macro or URL escape: " + value)
+        url = urllib.parse.urlsplit(value)
+        filename = posixpath.basename(url.fragment or url.path)
+        if not filename or filename not in manifest["sources"]:
+            raise ValueError("Declared source or patch is missing from the bundle: " + filename)
 
 
 def git(repo, *args):
@@ -147,6 +165,8 @@ def prepare_source(repo, ref, name, version, output, exclusions=(), packaging_ov
                 path = staging / component["archive"]
                 with path.open("rb") as stream:
                     manifest["sources"][path.name] = hashlib.file_digest(stream, "sha256").hexdigest()
+        if recipe is not None:
+            validate_recipe_sources(recipe, manifest)
         (staging / "source-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
         # mkdir reserves the destination exclusively; replace only our empty
         # reservation, never a caller's already existing directory.

@@ -68,6 +68,7 @@ def prepare(repo, name, cache, output, ref=None, candidate=False):
         manifest["candidate"] = True
     if info.get("components"):
         manifest["components"] = info["components"]
+    packaging.validate_recipe_sources(recipe, manifest)
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix=".dependency-", dir=output.parent) as tmp:
         staging = Path(tmp) / "ready"

@@ -57,6 +57,18 @@ class BundleTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "timestamp"):
                 builder.build(self.root, "image", self.root / "output")
 
+    def test_missing_declared_source_cannot_start_foreground_or_background_build(self):
+        recipe = b"Source1: vendor.tar.xz\n"
+        (self.root / "probe.spec").write_bytes(recipe)
+        self.manifest["sources"]["probe.spec"] = hashlib.sha256(recipe).hexdigest()
+        (self.root / "source-manifest.json").write_text(json.dumps(self.manifest))
+        with patch.object(builder.subprocess, "check_output", side_effect=AssertionError("engine called")), \
+                patch.object(builder.os, "posix_spawn", side_effect=AssertionError("driver started")):
+            for start in (builder.build, builder.launch_background):
+                with self.subTest(start=start.__name__), self.assertRaisesRegex(ValueError, "missing.*vendor.tar"):
+                    start(self.root, "image", self.root / "output")
+        self.assertFalse((self.root / "output").exists())
+
     def test_container_isolation_and_recorded_success_or_failure(self):
         self.verify()
         image_id = "sha256:" + "a" * 64

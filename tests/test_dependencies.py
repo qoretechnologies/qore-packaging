@@ -28,7 +28,8 @@ class DependencyTest(unittest.TestCase):
                      "sha256": hashlib.sha256(b"archive fixture").hexdigest(),
                      "extra_sources": ["fix.patch"]}
         self.write_config()
-        (self.repo / "dependencies/probe.spec").write_text("Name: probe\nVersion: 1.0\n")
+        (self.repo / "dependencies/probe.spec").write_text(
+            "Name: probe\nVersion: 1.0\nSource0: %{name}-%{version}.tar.gz\nPatch0: fix.patch\n")
         (self.repo / "dependencies/fix.patch").write_bytes(b"patch fixture")
         (self.cache / "probe-1.0.tar.gz").write_bytes(b"archive fixture")
 
@@ -64,6 +65,14 @@ class DependencyTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "checksum"):
             self.prepare(candidate=True)
         self.assertFalse((self.root / "output").exists())
+
+    def test_unlisted_patch_never_creates_output(self):
+        self.info["extra_sources"] = []
+        self.write_config()
+        with self.assertRaisesRegex(ValueError, "missing.*fix.patch"):
+            self.prepare(candidate=True)
+        self.assertFalse((self.root / "output").exists())
+        self.assertEqual(list(self.root.glob(".dependency-*")), [])
 
     def test_every_vendor_component_is_pinned_and_verified(self):
         self.info["components"] = [{"archive": "vendor.zip", "url": "https://example.org/vendor.zip",

@@ -129,3 +129,17 @@ class ObsTest(unittest.TestCase):
                     patch("sys.stdout", new_callable=io.StringIO) as output:
                 obs.upload(obs.PREFIX + "testing", source, False)
             self.assertIn('"qore-2.tar.xz"', output.getvalue())
+
+    def test_missing_declared_source_prevents_any_obs_request(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source = Path(tmp) / "incomplete"
+            self.make_bundle(source, "2")
+            recipe = source / "qore.spec"
+            recipe.write_text(recipe.read_text() + "Source1: absent.tar.xz\n")
+            path = source / "source-manifest.json"
+            manifest = json.loads(path.read_text())
+            manifest["sources"][recipe.name] = hashlib.sha256(recipe.read_bytes()).hexdigest()
+            path.write_text(json.dumps(manifest))
+            with patch.object(obs, "osc", side_effect=AssertionError("remote call")):
+                with self.assertRaisesRegex(ValueError, "missing.*absent.tar.xz"):
+                    obs.upload(obs.PREFIX + "testing", source, True)
