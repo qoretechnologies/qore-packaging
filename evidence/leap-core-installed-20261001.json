@@ -1,0 +1,48 @@
+{
+  "source": {
+    "schema": 1,
+    "commit": "e840e786cddb96662140f7613dfa238444578cef",
+    "source_date_epoch": 1790869274,
+    "name": "qore",
+    "version": "3.0.0~git20261001.8",
+    "exclusions": [],
+    "sources": {
+      "qore-3.0.0~git20261001.8.tar.xz": "b0b8d90ed45f2afa6b157200e716708b11fdedc033a87f1d8a72b3ad5716ef49",
+      "qore.spec": "5d51400cf24ff9586dacffce616fe425ed7a130892c46b56e53c3c11c40aed27"
+    },
+    "spec": "qore.spec"
+  },
+  "source_build": "/home/david/src/qore/git/qore-packaging/results/leap-qore-build-2",
+  "steps": {
+    "sdk": {
+      "exit_code": 0
+    },
+    "minimal_runtime": {
+      "exit_code": 0,
+      "test_dependency": "findutils",
+      "command": [
+        "docker",
+        "run",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "--name",
+        "qore-leap-final-runtime-3",
+        "-v",
+        "/home/david/src/qore/git/qore:/source:ro",
+        "sha256:f340cfc1d65f9d0adf65bfa71afea8aa459dc501fb7e59bbf5af3a81e11fa787",
+        "/source/rpm/tests-installed/runtime"
+      ]
+    }
+  },
+  "sdk_image": "sha256:aa5e096a1ec385587a13a7c35b85862f0d6f94575bac38076b61d0deafa95c42",
+  "exit_code": 0,
+  "runtime_image": "sha256:f340cfc1d65f9d0adf65bfa71afea8aa459dc501fb7e59bbf5af3a81e11fa787",
+  "status": "local x86_64 installed SDK and minimal runtime passed; native OBS and release matrix remain separate gates",
+  "logs": {
+    "results/leap-final-sdk-2.log": "66c2d3aa4b96ab3b57f98b227286edb993b8a72dd6d63fa19d92ed8f78e872d4",
+    "results/leap-final-runtime-3.log": "a30b8eb290c40ffdc175c5fc28b2f287f86097300e0807de35b91aa1df9011d1"
+  }
+}

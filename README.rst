@@ -17,11 +17,16 @@ full logs, containers and RPMs are retained under ignored ``results/`` and
 ``work/`` directories. Do not interpret a successfully prepared SRPM as a
 successful binary build.
 
-Sixteen external modules have committed RPM packaging and Fedora candidate
-builds. The committed Fedora core build has passed installed SDK and minimal
-runtime checks, and these modules are being rebuilt against that SDK. AMQP is
-the next active package. The remaining target matrix and release gates still
-need qualification.
+Eighteen external modules have committed RPM packaging. Seventeen have passed
+Fedora builds against the installed core SDK and installed-runtime suites;
+ODBC additionally passes committed Fedora and Leap builds and installed-runtime
+checks with real offline PostgreSQL tests. All eighteen modules now have Fedora
+OBS builds enabled on both architectures, with publication disabled. The installed
+Leap SDK passes ONNX inference, session pools, compiler and debugger checks.
+ZeroMQ is the next active package. Combined installation exposes the designed
+ProviderIndexUtil source-selection diagnostic when msgpack is added; its
+qualification diagnostic exception is explicitly approved and documented. The remaining target matrix and
+release gates still need qualification.
 
 The target matrix is Fedora 44, AlmaLinux 10 as the Enterprise Linux baseline,
 and openSUSE Leap 16.0, initially x86_64. aarch64 requires native qualification
