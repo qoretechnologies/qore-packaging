@@ -5,7 +5,7 @@
 %global build_mtime_policy clamp_to_source_date_epoch
 Name: add-determinism
 Version: 0.7.3
-Release: 3.qore%{?dist}
+Release: 4.qore%{?dist}
 Summary: Normalize files for reproducible RPM builds
 License: GPL-3.0-or-later AND MIT AND Apache-2.0 AND BSD-3-Clause AND ISC AND Unicode-3.0 AND CC0-1.0
 URL: https://github.com/keszybz/add-determinism
@@ -25,6 +25,8 @@ BuildRequires: pkgconfig(libselinux)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: python3
 BuildRequires: util-linux-core
+# linkdupes consults the targeted file-context database even in an OBS VM.
+BuildRequires: selinux-policy-targeted
 Provides: add-determinism(qore-tempfile-fix) = 1
 
 %description
@@ -34,6 +36,7 @@ All normal handlers and file normalization checks remain enabled.
 
 %package -n linkdupes
 Summary: Link identical files while respecting SELinux contexts
+Requires: selinux-policy-targeted
 Provides: linkdupes(qore-bounded-descriptors) = 1
 %description -n linkdupes
 Link identical files while checking their metadata and SELinux contexts.
@@ -121,6 +124,9 @@ python3 -B -W error %{SOURCE3} target/release
 %license LICENSE.GPL3
 %{_rpmconfigdir}/macros.d/macros.build-reproducibility
 %changelog
+* Thu Oct 01 2026 David Nichols <david@qore.org> - 0.7.3-4.qore
+- Require the SELinux file-context database used by linkdupes.
+
 * Thu Oct 01 2026 David Nichols <david@qore.org> - 0.7.3-3.qore
 - Exclude live temporary files from parallel normalization walks.
 - Bound descriptor usage during incremental file comparison.

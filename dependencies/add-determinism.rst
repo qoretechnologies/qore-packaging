@@ -45,3 +45,12 @@ registry checksums while vendoring; all build and test commands use both
 checksum manifests are retained in both binary packages. The license inventory
 is in ``add-determinism-vendor-licenses.json``. Tests use the release binaries
 with SELinux support and cannot download dependencies.
+
+SELinux policy dependency
+-------------------------
+
+The SELinux-enabled linkdupes executable needs the targeted file-context
+database, including in an OBS VM with no active SELinux enforcement. Both its
+runtime RPM and the build recipe require selinux-policy-targeted. Without it,
+libselinux cannot initialize its label lookup and correctly refuses to compare
+files. The dependency preserves those checks for every consumer of the tool.
