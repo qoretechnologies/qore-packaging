@@ -6,6 +6,7 @@ import io
 import json
 from pathlib import Path
 import shutil
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -17,6 +18,16 @@ loader.loader.exec_module(obs)
 
 
 class ObsTest(unittest.TestCase):
+    def test_osc_permits_one_source_download_attempt_and_propagates_errors(self):
+        with patch.object(obs.subprocess, "run", return_value="result") as run:
+            self.assertEqual("result", obs.osc("checkout", "project", "package"))
+            command = run.call_args.args[0]
+            self.assertEqual("http_retries=1", command[command.index("--setopt") + 1])
+            self.assertTrue(run.call_args.kwargs["check"])
+        with patch.object(obs.subprocess, "run", side_effect=subprocess.CalledProcessError(1, command)):
+            with self.assertRaises(subprocess.CalledProcessError):
+                obs.osc("checkout", "project", "package")
+
     def test_project_templates_are_disabled_and_owned(self):
         for channel in ("testing", "stable"):
             self.assertEqual(obs.validate_project(ROOT / f"obs/project-{channel}.xml"), obs.PREFIX + channel)

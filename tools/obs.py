@@ -19,7 +19,9 @@ PREFIX = "home:davidnichols:qore:"
 
 
 def osc(*args, **kwargs):
-    return subprocess.run(["osc", "--setopt", "http_retries=0", "-A", API, *args],
+    # osc's streamfile counts the initial download as an attempt. Zero prevents
+    # every checkout download before HTTP is called; one permits that request.
+    return subprocess.run(["osc", "--setopt", "http_retries=1", "-A", API, *args],
                           check=True, **kwargs)
 
 
@@ -55,7 +57,7 @@ def create_project(metadata, apply):
     project = validate_project(metadata)
     # First list the parent as an authenticated permission/connectivity check.
     osc("api", "/source/home:davidnichols/_meta", stdout=subprocess.DEVNULL)
-    result = subprocess.run(["osc", "--setopt", "http_retries=0", "-A", API,
+    result = subprocess.run(["osc", "--setopt", "http_retries=1", "-A", API,
                              "api", f"/source/{project}/_meta"],
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     if result.returncode == 0:
