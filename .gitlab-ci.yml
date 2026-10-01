@@ -1,0 +1,19 @@
+# Copyright (C) 2026 Qore Technologies, s.r.o.
+# SPDX-License-Identifier: MIT
+stages:
+  - test
+
+packaging-tools:
+  stage: test
+  image: python:3.13-bookworm@sha256:227b6570d6ee07061ae6ca2eb04dedfb6d2b34045835f343065b9869e4d427ea
+  tags:
+    - k8s
+    - amd64
+  rules:
+    - changes:
+        - tools/**/*
+        - tests/**/*
+        - dependencies/*.py
+        - .gitlab-ci.yml
+  script:
+    - python3 -B -W error -m unittest discover -s tests -v
