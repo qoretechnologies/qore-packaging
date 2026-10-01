@@ -17,15 +17,24 @@ full logs, containers and RPMs are retained under ignored ``results/`` and
 ``work/`` directories. Do not interpret a successfully prepared SRPM as a
 successful binary build.
 
-Eighteen external modules have committed RPM packaging. Seventeen have passed
-Fedora builds against the installed core SDK and installed-runtime suites;
-ODBC additionally passes committed Fedora and Leap builds and installed-runtime
-checks with real offline PostgreSQL tests. All eighteen modules now have Fedora
-OBS builds enabled on both architectures, with publication disabled. The installed
-Leap SDK passes ONNX inference, session pools, compiler and debugger checks.
-ZeroMQ is the next active package. Combined installation exposes the designed
-ProviderIndexUtil source-selection diagnostic when msgpack is added; its
-qualification diagnostic exception is explicitly approved and documented. The remaining target matrix and
+Twenty-one external modules have committed RPM packaging and pass Fedora
+builds against the installed core SDK and installed-runtime suites. ODBC and
+ImageMagick additionally pass committed Leap builds and installed-runtime checks.
+PostgreSQL includes mandatory Fedora pgvector coverage. ZeroMQ includes draft
+sockets and CURVE. All twenty-one modules have Fedora OBS builds enabled on both
+architectures, with publication disabled. The installed Leap core SDK passes
+ONNX inference, session pools, compiler and debugger checks.
+
+Fedora's latest OBS core build failed during distribution RPM file
+post-processing on both architectures. The add-determinism and linkdupes defects
+are root caused; a tested backport is in qualification. The completed Leap module
+build wave passes sixteen of eighteen packages; ZIP Zstandard discovery and the
+PROJ database dependency are being corrected. These results do not qualify the
+remaining architecture or installed-runtime matrix.
+
+Combined installation exposes the designed ProviderIndexUtil source-selection
+diagnostic when msgpack is added. Its qualification diagnostic exception is
+explicitly approved and documented. The remaining modules, target matrix and
 release gates still need qualification.
 
 The target matrix is Fedora 44, AlmaLinux 10 as the Enterprise Linux baseline,

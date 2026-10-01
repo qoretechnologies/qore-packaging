@@ -3,16 +3,22 @@ Installed module wave review
 
 Copyright 2026 Qore Technologies, s.r.o.
 
-Scope: AMQP 4707320, ODBC 07724a8, eighteen OBS package build flags,
-the Fedora installed-module evidence and Leap installed-core evidence.
-ZeroMQ remains an uncommitted candidate and is excluded from this review.
+Scope: AMQP 4707320, ODBC 07724a8, ZeroMQ 567790b, ImageMagick 2f37f77,
+PostgreSQL ba456f6, twenty-one Fedora OBS package build flags, Fedora installed
+module evidence and Leap installed core, ODBC and ImageMagick evidence.
+The in-progress Fedora BRP and Leap ZIP/PROJ fixes are excluded from this review.
 All 62 checks in the audit-changes skill were considered below.
 
-Validation: 71 orchestration tests pass; seventeen modules pass the Fedora
-installed SDK build and installed-runtime checks. ODBC additionally passes
-committed Fedora and Leap RPM builds, two HTML checks, five fixture unit tests
-and eight live PostgreSQL cases (99 assertions) in each installed target.
-All eighteen Fedora OBS module builds are enabled; publication stays disabled.
+Validation: 71 orchestration tests pass; twenty-one modules pass the Fedora
+installed SDK build and installed-runtime checks. ODBC and ImageMagick also
+pass committed Leap builds and installed checks. ZeroMQ passes 113 cases;
+ImageMagick passes 114 cases, CLI checks and 124380 translation checks on both
+targets. PostgreSQL passes 32 cases with 382 assertions and required pgvector,
+three public HTML checks, three uninstall checks and five fixture unit tests.
+No C++ runtime implementation changed in these module updates. QPP comment
+changes fix generated API links; CMake fixes restore documented public pages.
+All twenty-one Fedora OBS module builds are enabled; publication stays disabled.
+Fedora core OBS post-processing failures currently block their dependency closure.
 
 The private PostgreSQL fixture validates inputs, isolates inherited connection
 settings, uses a private Unix socket and always attempts shutdown after startup.
@@ -37,7 +43,7 @@ diagnostic on 2026-10-01. Functionality is preserved and no warning is suppresse
 
    * - Entry exists in doxygen/lang/900_release_notes.dox.tmpl (for modules in the Qore repo; external modules have release notes in their .qm)
      - Pass
-     - AMQP and ODBC mainpage release notes describe corrected public API documentation.
+     - AMQP, ODBC, ZeroMQ, ImageMagick and PostgreSQL mainpage release notes describe corrected public API documentation.
 
    * - qore_user_module() or qore_external_user_module() call in CMakeLists.txt
      - N/A

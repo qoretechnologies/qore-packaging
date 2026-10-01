@@ -1,0 +1,107 @@
+{
+  "source": {
+    "schema": 1,
+    "commit": "567790bfc8e5f7e19e47413a6279722076a12c4f",
+    "source_date_epoch": 1790876467,
+    "name": "qore-zmq-module",
+    "version": "1.2.0",
+    "exclusions": [],
+    "sources": {
+      "qore-zmq-module-1.2.0.tar.xz": "374b0e1cf587a84fc11b7a40d6c100cc2e6a06fa0f99851afede73551f7baafd",
+      "qore-zmq-module.spec": "774cc09e171848f972c9e3d8111a812a66b1a5d1f7faa0f27e1bd759d116ba61",
+      "libzmq-4.3.5.tar.xz": "bba75a7c613d448dcc63bd72a7a05cf8dba52beee904fb9ae674f89e02c49a55",
+      "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017.tar.xz": "c837807150b707dd826c429851c1071e54c38b63118617f7b4c1a5647dcee368"
+    },
+    "spec": "qore-zmq-module.spec",
+    "vendor_manifest": "rpm/vendor-sources.json",
+    "components": [
+      {
+        "name": "libzmq",
+        "url": "https://codeload.github.com/zeromq/libzmq/tar.gz/v4.3.5",
+        "sha256": "6c972d1e6a91a0ecd79c3236f04cf0126f2f4dfbbad407d72b4606a7ba93f9c6",
+        "top": "libzmq-4.3.5",
+        "retained_paths": [
+          "CMakeLists.txt",
+          "LICENSE",
+          "AUTHORS",
+          "NEWS",
+          "README.md",
+          "src",
+          "include",
+          "builds/cmake",
+          "external/sha1",
+          "external/wepoll",
+          "version.sh"
+        ],
+        "archive": "libzmq-4.3.5.tar.xz",
+        "licenses": [
+          "LICENSE"
+        ],
+        "version": "v4.3.5"
+      },
+      {
+        "name": "czmq",
+        "url": "https://codeload.github.com/zeromq/czmq/tar.gz/b669c7eb60cb8f587071ac6ece7cd68d30ac4017",
+        "sha256": "1ef06cd24fbe91f094ff2b4ce54aaf9c6fa394bec0e12c9f5b4f491f7aaa03d0",
+        "top": "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017",
+        "retained_paths": [
+          "CMakeLists.txt",
+          "LICENSE",
+          "AUTHORS",
+          "NEWS",
+          "README.md",
+          "README.txt",
+          "src",
+          "include",
+          "Findlibcurl.cmake",
+          "Findlibmicrohttpd.cmake",
+          "Findlibsodium.cmake",
+          "Findlibzmq.cmake",
+          "Findlz4.cmake",
+          "Findnss.cmake",
+          "Findsystemd.cmake",
+          "Finduuid.cmake",
+          "builds/cmake"
+        ],
+        "archive": "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017.tar.xz",
+        "licenses": [
+          "LICENSE"
+        ],
+        "version": "b669c7eb60cb8f587071ac6ece7cd68d30ac4017"
+      }
+    ]
+  },
+  "artifacts": {
+    "rpmbuild/RPMS/noarch/qore-zmq-module-doc-1.2.0-1.fc44.noarch.rpm": "163d1951763ffeea7c287ed6d4a9b8bb3bbe872fa66f82bb9a926e417aa3ed97",
+    "rpmbuild/RPMS/x86_64/qore-zmq-module-1.2.0-1.fc44.x86_64.rpm": "2bad7144e50a73123bd3867d5178e52b2679825a07e40e76c029913e7b5ed510",
+    "rpmbuild/RPMS/x86_64/qore-zmq-module-debuginfo-1.2.0-1.fc44.x86_64.rpm": "9360caf72760692da3bad43730c816e5670ef402a843aab749ca020ff8aa793c",
+    "rpmbuild/RPMS/x86_64/qore-zmq-module-debugsource-1.2.0-1.fc44.x86_64.rpm": "8d67350297eba06e3f3f321c3ff1ad328f9c29720367f8fc98ada98c12cbd133",
+    "rpmbuild/SRPMS/qore-zmq-module-1.2.0-1.fc44.src.rpm": "d309dcb8c6b1bf5e6ca602f6e2516a5410dd590fa0514ee3fc0f653936116271"
+  },
+  "runtime_image": "sha256:5be9c623bfe9b799856bf31d7649a785b5bdc094c2df5bcef68a210c059515c4",
+  "build_exit_code": 0,
+  "installed_exit_code": 0,
+  "cases": 113,
+  "assertions": 1916,
+  "html_tests": 2,
+  "network": "none",
+  "user": "1019:100",
+  "qore_sdk_or_compiler_installed": false,
+  "capabilities": [
+    "CLIENT/SERVER",
+    "RADIO/DISH",
+    "CURVE",
+    "steerable proxy"
+  ],
+  "lint": {
+    "errors": 0,
+    "warnings": "3 expected local source archive warnings",
+    "log": "results/fedora-zmq-build-5-rpmlint.log"
+  },
+  "logs": {
+    "results/fedora-zmq-final/build.log": "48730facfe237a3b61cec21478b2fb3207d7df094da45ac74390f6f098be9da1",
+    "results/fedora-zmq-final-installed.log": "b6a223a60f2d706f1921c4bd69b0340332ebe89810b3a820bb35061ebe942b75",
+    "results/fedora-zmq-build-5-rpmlint.log": "ad1cd7f22e465cd587d964e3775e031ccf14bd4618d5f8f7f50c35e46cd6e292"
+  },
+  "compiler_diagnostics": "Existing upstream unused-variable warnings and an exhaustive option-enum switch diagnostic remain; the build is not represented as warning-free. Runtime suites and strict documentation checks pass."
+}
