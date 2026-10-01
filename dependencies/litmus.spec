@@ -9,7 +9,7 @@
 %endif
 Name: litmus
 Version: 0.18
-Release: 2.qore%{?dist}
+Release: 3.qore%{?dist}
 Summary: WebDAV server compliance tests
 License: GPL-2.0-or-later
 URL: https://notroj.github.io/litmus/
@@ -25,6 +25,10 @@ BuildRequires: help2man
 BuildRequires: apache2 >= 2.4.55
 %else
 BuildRequires: httpd >= 2.4.55
+%if 0%{?fedora}
+# Resolve httpd's two equivalent logo providers in minimal OBS build roots.
+BuildRequires: fedora-logos-httpd
+%endif
 %endif
 BuildRequires: python3
 %description
@@ -59,6 +63,10 @@ python3 -B -W error %{SOURCE2} "$PWD/litmus"
 %{_libexecdir}/litmus/
 %{_mandir}/man1/litmus.1*
 %changelog
+* Thu Oct 01 2026 David Nichols <david@qore.org> - 0.18-3.qore
+- Resolve Apache from system directories under restricted build-user PATHs.
+- Select Fedora's httpd logo provider explicitly for OBS dependency resolution.
+
 * Thu Oct 01 2026 David Nichols <david@qore.org> - 0.18-2.qore
 - Enable PIE and full RELRO on distributions whose default flags omit them.
 

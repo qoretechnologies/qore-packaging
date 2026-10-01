@@ -93,7 +93,11 @@ def run(litmus, installed=False):
     litmus = litmus.resolve(strict=True)
     if os.getuid() == 0:
         raise RuntimeError('The private Apache fixture must run unprivileged')
-    httpd = shutil.which('httpd') or shutil.which('apache2')
+    # RPM workers commonly omit administrator directories from the build user's
+    # PATH. Resolve the distribution executable explicitly, without depending on
+    # a login shell or a local command shadowing the packaged server.
+    server_path = '/usr/sbin:/usr/bin:/sbin:/bin'
+    httpd = shutil.which('httpd', path=server_path) or shutil.which('apache2', path=server_path)
     if not httpd:
         raise RuntimeError('Apache server executable is missing')
     modules = next((p for p in (Path('/usr/lib64/httpd/modules'), Path('/usr/lib64/apache2'))

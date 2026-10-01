@@ -39,9 +39,15 @@ distribution Apache fixture. It does not waive Qore XML WebDAV compliance tests.
   ``dav_method_lock`` unconditionally sets ``HTTP_OK`` after successful lock
   creation. Source: https://github.com/apache/httpd/blob/2.4.68/modules/dav/main/mod_dav.c
 
-Leap Apache 2.4.66 produces the same three diagnostics from the same code paths.
+Leap Apache 2.4.66 and EL10 Apache 2.4.63 produce the same three diagnostics from
+the same code paths; all 106 tests pass on each distribution.
 Its statically compiled prefork MPM and unixd module are detected with httpd -l,
 while Fedora loads its shared event MPM.
+
+The fixture resolves Apache in the standard system executable directories even
+when OBS gives the unprivileged build account a PATH without /usr/sbin. Fedora's
+recipe explicitly selects fedora-logos-httpd to resolve httpd's alternative logo
+providers. Neither setting changes the server's protocol behavior.
 
 These are hard-coded server behaviors, not configuration errors. The test tool,
 neon client and server code are unchanged. Fixing the distribution's Apache is
