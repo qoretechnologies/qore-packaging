@@ -28,10 +28,23 @@ runtime without the SDK or compiler.
 Native Fedora core builds exposed two RPM post-processing defects; their tested
 add-determinism/linkdupes fixes are uploaded for both architectures. Native Leap
 core packaging exposed development fixtures in the documentation package and
-license-file layout issues. Corrected source revisions are undergoing final
-qualification. Local success on the earlier core builds does not qualify those
-new revisions or native aarch64. Litmus is qualified on Fedora and Leap for
-mandatory XML WebDAV tests, with the explicitly approved Apache diagnostics.
+license-file layout issues. Core revision 12 now passes full local builds, SDK
+checks and minimal-runtime ONNX checks on all three targets. Revision 14 adds
+documentation fixes, canonical HTTP response charsets and an ONNX async pool
+statistics race fix found by native Leap aarch64 tests. It is undergoing fresh
+qualification locally and on all six OBS target/architecture combinations.
+Earlier local success does not qualify the new revision or native aarch64.
+Litmus is qualified on all three distributions for mandatory XML WebDAV tests,
+with the explicitly approved Apache diagnostics; its final OBS recipe succeeds
+on both architectures.
+
+XML and SSH2 now have committed RPM recipes and source fixes. XML passes 304
+functional suites, all 106 Litmus cases against Qore, native Valgrind checks
+and strict API documentation. SSH2 passes all eight integration suites and
+strict documentation; its private server fixture also passes negative and
+cleanup tests. Final RPM builds and minimal-runtime checks using the new core
+SDK are queued. These two modules are not yet counted in the twenty-one
+qualified local module builds above.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is
