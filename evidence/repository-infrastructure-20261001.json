@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "github_repository": "https://github.com/qoretechnologies/qore-packaging",
+  "gitlab_project": {
+    "id": 188,
+    "name": "qore-packaging",
+    "path_with_namespace": "mirror/qore-packaging",
+    "visibility": "private",
+    "web_url": "https://git.qoretechnologies.com/mirror/qore-packaging",
+    "default_branch": "main",
+    "builds_access_level": "enabled",
+    "initial_ci_disabled_corrected": true
+  },
+  "repository_contents_pushed": true,
+  "ci_helper": {
+    "repository": "git@git.qoretechnologies.com:infrastructure/github-ci-helper.git",
+    "branch": "qore-packaging",
+    "commit": "5c477f724617898c86654b7b5ece3cabed8908a5",
+    "pushed": true,
+    "tests": 4,
+    "test_result": "pass",
+    "test_log": "results/mirror-helper-tests.log",
+    "gitlab_lint": "pass",
+    "gitlab_lint_log": "results/mirror-ci-lint.json",
+    "policy": "Atomic non-forcing branch and tag updates; preserve destination-only refs.",
+    "push_option": "ci.skip; first mirror will be triggered after GitHub source is committed",
+    "first_push_job": {
+      "id": 205932,
+      "result": "failed",
+      "reason": "GitHub public clone returned an authentication challenge; source is now anonymously readable locally.",
+      "retry_job": 205933
+    },
+    "credential_fix": {
+      "configured_variable": "GITHUB_TOKEN",
+      "previously_checked_variable": "GITHUB_ACCESS_TOKEN",
+      "configured_credential_smart_http_status": 200,
+      "tests": 4,
+      "lint": "valid; no errors or warnings",
+      "pipeline_validation": {
+        "result": "pass",
+        "pipeline": 58137
+      }
+    }
+  },
+  "webhook_configured": true,
+  "webhook_id": 690303406,
+  "webhook_delivery_verified": true,
+  "bootstrap_commit": "29f70c938488446c8df521c726098aed672d3ccd",
+  "bootstrap_staged_tests": {
+    "count": 52,
+    "result": "pass",
+    "log": "results/bootstrap-staged-tree-tests.log"
+  },
+  "tooling_ci": {
+    "result": "pass",
+    "pipeline": 58138,
+    "commit": "29f70c938488446c8df521c726098aed672d3ccd"
+  },
+  "tooling_ci_latest": {
+    "pipeline": 58328,
+    "commit": "f98fd1d098303fe249b49cff6304f4612319715a",
+    "result": "pass",
+    "tests": 71
+  }
+}

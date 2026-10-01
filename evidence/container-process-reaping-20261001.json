@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "root_cause": "rpmbuild as PID 1 does not reap orphaned sleep children after process-group interruption; kill(-pgid,0) sees the zombies",
+  "reproduction": {
+    "without_init": "system.qtest and backquote.qtest fail, /proc shows two sleep zombies parented to PID 1",
+    "with_init": "both pass, no zombies"
+  },
+  "logs": [
+    "results/fedora-qore-build-2/process-reaping-parent-false.log",
+    "results/fedora-qore-build-2/process-reaping-parent-true.log"
+  ],
+  "fix": "run all local build containers with --init"
+}

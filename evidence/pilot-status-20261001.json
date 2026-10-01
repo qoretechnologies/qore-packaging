@@ -1,0 +1,627 @@
+{
+  "schema": 1,
+  "targets": {
+    "fedora-44": {
+      "rpm_helper_tests": 26,
+      "rpm_helper_result": "pass",
+      "srpm_result": 0,
+      "srpm_builder_image": "sha256:8d3a3bd4369dd8b88be2e17687b2d7c47dca1520f246b0834cdb89a16875eb94",
+      "srpm_sha256": {
+        "rpmbuild/SRPMS/qore-3.0.0~git20260930.1-6.fc44.src.rpm": "9e4cdaed3069bfc69a77c891ef8911a9032e34251679654a58fd724e7c3b008a"
+      },
+      "binary_qualification": "Committed build 9 passes installed SDK and minimal runtime checks; newer OpenSSL guard source and full release matrix still require final qualification",
+      "onnx_build_tree_smoke": {
+        "result": "pass",
+        "runtime_version": "1.22.2",
+        "model": "modules/ml/test/data/test_linear.onnx",
+        "input": 4.0,
+        "expected": 9.0,
+        "actual": 9.0,
+        "installed_rpm_test": "pending"
+      },
+      "ml_build_tree_suite": {
+        "result": "pass",
+        "test_cases": 344,
+        "assertions": 2473,
+        "onnx_enabled": true,
+        "installed_rpm_test": "pending",
+        "log": "results/fedora-qore-build-4/build.log",
+        "clean_candidate_build_tests": "pass"
+      },
+      "rpm_helper_log": "results/fedora-obs-build-requirements.log",
+      "qcc_rpm_integration": {
+        "result": "pass",
+        "log": "results/fedora-qcc-rpm-integration-2.log",
+        "build_roots": 2,
+        "identical_installed_aot": true,
+        "module_load_result": 42,
+        "qore_debug_source_packaged": true,
+        "separate_debuginfo": true,
+        "warnings": 0,
+        "installed_sdk_qualification": "pending"
+      },
+      "core_source_fixes": [
+        "3f21cd979e70bc884925fa76b23387feaba003c6",
+        "9cefc85619760fea1dd26283813f2b7f97212b16"
+      ],
+      "cmake_tests": {
+        "count": 53,
+        "result": "pass",
+        "log": "results/fedora-qore-build-4/build.log",
+        "source_test_fixture_incrementally_updated": false,
+        "clean_build": "pass (candidate 7)",
+        "clean_candidate_build_tests": "pass"
+      },
+      "timestamp_clamping_verified": true,
+      "current_spec_parse": "pass",
+      "spec_parse_log": "results/fedora-spec-parse-20261001.log",
+      "core_build_tree_suite": {
+        "result": "pass",
+        "tests": 397,
+        "failed": 0,
+        "debug_enabled": true,
+        "container_init": true,
+        "log": "results/fedora-qore-build-4/build.log",
+        "clean_rpm_qualification": "installed RPM qualification pending",
+        "clean_candidate_build_tests": "pass"
+      },
+      "rpm_fileattr_integration": {
+        "result": "pass",
+        "log": "results/fedora-rpm-fileattr-integration.log",
+        "scope": "Real RPM file attribute loading and qmod-only dependency generation; AOT trailers, debuginfo, reproducible ELF, source timestamps"
+      },
+      "prefix_map_validation": {
+        "result": "pass",
+        "tests": 2,
+        "log": "results/fedora-prefix-map-validation-tests.log"
+      },
+      "candidate_7_difference_from_working_tree": "Current working tree additionally declares Python >= 3.11, validates debug-prefix path components, extends file-attribute integration tests, and includes SUSE-only ldconfig scriptlets and packaging documentation. Candidate 7 must not be labeled an exact build of the final packaging revision.",
+      "installed_candidate_sdk": {
+        "result": "pass",
+        "image": "sha256:829deae3fabf2d8bfa5c0d4ceb566248e6f5932b3fc342524fe786da74f45c91",
+        "candidate": 7,
+        "logs": {
+          "runtime": "results/fedora-installed-runtime-1.log",
+          "development": "results/fedora-installed-development-1.log",
+          "tools": "results/fedora-installed-tools-1.log",
+          "remote-debuggers": "results/fedora-installed-remote-debuggers-1.log"
+        },
+        "scope": [
+          "All bundled native module imports",
+          "ONNX linear inference and session pool",
+          "AST/IR/JIT/tiered execution",
+          "AOT trailers",
+          "CMake and pkg-config C++ embedding",
+          "Standalone and source-free module AOT compilation",
+          "Metadata extraction and qdx",
+          "CLI and remote debugger startup"
+        ],
+        "minimal_image_dependency_closure": "pending"
+      },
+      "candidate_7_binary_build": {
+        "result": "pass",
+        "directory": "results/fedora-qore-build-4",
+        "image": "sha256:e52ff717c668a6c9bd12762dc1e91b9b9c085f2338ebd627bcebc1875b4959b8",
+        "source": {
+          "schema": 1,
+          "commit": "9cefc85619760fea1dd26283813f2b7f97212b16",
+          "source_date_epoch": 1790847400,
+          "name": "qore",
+          "version": "3.0.0~git20261001.2",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261001.2.tar.xz": "0e867fedae1b4635994ce8d6ec5a0518a63d7768f2686be87092807f5374aa2b",
+            "qore.spec": "7b7a235311d2fa2d1b2f4e7be307985874ee43694ebc62af1ea21ba87b75ce3e"
+          },
+          "candidate": true,
+          "packaging_overlay": {
+            "qore.spec-multi": "814f09249ce63bb03c8112669ffa179a8b3ddb670cfe42b8ca468c2c57b42f3e",
+            "rpm/README.rst": "1e0e6c8dfdf5859f91237884a07da7d69c06b0557de35c1c40373919c622167c",
+            "rpm/build-env.sh": "5bb2e0a8a9766a8a5ccd052276569fabec79eefe3bc0e6ff34c6225ac23a2935",
+            "rpm/finalize-install.py": "efe836d5b5b635c2e4f4f61df6f17cf5ca3213fb94e22568af6d2fd2bfca2aa8",
+            "rpm/install-aot-sources.py": "6dfbc52c16efd371a91cdf5380dfbbd88e3936c36fe1283db61fb102f3f955fb",
+            "rpm/macros.qore": "f50fdc449b7cf7bdd740847c95c2d52b1d35f42e62790eb491d5f5cd3a7d3c7a",
+            "rpm/module-env.sh": "60f1a0df445e7ddf503cc7cbb3226e77d66e3a74e7dc7957f430f9056203f6a2",
+            "rpm/preserve-aot-metadata.py": "7da2958a214e5789a53e7e08df469092a7df8bb8f3f7894d6fe04105a1383c85",
+            "rpm/qore-requires.py": "b7f045ac568afaf111677b6d95e17801a690a90c025a2f90ed3ad8da1e798539",
+            "rpm/qore.attr": "27955577326242b224de233f27a58b9ac5c1e26e29fc193faa5afac9d60f337d",
+            "rpm/tests-installed/development": "6fe87c237458790f18c2e549a4bff03b627a3a214f8d320ef1d4814bc835162e",
+            "rpm/tests-installed/remote-debuggers": "5d37b1cce6e6776c87467c64220d8df0b43fc3d843d1181d6b3f2b349d4afe91",
+            "rpm/tests-installed/runtime": "7b95d1bf63032c368705acb5064d2d0ba2e56dcd0dc54fd7cae10ca4a2866c7b",
+            "rpm/tests-installed/tools": "45a7faec3a57d42fc6b136ee9fc471ecf4d516403adea14067bdb4e0b287debe",
+            "rpm/tests/qcc-rpm-integration.py": "96b2973e90a310612ef76b4056e554e1e26946dbce2fa00415e2938dc37c07b6",
+            "rpm/tests/test_aot_metadata.py": "27cf16ce1de4648e6ef5a5c2be32fc3ed8f22056f3eb30bfbbf00ececbbf9b6f",
+            "rpm/tests/test_aot_sources.py": "2d43f4cf75273c1f6f6ac880cdfda4c57eb2b0f8f14c789dc1b71ccb0bf176d1",
+            "rpm/tests/test_build_env.py": "f843d11ebecd6275dce585e5452efb5813659af10407191b931f1657daad0e3a",
+            "rpm/tests/test_install.py": "d48491fff789e958db62d0f5bb8e580ba8a780e7cacab19c03157ce19ec5b3c0",
+            "rpm/tests/test_requires.py": "7014ef55c11a3622b9431f6d6ceea3d1539e79288cc5abe110b6f7405f46a47b",
+            "rpm/tests/test_rpm_post.py": "9cac831fc87fb3e5def7c9b88bb0c9c7e726154409a0ef1cd602589c518aa114"
+          },
+          "spec": "qore.spec"
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261001.2-6.fc44.noarch.rpm": "1b71d8c872ff3bfb2271c246271ba2dfc925d97bb55590160bb55c2e125be293",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261001.2-6.fc44.noarch.rpm": "ecf62520fe0d6bf9488026e4488a5c674fddd82ba6c84cd971655598938382e5",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261001.2-6.fc44.noarch.rpm": "7cfffe8cbc36edb83a002ad3ee7eaa4003d0fca456022bb67c37a3a2022fac26",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261001.2-6.fc44.noarch.rpm": "b14d5d99a9d486312e36eeada14042e5a98a94161ec0825662309b6797a493ed",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261001.2-6.fc44.noarch.rpm": "b82e77cda53c61c3b5f40a1d38b35690bb0bd769117b1046eac983b901249000",
+          "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261001.2-6.fc44.x86_64.rpm": "71a47a73144ba58889628b9c00231c7cc47ba50c571dba97a1ce32956b8089e8",
+          "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261001.2-6.fc44.x86_64.rpm": "614397d2c45f8406695c5fcef476898dda42602c024e025e74c3b0dc6960adc3",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261001.2-6.fc44.x86_64.rpm": "9ce027a931e05e9302372cbb4901ebe4b7ca82d4c0c3e4536ff751b0f39353ae",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261001.2-6.fc44.x86_64.rpm": "d227fe906c34807f30f6c8c3db16959f7df985f8e61045aaa270c6eac4e498fd",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261001.2-6.fc44.x86_64.rpm": "6a5183b53850c62c454e1a73a13d23a4b49ab54015b080f7b6fa6273e5736c68",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261001.2-6.fc44.x86_64.rpm": "28bf9bd9f422f0cb4dd8f1266c140c6fd0aa01b91aab447d426a5da34b9231d0",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261001.2-6.fc44.x86_64.rpm": "ef9c8ea68a5d9d87422f3f32f33931d1effe087f6bf6ecca0c1d2c5e424faff0",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261001.2-6.fc44.x86_64.rpm": "700a16eae7edfd18649d18dcd82dc84cc2043d627a3b4b452fdbd42bca739651",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261001.2-6.fc44.x86_64.rpm": "4d51d9c24f9bd35792d5eebfb62364664ac4de5ab6ece2b8e55466458f74578d",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261001.2-6.fc44.src.rpm": "83ef309488927e462a82f77ff239914f8ec9ca60a287afcb62d5ffc3ee2077bf"
+        }
+      },
+      "minimal_runtime_install": {
+        "result": "pass",
+        "candidate": 7,
+        "image": "sha256:ced28c8329b80997cb0f11bf517eff900e6a72bda6b83f33da7fbbd6fa2c1fa1",
+        "weak_dependencies": false,
+        "sdk_and_compilers_installed": false,
+        "logs": [
+          "results/fedora-minimal-install.log",
+          "results/fedora-minimal-runtime-tests.log"
+        ],
+        "scope": "ONNX model and session-pool inference, bundled native imports, AOT metadata, AST/IR/JIT/tiered JSON/YAML execution; local packages unsigned during qualification."
+      },
+      "source_merge": "bce77abb5 (upstream develop integrated after 21 AOT CMake regression tests; pushed without force)",
+      "documentation_sdk_fix": {
+        "commit": "afca6726d",
+        "tests": 55,
+        "result": "pass",
+        "test_log": "results/qore-cmake-doc-sdk-suite.log",
+        "scope": "Installed language reference index, configurable cross-reference URL and existing image directories; source configuration also passes with /usr Release."
+      }
+    },
+    "el-10": {
+      "rpm_helper_tests": 26,
+      "rpm_helper_result": "pass",
+      "srpm_result": 0,
+      "srpm_builder_image": "sha256:18ddeadb89ef8818480abe0f1138a058205756776129f9519aee1d4bf369d258",
+      "srpm_sha256": {
+        "rpmbuild/SRPMS/qore-3.0.0~git20260930.1-6.el10.src.rpm": "871dfb38c9103877903ad09f881b03a3624fb5e5df3b33ce76ebb1baa6168852"
+      },
+      "binary_qualification": "not yet qualified; current builds and earlier candidate checks are recorded separately",
+      "rpm_helper_log": "results/el10-obs-build-requirements.log",
+      "timestamp_clamping_verified": true,
+      "current_spec_parse": "pass",
+      "spec_parse_log": "results/el10-spec-parse-20261001.log",
+      "rpm_fileattr_integration": {
+        "result": "pass",
+        "log": "results/el10-rpm-fileattr-integration.log",
+        "scope": "Real RPM file attribute loading and qmod-only dependency generation; AOT trailers, debuginfo, reproducible ELF, source timestamps"
+      },
+      "prefix_map_validation": {
+        "result": "pass",
+        "tests": 2,
+        "log": "results/el10-prefix-map-validation-tests.log"
+      }
+    },
+    "leap-16.0": {
+      "rpm_helper_tests": 26,
+      "rpm_helper_result": "pass",
+      "srpm_result": 0,
+      "srpm_builder_image": "sha256:f2cbb3ceca09ce3a3a3283d088df9e568f4948cac5f52d36f76125ec6302af2b",
+      "srpm_sha256": {
+        "rpmbuild/SRPMS/qore-3.0.0~git20260930.1-6.src.rpm": "12112a544ec808b2ed91735d4883ddb5f5658388a70378194023a25556b2392b"
+      },
+      "binary_qualification": "not yet qualified; current builds and earlier candidate checks are recorded separately",
+      "rpm_helper_log": "results/leap-obs-build-requirements.log",
+      "timestamp_clamping_verified": true,
+      "current_spec_parse": "pass",
+      "spec_parse_log": "results/leap-spec-parse-20261001.log",
+      "rpm_fileattr_integration": {
+        "result": "pass",
+        "log": "results/leap-rpm-fileattr-integration.log",
+        "scope": "Real RPM file attribute loading and qmod-only dependency generation; AOT trailers, debuginfo, reproducible ELF, source timestamps"
+      },
+      "prefix_map_validation": {
+        "result": "pass",
+        "tests": 2,
+        "log": "results/leap-prefix-map-validation-tests.log"
+      }
+    }
+  },
+  "source_tool_tests": {
+    "count": 71,
+    "result": "pass",
+    "log": "results/source-completeness-tests.log"
+  },
+  "obs_project": "home:davidnichols:qore:testing",
+  "obs_created": true,
+  "obs_projects": {
+    "testing": {
+      "name": "home:davidnichols:qore:testing",
+      "created": true,
+      "build_enabled": false,
+      "publish_enabled": false,
+      "create_http_status": 500,
+      "metadata_readback_verified": true,
+      "backend_targets_verified": 6
+    },
+    "stable": {
+      "name": "home:davidnichols:qore:stable",
+      "created": true,
+      "build_enabled": false,
+      "publish_enabled": false,
+      "create_http_status": 500,
+      "metadata_readback_verified": true,
+      "backend_targets_verified": 6
+    }
+  },
+  "tooling_ci": {
+    "image": "python:3.13-bookworm@sha256:227b6570d6ee07061ae6ca2eb04dedfb6d2b34045835f343065b9869e4d427ea",
+    "tests": 52,
+    "result": "pass",
+    "gitlab_config_lint": "pass",
+    "jobs_created_remotely": false,
+    "log": "results/packaging-tools-ci-image-tests.log"
+  },
+  "obs_source_packages": {
+    "qore": {
+      "created": true,
+      "source_uploaded": false,
+      "metadata": "obs/package-qore-testing.xml",
+      "inherits_project_build_disabled": true,
+      "inherits_project_publish_disabled": true
+    }
+  },
+  "obs_worker_capacity": {
+    "repository": "Fedora_44",
+    "architecture": "x86_64",
+    "physical_memory_gib": 24,
+    "disk_gib": 30,
+    "compliant_workers": 48,
+    "checked_log": "results/obs-qore-worker-constraints.log"
+  },
+  "pilot_modules": {
+    "uuid": {
+      "target": "fedora-44",
+      "binary_build": "pass",
+      "installed_runtime": "pass",
+      "build_directory": "results/fedora-uuid-build-1",
+      "image": "sha256:829deae3fabf2d8bfa5c0d4ceb566248e6f5932b3fc342524fe786da74f45c91",
+      "source": {
+        "schema": 1,
+        "commit": "83a2d5908e14ad16c8226e77e152aaa98131a64d",
+        "source_date_epoch": 1790617418,
+        "name": "qore-uuid-module",
+        "version": "1.4.2",
+        "exclusions": [],
+        "sources": {
+          "qore-uuid-module-1.4.2.tar.xz": "0f7724f78d677c87c8189ef934b48879417f84cbd2fbb184e44cac4c27493eb3",
+          "qore-uuid-module.spec": "d9ad7d21f4a2f5ed0b78072664d3f64da11fa98b8262c3bfba95aadff1f18f3b"
+        },
+        "candidate": true,
+        "packaging_overlay": {
+          "qore-uuid-module.spec": "d9ad7d21f4a2f5ed0b78072664d3f64da11fa98b8262c3bfba95aadff1f18f3b"
+        },
+        "spec": "qore-uuid-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-2.fc44.noarch.rpm": "2214b9bae4d784cba80672b16da975d94643a3e38e53e2764440f18bddb41f99",
+        "rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-2.fc44.x86_64.rpm": "e6e6ae1e8b7f6dc4bcaddf626047492275bb532e1d7254595791c771250236e1",
+        "rpmbuild/RPMS/x86_64/qore-uuid-module-debuginfo-1.4.2-2.fc44.x86_64.rpm": "429011db35c01eeef92589fc0df2f63328b6f09b26f6da120c4cbaea67360f11",
+        "rpmbuild/RPMS/x86_64/qore-uuid-module-debugsource-1.4.2-2.fc44.x86_64.rpm": "82bb07b180708dd9c499b5ecf7cc1dbb39b268d562aa5ba1e29ba7e201c70cb1",
+        "rpmbuild/SRPMS/qore-uuid-module-1.4.2-2.fc44.src.rpm": "a6bfc380a879fb6c38615fce4fe934bc2deb7ba30528a92551a21a6ac5aaf794"
+      },
+      "installed_log": "results/fedora-installed-pilot-module-tests.log",
+      "rpmlint": "pending corrections"
+    },
+    "zip": {
+      "target": "fedora-44",
+      "binary_build": "pass",
+      "installed_runtime": "pass",
+      "build_directory": "results/fedora-zip-build-1",
+      "image": "sha256:829deae3fabf2d8bfa5c0d4ceb566248e6f5932b3fc342524fe786da74f45c91",
+      "source": {
+        "schema": 1,
+        "commit": "6aa697a5eefc1929a2cbc0e50545713dbb20a1ab",
+        "source_date_epoch": 1790833846,
+        "name": "qore-zip-module",
+        "version": "1.0.0",
+        "exclusions": [
+          "src/minizip-ng"
+        ],
+        "sources": {
+          "qore-zip-module-1.0.0.tar.xz": "fba2e8c87f1b1c04a41ad59d4ae940f4561e2e75729574398fb27d2ee943811d",
+          "qore-zip-module.spec": "f129346382fc23ae7190fca9eb10fd791c1397cda6bdb7befcc21afd334e8485",
+          "minizip-ng-4.2.2.tar.xz": "6ffc571dc01e8d3d710b2694026334c6ba9ac0cfeab649c4abae6b1d2d9082c9"
+        },
+        "candidate": true,
+        "packaging_overlay": {
+          "qore-zip-module.spec": "f129346382fc23ae7190fca9eb10fd791c1397cda6bdb7befcc21afd334e8485"
+        },
+        "spec": "qore-zip-module.spec",
+        "components": {
+          "minizipng": {
+            "version": "4.2.2",
+            "url": "https://codeload.github.com/zlib-ng/minizip-ng/tar.gz/refs/tags/4.2.2",
+            "sha256": "71af7b9799856d8b03619df3949e9c1be9703f8de0795af71399ba283cb27aac",
+            "excluded": [
+              "doc",
+              "test",
+              ".github"
+            ]
+          }
+        }
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-zip-module-doc-1.0.0-1.fc44.noarch.rpm": "d76bb36c75e6817ba34b02fdd21cc44354bcb6527f9e07540b7ea57b84a90aa7",
+        "rpmbuild/RPMS/x86_64/qore-zip-module-1.0.0-1.fc44.x86_64.rpm": "0f541039ddcfee1dce1cfd3da6b21c74a11c8ad8338b68a198e0f23f69b45ecf",
+        "rpmbuild/RPMS/x86_64/qore-zip-module-debuginfo-1.0.0-1.fc44.x86_64.rpm": "50a9ab14fa95f4bb1252c46455c887aa6b59699a6af54a7e6bf888bb3ac4895d",
+        "rpmbuild/RPMS/x86_64/qore-zip-module-debugsource-1.0.0-1.fc44.x86_64.rpm": "c5e6162e1916b6277891a5a3ab4d05f9ea16e7e617bd755ba8c8b0505adefc6f",
+        "rpmbuild/SRPMS/qore-zip-module-1.0.0-1.fc44.src.rpm": "c241b6e213dfb4a653a5eebea1ae0c013a236caecb74fdd2a18fd56434871459"
+      },
+      "installed_log": "results/fedora-installed-pilot-module-tests.log",
+      "rpmlint": "pending corrections"
+    }
+  },
+  "next_modules": {
+    "sysconf": {
+      "build": "results/fedora-sysconf-build-1",
+      "tests": 13,
+      "assertions": 38,
+      "source_doc_fix_tests": "results/fedora-doc-sdk-module-integration-2.log",
+      "valgrind_errors": 0
+    },
+    "magic": {
+      "build": "results/fedora-magic-build-1",
+      "tests": 37,
+      "assertions": 144,
+      "source_doc_fix_tests": "results/fedora-doc-sdk-module-integration-2.log",
+      "valgrind": {
+        "result": "pass with upstream Valgrind-enabled PCRE2 10.47",
+        "errors": 0,
+        "definitely_lost": 0,
+        "indirectly_lost": 0,
+        "possibly_lost": 0,
+        "tests": 37,
+        "assertions": 144,
+        "log": "results/fedora-magic-valgrind-pcre-aware.log",
+        "root_cause": "Stock PCRE2 SIMD JIT reads aligned blocks beyond the subject end, ignoring padding in the final result; reproduced without Qore or magic in a standalone C program. Upstream PCRE2 issue 654 documents this diagnostic.",
+        "reference": "https://github.com/PCRE2Project/pcre2/issues/654",
+        "instrumentation": "PCRE2_SUPPORT_VALGRIND=ON and PCRE2_SUPPORT_JIT=ON; standard upstream diagnostics configuration disables SIMD during Valgrind checks; no suppression and no shipped-library replacement.",
+        "pcre2_source_sha256": "47fe8c99461250d42f89e6e8fdaeba9da057855d06eb7fc08d9ca03fd08d7bc7",
+        "pcre2_tests": 3,
+        "isolated_reproducer": "results/fedora-pcre2-native-valgrind.log",
+        "instrumented_reproducer": "results/fedora-pcre2-native-valgrind-aware.log"
+      }
+    },
+    "msgpack": {
+      "build": "results/fedora-msgpack-build-1",
+      "tests": 9,
+      "assertions": 259,
+      "source_doc_fix_tests": "results/fedora-msgpack-doc-integration-3.log"
+    }
+  },
+  "minimal_install_regression": {
+    "status": "passed after adding the glibc converter dependency",
+    "root_cause": "iconv dynamically loads ISO8859-2.so, which is absent in minimal glibc installations; ELF automatic dependencies do not discover it",
+    "requires": {
+      "fedora_and_el": "glibc-gconv-extra",
+      "suse": "glibc-gconv-modules-extra"
+    },
+    "test": "rpm/tests-installed/runtime, plus MessagePack 9 cases / 259 assertions",
+    "log": "results/fedora-installed-module-wave-1-gconv.log",
+    "image": "sha256:d92fcda0c5c59f168311156725dcf4120836a3ee60c5ed426304390350f86898",
+    "qualification_limit": "Current installed candidate 7 plus explicit converter package; final committed RPM dependency closure still required."
+  },
+  "core_doc_sdk_followup": {
+    "commit": "2f2551de4cdcfcb003dc1a2da3a225c11014476e",
+    "cmake_tests": 56,
+    "result": "pass",
+    "log": "results/qore-cmake-doc-sdk-suite-2.log",
+    "fix": "Two-phase final documentation retains all reference indexes and quotes child paths."
+  },
+  "installed_module_wave_1": {
+    "evidence": "evidence/fedora-module-wave-1-20261001.json",
+    "modules": 16,
+    "scope": "candidate SDK builds; final SDK, other targets and native architecture qualification pending"
+  },
+  "runtime_provider_validation": {
+    "helper_tests_per_target": 25,
+    "targets": [
+      "fedora",
+      "el10",
+      "leap"
+    ],
+    "logs": [
+      "results/fedora-rpm-helper-tree-sitter-provider-2.log",
+      "results/el10-rpm-helper-tree-sitter-provider-2.log",
+      "results/leap-rpm-helper-tree-sitter-provider-2.log"
+    ],
+    "root_cause": "Fedora names the parser runtime libtree-sitter; the Enterprise Linux backport is tree-sitter. The initial explicit runtime floor incorrectly reused the EL name on Fedora.",
+    "fix_commit": "3eee190a430f4ce7fefbbec908a665756ff26ec5"
+  },
+  "fedora_committed_build_6": {
+    "result": "binary build passed; installation blocked by the parser package name, fixed in the next source revision",
+    "source": {
+      "schema": 1,
+      "commit": "25bb5257d44f154ade7e71fe8168d9520ad57a52",
+      "source_date_epoch": 1790857236,
+      "name": "qore",
+      "version": "3.0.0~git20261001.4",
+      "exclusions": [],
+      "sources": {
+        "qore-3.0.0~git20261001.4.tar.xz": "ccf8df814c4c236d530e884544ec064cc85c4beb6c0de841a1698fc6d9494371",
+        "qore.spec": "2ef1e12df8a3a3936713ee289e5f26409d9848a97d01dd00fb147f170fd2e1c0"
+      },
+      "spec": "qore.spec"
+    },
+    "exit_code": 0,
+    "artifacts": {
+      "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261001.4-6.fc44.noarch.rpm": "eb26f3567b4254f15bd1ec4d1af711901e3481967c65902cfea09acd2dead3e0",
+      "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261001.4-6.fc44.noarch.rpm": "8d7195f47506285484a44fcc62b59c2e424f58b343dd00d9f441f42838d4c335",
+      "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261001.4-6.fc44.noarch.rpm": "2c0f41908c3bf1cc46c9b59068dc87697aa1d91c8eea25d89f3fbc6bdac49807",
+      "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261001.4-6.fc44.noarch.rpm": "f9f90481e2e8bcf55c2e8024c75442a9c8e07881b840cee7ca33cc5bc2b164b6",
+      "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261001.4-6.fc44.noarch.rpm": "ed044fc3393d1c326c2b70956279124c4432fa64da526cffaace6dbcdd069453",
+      "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261001.4-6.fc44.x86_64.rpm": "8f74b9d043d91a12780e773e92b7cd67397649261bdd174a6fe9ebb19cf256f3",
+      "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261001.4-6.fc44.x86_64.rpm": "570c297321503085416448d107ae3fcb0b955fd9845c5042539bd870b50c10d4",
+      "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261001.4-6.fc44.x86_64.rpm": "31877dd32d2e039786c8ab3a10f736168d20ec0bef817d436b22730f356a947d",
+      "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261001.4-6.fc44.x86_64.rpm": "8359792dd7870dfd3062082d65d8d33bf2f31666df62bd3a6ba9addc6cba96fd",
+      "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261001.4-6.fc44.x86_64.rpm": "ffedd2ff4e51f405a9782bc93bfe23f638a3eb78bb970b3eae9dd47b7372987c",
+      "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261001.4-6.fc44.x86_64.rpm": "1569f766b0768f67f5c823d6fef6c3a555ee2fd5e3c34fc4333c7be603e00b3c",
+      "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261001.4-6.fc44.x86_64.rpm": "06e95eeeb2382a5ef3668fb42da12bfd3dbc420c348c4a2f33cf590d18491074",
+      "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261001.4-6.fc44.x86_64.rpm": "ed6737dfdefbb84ef9c210f9f521adc5b9ed56a5d86e58cc4d1ea76f6f4ffb4a",
+      "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261001.4-6.fc44.x86_64.rpm": "deabc6a35c310d524eca2273fccf48b93a8ec7085212a1d7ab56cbd698d6941e",
+      "rpmbuild/SRPMS/qore-3.0.0~git20261001.4-6.fc44.src.rpm": "ff69d607dfad2b768314571cec7d1f1496317a195a544e47955c404601337f13"
+    },
+    "log": "results/fedora-qore-build-6/build-recovered.log",
+    "core_test_files_passed": 397,
+    "ml_test_cases_passed": 344,
+    "ml_assertions": 2473,
+    "next_build": "results/fedora-qore-build-7"
+  },
+  "tooling_ci_latest": {
+    "commit": "f98fd1d098303fe249b49cff6304f4612319715a",
+    "pipeline": 58328,
+    "result": "pass"
+  },
+  "current_core": {
+    "commit": "b089f733ac319e2560de410683adc5469d4ba034",
+    "cmake_tests": {
+      "count": 61,
+      "result": "pass",
+      "log": "results/qore-engine-cmake-regression.log"
+    },
+    "engine_cleanup_regression": {
+      "configurations": 5,
+      "result": "pass",
+      "real_el10_header": "zero-byte engine.h; corrected version guard compiles",
+      "valgrind": {
+        "cases": 42,
+        "assertions": 635,
+        "lost_bytes": 0,
+        "errors": 0,
+        "pcre2": "JIT enabled with upstream supported Valgrind instrumentation",
+        "logs": [
+          "results/qore-engine-final-crypto-valgrind.log",
+          "results/qore-engine-final-qorecrypto-valgrind.log"
+        ]
+      }
+    },
+    "fedora-qore-build-9": {
+      "source": {
+        "schema": 1,
+        "commit": "a6266f7597ab8c303bcf5f0a6bb6e898b586f751",
+        "source_date_epoch": 1790867135,
+        "name": "qore",
+        "version": "3.0.0~git20261001.7",
+        "exclusions": [],
+        "sources": {
+          "qore-3.0.0~git20261001.7.tar.xz": "ac1d5651ea0cfc432ce8a496a71142595b2865672766da4ed6767852d81e64c7",
+          "qore.spec": "6bba2a106a4d26a72e5e830402f8669974cf92ca8d1c71a1ae76bd0610f0cdd7"
+        },
+        "spec": "qore.spec"
+      },
+      "image": "sha256:4517ec9c92d3a312e34bbfd44ea84204b2c7c8fe8fe762b71589651df9556c0f",
+      "exit_code": 0,
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261001.7-9.fc44.noarch.rpm": "16f4a8538f48253e5d04bb7742122cc96530c33ed3a489af8287fccb670c5dd4",
+        "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261001.7-9.fc44.noarch.rpm": "c12bc1817009844ffb49616c4c3468468bc0df323e6d5b0d990f950b01344f99",
+        "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261001.7-9.fc44.noarch.rpm": "c1e4f37452d9e2283eb33563172b9f5f5841860e12ece5d712051c1130e9d8a9",
+        "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261001.7-9.fc44.noarch.rpm": "9633c7cbea8d732a9e1ce577e1980169343e8d5dda8e89494c45d527f81fb3b1",
+        "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261001.7-9.fc44.noarch.rpm": "19db79976881aee1de0ae64d7ae8f73900ea22c54688bdb475304a4ed6bfdb30",
+        "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261001.7-9.fc44.x86_64.rpm": "e7ba5c10eb9999395c112a0e1fc2db17d69cb492a277daeb337e0db41c2a5e50",
+        "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261001.7-9.fc44.x86_64.rpm": "daa270c37c67daa970aeac85dd98db16208cd6f0506563b1f3844faba1a23c93",
+        "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261001.7-9.fc44.x86_64.rpm": "d9bf7eab582db64ae4dc52cd0154aa8fe57c20bc55ac02ef402ab59a7f824aa2",
+        "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261001.7-9.fc44.x86_64.rpm": "e9f3a8e72c1c927cf64c6e44fa1670fcdb20038aeef80fd6b9ec584ad43a196c",
+        "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261001.7-9.fc44.x86_64.rpm": "05cc82d2d65e617f16ef026bb0423215b1c10b9430212e8590c3b62d4732ab6c",
+        "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261001.7-9.fc44.x86_64.rpm": "2794ffa955ba52213a0ea609840460b5f6d5c540756825e15abb137b0f704c35",
+        "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261001.7-9.fc44.x86_64.rpm": "b84b23884ac068da7a506f920cd8f9a80b696dea779936d9184edb9f62a15da9",
+        "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261001.7-9.fc44.x86_64.rpm": "23b9d8b619fcd36c739a2d2bf637b2c602e78c36664c036ed42674e2085b3866",
+        "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261001.7-9.fc44.x86_64.rpm": "277960fe3e7be187ede5c3d78e973ac618aa98c3e7952cef633550ee0220f290",
+        "rpmbuild/SRPMS/qore-3.0.0~git20261001.7-9.fc44.src.rpm": "4964a1662f4d52e98450e1aaec2014b9ec3521bdd486911064a0bbe46d80d10f"
+      },
+      "installed_qualification": {
+        "source_build": "results/fedora-qore-build-9",
+        "steps": {
+          "fedora-final-sdk-9": {
+            "exit_code": 0,
+            "log": "results/fedora-final-sdk-9.log"
+          },
+          "fedora-final-runtime-9": {
+            "exit_code": 0,
+            "log": "results/fedora-final-runtime-9.log"
+          }
+        },
+        "sdk_image": "sha256:e7c0a2bd6acf994d59b4de0967ff52c0460e4fb903fb96c59d8f567df84bbda5",
+        "runtime_image": "sha256:c1ed7ece0280f0ff2efcb74b4160430668e3fab8beda5a17b4b16d5f3a3d92cc",
+        "exit_code": 0
+      }
+    },
+    "leap-qore-build-2": {
+      "image": "sha256:2b48c778c1df66ce4ccd5c16851f1cca58a2c02a5ddd0331a031b649f9b1a3ca",
+      "source": {
+        "schema": 1,
+        "commit": "e840e786cddb96662140f7613dfa238444578cef",
+        "source_date_epoch": 1790869274,
+        "name": "qore",
+        "version": "3.0.0~git20261001.8",
+        "exclusions": [],
+        "sources": {
+          "qore-3.0.0~git20261001.8.tar.xz": "b0b8d90ed45f2afa6b157200e716708b11fdedc033a87f1d8a72b3ad5716ef49",
+          "qore.spec": "5d51400cf24ff9586dacffce616fe425ed7a130892c46b56e53c3c11c40aed27"
+        },
+        "spec": "qore.spec"
+      },
+      "exit_code": 0,
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261001.8-9.noarch.rpm": "358f798513db18a08875e124a1f9dd36ab467450fc4660d228a5ed48e4982f08",
+        "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261001.8-9.noarch.rpm": "b32b108dc23822e5c65d2ca9839e65496cf2984545ba23e08b4a0fbb2869e0ff",
+        "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261001.8-9.noarch.rpm": "74ff97389f0b572d711dbec0067284058bf8757f6fc04a141589a0535859e2f5",
+        "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261001.8-9.noarch.rpm": "2e2c7ec503ac0092cc2224a45f5aa48089ba521a80a94621b5aab360d1c36746",
+        "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261001.8-9.noarch.rpm": "c5b755121de6dc191a0492639d79174e0ddacc4d6b55cabf667e48084a89ff92",
+        "rpmbuild/RPMS/x86_64/libqore20-3.0.0~git20261001.8-9.x86_64.rpm": "7cdf0636615d46fe7780b0bb1c50888fd9f17d920d8c1529bb2bf2f3399a2452",
+        "rpmbuild/RPMS/x86_64/libqore20-debuginfo-3.0.0~git20261001.8-9.x86_64.rpm": "be9e8fe15cbfbddecac5f60b258e030400e6d23fca807f5797fded56bd366773",
+        "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261001.8-9.x86_64.rpm": "2b059f137e2f3fc4a44c294c3739ee63e6b40a502dc092dacdf112426b3456cc",
+        "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261001.8-9.x86_64.rpm": "1587e0e3d35f9e6b6cb18148ca18bc58e663e9a207b29aca725db04f7e8a7658",
+        "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261001.8-9.x86_64.rpm": "b064eff9006f070396728051982678d6a4f0a1660f7f8746b28b8fc7e76a4e07",
+        "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261001.8-9.x86_64.rpm": "c28df882facf60062d8828a1d14c66eee30eee137a022e679671106a17c5c818",
+        "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261001.8-9.x86_64.rpm": "533a0b1728c0a62e15bea7fb919f1c5b5be8b175c7b451b79258095bca9371bd",
+        "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261001.8-9.x86_64.rpm": "29d637609a577bada32f087af928143e1a30025f81a18d7c7acf9095a281207d",
+        "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261001.8-9.x86_64.rpm": "a6369ac6324451b4ee260c92e21c2849faf60a734318e9ea8e422c83f77eecfb",
+        "rpmbuild/SRPMS/qore-3.0.0~git20261001.8-9.src.rpm": "ad8a51858328ce57448bba0aaf398458d4f75cc1936a622ac3b7f19d0a17d502"
+      }
+    },
+    "el10-qore-build-2": {
+      "image": "sha256:89a7e0c98ab303e63abcfa540e3feea3f1f6ce1b83ef3722f5d5a7b29062dbf1",
+      "source": {
+        "schema": 1,
+        "commit": "b089f733ac319e2560de410683adc5469d4ba034",
+        "source_date_epoch": 1790872538,
+        "name": "qore",
+        "version": "3.0.0~git20261001.9",
+        "exclusions": [],
+        "sources": {
+          "qore-3.0.0~git20261001.9.tar.xz": "4e6d7fd2bfd16810d10681b675317c990e672bbe7ddb027cbf0b4db75a2b68ca",
+          "qore.spec": "172caf30e3f7eb68c7616c9b5a8a4febfef54c17fb8462359c1f4a6043fa2df5"
+        },
+        "spec": "qore.spec"
+      },
+      "exit_code": 11,
+      "artifacts": {}
+    }
+  },
+  "amqp_followup": {
+    "source_commit": "467a381",
+    "status": "documentation fixes committed; first RPM build in progress",
+    "offline_cases": 72,
+    "assertions": 195,
+    "unavailable_broker_suites": 2,
+    "html_tests": 2,
+    "translations": 612
+  },
+  "final_sdk_module_rebuild": {
+    "record": "results/fedora-final-module-wave-9.json",
+    "core_build": "results/fedora-qore-build-9",
+    "modules": 16,
+    "status": "in progress"
+  }
+}
