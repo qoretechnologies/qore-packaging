@@ -33,8 +33,12 @@ BuildRequires: c-ares-devel
 %if 0%{?suse_version}
 # Leap OBS maps gcc-c++ to gcc13; applications require C++23 <print>.
 BuildRequires: gcc15-c++
+BuildRequires: timezone
+Requires: timezone
 %else
 BuildRequires: gcc-c++ >= 14
+BuildRequires: tzdata
+Requires: tzdata
 %endif
 BuildRequires: libev-devel
 BuildRequires: libxml2-devel
