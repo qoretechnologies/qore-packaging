@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "target": "openSUSE Leap 16 x86_64",
+  "source": {
+    "schema": 1,
+    "name": "mongo-c-driver",
+    "version": "2.5.5",
+    "commit": null,
+    "source_date_epoch": 1790812800,
+    "spec": "mongo-c-driver.spec",
+    "upstream": {
+      "url": "https://github.com/mongodb/mongo-c-driver/archive/2.5.5.tar.gz",
+      "sha256": "0461e130ed73805fc1aff4fb7b7182e88dc1f86fef8812276e4f84e30c07aae5"
+    },
+    "sources": {
+      "mongo-c-driver-2.5.5.tar.gz": "0461e130ed73805fc1aff4fb7b7182e88dc1f86fef8812276e4f84e30c07aae5",
+      "mongo-c-driver-bson-alias.patch": "b82ace48ee2e17e81c0d01d46c4d5c683ed85691b0c7502af35b68e19a9abbe3",
+      "mongo-c-driver-proc-ctl-test.py": "0470aa3a7ddb9c20b817b8db3f0e7cdb54ed6a00be6db8e659e74c0575056a6c",
+      "mongo-c-driver-tests.patch": "a026f018cc069025a9f99b93981b5ce251971870e215b096edd4bab2784f8aa0",
+      "mongo-c-driver.spec": "d156d5555cd6d42127ff6d086958604d2e51decb47194517de3b5e446ca2fe7d"
+    },
+    "candidate": true
+  },
+  "image": "sha256:b3a1b12c13ba35a11dec0414779adc7ea122fe8aac6340376cdd651e2dabbefc",
+  "artifacts": {
+    "rpmbuild/RPMS/x86_64/bson-devel-2.5.5-2.qore.x86_64.rpm": "10713b41e2aa84629c5a195e6fd7f2615a60c727afba1d96bf506c0989cdbe7b",
+    "rpmbuild/RPMS/x86_64/libbson2-2.5.5-2.qore.x86_64.rpm": "cb5a1aa98eb27d2e0f3e492457ecf2cf05a84780430f8898b75d7322524b9b92",
+    "rpmbuild/RPMS/x86_64/libbson2-debuginfo-2.5.5-2.qore.x86_64.rpm": "df762eccec7358723aeb0e15210088f9e4426b131673b71bc16dfd3ca2cc3adc",
+    "rpmbuild/RPMS/x86_64/libmongoc2-2.5.5-2.qore.x86_64.rpm": "8e40ba93faaace9f9e69aeff443270f7f941ccd5c7303519239f8003df4ed62b",
+    "rpmbuild/RPMS/x86_64/libmongoc2-debuginfo-2.5.5-2.qore.x86_64.rpm": "5f5350e30ef6f6857e5df1a0b78bf6c871c80c07807539dede48a991301b2951",
+    "rpmbuild/RPMS/x86_64/mongo-c-driver-debuginfo-2.5.5-2.qore.x86_64.rpm": "6a134155ddd32ca611216bafbead974fd53ac77cc25f065cf53e435885410321",
+    "rpmbuild/RPMS/x86_64/mongo-c-driver-debugsource-2.5.5-2.qore.x86_64.rpm": "732d0f369e07ed80d1235c46c3216ee5718125c759c8a164f33089a370099f89",
+    "rpmbuild/RPMS/x86_64/mongo-c-driver-devel-2.5.5-2.qore.x86_64.rpm": "7f68b428ec987745296e83b37242b94b9f22682094186d22bc06f1087c0785fb",
+    "rpmbuild/RPMS/x86_64/mongo-c-driver-devel-debuginfo-2.5.5-2.qore.x86_64.rpm": "0098633c5375aebb674771ad84d4522d56c2be4c05d04a748f3545ff3cbfef3b",
+    "rpmbuild/SRPMS/mongo-c-driver-2.5.5-2.qore.src.rpm": "a430d35dd52fc53de082c8c50bd20c989144167872ca99780856308e81fedc38"
+  },
+  "build": "results/leap-mongo-build-8",
+  "exit_code": 0,
+  "compiler": "GCC 13 with OBS CFLAGS/CXXFLAGS/LDFLAGS, including -flto=auto and strict aliasing",
+  "ctest": {
+    "registered": 3033,
+    "skipped": 1743,
+    "failed": 0,
+    "skip_policy": "upstream MONGOC_TEST_SKIP_LIVE=on; server/cloud cases require separate connected qualification"
+  },
+  "fixture_publication_tests": 3,
+  "bson_valgrind": {
+    "build_type": "Debug",
+    "passed": 439,
+    "upstream_skipped": 2,
+    "definitely_lost": 0,
+    "indirectly_lost": 0,
+    "possibly_lost": 0,
+    "errors": 0,
+    "log": "results/leap-mongo-alias-debug-valgrind.log"
+  },
+  "fixed_causes": [
+    "BSON private storage aliasing miscompiled by GCC 13 LTO",
+    "SUSE buildroot missing distribution-release for OS metadata",
+    "staged pkg-config consumers need their temporary library search path for indirect libbson",
+    "process fixture global os.sync delayed atomic publication 14-19 seconds beyond the five-second stop deadline"
+  ],
+  "installed_sdk": {
+    "result": "pass",
+    "log": "results/leap-mongo-installed-8-unsigned.log",
+    "scope": "compile and run against installed shared SDK; construct nested BSON static view and MongoDB URI client; zero lost bytes and Valgrind errors",
+    "local_rpm_signatures": "unsigned locally built RPMs, validated artifact hashes; OBS signing remains separate"
+  },
+  "obs_rebuild": "pending upload"
+}

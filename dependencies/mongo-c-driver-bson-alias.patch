@@ -1,0 +1,54 @@
+From: Qore RPM packaging maintainers
+Subject: [PATCH] Declare aliasing of BSON private storage layouts
+
+The inline and allocated private layouts overlay public bson_t objects.
+GCC 13 with LTO otherwise reuses the public length from bson_init() across
+writes through bson_impl_inline_t, causing the existing bson/dsl/predicate
+regression to reject a nonempty embedded document. Annotate the two private
+views with may_alias; preserve public layout, ABI, strict aliasing and LTO.
+The existing BSON DSL predicate, parse, visit and build tests cover this path.
+
+--- a/src/libbson/src/bson/bson_t-private.h
++++ b/src/libbson/src/bson/bson_t-private.h
+@@ -31,6 +31,14 @@
+ 
+ BSON_BEGIN_DECLS
+ 
++/* Private layouts overlay the public bson_t storage. Make their aliasing
++ * contract explicit for compilers that perform type-based alias analysis. */
++#if defined(__GNUC__)
++#define BSON_IMPL_MAY_ALIAS __attribute__((__may_alias__))
++#else
++#define BSON_IMPL_MAY_ALIAS
++#endif
++
+ 
+ typedef enum {
+    BSON_FLAG_NONE = 0,
+@@ -47,7 +55,7 @@
+ 
+ 
+ BSON_ALIGNED_BEGIN(BSON_ALIGN_OF_PTR)
+-typedef struct {
++typedef struct BSON_IMPL_MAY_ALIAS {
+    bson_flags_t flags;
+    uint32_t len;
+    uint8_t data[BSON_INLINE_DATA_SIZE];
+@@ -56,7 +64,7 @@
+ 
+ BSON_STATIC_ASSERT2(impl_inline_t, sizeof(bson_impl_inline_t) == 128);
+ 
+-typedef struct {
++typedef struct BSON_IMPL_MAY_ALIAS {
+    bson_flags_t flags; /* flags describing the bson_t */
+    /* len is part of the public bson_t declaration. It is not
+     * exposed through an accessor function. Plus, it's redundant since
+@@ -100,6 +108,8 @@
+ BSON_STATIC_ASSERT2(impls_match_alignment, BSON_ALIGNOF(bson_t) == BSON_ALIGNOF(bson_impl_alloc_t));
+ 
+ 
++#undef BSON_IMPL_MAY_ALIAS
++
+ BSON_END_DECLS
+ 
+ 

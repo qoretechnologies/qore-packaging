@@ -10,12 +10,18 @@
 %endif
 Name: mongo-c-driver
 Version: 2.5.5
-Release: 1.qore%{?dist}
+Release: 2.qore%{?dist}
 Summary: MongoDB C driver and BSON libraries
 License: Apache-2.0 AND ISC AND MIT AND Zlib
 URL: https://github.com/mongodb/mongo-c-driver
 Source0: https://github.com/mongodb/mongo-c-driver/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 Patch0: mongo-c-driver-tests.patch
+Patch1: mongo-c-driver-bson-alias.patch
+Source1: mongo-c-driver-proc-ctl-test.py
+%if 0%{?suse_version}
+# Runtime platform identification and its tests read the distribution release file.
+BuildRequires: distribution-release
+%endif
 BuildRequires: cmake >= 3.25
 BuildRequires: make
 BuildRequires: gcc-c++
@@ -92,6 +98,7 @@ rm -f %{buildroot}%{_datadir}/mongo-c-driver/%{version}/uninstall.sh \
   %{buildroot}%{_datadir}/mongo-c-driver/%{version}/THIRD_PARTY_NOTICES
 
 %check
+python3 -B -W error %{SOURCE1} "$PWD/build/proc-ctl.py"
 # Upstream's flag retains local unit/mock tests and excludes external MongoDB
 # servers, cloud credentials and network-dependent topology integration.
 MONGOC_TEST_SKIP_LIVE=on ctest --test-dir build --output-on-failure --parallel 2 --timeout 300
@@ -116,5 +123,8 @@ MONGOC_TEST_SKIP_LIVE=on ctest --test-dir build --output-on-failure --parallel 2
 %{_libdir}/cmake/bson-%{version}/
 
 %changelog
+* Thu Oct 01 2026 David Nichols <david@qore.org> - 2.5.5-2.qore
+- Correct BSON storage aliasing and qualify staged SDK imports with GCC 13 LTO.
+
 * Thu Oct 01 2026 David Nichols <david@qore.org> - 2.5.5-1.qore
 - Supply the Leap SDK with offline upstream unit and mock tests.

@@ -7,6 +7,10 @@ batch error tests instead of blocking until the socket timeout. Assert the
 TLS operation's returned error; command failures use structured logging,
 not the historical warning message. Mark the default-client-pool test as
 live, and register static pkg-config imports only when static SDKs install.
+Point staged pkg-config consumer tests at their temporary SDK library directory
+so indirect libbson dependencies resolve with ELF DT_RUNPATH and --as-needed.
+Publish process-control files atomically without flushing unrelated filesystem
+writes; preserve the previous value if writing or replacing the new file fails.
 No runtime library behavior is changed.
 
 --- a/src/libmongoc/tests/import-tests.cmake
@@ -104,3 +108,42 @@ No runtime library behavior is changed.
     capture_logs(false);
  
     /* next operation comes on a new connection, server verification fails */
+--- a/src/libmongoc/tests/pkg-config-import/CMakeLists.txt
++++ b/src/libmongoc/tests/pkg-config-import/CMakeLists.txt
+@@ -30,3 +30,16 @@
+     target_link_libraries(use-mongoc PRIVATE PkgConfig::thing)
+     add_test(use-mongoc use-mongoc)
+ endif()
++
++# INSTALL_PARENT stages the SDK outside the system loader search path. ELF
++# DT_RUNPATH only covers direct dependencies, so use-mongoc must also find
++# libbson when the linker drops its unused direct dependency with --as-needed.
++if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
++    string(REPLACE ";" ":" test_library_path "${thing_LIBRARY_DIRS}")
++    foreach(test_name use-bson use-mongoc)
++        if(TEST ${test_name})
++            set_tests_properties(${test_name} PROPERTIES
++                ENVIRONMENT "LD_LIBRARY_PATH=${test_library_path}:$ENV{LD_LIBRARY_PATH}")
++        endif()
++    endforeach()
++endif()
+--- a/build/proc-ctl.py
++++ b/build/proc-ctl.py
+@@ -240,10 +240,13 @@
+     """
+     tmp = fpath.with_name(fpath.name + '.tmp')
+     remove_file(tmp)
+-    tmp.write_text(content)
+-    os.sync()
+-    remove_file(fpath)
+-    tmp.rename(fpath)
++    try:
++        tmp.write_text(content)
++        # Readers need atomic visibility, not a flush of every filesystem.
++        # A global sync can exceed the fixture shutdown deadline under I/O load.
++        tmp.replace(fpath)
++    finally:
++        remove_file(tmp)
+ 
+ 
+ def remove_file(fpath: Path):
