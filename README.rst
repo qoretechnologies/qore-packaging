@@ -17,24 +17,21 @@ full logs, containers and RPMs are retained under ignored ``results/`` and
 ``work/`` directories. Do not interpret a successfully prepared SRPM as a
 successful binary build.
 
-Twenty-one external modules have committed RPM packaging and pass Fedora
-builds against the installed core SDK and installed-runtime suites. ODBC and
-ImageMagick additionally pass committed Leap builds and installed-runtime checks.
-PostgreSQL includes mandatory Fedora pgvector coverage. ZeroMQ includes draft
-sockets and CURVE. All twenty-one modules have Fedora OBS builds enabled on both
-architectures, with publication disabled. The installed Leap and EL10 core SDKs pass
-ONNX inference, session pools, compiler and debugger checks. EL10 also passes
-ONNX inference in a minimal installed runtime without the SDK or compiler.
+Twenty-one external modules have committed RPM packaging and pass builds and
+installed-runtime suites on Fedora 44, Leap 16.0 and EL10. PostgreSQL includes
+mandatory Fedora pgvector coverage. ZeroMQ includes draft sockets and CURVE.
+All twenty-one modules have Fedora OBS builds enabled on both architectures,
+with publication disabled. Leap and EL10 core SDKs pass ONNX inference, session
+pools, compiler and debugger checks; EL10 also passes ONNX inference in a minimal
+runtime without the SDK or compiler.
 
-Fedora's latest OBS core build failed during distribution RPM file
-post-processing on both architectures. The add-determinism and linkdupes defects
-are root caused and fixed; the tested backport is uploaded for both native OBS
-architectures. A full Fedora core rebuild uses the fixed tools and the latest
-merged Qore source. Twenty of the twenty-one completed modules
-also pass Leap builds and installed-runtime checks, including corrected ZIP
-Zstandard discovery and PROJ database dependencies. PostgreSQL Leap and all
-remaining architecture checks are still pending. All twenty-one completed modules
-now also pass EL10 builds; combined installed-runtime qualification is in progress.
+Native Fedora core builds exposed two RPM post-processing defects; their tested
+add-determinism/linkdupes fixes are uploaded for both architectures. Native Leap
+core packaging exposed development fixtures in the documentation package and
+license-file layout issues. Corrected source revisions are undergoing final
+qualification. Local success on the earlier core builds does not qualify those
+new revisions or native aarch64. Litmus is qualified on Fedora and Leap for
+mandatory XML WebDAV tests, with the explicitly approved Apache diagnostics.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is

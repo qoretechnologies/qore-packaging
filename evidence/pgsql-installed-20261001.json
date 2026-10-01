@@ -44,5 +44,39 @@
   "rpm_lint": {
     "result": "0 errors, 1 expected local Source0 warning",
     "log": "results/fedora-pgsql-build-3-rpmlint.log"
+  },
+  "leap": {
+    "schema": 1,
+    "modules": {
+      "leap": {
+        "source": {
+          "schema": 1,
+          "commit": "ba456f648483fed44985ece0f34e30774f166208",
+          "source_date_epoch": 1790878038,
+          "name": "qore-pgsql-module",
+          "version": "3.5.0",
+          "exclusions": [],
+          "sources": {
+            "qore-pgsql-module-3.5.0.tar.xz": "8d3c139522757ec1d1fd6f1be939c8fcb0f13e5a8e849efea83d15f124d23075",
+            "qore-pgsql-module.spec": "8ead33456a9e9a295b02105a72aaece3bd766960924090aa6521887b888fa1c3"
+          },
+          "spec": "qore-pgsql-module.spec"
+        },
+        "build": "/home/david/src/qore/git/qore-packaging/results/leap-pgsql-wave-1-pgsql",
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-pgsql-module-doc-3.5.0-1.noarch.rpm": "1d866491d14b2a0d4a7ef8ae750d126c4e5152130ead5e54f7f4d777720f65d6",
+          "rpmbuild/RPMS/x86_64/qore-pgsql-module-3.5.0-1.x86_64.rpm": "c2a8594de61b95627c9cd31f078887df4c3e651cc099ce8d4573b4a1f5114cd7",
+          "rpmbuild/RPMS/x86_64/qore-pgsql-module-debuginfo-3.5.0-1.x86_64.rpm": "7c0d5e403c59e02743d5bff7b838b130694273e423315ff0105a859815cce295",
+          "rpmbuild/RPMS/x86_64/qore-pgsql-module-debugsource-3.5.0-1.x86_64.rpm": "d735068ef4508d449cbb3f26e971b8230661b72cadd76afe0e5c73f1f85dbf08",
+          "rpmbuild/SRPMS/qore-pgsql-module-3.5.0-1.src.rpm": "9c6af8b95561b70fd989d46d7f39f18462f619f0f5051bb2010daf81424a53a5"
+        },
+        "runtime_image": "sha256:42ec8d26aabcbc8fbd82745f9597a23085fc9e3774a7323629a057b018fb24d1",
+        "installed_exit_code": 0,
+        "network": "none",
+        "user": "1019:100",
+        "sdk_or_compiler_installed": false
+      }
+    },
+    "exit_code": 0
   }
 }
