@@ -184,6 +184,185 @@
     "litmus-fixture-tests-5.log": "235bb8b60821437b8367d16dee13c532f8c9d147a57e98bbbc5a6b84048c1192",
     "litmus-rpmlint-5.log": "66e09f8104f9db59e21d7f081aa825d04097804ef831ea1de77f5bd3c0ed5f4d",
     "litmus-leap-rpmlint-2.log": "e8a741247d5805c68035dde20d5975be112bdd5632a26a1b15bd34eba82b2090",
-    "litmus-final-tools-tests.log": "cd2827525d150221078f52eb26ac7e2dcca002026d849a8a03c621dc0712365d"
-  }
+    "litmus-final-tools-tests.log": "cd2827525d150221078f52eb26ac7e2dcca002026d849a8a03c621dc0712365d",
+    "litmus-leap-rpmlint-3.log": "12e808ccc95fb9cde4b82cad9ac157776ee1aa1717ceca59b8c5726b8930cab3",
+    "litmus-fedora-rpmlint-6.log": "66e09f8104f9db59e21d7f081aa825d04097804ef831ea1de77f5bd3c0ed5f4d"
+  },
+  "hardened_qualification": {
+    "schema": 1,
+    "targets": {
+      "fedora": {
+        "exit_code": 0,
+        "build": {
+          "schema": 1,
+          "image": "sha256:c5bb2f1e509d73b3c267974653c17a443d96ba08418fe88e2b11cb9de02e120f",
+          "source": {
+            "schema": 1,
+            "name": "litmus",
+            "version": "0.18",
+            "commit": null,
+            "source_date_epoch": 1790812800,
+            "spec": "litmus.spec",
+            "upstream": {
+              "url": "https://notroj.github.io/litmus/litmus-0.18.tar.gz",
+              "sha256": "efb3a1b91472760f66f2fcb4ca2b58af19c024fb0263ca725f1f1b44182fd8ca"
+            },
+            "sources": {
+              "GPL-2.0-current.txt": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6",
+              "litmus-0.18.tar.gz": "efb3a1b91472760f66f2fcb4ca2b58af19c024fb0263ca725f1f1b44182fd8ca",
+              "litmus-httpd-fixture-test.py": "9e27e1e8c8a03dc0847375c1afca537c8eec5bc6bee89f2d62803955bc649315",
+              "litmus-httpd-test.py": "18fe5af3c82342595369b4817f331de2dc23a257f06c5704c327884ff899fa6b",
+              "litmus.spec": "fd45079f4734ce4e653b2b5b4146d3fa4e983c9de3977dea6955993913ebc76c"
+            },
+            "candidate": true,
+            "components": [
+              {
+                "url": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt",
+                "archive": "GPL-2.0-current.txt",
+                "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6"
+              }
+            ]
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790812800",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/litmus-candidate-6:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/fedora-litmus-build-6:/work",
+            "sha256:c5bb2f1e509d73b3c267974653c17a443d96ba08418fe88e2b11cb9de02e120f",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/litmus.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/x86_64/litmus-0.18-2.qore.fc44.x86_64.rpm": "465e98f66a06fb27c5a8b09b7e406e486cce43550dd2be56d50100925a6b1706",
+            "rpmbuild/RPMS/x86_64/litmus-debuginfo-0.18-2.qore.fc44.x86_64.rpm": "4a699abbf225397ab2f31f89c819074c492ec21dc6312dd904be4a0bb71b6858",
+            "rpmbuild/RPMS/x86_64/litmus-debugsource-0.18-2.qore.fc44.x86_64.rpm": "146f01507cb4927c7d88e37fbd75bbf4336ea96d34e3718b094699f1d210209e",
+            "rpmbuild/SRPMS/litmus-0.18-2.qore.fc44.src.rpm": "72fec3315d952c242423552f6f2c3612190de7fc8c3f193cfbf2a3282a8c3774"
+          }
+        },
+        "image": "sha256:ac30fd8f76cfcf95e21e3aa642c0ba5e5378b326d7a1c1c5fddc4d3b1e74c12d",
+        "installed_tests": 106,
+        "fixture_tests": 7,
+        "expected_apache_warnings": 3,
+        "network": "none",
+        "user": "1019:100"
+      },
+      "leap": {
+        "exit_code": 0,
+        "build": {
+          "schema": 1,
+          "image": "sha256:dbb496125ec8c3cdd00869d97e9fba6a2cd7660c2a63dcc1fec76a6f7a8e3618",
+          "source": {
+            "schema": 1,
+            "name": "litmus",
+            "version": "0.18",
+            "commit": null,
+            "source_date_epoch": 1790812800,
+            "spec": "litmus.spec",
+            "upstream": {
+              "url": "https://notroj.github.io/litmus/litmus-0.18.tar.gz",
+              "sha256": "efb3a1b91472760f66f2fcb4ca2b58af19c024fb0263ca725f1f1b44182fd8ca"
+            },
+            "sources": {
+              "GPL-2.0-current.txt": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6",
+              "litmus-0.18.tar.gz": "efb3a1b91472760f66f2fcb4ca2b58af19c024fb0263ca725f1f1b44182fd8ca",
+              "litmus-httpd-fixture-test.py": "9e27e1e8c8a03dc0847375c1afca537c8eec5bc6bee89f2d62803955bc649315",
+              "litmus-httpd-test.py": "18fe5af3c82342595369b4817f331de2dc23a257f06c5704c327884ff899fa6b",
+              "litmus.spec": "fd45079f4734ce4e653b2b5b4146d3fa4e983c9de3977dea6955993913ebc76c"
+            },
+            "candidate": true,
+            "components": [
+              {
+                "url": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt",
+                "archive": "GPL-2.0-current.txt",
+                "sha256": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6"
+              }
+            ]
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790812800",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/litmus-candidate-6:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/leap-litmus-build-3:/work",
+            "sha256:dbb496125ec8c3cdd00869d97e9fba6a2cd7660c2a63dcc1fec76a6f7a8e3618",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/litmus.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/x86_64/litmus-0.18-2.qore.x86_64.rpm": "1d84d4edc5ee144199c970b0e1cc1d9a380f26070d0c75cb64ec568baeabc47c",
+            "rpmbuild/RPMS/x86_64/litmus-debuginfo-0.18-2.qore.x86_64.rpm": "92142c8751f24426af6ed0826c94f7d516c2cbf83ad62ee7936dc70e9298fed3",
+            "rpmbuild/RPMS/x86_64/litmus-debugsource-0.18-2.qore.x86_64.rpm": "d64d4d5d8c51b2be26ad3e7e4dadec4cf894744aa1050e626dfb57841d5a6e52",
+            "rpmbuild/SRPMS/litmus-0.18-2.qore.src.rpm": "f830d37328c14a511dca889f5ea8e1aeaa9e205827ed0d62bde949f117068c6b"
+          }
+        },
+        "image": "sha256:8f26d6e0ca40de62bbb18a634b291bebda088ce42a3cee4ef037436ab4b853b4",
+        "installed_tests": 106,
+        "fixture_tests": 7,
+        "expected_apache_warnings": 3,
+        "network": "none",
+        "user": "1019:100"
+      }
+    },
+    "exit_code": 0
+  },
+  "hardening": "All Litmus ELF executables use PIE, RELRO and immediate binding; both targets now have zero RPM lint errors or warnings."
 }

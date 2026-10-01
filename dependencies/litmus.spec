@@ -9,7 +9,7 @@
 %endif
 Name: litmus
 Version: 0.18
-Release: 1.qore%{?dist}
+Release: 2.qore%{?dist}
 Summary: WebDAV server compliance tests
 License: GPL-2.0-or-later
 URL: https://notroj.github.io/litmus/
@@ -37,6 +37,8 @@ cp %{SOURCE1} COPYING.current
 %build
 # Litmus uses plain Autoconf without Automake dependency-tracking options.
 %set_build_flags
+export CFLAGS="$CFLAGS -fPIE"
+export LDFLAGS="$LDFLAGS -pie -Wl,-z,relro,-z,now"
 ./configure --build=%{_build} --host=%{_host} --prefix=%{_prefix} \
     --bindir=%{_bindir} --libdir=%{_libdir} --libexecdir=%{_libexecdir} --mandir=%{_mandir} \
     --with-neon=%{_prefix}
@@ -57,6 +59,9 @@ python3 -B -W error %{SOURCE2} "$PWD/litmus"
 %{_libexecdir}/litmus/
 %{_mandir}/man1/litmus.1*
 %changelog
+* Thu Oct 01 2026 David Nichols <david@qore.org> - 0.18-2.qore
+- Enable PIE and full RELRO on distributions whose default flags omit them.
+
 * Thu Oct 01 2026 David Nichols <david@qore.org> - 0.18-1.qore
 - Build WebDAV qualification tools with the system neon library.
 - Run default suites against an isolated unprivileged Apache server.
