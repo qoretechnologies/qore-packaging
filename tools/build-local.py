@@ -80,6 +80,37 @@ exec rpmbuild "$@"
     return result.returncode
 
 
+def launch_background(source, image, output, jobs=2, engine="docker", source_only=False):
+    """Keep the driver and its completion record alive across terminal closure."""
+    verify_bundle(source)
+    if jobs < 1 or jobs > 16:
+        raise ValueError("Use between 1 and 16 build jobs")
+    source, output = Path(source).resolve(), Path(output).resolve()
+    if output.exists():
+        raise ValueError("Use a new build output directory")
+    info = json.loads(subprocess.check_output([engine, "image", "inspect", image], text=True))[0]
+    image_id = info["Id"]
+    if not re.fullmatch(r"sha256:[a-f0-9]{64}", image_id):
+        raise ValueError("Expected an immutable image ID")
+    command = [sys.executable, str(Path(__file__).resolve()), "--source", str(source),
+               "--image", image_id, "--output", str(output), "--jobs", str(jobs), "--engine", engine]
+    if source_only:
+        command.append("--source-only")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    driver_log = output.with_name(output.name + "-driver.log")
+    # Exclusive creation prevents launching a second driver for this output.
+    # The child inherits an open regular file, never the interactive tool pipe.
+    with driver_log.open("x") as log:
+        actions = [(os.POSIX_SPAWN_OPEN, 0, os.devnull, os.O_RDONLY, 0),
+                   (os.POSIX_SPAWN_DUP2, log.fileno(), 1),
+                   (os.POSIX_SPAWN_DUP2, log.fileno(), 2),
+                   (os.POSIX_SPAWN_CLOSE, log.fileno())]
+        pid = os.posix_spawn(sys.executable, command, os.environ.copy(),
+                             file_actions=actions, setsid=True)
+    return {"pid": pid, "image": image_id, "output": str(output),
+            "driver_log": str(driver_log), "status": "launched; build.json records completion"}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, required=True)
@@ -88,7 +119,13 @@ def main():
     parser.add_argument("--jobs", type=int, default=2)
     parser.add_argument("--engine", choices=("docker", "podman"), default="docker")
     parser.add_argument("--source-only", action="store_true")
+    parser.add_argument("--background", action="store_true",
+                        help="launch a persistent driver; read build.json for the final result")
     args = parser.parse_args()
+    if args.background:
+        print(json.dumps(launch_background(args.source, args.image, args.output, args.jobs,
+                                           args.engine, args.source_only), indent=2))
+        return
     sys.exit(build(args.source, args.image, args.output, args.jobs, args.engine, args.source_only))
 
 
