@@ -10,7 +10,7 @@
 
 int main(int argc, char** argv) {
     try {
-        if (argc == 2 && std::string(argv[1]) == "--baseline") {
+        if (argc == 2 && std::string(argv[1]) == "--version-only") {
             std::cout << Ort::GetVersionString() << '\n';
             return 0;
         }
@@ -18,6 +18,10 @@ int main(int argc, char** argv) {
             throw std::runtime_error("expected an ONNX model path");
         }
         Ort::Env env(ORT_LOGGING_LEVEL_WARNING, "rpm-sdk-test");
+        if (std::string(argv[1]) == "--baseline") {
+            std::cout << "ONNX environment initialized without a session or inference\n";
+            return 0;
+        }
         Ort::SessionOptions options;
         options.SetIntraOpNumThreads(1);
         options.SetInterOpNumThreads(1);

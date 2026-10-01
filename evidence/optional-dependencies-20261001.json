@@ -158,7 +158,7 @@
     "upstream_fix": "https://github.com/microsoft/onnxruntime/commit/15c255499f6552eb92762ceee20ed25bd46a1693",
     "patch": "dependencies/onnxruntime-test-conversion.patch",
     "reason": "Backport upstream scalar test conversion helpers to avoid GCC false-positive packet bounds diagnostics on short buffers.",
-    "build": "Leap clean build and installed SDK passed; EL10 clean build pending",
+    "build": "Leap and EL10 clean builds and installed SDK consumers passed",
     "valgrind": {
       "target": "el10",
       "affected_tests_passed": 32,
@@ -189,7 +189,7 @@
           "ctest_tests": 7,
           "failed": 0,
           "log": "results/el10-onnx-softsign-build-and-test.log",
-          "clean_recipe_build": "pending"
+          "clean_recipe_build": "passed build 3, seven CTest groups"
         },
         "leap": {
           "result": "pass",
@@ -276,7 +276,79 @@
       "sha256": "517a8429741283376db428903e1b71c7eee676c1f4b9d4c935bcde1ec9e81008",
       "assembly": "MLAS objects use --noexecstack",
       "rpath": "CMake BUILD_RPATH replaces raw linker flags; install removes build paths"
-    }
+    },
+    "el10_clean_build": {
+      "directory": "results/el10-onnxruntime-build-3",
+      "image": "sha256:9012a7c069d1c0f93b4272fa6b4195686330c333d344635ada4b34bf1006174d",
+      "artifacts": {
+        "rpmbuild/RPMS/x86_64/onnxruntime-1.22.2-1.qore.el10.x86_64.rpm": "d14754aa0e8b4f20721671acd209ce5d14f660c402e97c7a0cffd4f0cfec28da",
+        "rpmbuild/RPMS/x86_64/onnxruntime-debuginfo-1.22.2-1.qore.el10.x86_64.rpm": "d21436ab800fc42a47a3a8b0a3727c3875be4b5bcf860914db53a78de4c2c7b3",
+        "rpmbuild/RPMS/x86_64/onnxruntime-debugsource-1.22.2-1.qore.el10.x86_64.rpm": "33426e3a97eec2291bf28385a01aae3082196ed489f85901cbb881b63c5d30b4",
+        "rpmbuild/RPMS/x86_64/onnxruntime-devel-1.22.2-1.qore.el10.x86_64.rpm": "81060d0455a363a4e5d108add2427031f08e8d0f73a17fbb3ab1cd5548613725",
+        "rpmbuild/RPMS/x86_64/onnxruntime-tools-1.22.2-1.qore.el10.x86_64.rpm": "e810256ac80d62fa179eefcf21dcfa2eca40bd454abc17fe7c92aba03373f52c",
+        "rpmbuild/RPMS/x86_64/onnxruntime-tools-debuginfo-1.22.2-1.qore.el10.x86_64.rpm": "664477ab45422d71ebd495e70c3cb0cf49ac727e2eee111c5be89401e0cc52f9",
+        "rpmbuild/SRPMS/onnxruntime-1.22.2-1.qore.el10.src.rpm": "445e58fb1a9c8723dfd34775ea6c16d7f0fc7e2b0a62913939adc0a15a3fb45a"
+      },
+      "ctest_groups": 7,
+      "failures": 0
+    },
+    "leap_installed_environment_baseline": {
+      "log": "results/leap-onnx-build-3-installed-sdk-environment.log",
+      "cmake_consumer": "pass",
+      "pkgconfig_consumer": "pass",
+      "inference": "three-sample linear model, invalid input name and missing model passed",
+      "valgrind": {
+        "definitely lost": [
+          0,
+          0
+        ],
+        "indirectly lost": [
+          0,
+          0
+        ],
+        "possibly lost": [
+          0,
+          0
+        ],
+        "still reachable": [
+          5832,
+          5832
+        ]
+      },
+      "memory_errors": 0,
+      "suppressed": 0,
+      "baseline": "Ort::Env construction/destruction without a session or inference",
+      "approved_exception": null
+    },
+    "el10_installed_environment_baseline": {
+      "log": "results/el10-onnx-build-3-installed-sdk-environment.log",
+      "cmake_consumer": "pass",
+      "pkgconfig_consumer": "pass",
+      "inference": "three-sample linear model, invalid input name and missing model passed",
+      "valgrind": {
+        "definitely lost": [
+          512,
+          512
+        ],
+        "indirectly lost": [
+          0,
+          0
+        ],
+        "possibly lost": [
+          0,
+          0
+        ],
+        "still reachable": [
+          5320,
+          5320
+        ]
+      },
+      "memory_errors": 0,
+      "suppressed": 0,
+      "baseline": "Ort::Env construction/destruction without a session or inference",
+      "approved_exception": "cpuinfo maps at init.c lines 283 and 292"
+    },
+    "build_requirement_update": "hardlink file requirement replaced with native util-linux package name; target parser and actual RPM provider checks passed on Fedora, EL10 and Leap; build/install/runtime commands unchanged"
   },
   "rpmlint_scope": {
     "reference": "https://github.com/openSUSE/obs-build/blob/master/build-recipe-spec",

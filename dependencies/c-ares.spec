@@ -43,6 +43,8 @@ BuildRequires: pkgconfig(gmock)
 BuildRequires: valgrind
 %if 0%{?suse_version}
 BuildRequires: fdupes
+# getaddrinfo service-name tests need the distribution services database.
+BuildRequires: netcfg
 %description
 Asynchronous DNS resolver with the query life cycle fixes required by Qore.
 

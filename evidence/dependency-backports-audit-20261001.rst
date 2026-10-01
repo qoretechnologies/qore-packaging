@@ -7,16 +7,25 @@ Scope: dependency recipes, pinned sources, patches and installed ONNX SDK fixtur
 Method: /home/david/.codex/skills/audit-changes/SKILL.md.
 This is a code review, not repository or untested-architecture qualification.
 
-Current spec hashes match completed binary builds and parse on all three targets.
-ONNX Leap passes seven CTest groups, CMake/pkg-config consumers, inference and
-negative cases, and Valgrind with zero errors or lost allocations. Its two policy
-warnings concern the upstream private provider basename and duplicate licenses.
-EL's clean ONNX rebuild remains pending; affected tests and the approved cpuinfo
-startup-allocation baseline already have Valgrind evidence. Arrow's installed SDK
-and policy checks pass; its recovered build lacks part of the test transcript,
-which the evidence states explicitly. MongoDB mock/local tests and SDK consumers
-pass. HTTP/parser evidence records the completed builds; nghttp2's Fedora crypto-
-policy warnings are not represented as policy compliance.
+The latest c-ares and nghttp2 Leap recipes match completed binary builds after
+OBS exposed missing netcfg and an older default compiler. nghttp2 explicitly
+selects GCC 15 on Leap; the live OBS build resolver confirms its availability.
+ONNX build 3 passes seven CTest groups on both Leap and EL10. Its only later
+recipe change replaces the hardlink file prerequisite with the actual package
+name, verified with native RPM parsers and provider databases on all targets.
+
+The installed ONNX consumer now initializes Ort::Env in its no-inference baseline.
+Both discovery mechanisms, inference and negative cases pass on Leap and EL10.
+Valgrind reports no memory errors: Leap loses no bytes; EL10 has the same approved
+512-byte cpuinfo map allocation in baseline and inference, symbolized to init.c
+lines 283 and 292. No suppressions were added. C++ changes are confined to this
+RAII test fixture. The existing 62-point checklist below still applies.
+
+Arrow's installed SDK and policy checks pass; its recovered build lacks part of
+the test transcript, which the evidence states explicitly. MongoDB mock/local
+tests and SDK consumers pass. HTTP/parser evidence records completed builds;
+nghttp2's Fedora crypto-policy warnings are not represented as policy compliance.
+OBS architecture builds and repository qualification remain separate gates.
 
 .. list-table:: Complete skill checklist
    :header-rows: 1

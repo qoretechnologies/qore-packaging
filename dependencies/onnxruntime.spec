@@ -51,7 +51,11 @@ BuildRequires: gcc-c++
 BuildRequires: make
 BuildRequires: python3
 BuildRequires: patch
-BuildRequires: /usr/bin/hardlink
+%if 0%{?suse_version}
+BuildRequires: util-linux
+%else
+BuildRequires: util-linux-core
+%endif
 BuildRequires: pkgconfig(zlib)
 %if 0%{?suse_version}
 BuildRequires: glibc-locale

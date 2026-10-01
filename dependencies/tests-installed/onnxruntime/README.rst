@@ -17,6 +17,9 @@ exported discovery mechanisms::
 The model comes from the same pinned Qore source as the package qualification.
 The consumer checks batched inference across negative, zero and positive inputs,
 output dimensions, invalid input-name rejection and missing-model errors.
-Run Valgrind on both --baseline and the model invocation. Retain the full reports
+Run Valgrind on both --baseline and the model invocation. The baseline constructs
+and destroys Ort::Env without creating a session or running inference; this also
+initializes cpuinfo, which a version query alone does not do. Use --version-only
+to measure library loading separately. Retain the full reports
 and compare against the documented cpuinfo startup-allocation exception; do not
 suppress leaks or accept additional inference-related memory errors.

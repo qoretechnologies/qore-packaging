@@ -168,7 +168,6 @@
     "leap": {
       "c-ares": {
         "result": "pass",
-        "result_directory": "results/leap-c-ares-build-10",
         "image": "sha256:d34fe9f428755afc90759e5a27bdf7afb6a8e9235b6f802b4896c3f952a42c46",
         "source": {
           "schema": 1,
@@ -187,17 +186,18 @@
             "c-ares-rpmlintrc": "1368a67ca9b86db834a10c8ef42a1883501abbbf8b1cd41294ed81d39a12256e",
             "c-ares-test-language.patch": "818e0ec1c94f866cb4e527f111c486fe76136e30cf554603d387cd557f2c7316",
             "c-ares-timeout-test.patch": "ebcc70d377a3b642ef8fc901e047133b0236dd1730060d913d699c73e18acf9f",
-            "c-ares.spec": "95350de9f23eddf04b7aebe74f1b586865a0b09eb19c644791f0ad9ad8c52342"
+            "c-ares.spec": "125efcebd04a5b39b3a54a447bc970cb6c2ae98e5590cc3018ac24f4d4c979a0"
           },
           "candidate": true
         },
         "artifacts": {
-          "rpmbuild/RPMS/x86_64/c-ares-debugsource-1.34.8-160000.2.qore.x86_64.rpm": "1eecde63d4344885c8f8f6622b8083fc151b391e16b337644e13229afe798b90",
-          "rpmbuild/RPMS/x86_64/c-ares-devel-1.34.8-160000.2.qore.x86_64.rpm": "47e09ff8a98919afdfd7343125d6cdc3f91d08ac16b59e458bfb2e337db44589",
-          "rpmbuild/RPMS/x86_64/libcares2-1.34.8-160000.2.qore.x86_64.rpm": "e3b9d184096cc60c730d9b8bca84923212241cdfaa0c27363c2201d2d7984878",
-          "rpmbuild/RPMS/x86_64/libcares2-debuginfo-1.34.8-160000.2.qore.x86_64.rpm": "e16e782ade43f99af93e927fe44e1ba769b89657893e9f91d6349b5415b52f09",
-          "rpmbuild/SRPMS/c-ares-1.34.8-160000.2.qore.src.rpm": "091d4774a8479d4eb1fabbb887ed8526aa2d505f915a8466a8f714dd585bff78"
-        }
+          "rpmbuild/RPMS/x86_64/c-ares-debugsource-1.34.8-160000.2.qore.x86_64.rpm": "440c38cf0a807cb6c27f6ba9e44f516c7490d7ca37c6f21d681f9656227b079c",
+          "rpmbuild/RPMS/x86_64/c-ares-devel-1.34.8-160000.2.qore.x86_64.rpm": "7714554c8f34eb7443e9e72505c1467131b89c9cbdd785772f39a4b3de079044",
+          "rpmbuild/RPMS/x86_64/libcares2-1.34.8-160000.2.qore.x86_64.rpm": "6fc7903403ab9439a9b5b1ad2b049a40d9d962b8d9c94abc3e7e114670586d8a",
+          "rpmbuild/RPMS/x86_64/libcares2-debuginfo-1.34.8-160000.2.qore.x86_64.rpm": "b6f606cd247508a2409234e0a4d6cc085143ed47d3f9fc849ea68ca6b3f5ab11",
+          "rpmbuild/SRPMS/c-ares-1.34.8-160000.2.qore.src.rpm": "69747231f2a29527f64884d860ae4d54f06f1aa4d401a6aa05d70b5d08f1b9a8"
+        },
+        "directory": "results/leap-c-ares-build-11"
       },
       "ngtcp2": {
         "result": "pass",
@@ -266,8 +266,7 @@
       },
       "nghttp2": {
         "result": "pass",
-        "result_directory": "results/leap-nghttp2-build-9",
-        "image": "sha256:cdaa1236ab67934374a719e42d493c3b6a35a6f290fd1f569e6fce0e3322f295",
+        "image": "sha256:2b48c778c1df66ce4ccd5c16851f1cca58a2c02a5ddd0331a031b649f9b1a3ca",
         "source": {
           "schema": 1,
           "name": "nghttp2",
@@ -283,20 +282,20 @@
             "nghttp2-1.70.0.tar.gz": "aa317e2cf9dca6afa0aed68f8fad6ff303ec6982e25a78c75c0b65e2b9b3ded5",
             "nghttp2-build-fixes.patch": "69e7ff40ee95443d6a11af6f16deb2abf4a03cba4937099a355387fb3c52c9b8",
             "nghttp2-daemon-check.py": "7dab77d4677d61fb24d25f3113d2b93cec79d42ddf120c31f856f68a71028583",
-            "nghttp2.spec": "0930dde73d82ff6cffb283501fd56d1d98658f58ec7db15c0c225b95ea2bc3e3"
+            "nghttp2.spec": "308341749badcb9bc1b2575bda9c93881e1adf6b65f4e369e4da710c7cd37644"
           },
           "candidate": true
         },
         "artifacts": {
-          "rpmbuild/RPMS/x86_64/libnghttp2-14-1.70.0-1.qore.x86_64.rpm": "160aaf2fbb8082d497bd491724e55e9e27427d0763b9a4b1e4650fa1c32d0181",
-          "rpmbuild/RPMS/x86_64/libnghttp2-14-debuginfo-1.70.0-1.qore.x86_64.rpm": "4797416910f2f78b9ec153b197a68a73257bd6e6ee2cf42924c2e51eff623efc",
-          "rpmbuild/RPMS/x86_64/libnghttp2-devel-1.70.0-1.qore.x86_64.rpm": "fee267d6d12cff101f2a74c655681740de953c1d92c3c526b05eb495fbd5217e",
-          "rpmbuild/RPMS/x86_64/nghttp2-1.70.0-1.qore.x86_64.rpm": "3a23d4538441afbdb8e68b8c3043146d29cae0b879da0c12ef6192d367fd7f42",
-          "rpmbuild/RPMS/x86_64/nghttp2-debuginfo-1.70.0-1.qore.x86_64.rpm": "ace01fdd7f0495f787c715af4c20f3a7425f3e805b138437fe502dfea6f90e97",
-          "rpmbuild/RPMS/x86_64/nghttp2-debugsource-1.70.0-1.qore.x86_64.rpm": "015eac869acf25f6f69e5a8b24364ff2314653c1ff0e896793234442dc50f6e0",
-          "rpmbuild/SRPMS/nghttp2-1.70.0-1.qore.src.rpm": "53e3a6ed93fecb8c9a76f358a0029a814cd96dfd7b5fd690792618ba2f5cb119"
+          "rpmbuild/RPMS/x86_64/libnghttp2-14-1.70.0-1.qore.x86_64.rpm": "18b48e19f08a6a07dbd9adf26cfb1a776fac3b1d75ce9b21e52a38f649b3d5ee",
+          "rpmbuild/RPMS/x86_64/libnghttp2-14-debuginfo-1.70.0-1.qore.x86_64.rpm": "6c04c365e18c9624a3daf083fe784d56735f6f506808456fd003127cf580f4c8",
+          "rpmbuild/RPMS/x86_64/libnghttp2-devel-1.70.0-1.qore.x86_64.rpm": "1a6928bbd0a36ff692a3842126fbac94af6eaf241c46631a8beb8231f0d51d4e",
+          "rpmbuild/RPMS/x86_64/nghttp2-1.70.0-1.qore.x86_64.rpm": "a92b7e3dc39a90c557bf015bbb97364a650cd2cce025044f68caac8a8050c2c9",
+          "rpmbuild/RPMS/x86_64/nghttp2-debuginfo-1.70.0-1.qore.x86_64.rpm": "af533b6a212585e80a0b1d3f2719eb417f23982814d980b5a5dce69617bf127e",
+          "rpmbuild/RPMS/x86_64/nghttp2-debugsource-1.70.0-1.qore.x86_64.rpm": "095d18c9f179e8868752ccbf97ce215e721f16c50a61dbaae73027af4009771a",
+          "rpmbuild/SRPMS/nghttp2-1.70.0-1.qore.src.rpm": "f7bbe3f0426b9f5662604c1168744e7d77c7e0311d6a46c569bcdd2250f3f1f0"
         },
-        "rpmlint_log": "results/leap-nghttp2-build-9-rpmlint.log"
+        "directory": "results/leap-nghttp2-build-11"
       },
       "tree-sitter": {
         "result": "pass",

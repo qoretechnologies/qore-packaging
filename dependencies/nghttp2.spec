@@ -30,7 +30,12 @@ Source1: nghttp2-daemon-check.py
 
 
 BuildRequires: c-ares-devel
-BuildRequires: gcc-c++
+%if 0%{?suse_version}
+# Leap OBS maps gcc-c++ to gcc13; applications require C++23 <print>.
+BuildRequires: gcc15-c++
+%else
+BuildRequires: gcc-c++ >= 14
+%endif
 BuildRequires: libev-devel
 BuildRequires: libxml2-devel
 BuildRequires: make
@@ -81,6 +86,7 @@ for building applications with libnghttp2.
 
 %build
 %if 0%{?suse_version}
+export CC=gcc-15 CXX=g++-15
 # Link installed command-line programs as position-independent executables.
 export CFLAGS="%{optflags} -fPIE" CXXFLAGS="%{optflags} -fPIE"
 %endif
