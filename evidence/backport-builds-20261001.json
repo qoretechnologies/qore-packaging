@@ -1,0 +1,414 @@
+{
+  "schema": 1,
+  "builds": {
+    "el10": {
+      "c-ares": {
+        "result": "pass",
+        "image": "sha256:c7aff12890d44097ef060e5768a15bebbd6fb168b32f433d0cfcc7d2b686bbb4",
+        "source": {
+          "schema": 1,
+          "name": "c-ares",
+          "version": "1.34.8",
+          "commit": null,
+          "source_date_epoch": 1790812800,
+          "spec": "c-ares.spec",
+          "upstream": {
+            "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/c-ares/1.34.8-1/c-ares_1.34.8.orig.tar.gz",
+            "sha256": "c222b6d681096f9444d2c4863d2c1174019e27cacca0a4a5c114d36dd7d7bf78"
+          },
+          "sources": {
+            "c-ares-1.34.8.tar.gz": "c222b6d681096f9444d2c4863d2c1174019e27cacca0a4a5c114d36dd7d7bf78",
+            "c-ares-lost-query.patch": "4802c56046af7ef251e746174fe74c6cc4c483c72e574b2d082ff4ad0ee64983",
+            "c-ares-test-language.patch": "818e0ec1c94f866cb4e527f111c486fe76136e30cf554603d387cd557f2c7316",
+            "c-ares-timeout-test.patch": "ebcc70d377a3b642ef8fc901e047133b0236dd1730060d913d699c73e18acf9f",
+            "c-ares.spec": "c0da335d1248ded9341907e1b0fd7788ecb2fb091d335f376f7762720416268f"
+          },
+          "candidate": true
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/x86_64/c-ares-1.34.8-2.qore.el10.x86_64.rpm": "93479afcb33aa030c441ef4e3c51f785940c1ef5a1c2eb8abef627163f6230fb",
+          "rpmbuild/RPMS/x86_64/c-ares-debuginfo-1.34.8-2.qore.el10.x86_64.rpm": "f2d1bb99323b1f46c8ba002a1c034ed75dff3b801c38cb04953e6c5235607be2",
+          "rpmbuild/RPMS/x86_64/c-ares-debugsource-1.34.8-2.qore.el10.x86_64.rpm": "921b104348a06a44365e1ffd3de9b6842de142840bec76005d27b5243e1ea581",
+          "rpmbuild/RPMS/x86_64/c-ares-devel-1.34.8-2.qore.el10.x86_64.rpm": "284ed882f46610065bce750a1d8e410503a6210386c3497d634b6529f35780c5",
+          "rpmbuild/SRPMS/c-ares-1.34.8-2.qore.el10.src.rpm": "59ef0605d89e5411bf8dcacc96ac954901497c45dccefa5f0f447582c354fe6c"
+        }
+      },
+      "ngtcp2": {
+        "result": "pass",
+        "image": "sha256:c7aff12890d44097ef060e5768a15bebbd6fb168b32f433d0cfcc7d2b686bbb4",
+        "source": {
+          "schema": 1,
+          "name": "ngtcp2",
+          "version": "1.25.0",
+          "commit": null,
+          "source_date_epoch": 1790812800,
+          "spec": "ngtcp2.spec",
+          "upstream": {
+            "url": "https://github.com/ngtcp2/ngtcp2/releases/download/v1.25.0/ngtcp2-1.25.0.tar.xz",
+            "sha256": "2a34d2484ba17847a5d11965704e9dd0fac4c6d8efc75ffe1ec7de66d8c6b6fb"
+          },
+          "sources": {
+            "ngtcp2-1.25.0.tar.xz": "2a34d2484ba17847a5d11965704e9dd0fac4c6d8efc75ffe1ec7de66d8c6b6fb",
+            "ngtcp2.spec": "72b884fd9efa94a7021b3a94e10f678be7516d4820ea9a6a0ee0a4170491f84e"
+          },
+          "candidate": true
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/x86_64/ngtcp2-1.25.0-1.qore.el10.x86_64.rpm": "8d49752b30358d951e2280714241a8e17c5a0d1f2df440656e2b2df42ec05c4e",
+          "rpmbuild/RPMS/x86_64/ngtcp2-crypto-gnutls-1.25.0-1.qore.el10.x86_64.rpm": "c01a01893f7ad80479e8460164f91b686b782b6a769b3e49d48345c321ddac47",
+          "rpmbuild/RPMS/x86_64/ngtcp2-crypto-gnutls-debuginfo-1.25.0-1.qore.el10.x86_64.rpm": "d5fd8ffba6717e97d897e55518d26ab2c8a1a4017f8d668cf691163247b62eba",
+          "rpmbuild/RPMS/x86_64/ngtcp2-crypto-gnutls-devel-1.25.0-1.qore.el10.x86_64.rpm": "7dbc70a41f9dc321daff99e27e986607917640e38fba9861155a031d831b5c9b",
+          "rpmbuild/RPMS/x86_64/ngtcp2-crypto-ossl-1.25.0-1.qore.el10.x86_64.rpm": "9aa281b349f96e728ac3d122f30d6eacf855454975d0def05f06cbde9f9179ce",
+          "rpmbuild/RPMS/x86_64/ngtcp2-crypto-ossl-debuginfo-1.25.0-1.qore.el10.x86_64.rpm": "b35ebc0b30d993ced6c62b9fd6cbbd14c734f42b5afd52b48326e27ce447a4a9",
+          "rpmbuild/RPMS/x86_64/ngtcp2-crypto-ossl-devel-1.25.0-1.qore.el10.x86_64.rpm": "0db4603483d7cb9981b97ab9ff9592ec3ac1531fdc155fe4e77e5b941e1c90fb",
+          "rpmbuild/RPMS/x86_64/ngtcp2-debuginfo-1.25.0-1.qore.el10.x86_64.rpm": "a0eec0f319912bea8443029151d26d1e8e9d716616c787af572328bc919f32e1",
+          "rpmbuild/RPMS/x86_64/ngtcp2-debugsource-1.25.0-1.qore.el10.x86_64.rpm": "70f08b83cdd8eed7fa79e505a8801120fbf45cbd820c625746a5fb6724ffa2af",
+          "rpmbuild/RPMS/x86_64/ngtcp2-devel-1.25.0-1.qore.el10.x86_64.rpm": "5df8e5518bfb65050a463bfdaa1b3c8993677c848599868785a8ae88865022ec",
+          "rpmbuild/SRPMS/ngtcp2-1.25.0-1.qore.el10.src.rpm": "1f1077eddad7d1e6606e277c45bb958d47cd3af08f1dda5d80df965128f20da6"
+        }
+      },
+      "nghttp3": {
+        "result": "pass",
+        "image": "sha256:c7aff12890d44097ef060e5768a15bebbd6fb168b32f433d0cfcc7d2b686bbb4",
+        "source": {
+          "schema": 1,
+          "name": "nghttp3",
+          "version": "1.18.0",
+          "commit": null,
+          "source_date_epoch": 1790812800,
+          "spec": "nghttp3.spec",
+          "upstream": {
+            "url": "https://github.com/ngtcp2/nghttp3/releases/download/v1.18.0/nghttp3-1.18.0.tar.xz",
+            "sha256": "aad782c23d3f01bd4bb52c8bac7a553b631ef8115fd1612703df6183449fef19"
+          },
+          "sources": {
+            "nghttp3-1.18.0.tar.xz": "aad782c23d3f01bd4bb52c8bac7a553b631ef8115fd1612703df6183449fef19",
+            "nghttp3.spec": "580aac9776bbf0b6cf55c2cee471211a53151ebd11ed8a055903bb96fb480f11"
+          },
+          "candidate": true
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/x86_64/libnghttp3-1.18.0-1.qore.el10.x86_64.rpm": "257a190a34e1bf0218803a1248d1b5496cff8dc0398f169511f5e6440fc1ecd2",
+          "rpmbuild/RPMS/x86_64/libnghttp3-debuginfo-1.18.0-1.qore.el10.x86_64.rpm": "5b1d0fc18ac317412cc29dc8b66c3824af4166b6e18d9934f7f0ba39f65a465b",
+          "rpmbuild/RPMS/x86_64/libnghttp3-devel-1.18.0-1.qore.el10.x86_64.rpm": "11a710291798419a695d1339d245579472e54adfaf984d6fd85e5a87bcb70416",
+          "rpmbuild/RPMS/x86_64/nghttp3-debugsource-1.18.0-1.qore.el10.x86_64.rpm": "533a7196445d552231de4cbdfb2e777100386be59f6f210dc982bea2ff0fd44f",
+          "rpmbuild/SRPMS/nghttp3-1.18.0-1.qore.el10.src.rpm": "3b7b30ebcf4e0aecb3154915dfe80ec729e6811363988627e92e2421114db496"
+        }
+      },
+      "nghttp2": {
+        "result": "pass",
+        "image": "sha256:57ba4990d8bbd0dbde272d99162364ebc4d675777ba963b288cb8c5aadd4987e",
+        "source": {
+          "schema": 1,
+          "name": "nghttp2",
+          "version": "1.70.0",
+          "commit": null,
+          "source_date_epoch": 1790812800,
+          "spec": "nghttp2.spec",
+          "upstream": {
+            "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/nghttp2/1.70.0-1/nghttp2_1.70.0.orig.tar.gz",
+            "sha256": "aa317e2cf9dca6afa0aed68f8fad6ff303ec6982e25a78c75c0b65e2b9b3ded5"
+          },
+          "sources": {
+            "nghttp2-1.70.0.tar.gz": "aa317e2cf9dca6afa0aed68f8fad6ff303ec6982e25a78c75c0b65e2b9b3ded5",
+            "nghttp2-build-fixes.patch": "69e7ff40ee95443d6a11af6f16deb2abf4a03cba4937099a355387fb3c52c9b8",
+            "nghttp2-daemon-check.py": "7dab77d4677d61fb24d25f3113d2b93cec79d42ddf120c31f856f68a71028583",
+            "nghttp2.spec": "0930dde73d82ff6cffb283501fd56d1d98658f58ec7db15c0c225b95ea2bc3e3"
+          },
+          "candidate": true
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/x86_64/libnghttp2-1.70.0-1.qore.el10.x86_64.rpm": "24fc98eb1c867c90e91db66680a9012a1d0206c20eda3094b2b0af97e33695b4",
+          "rpmbuild/RPMS/x86_64/libnghttp2-debuginfo-1.70.0-1.qore.el10.x86_64.rpm": "29f0efa809ae0c9c1eb079848628b0b95927a52dcc4a5847df1214cff6c686d2",
+          "rpmbuild/RPMS/x86_64/libnghttp2-devel-1.70.0-1.qore.el10.x86_64.rpm": "87e541f4fc5589dd251319a56cd0e4ce60393f0acb11c13c47f8ad559f8cbdfb",
+          "rpmbuild/RPMS/x86_64/nghttp2-1.70.0-1.qore.el10.x86_64.rpm": "93fe08205658a30cdaf063842f20e9bdf2a29c2c21e73da52566c7744b312240",
+          "rpmbuild/RPMS/x86_64/nghttp2-debuginfo-1.70.0-1.qore.el10.x86_64.rpm": "b37874a99b7c6270e1e552f33b839f6bde0b9cd2a148eb513f3c80b1a9830baf",
+          "rpmbuild/RPMS/x86_64/nghttp2-debugsource-1.70.0-1.qore.el10.x86_64.rpm": "fa8129a0ec90b887b7b7f0c800948dcacbdde6598925ccc77f2a42c545a3826e",
+          "rpmbuild/SRPMS/nghttp2-1.70.0-1.qore.el10.src.rpm": "77ae4c41f2c2afd2d522434412e4d982e85a9552408343596722a3b78a8a8fc1"
+        },
+        "result_directory": "results/el10-nghttp2-build-9",
+        "daemon_regressions": {
+          "normal": 3,
+          "valgrind": 3,
+          "errors": 0,
+          "definitely_lost": 0,
+          "indirectly_lost": 0
+        }
+      },
+      "tree-sitter": {
+        "result": "pass",
+        "image": "sha256:c7aff12890d44097ef060e5768a15bebbd6fb168b32f433d0cfcc7d2b686bbb4",
+        "source": {
+          "schema": 1,
+          "name": "tree-sitter",
+          "version": "0.26.13",
+          "commit": null,
+          "source_date_epoch": 1790812800,
+          "spec": "tree-sitter.spec",
+          "upstream": {
+            "url": "https://github.com/tree-sitter/tree-sitter/archive/refs/tags/v0.26.13.tar.gz",
+            "sha256": "ece24c3c5e2a76384075e830c7139b59fce8fb01e4ef8436fab08bbe10444c89"
+          },
+          "sources": {
+            "tree-sitter-0.26.13.tar.gz": "ece24c3c5e2a76384075e830c7139b59fce8fb01e4ef8436fab08bbe10444c89",
+            "tree-sitter-runtime.c": "e8879ad1c550de784c2a79e795593afdc0331d81089730fdd6d6f4833f8c1e70",
+            "tree-sitter.spec": "312f0cca40fd1d67da21c4ebc1ce0af6673783a151546b2d5e5b181a727508d9"
+          },
+          "candidate": true
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/x86_64/tree-sitter-0.26.13-1.qore.el10.x86_64.rpm": "9af4b55ba365cb796c1e1701e50bdf694a6c61b0b812933a23fdffd01a902f36",
+          "rpmbuild/RPMS/x86_64/tree-sitter-debuginfo-0.26.13-1.qore.el10.x86_64.rpm": "5aad5e4ebaf7ef9807b0b45505d1ae151e7da9b6915581e005ac3145545beade",
+          "rpmbuild/RPMS/x86_64/tree-sitter-debugsource-0.26.13-1.qore.el10.x86_64.rpm": "911ca0e3b1af7ea1d0547e6bd5e6cae5a08367f37cd9780083f6a659b07692b1",
+          "rpmbuild/RPMS/x86_64/tree-sitter-devel-0.26.13-1.qore.el10.x86_64.rpm": "7f7adc61e83910dbf1ebba1e2a71fb5fc3b9aacef7d37f746a358c3889901e19",
+          "rpmbuild/SRPMS/tree-sitter-0.26.13-1.qore.el10.src.rpm": "8cc0e55f9a4dac0655ae34f21e2a3150d3962f920e0a8992c33f3c8456e1af0e"
+        }
+      }
+    },
+    "leap": {
+      "c-ares": {
+        "result": "pass",
+        "result_directory": "results/leap-c-ares-build-10",
+        "image": "sha256:d34fe9f428755afc90759e5a27bdf7afb6a8e9235b6f802b4896c3f952a42c46",
+        "source": {
+          "schema": 1,
+          "name": "c-ares",
+          "version": "1.34.8",
+          "commit": null,
+          "source_date_epoch": 1790812800,
+          "spec": "c-ares.spec",
+          "upstream": {
+            "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/c-ares/1.34.8-1/c-ares_1.34.8.orig.tar.gz",
+            "sha256": "c222b6d681096f9444d2c4863d2c1174019e27cacca0a4a5c114d36dd7d7bf78"
+          },
+          "sources": {
+            "c-ares-1.34.8.tar.gz": "c222b6d681096f9444d2c4863d2c1174019e27cacca0a4a5c114d36dd7d7bf78",
+            "c-ares-lost-query.patch": "4802c56046af7ef251e746174fe74c6cc4c483c72e574b2d082ff4ad0ee64983",
+            "c-ares-rpmlintrc": "1368a67ca9b86db834a10c8ef42a1883501abbbf8b1cd41294ed81d39a12256e",
+            "c-ares-test-language.patch": "818e0ec1c94f866cb4e527f111c486fe76136e30cf554603d387cd557f2c7316",
+            "c-ares-timeout-test.patch": "ebcc70d377a3b642ef8fc901e047133b0236dd1730060d913d699c73e18acf9f",
+            "c-ares.spec": "95350de9f23eddf04b7aebe74f1b586865a0b09eb19c644791f0ad9ad8c52342"
+          },
+          "candidate": true
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/x86_64/c-ares-debugsource-1.34.8-160000.2.qore.x86_64.rpm": "1eecde63d4344885c8f8f6622b8083fc151b391e16b337644e13229afe798b90",
+          "rpmbuild/RPMS/x86_64/c-ares-devel-1.34.8-160000.2.qore.x86_64.rpm": "47e09ff8a98919afdfd7343125d6cdc3f91d08ac16b59e458bfb2e337db44589",
+          "rpmbuild/RPMS/x86_64/libcares2-1.34.8-160000.2.qore.x86_64.rpm": "e3b9d184096cc60c730d9b8bca84923212241cdfaa0c27363c2201d2d7984878",
+          "rpmbuild/RPMS/x86_64/libcares2-debuginfo-1.34.8-160000.2.qore.x86_64.rpm": "e16e782ade43f99af93e927fe44e1ba769b89657893e9f91d6349b5415b52f09",
+          "rpmbuild/SRPMS/c-ares-1.34.8-160000.2.qore.src.rpm": "091d4774a8479d4eb1fabbb887ed8526aa2d505f915a8466a8f714dd585bff78"
+        }
+      },
+      "ngtcp2": {
+        "result": "pass",
+        "result_directory": "results/leap-ngtcp2-build-8",
+        "image": "sha256:91ba924bfddf7c454a3ab485f697baa9afc721b3ee2a6b023de7cc6e8c870a9c",
+        "source": {
+          "schema": 1,
+          "name": "ngtcp2",
+          "version": "1.25.0",
+          "commit": null,
+          "source_date_epoch": 1790812800,
+          "spec": "ngtcp2.spec",
+          "upstream": {
+            "url": "https://github.com/ngtcp2/ngtcp2/releases/download/v1.25.0/ngtcp2-1.25.0.tar.xz",
+            "sha256": "2a34d2484ba17847a5d11965704e9dd0fac4c6d8efc75ffe1ec7de66d8c6b6fb"
+          },
+          "sources": {
+            "ngtcp2-1.25.0.tar.xz": "2a34d2484ba17847a5d11965704e9dd0fac4c6d8efc75ffe1ec7de66d8c6b6fb",
+            "ngtcp2.spec": "6bfbda7968b678bbd4a67f37bba43044d25ce20b9b055bcc904b273767e12667"
+          },
+          "candidate": true
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/x86_64/libngtcp2-16-1.25.0-1.qore.x86_64.rpm": "8feec812dafffeaa371c64affe8e4fae6f7528c7818d8ad01c88d656cb5a6ce5",
+          "rpmbuild/RPMS/x86_64/libngtcp2-16-debuginfo-1.25.0-1.qore.x86_64.rpm": "01699116b1aa33bd2af5bb9e23a2b229a380a859c2662e4c0af5e3f7ef857c6e",
+          "rpmbuild/RPMS/x86_64/libngtcp2-devel-1.25.0-1.qore.x86_64.rpm": "3a448c035c6e8c7af91634a46b636ef9f5fbee8d8abd3a8556a5e8707341d777",
+          "rpmbuild/RPMS/x86_64/libngtcp2_crypto_gnutls-devel-1.25.0-1.qore.x86_64.rpm": "6bbc023fea53bf7f784aa0ce7b0dc62b04df5c609a0a7d1efeec8ff247efd216",
+          "rpmbuild/RPMS/x86_64/libngtcp2_crypto_gnutls8-1.25.0-1.qore.x86_64.rpm": "9ffbd7b1937cbbacc9a49bbe6d401768ff51ff20d318a9e9e4f618aee4f87d96",
+          "rpmbuild/RPMS/x86_64/libngtcp2_crypto_gnutls8-debuginfo-1.25.0-1.qore.x86_64.rpm": "bc4c6557b7e73c5cd568c069a2a40906535a45d3748aab9e380dce07efc7bb20",
+          "rpmbuild/RPMS/x86_64/libngtcp2_crypto_ossl-devel-1.25.0-1.qore.x86_64.rpm": "eaaa122d015dd5dba725b69d9de547d3393803d08077adf9c0f0d062f7952e41",
+          "rpmbuild/RPMS/x86_64/libngtcp2_crypto_ossl0-1.25.0-1.qore.x86_64.rpm": "2e840e2998042a0020ea2b47306546f81cd1e48efe0e7c900591a584df10e739",
+          "rpmbuild/RPMS/x86_64/libngtcp2_crypto_ossl0-debuginfo-1.25.0-1.qore.x86_64.rpm": "b8c17122570ad8c4a96a6c220993fe0d1bcb2f223f6d8c12759630a24f494b91",
+          "rpmbuild/RPMS/x86_64/ngtcp2-debuginfo-1.25.0-1.qore.x86_64.rpm": "02e722d90e455307a4266fd2e97d9c09f9d7c73099a455329b380f70a69d9d68",
+          "rpmbuild/RPMS/x86_64/ngtcp2-debugsource-1.25.0-1.qore.x86_64.rpm": "0aba240ad0d5c923a49ed4fb0ad1b915fe9325eca74a175b02f7aacd4a8c7905",
+          "rpmbuild/SRPMS/ngtcp2-1.25.0-1.qore.src.rpm": "c2628804c4293830c26152b197ec9e5ece4d00027bc6e1f590dd73a3755418bd"
+        }
+      },
+      "nghttp3": {
+        "result": "pass",
+        "result_directory": "results/leap-nghttp3-build-20261001",
+        "image": "sha256:91ba924bfddf7c454a3ab485f697baa9afc721b3ee2a6b023de7cc6e8c870a9c",
+        "source": {
+          "schema": 1,
+          "name": "nghttp3",
+          "version": "1.18.0",
+          "commit": null,
+          "source_date_epoch": 1790812800,
+          "spec": "nghttp3.spec",
+          "upstream": {
+            "url": "https://github.com/ngtcp2/nghttp3/releases/download/v1.18.0/nghttp3-1.18.0.tar.xz",
+            "sha256": "aad782c23d3f01bd4bb52c8bac7a553b631ef8115fd1612703df6183449fef19"
+          },
+          "sources": {
+            "nghttp3-1.18.0.tar.xz": "aad782c23d3f01bd4bb52c8bac7a553b631ef8115fd1612703df6183449fef19",
+            "nghttp3.spec": "e7c9f408911cbf1ca26af30093670a31d3bef8eaf21a697cfa97d6a3a01933e3"
+          },
+          "candidate": true
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/x86_64/libnghttp3-9-1.18.0-1.qore.x86_64.rpm": "c9f013bf636bea58361bbbc7e41f929626bbceda674541d6779f42d7bf1a2230",
+          "rpmbuild/RPMS/x86_64/libnghttp3-9-debuginfo-1.18.0-1.qore.x86_64.rpm": "df96179269653c28e5e88f3c6d0ecd4441fdc9f4e29edd311559a211a04a6478",
+          "rpmbuild/RPMS/x86_64/libnghttp3-devel-1.18.0-1.qore.x86_64.rpm": "f2baa295fd12484f5b7ac7179de7e4c4f988be03b3a2a28a3fd4166c63ef9d4f",
+          "rpmbuild/RPMS/x86_64/nghttp3-debugsource-1.18.0-1.qore.x86_64.rpm": "2c5cd3649a555bcc986967500337d15ca691999d0b96e3c4fed99e33a9e8977d",
+          "rpmbuild/SRPMS/nghttp3-1.18.0-1.qore.src.rpm": "f6958dd31bbc71a897dcb145d59f2884645d6e5b70723c1051f24698cfa6f3c4"
+        }
+      },
+      "nghttp2": {
+        "result": "pass",
+        "result_directory": "results/leap-nghttp2-build-9",
+        "image": "sha256:cdaa1236ab67934374a719e42d493c3b6a35a6f290fd1f569e6fce0e3322f295",
+        "source": {
+          "schema": 1,
+          "name": "nghttp2",
+          "version": "1.70.0",
+          "commit": null,
+          "source_date_epoch": 1790812800,
+          "spec": "nghttp2.spec",
+          "upstream": {
+            "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/nghttp2/1.70.0-1/nghttp2_1.70.0.orig.tar.gz",
+            "sha256": "aa317e2cf9dca6afa0aed68f8fad6ff303ec6982e25a78c75c0b65e2b9b3ded5"
+          },
+          "sources": {
+            "nghttp2-1.70.0.tar.gz": "aa317e2cf9dca6afa0aed68f8fad6ff303ec6982e25a78c75c0b65e2b9b3ded5",
+            "nghttp2-build-fixes.patch": "69e7ff40ee95443d6a11af6f16deb2abf4a03cba4937099a355387fb3c52c9b8",
+            "nghttp2-daemon-check.py": "7dab77d4677d61fb24d25f3113d2b93cec79d42ddf120c31f856f68a71028583",
+            "nghttp2.spec": "0930dde73d82ff6cffb283501fd56d1d98658f58ec7db15c0c225b95ea2bc3e3"
+          },
+          "candidate": true
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/x86_64/libnghttp2-14-1.70.0-1.qore.x86_64.rpm": "160aaf2fbb8082d497bd491724e55e9e27427d0763b9a4b1e4650fa1c32d0181",
+          "rpmbuild/RPMS/x86_64/libnghttp2-14-debuginfo-1.70.0-1.qore.x86_64.rpm": "4797416910f2f78b9ec153b197a68a73257bd6e6ee2cf42924c2e51eff623efc",
+          "rpmbuild/RPMS/x86_64/libnghttp2-devel-1.70.0-1.qore.x86_64.rpm": "fee267d6d12cff101f2a74c655681740de953c1d92c3c526b05eb495fbd5217e",
+          "rpmbuild/RPMS/x86_64/nghttp2-1.70.0-1.qore.x86_64.rpm": "3a23d4538441afbdb8e68b8c3043146d29cae0b879da0c12ef6192d367fd7f42",
+          "rpmbuild/RPMS/x86_64/nghttp2-debuginfo-1.70.0-1.qore.x86_64.rpm": "ace01fdd7f0495f787c715af4c20f3a7425f3e805b138437fe502dfea6f90e97",
+          "rpmbuild/RPMS/x86_64/nghttp2-debugsource-1.70.0-1.qore.x86_64.rpm": "015eac869acf25f6f69e5a8b24364ff2314653c1ff0e896793234442dc50f6e0",
+          "rpmbuild/SRPMS/nghttp2-1.70.0-1.qore.src.rpm": "53e3a6ed93fecb8c9a76f358a0029a814cd96dfd7b5fd690792618ba2f5cb119"
+        },
+        "rpmlint_log": "results/leap-nghttp2-build-9-rpmlint.log"
+      },
+      "tree-sitter": {
+        "result": "pass",
+        "result_directory": "results/leap-tree-sitter-build-20261001",
+        "image": "sha256:91ba924bfddf7c454a3ab485f697baa9afc721b3ee2a6b023de7cc6e8c870a9c",
+        "source": {
+          "schema": 1,
+          "name": "tree-sitter",
+          "version": "0.26.13",
+          "commit": null,
+          "source_date_epoch": 1790812800,
+          "spec": "tree-sitter.spec",
+          "upstream": {
+            "url": "https://github.com/tree-sitter/tree-sitter/archive/refs/tags/v0.26.13.tar.gz",
+            "sha256": "ece24c3c5e2a76384075e830c7139b59fce8fb01e4ef8436fab08bbe10444c89"
+          },
+          "sources": {
+            "tree-sitter-0.26.13.tar.gz": "ece24c3c5e2a76384075e830c7139b59fce8fb01e4ef8436fab08bbe10444c89",
+            "tree-sitter-runtime.c": "e8879ad1c550de784c2a79e795593afdc0331d81089730fdd6d6f4833f8c1e70",
+            "tree-sitter.spec": "fa7a504db4a6650aee8b11bb6684eff7877b368b36b953b3945678013d35b56d"
+          },
+          "candidate": true
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/x86_64/libtree-sitter0_26-0.26.13-1.qore.x86_64.rpm": "bd979b48398fa503cf3ec70857a264112671a3fba5e1af2007fb96e12d48227b",
+          "rpmbuild/RPMS/x86_64/libtree-sitter0_26-debuginfo-0.26.13-1.qore.x86_64.rpm": "14eb39ec3c81d2ff2e507115c5fb23b6fbb91e03213d6cfa5c27a051d68341bb",
+          "rpmbuild/RPMS/x86_64/tree-sitter-debugsource-0.26.13-1.qore.x86_64.rpm": "0f4713a25520977a9b40ed0584de72308d64d0bf91c27f21822d8d607aec35b7",
+          "rpmbuild/RPMS/x86_64/tree-sitter-devel-0.26.13-1.qore.x86_64.rpm": "9951781ff725bb4b6ee6e3da8cb589f5e77ce085a1ba622d183d751635babb85",
+          "rpmbuild/SRPMS/tree-sitter-0.26.13-1.qore.src.rpm": "8ab40a53bb3a8bdfc9273e443135964e9716dcc14cd763c8ef29c52e83ee9573"
+        }
+      }
+    },
+    "fedora": {
+      "nghttp2": {
+        "result": "pass",
+        "image": "sha256:7007ff30846317434cd3e92e0929704d4e60e15380c49ba4b110bfb9652eb8a3",
+        "source": {
+          "schema": 1,
+          "name": "nghttp2",
+          "version": "1.70.0",
+          "commit": null,
+          "source_date_epoch": 1790812800,
+          "spec": "nghttp2.spec",
+          "upstream": {
+            "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/nghttp2/1.70.0-1/nghttp2_1.70.0.orig.tar.gz",
+            "sha256": "aa317e2cf9dca6afa0aed68f8fad6ff303ec6982e25a78c75c0b65e2b9b3ded5"
+          },
+          "sources": {
+            "nghttp2-1.70.0.tar.gz": "aa317e2cf9dca6afa0aed68f8fad6ff303ec6982e25a78c75c0b65e2b9b3ded5",
+            "nghttp2-build-fixes.patch": "69e7ff40ee95443d6a11af6f16deb2abf4a03cba4937099a355387fb3c52c9b8",
+            "nghttp2-daemon-check.py": "7dab77d4677d61fb24d25f3113d2b93cec79d42ddf120c31f856f68a71028583",
+            "nghttp2.spec": "0930dde73d82ff6cffb283501fd56d1d98658f58ec7db15c0c225b95ea2bc3e3"
+          },
+          "candidate": true
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/x86_64/libnghttp2-1.70.0-1.qore.fc44.x86_64.rpm": "2d0bc90112b5aee5527e073631ebc77313e481251d6720de3ea996ddf48553c5",
+          "rpmbuild/RPMS/x86_64/libnghttp2-debuginfo-1.70.0-1.qore.fc44.x86_64.rpm": "16fb0099f5e48099b0a24f67a9a0dbb6546f3ad3f95c3f40d974799cc65a6caa",
+          "rpmbuild/RPMS/x86_64/libnghttp2-devel-1.70.0-1.qore.fc44.x86_64.rpm": "5ca2a365ce06b3da4e8779ca48e038698360ee16f8a8f4653473e1047bb8d7a8",
+          "rpmbuild/RPMS/x86_64/nghttp2-1.70.0-1.qore.fc44.x86_64.rpm": "a7cbc04af4dd1f883d343b5c4961fb7e26e7b17794fc9317a6d0d1f02023e507",
+          "rpmbuild/RPMS/x86_64/nghttp2-debuginfo-1.70.0-1.qore.fc44.x86_64.rpm": "65547471a81aa273c22a357dad4e77211cb2deea599c8c4999bad89cc7729aef",
+          "rpmbuild/RPMS/x86_64/nghttp2-debugsource-1.70.0-1.qore.fc44.x86_64.rpm": "c98442731e4c40e006230117a9cbc55194ad77ddf7076ea6b2a5e72ba2884b73",
+          "rpmbuild/SRPMS/nghttp2-1.70.0-1.qore.fc44.src.rpm": "4a19642bcee747cb32d68f602959654a973921e552c8835d8e33bb75ff841665"
+        },
+        "result_directory": "results/fedora-nghttp2-build-10",
+        "daemon_regressions": {
+          "normal": 3,
+          "valgrind": 3,
+          "errors": 0,
+          "definitely_lost": 0,
+          "indirectly_lost": 0
+        },
+        "rpmlint": {
+          "errors": 0,
+          "warnings": 7,
+          "log": "results/fedora-nghttp2-build-10-rpmlint-2.log",
+          "diagnostics": {
+            "configure-without-libdir-spec": "False positive: the RPM configure macro passes --libdir=/usr/lib64. Same configure layout is used in the Fedora recipe.",
+            "crypto-policy-non-compliance-openssl": "Four application binaries set upstream Mozilla cipher defaults. Native Fedora recipe carries the same behavior; no policy patch is present. Further review required; do not claim system crypto-policy compliance."
+          },
+          "native_fedora_recipe_commit": "201a2da3ea14c109899799bad4266d9d750ef66c"
+        }
+      }
+    }
+  },
+  "nghttp2_daemon_regression": {
+    "source_patch": "dependencies/nghttp2-build-fixes.patch",
+    "tests": "dependencies/nghttp2-daemon-check.py",
+    "log": "results/leap-nghttp2-daemon-tests-3.log",
+    "cases": [
+      "chdir permission denied",
+      "chdir missing directory",
+      "real chdir followed by systemd readiness and graceful shutdown"
+    ],
+    "result": "pass",
+    "valgrind_errors": 0,
+    "valgrind_definitely_lost": 0,
+    "valgrind_indirectly_lost": 0,
+    "clean_rpm_rebuild": "results/leap-nghttp2-build-9"
+  },
+  "c_ares_rpmlint_false_positive": {
+    "checker": "rpmlint 2.7 BinariesCheck.create_regexp_call",
+    "cause": "Regex lacks leading symbol boundary; gethostbyname also matches public ares_gethostbyname. No libc gethostbyname/gethostbyaddr imports.",
+    "filter": "dependencies/c-ares-rpmlintrc",
+    "log": "results/leap-c-ares-rpmlint-filter.log",
+    "errors": 0,
+    "warnings": 0
+  },
+  "leap_rpmlint": {
+    "errors": 0,
+    "warnings": 0,
+    "small_libraries_log": "results/leap-http-final-small-rpmlint.log",
+    "nghttp2_log": "results/leap-nghttp2-build-9-rpmlint.log"
+  }
+}

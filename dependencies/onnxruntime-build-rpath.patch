@@ -1,0 +1,30 @@
+From: Qore Technologies <info@qoretechnologies.com>
+Subject: [PATCH] Use CMake build RPATH properties for local provider discovery
+
+Raw linker RPATH options survive CMAKE_SKIP_INSTALL_RPATH. Keep provider
+discovery in the build tree while allowing system installations to use the
+normal dynamic linker paths. Copyright (C) 2026 Qore Technologies, s.r.o.
+
+--- a/cmake/onnxruntime_framework.cmake
++++ b/cmake/onnxruntime_framework.cmake
+@@ -100,7 +100,8 @@
+ # But our test files don't use the shared library so this must be set for them.
+ # For Win32 it generates an absolute path for shared providers based on the location of the executable/onnxruntime.dll
+ if (UNIX AND NOT APPLE AND NOT onnxruntime_MINIMAL_BUILD AND NOT CMAKE_SYSTEM_NAME STREQUAL "Emscripten" AND NOT CMAKE_SYSTEM_NAME MATCHES "AIX")
+-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath='$ORIGIN'")
++  # Let CMake remove build-only paths when installing distribution packages.
++  list(APPEND CMAKE_BUILD_RPATH "$ORIGIN")
+ endif()
+ 
+ if (onnxruntime_DEBUG_NODE_INPUTS_OUTPUTS_ENABLE_DUMP_TO_SQLDB)
+--- a/cmake/onnxruntime.cmake
++++ b/cmake/onnxruntime.cmake
+@@ -127,7 +127,7 @@
+     include(CheckLinkerFlag)
+     check_linker_flag(CXX "LINKER:-rpath=\$ORIGIN" LINKER_SUPPORT_RPATH)
+     if(LINKER_SUPPORT_RPATH)
+-      target_link_options(onnxruntime PRIVATE "LINKER:-rpath=\$ORIGIN")
++      set_property(TARGET onnxruntime APPEND PROPERTY BUILD_RPATH "$ORIGIN")
+     endif()
+   endif()
+ endif()

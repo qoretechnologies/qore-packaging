@@ -1,0 +1,76 @@
+From: Qore RPM packaging maintainers
+Subject: [PATCH] Check daemon chdir errors and fix obsolete libtool grep escaping
+
+Return chdir errors from the systemd daemon path, matching util::daemonize.
+GNU grep diagnoses the unnecessary escaped hyphen outside a character class.
+Patch the release archive's generated configure script; no autoreconf is needed.
+
+--- a/src/shrpx.cc
++++ b/src/shrpx.cc
+@@ -1030,7 +1030,9 @@
+ #ifdef HAVE_LIBSYSTEMD
+   if (sd_booted() && (getenv("NOTIFY_SOCKET") != nullptr)) {
+     Log{NOTICE} << "Daemonising disabled under systemd";
+-    chdir("/");
++    if (chdir("/") == -1) {
++      return std::unexpected{Error::SYSCALL};
++    }
+     return {};
+   }
+ #endif // defined(HAVE_LIBSYSTEMD)
+--- a/configure
++++ b/configure
+@@ -15784,7 +15784,7 @@
+       # Commands to make compiler produce verbose output that lists
+       # what "hidden" libraries, object files and flags are used when
+       # linking a shared library.
+-      output_verbose_link_cmd='$CC -shared $CFLAGS -v conftest.$objext 2>&1 | $GREP -v "^Configured with:" | $GREP " \-L"'
++      output_verbose_link_cmd='$CC -shared $CFLAGS -v conftest.$objext 2>&1 | $GREP -v "^Configured with:" | $GREP " -L"'
+ 
+     else
+       GXX=no
+@@ -16281,7 +16281,7 @@
+             # explicitly linking system object files so we need to strip them
+             # from the output so that they don't get included in the library
+             # dependencies.
+-            output_verbose_link_cmd='templist=`($CC -b $CFLAGS -v conftest.$objext 2>&1) | $EGREP " \-L"`; list= ; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; func_echo_all "$list"'
++            output_verbose_link_cmd='templist=`($CC -b $CFLAGS -v conftest.$objext 2>&1) | $EGREP " -L"`; list= ; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; func_echo_all "$list"'
+             ;;
+           *)
+             if test yes = "$GXX"; then
+@@ -16346,7 +16346,7 @@
+ 	    # explicitly linking system object files so we need to strip them
+ 	    # from the output so that they don't get included in the library
+ 	    # dependencies.
+-	    output_verbose_link_cmd='templist=`($CC -b $CFLAGS -v conftest.$objext 2>&1) | $GREP " \-L"`; list= ; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; func_echo_all "$list"'
++	    output_verbose_link_cmd='templist=`($CC -b $CFLAGS -v conftest.$objext 2>&1) | $GREP " -L"`; list= ; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; func_echo_all "$list"'
+ 	    ;;
+           *)
+ 	    if test yes = "$GXX"; then
+@@ -16685,7 +16685,7 @@
+ 	      # Commands to make compiler produce verbose output that lists
+ 	      # what "hidden" libraries, object files and flags are used when
+ 	      # linking a shared library.
+-	      output_verbose_link_cmd='$CC -shared $CFLAGS -v conftest.$objext 2>&1 | $GREP -v "^Configured with:" | $GREP " \-L"'
++	      output_verbose_link_cmd='$CC -shared $CFLAGS -v conftest.$objext 2>&1 | $GREP -v "^Configured with:" | $GREP " -L"'
+ 
+ 	    else
+ 	      # FIXME: insert proper C++ library support
+@@ -16769,7 +16769,7 @@
+ 	        # Commands to make compiler produce verbose output that lists
+ 	        # what "hidden" libraries, object files and flags are used when
+ 	        # linking a shared library.
+-	        output_verbose_link_cmd='$CC -shared $CFLAGS -v conftest.$objext 2>&1 | $GREP -v "^Configured with:" | $GREP " \-L"'
++	        output_verbose_link_cmd='$CC -shared $CFLAGS -v conftest.$objext 2>&1 | $GREP -v "^Configured with:" | $GREP " -L"'
+ 	      else
+ 	        # g++ 2.7 appears to require '-G' NOT '-shared' on this
+ 	        # platform.
+@@ -16780,7 +16780,7 @@
+ 	        # Commands to make compiler produce verbose output that lists
+ 	        # what "hidden" libraries, object files and flags are used when
+ 	        # linking a shared library.
+-	        output_verbose_link_cmd='$CC -G $CFLAGS -v conftest.$objext 2>&1 | $GREP -v "^Configured with:" | $GREP " \-L"'
++	        output_verbose_link_cmd='$CC -G $CFLAGS -v conftest.$objext 2>&1 | $GREP -v "^Configured with:" | $GREP " -L"'
+ 	      fi
+ 
+ 	      hardcode_libdir_flag_spec_CXX='$wl-R $wl$libdir'

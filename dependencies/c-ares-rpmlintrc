@@ -1,0 +1,7 @@
+# Copyright (C) 2026 Qore Technologies, s.r.o.
+# SPDX-License-Identifier: MIT
+# rpmlint 2.7 BinariesCheck.create_regexp_call has no leading symbol boundary;
+# its gethostbyname expression matches c-ares' ares_gethostbyname API. The
+# library has no undefined libc gethostbyname/gethostbyaddr symbols. This
+# narrowly scoped filter keeps diagnostics for every other library enabled.
+addFilter(r"^libcares2\.[^:]+: W: binary-or-shlib-calls-gethostbyname /usr/lib(?:64)?/libcares\.so\.2\.[0-9.]+$")

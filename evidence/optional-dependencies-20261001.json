@@ -1,0 +1,287 @@
+{
+  "schema": 1,
+  "mongo-c-driver": {
+    "version": "2.5.5",
+    "recipe": "dependencies/mongo-c-driver.spec",
+    "patch": "dependencies/mongo-c-driver-tests.patch",
+    "clean_build_result": "pass",
+    "result_directory": "results/leap-mongo-c-driver-build-6",
+    "upstream_tests_registered": 3033,
+    "external_server_tests": "skipped by upstream MONGOC_TEST_SKIP_LIVE",
+    "test_fixes": {
+      "exhaust_cursor": "Upstream CDRIVER-6135 reconnects for killCursors; mock tests must answer the cleanup command after network errors. Stack captured in results/leap-mongo-exhaust-gdb-3.log.",
+      "ssl_reconnect": "Command error is returned as MONGOC_ERROR_STREAM / MONGOC_ERROR_STREAM_SOCKET; the legacy warning assertion predates structured command logging.",
+      "client_pool_ssl": "Default client pool requires external server; use TestSuite_AddLive.",
+      "static_imports": "Register static pkg-config tests only when static SDK installation is enabled."
+    },
+    "valgrind": {
+      "cases": 8,
+      "errors": 0,
+      "definitely_lost": 0,
+      "indirectly_lost": 0,
+      "log": "results/leap-mongo-exhaust-valgrind.log"
+    },
+    "remaining": "OBS rebuild and repository publication after committed source pinning.",
+    "patch_sha256": "0559e4e9c938a2196720e5c14598aa9294c89e8a04c2ad3be6a8cbe6aa2513c8",
+    "rpm_warnings": 0,
+    "artifacts": {
+      "rpmbuild/RPMS/x86_64/bson-devel-2.5.5-1.qore.x86_64.rpm": "ed86a0b072cb3a5c73e4cac8453dd6dc9de102f8746aad004dc16e2ac6268ea5",
+      "rpmbuild/RPMS/x86_64/libbson2-2.5.5-1.qore.x86_64.rpm": "6753f1fb17f1f03cff5941ace246983731333f402b526ddd03e61d8d0d7a50a5",
+      "rpmbuild/RPMS/x86_64/libbson2-debuginfo-2.5.5-1.qore.x86_64.rpm": "85c7b68c589671c719455e8472419a090a578b867e7c8d3560b086ca349992b9",
+      "rpmbuild/RPMS/x86_64/libmongoc2-2.5.5-1.qore.x86_64.rpm": "4db1142f848971347823c44a82b4e54803e0b1e4bfd651f9282894376b7813b1",
+      "rpmbuild/RPMS/x86_64/libmongoc2-debuginfo-2.5.5-1.qore.x86_64.rpm": "539ba42e47e789009caa5fa9815d33457c478330771c3f3ef65f73a2ee63f994",
+      "rpmbuild/RPMS/x86_64/mongo-c-driver-debuginfo-2.5.5-1.qore.x86_64.rpm": "6f1542756a2a5eef66b57807ecf1887041ebf45fd0218335376e71f865c1be7b",
+      "rpmbuild/RPMS/x86_64/mongo-c-driver-debugsource-2.5.5-1.qore.x86_64.rpm": "3b7e4e7e6361a05064b71b0f891e9b1c4a5b9c4c5037286ccd519d3c4d085d94",
+      "rpmbuild/RPMS/x86_64/mongo-c-driver-devel-2.5.5-1.qore.x86_64.rpm": "e0aa073dda8067fd245b3a768e35a346eea7c4b8a5b627f2bf71f8573b49aab0",
+      "rpmbuild/RPMS/x86_64/mongo-c-driver-devel-debuginfo-2.5.5-1.qore.x86_64.rpm": "17ebe3fd81f9489efda1a7b4ce5d94ed53b26724b8d55e2ac03aa25f81519ec1",
+      "rpmbuild/SRPMS/mongo-c-driver-2.5.5-1.qore.src.rpm": "3b241ef3578489e6f04a6c3a85776e9e071cbc61411abab65f7551780cd1bdfb"
+    },
+    "builder_image": "sha256:9733e1a010614728a659916783b1900d48188da423c71348f936ccd1a15b85bc",
+    "installed_sdk": {
+      "result": "pass",
+      "image": "sha256:c2dab7f6e94967d692dacb3ec745c843d57c55f84248dc0a2b13ad0faa6e30fe",
+      "runtime_packages_from": "results/leap-mongo-c-driver-build-6",
+      "log": "results/leap-mongo-build-6-installed-sdk.log",
+      "scope": "pkg-config discovery, C linking, driver initialization/cleanup, ldconfig cache and mongoc2-stat PIE ELF header"
+    },
+    "rpmlint": {
+      "result": "pass",
+      "errors": 0,
+      "warnings": 0,
+      "packages": 5,
+      "log": "results/leap-mongo-build-6-rpmlint.log"
+    }
+  },
+  "apache-arrow": {
+    "version": "25.0.1",
+    "upstream_fix": "https://github.com/apache/arrow/commit/d048f71964fe2df5540be2256048eb15f830962b",
+    "reason": "Runtime SSE4.2 dispatch referenced kernels omitted when baseline SIMD is NONE.",
+    "build": "pass (clean build 7; daemon exit recovered after terminal interruption)",
+    "valgrind": {
+      "result": "pass",
+      "bit_unpack_tests_passed": 20,
+      "bit_unpack_skipped": 5,
+      "skip_reason": "AVX512 unavailable under Valgrind CPU emulation",
+      "byte_stream_split_tests_passed": 16,
+      "parquet_statistics_tests_passed": 105,
+      "errors": 0,
+      "leaks": 0,
+      "logs": [
+        "results/leap-arrow-sse-valgrind-and-tests.log",
+        "results/leap-arrow-byte-stream-statistics-valgrind.log"
+      ]
+    },
+    "incremental_ctest": {
+      "result": "pass",
+      "tests": 53,
+      "failed": 0,
+      "log": "results/leap-arrow-upstream-fix-ctest-2.log",
+      "clean_recipe_build": "pass; build 7 recipe requires all 53 tests, but terminal interruption truncated its final test log"
+    },
+    "gcc15_statistics_diagnostic": {
+      "classification": "false positive",
+      "location": "cpp/src/parquet/statistics.cc:890",
+      "analysis": "min/max locals are alive during Copy. Arithmetic Copy assigns values; ByteArray/FLBA specializations copy data into owned buffers before assigning pointers. No address of the local escapes. The 105 statistics tests pass under Valgrind with all allocations freed.",
+      "warning_suppressed": false
+    },
+    "result_directory": "results/leap-apache-arrow-build-7",
+    "artifacts": {
+      "rpmbuild/RPMS/x86_64/apache-arrow-debuginfo-25.0.1-1.qore.x86_64.rpm": "6ea8c6f562a3ef55421a2e392dba4cdde3142aa84be52e07af3ffcfa730ce3a2",
+      "rpmbuild/RPMS/x86_64/apache-arrow-debugsource-25.0.1-1.qore.x86_64.rpm": "f1a628347ffbb58aa211020dd31747d9dc9ef022d29a2ba1861807b71dc67f2c",
+      "rpmbuild/RPMS/x86_64/apache-arrow-devel-25.0.1-1.qore.x86_64.rpm": "37c44deec59ffa7c6c97d48432915e4a053f1599128219d2b732a1a4c78c8d2d",
+      "rpmbuild/RPMS/x86_64/apache-parquet-devel-25.0.1-1.qore.x86_64.rpm": "f172e178af56cc1c2630cc649f4d7383788d372d564c805c8ef9adfbe5b9882b",
+      "rpmbuild/RPMS/x86_64/libarrow2500-25.0.1-1.qore.x86_64.rpm": "3bcaf0eafda5fb3484f89b93de5851b18133d0a4283399302c3bfccd21f38669",
+      "rpmbuild/RPMS/x86_64/libarrow2500-debuginfo-25.0.1-1.qore.x86_64.rpm": "c420d63696c36b0af9a6a6718631061d9e04d3c9547765045d391a5f98c2eb54",
+      "rpmbuild/RPMS/x86_64/libparquet2500-25.0.1-1.qore.x86_64.rpm": "09e868d655f68c3dc5e55eddd480acb4347b17a043188dcac1ea326dc79c40bd",
+      "rpmbuild/RPMS/x86_64/libparquet2500-debuginfo-25.0.1-1.qore.x86_64.rpm": "7658152af231158cbc80739e264e2fc78d3ae9ddf91f9c3bb4e853196a25fbf2",
+      "rpmbuild/SRPMS/apache-arrow-25.0.1-1.qore.src.rpm": "6889e3204558097f2e6ed057ac35c956e458babbd51f1884b33ea15cdfd8addc"
+    },
+    "remaining": "Committed recipe/source pinning and OBS target qualification still required.",
+    "tests_passed": 53,
+    "rpmlint": {
+      "result": "pass",
+      "errors": 0,
+      "warnings": 0,
+      "packages": 5,
+      "log": "results/leap-arrow-build-7-runtime-sdk-rpmlint.log"
+    },
+    "installed_sdk": {
+      "result": "pass",
+      "image": "sha256:f34d20e22fd3f525395424c40f61d66bad068ae1b5f679a2025d66c59ace28b1",
+      "log": "results/leap-arrow-build-7-installed-sdk.log",
+      "scope": "CMake imported targets and pkg-config C++20 consumers; compressed nullable Parquet round trip; -Werror; Valgrind zero errors and all heap blocks freed."
+    },
+    "recovery": {
+      "container_id": "b2d112fe6d0181e0e5fec830d31e5b15dd42dbbf864335c233e76c5f821d9d1b",
+      "completion_event": {
+        "Type": "container",
+        "Action": "die",
+        "Actor": {
+          "ID": "b2d112fe6d0181e0e5fec830d31e5b15dd42dbbf864335c233e76c5f821d9d1b",
+          "Attributes": {
+            "execDuration": "2866",
+            "exitCode": "0",
+            "image": "sha256:c1eca4a3dbaefb2a87359dbca8541b5c93413ab10980415039ef6fc137334a77",
+            "name": "nostalgic_lamport",
+            "org.openbuildservice.disturl": "obs://build.opensuse.org/openSUSE:Leap:16.0:Images/images/256975f9234c30e18c490ab7d766fcbc-opensuse-leap-image:docker",
+            "org.opencontainers.image.created": "2026-09-28T11:20:21.838119669Z",
+            "org.opencontainers.image.description": "Image containing a minimal environment for containers based on openSUSE Leap 16.0.",
+            "org.opencontainers.image.source": "https://build.opensuse.org/package/show/openSUSE:Leap:16.0:Images/opensuse-leap-image?rev=256975f9234c30e18c490ab7d766fcbc",
+            "org.opencontainers.image.title": "openSUSE Leap 16.0 Base Container",
+            "org.opencontainers.image.url": "https://www.opensuse.org/",
+            "org.opencontainers.image.vendor": "openSUSE Project",
+            "org.opencontainers.image.version": "16.0.6.375",
+            "org.opensuse.base.created": "2026-09-28T11:20:21.838119669Z",
+            "org.opensuse.base.description": "Image containing a minimal environment for containers based on openSUSE Leap 16.0.",
+            "org.opensuse.base.disturl": "obs://build.opensuse.org/openSUSE:Leap:16.0:Images/images/256975f9234c30e18c490ab7d766fcbc-opensuse-leap-image:docker",
+            "org.opensuse.base.lifecycle-url": "https://en.opensuse.org/Lifetime",
+            "org.opensuse.base.reference": "registry.opensuse.org/opensuse/leap:16.0.6.375",
+            "org.opensuse.base.source": "https://build.opensuse.org/package/show/openSUSE:Leap:16.0:Images/opensuse-leap-image?rev=256975f9234c30e18c490ab7d766fcbc",
+            "org.opensuse.base.title": "openSUSE Leap 16.0 Base Container",
+            "org.opensuse.base.url": "https://www.opensuse.org/",
+            "org.opensuse.base.vendor": "openSUSE Project",
+            "org.opensuse.base.version": "16.0.6.375",
+            "org.opensuse.lifecycle-url": "https://en.opensuse.org/Lifetime",
+            "org.opensuse.reference": "registry.opensuse.org/opensuse/leap:16.0.6.375"
+          }
+        },
+        "scope": "local",
+        "time": 1790858258,
+        "timeNano": 1790858258377476176
+      },
+      "build_log_complete": false,
+      "reason": "Foreground driver session ended while the container continued. Exit status recovered from Docker daemon events; build output log is truncated."
+    }
+  },
+  "onnxruntime": {
+    "version": "1.22.2",
+    "upstream_fix": "https://github.com/microsoft/onnxruntime/commit/15c255499f6552eb92762ceee20ed25bd46a1693",
+    "patch": "dependencies/onnxruntime-test-conversion.patch",
+    "reason": "Backport upstream scalar test conversion helpers to avoid GCC false-positive packet bounds diagnostics on short buffers.",
+    "build": "Leap clean build and installed SDK passed; EL10 clean build pending",
+    "valgrind": {
+      "target": "el10",
+      "affected_tests_passed": 32,
+      "additional_test_errors": 0,
+      "startup_definitely_lost_bytes": 512,
+      "startup_definitely_lost_blocks": 2,
+      "startup_possibly_lost_bytes": 1600,
+      "affected_log": "results/el10-onnx-softsign-conversion-valgrind.log",
+      "zero_test_baseline_log": "results/el10-onnx-startup-only-valgrind.log",
+      "root_cause": "Bundled cpuinfo allocates two CPU mapping tables at process startup and has an empty deinitializer. LTO drops the unused global pointers in the test executable. The same definite losses occur before any tests run; Abseil global flag registration has the same possibly-lost allocation in both runs.",
+      "upstream_cleanup_reverted": "https://github.com/pytorch/cpuinfo/pull/411",
+      "revert_reason": "Cleanup was not reentrant or thread safe and broke existing clients.",
+      "exception_status": "approved by user on 2026-10-01; no suppression added"
+    },
+    "patch_sha256": "29003fc76bfd588ddcc9d00f8f4834c289838612978e7b19db7f0066ddc6423d",
+    "softsign_fix": {
+      "upstream_pr": "https://github.com/microsoft/onnxruntime/pull/32222",
+      "status": "reviewed upstream proposal; not merged as checked 2026-10-01",
+      "commits": [
+        "ecd749df2903d0c45f64ed28020825f899aca4b9",
+        "ba8452cc26754bfaf657ad59194c3a9bd53529af"
+      ],
+      "reason": "EL10 x86-64-v3 reproduces reciprocal underflow for +/-FLT_MAX; direct division restores +/-1. Existing extreme-value test remains enabled.",
+      "reproduction": "results/el10-onnx-upstream-conversion-build-and-test.log",
+      "patched_validation": {
+        "el10": {
+          "result": "pass",
+          "ctest_tests": 7,
+          "failed": 0,
+          "log": "results/el10-onnx-softsign-build-and-test.log",
+          "clean_recipe_build": "pending"
+        },
+        "leap": {
+          "result": "pass",
+          "ctest_tests": 7,
+          "failed": 0,
+          "log": "results/leap-onnx-upstream-fixes-build-and-test.log",
+          "clean_recipe_build": "passed build 3, seven CTest groups"
+        }
+      },
+      "sha256": "9daf68af1afd8878858d714700aed3cb1fe6337985bda5e2e549a8c05bba058e"
+    },
+    "gcc15_fix": {
+      "commit": "f7619dc93f592ddfc10f12f7145f9781299163a0",
+      "reason": "Include cstdint explicitly in optimizer_api.h after GCC 15 removed the transitive include.",
+      "sha256": "6ac1183c51042ce02852c025b63dfae4ea936a3da3392720daf71dc0b4128455"
+    },
+    "leap_valgrind": {
+      "affected_tests_passed": 32,
+      "errors": 0,
+      "definitely_lost_bytes": 0,
+      "indirectly_lost_bytes": 0,
+      "possibly_lost_bytes": 1600,
+      "still_reachable_bytes": 8776,
+      "log": "results/leap-onnx-softsign-conversion-valgrind.log",
+      "note": "Abseil process-lifetime flag registration remains possibly lost. cpuinfo maps remain reachable without EL LTO elimination."
+    },
+    "cpuinfo_exception": {
+      "status": "approved by user on 2026-10-01",
+      "scope": "512-byte process-startup allocation in bundled cpuinfo on the EL LTO build, also reproduced with zero test cases; no additional errors in 32 affected tests.",
+      "upstream": "https://github.com/pytorch/cpuinfo/pull/411",
+      "reason": "Upstream reverted cleanup because it violated thread safety/reentrancy; do not apply that unsafe cleanup or suppress unrelated findings.",
+      "resolution": "Keep the allocation documented while packaging ONNX-enabled ML; re-evaluate when an upstream safe fix is available."
+    },
+    "leap_clean_build": {
+      "directory": "results/leap-onnxruntime-build-3",
+      "image": "sha256:8711660899adf0e1209b8dd519ca99bae263bbc47b4ec38c6d54fc7af23d31dd",
+      "artifacts": {
+        "rpmbuild/RPMS/x86_64/libonnxruntime1-1.22.2-1.qore.x86_64.rpm": "b59fd579e49b61eae5644ab201fc473cf2bd7583b043eba155dde99ba4c7de33",
+        "rpmbuild/RPMS/x86_64/libonnxruntime1-debuginfo-1.22.2-1.qore.x86_64.rpm": "8773e85935df4bdba183b3457a85fc0f865cbcfa35cb185aabaa08e4fd3e7a57",
+        "rpmbuild/RPMS/x86_64/onnxruntime-debugsource-1.22.2-1.qore.x86_64.rpm": "cb93c27bf35a1f2be6141e0976569f0552864400068be9613704b4a504c6f8e9",
+        "rpmbuild/RPMS/x86_64/onnxruntime-devel-1.22.2-1.qore.x86_64.rpm": "25b9dd7acac387829a91e1e180bb5f9b59db27f21b382262e02ac0e3047a96c1",
+        "rpmbuild/RPMS/x86_64/onnxruntime-tools-1.22.2-1.qore.x86_64.rpm": "96d3c304573402d9539450c605d072cbb67bd453fde0f4715489ac09fc1cbacf",
+        "rpmbuild/RPMS/x86_64/onnxruntime-tools-debuginfo-1.22.2-1.qore.x86_64.rpm": "0d9d37147448b2ab27dae721fd758d42ed2a0e3d400c18d14422bf6fd9c66bb7",
+        "rpmbuild/SRPMS/onnxruntime-1.22.2-1.qore.src.rpm": "75bd098e789416c8c9f13e3fd99989fa203f2e324fafb83f108e7e4761ec58a0"
+      },
+      "ctest_groups": 7,
+      "failures": 0,
+      "log": "results/leap-onnxruntime-build-3/build.log"
+    },
+    "leap_installed_sdk": {
+      "log": "results/leap-onnx-build-3-installed-sdk-2.log",
+      "image": "sha256:a6bea20344da9c17581f16d06abbecf69f91ddedee6180e2751c47b098aa81fc",
+      "cmake_consumer": "pass",
+      "pkgconfig_consumer": "pass",
+      "inference": "three-sample linear model plus invalid input name and missing model cases passed",
+      "valgrind": {
+        "errors": 0,
+        "definitely_lost_bytes": 0,
+        "indirectly_lost_bytes": 0,
+        "possibly_lost_bytes": 0,
+        "baseline_reachable_bytes": 80,
+        "inference_reachable_bytes": 5832,
+        "suppressed": 0
+      },
+      "elf": {
+        "build_rpath": false,
+        "executable_stack": false
+      },
+      "model_sha256": "e01940baadc56a46bb58f173e9066a7a821a5887aedab250ddb90f6754cee024"
+    },
+    "leap_rpmlint": {
+      "log": "results/leap-onnx-build-3-runtime-sdk-rpmlint.log",
+      "packages": 4,
+      "errors": 0,
+      "warnings": 2,
+      "badness": 0,
+      "warnings_detail": [
+        "Private provider-loading library intentionally retains upstream unversioned basename",
+        "Duplicate retained upstream license texts"
+      ]
+    },
+    "build_hardening": {
+      "patch": "dependencies/onnxruntime-build-rpath.patch",
+      "sha256": "517a8429741283376db428903e1b71c7eee676c1f4b9d4c935bcde1ec9e81008",
+      "assembly": "MLAS objects use --noexecstack",
+      "rpath": "CMake BUILD_RPATH replaces raw linker flags; install removes build paths"
+    }
+  },
+  "rpmlint_scope": {
+    "reference": "https://github.com/openSUSE/obs-build/blob/master/build-recipe-spec",
+    "rule": "Match OBS: lint runtime/development and source RPMs; debug RPM contents have separate ELF/debug-source checks.",
+    "diagnostic_log": "results/leap-mongo-rpmlint.log",
+    "reason": "The first local lint invocation included debuginfo packages that OBS explicitly excludes, producing inapplicable executable/library diagnostics for debug-only ELF files."
+  }
+}

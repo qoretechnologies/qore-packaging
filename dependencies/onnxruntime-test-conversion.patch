@@ -1,0 +1,49 @@
+From: Qore RPM packaging maintainers
+Subject: [PATCH] Backport upstream test conversion fixes for GCC vector bounds analysis
+
+Upstream: https://github.com/microsoft/onnxruntime/commit/15c255499f6552eb92762ceee20ed25bd46a1693
+Backported only the three conversion helpers present in 1.22.2; the newer
+upstream tree moved these to test/unittest_util/conversion.h. GCC 14 with
+EL10's x86-64-v3 flags diagnoses the guarded Eigen packet assignment for
+short buffers. Preserve Eigen scalar conversion semantics without the
+packet assignment, as upstream does. Runtime inference code is unchanged.
+
+--- a/onnxruntime/test/providers/provider_test_utils.h
++++ b/onnxruntime/test/providers/provider_test_utils.h
+@@ -2,6 +2,8 @@
+ // Licensed under the MIT License.
+ 
+ #pragma once
++
++#include <algorithm>
+ 
+ #include "test/providers/checkers.h"
+ #include "test/providers/op_tester.h"
+@@ -10,22 +12,17 @@
+ namespace onnxruntime {
+ namespace test {
+ inline void ConvertFloatToMLFloat16(const float* f_datat, MLFloat16* h_data, size_t input_size) {
+-  auto in_vector = ConstEigenVectorMap<float>(f_datat, input_size);
+-  auto output_vector = EigenVectorMap<Eigen::half>(static_cast<Eigen::half*>(static_cast<void*>(h_data)), input_size);
+-  output_vector = in_vector.template cast<Eigen::half>();
++  auto* h = static_cast<Eigen::half*>(static_cast<void*>(h_data));
++  std::transform(f_datat, f_datat + input_size, h, [](float f) { return static_cast<Eigen::half>(f); });
+ }
+ 
+ inline void ConvertFloatToUint8_t(const float* f_datat, uint8_t* u8_data, size_t input_size) {
+-  auto in_vector = ConstEigenVectorMap<float>(f_datat, input_size);
+-  auto output_vector = EigenVectorMap<uint8_t>(static_cast<uint8_t*>(static_cast<void*>(u8_data)), input_size);
+-  output_vector = in_vector.template cast<uint8_t>();
++  std::transform(f_datat, f_datat + input_size, u8_data, [](float f) { return static_cast<uint8_t>(f); });
+ }
+ 
+ inline void ConvertMLFloat16ToFloat(const MLFloat16* h_data, float* f_data, size_t input_size) {
+-  auto in_vector =
+-      ConstEigenVectorMap<Eigen::half>(static_cast<const Eigen::half*>(static_cast<const void*>(h_data)), input_size);
+-  auto output_vector = EigenVectorMap<float>(f_data, input_size);
+-  output_vector = in_vector.template cast<float>();
++  const auto* h = static_cast<const Eigen::half*>(static_cast<const void*>(h_data));
++  std::transform(h, h + input_size, f_data, [](Eigen::half h) { return static_cast<float>(h); });
+ }
+ 
+ inline std::vector<MLFloat16> FloatsToMLFloat16s(const std::vector<float>& f) {

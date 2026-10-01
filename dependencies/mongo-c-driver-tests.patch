@@ -1,0 +1,106 @@
+From: Qore RPM packaging maintainers
+Subject: [PATCH] Align mock and import tests with current driver configuration
+
+CDRIVER-6135 (upstream 33e14c4fc781be87d5830f82aed530b4d97bdc9b)
+allows reconnection for killCursors. Answer that command in both second-
+batch error tests instead of blocking until the socket timeout. Assert the
+TLS operation's returned error; command failures use structured logging,
+not the historical warning message. Mark the default-client-pool test as
+live, and register static pkg-config imports only when static SDKs install.
+No runtime library behavior is changed.
+
+--- a/src/libmongoc/tests/import-tests.cmake
++++ b/src/libmongoc/tests/import-tests.cmake
+@@ -123,14 +123,16 @@
+       "EXPECT_BSON_VERSION=${mongo-c-driver_VERSION_FULL}"
+ )
+ 
+-add_test_cmake_project(
+-   mongoc/pkg-config/bson-import-static src/libmongoc/tests/pkg-config-import
+-   INSTALL_PARENT
+-   SETTINGS
+-      PKG_CONFIG_SEARCH=bson${PROJECT_VERSION_MAJOR}-static
+-      "EXPECT_BSON_VERSION=${mongo-c-driver_VERSION_FULL}"
+-      EXPECT_BSON_STATIC=1
+-)
++if(ENABLE_STATIC_LIBBSON_INSTALL AND TARGET bson_static)
++   add_test_cmake_project(
++      mongoc/pkg-config/bson-import-static src/libmongoc/tests/pkg-config-import
++      INSTALL_PARENT
++      SETTINGS
++         PKG_CONFIG_SEARCH=bson${PROJECT_VERSION_MAJOR}-static
++         "EXPECT_BSON_VERSION=${mongo-c-driver_VERSION_FULL}"
++         EXPECT_BSON_STATIC=1
++   )
++endif()
+ 
+ add_test_cmake_project(
+    mongoc/pkg-config/mongoc-import-shared src/libmongoc/tests/pkg-config-import
+@@ -140,12 +142,14 @@
+       "EXPECT_MONGOC_VERSION=${mongo-c-driver_VERSION_FULL}"
+ )
+ 
+-add_test_cmake_project(
+-   mongoc/pkg-config/mongoc-import-static src/libmongoc/tests/pkg-config-import
+-   INSTALL_PARENT
+-   SETTINGS
+-      PKG_CONFIG_SEARCH=mongoc${PROJECT_VERSION_MAJOR}-static
+-      "EXPECT_MONGOC_VERSION=${mongo-c-driver_VERSION_FULL}"
+-      EXPECT_BSON_STATIC=1
+-      EXPECT_MONGOC_STATIC=1
+-)
++if(MONGOC_ENABLE_STATIC_INSTALL)
++   add_test_cmake_project(
++      mongoc/pkg-config/mongoc-import-static src/libmongoc/tests/pkg-config-import
++      INSTALL_PARENT
++      SETTINGS
++         PKG_CONFIG_SEARCH=mongoc${PROJECT_VERSION_MAJOR}-static
++         "EXPECT_MONGOC_VERSION=${mongo-c-driver_VERSION_FULL}"
++         EXPECT_BSON_STATIC=1
++         EXPECT_MONGOC_STATIC=1
++   )
++endif()
+--- a/src/libmongoc/tests/test-mongoc-exhaust.c
++++ b/src/libmongoc/tests/test-mongoc-exhaust.c
+@@ -612,8 +612,9 @@
+    request_destroy(request);
+    // If error occurs after the first batch, expect `mongoc_cursor_destroy` sends `killCursors` to clean up the
+    // server-side cursor.
+-   if (error_when == SECOND_BATCH && error_type != NETWORK_ERROR) {
+-      // If connection is still alive, driver will try to send `getMore`, but fail.
++   if (error_when == SECOND_BATCH) {
++      // Since CDRIVER-6135 the driver reconnects after a network error to
++      // send killCursors. Reply on both the existing and reconnected paths.
+       future = future_cursor_destroy(cursor);
+       request = mock_server_receives_msg(
+          server,
+--- a/src/libmongoc/tests/test-mongoc-client-pool.c
++++ b/src/libmongoc/tests/test-mongoc-client-pool.c
+@@ -646,7 +646,7 @@
+       test_framework_skip_if_max_wire_version_less_than_9 /* require server 4.4+ for streaming monitoring protocol */);
+ 
+ #if defined(MONGOC_ENABLE_SSL_OPENSSL)
+-   TestSuite_Add(
++   TestSuite_AddLive(
+       suite, "/ClientPool/openssl/change_ssl_opts [lock:live-server]", test_mongoc_client_pool_change_openssl_ctx);
+ #endif
+ 
+--- a/src/libmongoc/tests/test-mongoc-client.c
++++ b/src/libmongoc/tests/test-mongoc-client.c
+@@ -2734,12 +2734,10 @@
+ 
+    /* network timeout */
+    capture_logs(true);
+-   ASSERT(!_cmd(server, client, false /* server hangs up */, &error));
+-   if (pooled) {
+-      ASSERT_CAPTURED_LOG("failed to write data because server closed the connection",
+-                          MONGOC_LOG_LEVEL_WARNING,
+-                          "Failed to buffer 4 bytes");
+-   }
++   ASSERT(!_cmd(server, client, false /* server does not reply */, &error));
++   // Command failures are returned through bson_error_t and structured APM
++   // logging, not the legacy warning logger. Assert the actual I/O failure.
++   ASSERT_ERROR_CONTAINS(error, MONGOC_ERROR_STREAM, MONGOC_ERROR_STREAM_SOCKET, "socket error or timeout");
+    capture_logs(false);
+ 
+    /* next operation comes on a new connection, server verification fails */

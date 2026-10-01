@@ -1,0 +1,26 @@
+From f7619dc93f592ddfc10f12f7145f9781299163a0 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?=C8=98tefan=20Talpalaru?= <stefantalpalaru@yahoo.com>
+Date: Tue, 29 Apr 2025 04:15:45 +0200
+Subject: [PATCH] fix compilation with gcc-15 (#24583)
+
+With GCC-15, some libstdc++ headers stopped including <stdint.h>:
+https://github.com/gcc-mirror/gcc/commit/3a817a4a5a6d94da9127af3be9f84a74e3076ee2
+
+So we need to include it ourselves, in places where we relied on the
+standard headers doing it.
+---
+ .../core/optimizer/transpose_optimization/optimizer_api.h        | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/onnxruntime/core/optimizer/transpose_optimization/optimizer_api.h b/onnxruntime/core/optimizer/transpose_optimization/optimizer_api.h
+index e4d59ea732d1e..1b5833750f5e1 100644
+--- a/onnxruntime/core/optimizer/transpose_optimization/optimizer_api.h
++++ b/onnxruntime/core/optimizer/transpose_optimization/optimizer_api.h
+@@ -10,6 +10,7 @@
+ #include <string_view>
+ #include <unordered_map>
+ #include <unordered_set>
++#include <cstdint>
+ #include <vector>
+ 
+ namespace onnx_transpose_optimization {

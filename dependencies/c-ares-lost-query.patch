@@ -1,0 +1,29 @@
+# Both Qore lost-query and query-ID reuse fixes; see qore/cmake/PatchCaresLostQuery.cmake.
+--- a/src/lib/ares_process.c
++++ b/src/lib/ares_process.c
+@@ -1393,8 +1393,10 @@
+    * been freed.  Do not dereference 'query' here.  If it is no longer tracked
+    * it ended, so don't report success to the caller (which would, e.g., cause
+    * ares_send_nolock() to write to a now-freed *qid). */
++  /* A new query sent from a callback can have been given the same qid, so the query itself is compared;
++   * its address is only compared, never dereferenced */
+   if (status == ARES_SUCCESS &&
+-      ares_htable_szvp_get_direct(channel->queries_by_qid, qid) == NULL) {
++      ares_htable_szvp_get_direct(channel->queries_by_qid, qid) != query) {
+     status = ARES_ETIMEOUT;
+   }
+ 
+@@ -1601,7 +1603,12 @@
+ {
+   /* Remove the query from all the lists in which it is linked */
+   ares_query_remove_from_conn(query);
+-  ares_htable_szvp_remove(query->channel->queries_by_qid, query->qid);
++  /* The query may already have been detached (ares_flush_requeue() detaches it before invoking its
++   * callback), and the callback may have started a new query with the freed qid: only remove the qid
++   * mapping if it still refers to this query */
++  if (ares_htable_szvp_get_direct(query->channel->queries_by_qid, query->qid) == query) {
++    ares_htable_szvp_remove(query->channel->queries_by_qid, query->qid);
++  }
+   ares_llist_node_destroy(query->node_all_queries);
+   query->node_all_queries = NULL;
+ }

@@ -1,0 +1,28 @@
+From: Qore Technologies, s.r.o.
+Subject: Test timeout selection against the existing local mock fixture
+
+The default-channel test queries public DNS. In an offline build its send can
+fail immediately, leaving no timer to inspect. Use the existing IPv4/IPv6 and
+UDP/TCP mock fixture, and cancel the outstanding query after checking timers.
+
+--- a/test/ares-test-misc.cc
++++ b/test/ares-test-misc.cc
+@@ -180,7 +180,7 @@
+   EXPECT_EQ(ARES_EBADSTR, ares_set_servers_csv(channel_, "2.3.4.5,1.2.3.4:Z,3.4.5.6"));
+ }
+ 
+-TEST_F(DefaultChannelTest, TimeoutValue) {
++TEST_P(MockChannelTest, TimeoutValue) {
+   struct timeval tinfo;
+   tinfo.tv_sec = 0;
+   tinfo.tv_usec = 0;
+@@ -214,6 +214,9 @@
+   pt = ares_timeout(channel_, nullptr, &tinfo);
+   EXPECT_EQ(&tinfo, pt);
+ 
++  ares_cancel(channel_);
++  EXPECT_TRUE(result.done_);
++  EXPECT_EQ(ARES_ECANCELLED, result.status_);
+   Process();
+ }
+ 
