@@ -22,15 +22,19 @@ builds against the installed core SDK and installed-runtime suites. ODBC and
 ImageMagick additionally pass committed Leap builds and installed-runtime checks.
 PostgreSQL includes mandatory Fedora pgvector coverage. ZeroMQ includes draft
 sockets and CURVE. All twenty-one modules have Fedora OBS builds enabled on both
-architectures, with publication disabled. The installed Leap core SDK passes
-ONNX inference, session pools, compiler and debugger checks.
+architectures, with publication disabled. The installed Leap and EL10 core SDKs pass
+ONNX inference, session pools, compiler and debugger checks. EL10 also passes
+ONNX inference in a minimal installed runtime without the SDK or compiler.
 
 Fedora's latest OBS core build failed during distribution RPM file
 post-processing on both architectures. The add-determinism and linkdupes defects
-are root caused; a tested backport is in qualification. The completed Leap module
-build wave passes sixteen of eighteen packages; ZIP Zstandard discovery and the
-PROJ database dependency are being corrected. These results do not qualify the
-remaining architecture or installed-runtime matrix.
+are root caused and fixed; the tested backport is uploaded for both native OBS
+architectures. A full Fedora core rebuild uses the fixed tools and the latest
+merged Qore source. Twenty of the twenty-one completed modules
+also pass Leap builds and installed-runtime checks, including corrected ZIP
+Zstandard discovery and PROJ database dependencies. PostgreSQL Leap and all
+remaining architecture checks are still pending. All twenty-one completed modules
+now also pass EL10 builds; combined installed-runtime qualification is in progress.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is

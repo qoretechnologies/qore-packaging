@@ -1,0 +1,907 @@
+{
+  "schema": 1,
+  "core_build": "results/el10-qore-build-3",
+  "modules": {
+    "module-amqp": {
+      "commit": "47073201ba2af287dc6adc5c426e9b90ca929bc9",
+      "build_requires": [
+        "cmake >= 3.21",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "pkgconfig(libqpid-proton-cpp)",
+        "python3",
+        "qore-devel >= 3.0.0~",
+        "qore-misc-tools >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:a5001cc86d40cf3e8614d4d9758eda0112eae196334ec0d4b1280361149a3d8a",
+      "build": "results/el10-wave-1-amqp",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "47073201ba2af287dc6adc5c426e9b90ca929bc9",
+        "source_date_epoch": 1790874373,
+        "name": "qore-amqp-module",
+        "version": "1.0.0",
+        "exclusions": [],
+        "sources": {
+          "qore-amqp-module-1.0.0.tar.xz": "482a80f8335e0fb834abfda53bf3b33a2ea9c46e6a6891ed6e52a1755e1df3d4",
+          "qore-amqp-module.spec": "08507037b91dffe5538d74e6743e0d232eaeae1d70a5daa8148bcce843be1262"
+        },
+        "spec": "qore-amqp-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-amqp-module-doc-1.0.0-1.el10.noarch.rpm": "faf43c0fac5fca6535ff94f6097377174ab3aef334bcd48a4b063e7f3a33ab36",
+        "rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-1.el10.x86_64.rpm": "b2f3e537c74e3f152c0052fd7e81b3dce91ffb6be9cdc553e2dbc0bc71e3ef33",
+        "rpmbuild/RPMS/x86_64/qore-amqp-module-debuginfo-1.0.0-1.el10.x86_64.rpm": "2fdce0902b7630a899826e9e5e477d7d4a22d4f8eb15a313ce3214ffcec6256c",
+        "rpmbuild/RPMS/x86_64/qore-amqp-module-debugsource-1.0.0-1.el10.x86_64.rpm": "be055e74c589d6fbe4b07afb6ed63e279bc4d09f921d2648a9cefa131d2f212f",
+        "rpmbuild/SRPMS/qore-amqp-module-1.0.0-1.el10.src.rpm": "2713445d84827e884a514bfd998d263b0a1cebcf5342d754ba08e89903c3accc"
+      },
+      "build_log_sha256": "82b3282ac50149a6bdbe1309cbdeec9775ab22eea76b9ee728219fd76b1b9ac2"
+    },
+    "module-cairo": {
+      "commit": "c9a9ffac109dc23568f2034837e6cb3cdb848425",
+      "build_requires": [
+        "cmake >= 3.21",
+        "dejavu-sans-fonts",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "pkgconfig(cairo)",
+        "pkgconfig(librsvg-2.0)",
+        "qore-devel >= 3.0.0~",
+        "qore-misc-tools >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:c0d17d8af2fc0c29bae6ac48bf6629a8b3047df879973ae8ed7cf01fe0339207",
+      "build": "results/el10-wave-1-cairo",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "c9a9ffac109dc23568f2034837e6cb3cdb848425",
+        "source_date_epoch": 1790869427,
+        "name": "qore-cairo-module",
+        "version": "1.0.0",
+        "exclusions": [],
+        "sources": {
+          "qore-cairo-module-1.0.0.tar.xz": "ffbfeac13a9d89520c8e6bf281f2b6d29da78a3dc18fa12ee6f39fc42096a883",
+          "qore-cairo-module.spec": "8fb22ddfb7d526fe5146b4ea290d6d6f069e03d834339a7374b03ab429c36fb4"
+        },
+        "spec": "qore-cairo-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-cairo-module-doc-1.0.0-1.el10.noarch.rpm": "d1a732110fb9d0a0a94da56dd05b17603fe79c275a5277b6409f728510b8e754",
+        "rpmbuild/RPMS/x86_64/qore-cairo-module-1.0.0-1.el10.x86_64.rpm": "2830aa5046fb643f656216f19e4bbead548467155a1b23e9251bee25cc096f49",
+        "rpmbuild/RPMS/x86_64/qore-cairo-module-debuginfo-1.0.0-1.el10.x86_64.rpm": "301168b426f02e57d9688b1c1c9deb22cf5e3624b5693fbcbd462b854e315260",
+        "rpmbuild/RPMS/x86_64/qore-cairo-module-debugsource-1.0.0-1.el10.x86_64.rpm": "c8a6863f89267d379180f3792b21fd545d116d5362466df2c8a308efe5f772b6",
+        "rpmbuild/SRPMS/qore-cairo-module-1.0.0-1.el10.src.rpm": "99619bfa26909dc176643ed75dc904cb7274967a5430beff8ef3d2eab86f7225"
+      },
+      "build_log_sha256": "1acb97becac6ce61a0fc4987409bc9ef157d99a5176fe05dd855a7b12eafd41d"
+    },
+    "module-fsevent": {
+      "commit": "28c462040842d8cc7bf4c56c0b0ca27a7b36871a",
+      "build_requires": [
+        "cmake >= 3.21",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "python3 >= 3.11",
+        "qore-devel >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:bfe52a0c422965b077b5b173bb8ad7a2080c07940397a14028f34786bc4d9161",
+      "build": "results/el10-wave-1-fsevent",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "28c462040842d8cc7bf4c56c0b0ca27a7b36871a",
+        "source_date_epoch": 1790869427,
+        "name": "qore-fsevent-module",
+        "version": "2.0.0",
+        "exclusions": [],
+        "sources": {
+          "qore-fsevent-module-2.0.0.tar.xz": "ee317837f44d088d0bbbc7335b77a1a45e157fad5a656551fcd0812e3a3209d6",
+          "qore-fsevent-module.spec": "086388450dbe0e363fc9c0cf3b6f80389c282fdd1cfe2e057034b31b926a5f8e"
+        },
+        "spec": "qore-fsevent-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-fsevent-module-doc-2.0.0-1.el10.noarch.rpm": "8f55965763650e99b91dfccc207735ec8dc362186578f04bfa27db8e865511ee",
+        "rpmbuild/RPMS/x86_64/qore-fsevent-module-2.0.0-1.el10.x86_64.rpm": "734f49b668be65bc85073802f879e3f2765b97b8fef542ab8a2e162ae7ebb1f3",
+        "rpmbuild/RPMS/x86_64/qore-fsevent-module-debuginfo-2.0.0-1.el10.x86_64.rpm": "26fee25ddf6d04a34d8dabf14bd4d86e2abb19b003f8c4d755756b6f4dcb9424",
+        "rpmbuild/RPMS/x86_64/qore-fsevent-module-debugsource-2.0.0-1.el10.x86_64.rpm": "0ef8449924cba57a96ad739ecdea2cfcbf291291f56a52717cdcfe242965111a",
+        "rpmbuild/SRPMS/qore-fsevent-module-2.0.0-1.el10.src.rpm": "1cdec1ce296480e4b6ddc530525812b750496accf14cdb80910c125edd6fb52f"
+      },
+      "build_log_sha256": "917b15a1a2b6217199e6a640c06e2cbf8fee18d1df020e065298480de9062ac6"
+    },
+    "module-geos": {
+      "commit": "26414815d9621b3cc3bc6f44a4ee7dbd76b8e8b9",
+      "build_requires": [
+        "cmake >= 3.21",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "pkgconfig(geos) >= 3.12",
+        "qore-devel >= 3.0.0~",
+        "qore-misc-tools >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:e9f5b57cdc33c6db089545c9544f661d72400c79b02905088bc7afe5f9680d22",
+      "build": "results/el10-wave-1-geos",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "26414815d9621b3cc3bc6f44a4ee7dbd76b8e8b9",
+        "source_date_epoch": 1790869427,
+        "name": "qore-geos-module",
+        "version": "1.0.0",
+        "exclusions": [],
+        "sources": {
+          "qore-geos-module-1.0.0.tar.xz": "77134cb5c9766c0cfee442633c7323e639eb343f79676776f53c8afca5a275fd",
+          "qore-geos-module.spec": "d8d195cccd66f91327e34e662cc4d1cb0438e8458c69c0dae3dc2c3cde6e1918"
+        },
+        "spec": "qore-geos-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-2.el10.noarch.rpm": "0726f78aa4a02a6cfd3324b0a371b1a2ca6867d2e84c4b757d5ce66795c5a7d6",
+        "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-2.el10.x86_64.rpm": "251f6b9bda613fdef81337299209c9d5493574b1df212d0fb4f3501d3f17d2a5",
+        "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-2.el10.x86_64.rpm": "3802e48f9112249c7c1eea94e7b9f04fa97207393ea12055c03e3ee9b6ec83ed",
+        "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-2.el10.x86_64.rpm": "3475b9e3b7b2b92dcbe889d842f4a3ee560e6b535127fe6ab033d504f0aef122",
+        "rpmbuild/SRPMS/qore-geos-module-1.0.0-2.el10.src.rpm": "803003397fe0cc6205c71e82ba07c84974ff1a894beaab7590ff29f2cd9a7c3a"
+      },
+      "build_log_sha256": "b0463f093cf0f3f6d5d44628d87c060358e2fe8e64bba9d160d62a7be872842f"
+    },
+    "module-git": {
+      "commit": "82519ded62a57fa4c2f1f728190402404495a98f",
+      "build_requires": [
+        "cmake >= 3.21",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "pkgconfig(libgit2)",
+        "qore-devel >= 3.0.0~",
+        "qore-misc-tools >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:3715c2507abd189018cd0772154ca8a573369fd3369dbaf7af86beffed9e2773",
+      "build": "results/el10-wave-1-git",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "82519ded62a57fa4c2f1f728190402404495a98f",
+        "source_date_epoch": 1790869427,
+        "name": "qore-git-module",
+        "version": "1.0.0",
+        "exclusions": [],
+        "sources": {
+          "qore-git-module-1.0.0.tar.xz": "7365d543156c39c08948d0ca1967934a82383613c476c5ede645eaae45b2c20f",
+          "qore-git-module.spec": "545f4117d45f3277d2244a5db36f3acf57aeb20818eac9b7b66d8421c273be8d"
+        },
+        "spec": "qore-git-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-git-module-doc-1.0.0-1.el10.noarch.rpm": "fc23ad129b671487672880b3f6d065f07fdfdb74b207dd6bc2c144cd612ddf7f",
+        "rpmbuild/RPMS/x86_64/qore-git-module-1.0.0-1.el10.x86_64.rpm": "35e49701a3244b33cccac18fcbcd9074dd95904a395888c3edce29ccb8c074cb",
+        "rpmbuild/RPMS/x86_64/qore-git-module-debuginfo-1.0.0-1.el10.x86_64.rpm": "73a3818f7f45d66c5bb0e13fb48deeed04c1707bbec2cb72843d9418fd84226b",
+        "rpmbuild/RPMS/x86_64/qore-git-module-debugsource-1.0.0-1.el10.x86_64.rpm": "d72305b516db8a6452739809ee7093edaf1208c066b1fade0c55892583a9038f",
+        "rpmbuild/SRPMS/qore-git-module-1.0.0-1.el10.src.rpm": "ac383b7697ef8f906ad131a30ae926e2181edcb820165c9bd23ab6935d34e44d"
+      },
+      "build_log_sha256": "6e790303cf8472ac9f9864653326a9a08b3d4604ef6ea543ca2c1dceb2b438a1"
+    },
+    "module-imagemagick": {
+      "commit": "2f37f77d4be96f5deb274c718518eeb0fd941287",
+      "build_requires": [
+        "cmake >= 3.21",
+        "dejavu-sans-fonts",
+        "diffutils",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "pkgconfig(MagickWand) >= 7.0",
+        "python3",
+        "qore-devel >= 3.0.0~",
+        "qore-misc-tools >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "urw-base35-fonts",
+        "util-linux-core"
+      ],
+      "image": "sha256:2dbd4ef93401b179b6f392747ec0cbb43325b09c15b7a1aec028a01b9451b69e",
+      "build": "results/el10-wave-1-imagemagick",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "2f37f77d4be96f5deb274c718518eeb0fd941287",
+        "source_date_epoch": 1790877001,
+        "name": "qore-imagemagick-module",
+        "version": "1.0.0",
+        "exclusions": [],
+        "sources": {
+          "qore-imagemagick-module-1.0.0.tar.xz": "40dc531e79743c061475f6aadded664992044a001f68d7302af2dde860e278b1",
+          "qore-imagemagick-module.spec": "d6b0ce9bda50631f8ebc8ade7256591b3db466295a8b9a0ef155bb2a56870437"
+        },
+        "spec": "qore-imagemagick-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-imagemagick-module-doc-1.0.0-1.el10.noarch.rpm": "7acd8423750e9c6b5d3c0fd0ff3cdc6fa397c3d7b0c85646398193988bdd4496",
+        "rpmbuild/RPMS/x86_64/qore-imagemagick-module-1.0.0-1.el10.x86_64.rpm": "faf6cb44ddb4e6e479418c5e6525847612fc3548642207b7d723893d22e83f79",
+        "rpmbuild/RPMS/x86_64/qore-imagemagick-module-debuginfo-1.0.0-1.el10.x86_64.rpm": "acebf5b30e764386a2aac68e3662a9a7544c175cafc55b348a66db2aeab54c3e",
+        "rpmbuild/RPMS/x86_64/qore-imagemagick-module-debugsource-1.0.0-1.el10.x86_64.rpm": "0f82d25add5428802b0514e8e6022a86a1f763f1f248d671a9c752518ee45964",
+        "rpmbuild/SRPMS/qore-imagemagick-module-1.0.0-1.el10.src.rpm": "265a7a4c79d0d01da52f8e2a903da3061d7bc91a3ebe29c1d72dd7ba417d79bb"
+      },
+      "build_log_sha256": "03ffc3f7e8f12c83f78bfe628f8058ad12899a36a545719492f8123291954912"
+    },
+    "module-kalman": {
+      "commit": "4fd90f07cde15199f1a188ec79261908e39d157c",
+      "build_requires": [
+        "cmake >= 3.5",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "pkgconfig(eigen3) >= 3.3",
+        "qore-devel >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:ecb563de7938f7eb241ea2c1187be7936edda8fe4639865e76d7f56ca3fa358a",
+      "build": "results/el10-wave-1-kalman",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "4fd90f07cde15199f1a188ec79261908e39d157c",
+        "source_date_epoch": 1790870101,
+        "name": "qore-kalman-module",
+        "version": "1.1.0",
+        "exclusions": [],
+        "sources": {
+          "qore-kalman-module-1.1.0.tar.xz": "f9702f86f7566d93068b6590d43fc563b85f4874e586a7a995a230c975d903b8",
+          "qore-kalman-module.spec": "3c0e272cb96d27e51fd08c585ba376b911711cb4955a545cccdee4ab2b269b3a"
+        },
+        "spec": "qore-kalman-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-kalman-module-doc-1.1.0-1.el10.noarch.rpm": "cfe8d8ec6f6333fd42d1a46a6e9004ef9ded08981b2cbc02f95e8d55d6956f18",
+        "rpmbuild/RPMS/x86_64/qore-kalman-module-1.1.0-1.el10.x86_64.rpm": "f01c0cab2ddc973f4bc44399b6e3896de5bd9d05831f9133d7b361d29d68406d",
+        "rpmbuild/RPMS/x86_64/qore-kalman-module-debuginfo-1.1.0-1.el10.x86_64.rpm": "3802990908212966cf24d423e17464c83dbacdfb07caa1b0839ef52cd1edeb9c",
+        "rpmbuild/RPMS/x86_64/qore-kalman-module-debugsource-1.1.0-1.el10.x86_64.rpm": "9b3f623f438a20e19bb51c57d88b972bceeb6db39ecc341573d9b475a2a7c81a",
+        "rpmbuild/SRPMS/qore-kalman-module-1.1.0-1.el10.src.rpm": "af097b845caf8169778bda7d3c60b71bd6d44cafa7b19ddc13711fc3baab8a6b"
+      },
+      "build_log_sha256": "41363b4ae4b6ddece916d06aa8c88feddd7756a152bc7a4ec6c6c5ff75c8483a"
+    },
+    "module-magic": {
+      "commit": "051876b26c7d77417870c88f914408199ea4b529",
+      "build_requires": [
+        "cmake >= 3.5",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "pkgconfig(libmagic)",
+        "python3",
+        "qore-devel >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:17829920d3e20c39f0f7b83fe4433cad9eb27e755f03b4a54584a42d0a643bad",
+      "build": "results/el10-wave-1-magic",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "051876b26c7d77417870c88f914408199ea4b529",
+        "source_date_epoch": 1790869900,
+        "name": "qore-magic-module",
+        "version": "2.0.0",
+        "exclusions": [],
+        "sources": {
+          "qore-magic-module-2.0.0.tar.xz": "87df25ca5a8c1d67f18845bce23d21f4a9c97d6852020077afc412f201210ddb",
+          "qore-magic-module.spec": "18611e9fc4f24f6cbfb8fbc562ebe3c1c405712f03051978f6dc4174c11a2430"
+        },
+        "spec": "qore-magic-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-magic-module-doc-2.0.0-2.el10.noarch.rpm": "0aeb1926167fb987f86d06f96f334dfde94955adece36fc68e9eb34cfbf2be64",
+        "rpmbuild/RPMS/x86_64/qore-magic-module-2.0.0-2.el10.x86_64.rpm": "7f1cbf684fe40d87e2928c16d5e713234140a05198f7381766c3cfa9e6b1f178",
+        "rpmbuild/RPMS/x86_64/qore-magic-module-debuginfo-2.0.0-2.el10.x86_64.rpm": "c23fc4b6cadd0b4610f6979a031d9c1eede5ea3e6bd1b70ea1d3a96ae4472de5",
+        "rpmbuild/RPMS/x86_64/qore-magic-module-debugsource-2.0.0-2.el10.x86_64.rpm": "c314070b30bf6706da09ba8e5670277314ea4ef16c89cc6941e093fa2ece0545",
+        "rpmbuild/SRPMS/qore-magic-module-2.0.0-2.el10.src.rpm": "817ba7c21fdab7b041c0d3f7936a88b5a01c12741a7555968d542df385ef8e6b"
+      },
+      "build_log_sha256": "338a806b21f6b7e5daaa7bbec595ce1a7c6658a50504e4fe21ff31a0650cfea6"
+    },
+    "module-msgpack": {
+      "commit": "232be4120fe5ea60edacb8299f8e58406db14e5d",
+      "build_requires": [
+        "cmake >= 3.5",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "qore-devel >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:80c05f60c538ea17e0b154a1da389173b7236f3d1bc7fce93110a4690d326495",
+      "build": "results/el10-wave-1-msgpack",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "232be4120fe5ea60edacb8299f8e58406db14e5d",
+        "source_date_epoch": 1790869902,
+        "name": "qore-msgpack-module",
+        "version": "1.0.1",
+        "exclusions": [],
+        "sources": {
+          "qore-msgpack-module-1.0.1.tar.xz": "f467a8cf6c9eb3f32761125b97e012a260b958d61e131346d5381ca7365d3508",
+          "qore-msgpack-module.spec": "eef1a6166e607919d059b99338b5108772695f507738b8cb3ed22ad574acab07"
+        },
+        "spec": "qore-msgpack-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-msgpack-module-doc-1.0.1-2.el10.noarch.rpm": "798c6fd0917f9ec3451d2cb8783ab01c193b2cd44441b02cfac4144891866ea6",
+        "rpmbuild/RPMS/x86_64/qore-msgpack-module-1.0.1-2.el10.x86_64.rpm": "2e34c8e7a1eac8f0fa3d0742c80ada7abaa26e1e5d0b9a728fb2d77dc6b94fad",
+        "rpmbuild/RPMS/x86_64/qore-msgpack-module-debuginfo-1.0.1-2.el10.x86_64.rpm": "4f46af5bf84080c1ba214fc156ee10a397e1dc18c7e939d527e0dcb19c3cca4f",
+        "rpmbuild/RPMS/x86_64/qore-msgpack-module-debugsource-1.0.1-2.el10.x86_64.rpm": "d183e0eff95ff6536c2a596d352c795341a857de133168aa53a8b68486b050c5",
+        "rpmbuild/SRPMS/qore-msgpack-module-1.0.1-2.el10.src.rpm": "a9bf094d1e98949e47124be62e1408a052d4a36b3fe2f6b4d7eac86398e535d6"
+      },
+      "build_log_sha256": "ee2f6a39833f1df467ccc4e2d439730810651fb4e3a6bced6d1c0b2a32551bdc"
+    },
+    "module-odbc": {
+      "commit": "07724a800d199cdee9c8f8fa5a9c865f08425577",
+      "build_requires": [
+        "cmake >= 3.5",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "postgresql-odbc",
+        "postgresql-server",
+        "python3",
+        "qore-devel >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "unixODBC-devel",
+        "util-linux-core"
+      ],
+      "image": "sha256:cc7f4177bcda12b85dbd4cc0ebd8ca64794a86677262deda4288372c31cb7dd2",
+      "build": "results/el10-wave-1-odbc",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "07724a800d199cdee9c8f8fa5a9c865f08425577",
+        "source_date_epoch": 1790875541,
+        "name": "qore-odbc-module",
+        "version": "1.2.0",
+        "exclusions": [],
+        "sources": {
+          "qore-odbc-module-1.2.0.tar.xz": "112013170e78a23e2f1a68a0818cb85e8bbdabe15998acf658516f4f8a85ea4c",
+          "qore-odbc-module.spec": "d4fd8f8954a17b86a4628b095417c17e1c5a3986909ce3fd0a57995b5d2454af"
+        },
+        "spec": "qore-odbc-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-odbc-module-doc-1.2.0-1.el10.noarch.rpm": "bdb0d8efec814fd460a48c2d1444af1e33812ab8da9eefd706ed9f09d7ac75c2",
+        "rpmbuild/RPMS/x86_64/qore-odbc-module-1.2.0-1.el10.x86_64.rpm": "443e3f9e1555a359ac3934a1c20404f7f6bb4eea4e276f3a6878fa141e972032",
+        "rpmbuild/RPMS/x86_64/qore-odbc-module-debuginfo-1.2.0-1.el10.x86_64.rpm": "61c1277685324ae5602bce6fe91c74a10dcfb0a3b51705a388275ce045f60e11",
+        "rpmbuild/RPMS/x86_64/qore-odbc-module-debugsource-1.2.0-1.el10.x86_64.rpm": "281c103d70453862743257ef259d045918c48454ab535bde2018d1b2c34dd212",
+        "rpmbuild/SRPMS/qore-odbc-module-1.2.0-1.el10.src.rpm": "267851709082ff6602b4a880e9197aa70d8477b2d80ac7b15b0e484912353d8b"
+      },
+      "build_log_sha256": "c020a1acb8bb4ba3f6b7da5d299b3a15a008cb371807f90467e2aa0274b0b232"
+    },
+    "module-pgsql": {
+      "commit": "ba456f648483fed44985ece0f34e30774f166208",
+      "build_requires": [
+        "cmake >= 3.5",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "pkgconfig(libpq)",
+        "postgresql-server",
+        "python3",
+        "qore-devel >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:2b83161c97dbcf1e88f3f0e86a1bbeba92a2233143d091b65b136ca962a869a8",
+      "build": "results/el10-wave-1-pgsql",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "ba456f648483fed44985ece0f34e30774f166208",
+        "source_date_epoch": 1790878038,
+        "name": "qore-pgsql-module",
+        "version": "3.5.0",
+        "exclusions": [],
+        "sources": {
+          "qore-pgsql-module-3.5.0.tar.xz": "8d3c139522757ec1d1fd6f1be939c8fcb0f13e5a8e849efea83d15f124d23075",
+          "qore-pgsql-module.spec": "8ead33456a9e9a295b02105a72aaece3bd766960924090aa6521887b888fa1c3"
+        },
+        "spec": "qore-pgsql-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-pgsql-module-doc-3.5.0-1.el10.noarch.rpm": "d17f9a4d1fa5c4744ee57c4f947393dadeac16e3f9812cd5c2764570475d4995",
+        "rpmbuild/RPMS/x86_64/qore-pgsql-module-3.5.0-1.el10.x86_64.rpm": "50678a4a6d2a61655edf6f600e9173bf86bde3fa961caee15692d6c4bc312e45",
+        "rpmbuild/RPMS/x86_64/qore-pgsql-module-debuginfo-3.5.0-1.el10.x86_64.rpm": "4e87f2ca61e11eda3e1bff377a3d9eab442d8e77506b69603c63a34e2da7b2d6",
+        "rpmbuild/RPMS/x86_64/qore-pgsql-module-debugsource-3.5.0-1.el10.x86_64.rpm": "254b354e3465980e37fd07f58a995cb1579e84dd531bae3cc24edd6a292d31f6",
+        "rpmbuild/SRPMS/qore-pgsql-module-3.5.0-1.el10.src.rpm": "ddce9868a0a7c92bcd2cf925c7d89e4a3bddf60ccc633c985121e7273d632f51"
+      },
+      "build_log_sha256": "7f96c4a4f0489f83928529c43a607704cbfd784a4ca1cd351c764a3d2ed45faf"
+    },
+    "module-process": {
+      "commit": "1c80192cab33c3899add4df4a4454d345d90efaa",
+      "build_requires": [
+        "cmake >= 3.8",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "procps",
+        "python3",
+        "qore-devel >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:ffb962a1058994680495788dedf91038744971a8e286bcb61b1ee7f32cbf7b2c",
+      "build": "results/el10-wave-1-process",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "1c80192cab33c3899add4df4a4454d345d90efaa",
+        "source_date_epoch": 1790872219,
+        "name": "qore-process-module",
+        "version": "2.1.0",
+        "exclusions": [],
+        "sources": {
+          "qore-process-module-2.1.0.tar.xz": "3911847d2ec243aed4d1a976d2d3a56ceac4e29f3badcbf42d9bf9961c86198a",
+          "qore-process-module.spec": "901be30fa4d397b8fe0aed7687bdd81b0be705cbd0f129315dd4546e96d28841"
+        },
+        "spec": "qore-process-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-process-module-doc-2.1.0-1.el10.noarch.rpm": "8d6a196b43789616dcd8c860579a7a947171e97f38c65c70676348073b9e46c0",
+        "rpmbuild/RPMS/x86_64/qore-process-module-2.1.0-1.el10.x86_64.rpm": "1d1fcd6cd1e8075fabc5c6b4659c7fc29ea19dd509cf70fb371cafd21ebb7177",
+        "rpmbuild/RPMS/x86_64/qore-process-module-debuginfo-2.1.0-1.el10.x86_64.rpm": "ee870c671780b15b538e357b93d3b08c42e851a630cd3c0178454bd942fc9a1c",
+        "rpmbuild/RPMS/x86_64/qore-process-module-debugsource-2.1.0-1.el10.x86_64.rpm": "badcf3e848498ceec978e1b003fc07906397681dc4f4e39d31bf693900e26d17",
+        "rpmbuild/SRPMS/qore-process-module-2.1.0-1.el10.src.rpm": "9ea8d3570c2f4ec94fb46281ed344e2392c192f80944c7971e41c6fdddda5e9b"
+      },
+      "build_log_sha256": "69edc74b11d692cf2b921b1dd187f3cbeb4f055723669554c8f9f1070d887100"
+    },
+    "module-sqlite3": {
+      "commit": "5a20eae40d4d56da0dadb4f46aa153afac12cdb7",
+      "build_requires": [
+        "cmake >= 3.5",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "pkgconfig(sqlite3)",
+        "qore-devel >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:011e8b0e42bd27d0f857b6aceee5a8f679411c848cced56173840082e26a94b9",
+      "build": "results/el10-wave-1-sqlite3",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "5a20eae40d4d56da0dadb4f46aa153afac12cdb7",
+        "source_date_epoch": 1790869904,
+        "name": "qore-sqlite3-module",
+        "version": "1.2.0",
+        "exclusions": [],
+        "sources": {
+          "qore-sqlite3-module-1.2.0.tar.xz": "11cbc9462708aaa5fa3b7cfa9853c63f287b059420252add7a85876f635ce112",
+          "qore-sqlite3-module.spec": "ed190eeae1b636c9887c0f646ec83009e99bab2038f361261a758941e48f05f3"
+        },
+        "spec": "qore-sqlite3-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-sqlite3-module-doc-1.2.0-2.el10.noarch.rpm": "7151e7b931663644e0e2f2c983f4beb2f939cf68f08051602bd8915e11e15f6e",
+        "rpmbuild/RPMS/x86_64/qore-sqlite3-module-1.2.0-2.el10.x86_64.rpm": "bc0054353b3e45ca002cc90de03e8f7116404ecc3b9783c36ca821d12ceb60ba",
+        "rpmbuild/RPMS/x86_64/qore-sqlite3-module-debuginfo-1.2.0-2.el10.x86_64.rpm": "36f4a1bc0cfe73b131322ab51d9888691b1229f62014425654e486489f17fbe5",
+        "rpmbuild/RPMS/x86_64/qore-sqlite3-module-debugsource-1.2.0-2.el10.x86_64.rpm": "c94f3933c821e9587570860bd226b5753993e74682b3c82f29bd0cfde361cee5",
+        "rpmbuild/SRPMS/qore-sqlite3-module-1.2.0-2.el10.src.rpm": "f4f45b84a4c01384a2c759d15e9cd94cfb23c997b772e5ca44e1629958b4b491"
+      },
+      "build_log_sha256": "219e507186c9bfec7d8507bbf91e267d3646fef71ab4ddc069214a7bd98526c7"
+    },
+    "module-sysconf": {
+      "commit": "f023f1def754039550ec8b4f34fdbf8f0cef1125",
+      "build_requires": [
+        "cmake >= 3.5",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "qore-devel >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:2415c7a6b884df76405d2339f0fd24bcb89aaacd737b7f0ce0c78d004ea3a909",
+      "build": "results/el10-wave-1-sysconf",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "f023f1def754039550ec8b4f34fdbf8f0cef1125",
+        "source_date_epoch": 1790869897,
+        "name": "qore-sysconf-module",
+        "version": "1.1.0",
+        "exclusions": [],
+        "sources": {
+          "qore-sysconf-module-1.1.0.tar.xz": "71185f172f5ba6ce335fe3ca2d6c71ccd81f06fd4e08d460851dca36b9f81c70",
+          "qore-sysconf-module.spec": "744d09637408759aa98a4c18b51a5a9d3fb49b96c1d42fb75587bad332dd905e"
+        },
+        "spec": "qore-sysconf-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-sysconf-module-doc-1.1.0-2.el10.noarch.rpm": "60fbc8e82cbea14c466a3cb7c05e0cb0032a5fff7676cfc208e63b0dc8effc88",
+        "rpmbuild/RPMS/x86_64/qore-sysconf-module-1.1.0-2.el10.x86_64.rpm": "14ad6337067f62bac821dfede685c56e685857ed2ad58ea5fd8c8c4f76eb8a90",
+        "rpmbuild/RPMS/x86_64/qore-sysconf-module-debuginfo-1.1.0-2.el10.x86_64.rpm": "3399bd679efc3951e4d1694186ef2874f364103e954a2e2f63479770806e1d9d",
+        "rpmbuild/RPMS/x86_64/qore-sysconf-module-debugsource-1.1.0-2.el10.x86_64.rpm": "69ac878fa6004023a657c659b52f126dd2e258f9bf7f1ccf574ce28e0ea3a437",
+        "rpmbuild/SRPMS/qore-sysconf-module-1.1.0-2.el10.src.rpm": "d3d20b7fc80fe0c49b1a6c9a0e3e8e666b3b5898ad49e74d59e19e7735b2aa8c"
+      },
+      "build_log_sha256": "af44798f86d8ea51d237ae7da0dab2105492685e5cd50d819ebe7b422854603d"
+    },
+    "module-tar": {
+      "commit": "59fac27c6caedc74fa7602bbbb616005964019ac",
+      "build_requires": [
+        "cmake >= 3.21",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "pkgconfig(libarchive)",
+        "pkgconfig(openssl)",
+        "qore-devel >= 3.0.0~",
+        "qore-misc-tools >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "tar",
+        "util-linux-core"
+      ],
+      "image": "sha256:ee6658dfe6490715a7e3e50bf0f96861e3e6acaa37af39c8d8b22a3df1feedae",
+      "build": "results/el10-wave-1-tar",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "59fac27c6caedc74fa7602bbbb616005964019ac",
+        "source_date_epoch": 1790869907,
+        "name": "qore-tar-module",
+        "version": "1.0.0",
+        "exclusions": [],
+        "sources": {
+          "qore-tar-module-1.0.0.tar.xz": "65eb9185a3ab29e547bdd86139e27cef9ee57379f781c4c87ac17e96c96b70ea",
+          "qore-tar-module.spec": "3d87151cc034376d97d9dac2844f153ba975572d949fcd9d9d02694d7bdff2f3"
+        },
+        "spec": "qore-tar-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-tar-module-doc-1.0.0-1.el10.noarch.rpm": "48011c5e27154e72b1b3f6cebe6d089a72bcae3a9dd1a8a7a997e15325bfa385",
+        "rpmbuild/RPMS/x86_64/qore-tar-module-1.0.0-1.el10.x86_64.rpm": "084538a360512409f3e6b5591b041cd2b38fa9fb337f4aa93b30fbac2aa392a0",
+        "rpmbuild/RPMS/x86_64/qore-tar-module-debuginfo-1.0.0-1.el10.x86_64.rpm": "a813a8f583e464a61a7d4289a754aafb89b1ea22a61b515f5d8752cd5ed4fd60",
+        "rpmbuild/RPMS/x86_64/qore-tar-module-debugsource-1.0.0-1.el10.x86_64.rpm": "700a5221803460fe1de21ca2784b6d03497ec2bcc380a8d7a9497535a04050f8",
+        "rpmbuild/SRPMS/qore-tar-module-1.0.0-1.el10.src.rpm": "40e053d9873fef91bc066f2389fe2d1bdd19cff0586d0ef7dc724f63c2954773"
+      },
+      "build_log_sha256": "efc5c4840b17f13513160a8b41417e5390adf0fe4f762899630a7f8bb3b78f86"
+    },
+    "module-uuid": {
+      "commit": "43f2f55ee9d20aeb0bf3b9ac4ad79293f9352840",
+      "build_requires": [
+        "cmake >= 3.5",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "pkgconfig(uuid)",
+        "qore-devel >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:839219d2af0b4473e2d9e8582ddf06cd4062e8ab3f31b54f81a76668e8001f9d",
+      "build": "results/el10-wave-1-uuid",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "43f2f55ee9d20aeb0bf3b9ac4ad79293f9352840",
+        "source_date_epoch": 1790869427,
+        "name": "qore-uuid-module",
+        "version": "1.4.2",
+        "exclusions": [],
+        "sources": {
+          "qore-uuid-module-1.4.2.tar.xz": "7974dcbe219e859247436c1866e547626f083795143d4363fb79d97238ab0a80",
+          "qore-uuid-module.spec": "ce5dff6cbaf027ada227c429f2492859fc9c76d2c0207d6c596ca4e4e4b14ab6"
+        },
+        "spec": "qore-uuid-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-2.el10.noarch.rpm": "84c5e2b0b2f9b321b2ebc42ace6d3f674403d20bc4ee3e9b758c20de7f02450c",
+        "rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-2.el10.x86_64.rpm": "953be03e0d368ec99cf00c54dcdb800818f1c1da52c08cd95b42d39ce846210b",
+        "rpmbuild/RPMS/x86_64/qore-uuid-module-debuginfo-1.4.2-2.el10.x86_64.rpm": "a333267ce96894d1d904eb1a4fb87d94692100104ca8ff5584645c751d525b4e",
+        "rpmbuild/RPMS/x86_64/qore-uuid-module-debugsource-1.4.2-2.el10.x86_64.rpm": "cf089f2db08b6a6a10d6c74c867fda83c6319c51d82936700c948ece07c8baab",
+        "rpmbuild/SRPMS/qore-uuid-module-1.4.2-2.el10.src.rpm": "a5c4ff4807c1d25b1ccfcb85195d9ee3ed1f028108ca26d128cff46be0cc3737"
+      },
+      "build_log_sha256": "1822e098e0f3e74ffa990de9d2c3479c7d2f5b7ca24ff0a08ff94d79af9d7086"
+    },
+    "module-vss": {
+      "commit": "a1960dc7f1e8e4da7bd1215eff2cb6dfb8fea904",
+      "build_requires": [
+        "cmake >= 3.21",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "python3",
+        "qore-devel >= 3.0.0~",
+        "qore-misc-tools >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:d45198ec65617946c730874d3fd754a48b45b8af75142489c9efcddd28bcc641",
+      "build": "results/el10-wave-1-vss",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "a1960dc7f1e8e4da7bd1215eff2cb6dfb8fea904",
+        "source_date_epoch": 1790869427,
+        "name": "qore-vss-module",
+        "version": "1.0.0",
+        "exclusions": [],
+        "sources": {
+          "qore-vss-module-1.0.0.tar.xz": "4b1320f95feb028533637e8e7b6bac123208189853485343a0c7269503b46197",
+          "qore-vss-module.spec": "35d2fa665a2ed39bc9a1ce7488643202b8a19b87fad88fbfd6c78a54953f7ea2"
+        },
+        "spec": "qore-vss-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-vss-module-doc-1.0.0-1.el10.noarch.rpm": "dfea436fbafa1e9f51621e9e102f1c0c2e71521d130581f9b663d22b50eaa560",
+        "rpmbuild/RPMS/x86_64/qore-vss-module-1.0.0-1.el10.x86_64.rpm": "5f39f9dbd15951aacddb5f5eeff9c6380e50c26d61d4b2c45d56cab2ddbe2434",
+        "rpmbuild/RPMS/x86_64/qore-vss-module-debuginfo-1.0.0-1.el10.x86_64.rpm": "4f8846dee00650bac3332538cabe37a2818b08ddf17e2564401d9a7a1bb84c55",
+        "rpmbuild/RPMS/x86_64/qore-vss-module-debugsource-1.0.0-1.el10.x86_64.rpm": "448f017882b00b642fdb95c214472bfabb3d1f6adef8d22deedd447f08e181b1",
+        "rpmbuild/SRPMS/qore-vss-module-1.0.0-1.el10.src.rpm": "e72a0859005ee3e3cbe7b50bb49b17e7b5d110c67db37cf01e5e3eee29e5b97b"
+      },
+      "build_log_sha256": "eca35d94b3f880ebe3e56b0a27ea0ef0e14027bbdc9f7106f4e69015e591c194"
+    },
+    "module-zip": {
+      "commit": "92e22b844f931ad1744f6e525d2561473ff0ea44",
+      "build_requires": [
+        "bzip2-devel",
+        "cmake >= 3.21",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "patch",
+        "pkgconfig(liblzma)",
+        "pkgconfig(libzstd)",
+        "pkgconfig(openssl)",
+        "pkgconfig(zlib)",
+        "python3 >= 3.11",
+        "qore-devel >= 3.0.0~",
+        "qore-misc-tools >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "unzip",
+        "util-linux-core"
+      ],
+      "image": "sha256:a24f6d3122bb44ba3c4cdbd57609963753629742ae21a1bfe330f07d9c26dd15",
+      "build": "results/el10-wave-1-zip",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "92e22b844f931ad1744f6e525d2561473ff0ea44",
+        "source_date_epoch": 1790878652,
+        "name": "qore-zip-module",
+        "version": "1.0.0",
+        "exclusions": [],
+        "sources": {
+          "qore-zip-module-1.0.0.tar.xz": "2167604c3d260d57061879f34b432cf05218ee91e600dd3dfe013527d6381953",
+          "qore-zip-module.spec": "eede12a2b2d4b46e66b77f253476173722c848597ffd8de0783c404d968c8911",
+          "minizip-ng-4.2.2.tar.xz": "943f6a703ecf108f1bcdc14edb4c5a5a93d487843544f069a9aa89a05be9a4f8"
+        },
+        "spec": "qore-zip-module.spec",
+        "vendor_manifest": "rpm/vendor-sources.json",
+        "components": [
+          {
+            "name": "minizip-ng",
+            "archive": "minizip-ng-4.2.2.tar.xz",
+            "top": "minizip-ng-4.2.2",
+            "licenses": [
+              "LICENSE"
+            ],
+            "version": "4.2.2",
+            "url": "https://codeload.github.com/zlib-ng/minizip-ng/tar.gz/refs/tags/4.2.2",
+            "sha256": "71af7b9799856d8b03619df3949e9c1be9703f8de0795af71399ba283cb27aac",
+            "excluded": [
+              "doc",
+              "test",
+              ".github"
+            ]
+          }
+        ]
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-zip-module-doc-1.0.0-1.el10.noarch.rpm": "0879336d9bf6fd0c5c2ac3b4ba16b6fe0a5b795fd712ecc183c6ef11035514fb",
+        "rpmbuild/RPMS/x86_64/qore-zip-module-1.0.0-1.el10.x86_64.rpm": "7bede9d0188218a78c83e8de90ec25470ba687e514c39e8d822d6417f0909b1c",
+        "rpmbuild/RPMS/x86_64/qore-zip-module-debuginfo-1.0.0-1.el10.x86_64.rpm": "571a0f58882c41ace9090b9dc045f7bc8cf7594a655dd0c1e316e76aa9e090bd",
+        "rpmbuild/RPMS/x86_64/qore-zip-module-debugsource-1.0.0-1.el10.x86_64.rpm": "9fa07c22628b6fe9646e2401468b0c849c181a88f79af3de2d720a0e3ce5fd6a",
+        "rpmbuild/SRPMS/qore-zip-module-1.0.0-1.el10.src.rpm": "5fb99674e131a72539e8ff40c1f41d0e426f0910216a3186aacc4b410dba85f5"
+      },
+      "build_log_sha256": "3ae5192e1702156ad4ebdcfcb81a8733212c6202c4972eb96aeb85f40b13d9f7"
+    },
+    "module-zmq": {
+      "commit": "567790bfc8e5f7e19e47413a6279722076a12c4f",
+      "build_requires": [
+        "cmake >= 3.21",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "pkgconfig(gnutls)",
+        "pkgconfig(libbsd)",
+        "pkgconfig(liblz4)",
+        "pkgconfig(libsodium)",
+        "pkgconfig(uuid)",
+        "python3",
+        "qore-devel >= 3.0.0~",
+        "qore-rpm-macros >= 3.0.0~",
+        "tar",
+        "util-linux-core",
+        "xz"
+      ],
+      "image": "sha256:c7afc117c11c72554a6f96eaececad4c0354728e620d3b67a04ae9e17f11dbb5",
+      "build": "results/el10-wave-1-zmq",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "567790bfc8e5f7e19e47413a6279722076a12c4f",
+        "source_date_epoch": 1790876467,
+        "name": "qore-zmq-module",
+        "version": "1.2.0",
+        "exclusions": [],
+        "sources": {
+          "qore-zmq-module-1.2.0.tar.xz": "374b0e1cf587a84fc11b7a40d6c100cc2e6a06fa0f99851afede73551f7baafd",
+          "qore-zmq-module.spec": "774cc09e171848f972c9e3d8111a812a66b1a5d1f7faa0f27e1bd759d116ba61",
+          "libzmq-4.3.5.tar.xz": "bba75a7c613d448dcc63bd72a7a05cf8dba52beee904fb9ae674f89e02c49a55",
+          "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017.tar.xz": "c837807150b707dd826c429851c1071e54c38b63118617f7b4c1a5647dcee368"
+        },
+        "spec": "qore-zmq-module.spec",
+        "vendor_manifest": "rpm/vendor-sources.json",
+        "components": [
+          {
+            "name": "libzmq",
+            "url": "https://codeload.github.com/zeromq/libzmq/tar.gz/v4.3.5",
+            "sha256": "6c972d1e6a91a0ecd79c3236f04cf0126f2f4dfbbad407d72b4606a7ba93f9c6",
+            "top": "libzmq-4.3.5",
+            "retained_paths": [
+              "CMakeLists.txt",
+              "LICENSE",
+              "AUTHORS",
+              "NEWS",
+              "README.md",
+              "src",
+              "include",
+              "builds/cmake",
+              "external/sha1",
+              "external/wepoll",
+              "version.sh"
+            ],
+            "archive": "libzmq-4.3.5.tar.xz",
+            "licenses": [
+              "LICENSE"
+            ],
+            "version": "v4.3.5"
+          },
+          {
+            "name": "czmq",
+            "url": "https://codeload.github.com/zeromq/czmq/tar.gz/b669c7eb60cb8f587071ac6ece7cd68d30ac4017",
+            "sha256": "1ef06cd24fbe91f094ff2b4ce54aaf9c6fa394bec0e12c9f5b4f491f7aaa03d0",
+            "top": "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017",
+            "retained_paths": [
+              "CMakeLists.txt",
+              "LICENSE",
+              "AUTHORS",
+              "NEWS",
+              "README.md",
+              "README.txt",
+              "src",
+              "include",
+              "Findlibcurl.cmake",
+              "Findlibmicrohttpd.cmake",
+              "Findlibsodium.cmake",
+              "Findlibzmq.cmake",
+              "Findlz4.cmake",
+              "Findnss.cmake",
+              "Findsystemd.cmake",
+              "Finduuid.cmake",
+              "builds/cmake"
+            ],
+            "archive": "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017.tar.xz",
+            "licenses": [
+              "LICENSE"
+            ],
+            "version": "b669c7eb60cb8f587071ac6ece7cd68d30ac4017"
+          }
+        ]
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-zmq-module-doc-1.2.0-1.el10.noarch.rpm": "c771661a5484799cad3e6b2d2d63da1c096a5fd2eaa85157b761ffb02927053e",
+        "rpmbuild/RPMS/x86_64/qore-zmq-module-1.2.0-1.el10.x86_64.rpm": "19a51f4d58687ddda76509f28b47d00e79ea99deb69d554c0b75e5b073588ed6",
+        "rpmbuild/RPMS/x86_64/qore-zmq-module-debuginfo-1.2.0-1.el10.x86_64.rpm": "377ce8d5191e4480fa14240d39afb314c9cbd234d7d5f209ed3c9782ed9333d4",
+        "rpmbuild/RPMS/x86_64/qore-zmq-module-debugsource-1.2.0-1.el10.x86_64.rpm": "8720db5cbf4be691ff278add79114beb43cfb208342c619380d69e512120e83d",
+        "rpmbuild/SRPMS/qore-zmq-module-1.2.0-1.el10.src.rpm": "3a5fe9cf13ea17dc93da247f37ff3af3e52c7729c04016eed8bdc49cea9ae46c"
+      },
+      "build_log_sha256": "9390b9f5ce44da4e2e69539f5927133658f9c2d7c8bf9312cb14520ba6a619a8"
+    },
+    "module-ncurses": {
+      "commit": "afb8b137a78de6a4a0323d61ff654475dec0575d",
+      "build_requires": [
+        "cmake >= 3.21",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "ncurses-base",
+        "pkgconfig(ncursesw)",
+        "pkgconfig(panelw)",
+        "python3",
+        "qore-devel >= 3.0.0~",
+        "qore-magic-module >= 2.0",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:2da2ac4dc8506ba54c74cb8b61faa16e4d80100b5335b5e46892ca427f6fe4da",
+      "build": "results/el10-wave-1-ncurses",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "afb8b137a78de6a4a0323d61ff654475dec0575d",
+        "source_date_epoch": 1790870769,
+        "name": "qore-ncurses-module",
+        "version": "2.0.0",
+        "exclusions": [],
+        "sources": {
+          "qore-ncurses-module-2.0.0.tar.xz": "261835c51815ce09f55a96d8334f75541e67564e7287ca36e1f5e6411935743d",
+          "qore-ncurses-module.spec": "877080cb980394f8f0d2c2cf6e4deabbee08daebd9cc928472ea033a32caca35"
+        },
+        "spec": "qore-ncurses-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-ncurses-module-doc-2.0.0-1.el10.noarch.rpm": "f766f418ec9884a321479d8f9c1f54710e9252f385dc4d4caeec5474fc2f5b0d",
+        "rpmbuild/RPMS/x86_64/qore-ncurses-module-2.0.0-1.el10.x86_64.rpm": "1d4d1dfe5fdd23e9b8039e80c1f99c07c7f41f4b98bce604c3a4cb3b10a5c9c0",
+        "rpmbuild/RPMS/x86_64/qore-ncurses-module-debuginfo-2.0.0-1.el10.x86_64.rpm": "204b7ce18d3b895671abf36b7de07f0fc45a4ae55f0ff7136127527f6261edec",
+        "rpmbuild/RPMS/x86_64/qore-ncurses-module-debugsource-2.0.0-1.el10.x86_64.rpm": "bdb19f8cc7cb000b7fb436b7e795654b60b9c2d88631359dfc0a3584419ec54d",
+        "rpmbuild/SRPMS/qore-ncurses-module-2.0.0-1.el10.src.rpm": "78ccbd4472c0812aaf41c58442796f7e9cc5eb4c4e9133299633c68558aa32b1"
+      },
+      "build_log_sha256": "c4604e173d05f6acfc5b17e8417c23186473ee53bd8bf338c96eb0b0cdc2e527"
+    },
+    "module-proj": {
+      "commit": "e137f78a09c40f77d8a30acced8390d208161cbf",
+      "build_requires": [
+        "cmake >= 3.21",
+        "doxygen",
+        "gcc-c++",
+        "make",
+        "pkgconfig(proj) >= 8.0",
+        "proj-data",
+        "qore-devel >= 3.0.0~",
+        "qore-geos-module >= 1.0.0",
+        "qore-geos-module-doc >= 1.0.0-2",
+        "qore-rpm-macros >= 3.0.0~",
+        "util-linux-core"
+      ],
+      "image": "sha256:895fff64a99e968f1f7433783bc87dbe41d28ddfca8e42e2a0c7f575aeace6f5",
+      "build": "results/el10-wave-1-proj",
+      "exit_code": 0,
+      "source": {
+        "schema": 1,
+        "commit": "e137f78a09c40f77d8a30acced8390d208161cbf",
+        "source_date_epoch": 1790878771,
+        "name": "qore-proj-module",
+        "version": "1.1.0",
+        "exclusions": [],
+        "sources": {
+          "qore-proj-module-1.1.0.tar.xz": "5e526f1b80ef2f68f4cbcf1116f9dad607d826149c1e07648befb459caccbfaa",
+          "qore-proj-module.spec": "2acf38aa2b0eccbdac9c2a7ab7f64a11f4a2a8b78a11e1ff0d96e00551b9f360"
+        },
+        "spec": "qore-proj-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-proj-module-doc-1.1.0-2.el10.noarch.rpm": "e62b194cb7d4349acb969a4e8fb10ec8b08b3ff79ffa7530c10fa0c03037d827",
+        "rpmbuild/RPMS/x86_64/qore-proj-module-1.1.0-2.el10.x86_64.rpm": "b77521a436cdd8ad8632acfa47b59b03e3220739dbb7761371b8391c37b28e65",
+        "rpmbuild/RPMS/x86_64/qore-proj-module-debuginfo-1.1.0-2.el10.x86_64.rpm": "d4d6e59208719d900214748f9ebc6e8df35695830aced640a1b8512c555153bb",
+        "rpmbuild/RPMS/x86_64/qore-proj-module-debugsource-1.1.0-2.el10.x86_64.rpm": "e10b98b3f73af2e218f7542364619a27b7709861e06155e69728a604b674ef9e",
+        "rpmbuild/SRPMS/qore-proj-module-1.1.0-2.el10.src.rpm": "175858dd8b300ba238d8bc2a26806ea87ae0b13dc61ad3aa29f127ad6813aa7c"
+      },
+      "build_log_sha256": "282649581e5e14b5931fc9bae29998013a5f7cc57c90a09769d0abd3c7d9d1f5"
+    }
+  },
+  "complete": true,
+  "installed_runtime": "Separate combined qualification in progress; build success is not installed qualification."
+}
