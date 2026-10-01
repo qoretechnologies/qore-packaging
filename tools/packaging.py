@@ -43,7 +43,8 @@ def build_order(packages):
     return result
 
 
-def prepare_source(repo, ref, name, version, output, exclusions=(), packaging_overlay=None, spec_path=None):
+def prepare_source(repo, ref, name, version, output, exclusions=(), packaging_overlay=None, spec_path=None,
+                   vendor_manifest=None, cache=None):
     """Archive exactly one commit; normalize ownership, ordering and timestamps.
 
     No checkout or ignored build outputs are read. Required vendored sources
@@ -56,6 +57,8 @@ def prepare_source(repo, ref, name, version, output, exclusions=(), packaging_ov
     output = Path(output)
     if output.exists():
         raise ValueError("Output directory must not exist")
+    if bool(vendor_manifest) != (cache is not None):
+        raise ValueError("Vendor manifest and source cache must be supplied together")
     commit = git(repo, "rev-parse", "--verify", "--end-of-options", ref + "^{commit}").decode().strip()
     timestamp = int(git(repo, "show", "-s", "--format=%ct", commit).decode())
     archive = git(repo, "archive", "--format=tar", commit)
@@ -135,6 +138,15 @@ def prepare_source(repo, ref, name, version, output, exclusions=(), packaging_ov
         (staging / filename).write_bytes(payload)
         if recipe is not None:
             (staging / (name + ".spec")).write_text(recipe)
+        if vendor_manifest:
+            components = prepare_components(repo, commit, vendor_manifest, overlays, cache,
+                                            staging, timestamp, set(manifest["sources"]))
+            manifest["vendor_manifest"] = vendor_manifest
+            manifest["components"] = components
+            for component in components:
+                path = staging / component["archive"]
+                with path.open("rb") as stream:
+                    manifest["sources"][path.name] = hashlib.file_digest(stream, "sha256").hexdigest()
         (staging / "source-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
         # mkdir reserves the destination exclusively; replace only our empty
         # reservation, never a caller's already existing directory.
@@ -145,6 +157,60 @@ def prepare_source(repo, ref, name, version, output, exclusions=(), packaging_ov
             output.rmdir()
             raise
     return manifest
+
+
+def prepare_components(repo, commit, manifest_path, overlays, cache, staging, timestamp, reserved):
+    """Read committed pins and produce normalized, licensed vendor archives."""
+    path = Path(manifest_path)
+    if path.is_absolute() or any(part in ("..", ".") for part in path.parts):
+        raise ValueError("Vendor manifest must be inside the repository")
+    data = (overlays[manifest_path].read_bytes() if manifest_path in overlays
+            else git(repo, "show", commit + ":" + manifest_path))
+    config = json.loads(data)
+    components = config.get("components") if isinstance(config, dict) else None
+    if not isinstance(config, dict) or config.get("schema") != 1 or not isinstance(components, list) or not components:
+        raise ValueError("Vendor manifest needs schema 1 and nonempty components")
+    names = set(reserved) | {"source-manifest.json"}
+    for component in components:
+        if not isinstance(component, dict):
+            raise ValueError("Vendor components must be objects")
+        archive = component.get("archive", "")
+        if not isinstance(archive, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._+-]*\.tar\.xz", archive) or archive in names:
+            raise ValueError("Vendor archives must have unique safe tar.xz names")
+        names.add(archive)
+        top = component.get("top", "")
+        if not isinstance(top, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._+-]*", top):
+            raise ValueError("Invalid component archive root")
+        url = component.get("url", "")
+        if not isinstance(url, str) or not url.startswith("https://"):
+            raise ValueError("Source downloads require HTTPS")
+        if not isinstance(component.get("licenses"), list) or not component["licenses"]:
+            raise ValueError("Vendor components must name their retained license files")
+        for field in ("licenses", "excluded", "retained_paths"):
+            values = component.get(field, [])
+            if not isinstance(values, list) or any(
+                    not isinstance(value, str) or not value or value.startswith("/")
+                    or any(part in ("", ".", "..") for part in value.split("/")) for value in values):
+                raise ValueError("Vendor paths must be safe relative paths")
+        digest = component.get("sha256", "")
+        if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
+            raise ValueError("Expected a lowercase SHA-256 digest")
+    for component in components:
+        digest = component["sha256"]
+        downloaded = fetch_source(component["url"], digest, Path(cache) / digest)
+        destination = staging / component["archive"]
+        repack_component(downloaded, digest, component["top"], timestamp, destination,
+                         component.get("excluded", []), component.get("retained_paths", []))
+        with tarfile.open(destination) as archive:
+            for license_path in component["licenses"]:
+                name = component["top"] + "/" + license_path
+                try:
+                    member = archive.getmember(name)
+                except KeyError as error:
+                    raise ValueError("Vendor license was not retained: " + name) from error
+                if not member.isfile() or member.size == 0:
+                    raise ValueError("Vendor license must be a nonempty file: " + name)
+    return components
 
 
 def verify_download(path, digest):
@@ -229,12 +295,15 @@ def main():
     prepare.add_argument("--packaging-overlay", type=Path,
                          help="candidate builds only: overlay rpm/ and spec files, recording every digest")
     prepare.add_argument("--spec", help="repository-relative canonical spec path")
+    prepare.add_argument("--vendor-manifest", help="repository-relative RPM vendor manifest, read from the same commit")
+    prepare.add_argument("--cache", type=Path, help="checksum-addressed upstream source cache")
     args = parser.parse_args()
     if args.command == "order":
         print("\n".join(build_order(json.loads((ROOT / "catalog.json").read_text())["packages"])))
     else:
         print(json.dumps(prepare_source(args.repo, args.ref, args.name, args.version,
-                                        args.output, args.exclude, args.packaging_overlay, args.spec), indent=2))
+                                        args.output, args.exclude, args.packaging_overlay, args.spec,
+                                        args.vendor_manifest, args.cache), indent=2))
 
 
 if __name__ == "__main__":

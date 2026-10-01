@@ -42,7 +42,7 @@ class CatalogTests(unittest.TestCase):
             self.assertEqual(target["qualified"], [])
 
 
-class SourceTests(unittest.TestCase):
+class SourceFixture(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
@@ -68,6 +68,8 @@ class SourceTests(unittest.TestCase):
         kwargs.update(overrides)
         return packaging.prepare_source(**kwargs)
 
+
+class SourceTests(SourceFixture):
     def test_clean_reproducible_archive(self):
         (self.repo / "source.txt").write_text("uncommitted\n")
         (self.repo / "untracked").write_text("secret\n")
@@ -166,6 +168,106 @@ class SourceTests(unittest.TestCase):
         self.git("commit", "-qm", "invalid recipe")
         with self.assertRaisesRegex(ValueError, "name does not match"):
             self.prepare(spec_path=recipe.name)
+
+
+class VendorBundleTests(SourceFixture):
+    def setUp(self):
+        super().setUp()
+        self.cache = self.root / "cache"
+        self.cache.mkdir()
+        payload = io.BytesIO()
+        with tarfile.open(fileobj=payload, mode="w") as archive:
+            for name in ("vendor-1/LICENSE", "vendor-1/src/code.c", "vendor-1/test/fixture"):
+                member = tarfile.TarInfo(name)
+                member.size = 7
+                archive.addfile(member, io.BytesIO(b"content"))
+        digest = packaging.hashlib.sha256(payload.getvalue()).hexdigest()
+        (self.cache / digest).write_bytes(payload.getvalue())
+        self.component = dict(name="vendor", archive="vendor-1.tar.xz", top="vendor-1",
+                              url="https://example.invalid/vendor.tar.gz", sha256=digest,
+                              licenses=["LICENSE"], excluded=["test"])
+        (self.repo / "rpm").mkdir()
+        self.write_vendor_manifest()
+
+    def write_vendor_manifest(self, components=None):
+        (self.repo / "rpm/vendor-sources.json").write_text(json.dumps({
+            "schema": 1, "components": components if components is not None else [self.component]}))
+        self.git("add", "rpm/vendor-sources.json")
+        self.git("commit", "-qm", "vendor pins", "--allow-empty")
+
+    def bundle(self, output="bundle", **overrides):
+        options = dict(vendor_manifest="rpm/vendor-sources.json", cache=self.cache)
+        options.update(overrides)
+        return self.prepare(output, **options)
+
+    def test_pinned_vendor_bundle_is_reproducible_and_ignores_dirty_manifest(self):
+        (self.repo / "rpm/vendor-sources.json").write_text("uncommitted invalid data")
+        with patch.object(packaging.urllib.request, "urlopen", side_effect=AssertionError("network")):
+            first = self.bundle("one")
+            second = self.bundle("two")
+        self.assertEqual(first, second)
+        self.assertEqual(first["components"], [self.component])
+        self.assertEqual(first["vendor_manifest"], "rpm/vendor-sources.json")
+        for name, digest in first["sources"].items():
+            packaging.verify_download(self.root / "one" / name, digest)
+            self.assertEqual((self.root / "one" / name).read_bytes(), (self.root / "two" / name).read_bytes())
+        with tarfile.open(self.root / "one/vendor-1.tar.xz") as archive:
+            self.assertEqual(archive.getnames(), ["vendor-1/LICENSE", "vendor-1/src/code.c"])
+            self.assertTrue(all(m.mtime == first["source_date_epoch"] for m in archive.getmembers()))
+
+    def test_vendor_errors_leave_no_plausible_source_bundle(self):
+        for change in ({"excluded": ["LICENSE"]}, {"licenses": ["absent"]},
+                       {"archive": "../outside.tar.xz"}, {"excluded": ["../escape"]},
+                       {"sha256": "bad"}, {"url": "http://example.invalid/source"},
+                       {"licenses": []}, {"retained_paths": "src"}):
+            with self.subTest(change=change):
+                component = dict(self.component, **change)
+                self.write_vendor_manifest([component])
+                with self.assertRaises(ValueError):
+                    self.bundle()
+                self.assertFalse((self.root / "bundle").exists())
+                self.assertEqual(list(self.root.glob(".qore-source-*")), [])
+
+    def test_corrupt_vendor_cache_is_rejected(self):
+        (self.cache / self.component["sha256"]).write_bytes(b"tampered")
+        with self.assertRaisesRegex(ValueError, "checksum"):
+            self.bundle()
+        self.assertFalse((self.root / "bundle").exists())
+
+    def test_duplicate_vendor_archive_and_primary_source_collision(self):
+        for components in ([self.component, self.component],
+                           [dict(self.component, archive="qore-test-module-1.0.0.tar.xz")]):
+            with self.subTest(components=components):
+                self.write_vendor_manifest(components)
+                with self.assertRaisesRegex(ValueError, "unique safe"):
+                    self.bundle(version="1.0.0")
+                self.assertFalse((self.root / "bundle").exists())
+
+    def test_vendor_manifest_and_cache_are_paired(self):
+        for options in ({"vendor_manifest": None}, {"cache": None}):
+            with self.subTest(options=options), self.assertRaisesRegex(ValueError, "supplied together"):
+                self.bundle(**options)
+
+    def test_candidate_vendor_manifest_is_recorded(self):
+        overlay = self.root / "overlay"
+        (overlay / "rpm").mkdir(parents=True)
+        component = dict(self.component, excluded=[])
+        (overlay / "rpm/vendor-sources.json").write_text(json.dumps({"schema": 1, "components": [component]}))
+        result = self.bundle(packaging_overlay=overlay)
+        self.assertTrue(result["candidate"])
+        self.assertIn("rpm/vendor-sources.json", result["packaging_overlay"])
+        with tarfile.open(self.root / "bundle/vendor-1.tar.xz") as archive:
+            self.assertIn("vendor-1/test/fixture", archive.getnames())
+
+    def test_vendor_cli(self):
+        result = subprocess.run([
+            "python3", str(ROOT / "tools/packaging.py"), "prepare", "--repo", str(self.repo),
+            "--ref", "HEAD", "--name", "qore-test-module", "--version", "1.0.0",
+            "--vendor-manifest", "rpm/vendor-sources.json", "--cache", str(self.cache),
+            "--output", str(self.root / "cli")], capture_output=True, text=True, check=True)
+        manifest = json.loads(result.stdout)
+        self.assertIn("vendor-1.tar.xz", manifest["sources"])
+        self.assertFalse(result.stderr)
 
 
 class VendorTests(unittest.TestCase):
