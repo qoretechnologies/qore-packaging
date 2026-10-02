@@ -23,13 +23,13 @@ mandatory Fedora pgvector coverage. ZeroMQ includes draft sockets and CURVE.
 The original twenty-one modules now have x86_64 OBS builds enabled on all three
 distributions and Fedora aarch64 builds enabled, with publication disabled.
 
-Core revision 15 passes all 400 local suites plus SDK, compiler, debugger and
-minimal-runtime ONNX qualification on all three distributions. OBS x86_64 builds
-also pass on all three. Native aarch64 remains a release gate: Fedora passed
-399/400 suites but timed out in HttpClientHttpsProxy. Twenty Leap and 100 Fedora
-x86_64 stress runs pass, so the native failure remains under investigation.
-Leap and EL10 aarch64 core builds pass; native installed-package checks remain
-required before publication.
+Core revision 16 passes all 400 local suites plus SDK, compiler, debugger and
+minimal-runtime ONNX qualification on all three distributions. Native OBS builds
+pass all 400 suites on all six x86_64/aarch64 targets. The earlier Fedora ARM
+HttpClientHttpsProxy timeout did not recur; its diagnostic evidence is retained.
+Native ARM installed-package checks remain required before publication. Evidence
+is recorded in ``evidence/core16-native-installed-20261002.json``. Revision 17
+is rebuilding the separately tested binary-module metadata ownership fix.
 
 The testing project's build configuration explicitly chooses CPU onnxruntime
 for qore-stdlib's ELF dependencies. Fedora provides those capabilities from
