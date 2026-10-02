@@ -1,0 +1,154 @@
+{
+  "schema": 1,
+  "date": "2026-10-02",
+  "status": "approved",
+  "scope": [
+    "GCC 16 -Warray-bounds for Array::~Array in the cleanup of an explicitly allocated QoreJniPrivateData at Globals.cpp:2285; GlobalReference.h and Array.h diagnostics only."
+  ],
+  "upstream": "https://gcc.gnu.org/pipermail/gcc-bugs/2026-July/967907.html",
+  "finding": "Speculative devirtualization adds the larger Array destructor behind a dynamic-type check at the unique_ptr cleanup. The allocation is explicitly QoreJniPrivateData (24 bytes); Array cannot be its dynamic type. GCC diagnoses the unreachable larger-type arm.",
+  "package_policy": "Keep normal distribution optimization and warning options. The no-speculative-devirtualization option is used only as a diagnostic control and is not applied to the package.",
+  "upstream_control": {
+    "O2": {
+      "array_bounds_warnings": 2,
+      "valgrind_error_summary": "0 errors from 0 contexts (suppressed: 0 from 0)",
+      "all_allocations_freed": true,
+      "iterations_each_concrete_type": 1000
+    },
+    "O3": {
+      "array_bounds_warnings": 2,
+      "valgrind_error_summary": "0 errors from 0 contexts (suppressed: 0 from 0)",
+      "all_allocations_freed": true,
+      "iterations_each_concrete_type": 1000
+    },
+    "control": {
+      "array_bounds_warnings": 0,
+      "valgrind_error_summary": "0 errors from 0 contexts (suppressed: 0 from 0)",
+      "all_allocations_freed": true,
+      "iterations_each_concrete_type": 1000
+    }
+  },
+  "bridge_control": {
+    "original": {
+      "command": [
+        "c++",
+        "-DJAVA_VERSION_MAJOR=25",
+        "-DNDEBUG",
+        "-DPACKAGE_VERSION=\"2.7.0\"",
+        "-DQORE_JNI_HAVE_COLUMNAR_RESULT_V2=1",
+        "-DQORE_JNI_HAVE_DECIMAL128_BUFFER=1",
+        "-DQORE_JNI_HAVE_GENERIC_CLASS_TYPES=1",
+        "-Djni_EXPORTS",
+        "-I/usr/lib/jvm/java-25-openjdk/include",
+        "-I/usr/lib/jvm/java-25-openjdk/include/linux",
+        "-I/source/src",
+        "-I/source/build/include",
+        "-I/source/build",
+        "-std=c++17",
+        "-DBUILDING_DLL=1",
+        "-O3",
+        "-DNDEBUG",
+        "-fPIC",
+        "-O2",
+        "-Wall",
+        "-g",
+        "-fdump-ipa-devirt=/results/original-devirt.log",
+        "-c",
+        "/source/src/Globals.cpp",
+        "-o",
+        "/results/original.o"
+      ],
+      "exit_code": 0,
+      "warnings": [
+        "/source/src/GlobalReference.h:68:5: warning: array subscript 3 is outside array bounds of \u2018void [24]\u2019 [-Warray-bounds=]",
+        "/source/src/Array.h:69:5: warning: array subscript \u2018jni::Array::__as_base [0]\u2019 is partly outside array bounds of \u2018unsigned char [24]\u2019 [-Warray-bounds=]"
+      ]
+    },
+    "control": {
+      "command": [
+        "c++",
+        "-DJAVA_VERSION_MAJOR=25",
+        "-DNDEBUG",
+        "-DPACKAGE_VERSION=\"2.7.0\"",
+        "-DQORE_JNI_HAVE_COLUMNAR_RESULT_V2=1",
+        "-DQORE_JNI_HAVE_DECIMAL128_BUFFER=1",
+        "-DQORE_JNI_HAVE_GENERIC_CLASS_TYPES=1",
+        "-Djni_EXPORTS",
+        "-I/usr/lib/jvm/java-25-openjdk/include",
+        "-I/usr/lib/jvm/java-25-openjdk/include/linux",
+        "-I/source/src",
+        "-I/source/build/include",
+        "-I/source/build",
+        "-std=c++17",
+        "-DBUILDING_DLL=1",
+        "-O3",
+        "-DNDEBUG",
+        "-fPIC",
+        "-O2",
+        "-Wall",
+        "-g",
+        "-fdump-ipa-devirt=/results/control-devirt.log",
+        "-fno-devirtualize-speculatively",
+        "-c",
+        "/source/src/Globals.cpp",
+        "-o",
+        "/results/control.o"
+      ],
+      "exit_code": 0,
+      "warnings": []
+    }
+  },
+  "logs_sha256": {
+    "results/jni-array-bounds-control-3/O3-valgrind.log": "7993d2a721fd7ad2ed1457f10f6c00ff6f4b53a40c9c42fa7cb1c2b1cb29ab42",
+    "results/jni-array-bounds-control-3/O3-link.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/jni-array-bounds-control-3/O2-compile.log": "b72d968a3d6da46dacc063190abd51e64512ab8408303c16bdca0e9a31a8d5d0",
+    "results/jni-array-bounds-control-3/O2-valgrind.log": "af3c8b1ad8168ae4ace09e5351361280151ed0597751943aeee9ef780f0f7ecc",
+    "results/jni-array-bounds-control-3/O2-link.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/jni-array-bounds-control-3/control-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/jni-array-bounds-control-3/driver.log": "87e3dc71035ef3b73843ef947164533882c3624ba0c5f5d84405afdbb780fee9",
+    "results/jni-array-bounds-control-3/control-valgrind.log": "9a384077463d2ae407d4eada9fe39a04d7e799051cf58b92044d8c2e272bb0b6",
+    "results/jni-array-bounds-control-3/control-link.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/jni-array-bounds-control-3/O3-compile.log": "b72d968a3d6da46dacc063190abd51e64512ab8408303c16bdca0e9a31a8d5d0",
+    "results/jni-devirtualization-control-1/original-devirt.log": "7a88655097b9f1e1bc19282f913271d1b50ddbb7f7936f4510b22bb79e796282",
+    "results/jni-devirtualization-control-1/original-compile.log": "105cb11f3fbb1843e315a84a4447c9cf250c80b55721dceb05a86be8f5fe29f8",
+    "results/jni-devirtualization-control-1/control-devirt.log": "9a30fdb24cae809be2e349b9a3c5e35fcda2a7157e698acb7c3773d0351dd918",
+    "results/jni-devirtualization-control-1/control-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/jni-devirtualization-control-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "bridge_devirtualization_evidence": [
+    "Indirect call -> speculative call std::unique_ptr<_Tp, _Dp>::~unique_ptr() [with _Tp = jni::QoreJniPrivateData; _Dp = std::default_delete<jni::QoreJniPrivateData>]/7803 => virtual jni::Array::~Array()/3005"
+  ],
+  "control_source_sha256": {
+    "work/jni-array-bounds-control/upstream-126408.cpp": "4f22df32bd8a45a19321e7a02541c767befd4809daf46b1d7485b7a8ce06a330",
+    "work/jni-array-bounds-control/upstream-driver.cpp": "8656a229a09d77bba0363656b62ef494ff7782b662ce0427b3ebf1fee899e308"
+  },
+  "bridge_functional_gate": "Fedora candidate-2 RPM completed its full %check and produced runtime, tools, Kotlin and documentation packages (results/fedora-jni-rpm-candidate-2/build.json). Existing JVM/glibc Valgrind qualification is recorded separately and approved.",
+  "commands": {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "--user",
+      "1019:100",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/jni-array-bounds-control:/source:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/jni-array-bounds-control-3:/results",
+      "-w",
+      "/results",
+      "sha256:c9f96a5a805a4f403256be08f11349bdd7654aea6dd450e2d799e7be84b7bd8c",
+      "sh",
+      "-c",
+      "set -eu\ng++ --version\nfor variant in O2 O3 control; do\n flags=-O2\n if [ \"$variant\" = O3 ]; then flags=-O3; fi\n if [ \"$variant\" = control ]; then flags=\"$flags -fno-devirtualize-speculatively\"; fi\n g++ $flags -g -Wall -Wextra -std=c++17 -fdump-ipa-devirt -c /source/upstream-126408.cpp -o /results/$variant.o > /results/$variant-compile.log 2>&1\n g++ $flags -g -Wall -Wextra -std=c++17 /source/upstream-driver.cpp /results/$variant.o -o /results/$variant > /results/$variant-link.log 2>&1\n valgrind --error-exitcode=97 --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all --log-file=/results/$variant-valgrind.log /results/$variant\ndone\n"
+    ],
+    "exit_code": 0
+  },
+  "user_approval": {
+    "date": "2026-10-02",
+    "answer": "Allow this documented compiler exception",
+    "scope": "Two GCC 16 array-bounds diagnostics identified in this record; normal compiler flags retained."
+  }
+}

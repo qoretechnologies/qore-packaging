@@ -1,0 +1,225 @@
+{
+  "schema": 1,
+  "source_before": "0d579cda4b51c730ba24a0c40ec4e4f1d4801250",
+  "description": "Literal backticks in two URL documentation comments cause Doxygen 1.16.1 to consume following declarations instead of exporting them. HTML entities preserve the characters and both tag entries.",
+  "tests": {
+    "fedora": {
+      "image": "sha256:a437efbf23f3bf7b180f7d58a5ad3dd70d524372ae60a57380dff115a2b5feda",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore:/source:ro",
+        "-w",
+        "/source",
+        "sha256:a437efbf23f3bf7b180f7d58a5ad3dd70d524372ae60a57380dff115a2b5feda",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "examples/test/cmake/test_url_doc_index.py",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    "leap": {
+      "image": "sha256:48f1246678238c3d1b479f5cffc69c511443b4855b7f548fc4b22bf793fb975b",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore:/source:ro",
+        "-w",
+        "/source",
+        "sha256:48f1246678238c3d1b479f5cffc69c511443b4855b7f548fc4b22bf793fb975b",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "examples/test/cmake/test_url_doc_index.py",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    "el10": {
+      "image": "sha256:50db5ec21c50dffb918d77c420f6c39d0c3c2c4c286b6150741de8c3dd80baeb",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore:/source:ro",
+        "-w",
+        "/source",
+        "sha256:50db5ec21c50dffb918d77c420f6c39d0c3c2c4c286b6150741de8c3dd80baeb",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "examples/test/cmake/test_url_doc_index.py",
+        "-v"
+      ],
+      "exit_code": 0
+    }
+  },
+  "preimage_control": {
+    "exit_code": 1,
+    "expected_failure": true,
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--user",
+      "1019:100",
+      "-v",
+      "/home/david/src/qore/git/qore:/source:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/ql_misc-before-url-docfix.qpp:/source/lib/ql_misc.qpp:ro",
+      "-w",
+      "/source",
+      "sha256:c9f96a5a805a4f403256be08f11349bdd7654aea6dd450e2d799e7be84b7bd8c",
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "examples/test/cmake/test_url_doc_index.py",
+      "-v"
+    ]
+  },
+  "logs": {
+    "results/core-url-doc-preimage-1.log": "a26d97eed1fc0b2ce589e17fb6885fb69b7cb5bd8f09b5931eb684cde8b74653",
+    "results/leap-url-doc-index-1.log": "d760ee901d46f28b24ea73fc30c4aa36ec6b07d916e89251dfe12799c512deef",
+    "results/fedora-url-doc-index-1.log": "1eec7d17231923b7421778ee5c53618793d31ecd88bb4c636b9e25f8da9bea1f",
+    "results/el10-url-doc-index-1.log": "abd0986ff787e0389bab1878496f30a322179e188aff7603264f32e125ca57ad",
+    "results/core-url-doc-index-1.log": "9324e5e47d25345157a1b99043cd543feeb6c40d9022caca93988bfc0b5a56ab"
+  },
+  "commit": "a0aa24887055223f95a7824ce2e10de4694aa0af",
+  "ci_pipeline": 58652,
+  "ci_observation": {
+    "date": "2026-10-02",
+    "jobs": [
+      {
+        "name": "test-perf",
+        "id": 206970,
+        "status": "success"
+      },
+      {
+        "name": "test-macos",
+        "id": 206969,
+        "status": "running"
+      },
+      {
+        "name": "test-tiered-ubuntu-amd64 2/2",
+        "id": 206968,
+        "status": "running"
+      },
+      {
+        "name": "test-tiered-ubuntu-amd64 1/2",
+        "id": 206967,
+        "status": "success"
+      },
+      {
+        "name": "test-jit-ubuntu-amd64 2/2",
+        "id": 206966,
+        "status": "success"
+      },
+      {
+        "name": "test-jit-ubuntu-amd64 1/2",
+        "id": 206965,
+        "status": "success"
+      },
+      {
+        "name": "test-ir-ubuntu-amd64 2/2",
+        "id": 206964,
+        "status": "running"
+      },
+      {
+        "name": "test-ir-ubuntu-amd64 1/2",
+        "id": 206963,
+        "status": "success"
+      },
+      {
+        "name": "test-alpine-arm64 2/2",
+        "id": 206962,
+        "status": "success"
+      },
+      {
+        "name": "test-alpine-arm64 1/2",
+        "id": 206961,
+        "status": "success"
+      },
+      {
+        "name": "test-alpine-amd64 2/2",
+        "id": 206960,
+        "status": "success"
+      },
+      {
+        "name": "test-alpine-amd64 1/2",
+        "id": 206959,
+        "status": "success"
+      },
+      {
+        "name": "test-ubuntu-arm64 2/2",
+        "id": 206958,
+        "status": "success"
+      },
+      {
+        "name": "test-ubuntu-arm64 1/2",
+        "id": 206957,
+        "status": "success"
+      },
+      {
+        "name": "test-ubuntu-amd64 2/2",
+        "id": 206956,
+        "status": "success"
+      },
+      {
+        "name": "test-ubuntu-amd64 1/2",
+        "id": 206955,
+        "status": "running"
+      },
+      {
+        "name": "build-perf",
+        "id": 206954,
+        "status": "success"
+      },
+      {
+        "name": "build-alpine-arm64",
+        "id": 206953,
+        "status": "success"
+      },
+      {
+        "name": "build-alpine-amd64",
+        "id": 206952,
+        "status": "success"
+      },
+      {
+        "name": "build-ubuntu-arm64",
+        "id": 206951,
+        "status": "success"
+      },
+      {
+        "name": "build-ubuntu-amd64",
+        "id": 206950,
+        "status": "success"
+      }
+    ],
+    "complete": false
+  }
+}
