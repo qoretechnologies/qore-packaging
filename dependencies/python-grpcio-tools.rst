@@ -35,4 +35,8 @@ logs are retained separately; the native result does not claim that CPython's
 shutdown allocations disappear.
 
 Candidate evidence is in ``evidence/grpcio-tools-candidate-20261003.json``.
-Canonical source rebuild and OBS qualification remain required before publishing.
+The canonical rebuild passes the same nine tests without build warnings, and its
+installed compiler ELF matches the Valgrind-qualified candidate byte for byte.
+OBS revision 1 has verified matching sources with publication disabled. See
+``evidence/grpcio-tools-rpm-final-20261003.json``. Native OBS and ARM
+qualification remain required before publishing.

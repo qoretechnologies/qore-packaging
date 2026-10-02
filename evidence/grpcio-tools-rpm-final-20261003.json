@@ -1,0 +1,154 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Canonical Leap x86_64 build and installed checks passed. OBS sources verified; publication disabled. Native OBS and ARM qualification remain pending.",
+  "build": {
+    "schema": 1,
+    "image": "sha256:af423e4ba64f6d6d3447445e99f71d472dd9bb6183aca9a9e22af04c737b6873",
+    "source": {
+      "schema": 1,
+      "name": "python-grpcio-tools",
+      "version": "1.68.1",
+      "commit": "a0677a83ccf75115a9ab61c53146efb3a64135c5",
+      "source_date_epoch": 1790979725,
+      "spec": "python-grpcio-tools.spec",
+      "upstream": {
+        "url": "https://files.pythonhosted.org/packages/source/g/grpcio-tools/grpcio_tools-1.68.1.tar.gz",
+        "sha256": "2413a17ad16c9c821b36e4a67fc64c37b9e4636ab1c3a07778018801378739ba"
+      },
+      "sources": {
+        "grpcio-tools-ABSEIL-LICENSE": "c79a7fea0e3cac04cd43f20e7b648e5a0ff8fa5344e644b0ee09ca1162b62747",
+        "grpcio-tools-GRPC-LICENSE": "590198e3f305f2c347fde64d637c65492bbef554db6c8364e149cd375e3797ee",
+        "grpcio-tools-PROTOBUF-LICENSE": "6e5e117324afd944dcf67f36cf329843bc1a92229a8cd9bb573d7a83130fea7d",
+        "grpcio-tools-UTF8-LICENSE": "02de69b64fc36d9e938f418e52723e42f0b2b226d58a9cb3c8dcbdf7059f5074",
+        "grpcio-tools-build-declarations.patch": "2c0b5e03adb892768e1307bb439b7219d7a647825bf558033596efb17e0d6dfd",
+        "grpcio-tools-complicated.proto": "52cac25457e9b9e417b0ad6adf16434936f2195b574409d6bd0ac2157bb74faa",
+        "grpcio-tools-flawed.proto": "da3764a472f447042882c4924b964fe34a7590ef0a3cd7068912006e618d67ae",
+        "grpcio-tools-license-sources.json": "a03646e81f9d309d8859af950c9d03dbec136073be2c2b79a1f827c1d4c4644a",
+        "grpcio-tools-protoc_test.py": "c57e185ebffb6138e4e3dc91bbd89528adb61049478287a2195238281c323b2d",
+        "grpcio-tools-runtime-test.py": "e6148d78a4a5dfff45e1200147c515fda6ba8063f47a2a44b02aefc6cd670681",
+        "grpcio-tools-simple.proto": "8ed701e08e5bdab0ebe4da768b303fc3f13de4ba98013236af9bbf91cf203619",
+        "grpcio-tools-simpler.proto": "8be7f71397effb015a01bb27345d2d824f7d71053e2662ccb96f9ff1e34220a9",
+        "grpcio-tools-simplest.proto": "d74509e1cab4c57cd42b30db4eb7b70bf173ec38889305bc360127770d3e9a55",
+        "grpcio-tools-test-sources.json": "6aec92c9c2b846ebcec0d51febadf4ccb2dc81a8bb4470f7f44e22088aa33026",
+        "grpcio_tools-1.68.1.tar.gz": "2413a17ad16c9c821b36e4a67fc64c37b9e4636ab1c3a07778018801378739ba",
+        "python-grpcio-tools.spec": "28a5c4be271406580352d4a820754610345f5c354d1bbcb93a92553a0386cc52"
+      }
+    },
+    "jobs": 3,
+    "network": "none",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "--hostname",
+      "qore-rpm-builder",
+      "--user",
+      "1019:100",
+      "-e",
+      "HOME=/work/home",
+      "-e",
+      "SOURCE_DATE_EPOCH=1790979725",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/python-grpcio-tools-final-1:/sources:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/leap-python-grpcio-tools-final-1:/work",
+      "sha256:af423e4ba64f6d6d3447445e99f71d472dd9bb6183aca9a9e22af04c737b6873",
+      "sh",
+      "-c",
+      "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+      "build-local",
+      "-ba",
+      "--define",
+      "_topdir /work/rpmbuild",
+      "--define",
+      "_sourcedir /sources",
+      "--define",
+      "_smp_build_ncpus 3",
+      "--define",
+      "_buildhost qore-rpm-builder",
+      "/sources/python-grpcio-tools.spec"
+    ],
+    "source_only": false,
+    "exit_code": 0,
+    "artifacts": {
+      "rpmbuild/RPMS/x86_64/python-grpcio-tools-debugsource-1.68.1-1.qore.x86_64.rpm": "987138d19defcc83656af47b7d16918068462f89546906aecce42339c50adc99",
+      "rpmbuild/RPMS/x86_64/python313-grpcio-tools-1.68.1-1.qore.x86_64.rpm": "58f3f15c5c861b720d03bb2be3d6a1129217d9aa0d35283f3f724ab841502f70",
+      "rpmbuild/RPMS/x86_64/python313-grpcio-tools-debuginfo-1.68.1-1.qore.x86_64.rpm": "9912c638e732363dfadd12e964dc158879c366491de0fc79c721c66beda30a90",
+      "rpmbuild/SRPMS/python-grpcio-tools-1.68.1-1.qore.src.rpm": "99f8afc4fe6ba5b81576fe2a452276ffc5c4f04bff279a63ba05fed983e5d449"
+    }
+  },
+  "installed": {
+    "command": [
+      "docker",
+      "run",
+      "--init",
+      "--network",
+      "none",
+      "--name",
+      "qore-leap-grpcio-tools-final-installed-1",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/leap-python-grpcio-tools-final-1:/rpms:ro",
+      "sha256:726b0497dc1b12784b1b23c882e07a90b3a1888e6a1c4bb145edf43c5fd1dd46",
+      "sh",
+      "-c",
+      "set -eu\nrpm -U --replacepkgs /rpms/rpmbuild/RPMS/x86_64/*.rpm\nrpm -V python313-grpcio-tools\nsha256sum /usr/lib64/python3.13/site-packages/grpc_tools/_protoc_compiler*.so\npython3 -B -W error -m grpc_tools.protoc --version\n"
+    ],
+    "exit_code": 0,
+    "image": "sha256:2c9b8f3eabc2deafa73a434731887d125e2716e29603509d31e70197e6a44fda",
+    "candidate_elf_sha256": "5824544cdc3d425c6614462d4202092a9dbd2d70960005c9c6ab654250aed78f",
+    "canonical_elf_sha256": "5824544cdc3d425c6614462d4202092a9dbd2d70960005c9c6ab654250aed78f",
+    "identical_qualified_elf": true
+  },
+  "test_counts": {
+    "upstream_compiler": 7,
+    "generated_stub_loopback": 2
+  },
+  "build_diagnostics": [],
+  "native_valgrind": {
+    "evidence": "evidence/grpcio-tools-candidate-20261003.json",
+    "canonical_elf_matches_qualified_candidate": true,
+    "errors": 0,
+    "definitely_lost": 0,
+    "indirectly_lost": 0,
+    "possibly_lost": 0,
+    "suppressions": 0,
+    "scope": "Installed native compiler entry point with explicit public Protobuf cache cleanup; does not claim zero whole-CPython shutdown retention."
+  },
+  "obs": {
+    "python-grpcio-tools": {
+      "source_commit": "a0677a83ccf75115a9ab61c53146efb3a64135c5",
+      "revision": "1",
+      "srcmd5": "c720178b95adbbf36116b28fcb65a7a4",
+      "verified_files": {
+        "grpcio-tools-ABSEIL-LICENSE": "df52c6edb7adc22e533b2bacc3bd3915",
+        "grpcio-tools-GRPC-LICENSE": "731e401b36f8077ae0c134b59be5c906",
+        "grpcio-tools-PROTOBUF-LICENSE": "37b5762e07f0af8c74ce80a8bda4266b",
+        "grpcio-tools-UTF8-LICENSE": "d4974d297231477b2ff507c35d61c13c",
+        "grpcio-tools-build-declarations.patch": "ea7424aa45b3612a003e1cd5487a161a",
+        "grpcio-tools-complicated.proto": "e904500c2aef9a505d74bd0330dbb6d6",
+        "grpcio-tools-flawed.proto": "cbd544014899f8ad2cb361ee8dd6c55e",
+        "grpcio-tools-license-sources.json": "8af86de9d20ea92769466151cdb37939",
+        "grpcio-tools-protoc_test.py": "323e6417f2630f6dd149b50dfd4d4068",
+        "grpcio-tools-runtime-test.py": "5246e8e599a9d2a3a37e097a35d2e222",
+        "grpcio-tools-simple.proto": "cd420be9440bc66039782683f8789ec0",
+        "grpcio-tools-simpler.proto": "7771b7d519e3959caa3eecf9387a1362",
+        "grpcio-tools-simplest.proto": "42293df76f97953c0d5d597515fc226e",
+        "grpcio-tools-test-sources.json": "61f311ee7637055b3a6429f241390378",
+        "grpcio_tools-1.68.1.tar.gz": "65eaa0cc106e6bdd04501e030639a768",
+        "python-grpcio-tools.spec": "368e7570e3b9dacdcb9173e1e3a35380",
+        "source-manifest.json": "fcf2a44a387c2c6fa2f19955f5cc659d"
+      }
+    }
+  },
+  "sha256": {
+    "results/leap-python-grpcio-tools-final-1/build.log": "06d7e8838cb9482ccc549bd144379ac307306894610b4d945a3ae4aa26f43bcd",
+    "results/leap-grpcio-tools-final-installed-1/status.json": "edbb4aee2ff39021da5eacab086e05e2a79887f16b093a9fa72e71e498ddd4a0",
+    "results/obs-grpcio-tools-final-1-upload.json": "fb6215b9d9f43c27648f29ea93c640a130a1f3db732e6bab6eb5ec7861581b85",
+    "evidence/grpcio-tools-candidate-20261003.json": "c293843b8fb6fc9b7a88fac5308d33b8a91917f050514cb3c9c27ab703cda686"
+  }
+}

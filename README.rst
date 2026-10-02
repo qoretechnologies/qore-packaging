@@ -177,6 +177,13 @@ OBS sources are verified with publication disabled. Leap needs PyArrow Flight an
 gRPC is not yet in the three-distribution qualified count. See
 ``evidence/grpc-rpm-final-20261002.json``.
 
+Leap's Python gRPC compiler fixture now passes a canonical RPM build and all
+nine upstream/generated-stub tests without warnings. Installed checks pass;
+the canonical compiler ELF is identical to the native Valgrind-qualified build.
+OBS revision 1 has verified sources with publication disabled. PyArrow Flight
+and its Compute/Acero/Dataset dependencies remain in qualification. See
+``evidence/grpcio-tools-rpm-final-20261003.json``.
+
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is
 explicitly approved and documented. The remaining modules, target matrix and
