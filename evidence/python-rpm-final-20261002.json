@@ -1,0 +1,969 @@
+{
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "scope": "Canonical Python RPM builds and installed runtime/SDK qualification, plus installed PROJ/Python interoperability on all three distributions. Native ARM and JNI/Python remain separate gates.",
+  "targets": {
+    "fedora": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:13f9e3a10065f2e3bef133da290e6c4533b12639f6b0b12b5a353d7ab44175cf",
+        "source": {
+          "schema": 1,
+          "commit": "d6bbb32f2d83944d84ea76e2098bc0f76c7983f5",
+          "source_date_epoch": 1790934410,
+          "name": "qore-python-module",
+          "version": "1.3.0",
+          "exclusions": [],
+          "sources": {
+            "qore-python-module-1.3.0.tar.xz": "bbe214916a7f57464ac6218628c15806bb403f0622e0cd2c571e740437e1618f",
+            "qore-python-module.spec": "5ae72162487f0768007d5c9bbde5d99e7106502b85ff514267f87f0d321f083a"
+          },
+          "spec": "qore-python-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790934410",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/python-source-final-1:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-python-final-1:/work",
+          "sha256:13f9e3a10065f2e3bef133da290e6c4533b12639f6b0b12b5a353d7ab44175cf",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-python-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-python-module-doc-1.3.0-2.fc44.noarch.rpm": "b0748421083b8a1959b5dadf5771f5afef69f89ab59c92d7b246bec6f83cd6e4",
+          "rpmbuild/RPMS/x86_64/qore-python-module-1.3.0-2.fc44.x86_64.rpm": "d0590ceae670494961dc800404e5c5609603c828296e1610209daf0c76c53dd6",
+          "rpmbuild/RPMS/x86_64/qore-python-module-debuginfo-1.3.0-2.fc44.x86_64.rpm": "8c9df9abcdf7f8aa2b7861392d68d47efbae020164bdd6b47a345179abb9256c",
+          "rpmbuild/RPMS/x86_64/qore-python-module-debugsource-1.3.0-2.fc44.x86_64.rpm": "1a1044fc871a2ad7bc4d20c8f0c526ded2f31f6535094310da69a94518f8a54e",
+          "rpmbuild/SRPMS/qore-python-module-1.3.0-2.fc44.src.rpm": "8ea3e6f580be94c3b0033fbe4680a393458f13969b78fa284e2b83f53d2175a7"
+        }
+      },
+      "installed": {
+        "steps": {
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/fedora-python-final-1-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-python-final-1-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/fedora-python-final-1-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-python-final-1-sdk-tests.log"
+          }
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:13f9e3a10065f2e3bef133da290e6c4533b12639f6b0b12b5a353d7ab44175cf",
+          "source": {
+            "schema": 1,
+            "commit": "d6bbb32f2d83944d84ea76e2098bc0f76c7983f5",
+            "source_date_epoch": 1790934410,
+            "name": "qore-python-module",
+            "version": "1.3.0",
+            "exclusions": [],
+            "sources": {
+              "qore-python-module-1.3.0.tar.xz": "bbe214916a7f57464ac6218628c15806bb403f0622e0cd2c571e740437e1618f",
+              "qore-python-module.spec": "5ae72162487f0768007d5c9bbde5d99e7106502b85ff514267f87f0d321f083a"
+            },
+            "spec": "qore-python-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790934410",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/python-source-final-1:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/fedora-python-final-1:/work",
+            "sha256:13f9e3a10065f2e3bef133da290e6c4533b12639f6b0b12b5a353d7ab44175cf",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-python-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-python-module-doc-1.3.0-2.fc44.noarch.rpm": "b0748421083b8a1959b5dadf5771f5afef69f89ab59c92d7b246bec6f83cd6e4",
+            "rpmbuild/RPMS/x86_64/qore-python-module-1.3.0-2.fc44.x86_64.rpm": "d0590ceae670494961dc800404e5c5609603c828296e1610209daf0c76c53dd6",
+            "rpmbuild/RPMS/x86_64/qore-python-module-debuginfo-1.3.0-2.fc44.x86_64.rpm": "8c9df9abcdf7f8aa2b7861392d68d47efbae020164bdd6b47a345179abb9256c",
+            "rpmbuild/RPMS/x86_64/qore-python-module-debugsource-1.3.0-2.fc44.x86_64.rpm": "1a1044fc871a2ad7bc4d20c8f0c526ded2f31f6535094310da69a94518f8a54e",
+            "rpmbuild/SRPMS/qore-python-module-1.3.0-2.fc44.src.rpm": "8ea3e6f580be94c3b0033fbe4680a393458f13969b78fa284e2b83f53d2175a7"
+          }
+        },
+        "phase": "complete",
+        "runtime_image": "sha256:eb59b5547a579b34159325d75815e3d051c73c24ca5eea447fcc15721d939491",
+        "sdk_image": "sha256:bfd4b48d6be49afa7975ce2cba246b0183668c593041afc660013262ebf1ce67",
+        "exit_code": 0
+      },
+      "proj_python": {
+        "steps": {
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/fedora-proj-python-1-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-proj-python-1-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/fedora-proj-python-2-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-proj-python-2-sdk-tests.log"
+          }
+        },
+        "proj_build": {
+          "schema": 1,
+          "image": "sha256:293b712e529ae846d1b3df5e3393a23edc5135eba7e9f471a5f182c09b6ffc15",
+          "source": {
+            "schema": 1,
+            "commit": "b4fc5f15dbb23129b5c93a0d3127b406add4b225",
+            "source_date_epoch": 1790923528,
+            "name": "qore-proj-module",
+            "version": "1.1.0",
+            "exclusions": [],
+            "sources": {
+              "qore-proj-module-1.1.0.tar.xz": "928cacd775d297577630d9483ef9f71db1a2c8415d17d7e0e5f636225684f527",
+              "qore-proj-module.spec": "d8777b4e6ed00a3bf7ef70213adcd33a38721bd1522fe503b09ecf6921ae6eb0"
+            },
+            "spec": "qore-proj-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790923528",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/proj-final-source-3:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/fedora-proj-final-build-3:/work",
+            "sha256:293b712e529ae846d1b3df5e3393a23edc5135eba7e9f471a5f182c09b6ffc15",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-proj-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-proj-module-doc-1.1.0-4.fc44.noarch.rpm": "2b06895bd73199c8a9f71c660cc9f71152eddead397162a934f888348a0f71aa",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-1.1.0-4.fc44.x86_64.rpm": "fd157b5cc0e297494bd856509738c40619167167475c63fb556065fe018ba597",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-debuginfo-1.1.0-4.fc44.x86_64.rpm": "a2c39e6bc3800ceed035e8f951ca02ba48ffcdf5cd688c78581e674a764b1390",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-debugsource-1.1.0-4.fc44.x86_64.rpm": "61bff91ae90bdff76625170b1c36eb9c607678a520e63cbd690ec16fc4dbcbd8",
+            "rpmbuild/SRPMS/qore-proj-module-1.1.0-4.fc44.src.rpm": "7b4b8a572de12c8f754c443443f28a17d455291103f882ff079b444de2512c0d"
+          }
+        },
+        "geos_build": {
+          "schema": 1,
+          "image": "sha256:5dfa25fb9c7ea85bcd0032d2ee9ffb0ca776d062675a6964f52b6c02add28bf6",
+          "source": {
+            "schema": 1,
+            "commit": "26414815d9621b3cc3bc6f44a4ee7dbd76b8e8b9",
+            "source_date_epoch": 1790869427,
+            "name": "qore-geos-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-geos-module-1.0.0.tar.xz": "77134cb5c9766c0cfee442633c7323e639eb343f79676776f53c8afca5a275fd",
+              "qore-geos-module.spec": "d8d195cccd66f91327e34e662cc4d1cb0438e8458c69c0dae3dc2c3cde6e1918"
+            },
+            "spec": "qore-geos-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790869427",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/fedora-final-9-module-geos:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/fedora-final-9-geos:/work",
+            "sha256:5dfa25fb9c7ea85bcd0032d2ee9ffb0ca776d062675a6964f52b6c02add28bf6",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-geos-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-2.fc44.noarch.rpm": "8daae2ca33a1e850c0b5085d6d44dc45f4d3a3fe2838c981273601aefcf9d040",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-2.fc44.x86_64.rpm": "049e1a1e976f5bf6723f5840dec32fbda97afac0e63b31472bebac361b849884",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-2.fc44.x86_64.rpm": "6adf5474af5404ab4a1f6f896d225bb5ac3a7e107f57526d16b5161e12fcbb02",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-2.fc44.x86_64.rpm": "1aa484568fa5f0ed59789bec61006a710c4f5f5acd3b1316a0bd76ea1ca315ff",
+            "rpmbuild/SRPMS/qore-geos-module-1.0.0-2.fc44.src.rpm": "51ecb7d03a6d10065a267b429124da3657528df187c04e2262d8172891d3c830"
+          }
+        },
+        "runtime_image": "sha256:47abf3fecb569c3de033657e8fb1f3195177028f645f2d8615e35ffce81434d4",
+        "harness_correction": "Runtime suites passed; the initial post-check expected the plural test cases for a one-case suite. Correct singular summaries were independently verified before continuing SDK qualification.",
+        "sdk_image": "sha256:1b441b7e3221a673a120aa5821dbdf3fc27ae3f3c4f91c245bd6a8d55e9c87d9",
+        "exit_code": 0
+      },
+      "logs_sha256": {
+        "results/fedora-python-final-1/build.log": "62801ff9779ae7b4c959577b7834b6299de2834056b9a0d43c38774489c29c82",
+        "results/fedora-python-final-1-runtime-install.log": "7fe839223c666c15a14f91bd6bb49a3837970d1e1e39a1a3d21a635a70402379",
+        "results/fedora-python-final-1-runtime-tests.log": "8a87d26d1ef702b4323e9c766098205fb6415680aa7405317a0592c1e7afe522",
+        "results/fedora-python-final-1-sdk-install.log": "c115a8a7fc95ebde2f1c2bfb4a224d85db62efcb3d92c320ccb39a23a0156473",
+        "results/fedora-python-final-1-sdk-tests.log": "586ce84bc67a3af0c807e118af0a126ed51f0ff7cc8a82f45f728c4ba6491dbf",
+        "results/fedora-proj-python-1-runtime-install.log": "25fbdb3f1bfd7d4e87edbd4116790c52b6ca444efc2c46dbea181d21eff1fd7a",
+        "results/fedora-proj-python-1-runtime-tests.log": "0ad42a9fb75d92e92dd34c0979c4d4c02a8ac92f067499fda0e911beba9b9a85",
+        "results/fedora-proj-python-2-sdk-install.log": "5fa71734042441369c06a7536bdcda57d2664ce8e48aff8fa047652e16233553",
+        "results/fedora-proj-python-2-sdk-tests.log": "806944cd6135dd2678a5b03c213d0503386f75b350c78daf4edce648e86b4fde"
+      },
+      "approved_compiler_diagnostics": [
+        "/work/rpmbuild/BUILD/qore-python-module-1.3.0-build/qore-python-module-1.3.0/src/QorePythonProgram.h:648:5: warning: \u2018operator delete(void*, unsigned long)\u2019 called on pointer \u2018this_3(D)\u2019 with nonzero offset 16 [-Wfree-nonheap-object]",
+        "/work/rpmbuild/BUILD/qore-python-module-1.3.0-build/qore-python-module-1.3.0/src/QorePythonProgram.h:648:5: warning: \u2018operator delete(void*, unsigned long)\u2019 called on pointer \u2018pp_4(D)\u2019 with nonzero offset 16 [-Wfree-nonheap-object]",
+        "/work/rpmbuild/BUILD/qore-python-module-1.3.0-build/qore-python-module-1.3.0/src/QorePythonProgram.h:648:5: warning: \u2018operator delete(void*, unsigned long)\u2019 called on pointer \u2018this_7(D)->p\u2019 with nonzero offset 16 [-Wfree-nonheap-object]",
+        "/work/rpmbuild/BUILD/qore-python-module-1.3.0-build/qore-python-module-1.3.0/src/QorePythonProgram.h:648:5: warning: \u2018operator delete(void*, unsigned long)\u2019 called on pointer \u2018_20\u2019 with nonzero offset 16 [-Wfree-nonheap-object]",
+        "/usr/src/debug/qore-python-module-1.3.0-2.fc44.x86_64/src/QorePythonProgram.h:648:5: warning: \u2018operator delete\u2019 called on pointer \u2018this_3(D)\u2019 with nonzero offset 16 [-Wfree-nonheap-object]",
+        "/usr/src/debug/qore-python-module-1.3.0-2.fc44.x86_64/src/QorePythonProgram.h:648:5: warning: \u2018operator delete\u2019 called on pointer \u2018pp_4(D)\u2019 with nonzero offset 16 [-Wfree-nonheap-object]",
+        "/usr/src/debug/qore-python-module-1.3.0-2.fc44.x86_64/src/QorePythonProgram.h:648:5: warning: \u2018operator delete\u2019 called on pointer \u2018_20\u2019 with nonzero offset 16 [-Wfree-nonheap-object]",
+        "/usr/src/debug/qore-python-module-1.3.0-2.fc44.x86_64/src/QorePythonProgram.h:648:5: warning: \u2018operator delete\u2019 called on pointer \u2018_20\u2019 with nonzero offset 16 [-Wfree-nonheap-object]"
+      ]
+    },
+    "leap": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:40d5f882b0315bf91cb992c00446039cf140bfbb043dc0cbfdbcf511ebe5aded",
+        "source": {
+          "schema": 1,
+          "commit": "d6bbb32f2d83944d84ea76e2098bc0f76c7983f5",
+          "source_date_epoch": 1790934410,
+          "name": "qore-python-module",
+          "version": "1.3.0",
+          "exclusions": [],
+          "sources": {
+            "qore-python-module-1.3.0.tar.xz": "bbe214916a7f57464ac6218628c15806bb403f0622e0cd2c571e740437e1618f",
+            "qore-python-module.spec": "5ae72162487f0768007d5c9bbde5d99e7106502b85ff514267f87f0d321f083a"
+          },
+          "spec": "qore-python-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790934410",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/python-source-final-1:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-python-final-1:/work",
+          "sha256:40d5f882b0315bf91cb992c00446039cf140bfbb043dc0cbfdbcf511ebe5aded",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-python-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-python-module-doc-1.3.0-2.noarch.rpm": "af3272c28ff8b0bb96577e2a6a1d49d3e3df6f4aaf06fcbf6f90898175d796e5",
+          "rpmbuild/RPMS/x86_64/qore-python-module-1.3.0-2.x86_64.rpm": "983667f393d27f5387a0001eeb2f3f05044b9fb4011a76d55f8e05920c387356",
+          "rpmbuild/RPMS/x86_64/qore-python-module-debuginfo-1.3.0-2.x86_64.rpm": "d57fb8beffe8eda9bbcac0cf36bd0e1eeb2d13e787f9be6f067064e45ac72f1b",
+          "rpmbuild/RPMS/x86_64/qore-python-module-debugsource-1.3.0-2.x86_64.rpm": "781497ab3c65be427e69723c8467b19db5c811fccb22e8a78d0a20816b395808",
+          "rpmbuild/SRPMS/qore-python-module-1.3.0-2.src.rpm": "6c6b6fe006d3ee9109a111e5ec9d51eab1113f798bc15ad0bea9d7858197eb7b"
+        }
+      },
+      "installed": {
+        "steps": {
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/leap-python-final-1-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/leap-python-final-1-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/leap-python-final-1-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/leap-python-final-1-sdk-tests.log"
+          }
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:40d5f882b0315bf91cb992c00446039cf140bfbb043dc0cbfdbcf511ebe5aded",
+          "source": {
+            "schema": 1,
+            "commit": "d6bbb32f2d83944d84ea76e2098bc0f76c7983f5",
+            "source_date_epoch": 1790934410,
+            "name": "qore-python-module",
+            "version": "1.3.0",
+            "exclusions": [],
+            "sources": {
+              "qore-python-module-1.3.0.tar.xz": "bbe214916a7f57464ac6218628c15806bb403f0622e0cd2c571e740437e1618f",
+              "qore-python-module.spec": "5ae72162487f0768007d5c9bbde5d99e7106502b85ff514267f87f0d321f083a"
+            },
+            "spec": "qore-python-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790934410",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/python-source-final-1:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/leap-python-final-1:/work",
+            "sha256:40d5f882b0315bf91cb992c00446039cf140bfbb043dc0cbfdbcf511ebe5aded",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-python-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-python-module-doc-1.3.0-2.noarch.rpm": "af3272c28ff8b0bb96577e2a6a1d49d3e3df6f4aaf06fcbf6f90898175d796e5",
+            "rpmbuild/RPMS/x86_64/qore-python-module-1.3.0-2.x86_64.rpm": "983667f393d27f5387a0001eeb2f3f05044b9fb4011a76d55f8e05920c387356",
+            "rpmbuild/RPMS/x86_64/qore-python-module-debuginfo-1.3.0-2.x86_64.rpm": "d57fb8beffe8eda9bbcac0cf36bd0e1eeb2d13e787f9be6f067064e45ac72f1b",
+            "rpmbuild/RPMS/x86_64/qore-python-module-debugsource-1.3.0-2.x86_64.rpm": "781497ab3c65be427e69723c8467b19db5c811fccb22e8a78d0a20816b395808",
+            "rpmbuild/SRPMS/qore-python-module-1.3.0-2.src.rpm": "6c6b6fe006d3ee9109a111e5ec9d51eab1113f798bc15ad0bea9d7858197eb7b"
+          }
+        },
+        "phase": "complete",
+        "runtime_image": "sha256:ee5a48e9aa9aa6ce22d040a7baf9ff7b0fb60e2e84a518154676f5a6834df541",
+        "sdk_image": "sha256:e6bbdccc0d5f405b0a44d8d793fec4ceeb85fabea11ca4305cae4469a8fcfb92",
+        "exit_code": 0
+      },
+      "proj_python": {
+        "steps": {
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/leap-proj-python-1-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/leap-proj-python-1-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/leap-proj-python-2-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/leap-proj-python-2-sdk-tests.log"
+          }
+        },
+        "proj_build": {
+          "schema": 1,
+          "image": "sha256:56d7ca7e23a9518d0ce92c7a4738cca2d1710f5613595f9c380ca9ab73143135",
+          "source": {
+            "schema": 1,
+            "commit": "b4fc5f15dbb23129b5c93a0d3127b406add4b225",
+            "source_date_epoch": 1790923528,
+            "name": "qore-proj-module",
+            "version": "1.1.0",
+            "exclusions": [],
+            "sources": {
+              "qore-proj-module-1.1.0.tar.xz": "928cacd775d297577630d9483ef9f71db1a2c8415d17d7e0e5f636225684f527",
+              "qore-proj-module.spec": "d8777b4e6ed00a3bf7ef70213adcd33a38721bd1522fe503b09ecf6921ae6eb0"
+            },
+            "spec": "qore-proj-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790923528",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/proj-final-source-3:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/leap-proj-final-build-3:/work",
+            "sha256:56d7ca7e23a9518d0ce92c7a4738cca2d1710f5613595f9c380ca9ab73143135",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-proj-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-proj-module-doc-1.1.0-4.noarch.rpm": "f22091eff57c641f1bb7a4f3c54b50eea949424117e7689543b63f8203b50cf2",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-1.1.0-4.x86_64.rpm": "53fc8d4f8036939820e378c573050024a71f9ec6cf0f89953ab2b64515435888",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-debuginfo-1.1.0-4.x86_64.rpm": "f65ad8f65838eb41406ce21c7f0a94cb8023454d8dc081935e21b4ac06906b73",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-debugsource-1.1.0-4.x86_64.rpm": "75864a4d880df53003778ad59550613674cf78706eafbb94141d52f887836459",
+            "rpmbuild/SRPMS/qore-proj-module-1.1.0-4.src.rpm": "46ddae4cb3c0ac99ae5ad217b22c492b6f2b6e8dacd68e80b7fccfbb83165639"
+          }
+        },
+        "geos_build": {
+          "schema": 1,
+          "image": "sha256:243319f579b0938206e1825b78aa137b088b99362e9381045aa37c96d30c0849",
+          "source": {
+            "schema": 1,
+            "commit": "26414815d9621b3cc3bc6f44a4ee7dbd76b8e8b9",
+            "source_date_epoch": 1790869427,
+            "name": "qore-geos-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-geos-module-1.0.0.tar.xz": "77134cb5c9766c0cfee442633c7323e639eb343f79676776f53c8afca5a275fd",
+              "qore-geos-module.spec": "d8d195cccd66f91327e34e662cc4d1cb0438e8458c69c0dae3dc2c3cde6e1918"
+            },
+            "spec": "qore-geos-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790869427",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/fedora-final-9-module-geos:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/leap-wave-2-geos:/work",
+            "sha256:243319f579b0938206e1825b78aa137b088b99362e9381045aa37c96d30c0849",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-geos-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-2.noarch.rpm": "794ed76ec3e01f6e1abb63d90f99b13ebd2de770bdec234d2a562f9cdd252022",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-2.x86_64.rpm": "4e291f16b124a4e64a37e83cc04b1697b9ce4f2deac43af379a458d44bfe4e5c",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-2.x86_64.rpm": "341ab98fe9e54b626b2dc6325ee3058922bfdbb31a16fbef9e700e65d3700a48",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-2.x86_64.rpm": "f7998494566603becf622b8258fbbbe607b93a23b2e0bb30cc2c166eaf3b6784",
+            "rpmbuild/SRPMS/qore-geos-module-1.0.0-2.src.rpm": "5f6eb3a5e8cb179565140744d35b799fb610d0b3d10b3d448e5c04b3be104490"
+          }
+        },
+        "runtime_image": "sha256:00cc54ac5ae7309fb92a357e9bddc83460cc8fd6657448ee703eda89cbcfa00d",
+        "harness_correction": "Runtime suites passed; the initial post-check expected the plural test cases for a one-case suite. Correct singular summaries were independently verified before continuing SDK qualification.",
+        "sdk_image": "sha256:62d13b0c3a417fe5a12f7dc4a00599c0a61ee795ad60735eefdfb38a3f9f590d",
+        "exit_code": 0
+      },
+      "logs_sha256": {
+        "results/leap-python-final-1/build.log": "e8dd3601c69205e7029da387d2ba541d5005987086b4ea5b18adbd634da71c14",
+        "results/leap-python-final-1-runtime-install.log": "297aba37fdc62ff751d34ce95e6d28eb8a43623e215668121925958bdf0c6e1a",
+        "results/leap-python-final-1-runtime-tests.log": "f3d4e12f465bb604441421d24ed9710bba1588e332ea04e64e577cffa21dd2bb",
+        "results/leap-python-final-1-sdk-install.log": "26cd32d16144a3980f07a94c11637b4323a9c031d7cd05ca2a8c366ac80aea22",
+        "results/leap-python-final-1-sdk-tests.log": "ee364f5a8488c7a8aa34b12e1ebe92b825b7f1ce047d14de73f267eed435bf77",
+        "results/leap-proj-python-1-runtime-install.log": "e4fd9128b620afc5d7dd6975cff393a1f7e3be1ca9f304f2a42b55602f423dcb",
+        "results/leap-proj-python-1-runtime-tests.log": "683ab833a88ea8469bca3e4ea0be7acacb4c4256fdc794b3d86f7e2bf934b094",
+        "results/leap-proj-python-2-sdk-install.log": "ff3d7c01befe0825bc8f37c7ff03b25cf2edf292a3bc130b98eaf39ba4d70c83",
+        "results/leap-proj-python-2-sdk-tests.log": "9e74eb8414ddb8a6e0893310456492ef5f3b02ad73f4b66e43749a87c8f6a807"
+      },
+      "approved_compiler_diagnostics": []
+    },
+    "el10": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:432827af6e4c4bbf280911ee6943feb8fc0c198f6ccd7a5285c3d5326eab867b",
+        "source": {
+          "schema": 1,
+          "commit": "d6bbb32f2d83944d84ea76e2098bc0f76c7983f5",
+          "source_date_epoch": 1790934410,
+          "name": "qore-python-module",
+          "version": "1.3.0",
+          "exclusions": [],
+          "sources": {
+            "qore-python-module-1.3.0.tar.xz": "bbe214916a7f57464ac6218628c15806bb403f0622e0cd2c571e740437e1618f",
+            "qore-python-module.spec": "5ae72162487f0768007d5c9bbde5d99e7106502b85ff514267f87f0d321f083a"
+          },
+          "spec": "qore-python-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790934410",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/python-source-final-1:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-python-final-1:/work",
+          "sha256:432827af6e4c4bbf280911ee6943feb8fc0c198f6ccd7a5285c3d5326eab867b",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-python-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-python-module-doc-1.3.0-2.el10.noarch.rpm": "76f83ba5ea888891ffd84fc1244e543cb6babe251f7ab8952aa939e7bb6e47ec",
+          "rpmbuild/RPMS/x86_64/qore-python-module-1.3.0-2.el10.x86_64.rpm": "8b1be5fcbb12d4da1525e10eed06fa3643e8ff064de816b5f9eb7ab4b32fd8fc",
+          "rpmbuild/RPMS/x86_64/qore-python-module-debuginfo-1.3.0-2.el10.x86_64.rpm": "087025dc995346db6a4e9a4f2187270940a65f2531f14172d98d346f2c934e64",
+          "rpmbuild/RPMS/x86_64/qore-python-module-debugsource-1.3.0-2.el10.x86_64.rpm": "089bb740e386d25a5da4e9811b9948a1d8f0303f6209e29ceda1c48e03f9b533",
+          "rpmbuild/SRPMS/qore-python-module-1.3.0-2.el10.src.rpm": "2c23a19eb99e691a6e0b84da8c0b246e9e25b371889aa8abd55cc33665bb2f60"
+        }
+      },
+      "installed": {
+        "steps": {
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/el10-python-final-1-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/el10-python-final-1-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/el10-python-final-1-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/el10-python-final-1-sdk-tests.log"
+          }
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:432827af6e4c4bbf280911ee6943feb8fc0c198f6ccd7a5285c3d5326eab867b",
+          "source": {
+            "schema": 1,
+            "commit": "d6bbb32f2d83944d84ea76e2098bc0f76c7983f5",
+            "source_date_epoch": 1790934410,
+            "name": "qore-python-module",
+            "version": "1.3.0",
+            "exclusions": [],
+            "sources": {
+              "qore-python-module-1.3.0.tar.xz": "bbe214916a7f57464ac6218628c15806bb403f0622e0cd2c571e740437e1618f",
+              "qore-python-module.spec": "5ae72162487f0768007d5c9bbde5d99e7106502b85ff514267f87f0d321f083a"
+            },
+            "spec": "qore-python-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790934410",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/python-source-final-1:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/el10-python-final-1:/work",
+            "sha256:432827af6e4c4bbf280911ee6943feb8fc0c198f6ccd7a5285c3d5326eab867b",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-python-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-python-module-doc-1.3.0-2.el10.noarch.rpm": "76f83ba5ea888891ffd84fc1244e543cb6babe251f7ab8952aa939e7bb6e47ec",
+            "rpmbuild/RPMS/x86_64/qore-python-module-1.3.0-2.el10.x86_64.rpm": "8b1be5fcbb12d4da1525e10eed06fa3643e8ff064de816b5f9eb7ab4b32fd8fc",
+            "rpmbuild/RPMS/x86_64/qore-python-module-debuginfo-1.3.0-2.el10.x86_64.rpm": "087025dc995346db6a4e9a4f2187270940a65f2531f14172d98d346f2c934e64",
+            "rpmbuild/RPMS/x86_64/qore-python-module-debugsource-1.3.0-2.el10.x86_64.rpm": "089bb740e386d25a5da4e9811b9948a1d8f0303f6209e29ceda1c48e03f9b533",
+            "rpmbuild/SRPMS/qore-python-module-1.3.0-2.el10.src.rpm": "2c23a19eb99e691a6e0b84da8c0b246e9e25b371889aa8abd55cc33665bb2f60"
+          }
+        },
+        "phase": "complete",
+        "runtime_image": "sha256:6667853d8961679515d1b0729eeec80ccd7077a6e4ac40e574c240bfcf2bc5ee",
+        "sdk_image": "sha256:19cc35d7a5451a905cb5807137fb3e74171cf9f48f266cf54f97fa07926c30e2",
+        "exit_code": 0
+      },
+      "proj_python": {
+        "steps": {
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/el10-proj-python-1-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/el10-proj-python-1-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/el10-proj-python-2-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/el10-proj-python-2-sdk-tests.log"
+          }
+        },
+        "proj_build": {
+          "schema": 1,
+          "image": "sha256:141dc2527d7528224ff56e2a5371e504a5a0b9bf19dafc1f22930bbbacdd3bdd",
+          "source": {
+            "schema": 1,
+            "commit": "b4fc5f15dbb23129b5c93a0d3127b406add4b225",
+            "source_date_epoch": 1790923528,
+            "name": "qore-proj-module",
+            "version": "1.1.0",
+            "exclusions": [],
+            "sources": {
+              "qore-proj-module-1.1.0.tar.xz": "928cacd775d297577630d9483ef9f71db1a2c8415d17d7e0e5f636225684f527",
+              "qore-proj-module.spec": "d8777b4e6ed00a3bf7ef70213adcd33a38721bd1522fe503b09ecf6921ae6eb0"
+            },
+            "spec": "qore-proj-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790923528",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/proj-final-source-3:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/el10-proj-final-build-3:/work",
+            "sha256:141dc2527d7528224ff56e2a5371e504a5a0b9bf19dafc1f22930bbbacdd3bdd",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-proj-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-proj-module-doc-1.1.0-4.el10.noarch.rpm": "f29ecef309aa92cdf978a211236bae5186ace2c17fcddecfbfc36b1c3c8e20b2",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-1.1.0-4.el10.x86_64.rpm": "011bab07a8f4d2dc7f9ed69296f4709391caa968c16e294d66085ade8b58eefd",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-debuginfo-1.1.0-4.el10.x86_64.rpm": "cae2d75edae1b1dfc229efae8c35561e84e1207a345055420fc48dab7c478d5f",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-debugsource-1.1.0-4.el10.x86_64.rpm": "a6b6a38e5a54659855b43b2b836b47171eb57cd68009601684b36d479dc91ae1",
+            "rpmbuild/SRPMS/qore-proj-module-1.1.0-4.el10.src.rpm": "0f2ce371eaef1c17e6eb2ab3f0d91daf609eaeb707df500b00c8ac664477a983"
+          }
+        },
+        "geos_build": {
+          "schema": 1,
+          "image": "sha256:e9f5b57cdc33c6db089545c9544f661d72400c79b02905088bc7afe5f9680d22",
+          "source": {
+            "schema": 1,
+            "commit": "26414815d9621b3cc3bc6f44a4ee7dbd76b8e8b9",
+            "source_date_epoch": 1790869427,
+            "name": "qore-geos-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-geos-module-1.0.0.tar.xz": "77134cb5c9766c0cfee442633c7323e639eb343f79676776f53c8afca5a275fd",
+              "qore-geos-module.spec": "d8d195cccd66f91327e34e662cc4d1cb0438e8458c69c0dae3dc2c3cde6e1918"
+            },
+            "spec": "qore-geos-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790869427",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/obs-module-geos-2641481:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/el10-wave-1-geos:/work",
+            "sha256:e9f5b57cdc33c6db089545c9544f661d72400c79b02905088bc7afe5f9680d22",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-geos-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-2.el10.noarch.rpm": "0726f78aa4a02a6cfd3324b0a371b1a2ca6867d2e84c4b757d5ce66795c5a7d6",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-2.el10.x86_64.rpm": "251f6b9bda613fdef81337299209c9d5493574b1df212d0fb4f3501d3f17d2a5",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-2.el10.x86_64.rpm": "3802e48f9112249c7c1eea94e7b9f04fa97207393ea12055c03e3ee9b6ec83ed",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-2.el10.x86_64.rpm": "3475b9e3b7b2b92dcbe889d842f4a3ee560e6b535127fe6ab033d504f0aef122",
+            "rpmbuild/SRPMS/qore-geos-module-1.0.0-2.el10.src.rpm": "803003397fe0cc6205c71e82ba07c84974ff1a894beaab7590ff29f2cd9a7c3a"
+          }
+        },
+        "runtime_image": "sha256:3866cde4663e70857417923fb55e86dc0a61141c518dbc1c1fb3b9f405202410",
+        "harness_correction": "Runtime suites passed; the initial post-check expected the plural test cases for a one-case suite. Correct singular summaries were independently verified before continuing SDK qualification.",
+        "sdk_image": "sha256:1c29c879d1d8cd469cf270af76e2030021b998a67008246f0a11a3daf58efe74",
+        "exit_code": 0
+      },
+      "logs_sha256": {
+        "results/el10-python-final-1/build.log": "575aee9b0b6189ed3e8227a798c76850c87151a4453e4e794e785009c7cab8e6",
+        "results/el10-python-final-1-runtime-install.log": "396c4e56b07944d9844ef5d6b46b31292d4b7662cfb19481a772bf5792ce65d1",
+        "results/el10-python-final-1-runtime-tests.log": "d39158eca8b73cd251434006a2576bc1e703a00c7feef2d14baf3cbee5d4a3d1",
+        "results/el10-python-final-1-sdk-install.log": "7eca7d39756f159e432acf545a3423d2e1c8db03d238c43cfa43b765c54968f4",
+        "results/el10-python-final-1-sdk-tests.log": "2508e956ae77fdb6dadafafcf5277c731e3a816f79e3c5279c37e775683645ee",
+        "results/el10-proj-python-1-runtime-install.log": "81c12542dbf24b6a4b72f096a3b8819b1eb0afbb8271e0c3aacf2ce56087574e",
+        "results/el10-proj-python-1-runtime-tests.log": "e703dcdf4b3090a0d76a01a2fcca986c84be061ea8926b72a1f1010eff763e32",
+        "results/el10-proj-python-2-sdk-install.log": "6bfb37c3948b459820c211ae11c260272263450d9316ff6aa3d0dc5a84302ffc",
+        "results/el10-proj-python-2-sdk-tests.log": "672f973529c9f4d493dcb3bc3a1fa1fab3edbaf72b788800de3e495a76ebf771"
+      },
+      "approved_compiler_diagnostics": []
+    }
+  },
+  "obs": {
+    "qore-python-module": {
+      "source_commit": "d6bbb32f2d83944d84ea76e2098bc0f76c7983f5",
+      "revision": "1",
+      "srcmd5": "dfd8b0672aa95c27dacfa53012616af2",
+      "verified_files": {
+        "qore-python-module-1.3.0.tar.xz": "4a6b894a45d3f397def9c6d581c99315",
+        "qore-python-module.spec": "c477c297aacf37aa8283749b6279a5f9",
+        "source-manifest.json": "1c6b7e26e56f8bd1990d06f633a00c2f"
+      }
+    }
+  }
+}

@@ -17,7 +17,7 @@ full logs, containers and RPMs are retained under ignored ``results/`` and
 ``work/`` directories. Do not interpret a successfully prepared SRPM as a
 successful binary build.
 
-Twenty-eight external modules have committed RPM packaging and pass builds and
+Twenty-nine external modules have committed RPM packaging and pass builds and
 installed-runtime suites on Fedora 44, Leap 16.0 and EL10. PostgreSQL includes
 mandatory Fedora pgvector coverage. ZeroMQ includes draft sockets and CURVE.
 The original twenty-one modules now have x86_64 OBS builds enabled on all three
@@ -53,7 +53,9 @@ https://openbuildservice.org/help/manuals/obs-user-guide/cha-obs-prjconfig.
 PROJ release 4 uses the literal GEOS documentation-index path in its spec.
 OBS does not expand ``%{_datadir}`` in this file dependency. All three local
 canonical builds and installed runtime/SDK checks pass; OBS revision 6 has
-verified matching sources. Python interoperation remains a separate gate.
+verified matching sources. Installed Python interoperation now passes in both
+import orders in runtime and SDK images on all three targets; the full PROJ and
+GEOS suites and compiler smoke test pass in the same combined installations.
 
 SSH, MySQL and tree-sitter now pass canonical builds and installed runtime/SDK
 checks against revision 15 on all three targets. SSH includes runnable installed
@@ -80,7 +82,7 @@ that dependency are enabled for Leap with publication disabled.
 XML now passes canonical RPM builds and all 304 installed suites on all three
 targets, including 106 Litmus cases against Qore and installed WebDAV CLI checks.
 Its separate native Valgrind and strict-documentation evidence is retained.
-XML and XML Security are included in the twenty-eight qualified local modules.
+XML and XML Security are included in the twenty-nine qualified local modules.
 XML Security passes canonical builds, installed runtime/SDK tests, documentation,
 and 13 native cases / 65 assertions under Valgrind on all three targets. Its
 parser options and errors are now isolated per document, including worker threads.
@@ -92,8 +94,12 @@ interpreter passes 30 cases / 270 assertions in Release and Debug/Valgrind;
 standalone shutdown regressions also pass. Explicitly approved exceptions cover
 CPython shutdown retention, GCC bug 125913 and an independently reproduced
 40-byte glibc loader allocation. Raw Valgrind diagnostics remain recorded; no
-invalid access or additional native leak is accepted. RPM qualification is in
-progress and Python is not yet included in the qualified module count. See
+invalid access or additional native leak is accepted. Canonical RPM builds and
+installed minimal-runtime/SDK tests now pass on all three targets, including
+strict documentation, the versioned CPython extension alias and compiler use.
+Python is included in the qualified count and uploaded to OBS with publication
+disabled. JNI/Python and native ARM qualification remain separate gates. See
+``evidence/python-rpm-final-20261002.json``,
 ``evidence/python-native-qualification-20261002.json`` and
 ``evidence/python-external-diagnostics-20261002.json``.
 

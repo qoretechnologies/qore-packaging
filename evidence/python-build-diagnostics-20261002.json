@@ -1,0 +1,50 @@
+{
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "scope": "Mark intentionally debug-only local variables as maybe_unused without changing runtime evaluation or disabling compiler diagnostics. Remove unused CMake arguments from RPM recipe separately.",
+  "targets": {
+    "fedora": {
+      "log": "results/fedora-python-native-20-build-valgrind.log",
+      "sha256": "1a088b57c1260a72d6d7a90938257af4f83b0841ffb22eb565a72a5c31f3fe90",
+      "suite": "30 cases / 270 assertions in Release and Debug/Valgrind; standalone shutdown and strict docs pass",
+      "diagnostics": [
+        "definitely lost: 0 bytes in 0 blocks",
+        "indirectly lost: 0 bytes in 0 blocks",
+        "possibly lost: 4,373 bytes in 55 blocks",
+        "ERROR SUMMARY: 49 errors from 49 contexts (suppressed: 0 from 0)"
+      ],
+      "compiler_warnings": [],
+      "exception_evidence": "python-external-diagnostics-20261002.json"
+    },
+    "leap": {
+      "log": "results/leap-python-native-20-build-valgrind.log",
+      "sha256": "6202e63d1cee4fd93b86091115c4a4f1977c650252a4f78797741d6b0d647de8",
+      "suite": "30 cases / 270 assertions in Release and Debug/Valgrind; standalone shutdown and strict docs pass",
+      "diagnostics": [
+        "definitely lost: 495,430 bytes in 8,908 blocks",
+        "indirectly lost: 0 bytes in 0 blocks",
+        "possibly lost: 4,417 bytes in 58 blocks",
+        "ERROR SUMMARY: 583 errors from 583 contexts (suppressed: 0 from 0)"
+      ],
+      "compiler_warnings": [],
+      "exception_evidence": "python-external-diagnostics-20261002.json"
+    },
+    "el10": {
+      "log": "results/el10-python-native-20-build-valgrind.log",
+      "sha256": "03b2c0e85294851700d503d2c57dd331c99b39496a83681e9f06b6c6170c8f34",
+      "suite": "30 cases / 270 assertions in Release and Debug/Valgrind; standalone shutdown and strict docs pass",
+      "diagnostics": [
+        "definitely lost: 353,944 bytes in 6,415 blocks",
+        "indirectly lost: 0 bytes in 0 blocks",
+        "possibly lost: 1,780 bytes in 31 blocks",
+        "ERROR SUMMARY: 673 errors from 673 contexts (suppressed: 0 from 0)"
+      ],
+      "compiler_warnings": [],
+      "exception_evidence": "python-external-diagnostics-20261002.json"
+    }
+  },
+  "source_sha256": {
+    "src/JavaLoader.cpp": "38e2c5574d7236face2c95856444cfd9ddedde67598faf5c571ff85d67f3b29a",
+    "src/QorePythonProgram.cpp": "9e21ced9376559f644ed11f07f5a4dbc77eebfc6fa1feb2fc3746236df6732db",
+    "src/python-module.cpp": "487746796cc9a4dbdb35879bcca17cf55c236e6df5087d71c2687545742daf0a"
+  }
+}
