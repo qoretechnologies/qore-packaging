@@ -9,7 +9,9 @@
 %endif
 Name: cyrus-sasl-digestmd5
 Version: 2.1.28
-Release: 160000.3.2.qore%{?dist}
+# OBS adds a distribution prefix to Release; keep this fix newer than Leap's plugin.
+Epoch: 1
+Release: 160000.3.3.qore%{?dist}
 Summary: Cyrus SASL DIGEST-MD5 compatibility with private OpenSSL 3 providers
 License: BSD-4-Clause
 URL: https://github.com/cyrusimap/cyrus-sasl
@@ -78,9 +80,13 @@ valgrind --default-suppressions=no --error-exitcode=97 --leak-check=full \
 %files
 %license COPYING
 %doc RPM-NOTES.rst
+%dir %{_libdir}/sasl2
 %{_libdir}/sasl2/libdigestmd5.so*
 
 %changelog
+* Fri Oct 02 2026 David Nichols <david@qore.org> - 1:2.1.28-160000.3.3.qore
+- Own the plugin directory and preserve upgrade ordering with OBS release prefixes.
+
 * Fri Oct 02 2026 David Nichols <david@qore.org> - 2.1.28-160000.3.2.qore
 - Backport private OpenSSL 3 provider loading and initialization error handling.
 - Free fetched ciphers and partial contexts on every failure path.

@@ -38,3 +38,7 @@ remain visible when compiling the plugin or its test. The user approved this
 narrow build-diagnostic exception on 2026-10-02; it does not permit runtime
 warnings, test failures or memory errors. No deprecated cipher implementation
 is rewritten or disabled as part of this compatibility fix.
+
+RPM installation owns the plugin directory explicitly. Epoch 1 ensures the
+backport upgrades Leap's epoch-0 package even when OBS prefixes Release with
+its distribution identifier. The base cyrus-sasl dependency remains unchanged.
