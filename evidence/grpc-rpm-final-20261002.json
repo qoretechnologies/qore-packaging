@@ -1,0 +1,973 @@
+{
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-02",
+  "status": "Canonical builds and installed x86_64 runtime/SDK qualification passed on Fedora 44 and EL10. Leap fixtures, native ARM and repository release gates remain pending. Publication disabled.",
+  "native_commit": "78c5cc7",
+  "packaging_commit": "49a9c976c918e822b1a6ea6054271f09e443af62",
+  "targets": {
+    "fedora": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:4e77906b5026c2edd755a34755cd295a8769ced264aa2e1d5b6a0fc8e77f8b40",
+        "source": {
+          "schema": 1,
+          "commit": "49a9c976c918e822b1a6ea6054271f09e443af62",
+          "source_date_epoch": 1790974680,
+          "name": "qore-grpc-module",
+          "version": "1.0.0",
+          "exclusions": [],
+          "sources": {
+            "qore-grpc-module-1.0.0.tar.xz": "0da57a500404bc313c881d51f76d324e708118c02f87fd49abacb18a468a4547",
+            "qore-grpc-module.spec": "9676c6aa95b1785553d39012047fed3f3d63320c25810cbeb17170200ef9bee6"
+          },
+          "spec": "qore-grpc-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790974680",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/grpc-source-final-1:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-grpc-final-1:/work",
+          "sha256:4e77906b5026c2edd755a34755cd295a8769ced264aa2e1d5b6a0fc8e77f8b40",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-grpc-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-grpc-module-doc-1.0.0-1.fc44.noarch.rpm": "35fb660cb9e75f70ab1fb2336d026db7ff8445c020be4e15287cb45e8d859388",
+          "rpmbuild/RPMS/x86_64/qore-grpc-module-1.0.0-1.fc44.x86_64.rpm": "4cac3aa25e8aa38a41c07bc8445c3d650c33549a3d23e6d5349d24802528ca20",
+          "rpmbuild/RPMS/x86_64/qore-grpc-module-debuginfo-1.0.0-1.fc44.x86_64.rpm": "3fbe2e47a0ecab1519b57752baf890be9744426b7e0adc4c0b63c6ac3cf6ef2c",
+          "rpmbuild/RPMS/x86_64/qore-grpc-module-debugsource-1.0.0-1.fc44.x86_64.rpm": "dbab86b484135b47d01d48bfaa84f43d05e80f98f7195e8f48058e1dd851495b",
+          "rpmbuild/SRPMS/qore-grpc-module-1.0.0-1.fc44.src.rpm": "c392f7f4a8c41d29d0d32ef9ac8d1479d39fd32ec2b259456162e8c060a36063"
+        }
+      },
+      "installed": {
+        "build": {
+          "schema": 1,
+          "image": "sha256:4e77906b5026c2edd755a34755cd295a8769ced264aa2e1d5b6a0fc8e77f8b40",
+          "source": {
+            "schema": 1,
+            "commit": "49a9c976c918e822b1a6ea6054271f09e443af62",
+            "source_date_epoch": 1790974680,
+            "name": "qore-grpc-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-grpc-module-1.0.0.tar.xz": "0da57a500404bc313c881d51f76d324e708118c02f87fd49abacb18a468a4547",
+              "qore-grpc-module.spec": "9676c6aa95b1785553d39012047fed3f3d63320c25810cbeb17170200ef9bee6"
+            },
+            "spec": "qore-grpc-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790974680",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/grpc-source-final-1:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/fedora-grpc-final-1:/work",
+            "sha256:4e77906b5026c2edd755a34755cd295a8769ced264aa2e1d5b6a0fc8e77f8b40",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-grpc-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-grpc-module-doc-1.0.0-1.fc44.noarch.rpm": "35fb660cb9e75f70ab1fb2336d026db7ff8445c020be4e15287cb45e8d859388",
+            "rpmbuild/RPMS/x86_64/qore-grpc-module-1.0.0-1.fc44.x86_64.rpm": "4cac3aa25e8aa38a41c07bc8445c3d650c33549a3d23e6d5349d24802528ca20",
+            "rpmbuild/RPMS/x86_64/qore-grpc-module-debuginfo-1.0.0-1.fc44.x86_64.rpm": "3fbe2e47a0ecab1519b57752baf890be9744426b7e0adc4c0b63c6ac3cf6ef2c",
+            "rpmbuild/RPMS/x86_64/qore-grpc-module-debugsource-1.0.0-1.fc44.x86_64.rpm": "dbab86b484135b47d01d48bfaa84f43d05e80f98f7195e8f48058e1dd851495b",
+            "rpmbuild/SRPMS/qore-grpc-module-1.0.0-1.fc44.src.rpm": "c392f7f4a8c41d29d0d32ef9ac8d1479d39fd32ec2b259456162e8c060a36063"
+          }
+        },
+        "steps": [
+          {
+            "name": "runtime-install",
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-fedora-grpc-installed-final-1-runtime",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-grpc-final-1:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-final-9-process:/process:ro",
+              "sha256:adb0e0cb4306f4749c79fdd397dbf184270765ba9bad80151163d41efdb31712",
+              "sh",
+              "-c",
+              "set -eu\ndnf -y --setopt=install_weak_deps=False install \"$@\"\nrpm -U --replacepkgs --includedocs /rpms/rpmbuild/RPMS/noarch/qore-grpc-module-doc-*.rpm\n",
+              "install",
+              "/rpms/rpmbuild/RPMS/noarch/qore-grpc-module-doc-1.0.0-1.fc44.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-grpc-module-1.0.0-1.fc44.x86_64.rpm",
+              "/process/rpmbuild/RPMS/x86_64/qore-process-module-2.1.0-1.fc44.x86_64.rpm",
+              "python3-grpcio",
+              "python3-grpcio-tools",
+              "python3-pyarrow"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-tests",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/fedora-grpc-installed-final-1/qore-grpc-module-1.0.0:/fixture",
+              "-w",
+              "/fixture",
+              "sha256:cb8a2b68f79b558dbce9564a929df2ed77ed12a64562057c14c471b23e461916",
+              "sh",
+              "-c",
+              "set -eu\nfor p in qore-devel gcc gcc-c++; do if rpm -q \"$p\"; then exit 1; fi; done\nset -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-grpc-module qore-grpc-module-doc\npython3 -c 'import grpc, grpc_tools.protoc, pyarrow.flight'\nexport QORE_GRPC_TEST_MODULE_DIR=/usr/lib64/qore-modules\nexport QORE_GRPC_TEST_QMOD_DIR=/usr/lib64/qore-modules\npython3 -m grpc_tools.protoc -Itest --python_out=test/interop --grpc_python_out=test/interop test/test.proto\nfor suite in test/*.qtest; do\n  timeout 600 qore -b --enable-debug -l /usr/lib64/qore-modules/grpc-api-2.0.qmod \\\n    -l /usr/lib64/qore-modules/GrpcUtil/GrpcUtil.qmod \\\n    -l /usr/lib64/qore-modules/GrpcDataProvider/GrpcDataProvider.qmod \\\n    -l /usr/lib64/qore-modules/ArrowFlightDataProvider/ArrowFlightDataProvider.qmod \\\n    -l /usr/lib64/qore-modules/SalesforcePubSubDataProvider/SalesforcePubSubDataProvider.qmod \"$suite\" -v\ndone\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-install",
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-fedora-grpc-installed-final-1-sdk",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-grpc-final-1:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-final-9-process:/process:ro",
+              "sha256:4e77906b5026c2edd755a34755cd295a8769ced264aa2e1d5b6a0fc8e77f8b40",
+              "sh",
+              "-c",
+              "set -eu\ndnf -y --setopt=install_weak_deps=False install \"$@\"\nrpm -U --replacepkgs --includedocs /rpms/rpmbuild/RPMS/noarch/qore-grpc-module-doc-*.rpm\n",
+              "install",
+              "/rpms/rpmbuild/RPMS/noarch/qore-grpc-module-doc-1.0.0-1.fc44.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-grpc-module-1.0.0-1.fc44.x86_64.rpm",
+              "/process/rpmbuild/RPMS/x86_64/qore-process-module-2.1.0-1.fc44.x86_64.rpm",
+              "python3-grpcio",
+              "python3-grpcio-tools",
+              "python3-pyarrow"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-tests",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/fedora-grpc-installed-final-1/qore-grpc-module-1.0.0:/fixture",
+              "-w",
+              "/fixture",
+              "sha256:82ee42a924e9b83b654640848aec36547f01d3a7dd9da39fd7811511f0e34fb8",
+              "sh",
+              "-c",
+              "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-grpc-module qore-grpc-module-doc\npython3 -c 'import grpc, grpc_tools.protoc, pyarrow.flight'\nexport QORE_GRPC_TEST_MODULE_DIR=/usr/lib64/qore-modules\nexport QORE_GRPC_TEST_QMOD_DIR=/usr/lib64/qore-modules\npython3 -m grpc_tools.protoc -Itest --python_out=test/interop --grpc_python_out=test/interop test/test.proto\nfor suite in test/*.qtest; do\n  timeout 600 qore -b --enable-debug -l /usr/lib64/qore-modules/grpc-api-2.0.qmod \\\n    -l /usr/lib64/qore-modules/GrpcUtil/GrpcUtil.qmod \\\n    -l /usr/lib64/qore-modules/GrpcDataProvider/GrpcDataProvider.qmod \\\n    -l /usr/lib64/qore-modules/ArrowFlightDataProvider/ArrowFlightDataProvider.qmod \\\n    -l /usr/lib64/qore-modules/SalesforcePubSubDataProvider/SalesforcePubSubDataProvider.qmod \"$suite\" -v\ndone\n"
+            ],
+            "exit_code": 0
+          }
+        ],
+        "runtime_image": "sha256:cb8a2b68f79b558dbce9564a929df2ed77ed12a64562057c14c471b23e461916",
+        "sdk_image": "sha256:82ee42a924e9b83b654640848aec36547f01d3a7dd9da39fd7811511f0e34fb8",
+        "exit_code": 0
+      },
+      "artifacts": {
+        "steps": [
+          {
+            "name": "sdk",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/fedora-grpc-final-artifacts-1:/work",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-grpc-final-1:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore/rpm/preserve-aot-metadata.py:/aot.py:ro",
+              "-w",
+              "/work",
+              "sha256:82ee42a924e9b83b654640848aec36547f01d3a7dd9da39fd7811511f0e34fb8",
+              "sh",
+              "-c",
+              "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nqcc -o consumer consumer.qr\n./consumer\npython3 -B -W error - <<'CHECK'\nimport importlib.util,pathlib,subprocess\nspec=importlib.util.spec_from_file_location('aot','/aot.py');aot=importlib.util.module_from_spec(spec);spec.loader.exec_module(aot)\nfor name in ['GrpcUtil','GrpcDataProvider','ArrowFlightDataProvider','SalesforcePubSubDataProvider']:\n p=pathlib.Path('/usr/lib64/qore-modules')/name/(name+'.qmod')\n trailers=aot.read_trailers(p);assert trailers,(name,'missing AOT trailers')\n assert b'QAMD' in trailers,(name,'missing metadata')\n sections=subprocess.check_output(['readelf','-S',str(p)],text=True)\n assert '.gnu_debuglink' in sections and '.debug_info' not in sections,name\n print(name,'AOT trailers preserved:',len(trailers),'bytes; separate debug link present')\nroot=pathlib.Path('/work/payload');root.mkdir()\npackages=list(pathlib.Path('/rpms/rpmbuild/RPMS').rglob('*-debug*.rpm'));assert packages\nfor p in packages:\n payload=subprocess.check_output(['rpm2cpio',str(p)])\n subprocess.run(['cpio','-idm','--quiet'],input=payload,cwd=root,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=True)\nfor name in ['GrpcUtil','GrpcDataProvider','ArrowFlightDataProvider','SalesforcePubSubDataProvider']:\n assert list(root.glob('usr/src/debug/**/'+name+'.qm')),name\n debug=list(root.glob('usr/lib/debug/**/'+name+'.qmod-*.debug'));assert len(debug)==1,(name,debug)\n sections=subprocess.check_output(['readelf','-S',str(debug[0])],text=True)\n assert '.debug_info' in sections,name\n print(name,'debug symbols and Qore sources included')\nCHECK\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/fedora-grpc-final-artifacts-1:/work",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-grpc-final-1:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore/rpm/preserve-aot-metadata.py:/aot.py:ro",
+              "-w",
+              "/work",
+              "sha256:cb8a2b68f79b558dbce9564a929df2ed77ed12a64562057c14c471b23e461916",
+              "sh",
+              "-c",
+              "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nfor p in qore-devel gcc gcc-c++; do if rpm -q \"$p\"; then exit 1; fi; done\n./consumer\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "fixture-control",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/fedora-grpc-final-artifacts-1:/work",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-grpc-final-1:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore/rpm/preserve-aot-metadata.py:/aot.py:ro",
+              "-w",
+              "/work",
+              "sha256:82ee42a924e9b83b654640848aec36547f01d3a7dd9da39fd7811511f0e34fb8",
+              "sh",
+              "-c",
+              "python3 -W always -c 'import grpc_tools.protoc; print(\"standalone compiler import succeeded\")' "
+            ],
+            "exit_code": 0
+          }
+        ],
+        "exit_code": 0,
+        "consumer_source": "%modern\n%requires grpc\n%requires GrpcUtil\n%requires GrpcDataProvider\n%requires ArrowFlightDataProvider\n%requires SalesforcePubSubDataProvider\nArrowSchema schema(({\"name\": \"id\", \"type\": \"int64\", \"nullable\": False},));\nArrowRecordBatch batch(schema, {\"id\": (1, 2, 3)});\nif (batch.numRows() != 3) { throw \"PACKAGE-ERROR\", \"incorrect record count\"; }\nprintf(\"packaged gRPC consumer: %d rows\\n\", batch.numRows());\n",
+        "consumer_sha256": "d5e6a3e68dd6889fe5ab1f03285b10e356cc443755a96c27431445db4e17f4cb"
+      },
+      "suites": {
+        "runtime": {
+          "suites": 13,
+          "registered_cases": 378,
+          "assertions": 1768,
+          "raw_counts": [
+            [
+              "25",
+              "25",
+              "129"
+            ],
+            [
+              "43",
+              "43",
+              "184"
+            ],
+            [
+              "9",
+              "9",
+              "31"
+            ],
+            [
+              "22",
+              "22",
+              "86"
+            ],
+            [
+              "54",
+              "54",
+              "223"
+            ],
+            [
+              "29",
+              "29",
+              "164"
+            ],
+            [
+              "7",
+              "7",
+              "21"
+            ],
+            [
+              "19",
+              "19",
+              "94"
+            ],
+            [
+              "19",
+              "19",
+              "51"
+            ],
+            [
+              "12",
+              "12",
+              "94"
+            ],
+            [
+              "11",
+              "11",
+              "38"
+            ],
+            [
+              "89",
+              "89",
+              "297"
+            ],
+            [
+              "39",
+              "39",
+              "356"
+            ]
+          ]
+        },
+        "sdk": {
+          "suites": 13,
+          "registered_cases": 378,
+          "assertions": 1768,
+          "raw_counts": [
+            [
+              "25",
+              "25",
+              "129"
+            ],
+            [
+              "43",
+              "43",
+              "184"
+            ],
+            [
+              "9",
+              "9",
+              "31"
+            ],
+            [
+              "22",
+              "22",
+              "86"
+            ],
+            [
+              "54",
+              "54",
+              "223"
+            ],
+            [
+              "29",
+              "29",
+              "164"
+            ],
+            [
+              "7",
+              "7",
+              "21"
+            ],
+            [
+              "19",
+              "19",
+              "94"
+            ],
+            [
+              "19",
+              "19",
+              "51"
+            ],
+            [
+              "12",
+              "12",
+              "94"
+            ],
+            [
+              "11",
+              "11",
+              "38"
+            ],
+            [
+              "89",
+              "89",
+              "297"
+            ],
+            [
+              "39",
+              "39",
+              "356"
+            ]
+          ]
+        }
+      }
+    },
+    "el10": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:f7defd82fdad1e43abfcb0aa60b0a4d8dc99279b1ddbbc057f51778aba3398ee",
+        "source": {
+          "schema": 1,
+          "commit": "49a9c976c918e822b1a6ea6054271f09e443af62",
+          "source_date_epoch": 1790974680,
+          "name": "qore-grpc-module",
+          "version": "1.0.0",
+          "exclusions": [],
+          "sources": {
+            "qore-grpc-module-1.0.0.tar.xz": "0da57a500404bc313c881d51f76d324e708118c02f87fd49abacb18a468a4547",
+            "qore-grpc-module.spec": "9676c6aa95b1785553d39012047fed3f3d63320c25810cbeb17170200ef9bee6"
+          },
+          "spec": "qore-grpc-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790974680",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/grpc-source-final-1:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-grpc-final-1:/work",
+          "sha256:f7defd82fdad1e43abfcb0aa60b0a4d8dc99279b1ddbbc057f51778aba3398ee",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-grpc-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-grpc-module-doc-1.0.0-1.el10.noarch.rpm": "ead690c2da4702e0d7e8b9bb1200b9e8fb6121fce0abb86f1803b02cca29ea4d",
+          "rpmbuild/RPMS/x86_64/qore-grpc-module-1.0.0-1.el10.x86_64.rpm": "2b092cccfd627af75176e709efdcde1604a49e5e23ea5bc6c72843a3d397b9fe",
+          "rpmbuild/RPMS/x86_64/qore-grpc-module-debuginfo-1.0.0-1.el10.x86_64.rpm": "0699afb2f1453eb6e26047c7b77896aea6d87293dab0c14e89278fa444a14f5b",
+          "rpmbuild/RPMS/x86_64/qore-grpc-module-debugsource-1.0.0-1.el10.x86_64.rpm": "5fb205c5491bf663de39d33c2941920beb845ffa6c63e4070b3c9faaf0e89457",
+          "rpmbuild/SRPMS/qore-grpc-module-1.0.0-1.el10.src.rpm": "39411b065886f9e382c880e605a2a9fa89175930946885c4148e1fd6e19ea334"
+        }
+      },
+      "installed": {
+        "build": {
+          "schema": 1,
+          "image": "sha256:f7defd82fdad1e43abfcb0aa60b0a4d8dc99279b1ddbbc057f51778aba3398ee",
+          "source": {
+            "schema": 1,
+            "commit": "49a9c976c918e822b1a6ea6054271f09e443af62",
+            "source_date_epoch": 1790974680,
+            "name": "qore-grpc-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-grpc-module-1.0.0.tar.xz": "0da57a500404bc313c881d51f76d324e708118c02f87fd49abacb18a468a4547",
+              "qore-grpc-module.spec": "9676c6aa95b1785553d39012047fed3f3d63320c25810cbeb17170200ef9bee6"
+            },
+            "spec": "qore-grpc-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790974680",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/grpc-source-final-1:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/el10-grpc-final-1:/work",
+            "sha256:f7defd82fdad1e43abfcb0aa60b0a4d8dc99279b1ddbbc057f51778aba3398ee",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-grpc-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-grpc-module-doc-1.0.0-1.el10.noarch.rpm": "ead690c2da4702e0d7e8b9bb1200b9e8fb6121fce0abb86f1803b02cca29ea4d",
+            "rpmbuild/RPMS/x86_64/qore-grpc-module-1.0.0-1.el10.x86_64.rpm": "2b092cccfd627af75176e709efdcde1604a49e5e23ea5bc6c72843a3d397b9fe",
+            "rpmbuild/RPMS/x86_64/qore-grpc-module-debuginfo-1.0.0-1.el10.x86_64.rpm": "0699afb2f1453eb6e26047c7b77896aea6d87293dab0c14e89278fa444a14f5b",
+            "rpmbuild/RPMS/x86_64/qore-grpc-module-debugsource-1.0.0-1.el10.x86_64.rpm": "5fb205c5491bf663de39d33c2941920beb845ffa6c63e4070b3c9faaf0e89457",
+            "rpmbuild/SRPMS/qore-grpc-module-1.0.0-1.el10.src.rpm": "39411b065886f9e382c880e605a2a9fa89175930946885c4148e1fd6e19ea334"
+          }
+        },
+        "steps": [
+          {
+            "name": "runtime-install",
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-el10-grpc-installed-final-1-runtime",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-grpc-final-1:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-wave-1-process:/process:ro",
+              "sha256:194a5f6ed5b3a2466f9eeb69920a5d308a84c2f8b09bc7522e11223546316c1d",
+              "sh",
+              "-c",
+              "set -eu\ndnf -y --setopt=install_weak_deps=False install \"$@\"\nrpm -U --replacepkgs --includedocs /rpms/rpmbuild/RPMS/noarch/qore-grpc-module-doc-*.rpm\n",
+              "install",
+              "/rpms/rpmbuild/RPMS/noarch/qore-grpc-module-doc-1.0.0-1.el10.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-grpc-module-1.0.0-1.el10.x86_64.rpm",
+              "/process/rpmbuild/RPMS/x86_64/qore-process-module-2.1.0-1.el10.x86_64.rpm",
+              "python3-grpcio",
+              "python3-grpcio-tools",
+              "python3-pyarrow"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-tests",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/el10-grpc-installed-final-1/qore-grpc-module-1.0.0:/fixture",
+              "-w",
+              "/fixture",
+              "sha256:dde31e487920df7e056e0aee71681128c1162b9864d83316be9fa02bb0a0e355",
+              "sh",
+              "-c",
+              "set -eu\nfor p in qore-devel gcc gcc-c++; do if rpm -q \"$p\"; then exit 1; fi; done\nset -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-grpc-module qore-grpc-module-doc\npython3 -c 'import grpc, grpc_tools.protoc, pyarrow.flight'\nexport QORE_GRPC_TEST_MODULE_DIR=/usr/lib64/qore-modules\nexport QORE_GRPC_TEST_QMOD_DIR=/usr/lib64/qore-modules\npython3 -m grpc_tools.protoc -Itest --python_out=test/interop --grpc_python_out=test/interop test/test.proto\nfor suite in test/*.qtest; do\n  timeout 600 qore -b --enable-debug -l /usr/lib64/qore-modules/grpc-api-2.0.qmod \\\n    -l /usr/lib64/qore-modules/GrpcUtil/GrpcUtil.qmod \\\n    -l /usr/lib64/qore-modules/GrpcDataProvider/GrpcDataProvider.qmod \\\n    -l /usr/lib64/qore-modules/ArrowFlightDataProvider/ArrowFlightDataProvider.qmod \\\n    -l /usr/lib64/qore-modules/SalesforcePubSubDataProvider/SalesforcePubSubDataProvider.qmod \"$suite\" -v\ndone\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-install",
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-el10-grpc-installed-final-1-sdk",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-grpc-final-1:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-wave-1-process:/process:ro",
+              "sha256:f7defd82fdad1e43abfcb0aa60b0a4d8dc99279b1ddbbc057f51778aba3398ee",
+              "sh",
+              "-c",
+              "set -eu\ndnf -y --setopt=install_weak_deps=False install \"$@\"\nrpm -U --replacepkgs --includedocs /rpms/rpmbuild/RPMS/noarch/qore-grpc-module-doc-*.rpm\n",
+              "install",
+              "/rpms/rpmbuild/RPMS/noarch/qore-grpc-module-doc-1.0.0-1.el10.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-grpc-module-1.0.0-1.el10.x86_64.rpm",
+              "/process/rpmbuild/RPMS/x86_64/qore-process-module-2.1.0-1.el10.x86_64.rpm",
+              "python3-grpcio",
+              "python3-grpcio-tools",
+              "python3-pyarrow"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-tests",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/el10-grpc-installed-final-1/qore-grpc-module-1.0.0:/fixture",
+              "-w",
+              "/fixture",
+              "sha256:c1556700064b7f6af0490dc9992556fbcff386e698c9af4a3d48e7d289a538b6",
+              "sh",
+              "-c",
+              "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-grpc-module qore-grpc-module-doc\npython3 -c 'import grpc, grpc_tools.protoc, pyarrow.flight'\nexport QORE_GRPC_TEST_MODULE_DIR=/usr/lib64/qore-modules\nexport QORE_GRPC_TEST_QMOD_DIR=/usr/lib64/qore-modules\npython3 -m grpc_tools.protoc -Itest --python_out=test/interop --grpc_python_out=test/interop test/test.proto\nfor suite in test/*.qtest; do\n  timeout 600 qore -b --enable-debug -l /usr/lib64/qore-modules/grpc-api-2.0.qmod \\\n    -l /usr/lib64/qore-modules/GrpcUtil/GrpcUtil.qmod \\\n    -l /usr/lib64/qore-modules/GrpcDataProvider/GrpcDataProvider.qmod \\\n    -l /usr/lib64/qore-modules/ArrowFlightDataProvider/ArrowFlightDataProvider.qmod \\\n    -l /usr/lib64/qore-modules/SalesforcePubSubDataProvider/SalesforcePubSubDataProvider.qmod \"$suite\" -v\ndone\n"
+            ],
+            "exit_code": 0
+          }
+        ],
+        "runtime_image": "sha256:dde31e487920df7e056e0aee71681128c1162b9864d83316be9fa02bb0a0e355",
+        "sdk_image": "sha256:c1556700064b7f6af0490dc9992556fbcff386e698c9af4a3d48e7d289a538b6",
+        "exit_code": 0
+      },
+      "artifacts": {
+        "steps": [
+          {
+            "name": "sdk",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/el10-grpc-final-artifacts-1:/work",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-grpc-final-1:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore/rpm/preserve-aot-metadata.py:/aot.py:ro",
+              "-w",
+              "/work",
+              "sha256:c1556700064b7f6af0490dc9992556fbcff386e698c9af4a3d48e7d289a538b6",
+              "sh",
+              "-c",
+              "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nqcc -o consumer consumer.qr\n./consumer\npython3 -B -W error - <<'CHECK'\nimport importlib.util,pathlib,subprocess\nspec=importlib.util.spec_from_file_location('aot','/aot.py');aot=importlib.util.module_from_spec(spec);spec.loader.exec_module(aot)\nfor name in ['GrpcUtil','GrpcDataProvider','ArrowFlightDataProvider','SalesforcePubSubDataProvider']:\n p=pathlib.Path('/usr/lib64/qore-modules')/name/(name+'.qmod')\n trailers=aot.read_trailers(p);assert trailers,(name,'missing AOT trailers')\n assert b'QAMD' in trailers,(name,'missing metadata')\n sections=subprocess.check_output(['readelf','-S',str(p)],text=True)\n assert '.gnu_debuglink' in sections and '.debug_info' not in sections,name\n print(name,'AOT trailers preserved:',len(trailers),'bytes; separate debug link present')\nroot=pathlib.Path('/work/payload');root.mkdir()\npackages=list(pathlib.Path('/rpms/rpmbuild/RPMS').rglob('*-debug*.rpm'));assert packages\nfor p in packages:\n payload=subprocess.check_output(['rpm2cpio',str(p)])\n subprocess.run(['cpio','-idm','--quiet'],input=payload,cwd=root,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=True)\nfor name in ['GrpcUtil','GrpcDataProvider','ArrowFlightDataProvider','SalesforcePubSubDataProvider']:\n assert list(root.glob('usr/src/debug/**/'+name+'.qm')),name\n debug=list(root.glob('usr/lib/debug/**/'+name+'.qmod-*.debug'));assert len(debug)==1,(name,debug)\n sections=subprocess.check_output(['readelf','-S',str(debug[0])],text=True)\n assert '.debug_info' in sections,name\n print(name,'debug symbols and Qore sources included')\nCHECK\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/el10-grpc-final-artifacts-1:/work",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-grpc-final-1:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore/rpm/preserve-aot-metadata.py:/aot.py:ro",
+              "-w",
+              "/work",
+              "sha256:dde31e487920df7e056e0aee71681128c1162b9864d83316be9fa02bb0a0e355",
+              "sh",
+              "-c",
+              "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nfor p in qore-devel gcc gcc-c++; do if rpm -q \"$p\"; then exit 1; fi; done\n./consumer\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "fixture-control",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/el10-grpc-final-artifacts-1:/work",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-grpc-final-1:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore/rpm/preserve-aot-metadata.py:/aot.py:ro",
+              "-w",
+              "/work",
+              "sha256:c1556700064b7f6af0490dc9992556fbcff386e698c9af4a3d48e7d289a538b6",
+              "sh",
+              "-c",
+              "python3 -W always -c 'import grpc_tools.protoc; print(\"standalone compiler import succeeded\")' "
+            ],
+            "exit_code": 0
+          }
+        ],
+        "exit_code": 0,
+        "consumer_source": "%modern\n%requires grpc\n%requires GrpcUtil\n%requires GrpcDataProvider\n%requires ArrowFlightDataProvider\n%requires SalesforcePubSubDataProvider\nArrowSchema schema(({\"name\": \"id\", \"type\": \"int64\", \"nullable\": False},));\nArrowRecordBatch batch(schema, {\"id\": (1, 2, 3)});\nif (batch.numRows() != 3) { throw \"PACKAGE-ERROR\", \"incorrect record count\"; }\nprintf(\"packaged gRPC consumer: %d rows\\n\", batch.numRows());\n",
+        "consumer_sha256": "02526cd3e0762be59aa82e947ea85c8b6e50fa32f2dea109688f241e735b7743"
+      },
+      "suites": {
+        "runtime": {
+          "suites": 13,
+          "registered_cases": 378,
+          "assertions": 1768,
+          "raw_counts": [
+            [
+              "25",
+              "25",
+              "129"
+            ],
+            [
+              "43",
+              "43",
+              "184"
+            ],
+            [
+              "9",
+              "9",
+              "31"
+            ],
+            [
+              "22",
+              "22",
+              "86"
+            ],
+            [
+              "54",
+              "54",
+              "223"
+            ],
+            [
+              "29",
+              "29",
+              "164"
+            ],
+            [
+              "7",
+              "7",
+              "21"
+            ],
+            [
+              "19",
+              "19",
+              "94"
+            ],
+            [
+              "19",
+              "19",
+              "51"
+            ],
+            [
+              "12",
+              "12",
+              "94"
+            ],
+            [
+              "11",
+              "11",
+              "38"
+            ],
+            [
+              "89",
+              "89",
+              "297"
+            ],
+            [
+              "39",
+              "39",
+              "356"
+            ]
+          ]
+        },
+        "sdk": {
+          "suites": 13,
+          "registered_cases": 378,
+          "assertions": 1768,
+          "raw_counts": [
+            [
+              "25",
+              "25",
+              "129"
+            ],
+            [
+              "43",
+              "43",
+              "184"
+            ],
+            [
+              "9",
+              "9",
+              "31"
+            ],
+            [
+              "22",
+              "22",
+              "86"
+            ],
+            [
+              "54",
+              "54",
+              "223"
+            ],
+            [
+              "29",
+              "29",
+              "164"
+            ],
+            [
+              "7",
+              "7",
+              "21"
+            ],
+            [
+              "19",
+              "19",
+              "94"
+            ],
+            [
+              "19",
+              "19",
+              "51"
+            ],
+            [
+              "12",
+              "12",
+              "94"
+            ],
+            [
+              "11",
+              "11",
+              "38"
+            ],
+            [
+              "89",
+              "89",
+              "297"
+            ],
+            [
+              "39",
+              "39",
+              "356"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "logs_sha256": {
+    "results/fedora-grpc-final-1/build.log": "4141d90695d5f57d50c0665d5cadbe06d4160846e0ed96f3d1aea178e6c800b4",
+    "results/fedora-grpc-final-1-installed/sdk-install.log": "03c029db83619f94cbcb9a74088cdd539526a41df65b2c19a6064d50e2666ea0",
+    "results/fedora-grpc-final-1-installed/sdk-tests.log": "5518fd69c59c87749c4dac68292313e7931a913e97b8b9aa848e43c35c9cdfe7",
+    "results/fedora-grpc-final-1-installed/runtime-install.log": "28318f30815bd10a92b77df31b502a6429b90ff712d47c98e99782e763dc674a",
+    "results/fedora-grpc-final-1-installed/runtime-tests.log": "7c7b54d1ca3ff32192f7d6f214d601fe44bfb70d99e8d47860474b99c43e1be4",
+    "results/fedora-grpc-final-artifacts-1/sdk.log": "0a670e1991b0cb0858a63a0b5a9d7acb419e29bc548e1b224f626b026e757e9c",
+    "results/fedora-grpc-final-artifacts-1/runtime.log": "886c82c69af4657725be77e684d2ec1d1dfe91420dc7e395694d7395de0121ec",
+    "results/fedora-grpc-final-artifacts-1/fixture-control.log": "fc8c1e0df313e55d8b51197a99235ba873e0adacbe11453ffaecf8ac8d71098f",
+    "results/el10-grpc-final-1/build.log": "0c5ef7aa0f0ae43fef81183e3f4e630ed217f9c87ec16d73e52aac9da9aebc11",
+    "results/el10-grpc-final-1-installed/sdk-install.log": "57b409b4c6d33b1a5ffcedcf5dac3074cbad84b5a7a15af9c929cdf8be734034",
+    "results/el10-grpc-final-1-installed/sdk-tests.log": "7fef713a82a227c7dab140fb0c2f82cec7c1de76664d90bcd1f56f81378498bb",
+    "results/el10-grpc-final-1-installed/runtime-install.log": "1e5949c79a74aafdb8f7e233464535bd46108bd773de078f9f281579b2385dd8",
+    "results/el10-grpc-final-1-installed/runtime-tests.log": "b83999496084a21a98e5dc91668947f4fa4c1572166f0da4e53184f11e1a4b53",
+    "results/el10-grpc-final-artifacts-1/sdk.log": "825e36babe31e5667b8720631ce0bf0f4aa521d0f4eb76280ebcf5cc11648ed2",
+    "results/el10-grpc-final-artifacts-1/runtime.log": "886c82c69af4657725be77e684d2ec1d1dfe91420dc7e395694d7395de0121ec",
+    "results/el10-grpc-final-artifacts-1/fixture-control.log": "c45fadfeda667411d4fdfad13c214c50e8694441f6e17d078c24676190fb63c3"
+  },
+  "diagnostics": {
+    "grpc_tools": "Approved distribution fixture pkg_resources deprecation; independent Python imports reproduce it on both targets. No filtering or downgrade. -W always control also reports namespace-declaration deprecations within the same deprecated package.",
+    "debugedit": "The distribution debug editor reports the retained LLVM .debug_names section. All four packaged modules preserve their AOT trailer, separate .debug_info, debug links and Qore source files; compiled consumers pass without development packages. Shared Qore RPM policy retains that section and disables unsupported DWZ processing.",
+    "optional_skips": "Two grpcurl comparisons (tool absent), five live Salesforce account cases. Required offline gRPC/Flight/PyArrow interoperation runs."
+  },
+  "obs": {
+    "qore-grpc-module": {
+      "source_commit": "49a9c976c918e822b1a6ea6054271f09e443af62",
+      "revision": "1",
+      "srcmd5": "829afc517d0f2eb65e0cfcf29bd5bf93",
+      "verified_files": {
+        "qore-grpc-module-1.0.0.tar.xz": "5b3779c64da44d2ceedef619ab20bf6a",
+        "qore-grpc-module.spec": "e04171e9749c96951d6bc000937208b1",
+        "source-manifest.json": "1617d6343bf50aded19b3d045817fb43"
+      }
+    }
+  },
+  "limitations": [
+    "Installed Fedora/EL runtime checks use the tested core20 candidate image; build and SDK checks use canonical core19. Core20 canonical and combined repository installation remain separate gates.",
+    "OBS sources verified; the remote build result is not yet claimed. Only two x86_64 targets enabled.",
+    "Leap Flight backport is building; PyArrow and grpcio-tools packaging remain pending."
+  ]
+}

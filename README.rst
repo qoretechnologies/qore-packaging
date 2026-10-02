@@ -148,14 +148,14 @@ qualified package count. The corresponding Qore PostgreSQL native-array versus
 JDBC-batch correction is recorded in
 ``evidence/core-pgsql-bulk-protocols-20261002.json`` and awaits a new core RPM build.
 
-gRPC packaging is committed and passes candidate builds and installed runtime/SDK
+gRPC packaging is committed and passes canonical builds and installed runtime/SDK
 checks on Fedora 44 and EL10. Each installation runs 13 suites and 1,768 assertions,
 including required Python gRPC and PyArrow Flight interoperation. Compiled consumers
 run without the SDK; AOT trailers, separate symbols and Qore debug sources are
 verified. The distribution grpc_tools deprecation retains its approved exception.
-Canonical builds are running. Leap needs PyArrow Flight and grpcio-tools fixtures;
+OBS sources are verified with publication disabled. Leap needs PyArrow Flight and grpcio-tools fixtures;
 gRPC is not yet in the three-distribution qualified count. See
-``evidence/grpc-rpm-candidate-20261002.json``.
+``evidence/grpc-rpm-final-20261002.json``.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is
