@@ -1,0 +1,348 @@
+{
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-02",
+  "status": "User approved this documented exception on 2026-10-02. Raw Valgrind exits remain 97; no blanket suppression is used.",
+  "image": "sha256:c9f96a5a805a4f403256be08f11349bdd7654aea6dd450e2d799e7be84b7bd8c",
+  "settings": {
+    "qore": "-b --enable-debug",
+    "QORE_PCRE2_NO_JIT": "1",
+    "jvm": "-Xint -XX:-UseCompressedOops -Xshare:off -XX:+UseSerialGC -Xcheck:jni",
+    "valgrind": "--leak-check=full --show-leak-kinds=definite,indirect,possible --errors-for-leak-kinds=definite,indirect --error-exitcode=97 --num-callers=30 --track-origins=yes --error-limit=no --max-stackframe=8388608",
+    "suppressions": "None; no ignore-below-stack-pointer or undefined-value suppression."
+  },
+  "causes": {
+    "perf_memory": "39 bytes: PerfMemory retains its backing-store filename at shutdown to avoid freeing heap memory from a signal-handler abort path. Standalone JVM controls reproduce it.",
+    "watcher_thread": "1120 direct and 2691 indirect bytes: WatcherThread is allocated at VM creation and is not deleted at shutdown. Upstream explicitly applies LSAN_IGNORE_OBJECT before clearing its pointer. The exact indirect graph, including a recycled 1008-byte Arena chunk, is reproduced by the standalone controls.",
+    "glibc_loader": "0, 72 or 200 bytes: deferred loader scope/dependency arrays allocated by _dl_map_object_deps and resize_scopes. With another thread alive, glibc queues old arrays; __rtld_libc_freeres frees the queue container without freeing its entries. Control 3 reproduces the maximum 200 bytes without Qore. Same source mechanism as the previously approved Python loader issue, with separately recorded sizes.",
+    "possible_pools": "All possible-loss stacks originate in JVM OopStorage::try_add_block, ParkEvent::Allocate, or JVM-created thread TLS allocate_dtv. OopStorage overallocates and aligns blocks, keeping interior pointers; releasing an entry defers empty-block reclamation. ParkEvent objects are explicitly immortal aligned allocations. Control 5 creates and deletes all 2000 JNI global references, yet reports these same allocation origins after DestroyJavaVM. Quantities vary with loaded classes/threads; this comparison is not a claim of equal byte totals or proof against Java heap growth.",
+    "stack_probes": "JVM generated interpreter code writes four bytes below the current stack pointer at page intervals to commit/check the shadow zone. All four bridge logs have 248 such reported contexts, with no other invalid-write category.",
+    "readability_probes": "os::is_readable_range aligns addresses down to page boundaries and uses SafeFetch32 to probe mapped pages, intentionally reading outside the logical bounds/defined contents of individual heap objects. Each bridge log has 12 contexts from this exact path.",
+    "control_only_ioctl": "Standalone socket control 3 additionally triggers libnet enumIPv4Interfaces diagnostics. Its first SIOCGIFCONF query uses a null buffer to ask for the required length; Linux inet_gifconf does not consume the input length in that case. Valgrind treats the uninitialized input length as consumed, then propagates undefinedness to allocation and the second ioctl. These contexts do not occur in the four bridge regressions and do not authorize unrelated uninitialized reads."
+  },
+  "sources": [
+    "https://github.com/openjdk/jdk25u/blob/master/src/hotspot/os/posix/perfMemory_posix.cpp",
+    "https://github.com/openjdk/jdk25u/blob/master/src/hotspot/share/runtime/nonJavaThread.cpp",
+    "https://github.com/openjdk/jdk25u/blob/master/src/hotspot/share/runtime/os.cpp",
+    "https://github.com/openjdk/jdk25u/blob/master/src/hotspot/cpu/x86/templateInterpreterGenerator_x86.cpp",
+    "https://github.com/openjdk/jdk25u/blob/master/src/hotspot/share/gc/shared/oopStorage.cpp",
+    "https://github.com/openjdk/jdk25u/blob/master/src/hotspot/share/runtime/park.cpp",
+    "https://github.com/bminor/glibc/blob/master/elf/dl-scope.c",
+    "https://github.com/bminor/glibc/blob/master/elf/dl-libc_freeres.c",
+    "https://github.com/bminor/glibc/blob/master/elf/dl-deps.c",
+    "https://github.com/openjdk/jdk25u/blob/master/src/java.base/unix/native/libnet/NetworkInterface.c",
+    "https://github.com/torvalds/linux/blob/master/net/ipv4/devinet.c"
+  ],
+  "excluded": [
+    "No Qore/JNI-owned allocation, cursor/local-reference defect, invalid access outside the exact JVM probes, or arbitrary libjvm allocation is exempted.",
+    "No blanket Valgrind suppression or warning filter is introduced.",
+    "The C++ regression fixes remain subject to functional, exception-injection, -Xcheck:jni, and cross-distribution RPM qualification.",
+    "Possible-loss pool origin matches do not exempt unbounded growth or leaked JNI handles; those require separate investigation if observed.",
+    "Fedora OpenJDK 25 evidence does not automatically qualify different JVM releases on Leap or Enterprise Linux."
+  ],
+  "runs": {
+    "results/fedora-jni-pg-valgrind-4/JdbcPostgresqlTransactions-valgrind.log": {
+      "raw_exit_code": 97,
+      "leaks": {
+        "definitely": {
+          "bytes": 1359,
+          "blocks": 5
+        },
+        "indirectly": {
+          "bytes": 2691,
+          "blocks": 13
+        },
+        "possibly": {
+          "bytes": 475656,
+          "blocks": 763
+        }
+      },
+      "allocation_origins_bytes": {
+        "indirectly": {
+          "WatcherThread::": 1683,
+          "VM_Version_StubGenerator::generate_get_cpu_info": 1008
+        },
+        "definitely": {
+          "PerfMemory::": 39,
+          "resize_scopes": 128,
+          "_dl_map_object_deps": 72,
+          "WatcherThread::": 1120
+        },
+        "possibly": {
+          "allocate_dtv": 3248,
+          "ParkEvent::Allocate": 9152,
+          "OopStorage::": 463256
+        }
+      },
+      "non_leak_contexts_by_origin": {
+        "JVM generated stack probes": 248,
+        "JVM readability probes": 12
+      },
+      "raw_error_summary": "203579 errors from 278 contexts (suppressed: 0 from 0)",
+      "functional_counts": [
+        {
+          "cases": 4,
+          "succeeded": 4,
+          "assertions": 34
+        }
+      ]
+    },
+    "results/fedora-jni-pg-valgrind-4/JdbcTransactions-valgrind.log": {
+      "raw_exit_code": 97,
+      "leaks": {
+        "definitely": {
+          "bytes": 1231,
+          "blocks": 3
+        },
+        "indirectly": {
+          "bytes": 2691,
+          "blocks": 13
+        },
+        "possibly": {
+          "bytes": 435192,
+          "blocks": 698
+        }
+      },
+      "allocation_origins_bytes": {
+        "indirectly": {
+          "WatcherThread::": 1683,
+          "VM_Version_StubGenerator::generate_get_cpu_info": 1008
+        },
+        "definitely": {
+          "PerfMemory::": 39,
+          "_dl_map_object_deps": 72,
+          "WatcherThread::": 1120
+        },
+        "possibly": {
+          "allocate_dtv": 2800,
+          "ParkEvent::Allocate": 8320,
+          "OopStorage::": 424072
+        }
+      },
+      "non_leak_contexts_by_origin": {
+        "JVM generated stack probes": 248,
+        "JVM readability probes": 12
+      },
+      "raw_error_summary": "185447 errors from 276 contexts (suppressed: 0 from 0)",
+      "functional_counts": [
+        {
+          "cases": 11,
+          "succeeded": 11,
+          "assertions": 102
+        }
+      ]
+    },
+    "results/fedora-jni-pg-valgrind-4/PgsqlBulkBindProtocols-valgrind.log": {
+      "raw_exit_code": 97,
+      "leaks": {
+        "definitely": {
+          "bytes": 1159,
+          "blocks": 2
+        },
+        "indirectly": {
+          "bytes": 2691,
+          "blocks": 13
+        },
+        "possibly": {
+          "bytes": 437168,
+          "blocks": 702
+        }
+      },
+      "allocation_origins_bytes": {
+        "indirectly": {
+          "WatcherThread::": 1683,
+          "VM_Version_StubGenerator::generate_get_cpu_info": 1008
+        },
+        "definitely": {
+          "PerfMemory::": 39,
+          "WatcherThread::": 1120
+        },
+        "possibly": {
+          "allocate_dtv": 3312,
+          "ParkEvent::Allocate": 9152,
+          "OopStorage::": 424704
+        }
+      },
+      "non_leak_contexts_by_origin": {
+        "JVM generated stack probes": 248,
+        "JVM readability probes": 12
+      },
+      "raw_error_summary": "188058 errors from 275 contexts (suppressed: 0 from 0)",
+      "functional_counts": [
+        {
+          "cases": 2,
+          "succeeded": 2,
+          "assertions": 24
+        }
+      ]
+    },
+    "results/fedora-jni-pg-valgrind-4/jdbc-valgrind.log": {
+      "raw_exit_code": 97,
+      "leaks": {
+        "definitely": {
+          "bytes": 1359,
+          "blocks": 5
+        },
+        "indirectly": {
+          "bytes": 2691,
+          "blocks": 13
+        },
+        "possibly": {
+          "bytes": 469336,
+          "blocks": 753
+        }
+      },
+      "allocation_origins_bytes": {
+        "indirectly": {
+          "WatcherThread::": 1683,
+          "VM_Version_StubGenerator::generate_get_cpu_info": 1008
+        },
+        "definitely": {
+          "PerfMemory::": 39,
+          "resize_scopes": 128,
+          "_dl_map_object_deps": 72,
+          "WatcherThread::": 1120
+        },
+        "possibly": {
+          "allocate_dtv": 3248,
+          "ParkEvent::Allocate": 9152,
+          "OopStorage::": 456936
+        }
+      },
+      "non_leak_contexts_by_origin": {
+        "JVM generated stack probes": 248,
+        "JVM readability probes": 12
+      },
+      "raw_error_summary": "187117 errors from 278 contexts (suppressed: 0 from 0)",
+      "functional_counts": [
+        {
+          "cases": 3,
+          "succeeded": 3,
+          "assertions": 22
+        }
+      ]
+    },
+    "results/jni-vm-control-3/valgrind.log": {
+      "raw_exit_code": 97,
+      "leaks": {
+        "definitely": {
+          "bytes": 1359,
+          "blocks": 5
+        },
+        "indirectly": {
+          "bytes": 2691,
+          "blocks": 13
+        },
+        "possibly": {
+          "bytes": 32896,
+          "blocks": 62
+        }
+      },
+      "allocation_origins_bytes": {
+        "indirectly": {
+          "WatcherThread::": 1683,
+          "VM_Version_StubGenerator::generate_get_cpu_info": 1008
+        },
+        "definitely": {
+          "PerfMemory::": 39,
+          "_dl_map_object_deps": 72,
+          "resize_scopes": 128,
+          "WatcherThread::": 1120
+        }
+      },
+      "non_leak_contexts_by_origin": {
+        "JVM generated stack probes": 167,
+        "JVM readability probes": 8,
+        "control-only SIOCGIFCONF query": 6
+      },
+      "raw_error_summary": "2710 errors from 198 contexts (suppressed: 0 from 0)"
+    },
+    "results/jni-vm-control-5/valgrind.log": {
+      "raw_exit_code": 97,
+      "leaks": {
+        "definitely": {
+          "bytes": 1159,
+          "blocks": 2
+        },
+        "indirectly": {
+          "bytes": 2691,
+          "blocks": 13
+        },
+        "possibly": {
+          "bytes": 43008,
+          "blocks": 78
+        }
+      },
+      "allocation_origins_bytes": {
+        "indirectly": {
+          "WatcherThread::": 1683,
+          "VM_Version_StubGenerator::generate_get_cpu_info": 1008
+        },
+        "definitely": {
+          "PerfMemory::": 39,
+          "WatcherThread::": 1120
+        },
+        "possibly": {
+          "allocate_dtv": 1824,
+          "ParkEvent::Allocate": 8320,
+          "OopStorage::": 32864
+        }
+      },
+      "non_leak_contexts_by_origin": {
+        "JVM generated stack probes": 166,
+        "JVM readability probes": 8
+      },
+      "raw_error_summary": "2320 errors from 189 contexts (suppressed: 0 from 0)"
+    }
+  },
+  "inputs": {
+    "work/jni-vm-control-3.c": {
+      "sha256": "b389d2dcca633e4839c8a1c0e634c06e7a995f8635b13df72ba82bd576ca145d",
+      "source": "/* Copyright 2026 Qore Technologies, s.r.o.; SPDX-License-Identifier: MIT */\n#include <jni.h>\n#include <dlfcn.h>\n#include <pthread.h>\n#include <stdbool.h>\n#include <stdio.h>\nstatic pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;\nstatic pthread_cond_t changed = PTHREAD_COND_INITIALIZER;\nstatic bool done;\nstatic void* worker(void* arg) {\n    (void)arg;\n    pthread_mutex_lock(&mutex);\n    while (!done) { pthread_cond_wait(&changed, &mutex); }\n    pthread_mutex_unlock(&mutex);\n    return NULL;\n}\nint main(void) {\n    pthread_t thread;\n    if (pthread_create(&thread, NULL, worker, NULL)) { return 1; }\n    void* handle = dlopen(\"/usr/lib/jvm/java-25-openjdk/lib/server/libjvm.so\", RTLD_NOW | RTLD_GLOBAL);\n    if (!handle) { fprintf(stderr, \"%s\\n\", dlerror()); return 2; }\n    jint (*create)(JavaVM**, void**, void*) = dlsym(handle, \"JNI_CreateJavaVM\");\n    if (!create) { return 3; }\n    JavaVM* vm = NULL;\n    JNIEnv* env = NULL;\n    JavaVMOption options[] = {\n        {.optionString = \"-Xint\"},\n        {.optionString = \"-XX:-UseCompressedOops\"},\n        {.optionString = \"-Xshare:off\"},\n        {.optionString = \"-XX:+UseSerialGC\"},\n        {.optionString = \"-Xcheck:jni\"},\n        {.optionString = \"-Djava.class.path=/results:/usr/share/java/postgresql.jar\"},\n    };\n    JavaVMInitArgs args = {.version = JNI_VERSION_1_8, .nOptions = 6, .options = options};\n    if (create(&vm, (void**)&env, &args) != JNI_OK) { return 4; }\n    jclass cls = (*env)->FindClass(env, \"VmControl\");\n    if ((*env)->ExceptionCheck(env) || !cls) { return 5; }\n    jmethodID run = (*env)->GetStaticMethodID(env, cls, \"run\", \"()V\");\n    if ((*env)->ExceptionCheck(env) || !run) { return 6; }\n    (*env)->CallStaticVoidMethod(env, cls, run);\n    if ((*env)->ExceptionCheck(env)) { (*env)->ExceptionDescribe(env); return 7; }\n    (*env)->DeleteLocalRef(env, cls);\n    if ((*vm)->DestroyJavaVM(vm) != JNI_OK) { return 8; }\n    pthread_mutex_lock(&mutex);\n    done = true;\n    pthread_cond_signal(&changed);\n    pthread_mutex_unlock(&mutex);\n    pthread_join(thread, NULL);\n    /* Keep the JVM mapped, matching its lifetime in the bridge host. */\n    return 0;\n}\n"
+    },
+    "work/jni-vm-control-5.c": {
+      "sha256": "5c79900fc0f5bc4fa52d3e8aa7477669a63802319f144cdbf5328472e4b79cfd",
+      "source": "/* Copyright 2026 Qore Technologies, s.r.o.; SPDX-License-Identifier: MIT */\n#include <jni.h>\n#include <dlfcn.h>\n#include <pthread.h>\n#include <stdbool.h>\n#include <stdio.h>\n#include <stdlib.h>\nstatic pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;\nstatic pthread_cond_t changed = PTHREAD_COND_INITIALIZER;\nstatic bool done;\nstatic void* worker(void* arg) {\n    (void)arg;\n    pthread_mutex_lock(&mutex);\n    while (!done) { pthread_cond_wait(&changed, &mutex); }\n    pthread_mutex_unlock(&mutex);\n    return NULL;\n}\nint main(void) {\n    pthread_t thread;\n    if (pthread_create(&thread, NULL, worker, NULL)) { return 1; }\n    void* handle = dlopen(\"/usr/lib/jvm/java-25-openjdk/lib/server/libjvm.so\", RTLD_NOW | RTLD_GLOBAL);\n    if (!handle) { fprintf(stderr, \"%s\\n\", dlerror()); return 2; }\n    jint (*create)(JavaVM**, void**, void*) = dlsym(handle, \"JNI_CreateJavaVM\");\n    if (!create) { return 3; }\n    JavaVM* vm = NULL;\n    JNIEnv* env = NULL;\n    JavaVMOption options[] = {\n        {.optionString = \"-Xint\"},\n        {.optionString = \"-XX:-UseCompressedOops\"},\n        {.optionString = \"-Xshare:off\"},\n        {.optionString = \"-XX:+UseSerialGC\"},\n        {.optionString = \"-Xcheck:jni\"},\n        {.optionString = \"-Djava.class.path=/results:/usr/share/java/postgresql.jar\"},\n    };\n    JavaVMInitArgs args = {.version = JNI_VERSION_1_8, .nOptions = 6, .options = options};\n    if (create(&vm, (void**)&env, &args) != JNI_OK) { return 4; }\n    jclass cls = (*env)->FindClass(env, \"VmControl\");\n    if ((*env)->ExceptionCheck(env) || !cls) { return 5; }\n    jmethodID run = (*env)->GetStaticMethodID(env, cls, \"run\", \"()V\");\n    if ((*env)->ExceptionCheck(env) || !run) { return 6; }\n    (*env)->CallStaticVoidMethod(env, cls, run);\n    if ((*env)->ExceptionCheck(env)) { (*env)->ExceptionDescribe(env); return 7; }\n    jobject* refs = calloc(2000, sizeof(*refs));\n    if (!refs) { return 9; }\n    for (int i = 0; i < 2000; ++i) {\n        refs[i] = (*env)->NewGlobalRef(env, cls);\n        if ((*env)->ExceptionCheck(env) || !refs[i]) { return 10; }\n    }\n    for (int i = 0; i < 2000; ++i) { (*env)->DeleteGlobalRef(env, refs[i]); }\n    free(refs);\n    (*env)->DeleteLocalRef(env, cls);\n    if ((*vm)->DestroyJavaVM(vm) != JNI_OK) { return 8; }\n    pthread_mutex_lock(&mutex);\n    done = true;\n    pthread_cond_signal(&changed);\n    pthread_mutex_unlock(&mutex);\n    pthread_join(thread, NULL);\n    /* Keep the JVM mapped, matching its lifetime in the bridge host. */\n    return 0;\n}\n"
+    },
+    "work/VmControl.java": {
+      "sha256": "ac1a07a48af19917acf920db338b701e1941b049f096583b957e18ec3c405f78",
+      "source": "// Copyright 2026 Qore Technologies, s.r.o.; SPDX-License-Identifier: MIT\nimport java.io.File;\nimport java.net.InetAddress;\nimport java.net.ServerSocket;\nimport java.util.HashMap;\npublic final class VmControl {\n    public static void run() throws Exception {\n        if (!new File(\"/usr/share/java/postgresql.jar\").exists()) { throw new AssertionError(\"driver absent\"); }\n        Class.forName(\"org.postgresql.Driver\");\n        try (ServerSocket socket = new ServerSocket(0, 1, InetAddress.getLoopbackAddress())) {\n            if (socket.getLocalPort() <= 0) { throw new AssertionError(\"socket not bound\"); }\n        }\n        Thread thread = new Thread(() -> {\n            HashMap<String, Integer> map = new HashMap<>();\n            map.put(\"fixture\", 1);\n            if (map.get(\"fixture\") != 1) { throw new AssertionError(\"bad map\"); }\n        });\n        thread.start();\n        thread.join();\n    }\n}\n"
+    },
+    "work/VmLoadControl.java": {
+      "sha256": "9f4d73618a5c72b39882e6ef1aa4453948953129b92eb4cb85c0619f58898bfa",
+      "source": "// Copyright 2026 Qore Technologies, s.r.o.; SPDX-License-Identifier: MIT\nimport java.io.File;\nimport java.util.HashMap;\npublic final class VmControl {\n    public static void run() throws Exception {\n        if (!new File(\"/usr/share/java/postgresql.jar\").exists()) { throw new AssertionError(\"driver absent\"); }\n        Class.forName(\"org.postgresql.Driver\");\n        Thread thread = new Thread(() -> {\n            HashMap<String, Integer> map = new HashMap<>();\n            map.put(\"fixture\", 1);\n            if (map.get(\"fixture\") != 1) { throw new AssertionError(\"bad map\"); }\n        });\n        thread.start();\n        thread.join();\n    }\n}\n"
+    },
+    "work/run-jni-vm-control-3.py": {
+      "sha256": "2c244a42b4f04179d4470dbd59c9301e070f2ff1e58770fab54536236f86e77e",
+      "source": "import subprocess,json\nfrom pathlib import Path\ncmd=['docker', 'run', '--rm', '--init', '--network', 'none', '--user', '1019:100', '-v', '/home/david/src/qore/git/qore-packaging/work/jni-vm-control-3.c:/control.c:ro', '-v', '/home/david/src/qore/git/qore-packaging/work/VmControl.java:/VmControl.java:ro', '-v', '/home/david/src/qore/git/qore-packaging/results/jni-vm-control-3:/results', 'sha256:c9f96a5a805a4f403256be08f11349bdd7654aea6dd450e2d799e7be84b7bd8c', 'sh', '-ec', 'javac -Xlint:all -Werror -d /results /VmControl.java; cc -Wall -Wextra -Werror -g /control.c -I/usr/lib/jvm/java-25-openjdk/include -I/usr/lib/jvm/java-25-openjdk/include/linux -ldl -pthread -o /results/control; exec valgrind --error-exitcode=97 --leak-check=full --show-leak-kinds=definite,indirect --errors-for-leak-kinds=definite,indirect --num-callers=30 --track-origins=yes --error-limit=no --max-stackframe=8388608 --log-file=/results/valgrind.log /results/control']\nwith Path(\"results/jni-vm-control-3/output.log\").open(\"w\") as log:r=subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT)\nPath(\"results/jni-vm-control-3/status.json\").write_text(json.dumps({\"command\":cmd,\"exit_code\":r.returncode},indent=2)+\"\\n\")\n"
+    },
+    "work/run-jni-vm-control-5.py": {
+      "sha256": "1d4b95139c53c3f816327339958a990f2f7e97150dee77871be831c1d4707c9b",
+      "source": "import subprocess,json\nfrom pathlib import Path\ncmd=['docker', 'run', '--rm', '--init', '--network', 'none', '--user', '1019:100', '-v', '/home/david/src/qore/git/qore-packaging/work/jni-vm-control-5.c:/control.c:ro', '-v', '/home/david/src/qore/git/qore-packaging/work/VmLoadControl.java:/VmControl.java:ro', '-v', '/home/david/src/qore/git/qore-packaging/results/jni-vm-control-5:/results', 'sha256:c9f96a5a805a4f403256be08f11349bdd7654aea6dd450e2d799e7be84b7bd8c', 'sh', '-ec', 'javac -Xlint:all -Werror -d /results /VmControl.java; cc -Wall -Wextra -Werror -g /control.c -I/usr/lib/jvm/java-25-openjdk/include -I/usr/lib/jvm/java-25-openjdk/include/linux -ldl -pthread -o /results/control; exec valgrind --error-exitcode=97 --leak-check=full --show-leak-kinds=definite,indirect,possible --errors-for-leak-kinds=definite,indirect --num-callers=30 --track-origins=yes --error-limit=no --max-stackframe=8388608 --log-file=/results/valgrind.log /results/control']\nwith Path(\"results/jni-vm-control-5/output.log\").open(\"w\") as log:r=subprocess.run(cmd,stdout=log,stderr=subprocess.STDOUT)\nPath(\"results/jni-vm-control-5/status.json\").write_text(json.dumps({\"command\":cmd,\"exit_code\":r.returncode},indent=2)+\"\\n\")\n"
+    },
+    "work/jni-pg-valgrind-4.py": {
+      "sha256": "49452cd1225a6ea4063829ca092986194c498902162c2b462ede32f0520ec79f",
+      "source": "import json,os,shlex,subprocess,tempfile\nfrom pathlib import Path\nsource=Path('/source');out=Path('/results')\nroot=Path(tempfile.mkdtemp(prefix='jni-pg-',dir='/tmp'));data=root/'data';sock=root/'socket';sock.mkdir()\nenv={k:v for k,v in os.environ.items() if not k.startswith('PG')}\nenv['QORE_JNI_JVM_ARGS']='-Xint -XX:-UseCompressedOops -Xshare:off -XX:+UseSerialGC -Xcheck:jni'\nenv['QORE_PCRE2_NO_JIT']='1'\nrecord={'tests':[]}\ntry:\n subprocess.run(['initdb','-D',str(data),'--username=qore_test','--auth=trust','--encoding=UTF8','--no-locale'],env=env,check=True)\n subprocess.run(['pg_ctl','-D',str(data),'-w','-t','30','-l',str(out/'postgres.log'),'-o',shlex.join(['-k',str(sock),'-h','127.0.0.1','-p','5432','-c','statement_timeout=5000']),'start'],env=env,check=True)\n plain='jdbc:postgresql://127.0.0.1:5432/postgres'\n qore='jdbc:qore_test/@ignored{url=postgresql://127.0.0.1:5432/postgres,classpath=/usr/share/java/postgresql.jar}'\n env.update(JDBC_DB_USER='qore_test',JDBC_DB_PASSWORD='qore_fixture',FLYWAY_DB_USER='qore_test',FLYWAY_DB_PASSWORD='qore_fixture',JDBC_DB_CLASSPATH='/usr/share/java/postgresql.jar',JDBC_DB_DRIVER_CLASS='org.postgresql.Driver',QORE_DB_CONNSTR=qore,QORE_DB_CONNSTR_PGSQL='pgsql:qore_test/qore_fixture@postgres%127.0.0.1:5432')\n module=source/'build-debug/jni-api-2.0.qmod'\n for name in ['JdbcTransactions','JdbcPostgresqlTransactions','jdbc','PgsqlBulkBindProtocols']:\n  env['QORE_DB_CONNSTR_JDBC_PGSQL']=qore if name in ['jdbc','JdbcPostgresqlTransactions','PgsqlBulkBindProtocols'] else plain\n  cmd=['qore','-b','--enable-debug','-l',str(module),'-l','/qore/qlib/PgsqlSqlUtilBase.qm']\n  provider=source/'build/qlib-qmod'/name/(name+'.qmod')\n  if provider.exists():cmd+=['-l',str(provider)]\n  cmd+=[('/qore/examples/test/qlib/SqlUtil/' if name=='PgsqlBulkBindProtocols' else 'test/')+name+'.qtest']\n  if name=='jni':cmd+=['--include=Qore Java API test','-vv']\n  cmd=['valgrind','--error-exitcode=97','--leak-check=full','--show-leak-kinds=definite,indirect,possible','--errors-for-leak-kinds=definite,indirect','--num-callers=30','--track-origins=yes','--error-limit=no','--max-stackframe=8388608','--log-file='+str(out/(name+'-valgrind.log'))]+cmd\n  with (out/(name+'.log')).open('w') as log:r=subprocess.run(cmd,env=env,stdout=log,stderr=subprocess.STDOUT,timeout=600)\n  record['tests'].append({'name':name,'exit_code':r.returncode});print(name,r.returncode,flush=True)\n record['exit_code']=int(any(t['exit_code'] for t in record['tests']))\nfinally:\n if (data/'postmaster.pid').exists():subprocess.run(['pg_ctl','-D',str(data),'-w','-t','30','-m','fast','stop'],env=env,check=True)\n (out/'status.json').write_text(json.dumps(record,indent=2)+'\\n')\n"
+    }
+  },
+  "logs_sha256": {
+    "results/fedora-jni-pg-valgrind-4/JdbcPostgresqlTransactions-valgrind.log": "34343b61420333e8c2d8e1e8b39399e73f260a90014d1466714d7704e708764e",
+    "results/fedora-jni-pg-valgrind-4/JdbcPostgresqlTransactions.log": "d34d5a4c845f9238948bd251c6612706745be48bcbdd9e0d0fc39aa9ad153e9e",
+    "results/fedora-jni-pg-valgrind-4/JdbcTransactions-valgrind.log": "6ad7651fe8beeeb26ba626e953b0751220961169171dfc2e743aba233d6fdf1b",
+    "results/fedora-jni-pg-valgrind-4/JdbcTransactions.log": "830dc66f15376d286bf415b440a29a1f91e8541c7735f2d27615b0830a6456ff",
+    "results/fedora-jni-pg-valgrind-4/PgsqlBulkBindProtocols-valgrind.log": "7c7a3d170d1c95d4593037039e9f394490732303cd26f104db9c58226e13b22f",
+    "results/fedora-jni-pg-valgrind-4/PgsqlBulkBindProtocols.log": "7f78f33d75254b05137e5b27a1903f8e52c7382e94027b2e1b5307803799a6cc",
+    "results/fedora-jni-pg-valgrind-4/jdbc-valgrind.log": "624894065e1f04ec3b05be92cd262636b8e4b38df6dfb6168e54add0c01b81e8",
+    "results/fedora-jni-pg-valgrind-4/jdbc.log": "93bae7fe67988c9a58c9c4224062c2a11c007be30760b4855e6cf19cc912fe98",
+    "results/fedora-jni-pg-valgrind-4/postgres.log": "0037612a4f9e211e4e460ce7c1ceba35d1111a75b0d6720a849f02bdc37eb789",
+    "results/jni-vm-control-3/output.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/jni-vm-control-3/valgrind.log": "98233e5c6aa20dbad6467f3f187f001cda7c152850b56c26e1f37521f75e3445",
+    "results/jni-vm-control-5/output.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/jni-vm-control-5/valgrind.log": "efded0fdf2ed1e681336f6717f70b2706e7f9ccfa751546038557e4f1b9da0c7"
+  },
+  "approval": {
+    "date": "2026-10-02",
+    "answer": "Allow this documented exception",
+    "scope": "Only the independently reproduced JVM/glibc diagnostics and allocation origins documented in this file; exclusions remain in force."
+  },
+  "jni_fix_commit": "4fbc538444b1bc4aed05277686fcd57f9d3efc75"
+}

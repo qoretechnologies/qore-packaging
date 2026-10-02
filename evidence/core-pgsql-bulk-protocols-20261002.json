@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "scope": "PgsqlSqlUtilBase native typed arrays versus JDBC batch protocol",
+  "results": {
+    "tests": [
+      {
+        "name": "PgsqlBulkBindProtocols",
+        "mode": "source",
+        "exit_code": 0
+      },
+      {
+        "name": "BulkPgsqlSqlUtil",
+        "mode": "source",
+        "exit_code": 0
+      },
+      {
+        "name": "PgsqlBulkBindProtocols",
+        "mode": "aot",
+        "exit_code": 0
+      },
+      {
+        "name": "BulkPgsqlSqlUtil",
+        "mode": "aot",
+        "exit_code": 0
+      }
+    ],
+    "exit_code": 0
+  },
+  "audit": {
+    "Pass": 13,
+    "N/A": 49,
+    "Fail": 0
+  },
+  "files": {
+    "results/fedora-core-pgsql-bulk-3/aot-BulkPgsqlSqlUtil.log": "8584767ea386e4664f10b312a7613e77f206a592149c5bbbd02754d27f9711af",
+    "results/fedora-core-pgsql-bulk-3/aot-PgsqlBulkBindProtocols.log": "bb8139e98c2476695391c1ae2501ef4c3af9ace9452c0718b744e1768d6f3a15",
+    "results/fedora-core-pgsql-bulk-3/postgres.log": "2df25dcce4c055440a8bb5debfd37208b88f6c27930b9d056c461f8f8aed49e7",
+    "results/fedora-core-pgsql-bulk-3/source-BulkPgsqlSqlUtil.log": "8584767ea386e4664f10b312a7613e77f206a592149c5bbbd02754d27f9711af",
+    "results/fedora-core-pgsql-bulk-3/source-PgsqlBulkBindProtocols.log": "bb8139e98c2476695391c1ae2501ef4c3af9ace9452c0718b744e1768d6f3a15"
+  },
+  "qore_fix_commit": "aecfa8eeda26de039e9b44eb3e740d9254e0aa87",
+  "qore_validated_merge": "748fb7bbc399608059ab3658f328e7ef6179c6c6",
+  "jni_fix_commit": "4fbc538444b1bc4aed05277686fcd57f9d3efc75",
+  "counts": {
+    "cases": 18,
+    "assertions": 160,
+    "modes": [
+      "source",
+      "aot"
+    ]
+  },
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o."
+}
