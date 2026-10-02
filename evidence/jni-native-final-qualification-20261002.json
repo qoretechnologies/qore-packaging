@@ -1,0 +1,636 @@
+{
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-02",
+  "status": "Native Release/Debug, strict documentation and Valgrind qualification passed with only previously approved external origins. Cross-distribution RPM qualification remains pending.",
+  "root_causes": {
+    "arrays": "The array constructor claimed a borrowed local jclass and deleted it twice. It now retains its own global reference without adopting the local reference.",
+    "exception_conversion": "QoreException accessors and UTF extraction used unchecked JNI calls and leaked UTF buffers; checked calls and holders preserve the original exception if conversion fails.",
+    "shutdown_handles": "A queue sentinel could overtake queued handles and omitted Java-live wrappers. Shutdown now closes registration, snapshots outstanding handles, joins the worker and atomically claims every remaining pointer.",
+    "closed_program": "A dispatcher constructed after Program deletion resurrected its zero strong count without restoring its dependency reference. Releasing the final closure then freed the Program before the dispatcher dereferenced it. A dependency reference preserves metadata while closed execution remains rejected.",
+    "destructor_errors": "A C++ destructor attempted to construct a Java exception after native registration had closed, allowing a JavaException through a noexcept destructor. Explicit destruction reports errors; GC/shutdown destruction clears errors with no caller. Failed exception-wrapper allocation clears its owned sink.",
+    "callback_result": "Dispatcher::dispatch owned the referenced Qore callback result but did not discard it after Java conversion. An existing string callback leaked 56 direct and 88 indirect bytes; ValueHolder now releases the result on success and exceptions.",
+    "docs": "Generated C++ inputs, unqualified references, invalid tags/parameters and malformed tables caused warnings and broken public indexes. Two-phase public indexes and installed dependency tags now pass strict docs and five generated-output checks."
+  },
+  "functional": {
+    "steps": [
+      {
+        "name": "build-compile",
+        "command": [
+          "cmake",
+          "--build",
+          "build",
+          "--parallel",
+          "2"
+        ],
+        "exit_code": 0,
+        "counts": []
+      },
+      {
+        "name": "build-ctest",
+        "command": [
+          "ctest",
+          "--test-dir",
+          "build",
+          "--output-on-failure"
+        ],
+        "exit_code": 0,
+        "counts": []
+      },
+      {
+        "name": "build-jni-reference-safety",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/source/build/jni-api-2.0.qmod",
+          "test/jni-reference-safety.qtest",
+          "-v"
+        ],
+        "exit_code": 0,
+        "counts": [
+          [
+            "9",
+            "9",
+            "797"
+          ]
+        ]
+      },
+      {
+        "name": "build-jni-exception-location",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/source/build/jni-api-2.0.qmod",
+          "test/jni-exception-location.qtest",
+          "-v"
+        ],
+        "exit_code": 0,
+        "counts": [
+          [
+            "7",
+            "7",
+            "206"
+          ]
+        ]
+      },
+      {
+        "name": "build-jni",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/source/build/jni-api-2.0.qmod",
+          "test/jni.qtest",
+          "-v"
+        ],
+        "exit_code": 0,
+        "counts": [
+          [
+            "60",
+            "60",
+            "444"
+          ]
+        ]
+      },
+      {
+        "name": "build-debug-compile",
+        "command": [
+          "cmake",
+          "--build",
+          "build-debug",
+          "--parallel",
+          "2"
+        ],
+        "exit_code": 0,
+        "counts": []
+      },
+      {
+        "name": "build-debug-ctest",
+        "command": [
+          "ctest",
+          "--test-dir",
+          "build-debug",
+          "--output-on-failure"
+        ],
+        "exit_code": 0,
+        "counts": []
+      },
+      {
+        "name": "build-debug-jni-reference-safety",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/source/build-debug/jni-api-2.0.qmod",
+          "test/jni-reference-safety.qtest",
+          "-v"
+        ],
+        "exit_code": 0,
+        "counts": [
+          [
+            "9",
+            "9",
+            "797"
+          ]
+        ]
+      },
+      {
+        "name": "build-debug-jni-exception-location",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/source/build-debug/jni-api-2.0.qmod",
+          "test/jni-exception-location.qtest",
+          "-v"
+        ],
+        "exit_code": 0,
+        "counts": [
+          [
+            "7",
+            "7",
+            "206"
+          ]
+        ]
+      },
+      {
+        "name": "build-debug-jni",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/source/build-debug/jni-api-2.0.qmod",
+          "test/jni.qtest",
+          "-v"
+        ],
+        "exit_code": 0,
+        "counts": [
+          [
+            "60",
+            "60",
+            "444"
+          ]
+        ]
+      }
+    ]
+  },
+  "documentation": {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "--user",
+      "1019:100",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/jni-native-1:/source",
+      "-v",
+      "/home/david/src/qore/git/qore/build/qore.tag:/core-devel/qore.tag:ro",
+      "-w",
+      "/source",
+      "sha256:c9f96a5a805a4f403256be08f11349bdd7654aea6dd450e2d799e7be84b7bd8c",
+      "sh",
+      "-c",
+      "set -eu\n. /usr/lib/rpm/qore/module-env.sh\nexport JAVA_HOME=/usr/lib/jvm/java-25-openjdk\nexport KOTLIN_HOME=\"$PWD/build/vendor-kotlin/kotlinc\"\nexport PATH=\"$JAVA_HOME/bin:$KOTLIN_HOME/bin:$PATH\"\ncmake --build build --target docs --parallel 2\npython3 -B -W error test/test-doc-index.py --build-dir build -v\n"
+    ],
+    "exit_code": 0
+  },
+  "valgrind_settings": {
+    "tests": [
+      {
+        "suite": "jni-reference-safety",
+        "command": [
+          "valgrind",
+          "--error-exitcode=97",
+          "--leak-check=full",
+          "--show-leak-kinds=definite,indirect,possible",
+          "--errors-for-leak-kinds=definite,indirect",
+          "--num-callers=30",
+          "--track-origins=yes",
+          "--error-limit=no",
+          "--max-stackframe=8388608",
+          "--log-file=/results/jni-reference-safety-valgrind.log",
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/source/build-debug/jni-api-2.0.qmod",
+          "test/jni-reference-safety.qtest",
+          "-v"
+        ],
+        "raw_exit_code": 97,
+        "counts": [
+          [
+            "9",
+            "9",
+            "797"
+          ]
+        ]
+      },
+      {
+        "suite": "jni-exception-location",
+        "command": [
+          "valgrind",
+          "--error-exitcode=97",
+          "--leak-check=full",
+          "--show-leak-kinds=definite,indirect,possible",
+          "--errors-for-leak-kinds=definite,indirect",
+          "--num-callers=30",
+          "--track-origins=yes",
+          "--error-limit=no",
+          "--max-stackframe=8388608",
+          "--log-file=/results/jni-exception-location-valgrind.log",
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/source/build-debug/jni-api-2.0.qmod",
+          "test/jni-exception-location.qtest",
+          "-v"
+        ],
+        "raw_exit_code": 97,
+        "counts": [
+          [
+            "7",
+            "7",
+            "206"
+          ]
+        ]
+      },
+      {
+        "suite": "jni",
+        "command": [
+          "valgrind",
+          "--error-exitcode=97",
+          "--leak-check=full",
+          "--show-leak-kinds=definite,indirect,possible",
+          "--errors-for-leak-kinds=definite,indirect",
+          "--num-callers=30",
+          "--track-origins=yes",
+          "--error-limit=no",
+          "--max-stackframe=8388608",
+          "--log-file=/results/jni-valgrind.log",
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/source/build-debug/jni-api-2.0.qmod",
+          "-l",
+          "/python-build/python-api-2.0.qmod",
+          "test/jni.qtest",
+          "-v",
+          "--include=defineClass",
+          "--include=static fields access test",
+          "--include=instance fields access test",
+          "--include=array test",
+          "--include=named argument call test",
+          "--include=qore exception test",
+          "--include=exception stack",
+          "--include=callback test",
+          "--include=issue 2950",
+          "--include=dispatcher destructor throws a Qore exception",
+          "--include=callback return value test"
+        ],
+        "raw_exit_code": 97,
+        "counts": [
+          [
+            "60",
+            "60",
+            "144"
+          ]
+        ]
+      },
+      {
+        "suite": "native-cleanup-shutdown",
+        "command": [
+          "valgrind",
+          "--error-exitcode=97",
+          "--leak-check=full",
+          "--show-leak-kinds=definite,indirect,possible",
+          "--errors-for-leak-kinds=definite,indirect",
+          "--num-callers=30",
+          "--track-origins=yes",
+          "--error-limit=no",
+          "--max-stackframe=8388608",
+          "--log-file=/results/native-cleanup-shutdown-valgrind.log",
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/source/build-debug/jni-api-2.0.qmod",
+          "test/native-cleanup-shutdown.qr"
+        ],
+        "raw_exit_code": 97,
+        "counts": []
+      }
+    ],
+    "complete": true
+  },
+  "external_exceptions": [
+    "jni-external-diagnostics-20261002.json",
+    "python-external-diagnostics-20261002.json",
+    "jni-compiler-diagnostics-20261002.json"
+  ],
+  "runs": {
+    "results/jni-shutdown-valgrind-4/jni-exception-location-valgrind.log": {
+      "raw_exit_code": 97,
+      "summary": {
+        "definitely": {
+          "bytes": 1231,
+          "blocks": 3
+        },
+        "indirectly": {
+          "bytes": 2691,
+          "blocks": 13
+        },
+        "possibly": {
+          "bytes": 438352,
+          "blocks": 703
+        }
+      },
+      "allocation_origins_bytes": {
+        "indirectly": {
+          "WatcherThread::": 1683,
+          "VM_Version_StubGenerator::generate_get_cpu_info": 1008
+        },
+        "definitely": {
+          "PerfMemory::": 39,
+          "_dl_map_object_deps": 72,
+          "WatcherThread::": 1120
+        },
+        "possibly": {
+          "allocate_dtv": 2800,
+          "ParkEvent::Allocate": 8320,
+          "OopStorage::": 427232
+        }
+      },
+      "non_leak_contexts": {
+        "JVM generated stack probes": 247,
+        "JVM readability probes": 10
+      },
+      "unclassified_contexts": 0,
+      "raw_error_summary": "175210 errors from 273 contexts (suppressed: 0 from 0)"
+    },
+    "results/jni-shutdown-valgrind-4/jni-reference-safety-valgrind.log": {
+      "raw_exit_code": 97,
+      "summary": {
+        "definitely": {
+          "bytes": 1231,
+          "blocks": 3
+        },
+        "indirectly": {
+          "bytes": 2691,
+          "blocks": 13
+        },
+        "possibly": {
+          "bytes": 438352,
+          "blocks": 703
+        }
+      },
+      "allocation_origins_bytes": {
+        "indirectly": {
+          "WatcherThread::": 1683,
+          "VM_Version_StubGenerator::generate_get_cpu_info": 1008
+        },
+        "definitely": {
+          "PerfMemory::": 39,
+          "_dl_map_object_deps": 72,
+          "WatcherThread::": 1120
+        },
+        "possibly": {
+          "allocate_dtv": 2800,
+          "ParkEvent::Allocate": 8320,
+          "OopStorage::": 427232
+        }
+      },
+      "non_leak_contexts": {
+        "JVM generated stack probes": 247,
+        "JVM readability probes": 8
+      },
+      "unclassified_contexts": 0,
+      "raw_error_summary": "184607 errors from 271 contexts (suppressed: 0 from 0)"
+    },
+    "results/jni-shutdown-valgrind-4/jni-valgrind.log": {
+      "raw_exit_code": 97,
+      "summary": {
+        "definitely": {
+          "bytes": 1159,
+          "blocks": 2
+        },
+        "indirectly": {
+          "bytes": 2691,
+          "blocks": 13
+        },
+        "possibly": {
+          "bytes": 489693,
+          "blocks": 833
+        }
+      },
+      "allocation_origins_bytes": {
+        "indirectly": {
+          "WatcherThread::": 1683,
+          "VM_Version_StubGenerator::generate_get_cpu_info": 1008
+        },
+        "definitely": {
+          "PerfMemory::": 39,
+          "WatcherThread::": 1120
+        },
+        "possibly": {
+          "CPython static type metadata": 4373,
+          "allocate_dtv": 2800,
+          "ParkEvent::Allocate": 9152,
+          "OopStorage::": 473368
+        }
+      },
+      "non_leak_contexts": {
+        "JVM generated stack probes": 250,
+        "JVM readability probes": 12
+      },
+      "unclassified_contexts": 0,
+      "raw_error_summary": "197879 errors from 277 contexts (suppressed: 0 from 0)"
+    },
+    "results/jni-shutdown-valgrind-4/native-cleanup-shutdown-valgrind.log": {
+      "raw_exit_code": 97,
+      "summary": {
+        "definitely": {
+          "bytes": 1231,
+          "blocks": 3
+        },
+        "indirectly": {
+          "bytes": 2691,
+          "blocks": 13
+        },
+        "possibly": {
+          "bytes": 436456,
+          "blocks": 700
+        }
+      },
+      "allocation_origins_bytes": {
+        "indirectly": {
+          "WatcherThread::": 1683,
+          "VM_Version_StubGenerator::generate_get_cpu_info": 1008
+        },
+        "definitely": {
+          "PerfMemory::": 39,
+          "_dl_map_object_deps": 72,
+          "WatcherThread::": 1120
+        },
+        "possibly": {
+          "allocate_dtv": 2800,
+          "ParkEvent::Allocate": 8320,
+          "OopStorage::": 425336
+        }
+      },
+      "non_leak_contexts": {
+        "JVM generated stack probes": 247,
+        "JVM readability probes": 10
+      },
+      "unclassified_contexts": 0,
+      "raw_error_summary": "172572 errors from 273 contexts (suppressed: 0 from 0)"
+    }
+  },
+  "source_sha256": {
+    "CMakeLists.txt": "3bd708390a7f719732f21640aea20e88891bb2e46aca2b5553386f04a5c99733",
+    "README": "18558568a0ec9245bb6e060ab0e5f569ae8c9149c7a7e1d47247937459b68c0a",
+    "docs/mainpage.dox.tmpl": "5a7b63df68ffabfa97bbdde5bf4a69850a54f88e962669f1ad6162f49ad2cbde",
+    "qlib/AccessDataProvider/AccessReadDataProviderFactory.qc": "b7b787e04f2097f6ad3ea11c3f4968b12ed3bad3fe32f3dbee44ee4b1dcbf51d",
+    "qlib/AvroDataProvider/AvroReadDataProvider.qc": "5f2fc1088948b93dda1f219eb79df45f5f1225ea9ddff74268c7c792ed7f7bd6",
+    "qlib/AvroDataProvider/AvroReadDataProviderFactory.qc": "acea4e8211683f0edff987c1b3e68d473ad100ab04fa4193dbab527f683a4191",
+    "qlib/AvroDataProvider/AvroWriteDataProviderFactory.qc": "8c95460b11a8382d1e98fa8bd3bb241a4a8c092a1ee21b90c37adc8146e74b09",
+    "qlib/BusyLightDataProvider/BusyLightConnection.qc": "1113b12476bfe422f0020da419828b30b1b26e6e851c92f5e42e473ccab0ddfc",
+    "qlib/BusyLightDataProvider/BusyLightDataProvider.qc": "5b086a42db5311a53425a0cfe74d8643a990ecf6034d49132601f203edc02ce6",
+    "qlib/BusyLightDataProvider/BusyLightDataProviderFactory.qc": "b5dad27900b3a7c859c8edec2a14a6e20bb96dffd08d02aa7ea11313c1a2f408",
+    "qlib/CamelDataProvider/CamelDataProviderFactory.qc": "1acff263e17c1bf2e4698259f3c789a922a34e9163bdbad330ba20b2670f1611",
+    "qlib/EmailDataProvider/EmlReadDataProvider.qc": "b50aaea3aa572f0c54ef157c4047d403764c27aa61dfb293e3d2d8fbc590dd51",
+    "qlib/EmailDataProvider/EmlReadDataProviderFactory.qc": "fccedb89fdd0b5945b3a81dd187693ccc8c40e351e8d08735d45eb8133b15473",
+    "qlib/EmailDataProvider/EmlWriteDataProviderFactory.qc": "5583754e2104c0c4f371e441c65e64556437446e17ff8799d7bf2f3f4c91a558",
+    "qlib/EmailDataProvider/MboxReadDataProvider.qc": "e7f2496f03b6f97453b4d4d7256ffb69ba554817f8bff4d98f073548a6109f37",
+    "qlib/EmailDataProvider/MboxReadDataProviderFactory.qc": "62f9336974afc9e662c724d83d2d6036ea2d6b62fd34a7d6c8dd39a4a9a6ab44",
+    "qlib/EmailDataProvider/MsgReadDataProvider.qc": "8ea58de990c6ba649cd4bbc89844fcdbbf9462f018b1e6874fe3d57a8038aeef",
+    "qlib/EmailDataProvider/MsgReadDataProviderFactory.qc": "37995dfb67ee8876fed11b007e5ac5148edb70e0708789e4967a1c40bead5f2a",
+    "qlib/ExcelDataProvider/ExcelReadDataProvider.qc": "4d0960902f0c3cf197e68364eb118b0ad9f284862b81bbc13c873f126f07ee61",
+    "qlib/ExcelDataProvider/ExcelReadDataProviderFactory.qc": "bd4cd46fba2bded6a5186ce507c340bb9606f44c48e6ffb9ae958281284388f1",
+    "qlib/ExcelDataProvider/ExcelWriteDataProviderFactory.qc": "0edfb4403c2de51667f249410049102366a9eabade2c29f5de4c275d1a63570a",
+    "qlib/FlywayDataProvider/FlywayDataProviderFactory.qc": "5a0f790d693e8ea9b121142cd85d31a0c5157956eca6729a0180f36b1d554432",
+    "qlib/JakartaJmsDataProvider/JakartaJmsDataProvider.qm": "664c3c8eae776fc1c2174061c774251968ae6cb7977574bb9312e4b1ab3f90b4",
+    "qlib/JasperReportsDataProvider/JasperReportsDataProviderFactory.qc": "a600e248a9244a5345724022958d6b715dc3e62fb8c64629898af8430673cae5",
+    "qlib/JdbcDataProvider/JdbcDataProviderFactory.qc": "51bb6ab6914a6aa48d660f77b4107f546130c9540df41fd1991f29760623059d",
+    "qlib/KafkaDataProvider/KafkaConnection.qc": "d6acf0369d7df61c4cab37124d8387c7f5ffdd458c32daa0f69e156b3fefcfc8",
+    "qlib/KafkaDataProvider/KafkaDataProviderFactory.qc": "f206359dabc35b39ca0a18d2159538aa13b2fd098ee74be779d4bfc72f5005eb",
+    "qlib/MqttDataProvider/AbstractFunctionalMqttDataProvider.qc": "825889d38eb4e48777bd95519b6c0993667ac2e21c37dd1b7a2567348ea6177a",
+    "qlib/MqttDataProvider/MqttConnection.qc": "caa99cf43a179d2016a03091026e93e69cec0f2d8ec1cf95c4f1b6c21795528d",
+    "qlib/MqttDataProvider/MqttDataProviderFactory.qc": "075507580fbe25ce0c4fe1c41bc04500ad505f25b2926383226391160ca0ef49",
+    "qlib/OdpDataProvider/OdpReadDataProvider.qc": "98176d8e622bd93e1678356d26f1f96616d6918c39103dcafd1bc074632a6185",
+    "qlib/OdpDataProvider/OdpReadDataProviderFactory.qc": "2e3385269ab59867b19927a539147b49375f8d0e7bb880410d982cb81155400a",
+    "qlib/OdpDataProvider/OdpWriteDataProviderFactory.qc": "7d89cd7777bdae1b6c6bdb6cd54ab4a896776fe95e0cf1d64ec798d1542f289b",
+    "qlib/OdtDataProvider/OdtReadDataProvider.qc": "3c4cdc6e89a92029909b46cb73dd7ca1a643492b693ce9078cb68af502a85f20",
+    "qlib/OdtDataProvider/OdtReadDataProviderFactory.qc": "4ddb573a96821b5183f66bb2067261457395549ad69563d27c0d4680fa03a103",
+    "qlib/OdtDataProvider/OdtWriteDataProviderFactory.qc": "d3caacd04f081e468f62c9ac58ec28a457d702adef5c5bc029049ecd0a630552",
+    "qlib/OpcUaDataProvider/AbstractFunctionalOpcUaDataProvider.qc": "d0b3c70d9c8ecea4440d33b1ed4cf07cb272c1bb759d09286091268b6a18dc28",
+    "qlib/OpcUaDataProvider/OpcUaTypeConversion.qc": "1045645c73029d83c5b68811df4a3fdc9d5a9fc9bcc6339c1c1d0bc40df94ae1",
+    "qlib/PowerPointDataProvider/PowerPointReadDataProvider.qc": "78a1aabdc288bcc2073d3ede6e302e362f2d51dcdc581cffb9489cd62a94f688",
+    "qlib/PowerPointDataProvider/PowerPointReadDataProviderFactory.qc": "a396e5d1786ed3063c58ba994738604ebe91d73b934b73fb55b964a74ccc3668",
+    "qlib/PowerPointDataProvider/PowerPointWriteDataProviderFactory.qc": "2b3b46084755277c44212b55aa355c73a29fe331d9012c2bb7da3c23c4c50a0d",
+    "qlib/TikaDataProvider/TikaReadDataProvider.qc": "0c65777f52928f8d364e2a27b29f134b7c78157062694099f60004fe688dd589",
+    "qlib/TikaDataProvider/TikaReadDataProviderFactory.qc": "72c8bca2fb09763d1f65a3905e3ca227d0ab623512e592dbc03ca55a2aa0323a",
+    "qlib/VcfDataProvider/VcfReadDataProvider.qc": "e46fbd94dc45f5e1b0b678757665180a75feaedfb5eb3bdbfc969f56d4853494",
+    "qlib/VcfDataProvider/VcfReadDataProviderFactory.qc": "63509e04456ff74e98916549eca86a7d4f907a1e775691040f77dc0d85e100b1",
+    "qlib/VcfDataProvider/VcfWriteDataProviderFactory.qc": "f6cd8ed48fa6b25778d2a98a3c52cc870471a724084c477b6f3a40a1a0090521",
+    "qlib/VisioDataProvider/VisioReadDataProvider.qc": "9eb8c23f684702471585f64da259a0e1336d9ca75ac1e72e5bcec3ceb8b505e1",
+    "qlib/VisioDataProvider/VisioReadDataProviderFactory.qc": "edc8f5f17abf2e13c2e2e87a2fd74c06331a119ce0582735902a0e0027134229",
+    "qlib/WordDataProvider/WordReadDataProvider.qc": "387b77662ca47b06cbc4709facfc73e4576d976c95f7b8069279750d88ab8963",
+    "qlib/WordDataProvider/WordReadDataProviderFactory.qc": "b0a51510644d6270992be20d8a36e4988aab231707a968655f154de1d69a2668",
+    "qlib/WordDataProvider/WordWriteDataProviderFactory.qc": "5049040f87722b1ec651c4469889f86a863d0fbdd0944a7546e45f3e82f99cc0",
+    "src/Array.cpp": "15794c4fa51c5420b4e14ecbf155125d5de6757cc2ae3e195d42e1c4e69c835d",
+    "src/Array.h": "10130d952ed102ba11b4b5543ac7e88221f969a0283ff4645f3b07db47a9d347",
+    "src/Dispatcher.cpp": "a4ff73feb0d6e4247162c936188be26e2f060a236f4cc96aa6a32798d7e416ea",
+    "src/Dispatcher.h": "c1b9fb11f8cce0e389fbada0019cae1341bdd58ae75d4ed2c55035b70eeb63cf",
+    "src/Globals.cpp": "d9e08caa1a250e2c5a72aa5bfaecb1fa3230de1c7e6534f66b70663b77da6546",
+    "src/Globals.h": "bc6b318ccc55b4684a53a46443bebb1c67cf56f943bcf9b458cfe95ff060c18b",
+    "src/QoreJdbcDriver.cpp": "b04cb6a7b70ceff68d48ba2dcc167eafad0b5805ac25980c55eb0c1400298a18",
+    "src/QoreJniClassMap.cpp": "74b22e9bbc511c7ad1e9912ba87bda416b185f6aa08fd9c8ba9eb4082284c5bc",
+    "src/QoreToJava.h": "f698828b083c2fcd6566aed11ad5257903c252e24fdd56b6d28ae5c35a7c6e3d",
+    "src/defs.cpp": "cdb98fdb6eaba00599010308ebc9a6d7112b51ca6fbc8b9bd1707f64d45ba3e1",
+    "src/java/org/qore/jni/JavaClassBuilder.java": "582480afc9966d496ed1774248dd1119bb793812c701d92805e339ddfe44cd81",
+    "src/java/org/qore/jni/KotlinMetadataHelper.java": "f7fc3eb27a19e06f6c9f7277bbbfec6a9e334f9a9d77dd73c77eaccb80c2ad05",
+    "src/java/org/qore/jni/NativeCleanup.java": "0653508ffb2d32c167804d9103b7f50ce2e306aef85c4ae3b3b64035e7c1b739",
+    "src/java/org/qore/jni/QoreClosure.java": "eb098e5ca51d4ad38d68bc6a81f2993c5bfc56452d2b54af3c217890cda469d2",
+    "src/java/org/qore/jni/QoreInvocationHandler.java": "1c4f72ca3222dfb98c98f32149ce701d1aea319175192e42e7b98f5072365510",
+    "src/java/org/qore/jni/QoreObjectBase.java": "2aee5798d0354a316da5921a98af55934a596b3ed74fb534c5294ff3eb533742",
+    "src/java/org/qore/jni/QoreURLClassLoader.java": "65e9baa70b501f34eb0322506f122ba314ffb2f812049df2bfa05dd570c23fb5",
+    "src/java/org/qore/jni/compiler/QoreJavaCompiler.java": "d1378e018db9592989edd5c65e48f11d3973f1f3a93ce0a95a868b0dd2822e48",
+    "src/java/org/qore/lang/AbstractDatasource.java": "551d724e82756aaaeee22eb46b7bd7a1406dad55914ccd4dc62cc6d61ac3b656",
+    "src/java/org/qore/lang/HTTPClient.java": "0a57f7813b246f25106ecabf8b54178a3eb51cfd0c085bc766372edeceeeba84",
+    "src/java/org/qore/lang/HashListIterator.java": "c5ba784395515309fb743a99db697026ce0246c606e52f7c6fe5ad08aa095c4e",
+    "src/java/org/qore/lang/dataprovider/AbstractDataProvider.java": "3244a92d57f6cb98c1a58d169a4bb7e6763323844160909eb0f4d52c5c82d317",
+    "src/java/org/qore/lang/mailmessage/Attachment.java": "e5f364cd65dd53f3d64877102dc7f13166202dae754043fa66d12f0243b1985c",
+    "src/java/org/qore/lang/mailmessage/Message.java": "a333e23fae637e387169c7bbc54613493995d178269e22c4e48ba5424899878e",
+    "src/java/org/qore/lang/mailmessage/Part.java": "6fc36d2d41046821206f1469b40e4ff984f50cfce202eaddeeb806da644209ab",
+    "src/java/org/qore/lang/qunit/Test.java": "f7fce1e484c08b6b4b3981b6e9ff8eaabfa77b67b31724bb1e231085d872614a",
+    "src/java/org/qore/lang/reflection/Type.java": "8c8ec18afd940181b40d119c2a196d42ea48b96a56962ead84db866f2ccbd853",
+    "src/java/org/qore/lang/restclient/RestClient.java": "9e81b94f8300b37090f6f174d34de81f3e481addbfe6762b6de6a0a4c9e559f6",
+    "src/java/org/qore/lang/smtpclient/SmtpClient.java": "dee7a3fc7e16b032ddbd5fc145472631445d2ba65d4c28ba6f8e1a7684c1cd86",
+    "src/java/org/qore/lang/soapclient/SoapClient.java": "53d078b06c1ca18726f0199a659346ac949231d064ceb4f085e38331094ee8ca",
+    "src/java/org/qore/lang/sqlutil/AbstractTable.java": "8cc3d8ce1bc322970eb7b757de9e0e2a51bdecb5c4b26bc2050a9afc760fe5c7",
+    "src/jni-module.cpp": "f971c1e956fcf4338cb53bead8145e190a5b067e027e069644d944532c0436c9",
+    "test/jni.qtest": "e0eac57316d6d9d1e0ead5f0d57916ba1e74f23f7f4c6a070192f6ba6661d891",
+    "test/java/src/org/qore/jni/ExceptionConversionFixture.java": "fdb3127b61da88db3afdaa83df03cf5ed6b8efc0645081f0c6a0b0bbe198c11c",
+    "test/java/src/org/qore/jni/NativeCleanupLifecycleTest.java": "7ab1531d4271b9963b80339f10b682fddfe1669f1f1c21b88cbc78a52b366e94",
+    "test/jni-reference-safety.qtest": "fd6add3044b03307eeaeb0ef25fcbcd9768443c1728dd22e90fe4e2b7f0939d5",
+    "test/native-cleanup-shutdown.qr": "84952e65fc815d314d14d81c2985f27fcdc6545b040133f2aa1331852b29d252",
+    "test/test-doc-index.py": "72e6dd82499e336e14e23e7f1f1214f066b7ed3cdbc80eb8fad40179fd82831f",
+    "test/test-native-cleanup-shutdown.py": "271fb812af281094ea3abec82fab96d6706710768fd39c370a58c9cc96b0c375"
+  },
+  "logs_sha256": {
+    "results/jni-shutdown-valgrind-4/native-cleanup-shutdown-valgrind.log": "ce3629f8c8f4f09d307687498d8437e26b2918ac3ee7173150afd71b3299e996",
+    "results/jni-shutdown-valgrind-4/native-cleanup-shutdown.log": "2c4f41753db85eed2ec9336371b676d137d7d6b8d1872c9aacfd5f31e2efbaad",
+    "results/jni-shutdown-valgrind-4/jni-exception-location-valgrind.log": "dd4594a21b672f2aa81d312f3c8ebd9cd18bc83a4153ecbe8d2678c19347130f",
+    "results/jni-shutdown-valgrind-4/jni-reference-safety-valgrind.log": "4b20dbe457078d4169b37b4e00ce8e7e0571ec15f01ab8432a370675cbfaa158",
+    "results/jni-shutdown-valgrind-4/jni-reference-safety.log": "37249f3d3ac18e43478ee3cfda04e20b0e8f660612e7943034d6954a75176c8b",
+    "results/jni-shutdown-valgrind-4/jni.log": "79fe982640dd94e40879e76ef9143632a10d26e5770c3d7400bbffefb7e811f9",
+    "results/jni-shutdown-valgrind-4/driver.log": "531c2826ed63fe285b26a4cc1b53756dbdb3c2ccfdfb55a775af58c76e065ce4",
+    "results/jni-shutdown-valgrind-4/jni-exception-location.log": "409407a40442f2713b227d817215beddc1948c7c9ad1d2a96d2d192a59c5fe88",
+    "results/jni-shutdown-valgrind-4/jni-valgrind.log": "f7d943c2e0bca102d502658916bd929dced14360861be9c9800fdc0a311a94e2",
+    "results/jni-shutdown-safety-6/build-debug-ctest.log": "6ebaf2c212bda9f0494eacc8dc45fed01df7efc69f03a79e41bf2145badbfd3a",
+    "results/jni-shutdown-safety-6/build-debug-compile.log": "b21a2efc1294b42ae061fb3faecf4d51c90222e727d033edaf946ec1333b6ef1",
+    "results/jni-shutdown-safety-6/build-jni-reference-safety.log": "37249f3d3ac18e43478ee3cfda04e20b0e8f660612e7943034d6954a75176c8b",
+    "results/jni-shutdown-safety-6/build-debug-jni-exception-location.log": "409407a40442f2713b227d817215beddc1948c7c9ad1d2a96d2d192a59c5fe88",
+    "results/jni-shutdown-safety-6/build-compile.log": "9d781a3caa26c691811344b3c8ad91a5eda51775beab8014596249039eea5985",
+    "results/jni-shutdown-safety-6/build-jni-exception-location.log": "409407a40442f2713b227d817215beddc1948c7c9ad1d2a96d2d192a59c5fe88",
+    "results/jni-shutdown-safety-6/build-jni.log": "135283f42b9c16df7eae71dd0637a2116271d8041bee1e0e355852b71c4a3e32",
+    "results/jni-shutdown-safety-6/driver.log": "18b6d6d063a53cabb2a143b2d9b0f53b20dead16cd63555c9b1b85f3fd8e7337",
+    "results/jni-shutdown-safety-6/build-debug-jni-reference-safety.log": "37249f3d3ac18e43478ee3cfda04e20b0e8f660612e7943034d6954a75176c8b",
+    "results/jni-shutdown-safety-6/build-debug-jni.log": "9dcb6fcc2a1450b27c1b0560037163d6d781a5092602862587ef3104a53a8e46",
+    "results/jni-shutdown-safety-6/build-ctest.log": "a92e95f1d3a54e16e2fc70d0eb331efe7a6c2c94511ab1f90658eb492c904d01",
+    "results/jni-python-control-1/load.log": "101490e20f200b54b21a97c30efb72ba88126a66a5b99557b4a47f6d2eaa7e27",
+    "results/jni-python-control-1/parse.log": "0d1eab2a59d513b012521599a4db69c10fc37ae348572cacc1be33ffbd33e2b8",
+    "results/jni-python-control-1/load-valgrind.log": "f4d64d6c13bd21440814f1e72df6f20dbdf73619b7d0b595d36611d0ffd241be",
+    "results/jni-python-control-1/parse-valgrind.log": "690a45e24292d2621052903cad3c0ecfd831bd68deecb4395da2de8564eeefe9",
+    "results/jni-python-finalization-1/main-valgrind.log": "8d0ca6c897615c4d934222c58df7e8e357adb7664185b77a46c1ab6e525c0611",
+    "results/jni-python-finalization-1/main.log": "9a2c6deaa164f77bcc5af3a49b1bdb0367c74e096f59c548c1218e0967d8b555",
+    "results/jni-python-finalization-1/load.log": "101490e20f200b54b21a97c30efb72ba88126a66a5b99557b4a47f6d2eaa7e27",
+    "results/jni-python-finalization-1/load-valgrind.log": "e779b03fbd7aa320a2ea309d1702a27abd314701f8e981a2ad58234da3e34401",
+    "results/jni-dispatch-valgrind-1/dispatch-valgrind.log": "1f385eee70dadc2e3e1860273841e67efc26b97b732d9f268a4a3cb1774ec2d8",
+    "results/jni-dispatch-valgrind-1/dispatch.log": "0d8c7c9362e4092ab142a381f5b79457f3a3a2b9febe6599c61cca6539434e3f",
+    "results/jni-docs-8.log": "4a7827bee5dd1e52d2ec2effdd2569b06bf648673d0b26bb5dcad4ae8c979e77",
+    "results/jni-shutdown-safety-4/build-compile.log": "0abb981363f4a9a9e7aa19ea81894ad6cdd4119c88a4db8f991a8e247937c658",
+    "results/jni-closed-program-before-1/returned-valgrind.log": "865251708e9de85ffb3a1c1d5b3b6ef67a8b90de8a09281033071e3477102f5e"
+  },
+  "controls": {
+    "python_runtime_policy": "The installed Python module intentionally does not finalize its owned interpreter unless built with QORE_ALLOW_PYTHON_SHUTDOWN (existing issue 4290 compatibility policy). Its JNI load-only and parse-only controls reproduce approximately 1.27 MB of Python possible-loss records. This is recorded separately from the stricter final memory qualification.",
+    "python_finalization": "The main Valgrind suite explicitly loads the previously qualified Debug Python module built with QORE_ALLOW_PYTHON_SHUTDOWN. Its load-only control and full selected tests retain exactly the same 4373 possible bytes in 49 CPython static-type loss contexts. No additional Python leak is exempted.",
+    "closed_program_before": "results/jni-closed-program-before-1/returned-valgrind.log has 20 non-JVM invalid-access/free contexts in the minimal closed-Program control; the permanent regression has none.",
+    "callback_before": "results/jni-dispatch-valgrind-1/dispatch-valgrind.log exposes the 56 direct + 88 indirect byte callback-result leak. The final suite includes both callback-return and explicit destructor-error cases and has no such loss.",
+    "no_suppressions": "Raw Valgrind exits remain 97, with zero suppressions; every context is classified. No warning/error-exitcode weakening is used."
+  },
+  "source_commit": "c32cb659422f69fbe046300cce4ebfb5899b3e51"
+}

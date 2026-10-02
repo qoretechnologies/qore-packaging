@@ -1,0 +1,338 @@
+{
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-02",
+  "native_parent": "c32cb659422f69fbe046300cce4ebfb5899b3e51",
+  "merged_upstream": "96be4335e060baa868127e5a63556071ade66997",
+  "root_cause": "GraphicsEnvironment.isHeadless is static (getStaticMethod) but findCreateQoreClassInBase used CallBooleanMethodA. Checked JNI rejects the receiver/method combination. CallStaticBooleanMethodA matches the declaration.",
+  "before": {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "--user",
+      "1019:100",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/jni-native-1:/source:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/jni-headless-before-1:/results",
+      "-w",
+      "/source",
+      "-e",
+      "QORE_JNI_JVM_ARGS=-Xcheck:jni -Djava.awt.headless=true",
+      "sha256:c9f96a5a805a4f403256be08f11349bdd7654aea6dd450e2d799e7be84b7bd8c",
+      "qore",
+      "-b",
+      "--enable-debug",
+      "-l",
+      "/source/build-debug/jni-api-2.0.qmod",
+      "/results/headless.qr"
+    ],
+    "exit_code": 134
+  },
+  "functional": {
+    "steps": [
+      {
+        "name": "build",
+        "command": [
+          "cmake",
+          "--build",
+          "build",
+          "--parallel",
+          "2"
+        ],
+        "exit_code": 0,
+        "counts": []
+      },
+      {
+        "name": "build-debug",
+        "command": [
+          "cmake",
+          "--build",
+          "build-debug",
+          "--target",
+          "jni",
+          "--parallel",
+          "2"
+        ],
+        "exit_code": 0,
+        "counts": []
+      },
+      {
+        "name": "headless-debug",
+        "command": [
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "test/test-headless-class-import.py",
+          "--qore",
+          "/usr/bin/qore",
+          "--module",
+          "build-debug/jni-api-2.0.qmod"
+        ],
+        "exit_code": 0,
+        "counts": []
+      },
+      {
+        "name": "ctest",
+        "command": [
+          "ctest",
+          "--test-dir",
+          "build",
+          "--output-on-failure"
+        ],
+        "exit_code": 0,
+        "counts": []
+      },
+      {
+        "name": "source-ExcelDataProvider",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/source/build/jni-api-2.0.qmod",
+          "test/ExcelDataProvider.qtest",
+          "-v"
+        ],
+        "exit_code": 0,
+        "counts": [
+          [
+            "40",
+            "40",
+            "204"
+          ]
+        ]
+      },
+      {
+        "name": "source-OdsDataProvider",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/source/build/jni-api-2.0.qmod",
+          "test/OdsDataProvider.qtest",
+          "-v"
+        ],
+        "exit_code": 0,
+        "counts": [
+          [
+            "35",
+            "35",
+            "187"
+          ]
+        ]
+      },
+      {
+        "name": "aot-ExcelDataProvider",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/source/build/jni-api-2.0.qmod",
+          "-l",
+          "/source/build/qlib-qmod/ExcelDataProvider/ExcelDataProvider.qmod",
+          "test/ExcelDataProvider.qtest",
+          "-v"
+        ],
+        "exit_code": 0,
+        "counts": [
+          [
+            "40",
+            "40",
+            "204"
+          ]
+        ]
+      },
+      {
+        "name": "aot-OdsDataProvider",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/source/build/jni-api-2.0.qmod",
+          "-l",
+          "/source/build/qlib-qmod/OdsDataProvider/OdsDataProvider.qmod",
+          "test/OdsDataProvider.qtest",
+          "-v"
+        ],
+        "exit_code": 0,
+        "counts": [
+          [
+            "35",
+            "35",
+            "187"
+          ]
+        ]
+      },
+      {
+        "name": "jni-reference-safety",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/source/build/jni-api-2.0.qmod",
+          "test/jni-reference-safety.qtest",
+          "-v"
+        ],
+        "exit_code": 0,
+        "counts": [
+          [
+            "9",
+            "9",
+            "797"
+          ]
+        ]
+      },
+      {
+        "name": "docs",
+        "command": [
+          "cmake",
+          "--build",
+          "build",
+          "--target",
+          "docs",
+          "--parallel",
+          "2"
+        ],
+        "exit_code": 2,
+        "counts": []
+      }
+    ]
+  },
+  "documentation": {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "--user",
+      "1019:100",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/jni-native-1:/source",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/jni-upstream-merge-2:/results",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/jni-upstream-merge-runner-2.py:/runner.py:ro",
+      "-v",
+      "/home/david/src/qore/git/qore/build/qore.tag:/core-devel/qore.tag:ro",
+      "-w",
+      "/source",
+      "-e",
+      "QORE_JNI_JVM_ARGS=-Xcheck:jni",
+      "sha256:c9f96a5a805a4f403256be08f11349bdd7654aea6dd450e2d799e7be84b7bd8c",
+      "sh",
+      "-c",
+      "set -eu\n. /usr/lib/rpm/qore/module-env.sh\nexport JAVA_HOME=/usr/lib/jvm/java-25-openjdk\nexport KOTLIN_HOME=\"$PWD/build/vendor-kotlin/kotlinc\"\nexport PATH=\"$JAVA_HOME/bin:$KOTLIN_HOME/bin:$PATH\"\ncmake --build build --target docs --parallel 2\npython3 -B -W error test/test-doc-index.py --build-dir build -v\n"
+    ],
+    "exit_code": 0
+  },
+  "valgrind": {
+    "settings": {
+      "tests": [
+        {
+          "suite": "headless-class-import",
+          "command": [
+            "valgrind",
+            "--error-exitcode=97",
+            "--leak-check=full",
+            "--show-leak-kinds=definite,indirect,possible",
+            "--errors-for-leak-kinds=definite,indirect",
+            "--num-callers=30",
+            "--track-origins=yes",
+            "--error-limit=no",
+            "--max-stackframe=8388608",
+            "--log-file=/results/headless-class-import-valgrind.log",
+            "qore",
+            "-b",
+            "--enable-debug",
+            "-l",
+            "/source/build-debug/jni-api-2.0.qmod",
+            "test/headless-class-import.qr"
+          ],
+          "raw_exit_code": 97,
+          "counts": []
+        }
+      ],
+      "complete": true
+    },
+    "summary": {
+      "definitely": {
+        "bytes": 1295,
+        "blocks": 4
+      },
+      "indirectly": {
+        "bytes": 2691,
+        "blocks": 13
+      },
+      "possibly": {
+        "bytes": 430768,
+        "blocks": 691
+      }
+    },
+    "allocation_origins_bytes": {
+      "indirectly": {
+        "WatcherThread::": 1683,
+        "VM_Version_StubGenerator::generate_get_cpu_info": 1008
+      },
+      "definitely": {
+        "PerfMemory::": 39,
+        "resize_scopes": 64,
+        "_dl_map_object_deps": 72,
+        "WatcherThread::": 1120
+      },
+      "possibly": {
+        "allocate_dtv": 2800,
+        "ParkEvent::Allocate": 8320,
+        "OopStorage::": 419648
+      }
+    },
+    "non_leak_contexts": {
+      "JVM generated stack probes": 247,
+      "JVM readability probes": 12
+    },
+    "unclassified_contexts": 0,
+    "exceptions": "jni-external-diagnostics-20261002.json; exact previously approved JVM/glibc origins only, no suppressions."
+  },
+  "source_sha256": {
+    "src/QoreJniClassMap.cpp": "2e54aa8dbf0ef2db7474a35b5d7a3edf8a64f27a85550205bd80e06f85f13c23",
+    "CMakeLists.txt": "d0ddb03abf9931eb66c319903faa5f9f5e7331d0368c51551405b2a1c0f23f71",
+    "README": "11b1e5be1fb3310b24d0bee613aae07d707f5914fdf650cfd1c44908549090a5",
+    "docs/mainpage.dox.tmpl": "dad60719e4a4eb156f55ebfdc7c32c4763151cd5982af1aea1736af834b9d02f",
+    "qlib/ExcelDataProvider/ExcelWorksheetReadDataProvider.qc": "24c65479ff4e8c1f9e1151433ad911366285e0d059707924c7725974e92b2385",
+    "test/test-headless-class-import.py": "c529353d17dc0b12d011458e916d19cac4f28c65beb5024a4bea10df03ef801b",
+    "test/headless-class-import.qr": "3ec8d26ac33246866d305b658815a229d5fbe687479f2d87a5c7794b6f8334f0"
+  },
+  "logs_sha256": {
+    "results/jni-headless-before-1/test.log": "e616e0263e816da78f9c4e71882614f71b6f0030e340f6d38bcbd0bfbdc6a5ed",
+    "results/jni-aot-checked-trace-1/trace.log": "004bce1dedf60b42c1976acd52c4fe337b575eeb7d6b7b34db80afa4b7d9b9e6",
+    "results/jni-upstream-merge-2/headless-debug.log": "d48721863702a25d968269b7275e0d5ac4b2092f5597eb50216899878b04286f",
+    "results/jni-upstream-merge-2/ctest.log": "5b63b6260d330e0d24acbd3425d436b001d7e6f3160d7cd87d8ff1dacb2cd457",
+    "results/jni-upstream-merge-2/jni-reference-safety.log": "37249f3d3ac18e43478ee3cfda04e20b0e8f660612e7943034d6954a75176c8b",
+    "results/jni-upstream-merge-2/aot-ExcelDataProvider.log": "9b3156951ba57693a5e4ea5ec43258679afb0746be4f12e7a7ef458bbddc9995",
+    "results/jni-upstream-merge-2/aot-OdsDataProvider.log": "1676499260a0dcff0ec5a82d2e084d1492b8cfe42d8b23aed9f7b8120a80732d",
+    "results/jni-upstream-merge-2/build-debug.log": "6e91472f52fd68b5517c34413f7139a23862522d6b2da91a3fb39e5bc971b27e",
+    "results/jni-upstream-merge-2/driver.log": "5b4fdb8060829ba86e9f7296eace43fe9f4be0fb5db23d57217313bd59a16c55",
+    "results/jni-upstream-merge-2/build.log": "8c3ee57f4b5ece902c796550fc2a13488f487e14d37b5ec74c15e65ebb130875",
+    "results/jni-upstream-merge-2/source-ExcelDataProvider.log": "9b3156951ba57693a5e4ea5ec43258679afb0746be4f12e7a7ef458bbddc9995",
+    "results/jni-upstream-merge-2/docs.log": "d548f4a680c153082f1cc4897ee386200f90a6bd9ca71dae45dcc0e020cbc3a3",
+    "results/jni-upstream-merge-2/source-OdsDataProvider.log": "1676499260a0dcff0ec5a82d2e084d1492b8cfe42d8b23aed9f7b8120a80732d",
+    "results/jni-merge-docs-1/docs.log": "6671a2699b132ec07855f9733b506814331e35e10a41cfe8966f1a42a3c9bd1a",
+    "results/jni-headless-valgrind-1/headless-class-import.log": "ab78328473a3429d6ccc1212b476244ccfa6bf9aafd188d220389528f99c04b8",
+    "results/jni-headless-valgrind-1/driver.log": "28acef7bd817ddbe28ddd901c3281ab6da9d014aa266f728fbbb6aaaf6c3fc3b",
+    "results/jni-headless-valgrind-1/headless-class-import-valgrind.log": "500a46b7a933865df3ea19f112a13f9ec7b097de49cbefe54de85af90b55fa15"
+  },
+  "limitations": [
+    "Cross-distribution RPM qualification remains pending.",
+    "This merge includes independently committed Excel/ODS fixes; both provider suites passed as source and AOT with checked JNI."
+  ]
+}

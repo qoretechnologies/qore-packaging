@@ -1,0 +1,440 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-02",
+  "scope": "Core release 20 canonical x86_64 RPM builds and installed SDK/minimal-runtime qualification on Fedora, Leap and EL10. Source commit 2a7afda675225f639a698ec289bc218560800485. OBS revision 15 uploaded with publication disabled; remote builds and native ARM installed checks remain separate gates.",
+  "local": {
+    "fedora": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:a437efbf23f3bf7b180f7d58a5ad3dd70d524372ae60a57380dff115a2b5feda",
+        "source": {
+          "schema": 1,
+          "commit": "2a7afda675225f639a698ec289bc218560800485",
+          "source_date_epoch": 1790971999,
+          "name": "qore",
+          "version": "3.0.0~git20261002.20",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261002.20.tar.xz": "d9e52e16886754e6fc60bde566198102d5c7b79433b026cd39df5a07ddc7e0c4",
+            "qore.spec": "e02989b4802619e8c7ea288e299b69ff98118367c8c0accc05573101ae3ce1f6"
+          },
+          "spec": "qore.spec"
+        },
+        "jobs": 4,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790971999",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/qore-source-policy-20:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-20:/work",
+          "sha256:a437efbf23f3bf7b180f7d58a5ad3dd70d524372ae60a57380dff115a2b5feda",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 4",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.20-20.fc44.noarch.rpm": "c7b05604d160bc9cb8a40d01ceff0fbcca44b30640596bc1b90d0272bbb178bf",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.20-20.fc44.noarch.rpm": "aa1be364309863a77906f23752d20959bbf392ba9201f1da3c5d502317203632",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.20-20.fc44.noarch.rpm": "cc7bbbf96015a9c8fe9e74d0d7a384f25483c3634842c6c94f961ccbc939d3c3",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.20-20.fc44.noarch.rpm": "c9eb9e72a859a23ed1ffb525313446df16fc14e0e9436b80087b04048413bb8c",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.20-20.fc44.noarch.rpm": "c05d8cb57247e27e555f60181fb1d4e089a3777ccdffe9ec679f9713edeed1d9",
+          "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "e557fb2586fcfe515e1439e99976c8aa6f50f175dac9c2501e41d01776ad790d",
+          "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "ded83cca549cc32b94b84893d4220e82683b5a9f0d9974848ae9b69318261ea8",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "1668f85f3a69977a49ff253e8ed997e41a9fad2d256b398b7bb16b0aceae0d9a",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "276cf6701a1a9d0c30a8ebe0b5f3b79d85be001798cc1f09002f7d4646bec87a",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "a688d579de05399638d90c1b2c42d84efc74444a0cfc90e6365b35d1b08b5cdc",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "e02d9110c8d353242db3dc3f953e8fe9cf55943dcf2b97adc00cf197786cda0e",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "6959af8de8245c20e08d5800b97bd89e07f34bee50b06e60300672100c651549",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "7ec9b5d40ee4d169ae2e39c36f713919039930a2690c292810b194443649b63b",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "5ce75f1817a44c74d33f5c2f09107d716d7c00a2bd14c4333f0fb2d75e96fc2c",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261002.20-20.fc44.src.rpm": "6add0557aeceb78ae2ffdc56105b5415c642910c8049edac10c8b5f27fe8f17d"
+        }
+      },
+      "installed": {
+        "source_build": "results/fedora-qore-policy-20",
+        "steps": {
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/fedora-core-policy-20-sdk-install-3.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-core-policy-20-sdk-tests-3.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/fedora-core-policy-20-runtime-install-3.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-core-policy-20-runtime-tests-3.log"
+          }
+        },
+        "source": {
+          "schema": 1,
+          "commit": "2a7afda675225f639a698ec289bc218560800485",
+          "source_date_epoch": 1790971999,
+          "name": "qore",
+          "version": "3.0.0~git20261002.20",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261002.20.tar.xz": "d9e52e16886754e6fc60bde566198102d5c7b79433b026cd39df5a07ddc7e0c4",
+            "qore.spec": "e02989b4802619e8c7ea288e299b69ff98118367c8c0accc05573101ae3ce1f6"
+          },
+          "spec": "qore.spec"
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.20-20.fc44.noarch.rpm": "c7b05604d160bc9cb8a40d01ceff0fbcca44b30640596bc1b90d0272bbb178bf",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.20-20.fc44.noarch.rpm": "aa1be364309863a77906f23752d20959bbf392ba9201f1da3c5d502317203632",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.20-20.fc44.noarch.rpm": "cc7bbbf96015a9c8fe9e74d0d7a384f25483c3634842c6c94f961ccbc939d3c3",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.20-20.fc44.noarch.rpm": "c9eb9e72a859a23ed1ffb525313446df16fc14e0e9436b80087b04048413bb8c",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.20-20.fc44.noarch.rpm": "c05d8cb57247e27e555f60181fb1d4e089a3777ccdffe9ec679f9713edeed1d9",
+          "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "e557fb2586fcfe515e1439e99976c8aa6f50f175dac9c2501e41d01776ad790d",
+          "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "ded83cca549cc32b94b84893d4220e82683b5a9f0d9974848ae9b69318261ea8",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "1668f85f3a69977a49ff253e8ed997e41a9fad2d256b398b7bb16b0aceae0d9a",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "276cf6701a1a9d0c30a8ebe0b5f3b79d85be001798cc1f09002f7d4646bec87a",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "a688d579de05399638d90c1b2c42d84efc74444a0cfc90e6365b35d1b08b5cdc",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "e02d9110c8d353242db3dc3f953e8fe9cf55943dcf2b97adc00cf197786cda0e",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "6959af8de8245c20e08d5800b97bd89e07f34bee50b06e60300672100c651549",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "7ec9b5d40ee4d169ae2e39c36f713919039930a2690c292810b194443649b63b",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.20-20.fc44.x86_64.rpm": "5ce75f1817a44c74d33f5c2f09107d716d7c00a2bd14c4333f0fb2d75e96fc2c",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261002.20-20.fc44.src.rpm": "6add0557aeceb78ae2ffdc56105b5415c642910c8049edac10c8b5f27fe8f17d"
+        },
+        "sdk_image": "sha256:22917630c8cdf6c560df78b09c1f5c3dd28ca6f26e5b00027a895954dc90e64d",
+        "runtime_image": "sha256:aaaaf5f3762f55166492464a0d4d5655fd242e4b34393fdd857973aebec6a892",
+        "exit_code": 0
+      },
+      "logs_sha256": {
+        "results/fedora-qore-policy-20/build.log": "300056655d6b7d4231b29f6288525ec2512d0533772203a91dc17f8db02a811d",
+        "results/fedora-core-policy-20-sdk-install-3.log": "1fb3cba4232c59096a1512d02e2b1c1d3974982878600d89bb13c8c5e50a218c",
+        "results/fedora-core-policy-20-sdk-tests-3.log": "98eb2fdce8f423a8a84c3c61ab347f6f629adbba74fd6688983e5270951acd99",
+        "results/fedora-core-policy-20-runtime-install-3.log": "673b04c01841ad12b9f8977036775b1540837e72e8cf0b57fb40675f0f0af707",
+        "results/fedora-core-policy-20-runtime-tests-3.log": "9558a8c25fb7d9164e1db835c75f1d0a85d7a07e40877afdf864bd8fd180128b"
+      },
+      "suites_passed": 400,
+      "suites_failed": 0
+    },
+    "leap": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:48f1246678238c3d1b479f5cffc69c511443b4855b7f548fc4b22bf793fb975b",
+        "source": {
+          "schema": 1,
+          "commit": "2a7afda675225f639a698ec289bc218560800485",
+          "source_date_epoch": 1790971999,
+          "name": "qore",
+          "version": "3.0.0~git20261002.20",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261002.20.tar.xz": "d9e52e16886754e6fc60bde566198102d5c7b79433b026cd39df5a07ddc7e0c4",
+            "qore.spec": "e02989b4802619e8c7ea288e299b69ff98118367c8c0accc05573101ae3ce1f6"
+          },
+          "spec": "qore.spec"
+        },
+        "jobs": 4,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790971999",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/qore-source-policy-20:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-20:/work",
+          "sha256:48f1246678238c3d1b479f5cffc69c511443b4855b7f548fc4b22bf793fb975b",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 4",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.20-20.noarch.rpm": "3bfcde8ece15041571032c0a0b8c6ae8ebe4555720cf5a3ed5d5ea9030b3dea1",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.20-20.noarch.rpm": "e357ef68f25b7f428bc3313d3f58c163358492fd18829078b882defa25be8245",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.20-20.noarch.rpm": "e210e4a595a41fc0b071c6486b9e8e1119936d074605965a8d5d5ae0367e4820",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.20-20.noarch.rpm": "84fe755fd237813fd7e14cf45f840ede1fe019303e5809ca4f4c21a371aaf7b1",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.20-20.noarch.rpm": "ddbe9ee8303748f6e8d5bde49f4d142981e66d69437c9930d56473f5d41f9a11",
+          "rpmbuild/RPMS/x86_64/libqore20-3.0.0~git20261002.20-20.x86_64.rpm": "3c7c1d94fd188673ee69da2599669c1c43d8cc7c43178e2b00845c7e920ddc8b",
+          "rpmbuild/RPMS/x86_64/libqore20-debuginfo-3.0.0~git20261002.20-20.x86_64.rpm": "12718a7b2ed00cd068062a7c054bd2e60673a2bfdc6100a1f476208b172b2df9",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.20-20.x86_64.rpm": "d2bb7743205258b3bfc27fa590cf2f0ac98f9e65534bfb87b0cb33b95186ec3d",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.20-20.x86_64.rpm": "271f60a0dfdff46f77da743fd35d3e725a06383f9c2be3ebe68614e8422d8583",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.20-20.x86_64.rpm": "1348882e5fc56a09c451985252e70185c71286769b24d3f8a0cd07b126cb02fd",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.20-20.x86_64.rpm": "e7c3bb204e3031c0200e6fd6e220a047cdff1ba076ec1871a6e5191c9fca66ea",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.20-20.x86_64.rpm": "a4e2ea718e5c2b5d81efca6ce650d962466a060599e38b131e644b679867b65c",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.20-20.x86_64.rpm": "3acd7fa0dcbac49dbbf51daa06ad7fcc6d93472f865dee1705435e6527c1fb45",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.20-20.x86_64.rpm": "17fecdcbc1b4f906658377de4a008c3d8549a1ff36de125db85bac2f19005c0c",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261002.20-20.src.rpm": "e34793b978397e8a850f554adbb75cb776251f563464334f7b81dd95b34c9b7c"
+        }
+      },
+      "installed": {
+        "source_build": "results/leap-qore-policy-20",
+        "steps": {
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/leap-core-policy-20-sdk-install-3.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/leap-core-policy-20-sdk-tests-3.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/leap-core-policy-20-runtime-install-3.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/leap-core-policy-20-runtime-tests-3.log"
+          }
+        },
+        "source": {
+          "schema": 1,
+          "commit": "2a7afda675225f639a698ec289bc218560800485",
+          "source_date_epoch": 1790971999,
+          "name": "qore",
+          "version": "3.0.0~git20261002.20",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261002.20.tar.xz": "d9e52e16886754e6fc60bde566198102d5c7b79433b026cd39df5a07ddc7e0c4",
+            "qore.spec": "e02989b4802619e8c7ea288e299b69ff98118367c8c0accc05573101ae3ce1f6"
+          },
+          "spec": "qore.spec"
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.20-20.noarch.rpm": "3bfcde8ece15041571032c0a0b8c6ae8ebe4555720cf5a3ed5d5ea9030b3dea1",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.20-20.noarch.rpm": "e357ef68f25b7f428bc3313d3f58c163358492fd18829078b882defa25be8245",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.20-20.noarch.rpm": "e210e4a595a41fc0b071c6486b9e8e1119936d074605965a8d5d5ae0367e4820",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.20-20.noarch.rpm": "84fe755fd237813fd7e14cf45f840ede1fe019303e5809ca4f4c21a371aaf7b1",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.20-20.noarch.rpm": "ddbe9ee8303748f6e8d5bde49f4d142981e66d69437c9930d56473f5d41f9a11",
+          "rpmbuild/RPMS/x86_64/libqore20-3.0.0~git20261002.20-20.x86_64.rpm": "3c7c1d94fd188673ee69da2599669c1c43d8cc7c43178e2b00845c7e920ddc8b",
+          "rpmbuild/RPMS/x86_64/libqore20-debuginfo-3.0.0~git20261002.20-20.x86_64.rpm": "12718a7b2ed00cd068062a7c054bd2e60673a2bfdc6100a1f476208b172b2df9",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.20-20.x86_64.rpm": "d2bb7743205258b3bfc27fa590cf2f0ac98f9e65534bfb87b0cb33b95186ec3d",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.20-20.x86_64.rpm": "271f60a0dfdff46f77da743fd35d3e725a06383f9c2be3ebe68614e8422d8583",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.20-20.x86_64.rpm": "1348882e5fc56a09c451985252e70185c71286769b24d3f8a0cd07b126cb02fd",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.20-20.x86_64.rpm": "e7c3bb204e3031c0200e6fd6e220a047cdff1ba076ec1871a6e5191c9fca66ea",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.20-20.x86_64.rpm": "a4e2ea718e5c2b5d81efca6ce650d962466a060599e38b131e644b679867b65c",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.20-20.x86_64.rpm": "3acd7fa0dcbac49dbbf51daa06ad7fcc6d93472f865dee1705435e6527c1fb45",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.20-20.x86_64.rpm": "17fecdcbc1b4f906658377de4a008c3d8549a1ff36de125db85bac2f19005c0c",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261002.20-20.src.rpm": "e34793b978397e8a850f554adbb75cb776251f563464334f7b81dd95b34c9b7c"
+        },
+        "sdk_image": "sha256:348ee8cb2e0a6728e7078bb87253116d34cfd8adb41b306c346f0afc99f02e62",
+        "runtime_image": "sha256:c28c539e11ebb734b9e64e65303f16f15376437198b9d40efa21da3727ac2e45",
+        "exit_code": 0
+      },
+      "logs_sha256": {
+        "results/leap-qore-policy-20/build.log": "d602553e4428716e82a4102d7043c8751a6e206b127242237b82f8336e987fcf",
+        "results/leap-core-policy-20-sdk-install-3.log": "41b0df315d15e6727fe203033e2abbbe6e545a993a6c1cd7e01ae1002ec43e36",
+        "results/leap-core-policy-20-sdk-tests-3.log": "e67fe22b5d35eb8abc2b1da24e0f2b44a763b2f08295e372d4dd558d8e09897c",
+        "results/leap-core-policy-20-runtime-install-3.log": "d51ac4a8ea298c7be4e68ca5c936c26b320659d6aed3aa7a6afb4183791b982e",
+        "results/leap-core-policy-20-runtime-tests-3.log": "e51f3dc1cb2d08e0bddf06b03042ba9464ca4a7603205edc8dbeea403cfc4f5f"
+      },
+      "suites_passed": 400,
+      "suites_failed": 0
+    },
+    "el10": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:50db5ec21c50dffb918d77c420f6c39d0c3c2c4c286b6150741de8c3dd80baeb",
+        "source": {
+          "schema": 1,
+          "commit": "2a7afda675225f639a698ec289bc218560800485",
+          "source_date_epoch": 1790971999,
+          "name": "qore",
+          "version": "3.0.0~git20261002.20",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261002.20.tar.xz": "d9e52e16886754e6fc60bde566198102d5c7b79433b026cd39df5a07ddc7e0c4",
+            "qore.spec": "e02989b4802619e8c7ea288e299b69ff98118367c8c0accc05573101ae3ce1f6"
+          },
+          "spec": "qore.spec"
+        },
+        "jobs": 4,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790971999",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/qore-source-policy-20:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-20:/work",
+          "sha256:50db5ec21c50dffb918d77c420f6c39d0c3c2c4c286b6150741de8c3dd80baeb",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 4",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.20-20.el10.noarch.rpm": "be91379bf0423b95c492f7fd7ff9e61eb4db5d4b6ffc2e846a2d77994d1da3e1",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.20-20.el10.noarch.rpm": "b56786dfe48e58254b299bade9da9c3a3c227735b0091348a38b9472a4df11d6",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.20-20.el10.noarch.rpm": "119398e30aebd80698ab6b596f61529ad398c42db057d8197cff71fd790e4cfe",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.20-20.el10.noarch.rpm": "744f254f52f470c50a2079777563d59e46eef07713d0c8987c40d07972c37e60",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.20-20.el10.noarch.rpm": "dca32db934f0b59e8580d97a8cc3cc9bf36a9ce84c629fd9845cef93d0d98b5f",
+          "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.20-20.el10.x86_64.rpm": "bda671afce24d4fdfa69d2b7b154e8b845029cc0195a4c076b8f5852acbb3919",
+          "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.20-20.el10.x86_64.rpm": "2444bb055a707132c54e9bab9e7dbcbbaeb69de5004cd18c9e88af16ef4f37f4",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.20-20.el10.x86_64.rpm": "36ea23eb6e5a474ad818cc2817297ff2b532c2bea8c8360c5610a02e3a9026d9",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.20-20.el10.x86_64.rpm": "bc9f93c9b0f9fb0264845e7a2a54c0dc68340e5ea0e9bf193206ba9c76d009be",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.20-20.el10.x86_64.rpm": "e48c8809069cf512fc94e047386c9e4944484e7315d58ef0925349187ec997fa",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.20-20.el10.x86_64.rpm": "048aac214e7c507dc76e3eaaaa15854def0350b8dcdffe29970687d3ebdf8158",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.20-20.el10.x86_64.rpm": "503d756cdb91c256b6c92d82dd215b8f4d27a1fcd72d4f54d67a8aa33f1e6255",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.20-20.el10.x86_64.rpm": "0d979ff0ce2dfc25c129581a534c22519c5ccc10bb252db64e60c3d54afe0af8",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.20-20.el10.x86_64.rpm": "bfb3ea84691ccd3dcffc1e5396857b34487065ab65c1ad0df28277da76c07c6c",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261002.20-20.el10.src.rpm": "8233d52b364b16f78bf9fcacd456db3e5919886e9a1c81be0f50c78638b63317"
+        }
+      },
+      "installed": {
+        "source_build": "results/el10-qore-policy-20",
+        "steps": {
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/el10-core-policy-20-sdk-install-3.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/el10-core-policy-20-sdk-tests-3.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/el10-core-policy-20-runtime-install-3.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/el10-core-policy-20-runtime-tests-3.log"
+          }
+        },
+        "source": {
+          "schema": 1,
+          "commit": "2a7afda675225f639a698ec289bc218560800485",
+          "source_date_epoch": 1790971999,
+          "name": "qore",
+          "version": "3.0.0~git20261002.20",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261002.20.tar.xz": "d9e52e16886754e6fc60bde566198102d5c7b79433b026cd39df5a07ddc7e0c4",
+            "qore.spec": "e02989b4802619e8c7ea288e299b69ff98118367c8c0accc05573101ae3ce1f6"
+          },
+          "spec": "qore.spec"
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.20-20.el10.noarch.rpm": "be91379bf0423b95c492f7fd7ff9e61eb4db5d4b6ffc2e846a2d77994d1da3e1",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.20-20.el10.noarch.rpm": "b56786dfe48e58254b299bade9da9c3a3c227735b0091348a38b9472a4df11d6",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.20-20.el10.noarch.rpm": "119398e30aebd80698ab6b596f61529ad398c42db057d8197cff71fd790e4cfe",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.20-20.el10.noarch.rpm": "744f254f52f470c50a2079777563d59e46eef07713d0c8987c40d07972c37e60",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.20-20.el10.noarch.rpm": "dca32db934f0b59e8580d97a8cc3cc9bf36a9ce84c629fd9845cef93d0d98b5f",
+          "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.20-20.el10.x86_64.rpm": "bda671afce24d4fdfa69d2b7b154e8b845029cc0195a4c076b8f5852acbb3919",
+          "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.20-20.el10.x86_64.rpm": "2444bb055a707132c54e9bab9e7dbcbbaeb69de5004cd18c9e88af16ef4f37f4",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.20-20.el10.x86_64.rpm": "36ea23eb6e5a474ad818cc2817297ff2b532c2bea8c8360c5610a02e3a9026d9",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.20-20.el10.x86_64.rpm": "bc9f93c9b0f9fb0264845e7a2a54c0dc68340e5ea0e9bf193206ba9c76d009be",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.20-20.el10.x86_64.rpm": "e48c8809069cf512fc94e047386c9e4944484e7315d58ef0925349187ec997fa",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.20-20.el10.x86_64.rpm": "048aac214e7c507dc76e3eaaaa15854def0350b8dcdffe29970687d3ebdf8158",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.20-20.el10.x86_64.rpm": "503d756cdb91c256b6c92d82dd215b8f4d27a1fcd72d4f54d67a8aa33f1e6255",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.20-20.el10.x86_64.rpm": "0d979ff0ce2dfc25c129581a534c22519c5ccc10bb252db64e60c3d54afe0af8",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.20-20.el10.x86_64.rpm": "bfb3ea84691ccd3dcffc1e5396857b34487065ab65c1ad0df28277da76c07c6c",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261002.20-20.el10.src.rpm": "8233d52b364b16f78bf9fcacd456db3e5919886e9a1c81be0f50c78638b63317"
+        },
+        "sdk_image": "sha256:a9af3844ca968f0fa6f2cec1f8c454513bd2f64647194798a9423762c7006041",
+        "runtime_image": "sha256:ee0486d8ace5b4222068723f96123f43f39cd5351aaf782ff5026a95612b094b",
+        "exit_code": 0
+      },
+      "logs_sha256": {
+        "results/el10-qore-policy-20/build.log": "56c0da43198fa5d5118db755eba9dfd3c1e5a3abf93911cac3038161a48a8f8e",
+        "results/el10-core-policy-20-sdk-install-3.log": "75e1a9afeb1b2792a9ea6c1c6ebc912bf115823072d42b41c7937094eecd4ff8",
+        "results/el10-core-policy-20-sdk-tests-3.log": "35ef55350e425cd3a5056749912c3ec3b128aa460a914110bf1581bc2aa173f9",
+        "results/el10-core-policy-20-runtime-install-3.log": "43aa5dcc10b5f8a6153af0765cb07391412a79a39ae0307ce98a46598d7bad56",
+        "results/el10-core-policy-20-runtime-tests-3.log": "6f5f47e900893f79055482de1d0da1cd76ceb7c9c2ad17a29af57f7945057bd0"
+      },
+      "suites_passed": 400,
+      "suites_failed": 0
+    }
+  },
+  "obs": {
+    "qore": {
+      "source_commit": "2a7afda675225f639a698ec289bc218560800485",
+      "revision": "15",
+      "srcmd5": "31e472d4c5294aa657487410f5d9e51d",
+      "verified_files": {
+        "qore-3.0.0~git20261002.20.tar.xz": "09785ac03406a08b6e8811f0c22ad981",
+        "qore.spec": "45b87156318f386196b185a1a10625e2",
+        "source-manifest.json": "11e1f7a2526fde5e13c83a736bc6d3c9"
+      }
+    }
+  },
+  "limitations": [
+    "All six OBS builds are currently building; no revision 20 native ARM installed qualification is claimed.",
+    "Combined modules, upgrades/removal, reproducibility, signing and publication remain release gates.",
+    "Existing core build/documentation and debugedit diagnostics are retained, as in release 19 evidence; this is not a claim of warning-free full core builds.",
+    "Earlier release-20 candidate artifacts used source a0aa24887 and are not the canonical artifacts recorded here."
+  ]
+}

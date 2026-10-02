@@ -56,6 +56,25 @@ see ``evidence/core19-local-installed-20261002.json``,
 ``evidence/proxy-shutdown-fix-20261002.json`` and
 ``evidence/core17-local-installed-20261002.json``.
 
+Core release 20 now passes all 400 local suites and installed runtime/SDK,
+ONNX, compiler, tools and debugger checks on all three x86_64 distributions.
+The canonical source is ``2a7afda675225f639a698ec289bc218560800485``; it is
+recorded separately from the earlier release-20 candidate in
+``evidence/core20-local-installed-20261002.json``. OBS revision 15 has matching
+source checksums and is building on all six targets, with publication disabled.
+Release-20 native ARM installed qualification remains pending.
+
+JNI native fixes and the latest Excel/ODS changes are committed. Release/Debug
+reference, exception and cleanup suites pass; strict documentation and the new
+checked-JNI headless regression pass. The latter corrects a static Java method
+that was incorrectly called through the instance JNI API during spreadsheet
+compilation. Source and AOT spreadsheet suites pass 782 assertions. Valgrind
+has no unclassified contexts or native losses; only the previously approved
+JVM/glibc and CPython origins remain. Evidence is in
+``evidence/jni-native-final-qualification-20261002.json`` and
+``evidence/jni-headless-merge-20261002.json``. JNI RPM builds on all three targets
+are in progress and are not included in the qualified-module count.
+
 The testing project's build configuration explicitly chooses CPU onnxruntime
 for qore-stdlib's ELF dependencies. Fedora provides those capabilities from
 several runtime, development, ROCm and Python packages; OBS otherwise refuses
@@ -141,12 +160,13 @@ verified canonical sources with publication disabled. See
 JNI qualification exposed JDBC transaction, cursor-reference and batch-reuse
 bugs, plus inaccurate Flyway action output types. The fixes are committed and
 pass the module's Alpine and Ubuntu CI jobs. Targeted PostgreSQL, failure-injection
-and source/AOT Flyway tests pass; the Fedora RPM build is in progress. The approved
+and source/AOT Flyway tests pass; current RPM builds cover all three targets. The approved
 JVM/glibc diagnostics retain their raw Valgrind logs and standalone controls in
 ``evidence/jni-external-diagnostics-20261002.json``. JNI is not yet included in the
 qualified package count. The corresponding Qore PostgreSQL native-array versus
 JDBC-batch correction is recorded in
-``evidence/core-pgsql-bulk-protocols-20261002.json`` and awaits a new core RPM build.
+``evidence/core-pgsql-bulk-protocols-20261002.json`` and is included in the
+canonical release-20 core RPMs.
 
 gRPC packaging is committed and passes canonical builds and installed runtime/SDK
 checks on Fedora 44 and EL10. Each installation runs 13 suites and 1,768 assertions,
@@ -409,5 +429,5 @@ on a workstation; use a fresh disposable distribution container.
 Release 19 native ARM evidence is recorded in
 ``evidence/core19-native-arm-installed-20261002.json``. Fedora 44 and Leap 16
 both passed all 400 OBS suites and native installed runtime/SDK qualification,
-including ONNX inference. Enterprise Linux ARM and combined-module/repository
-release gates are still pending; OBS testing publication remains disabled.
+including ONNX inference. Enterprise Linux ARM also passed release-19 installed qualification;
+combined-module/repository release gates are still pending; OBS testing publication remains disabled.
