@@ -51,3 +51,14 @@ rpm-leap-arm64:
     RPM_MANIFEST: qualification/core19-leap-aarch64.json
   before_script:
     - zypper --non-interactive install --no-recommends python3 ca-certificates shadow util-linux findutils
+
+rpm-el10-arm64:
+  extends: .rpm-native-installed
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "core19" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
+  image: almalinux@sha256:957738702313e6ee452cdb17bc1431542c467be9a4e2f4da3b8e551b0ebb9677
+  variables:
+    RPM_MANIFEST: qualification/core19-el10-aarch64.json
+  before_script:
+    - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils util-linux findutils dnf-plugins-core epel-release
+    - dnf config-manager --set-enabled crb
