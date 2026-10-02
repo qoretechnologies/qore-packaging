@@ -61,6 +61,17 @@ class InstalledQualificationTest(unittest.TestCase):
             self.assertEqual(command[-1], path)
             self.assertIn('--setopt=install_weak_deps=False', command)
 
+    def test_missing_unprivileged_runner_is_diagnosed_before_installation(self):
+        with patch.object(module.shutil, 'which', side_effect=lambda name: None if name == 'runuser' else '/bin/' + name):
+            with self.assertRaisesRegex(ValueError, 'fixture commands: runuser'):
+                module.check_prerequisites('fedora')
+
+    def test_prerequisite_inventory_uses_distribution_package_manager(self):
+        with patch.object(module.shutil, 'which', side_effect=lambda name: '/bin/' + name) as which:
+            module.check_prerequisites('suse')
+        self.assertIn(unittest.mock.call('zypper'), which.call_args_list)
+        self.assertNotIn(unittest.mock.call('dnf'), which.call_args_list)
+
 
 if __name__ == '__main__':
     unittest.main()

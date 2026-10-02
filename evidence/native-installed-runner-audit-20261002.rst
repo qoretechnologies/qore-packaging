@@ -270,3 +270,13 @@ required c-ares(qore-query-lifecycle-fixes) backport. The Fedora manifest now
 includes the exact ARM backport providing that capability; no dependency was
 relaxed. RPM_NATIVE_TARGET selects one target to avoid repeating passed work.
 84 unit tests and GitLab CI lint pass with no warnings or errors.
+
+Fedora fixture prerequisite correction
+--------------------------------------
+
+Pipeline 58617 installed the ARM runtime and verified every RPM payload. The
+fixture then could not start its unprivileged test process: runuser is shipped
+by Fedora util-linux, not util-linux-core. The CI dependency now names the
+owning package, verified against the target RPM database. A preflight detects
+missing commands before any download or package mutation. All 86 unit tests
+and GitLab lint pass without warnings.

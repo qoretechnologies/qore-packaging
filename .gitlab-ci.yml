@@ -40,7 +40,7 @@ rpm-fedora-arm64:
   variables:
     RPM_MANIFEST: qualification/core19-fedora-aarch64.json
   before_script:
-    - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils util-linux-core findutils
+    - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils util-linux findutils
 
 rpm-leap-arm64:
   extends: .rpm-native-installed

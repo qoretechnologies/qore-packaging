@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import platform
 import re
+import shutil
 import subprocess
 import tempfile
 
@@ -63,12 +64,20 @@ def install_command(family, paths):
     return ['dnf', '-y', '--nogpgcheck', '--setopt=install_weak_deps=False', 'install', *map(str, paths)]
 
 
+def check_prerequisites(family):
+    commands = ['rpm', 'useradd', 'runuser', 'chown', 'zypper' if family == 'suse' else 'dnf']
+    missing = [name for name in commands if shutil.which(name) is None]
+    if missing:
+        raise ValueError('Missing qualification fixture commands: ' + ', '.join(missing))
+
+
 def qualify(manifest, output):
     validate(manifest)
     if platform.machine() != manifest['arch']:
         raise ValueError('Qualification requires a matching native runner')
     if os.geteuid() != 0:
         raise ValueError('Use a disposable root container for package installation')
+    check_prerequisites(manifest['family'])
     output = Path(output).resolve()
     output.mkdir(parents=True, exist_ok=False)
     result = {'manifest': manifest, 'machine': platform.machine(),
