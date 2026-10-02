@@ -29,9 +29,12 @@ Native Fedora core builds exposed two RPM post-processing defects; their tested
 add-determinism/linkdupes fixes are uploaded for both architectures. Native Leap
 core packaging exposed development fixtures in the documentation package and
 license-file layout issues. Core revision 12 now passes full local builds, SDK
-checks and minimal-runtime ONNX checks on all three targets. Revision 14 adds
+checks and minimal-runtime ONNX checks on all three targets. Revision 14 added
 documentation fixes, canonical HTTP response charsets and an ONNX async pool
-statistics race fix found by native Leap aarch64 tests. It is undergoing fresh
+statistics race fix found by native Leap aarch64 tests. Its full core test run
+exposed one stale HTTPClient charset assertion on all three targets. The assertion and broader HTTP charset
+coverage are already corrected in Qore. Revision 15 includes those committed
+fixes, closure lifetime and closed-connection fixes, and is undergoing fresh
 qualification locally and on all six OBS target/architecture combinations.
 Earlier local success does not qualify the new revision or native aarch64.
 Litmus is qualified on all three distributions for mandatory XML WebDAV tests,
@@ -45,6 +48,14 @@ strict documentation; its private server fixture also passes negative and
 cleanup tests. Final RPM builds and minimal-runtime checks using the new core
 SDK are queued. These two modules are not yet counted in the twenty-one
 qualified local module builds above.
+
+Tree-sitter and MySQL also have committed RPM recipes. Their candidates pass
+full builds, installed minimal-runtime suites and compiler examples on all
+three distributions. Tree-sitter additionally passes all 93 cases under Valgrind
+with no errors or lost allocations. MySQL's private MariaDB runs all 34 cases
+and allows only the two explicitly approved fixture diagnostics documented in
+its recipe. These modules await canonical builds with the revision 15 core SDK;
+they are not included in the twenty-one final local module builds above.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is
