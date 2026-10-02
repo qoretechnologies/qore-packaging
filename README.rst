@@ -42,6 +42,11 @@ file lists from dependency solving; these mappings follow its documented
 ``FileProvides`` and ``Prefer`` configuration rules:
 https://openbuildservice.org/help/manuals/obs-user-guide/cha-obs-prjconfig.
 
+PROJ release 4 uses the literal GEOS documentation-index path in its spec.
+OBS does not expand ``%{_datadir}`` in this file dependency. All three local
+canonical builds and installed runtime/SDK checks pass; OBS revision 6 has
+verified matching sources. Python interoperation remains a separate gate.
+
 SSH, MySQL and tree-sitter now pass canonical builds and installed runtime/SDK
 checks against revision 15 on all three targets. SSH includes runnable installed
 documentation examples. Its confinement regression now owns both its allowed

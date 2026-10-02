@@ -1,0 +1,313 @@
+{
+  "schema": 1,
+  "date": "2026-10-02",
+  "module": "proj",
+  "scope": "Literal GEOS documentation-index file dependency for OBS and RPM parsers; Python interoperation remains pending.",
+  "qualification": {
+    "fedora": {
+      "steps": {
+        "build": {
+          "exit_code": 0,
+          "log": "results/fedora-proj-final-4-build.log"
+        },
+        "runtime-install": {
+          "exit_code": 0,
+          "log": "results/fedora-proj-final-4-runtime-install.log"
+        },
+        "runtime-tests": {
+          "exit_code": 0,
+          "log": "results/fedora-proj-final-4-runtime-tests.log"
+        },
+        "sdk-install": {
+          "exit_code": 0,
+          "log": "results/fedora-proj-final-4-sdk-install.log"
+        },
+        "sdk-tests": {
+          "exit_code": 0,
+          "log": "results/fedora-proj-final-4-sdk-tests.log"
+        }
+      },
+      "phase": "complete",
+      "build": {
+        "schema": 1,
+        "image": "sha256:293b712e529ae846d1b3df5e3393a23edc5135eba7e9f471a5f182c09b6ffc15",
+        "source": {
+          "schema": 1,
+          "commit": "b4fc5f15dbb23129b5c93a0d3127b406add4b225",
+          "source_date_epoch": 1790923528,
+          "name": "qore-proj-module",
+          "version": "1.1.0",
+          "exclusions": [],
+          "sources": {
+            "qore-proj-module-1.1.0.tar.xz": "928cacd775d297577630d9483ef9f71db1a2c8415d17d7e0e5f636225684f527",
+            "qore-proj-module.spec": "d8777b4e6ed00a3bf7ef70213adcd33a38721bd1522fe503b09ecf6921ae6eb0"
+          },
+          "spec": "qore-proj-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790923528",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/proj-final-source-3:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-proj-final-build-3:/work",
+          "sha256:293b712e529ae846d1b3df5e3393a23edc5135eba7e9f471a5f182c09b6ffc15",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-proj-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-proj-module-doc-1.1.0-4.fc44.noarch.rpm": "2b06895bd73199c8a9f71c660cc9f71152eddead397162a934f888348a0f71aa",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-1.1.0-4.fc44.x86_64.rpm": "fd157b5cc0e297494bd856509738c40619167167475c63fb556065fe018ba597",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-debuginfo-1.1.0-4.fc44.x86_64.rpm": "a2c39e6bc3800ceed035e8f951ca02ba48ffcdf5cd688c78581e674a764b1390",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-debugsource-1.1.0-4.fc44.x86_64.rpm": "61bff91ae90bdff76625170b1c36eb9c607678a520e63cbd690ec16fc4dbcbd8",
+          "rpmbuild/SRPMS/qore-proj-module-1.1.0-4.fc44.src.rpm": "7b4b8a572de12c8f754c443443f28a17d455291103f882ff079b444de2512c0d"
+        }
+      },
+      "runtime_image": "sha256:fa6aa5e5eeedbecf6917c517c2cc7e3a3b00e38f04121d764d58343b47afbfac",
+      "sdk_image": "sha256:b8d040a918fd30227969f00a153e4ce5931bc018b502aa894336986aa7475a9f",
+      "exit_code": 0
+    },
+    "leap": {
+      "steps": {
+        "build": {
+          "exit_code": 0,
+          "log": "results/leap-proj-final-4-build.log"
+        },
+        "runtime-install": {
+          "exit_code": 0,
+          "log": "results/leap-proj-final-4-runtime-install.log"
+        },
+        "runtime-tests": {
+          "exit_code": 0,
+          "log": "results/leap-proj-final-4-runtime-tests.log"
+        },
+        "sdk-install": {
+          "exit_code": 0,
+          "log": "results/leap-proj-final-4-sdk-install.log"
+        },
+        "sdk-tests": {
+          "exit_code": 0,
+          "log": "results/leap-proj-final-4-sdk-tests.log"
+        }
+      },
+      "phase": "complete",
+      "build": {
+        "schema": 1,
+        "image": "sha256:56d7ca7e23a9518d0ce92c7a4738cca2d1710f5613595f9c380ca9ab73143135",
+        "source": {
+          "schema": 1,
+          "commit": "b4fc5f15dbb23129b5c93a0d3127b406add4b225",
+          "source_date_epoch": 1790923528,
+          "name": "qore-proj-module",
+          "version": "1.1.0",
+          "exclusions": [],
+          "sources": {
+            "qore-proj-module-1.1.0.tar.xz": "928cacd775d297577630d9483ef9f71db1a2c8415d17d7e0e5f636225684f527",
+            "qore-proj-module.spec": "d8777b4e6ed00a3bf7ef70213adcd33a38721bd1522fe503b09ecf6921ae6eb0"
+          },
+          "spec": "qore-proj-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790923528",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/proj-final-source-3:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-proj-final-build-3:/work",
+          "sha256:56d7ca7e23a9518d0ce92c7a4738cca2d1710f5613595f9c380ca9ab73143135",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-proj-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-proj-module-doc-1.1.0-4.noarch.rpm": "f22091eff57c641f1bb7a4f3c54b50eea949424117e7689543b63f8203b50cf2",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-1.1.0-4.x86_64.rpm": "53fc8d4f8036939820e378c573050024a71f9ec6cf0f89953ab2b64515435888",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-debuginfo-1.1.0-4.x86_64.rpm": "f65ad8f65838eb41406ce21c7f0a94cb8023454d8dc081935e21b4ac06906b73",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-debugsource-1.1.0-4.x86_64.rpm": "75864a4d880df53003778ad59550613674cf78706eafbb94141d52f887836459",
+          "rpmbuild/SRPMS/qore-proj-module-1.1.0-4.src.rpm": "46ddae4cb3c0ac99ae5ad217b22c492b6f2b6e8dacd68e80b7fccfbb83165639"
+        }
+      },
+      "runtime_image": "sha256:c3db926babe31ee4315586340bb9b4f78b363a43917bb8f6ed53410878a813ad",
+      "sdk_image": "sha256:87d784620fa8d868f3cc0f1547ffa5ba1e35f831499d01d18c842ce33c5f7c67",
+      "exit_code": 0
+    },
+    "el10": {
+      "steps": {
+        "build": {
+          "exit_code": 0,
+          "log": "results/el10-proj-final-4-build.log"
+        },
+        "runtime-install": {
+          "exit_code": 0,
+          "log": "results/el10-proj-final-4-runtime-install.log"
+        },
+        "runtime-tests": {
+          "exit_code": 0,
+          "log": "results/el10-proj-final-4-runtime-tests.log"
+        },
+        "sdk-install": {
+          "exit_code": 0,
+          "log": "results/el10-proj-final-4-sdk-install.log"
+        },
+        "sdk-tests": {
+          "exit_code": 0,
+          "log": "results/el10-proj-final-4-sdk-tests.log"
+        }
+      },
+      "phase": "complete",
+      "build": {
+        "schema": 1,
+        "image": "sha256:141dc2527d7528224ff56e2a5371e504a5a0b9bf19dafc1f22930bbbacdd3bdd",
+        "source": {
+          "schema": 1,
+          "commit": "b4fc5f15dbb23129b5c93a0d3127b406add4b225",
+          "source_date_epoch": 1790923528,
+          "name": "qore-proj-module",
+          "version": "1.1.0",
+          "exclusions": [],
+          "sources": {
+            "qore-proj-module-1.1.0.tar.xz": "928cacd775d297577630d9483ef9f71db1a2c8415d17d7e0e5f636225684f527",
+            "qore-proj-module.spec": "d8777b4e6ed00a3bf7ef70213adcd33a38721bd1522fe503b09ecf6921ae6eb0"
+          },
+          "spec": "qore-proj-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790923528",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/proj-final-source-3:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-proj-final-build-3:/work",
+          "sha256:141dc2527d7528224ff56e2a5371e504a5a0b9bf19dafc1f22930bbbacdd3bdd",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-proj-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-proj-module-doc-1.1.0-4.el10.noarch.rpm": "f29ecef309aa92cdf978a211236bae5186ace2c17fcddecfbfc36b1c3c8e20b2",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-1.1.0-4.el10.x86_64.rpm": "011bab07a8f4d2dc7f9ed69296f4709391caa968c16e294d66085ade8b58eefd",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-debuginfo-1.1.0-4.el10.x86_64.rpm": "cae2d75edae1b1dfc229efae8c35561e84e1207a345055420fc48dab7c478d5f",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-debugsource-1.1.0-4.el10.x86_64.rpm": "a6b6a38e5a54659855b43b2b836b47171eb57cd68009601684b36d479dc91ae1",
+          "rpmbuild/SRPMS/qore-proj-module-1.1.0-4.el10.src.rpm": "0f2ce371eaef1c17e6eb2ab3f0d91daf609eaeb707df500b00c8ac664477a983"
+        }
+      },
+      "runtime_image": "sha256:43abd4fc37236c7dbf5415c907ccaecfa3446596c7b0e5d9bbca3d51b3cb6c37",
+      "sdk_image": "sha256:b449b42a82933748c83581410e80de0f596ce8a5787340ca327ff5132b28b58a",
+      "exit_code": 0
+    }
+  },
+  "obs_upload": {
+    "qore-proj-module": {
+      "source_commit": "b4fc5f15dbb23129b5c93a0d3127b406add4b225",
+      "revision": "6",
+      "srcmd5": "d302c5665dd7159570f0769dcfab1740",
+      "verified_files": {
+        "qore-proj-module-1.1.0.tar.xz": "c0e076c048b8e07e56c8fb2c41a571e9",
+        "qore-proj-module.spec": "58e2fa138df18d2ebfa58e84b2a197dc",
+        "source-manifest.json": "fbabb64074ef4f6f40b1bf19c66f0f00"
+      }
+    }
+  },
+  "dependency_resolution": {
+    "fedora": {
+      "local_spec_exit_code": 0,
+      "obs_file_dependency_error": false,
+      "obs_dependency_resolution": "resolved",
+      "obs_buildinfo": "results/fedora-proj-literal-buildinfo.xml"
+    },
+    "leap": {
+      "local_spec_exit_code": 0,
+      "obs_file_dependency_error": false,
+      "obs_dependency_resolution": "resolved",
+      "obs_buildinfo": "results/leap-proj-literal-buildinfo.xml"
+    },
+    "el10": {
+      "local_spec_exit_code": 0,
+      "obs_file_dependency_error": false,
+      "obs_dependency_resolution": "unresolvable: nothing provides libbson2.so.2()(64bit) needed by qore-stdlib, nothing provides libmongoc2.so.2()(64bit) needed by qore-stdlib",
+      "obs_buildinfo": "results/el10-proj-literal-buildinfo.xml"
+    }
+  }
+}
