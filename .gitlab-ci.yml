@@ -17,3 +17,33 @@ packaging-tools:
         - .gitlab-ci.yml
   script:
     - python3 -B -W error -m unittest discover -s tests -v
+
+# Explicitly requested qualification only; ordinary packaging commits never
+# start these native installed-package jobs.
+.rpm-native-installed:
+  stage: test
+  tags: [k8s, arm64]
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "core19"'
+  script:
+    - python3 -B -W error tools/qualify-installed.py "$RPM_MANIFEST" --output results/native-installed
+  artifacts:
+    when: always
+    paths: [results/native-installed/]
+    expire_in: 14 days
+
+rpm-fedora-arm64:
+  extends: .rpm-native-installed
+  image: registry.fedoraproject.org/fedora@sha256:bd539c7c03d6ee316e0f9396d4a44e6a137d2c4cd6bf6a019f608cfa2fba6fa6
+  variables:
+    RPM_MANIFEST: qualification/core19-fedora-aarch64.json
+  before_script:
+    - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils util-linux-core findutils
+
+rpm-leap-arm64:
+  extends: .rpm-native-installed
+  image: opensuse/leap@sha256:e8997b5b4278bb91ef108750b5d103e2d55bbf1f22965bb46a2ba3b35487b292
+  variables:
+    RPM_MANIFEST: qualification/core19-leap-aarch64.json
+  before_script:
+    - zypper --non-interactive install --no-recommends python3 ca-certificates shadow util-linux findutils

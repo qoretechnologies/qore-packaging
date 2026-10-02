@@ -363,3 +363,22 @@ when tooling, tests or CI configuration changes. Spec-only and documentation
 changes do not launch that job. Distribution package builds and installation
 checks are separate qualification steps; a tooling pipeline does not replace
 them.
+
+Native installed RPM qualification
+---------------------------------
+
+The GitLab jobs ``rpm-fedora-arm64`` and ``rpm-leap-arm64`` run only when a
+pipeline is explicitly started with ``RPM_NATIVE_QUALIFICATION=core19``.
+They use native ARM runners and pinned distribution images. Their manifests
+pin each OBS binary and core test fixture by SHA-256; no OBS credentials or
+published repository are needed. Package installation in these disposable
+containers accepts the pinned, unpublished testing RPMs. Public release
+signature and repository qualification remain separate gates.
+
+``tools/qualify-installed.py`` verifies every artifact before installation,
+checks the runner architecture, installs the minimal runtime without weak
+optional dependencies, verifies RPM payloads, and runs ONNX and module tests
+as an unprivileged user. It then adds the SDK and exercises CMake, pkg-config,
+qcc, metadata extraction, utilities and debugger startup. Logs and package
+inventories are retained as CI artifacts. Never run this installation tool
+on a workstation; use a fresh disposable distribution container.
