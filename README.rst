@@ -17,45 +17,46 @@ full logs, containers and RPMs are retained under ignored ``results/`` and
 ``work/`` directories. Do not interpret a successfully prepared SRPM as a
 successful binary build.
 
-Twenty-one external modules have committed RPM packaging and pass builds and
+Twenty-four external modules have committed RPM packaging and pass builds and
 installed-runtime suites on Fedora 44, Leap 16.0 and EL10. PostgreSQL includes
 mandatory Fedora pgvector coverage. ZeroMQ includes draft sockets and CURVE.
-All twenty-one modules have Fedora OBS builds enabled on both architectures,
-with publication disabled. Leap and EL10 core SDKs pass ONNX inference, session
-pools, compiler and debugger checks; EL10 also passes ONNX inference in a minimal
-runtime without the SDK or compiler.
+The original twenty-one modules now have x86_64 OBS builds enabled on all three
+distributions and Fedora aarch64 builds enabled, with publication disabled.
 
-Native Fedora core builds exposed two RPM post-processing defects; their tested
-add-determinism/linkdupes fixes are uploaded for both architectures. Native Leap
-core packaging exposed development fixtures in the documentation package and
-license-file layout issues. Core revision 12 now passes full local builds, SDK
-checks and minimal-runtime ONNX checks on all three targets. Revision 14 added
-documentation fixes, canonical HTTP response charsets and an ONNX async pool
-statistics race fix found by native Leap aarch64 tests. Its full core test run
-exposed one stale HTTPClient charset assertion on all three targets. The assertion and broader HTTP charset
-coverage are already corrected in Qore. Revision 15 includes those committed
-fixes, closure lifetime and closed-connection fixes, and is undergoing fresh
-qualification locally and on all six OBS target/architecture combinations.
-Earlier local success does not qualify the new revision or native aarch64.
-Litmus is qualified on all three distributions for mandatory XML WebDAV tests,
-with the explicitly approved Apache diagnostics; its final OBS recipe succeeds
-on both architectures.
+Core revision 15 passes all 400 local suites plus SDK, compiler, debugger and
+minimal-runtime ONNX qualification on all three distributions. OBS x86_64 builds
+also pass on all three. Native aarch64 remains a release gate: Fedora passed
+399/400 suites but timed out in HttpClientHttpsProxy; twenty x86_64 stress runs (four at a time)
+pass, so the native failure is still under investigation.
+Leap and EL10 native results must also be qualified before publication.
 
-XML and SSH2 now have committed RPM recipes and source fixes. XML passes 304
-functional suites, all 106 Litmus cases against Qore, native Valgrind checks
-and strict API documentation. SSH2 passes all eight integration suites and
-strict documentation; its private server fixture also passes negative and
-cleanup tests. Final RPM builds and minimal-runtime checks using the new core
-SDK are queued. These two modules are not yet counted in the twenty-one
-qualified local module builds above.
+The testing project's build configuration explicitly chooses CPU onnxruntime
+for qore-stdlib's ELF dependencies. Fedora provides those capabilities from
+several runtime, development, ROCm and Python packages; OBS otherwise refuses
+to choose. Verified buildinfo selects the CPU runtime with the revision 15 SDK.
 
-Tree-sitter and MySQL also have committed RPM recipes. Their candidates pass
-full builds, installed minimal-runtime suites and compiler examples on all
-three distributions. Tree-sitter additionally passes all 93 cases under Valgrind
-with no errors or lost allocations. MySQL's private MariaDB runs all 34 cases
-and allows only the two explicitly approved fixture diagnostics documented in
-its recipe. These modules await canonical builds with the revision 15 core SDK;
-they are not included in the twenty-one final local module builds above.
+SSH, MySQL and tree-sitter now pass canonical builds and installed runtime/SDK
+checks against revision 15 on all three targets. SSH includes runnable installed
+documentation examples. MySQL runs all 34 cases against an isolated MariaDB,
+allowing only the two approved fixture diagnostics. Final tree-sitter testing
+exposed a borrowed-tree lifetime bug; its fix retains trees for nodes/cursors,
+corrects copied-node source and cursor reset behavior, and adds ownership and
+concurrency regressions. All 99 cases / 371 assertions pass normally and under
+Valgrind on all three targets, with zero errors, losses or suppressions.
+
+XML and SSH2 have committed recipes and source fixes. SSH2's final builds and
+installed suites pass on all three targets. XML passes its final Leap build;
+remaining canonical XML runtime/target checks are still running. Their earlier
+qualification includes 304 XML suites, 106 Litmus cases against Qore, native
+Valgrind and strict documentation. They remain outside the twenty-four count
+until their final qualification evidence is recorded separately.
+
+OpenLDAP's strict references pass on all three targets. Its Leap SASL fixture
+exposed a distribution DIGEST-MD5 initialization crash. A tested plugin backport
+uses a private OpenSSL context and correct cleanup; all 86 LDAP cases pass with
+the installed plugin. Only the ten unchanged DES/3DES build-deprecation call
+sites have an explicitly approved diagnostic exception. Package qualification
+and native architecture coverage are still in progress.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is
