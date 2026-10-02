@@ -201,9 +201,24 @@ def prepare_components(repo, commit, manifest_path, overlays, cache, staging, ti
         top = component.get("top", "")
         if not isinstance(top, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._+-]*", top):
             raise ValueError("Invalid component archive root")
-        url = component.get("url", "")
-        if not isinstance(url, str) or not url.startswith("https://"):
-            raise ValueError("Source downloads require HTTPS")
+        generated = component.get("generated_from")
+        if "generated_from" in component:
+            if "url" in component or not isinstance(generated, dict) or not generated:
+                raise ValueError("Generated components need input pins instead of a download URL")
+            for name, expected in generated.items():
+                if (not isinstance(name, str) or not name or name.startswith("/")
+                        or any(part in ("", ".", "..") for part in name.split("/"))):
+                    raise ValueError("Generated input paths must be inside the repository")
+                if not isinstance(expected, str) or not re.fullmatch(r"[0-9a-f]{64}", expected):
+                    raise ValueError("Generated inputs require lowercase SHA-256 pins")
+                content = (overlays[name].read_bytes() if name in overlays
+                           else git(repo, "show", commit + ":" + name))
+                if hashlib.sha256(content).hexdigest() != expected:
+                    raise ValueError("Generated input checksum mismatch: " + name)
+        else:
+            url = component.get("url", "")
+            if not isinstance(url, str) or not url.startswith("https://"):
+                raise ValueError("Source downloads require HTTPS")
         if not isinstance(component.get("licenses"), list) or not component["licenses"]:
             raise ValueError("Vendor components must name their retained license files")
         for field in ("licenses", "excluded", "retained_paths"):
@@ -217,7 +232,13 @@ def prepare_components(repo, commit, manifest_path, overlays, cache, staging, ti
             raise ValueError("Expected a lowercase SHA-256 digest")
     for component in components:
         digest = component["sha256"]
-        downloaded = fetch_source(component["url"], digest, Path(cache) / digest)
+        if "generated_from" in component:
+            downloaded = Path(cache) / digest
+            if downloaded.is_symlink() or not downloaded.is_file():
+                raise ValueError("Prepare the pinned generated component in the cache first")
+            verify_download(downloaded, digest)
+        else:
+            downloaded = fetch_source(component["url"], digest, Path(cache) / digest)
         destination = staging / component["archive"]
         repack_component(downloaded, digest, component["top"], timestamp, destination,
                          component.get("excluded", []), component.get("retained_paths", []))

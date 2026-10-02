@@ -302,6 +302,69 @@ class VendorBundleTests(SourceFixture):
         with tarfile.open(self.root / "bundle/vendor-1.tar.xz") as archive:
             self.assertIn("vendor-1/test/fixture", archive.getnames())
 
+    def generated_component(self):
+        component = {k: v for k, v in self.component.items() if k != "url"}
+        committed = self.git("show", "HEAD:source.txt")
+        component["generated_from"] = {"source.txt": packaging.hashlib.sha256(committed).hexdigest()}
+        return component
+
+    def test_generated_bundle_uses_committed_inputs_and_never_downloads(self):
+        component = self.generated_component()
+        self.write_vendor_manifest([component])
+        (self.repo / "source.txt").write_text("uncommitted changes")
+        with patch.object(packaging, "fetch_source", side_effect=AssertionError("download attempted")):
+            first, second = self.bundle("one"), self.bundle("two")
+        self.assertEqual(first, second)
+        self.assertEqual(first["components"], [component])
+        with tarfile.open(self.root / "one/vendor-1.tar.xz") as archive:
+            self.assertEqual(archive.extractfile("vendor-1/LICENSE").read(), b"content")
+
+    def test_generated_inputs_reject_ambiguity_invalid_paths_and_wrong_pins(self):
+        component = self.generated_component()
+        for fields in ({"url": self.component["url"]}, {"generated_from": None},
+                       {"generated_from": {}}, {"generated_from": {"../escape": "a" * 64}},
+                       {"generated_from": {"/outside": "a" * 64}},
+                       {"generated_from": {"source.txt": "bad"}},
+                       {"generated_from": {"source.txt": "0" * 64}}):
+            with self.subTest(fields=fields):
+                self.write_vendor_manifest([{**component, **fields}])
+                with self.assertRaises(ValueError):
+                    self.bundle()
+                self.assertFalse((self.root / "bundle").exists())
+                self.assertEqual(list(self.root.glob(".qore-source-*")), [])
+
+    def test_generated_cache_must_exist_be_regular_and_match_checksum(self):
+        component = self.generated_component()
+        self.write_vendor_manifest([component])
+        cached = self.cache / component["sha256"]
+        content = cached.read_bytes()
+        cached.unlink()
+        with self.assertRaisesRegex(ValueError, "Prepare the pinned"):
+            self.bundle()
+        original = self.root / "original.tar"
+        original.write_bytes(content)
+        cached.symlink_to(original)
+        with self.assertRaisesRegex(ValueError, "Prepare the pinned"):
+            self.bundle()
+        cached.unlink()
+        cached.write_bytes(b"tampered")
+        with self.assertRaisesRegex(ValueError, "checksum mismatch"):
+            self.bundle()
+        self.assertFalse((self.root / "bundle").exists())
+
+    def test_generated_candidate_inputs_are_checked_against_the_recorded_overlay(self):
+        overlay = self.root / "overlay"
+        (overlay / "rpm").mkdir(parents=True)
+        generator = b"candidate generator\n"
+        (overlay / "rpm/generate.py").write_bytes(generator)
+        component = self.generated_component()
+        component["generated_from"]["rpm/generate.py"] = packaging.hashlib.sha256(generator).hexdigest()
+        (overlay / "rpm/vendor-sources.json").write_text(json.dumps({"schema": 1, "components": [component]}))
+        result = self.bundle(packaging_overlay=overlay)
+        self.assertTrue(result["candidate"])
+        self.assertEqual(result["packaging_overlay"]["rpm/generate.py"],
+                         component["generated_from"]["rpm/generate.py"])
+
     def test_vendor_cli(self):
         result = subprocess.run([
             "python3", str(ROOT / "tools/packaging.py"), "prepare", "--repo", str(self.repo),

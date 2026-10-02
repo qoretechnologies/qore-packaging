@@ -228,6 +228,15 @@ unchanged.
 Dependency sources and vendoring
 -------------------------------
 
+A module's vendor manifest may describe a locally assembled component with
+``generated_from`` instead of ``url``. This maps repository paths to SHA-256
+pins for its generator and input manifests. Preparation verifies those files
+against the selected commit (or explicit candidate overlay), requires the
+generated archive in the checksum-addressed cache, and verifies its hash and
+retained license files. It never downloads a missing generated component.
+This supports JNI's aggregate of pinned Java/Kotlin archives while preserving
+the original per-dependency URLs, sources and notices inside the component.
+
 ``dependencies/sources.json`` pins upstream dependency downloads. The nghttp2
 backport preserves the client/server applications and their matching library;
 ngtcp2 preserves matching OpenSSL and GnuTLS providers. c-ares carries both
