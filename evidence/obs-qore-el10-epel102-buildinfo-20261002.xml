@@ -1,0 +1,687 @@
+<buildinfo project="home:davidnichols:qore:testing" repository="AlmaLinux_10" package="qore" downloadurl="https://download.opensuse.org/repositories">
+  <arch>x86_64</arch>
+  <srcmd5>6f3a35fdb5d61f3b36726797bef67ad8</srcmd5>
+  <verifymd5>6f3a35fdb5d61f3b36726797bef67ad8</verifymd5>
+  <rev>10</rev>
+  <specfile>qore.spec</specfile>
+  <file>qore.spec</file>
+  <versrel>3.0.0~git20261002.15-15</versrel>
+  <bcnt>2</bcnt>
+  <release>15.2</release>
+  <debuginfo>1</debuginfo>
+  <constraint>hardware:physicalmemory:size unit=G 24</constraint>
+  <constraint>hardware:disk:size unit=G 30</constraint>
+  <subpack>libqore</subpack>
+  <subpack>qore</subpack>
+  <subpack>qore-debug-tools</subpack>
+  <subpack>qore-devel</subpack>
+  <subpack>qore-devel-doc</subpack>
+  <subpack>qore-doc</subpack>
+  <subpack>qore-misc-tools</subpack>
+  <subpack>qore-rpm-macros</subpack>
+  <subpack>qore-stdlib</subpack>
+  <bdep name="almalinux-release" preinstall="1" notmeta="1" version="10.2" release="21.el10" arch="x86_64" hdrmd5="3ea9d2aebf120c644579d5d7784d31f9" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="alternatives" preinstall="1" notmeta="1" version="1.30" release="2.el10" arch="x86_64" hdrmd5="3e47e765b3c0ab2f3cb590294ca38da0" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="audit-libs" preinstall="1" notmeta="1" version="4.0.3" release="5.el10" arch="x86_64" hdrmd5="63cd5063d5aa400dc00e08694416fef7" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="basesystem" preinstall="1" notmeta="1" version="11" release="22.el10" arch="noarch" hdrmd5="595b21c06f70147e1cbd931fd91c5943" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="bash" preinstall="1" notmeta="1" version="5.2.26" release="6.el10" arch="x86_64" hdrmd5="33ee7b72828d90fb415b67bd18703f74" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="bzip2-libs" preinstall="1" notmeta="1" version="1.0.8" release="25.el10" arch="x86_64" hdrmd5="e5f6720795f36889b359c475e483f7ef" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="ca-certificates" preinstall="1" notmeta="1" version="2025.2.80_v9.0.305" release="102.el10_1" arch="noarch" hdrmd5="4b30227dd6f330ba2eb8ae02782a9bb8" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="coreutils" preinstall="1" notmeta="1" version="9.5" release="8.el10_2.1" arch="x86_64" hdrmd5="0de89ee5dd355d8d0dd2d8dfe85f304a" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="coreutils-common" preinstall="1" notmeta="1" version="9.5" release="8.el10_2.1" arch="x86_64" hdrmd5="da18b36f87c634cf9feaebb8fbda2c64" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="crypto-policies" preinstall="1" notmeta="1" version="20260216" release="1.git0e54016.el10_2.2.alma.1" arch="noarch" hdrmd5="0820ad1bf0e4f4f5dc833e226fc9b7f4" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="curl" preinstall="1" notmeta="1" version="8.12.1" release="4.el10_2.6" arch="x86_64" hdrmd5="6933b8c642a4f3604c0898baf7a2cdb7" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="filesystem" preinstall="1" notmeta="1" version="3.18" release="17.el10" arch="x86_64" hdrmd5="cd099c7ded56a34afeb19303409768fe" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="findutils" preinstall="1" notmeta="1" epoch="1" version="4.10.0" release="5.el10" arch="x86_64" hdrmd5="a2ad8e80525d5697be0727e2b48720a3" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="gawk" preinstall="1" notmeta="1" version="5.3.0" release="6.el10_2.1" arch="x86_64" hdrmd5="4ae8215fea45c10f19b5157414557fe7" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="glibc" preinstall="1" version="2.39" release="128.el10_2.alma.1" arch="x86_64" hdrmd5="cf5231786a8b1137e026723eafc10ec9" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="glibc-common" preinstall="1" notmeta="1" version="2.39" release="128.el10_2.alma.1" arch="x86_64" hdrmd5="016b6ad77996b19ddd6a978168b7db0e" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="gmp" preinstall="1" notmeta="1" epoch="1" version="6.2.1" release="12.el10" arch="x86_64" hdrmd5="bbbc524d3ab91f5edafea5f166b1e8e0" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="grep" preinstall="1" notmeta="1" version="3.11" release="10.el10" arch="x86_64" hdrmd5="64543d207b8fd07457f39ea4b477b932" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="groff-base" preinstall="1" notmeta="1" version="1.23.0" release="10.el10" arch="x86_64" hdrmd5="daa077b8acd443ba18128417cf383036" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="keyutils-libs" preinstall="1" notmeta="1" version="1.6.3" release="5.el10" arch="x86_64" hdrmd5="6b7336de3157e5ae0d8f939406a398c5" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="krb5-libs" preinstall="1" notmeta="1" version="1.21.3" release="10.el10_2" arch="x86_64" hdrmd5="26e6d21bf129f0ab5858f96b4b4433cc" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libacl" preinstall="1" notmeta="1" version="2.4.0" release="1.el10_2" arch="x86_64" hdrmd5="a0f1be2a9f12ce85226fa3d869916825" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libarchive" preinstall="1" notmeta="1" version="3.7.7" release="11.el10_2" arch="x86_64" hdrmd5="14854a5a3a06e1ea8bee56929d828a2d" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libattr" preinstall="1" notmeta="1" version="2.6.0" release="1.el10_2" arch="x86_64" hdrmd5="2ae9d8e4a34ed3544d5f67175d2a4e0d" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libcap" preinstall="1" notmeta="1" version="2.69" release="7.el10_2.1" arch="x86_64" hdrmd5="39fccdd85305004fcc5d5f3b3f68c5f7" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libcap-ng" preinstall="1" notmeta="1" version="0.8.4" release="6.el10" arch="x86_64" hdrmd5="702388695e018fc6547ae8bbabd66b1f" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libcom_err" preinstall="1" notmeta="1" version="1.47.1" release="5.el10" arch="x86_64" hdrmd5="22e0715bd20c2f4c06149098c0241f64" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libcurl-minimal" preinstall="1" notmeta="1" version="8.12.1" release="4.el10_2.6" arch="x86_64" hdrmd5="cc8e65d2be24cac0025b70edffa5e718" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libeconf" preinstall="1" notmeta="1" version="0.6.2" release="4.el10" arch="x86_64" hdrmd5="208d3c26163ea7bed300f522617cdb01" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libffi" preinstall="1" notmeta="1" version="3.4.4" release="10.el10" arch="x86_64" hdrmd5="c80b924edecab6dabffeed80b4927ada" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libgcc" preinstall="1" notmeta="1" version="14.3.1" release="4.4.el10.alma.2" arch="x86_64" hdrmd5="7949b41f2a41490134f9c69f7e2c1c65" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libidn2" preinstall="1" notmeta="1" version="2.3.7" release="3.el10" arch="x86_64" hdrmd5="2b0050552a0a51ada221810e4efda676" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libnghttp2" preinstall="1" notmeta="1" version="1.70.0" release="3.1" arch="x86_64" hdrmd5="8920fbd504472c8b79e754baca106a17" project="home:davidnichols:qore:testing" repository="AlmaLinux_10"/>
+  <bdep name="libselinux" preinstall="1" notmeta="1" version="3.10" release="1.el10" arch="x86_64" hdrmd5="e0c0e992c667da597a0b24931c9fcb71" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libsepol" preinstall="1" notmeta="1" version="3.10" release="1.el10" arch="x86_64" hdrmd5="866983176e73a5537956f9bc7c09cbdd" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libstdc++" preinstall="1" notmeta="1" version="14.3.1" release="4.4.el10.alma.2" arch="x86_64" hdrmd5="87415d9f7f4ce0763d075b8f60feba0a" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libtasn1" preinstall="1" notmeta="1" version="4.20.0" release="5.el10_2" arch="x86_64" hdrmd5="d3544e48fd2501946f866ef6cf155c7e" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libunistring" preinstall="1" notmeta="1" version="1.1" release="10.el10" arch="x86_64" hdrmd5="3f16ea4ddf5bc4ae6ee21a4837c70fb4" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libverto" preinstall="1" notmeta="1" version="0.3.2" release="10.el10" arch="x86_64" hdrmd5="c9cd9352f564335e0e2d8f6004da1136" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libxcrypt" preinstall="1" notmeta="1" version="4.4.36" release="10.el10" arch="x86_64" hdrmd5="8d8e6f919abfb562e078733ba4769d67" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libxml2" preinstall="1" notmeta="1" version="2.12.5" release="10.el10_2.4" arch="x86_64" hdrmd5="02df1092164824e34773ad8b8280a684" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libzstd" preinstall="1" notmeta="1" version="1.5.5" release="9.el10" arch="x86_64" hdrmd5="2cd1680b7ef732c54728aa04789e0e99" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="lua-libs" preinstall="1" notmeta="1" version="5.4.6" release="7.el10" arch="x86_64" hdrmd5="be290028da837f19205de27d32cf8cf3" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="lz4-libs" preinstall="1" notmeta="1" version="1.9.4" release="8.el10" arch="x86_64" hdrmd5="f011548c152d1564efbe7ffa0b920650" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="mpfr" preinstall="1" notmeta="1" version="4.2.1" release="8.el10" arch="x86_64" hdrmd5="8b574f141ddc1b7e0e23a1a6d1f6e22c" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="ncurses" preinstall="1" version="6.4" release="15.20240127.el10_1" arch="x86_64" hdrmd5="55e486295958eb9b2a451d53a9fd6b28" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="ncurses-base" preinstall="1" notmeta="1" version="6.4" release="15.20240127.el10_1" arch="noarch" hdrmd5="fe651a52c8f62374dbbc28b771121270" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="ncurses-libs" preinstall="1" notmeta="1" version="6.4" release="15.20240127.el10_1" arch="x86_64" hdrmd5="26a618ec26f38b75cefd2bae38d88474" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="openssl-fips-provider" preinstall="1" notmeta="1" epoch="1" version="3.5.8" release="1.el10_2.alma.1" arch="x86_64" hdrmd5="2f089481b76b687afdae56a249f92a00" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="openssl-libs" preinstall="1" notmeta="1" epoch="1" version="3.5.8" release="1.el10_2.alma.1" arch="x86_64" hdrmd5="9214eba34fd54b7b03f0076fe94245b2" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="p11-kit" preinstall="1" notmeta="1" version="0.26.4" release="1.el10_2" arch="x86_64" hdrmd5="b1fdc552e0334922042ae9381be260ad" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="p11-kit-trust" preinstall="1" notmeta="1" version="0.26.4" release="1.el10_2" arch="x86_64" hdrmd5="0c81460da0bddfceb18074741eded163" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="pam-libs" preinstall="1" notmeta="1" version="1.6.1" release="9.el10_2.1" arch="x86_64" hdrmd5="73ac53faec4883456cbd9ae72f3a9341" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="pcre2" preinstall="1" notmeta="1" version="10.44" release="1.el10.3" arch="x86_64" hdrmd5="33d86a93e1b34e8e1357806fa9544e47" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="pcre2-syntax" preinstall="1" notmeta="1" version="10.44" release="1.el10.3" arch="noarch" hdrmd5="ccd27752f168a8b7672bfe7e68744cd1" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="perl-AutoLoader" preinstall="1" notmeta="1" version="5.74" release="515.el10_2" arch="noarch" hdrmd5="68aea0b8c93e3dfda07322dd8c87542a" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-B" preinstall="1" notmeta="1" version="1.89" release="515.el10_2" arch="x86_64" hdrmd5="42c939d8dae0cbc29190ddc4cd4fc951" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Carp" preinstall="1" notmeta="1" version="1.54" release="511.el10" arch="noarch" hdrmd5="bcd5efd9e0cc706f679371d782451e16" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Class-Struct" preinstall="1" notmeta="1" version="0.68" release="515.el10_2" arch="noarch" hdrmd5="af510b4e120071723bbed38d632d1618" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Data-Dumper" preinstall="1" notmeta="1" version="2.189" release="512.el10" arch="x86_64" hdrmd5="faced24591982d3fdab6fd6b20c5917e" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Digest" preinstall="1" notmeta="1" version="1.20" release="511.el10" arch="noarch" hdrmd5="84e350b83354754fb4db9f989fd1edf2" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Digest-MD5" preinstall="1" notmeta="1" version="2.59" release="6.el10" arch="x86_64" hdrmd5="876e8386a368a2dc22d1a3adecbfc4d1" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Digest-SHA" preinstall="1" notmeta="1" epoch="1" version="6.04" release="512.el10" arch="x86_64" hdrmd5="9d62b9b0abefcf4f1ba6a783e58fc507" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-DynaLoader" preinstall="1" notmeta="1" version="1.56" release="515.el10_2" arch="x86_64" hdrmd5="fc4a6c5b4ceb28bd6713f8d5092d97ad" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Encode" preinstall="1" notmeta="1" epoch="4" version="3.21" release="511.el10" arch="x86_64" hdrmd5="ae657f539bb189abb7ac76450c455b88" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Errno" preinstall="1" notmeta="1" version="1.38" release="515.el10_2" arch="x86_64" hdrmd5="349afa36740b9b969ca6b15a5a147ff1" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Exporter" preinstall="1" notmeta="1" version="5.78" release="511.el10" arch="noarch" hdrmd5="afc05752788c583eb69d050fa967f371" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Fcntl" preinstall="1" notmeta="1" version="1.18" release="515.el10_2" arch="x86_64" hdrmd5="8dca474ec71ec7ea491aa7b93e339a84" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-File-Basename" preinstall="1" notmeta="1" version="2.86" release="515.el10_2" arch="noarch" hdrmd5="db9bea2b4387befb8f70a159168fc837" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-File-Path" preinstall="1" notmeta="1" version="2.18" release="512.el10" arch="noarch" hdrmd5="afb1109786ec70a38b34536fe1335c68" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-File-Temp" preinstall="1" notmeta="1" epoch="1" version="0.231.100" release="512.el10" arch="noarch" hdrmd5="b9c403d2f298afde7ba7d289ad3ccecf" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-File-stat" preinstall="1" notmeta="1" version="1.14" release="515.el10_2" arch="noarch" hdrmd5="c1bf62af3ec557c8d2057d1e2094c119" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-FileHandle" preinstall="1" notmeta="1" version="2.05" release="515.el10_2" arch="noarch" hdrmd5="f7c7f67ba62de595a45b559374fb2dee" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Getopt-Long" preinstall="1" notmeta="1" epoch="1" version="2.58" release="3.el10" arch="noarch" hdrmd5="394d7db4240c4badac89a28e52e7b4cb" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Getopt-Std" preinstall="1" notmeta="1" version="1.14" release="515.el10_2" arch="noarch" hdrmd5="0ed840ed80e83d7f890dd4387cb37fab" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-HTTP-Tiny" preinstall="1" notmeta="1" version="0.088" release="512.el10" arch="noarch" hdrmd5="551cd14802b37aaab28db1f44ac0d083" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-IO" preinstall="1" notmeta="1" version="1.55" release="515.el10_2" arch="x86_64" hdrmd5="bdc3999a57e4f51485f047b739fdecf5" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-IO-Socket-IP" preinstall="1" notmeta="1" version="0.42" release="512.el10" arch="noarch" hdrmd5="87146e8cf9b3e329da14676afe72987b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-IO-Socket-SSL" preinstall="1" notmeta="1" version="2.085" release="3.el10" arch="noarch" hdrmd5="24d70970220d04b81c1496c9e3df37f5" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-IPC-Open3" preinstall="1" notmeta="1" version="1.22" release="515.el10_2" arch="noarch" hdrmd5="000411a0db7683fddee1f92fb43d5178" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-MIME-Base64" preinstall="1" notmeta="1" version="3.16" release="511.el10" arch="x86_64" hdrmd5="9ad927318b4d079c1d47a9310387216e" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Mozilla-CA" preinstall="1" notmeta="1" version="20231213" release="5.el10" arch="noarch" hdrmd5="fcc2827c735567d392dc1a8cbd5f510b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Net-SSLeay" preinstall="1" notmeta="1" version="1.94" release="8.el10" arch="x86_64" hdrmd5="498665157273eec20f78830f78c3afa9" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-POSIX" preinstall="1" notmeta="1" version="2.20" release="515.el10_2" arch="x86_64" hdrmd5="cc8ea6a39f215bafa0fe4d75d8925b0f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-PathTools" preinstall="1" notmeta="1" version="3.91" release="512.el10" arch="x86_64" hdrmd5="3b9c3d47e2d5f0a9adf21177e83f17e3" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Pod-Escapes" preinstall="1" notmeta="1" epoch="1" version="1.07" release="511.el10" arch="noarch" hdrmd5="7982187d37301575bdff5a2b93ed2e2b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Pod-Perldoc" preinstall="1" notmeta="1" version="3.28.01" release="512.el10" arch="noarch" hdrmd5="81c6fa8231c0d1ea38eefad4425af35d" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Pod-Simple" preinstall="1" notmeta="1" epoch="1" version="3.45" release="511.el10" arch="noarch" hdrmd5="51c868bdea985701613896451574c1b6" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Pod-Usage" preinstall="1" notmeta="1" epoch="4" version="2.03" release="511.el10" arch="noarch" hdrmd5="a893f14f364e0eed2c5531c020028e17" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Scalar-List-Utils" preinstall="1" notmeta="1" epoch="5" version="1.63" release="511.el10" arch="x86_64" hdrmd5="eaecf03182006577a9aefa937c16fa7e" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-SelectSaver" preinstall="1" notmeta="1" version="1.02" release="515.el10_2" arch="noarch" hdrmd5="8116d55bd9da3a37cd2c11324b968e37" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Socket" preinstall="1" notmeta="1" epoch="4" version="2.038" release="511.el10" arch="x86_64" hdrmd5="3b2866de051147801dd805af63657009" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Storable" preinstall="1" notmeta="1" epoch="1" version="3.32" release="511.el10" arch="x86_64" hdrmd5="a468635449924a8b5fd7d5f732fae705" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Symbol" preinstall="1" notmeta="1" version="1.09" release="515.el10_2" arch="noarch" hdrmd5="6fc3731110ba939b6831bd360b034c84" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Term-ANSIColor" preinstall="1" notmeta="1" version="5.01" release="512.el10" arch="noarch" hdrmd5="3f59f5750e47695e72c427a69baeb499" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Term-Cap" preinstall="1" notmeta="1" version="1.18" release="511.el10" arch="noarch" hdrmd5="74ce648663fe3f11f2ec31fbb83c9621" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Text-ParseWords" preinstall="1" notmeta="1" version="3.31" release="511.el10" arch="noarch" hdrmd5="ae1f64f6441e0bba44644eb26cc8bd8c" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Text-Tabs+Wrap" preinstall="1" notmeta="1" version="2024.001" release="511.el10" arch="noarch" hdrmd5="bb4f7ee0a76bd6bff0008c7f7ea17ddf" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Time-Local" preinstall="1" notmeta="1" epoch="2" version="1.350" release="511.el10" arch="noarch" hdrmd5="cc36224715c9f9403abd09684bb7888c" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-URI" preinstall="1" notmeta="1" version="5.27" release="3.el10" arch="noarch" hdrmd5="bcc80da914a104f99a236fbd3148fdc9" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-base" preinstall="1" notmeta="1" version="2.27" release="515.el10_2" arch="noarch" hdrmd5="97774bedde9c468d3792ed2f40dfff1a" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-constant" preinstall="1" notmeta="1" version="1.33" release="512.el10" arch="noarch" hdrmd5="a95b3103d5f92c20bbc863e87c11b8ea" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-if" preinstall="1" notmeta="1" version="0.61.000" release="515.el10_2" arch="noarch" hdrmd5="1fd2c54585a8ed81497402afaf5d46f8" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-interpreter" preinstall="1" notmeta="1" epoch="4" version="5.40.2" release="515.el10_2" arch="x86_64" hdrmd5="4aec77570374fe358c10679c90a80822" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-libnet" preinstall="1" notmeta="1" version="3.15" release="512.el10" arch="noarch" hdrmd5="a2ff3aaeed344f3df5d6d26d5d540ea3" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-libs" preinstall="1" notmeta="1" epoch="4" version="5.40.2" release="515.el10_2" arch="x86_64" hdrmd5="3f68155734ff60bfff78f9a77b71ef87" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-locale" preinstall="1" notmeta="1" version="1.12" release="515.el10_2" arch="noarch" hdrmd5="955f483edd48298bb84b38494494ec2f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-mro" preinstall="1" notmeta="1" version="1.29" release="515.el10_2" arch="x86_64" hdrmd5="58be17c0d6308c151347d58f301fde00" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-overload" preinstall="1" notmeta="1" version="1.37" release="515.el10_2" arch="noarch" hdrmd5="8db0dd0a9c5f86703b3ae1230de66552" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-overloading" preinstall="1" notmeta="1" version="0.02" release="515.el10_2" arch="noarch" hdrmd5="553b60aecca7e85e5e1051d993d263ae" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-parent" preinstall="1" notmeta="1" epoch="1" version="0.241" release="512.el10" arch="noarch" hdrmd5="92b831984d7f5e4a405aad7212cb8def" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-podlators" preinstall="1" notmeta="1" epoch="1" version="5.01" release="511.el10" arch="noarch" hdrmd5="f2f880e98127591c7639c23580d7a027" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-vars" preinstall="1" notmeta="1" version="1.05" release="515.el10_2" arch="noarch" hdrmd5="5efe71880a8626730c1b10e2d3207bce" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="popt" preinstall="1" notmeta="1" version="1.19" release="8.el10" arch="x86_64" hdrmd5="256fddaef6554f1f6ceb555943d5fe6f" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="readline" preinstall="1" notmeta="1" version="8.2" release="11.el10" arch="x86_64" hdrmd5="174639cbdc16be685c086ca7266bcd9c" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="rpm" preinstall="1" version="4.19.1.1" release="23.el10.alma.1" arch="x86_64" hdrmd5="d454f8f37bad0380e5019b37606672e7" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="rpm-libs" preinstall="1" notmeta="1" version="4.19.1.1" release="23.el10.alma.1" arch="x86_64" hdrmd5="6a52c3922745396512162d8f8ff9503d" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="rpm-sequoia" preinstall="1" notmeta="1" version="1.10.1.1" release="2.el10" arch="x86_64" hdrmd5="fbffbdf6aa9449b861c0a230cff5cb2d" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="sed" preinstall="1" notmeta="1" version="4.9" release="5.el10" arch="x86_64" hdrmd5="0323e43a85d3c630a97327bb0219984e" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="setup" preinstall="1" notmeta="1" version="2.14.5" release="7.el10" arch="noarch" hdrmd5="26a8c05f8f1bbf593e4be89452a0e7e6" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="sqlite-libs" preinstall="1" notmeta="1" version="3.46.1" release="6.el10_2" arch="x86_64" hdrmd5="1f4e613f278c45092ec9089ed25d192d" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="xz-libs" preinstall="1" notmeta="1" epoch="1" version="5.6.2" release="4.el10_2.1" arch="x86_64" hdrmd5="9a1fd59ef246761568a363049ac5e868" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="zlib-ng-compat" preinstall="1" notmeta="1" version="2.2.3" release="3.el10_1" arch="x86_64" hdrmd5="28b459adb24241e9517e1ce78666c920" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="dbus" vminstall="1" notmeta="1" epoch="1" version="1.14.10" release="5.el10" arch="x86_64" hdrmd5="76cee65cdb945e6d8cd30447cfba1b13" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="dbus-broker" vminstall="1" notmeta="1" version="36" release="5.el10_2" arch="x86_64" hdrmd5="efd4d23f90202c104207874bff2a6919" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="dbus-common" vminstall="1" notmeta="1" epoch="1" version="1.14.10" release="5.el10" arch="noarch" hdrmd5="f3d33e875be6a6ad067e588e2d3c0488" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="device-mapper" vminstall="1" notmeta="1" epoch="10" version="1.02.210" release="2.el10" arch="x86_64" hdrmd5="d0783915b28dd991662414ee1fdca29f" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="device-mapper-libs" vminstall="1" notmeta="1" epoch="10" version="1.02.210" release="2.el10" arch="x86_64" hdrmd5="a552cbb24d71e2d154dff4cc6e11e9a3" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="expat" vminstall="1" version="2.7.3" release="1.el10_2.5" arch="x86_64" hdrmd5="18f3be091fba926674e9c66eadf1c8ea" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="iptables-libs" vminstall="1" notmeta="1" version="1.8.11" release="16.el10_2" arch="x86_64" hdrmd5="5282e5cc4cbb9f07d3fbbea0fd59502b" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="kernel-obs-build" vminstall="1" notmeta="1" version="6.4.0" release="150700.53.78.1" arch="x86_64" hdrmd5="bbcbe423375ff62e7a2bb6a0181df868" project="OBS:DefaultKernel" repository="standard"/>
+  <bdep name="libblkid" vminstall="1" version="2.40.2" release="18.el10" arch="x86_64" hdrmd5="735d7bf51eeecf19c35d17bf409a2b4d" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libfdisk" vminstall="1" notmeta="1" version="2.40.2" release="18.el10" arch="x86_64" hdrmd5="c4e80c019a5b5f4dea9d7cb6afd8114d" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libmnl" vminstall="1" notmeta="1" version="1.0.5" release="7.el10" arch="x86_64" hdrmd5="fabfbcfa9361c9238d96081bb8ee1bf3" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libmount" vminstall="1" version="2.40.2" release="18.el10" arch="x86_64" hdrmd5="90ceec59b1ddf1c07edbade83e68278a" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libnetfilter_conntrack" vminstall="1" notmeta="1" version="1.0.9" release="12.el10" arch="x86_64" hdrmd5="375d40476496b36101a71a6859a086cf" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libnfnetlink" vminstall="1" notmeta="1" version="1.0.2" release="3.el10" arch="x86_64" hdrmd5="ec3f569b9267d3d1208f541a21736f3c" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libseccomp" vminstall="1" notmeta="1" version="2.5.6" release="1.el10" arch="x86_64" hdrmd5="d7b85c79e56a10b4258239a7825636e8" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libsmartcols" vminstall="1" version="2.40.2" release="18.el10" arch="x86_64" hdrmd5="911a0d671326fa14abcc46a6b8875d57" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libuuid" vminstall="1" version="2.40.2" release="18.el10" arch="x86_64" hdrmd5="f376da94fff0eb754df16f70ede75c81" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="systemd" vminstall="1" notmeta="1" version="257" release="23.el10_2.2.alma.1" arch="x86_64" hdrmd5="f8f300a1ad5b2f77f61567b655dd818b" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="systemd-libs" vminstall="1" version="257" release="23.el10_2.2.alma.1" arch="x86_64" hdrmd5="243b642a96c57c5c74f7c7b4806561a6" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="systemd-pam" vminstall="1" notmeta="1" version="257" release="23.el10_2.2.alma.1" arch="x86_64" hdrmd5="4664c6edcc70d197f3b59a7ea5c742c2" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="util-linux-core" vminstall="1" version="2.40.2" release="18.el10" arch="x86_64" hdrmd5="d269205fd4470081a707c883c9458a01" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="cmake" version="3.31.8" release="1.el10" arch="x86_64" hdrmd5="ad009fe0c97979cf7cf0ca5c98661968" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="make" epoch="1" version="4.4.1" release="9.el10" arch="x86_64" hdrmd5="c5424038bde4ef1359a4b6ea67274eb0" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="gcc-c++" version="14.3.1" release="4.4.el10.alma.2" arch="x86_64" hdrmd5="717bee99744ba574151f53ae9e5feb3a" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="bison" version="3.8.2" release="9.el10" arch="x86_64" hdrmd5="f6f6b9fdd01f7741c57d21355238f4b6" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="git" version="2.52.0" release="1.el10" arch="x86_64" hdrmd5="6aa2450d162d65ca8b9c269af06aa070" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="python3" version="3.12.14" release="1.el10_2" arch="x86_64" hdrmd5="6b177e150f141d58e5feb7a3a86559de" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="llvm-devel" version="21.1.8" release="1.el10.alma.1" arch="x86_64" hdrmd5="ec4ac67999fd343b8aa6b3c4804ff983" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="onnxruntime-devel" version="1.22.2" release="2.2" arch="x86_64" hdrmd5="7f56f321324d152a8b83e16c399c1e6c" project="home:davidnichols:qore:testing" repository="AlmaLinux_10"/>
+  <bdep name="bzip2-devel" version="1.0.8" release="25.el10" arch="x86_64" hdrmd5="c0b6b463c5a25804969cdd4337736953" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="protobuf-compiler" version="3.19.6" release="15.el10_1" arch="x86_64" hdrmd5="3dfe2726181906c6d98f277cfa0daa20" project="AlmaLinux:10" repository="CRB"/>
+  <bdep name="doxygen" epoch="2" version="1.13.2" release="1.el10" arch="x86_64" hdrmd5="2b88f1de80a4fd54b911f1bb2ff29d14" project="AlmaLinux:10" repository="CRB"/>
+  <bdep name="graphviz" version="9.0.0" release="15.el10" arch="x86_64" hdrmd5="2fb52b6c207fb03c695e0e5f490d351d" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="bzip2" version="1.0.8" release="25.el10" arch="x86_64" hdrmd5="55d60e7810482fc02ab74f791a351d26" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="gettext" version="0.22.5" release="6.el10" arch="x86_64" hdrmd5="bcf11de0bd3a178bec20337fca4f4b6d" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="zstd" version="1.5.5" release="9.el10" arch="x86_64" hdrmd5="def2b58ee2588c1f9297f43f8dc18f76" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="nss-softokn-freebl" version="3.124.0" release="5.el10_0" arch="x86_64" hdrmd5="82dcb92f3c4f8002c2fece0694b69c98" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl" epoch="4" version="5.40.2" release="515.el10_2" arch="x86_64" hdrmd5="ece4c4adffdaec0d9637d03a0302b4e7" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="rpm-build" version="4.19.1.1" release="23.el10.alma.1" arch="x86_64" hdrmd5="3a7ab00bec7f2ef09f84a8a1dd890a46" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="pkgconf-pkg-config" version="2.1.0" release="3.el10" arch="x86_64" hdrmd5="7fbf860ab46a0492211d93b79e803ff4" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="openssl-devel" epoch="1" version="3.5.8" release="1.el10_2.alma.1" arch="x86_64" hdrmd5="0cc5e909b465c8c766746c8f23e9433d" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="zlib-ng-compat-devel" version="2.2.3" release="3.el10_1" arch="x86_64" hdrmd5="d8e33b7a9ccbe275345ca46c261f8bfb" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="pcre2-devel" version="10.44" release="1.el10.3" arch="x86_64" hdrmd5="14b137d8cf6f3357e9331aec7db447e4" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="gmp-devel" epoch="1" version="6.2.1" release="12.el10" arch="x86_64" hdrmd5="97e21e438c5f39363652589f2f96eef2" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="mpfr-devel" version="4.2.1" release="8.el10" arch="x86_64" hdrmd5="11e94dc70e9d8bcb9af1d6885f0e6461" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libnghttp2-devel" version="1.70.0" release="3.1" arch="x86_64" hdrmd5="f5d74f9b052b6294ef28d2231246b14c" project="home:davidnichols:qore:testing" repository="AlmaLinux_10"/>
+  <bdep name="ngtcp2-devel" version="1.25.0" release="1.2" arch="x86_64" hdrmd5="933ab94d968d71adef57d760b4e223f1" project="home:davidnichols:qore:testing" repository="AlmaLinux_10"/>
+  <bdep name="ngtcp2-crypto-ossl-devel" version="1.25.0" release="1.2" arch="x86_64" hdrmd5="f60bf7b473aa7fef7ce956c63b8359d0" project="home:davidnichols:qore:testing" repository="AlmaLinux_10"/>
+  <bdep name="libnghttp3-devel" version="1.18.0" release="1.2" arch="x86_64" hdrmd5="f7b7257e4baf69d92a3a03e004d4b2e8" project="home:davidnichols:qore:testing" repository="AlmaLinux_10"/>
+  <bdep name="c-ares-devel" version="1.34.8" release="3.2" arch="x86_64" hdrmd5="7c4910bc3b4ae022ecd6a1369374a8dc" project="home:davidnichols:qore:testing" repository="AlmaLinux_10"/>
+  <bdep name="c-ares" version="1.34.8" release="3.2" arch="x86_64" hdrmd5="352fc539864b23f107bd7a1beda80d55" project="home:davidnichols:qore:testing" repository="AlmaLinux_10"/>
+  <bdep name="brotli-devel" version="1.1.0" release="7.el10_1" arch="x86_64" hdrmd5="0665af609bae69e30032c7858b19fd2c" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libzstd-devel" version="1.5.5" release="9.el10" arch="x86_64" hdrmd5="1d15c933186ca29b892220238ad68755" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="lz4-devel" version="1.9.4" release="8.el10" arch="x86_64" hdrmd5="638f2ae9dcf9c86bfe0cbe6e5d4e4ea5" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="krb5-devel" version="1.21.3" release="10.el10_2" arch="x86_64" hdrmd5="5a0b4f70c97f39c1454d89ec97b36fa5" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="tree-sitter-devel" version="0.26.13" release="1.2" arch="x86_64" hdrmd5="d3c321da45597b53cf226e33b50a824d" project="home:davidnichols:qore:testing" repository="AlmaLinux_10"/>
+  <bdep name="libicu-devel" version="74.2" release="5.el10_0" arch="x86_64" hdrmd5="dcec488c97a6555db1396f9d8a7fe8fa" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="eigen3-devel" version="3.4.0" release="17.el10" arch="noarch" hdrmd5="515511e1bcbe06e4edb3bf44eb62227e" project="AlmaLinux:10" repository="CRB"/>
+  <bdep name="protobuf-devel" version="3.19.6" release="15.el10_1" arch="x86_64" hdrmd5="1d4abe0882af1d3614064948c43651c2" project="AlmaLinux:10" repository="CRB"/>
+  <bdep name="libyaml-devel" version="0.2.5" release="16.el10" arch="x86_64" hdrmd5="f1de91bb5391d0359a9fcb29cd142497" project="AlmaLinux:10" repository="CRB"/>
+  <bdep name="utf8proc-devel" version="2.7.0" release="9.el10" arch="x86_64" hdrmd5="fc2374e3155febef0de697cb0f3b4cd7" project="AlmaLinux:10" repository="CRB"/>
+  <bdep name="libarrow-devel" version="17.0.0" release="9.el10_2" arch="x86_64" hdrmd5="b4507dc854c952d8bfa425b6668a84ef" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="parquet-libs-devel" version="17.0.0" release="9.el10_2" arch="x86_64" hdrmd5="fe5319e29b1924bc83a769c8124f5828" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="mongo-c-driver-devel" version="1.30.11" release="1.el10_2" arch="x86_64" hdrmd5="18f39c9259e5afa69a9f2fa5dc10857a" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="tesseract-devel" version="5.3.4" release="7.el10_2" arch="x86_64" hdrmd5="84618a0ad3d40ab12c43cba6c1229ce1" project="AlmaLinux:10" repository="CRB"/>
+  <bdep name="libcurl-devel" version="8.12.1" release="4.el10_2.6" arch="x86_64" hdrmd5="1ef41aef5708b9def503471ae6524290" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libarchive-devel" version="3.7.7" release="11.el10_2" arch="x86_64" hdrmd5="a563996bdc7a91294789792a2c2d2071" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="leptonica-devel" version="1.84.1" release="5.el10" arch="x86_64" hdrmd5="ccc0416de66d2f8f16b08261b4fff978" project="AlmaLinux:10" repository="CRB"/>
+  <bdep name="liburing-devel" version="2.12" release="1.el10" arch="x86_64" hdrmd5="dc7823ca6abb46f35689ebf8fa700415" project="AlmaLinux:10" repository="CRB"/>
+  <bdep name="libuv" epoch="1" version="1.52.1" release="1.el10_2" arch="x86_64" hdrmd5="4345e3912c33d34336a561c8704b1b81" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="cmake-data" version="3.31.8" release="1.el10" arch="noarch" hdrmd5="b05ce36b3b82a065d56dfc16d2503d29" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="cmake-rpm-macros" version="3.31.8" release="1.el10" arch="noarch" hdrmd5="e65f5f38a3ad3a7947f4381b32f44f9a" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="cmake-filesystem" version="3.31.8" release="1.el10" arch="x86_64" hdrmd5="5c37d44753f4da0d8badead22f73cede" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libmpc" version="1.3.1" release="7.el10" arch="x86_64" hdrmd5="974a12be4299281204bdba89e52d83a3" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="gcc" version="14.3.1" release="4.4.el10.alma.2" arch="x86_64" hdrmd5="99c171da548ae0ffafa581d7e3c83f6b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libstdc++-devel" version="14.3.1" release="4.4.el10.alma.2" arch="x86_64" hdrmd5="1029884b90918b57379097ff08548877" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="m4" version="1.4.19" release="11.el10" arch="x86_64" hdrmd5="c70d0a643afb8bc39ee0b472911bc589" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-lib" version="0.65" release="515.el10_2" arch="x86_64" hdrmd5="a0872413d1e27d6527237e36c7ee7761" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Git" version="2.52.0" release="1.el10" arch="noarch" hdrmd5="ae1ec506aead19e06a7af8a476336c68" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-TermReadKey" version="2.38" release="24.el10" arch="x86_64" hdrmd5="77d4a5a4d52942a4ac8d92c81f454c3f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="git-core" version="2.52.0" release="1.el10" arch="x86_64" hdrmd5="789558be04bdb26f8cf556c098287ec9" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="git-core-doc" version="2.52.0" release="1.el10" arch="noarch" hdrmd5="9db1e3aeb4eb9ac9af0452ec35490d30" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="python3-libs" version="3.12.14" release="1.el10_2" arch="x86_64" hdrmd5="c0884d0c270f2f109afd4d1c26298650" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="llvm-libs" version="21.1.8" release="1.el10.alma.1" arch="x86_64" hdrmd5="1ef907e1fb71ee1584a52588bb89af58" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libedit-devel" version="3.1" release="52.20230828cvs.el10" arch="x86_64" hdrmd5="d52ded7a1180486c357fb5b80043804f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="llvm" version="21.1.8" release="1.el10.alma.1" arch="x86_64" hdrmd5="2b77a3ca961454660e00c22f3ed5000d" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="llvm-googletest" version="21.1.8" release="1.el10.alma.1" arch="x86_64" hdrmd5="b9dfd620d518d9411f1980aaa776a6f5" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="llvm-test" version="21.1.8" release="1.el10.alma.1" arch="x86_64" hdrmd5="6f325e2f5d0cf1d4579442e746f485bb" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="llvm-static" version="21.1.8" release="1.el10.alma.1" arch="x86_64" hdrmd5="c415a2806ff865b0c56db265576c1cdf" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="onnxruntime" version="1.22.2" release="2.2" arch="x86_64" hdrmd5="6f18ca3b76be75e137df63248a67e745" project="home:davidnichols:qore:testing" repository="AlmaLinux_10"/>
+  <bdep name="protobuf" version="3.19.6" release="15.el10_1" arch="x86_64" hdrmd5="65570f9593c55e0031bc2f83ca85fd97" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="glib2" version="2.80.4" release="12.el10_2.22" arch="x86_64" hdrmd5="74cd9c1c6606fddab674bfea7957441d" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libX11" version="1.8.10" release="1.el10" arch="x86_64" hdrmd5="634b40b9003fa6bf269a980786b7f677" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="cairo" version="1.18.2" release="2.el10_2.1" arch="x86_64" hdrmd5="c9b67ae13b837609b27cea8f409994f2" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="pango" version="1.54.0" release="3.el10" arch="x86_64" hdrmd5="0221c8520ab60fabe251a547570e90a1" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="gdk-pixbuf2" version="2.42.12" release="4.el10_2.5" arch="x86_64" hdrmd5="8f121033e982a75df1d59f29dbee93ab" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="fontconfig" version="2.15.0" release="7.el10" arch="x86_64" hdrmd5="3dd4d7f4037cea2a7a47f385d15260cb" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="freetype" version="2.13.2" release="8.el10" arch="x86_64" hdrmd5="0a81ad1abccd39ef0245e3bf371d3cda" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="harfbuzz" version="8.4.0" release="6.el10" arch="x86_64" hdrmd5="dd182430794350ad27f1836c65066e25" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libtool-ltdl" version="2.4.7" release="13.el10" arch="x86_64" hdrmd5="13f6889c0af27b4f06cc1c98b4ab24d2" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="urw-base35-fonts" version="20200910" release="21.el10" arch="noarch" hdrmd5="70978045fd8aa20ed68e5fd7e69a1e08" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libXrender" version="0.9.11" release="8.el10" arch="x86_64" hdrmd5="dcdf3aa70d91c3d0d8bb04418f958b63" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="gd" version="2.3.3" release="20.el10_0" arch="x86_64" hdrmd5="93c93baaed5028716ff8ac9d77c9afe7" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="librsvg2" version="2.57.1" release="9.el10" arch="x86_64" hdrmd5="8da70c3343df68ca7bb710f924361ed8" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libwebp" version="1.3.2" release="10.el10" arch="x86_64" hdrmd5="a2287fb22d695e4b57dfba7608177fd2" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libgs" version="10.02.1" release="16.el10_0" arch="x86_64" hdrmd5="01544937d5d74b5db2deee8eda927f22" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="poppler-glib" version="24.02.0" release="7.el10_2.2" arch="x86_64" hdrmd5="5d1409a24c95443a4e80bcedbdc72acc" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libgomp" version="14.3.1" release="4.4.el10.alma.2" arch="x86_64" hdrmd5="43b07124c74b8dc9311f7f408491ba71" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="gettext-libs" version="0.22.5" release="6.el10" arch="x86_64" hdrmd5="b4110f925532800abaa5780b1d81bb05" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="gettext-runtime" version="0.22.5" release="6.el10" arch="x86_64" hdrmd5="55a1900df666c0da184c2b33ad5b7c86" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="nspr" version="4.39.0" release="5.el10_0" arch="x86_64" hdrmd5="2ced9d3502e0875aaa78090b72304562" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="nss-util" version="3.124.0" release="5.el10_0" arch="x86_64" hdrmd5="c8593f44e3ff2279df685240feba39b5" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Time-HiRes" epoch="4" version="1.9777" release="511.el10" arch="x86_64" hdrmd5="7313bc03f1f68dd3641c818a4a19604a" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-ExtUtils-MakeMaker" epoch="2" version="7.70" release="513.el10" arch="noarch" hdrmd5="b279c7ee52ae4d10f9ceeba8d4f34b53" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-autodie" version="2.37" release="512.el10" arch="noarch" hdrmd5="ce97b0f916473f530611e7a6c56e48a0" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Module-CoreList" epoch="1" version="5.20260119" release="1.el10" arch="noarch" hdrmd5="10b5307053cc30425b8498052db3b95b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Archive-Tar" version="3.02" release="512.el10_2.2" arch="noarch" hdrmd5="e6138f1e64edc5cab5cc5f4d06e1c61a" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-ExtUtils-ParseXS" epoch="1" version="3.51" release="512.el10" arch="noarch" hdrmd5="6da5f0bdb8593b119bc48a1bebb83702" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-debugger" version="1.60" release="515.el10_2" arch="noarch" hdrmd5="988967d0e0b4ce6ce4c7e91abf4133de" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-macros" epoch="4" version="5.40.2" release="515.el10_2" arch="noarch" hdrmd5="f7a2c1af72eefd7da247cc8737f4c5ea" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-sigtrap" version="1.10" release="515.el10_2" arch="noarch" hdrmd5="adee65735eb0a8a28e51e9ce70c6e223" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-CPAN" version="2.36" release="514.el10_0" arch="noarch" hdrmd5="88d2bac69437e5a44d9b06f7d595677f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-CPAN-Meta" version="2.150010" release="511.el10" arch="noarch" hdrmd5="3cf5e2d2980cb2675f9dd8ee10c15f84" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-CPAN-Meta-Requirements" version="2.143" release="11.el10" arch="noarch" hdrmd5="74983e42d44cda9d4e1e2df1ea9fc846" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-CPAN-Meta-YAML" version="0.018" release="512.el10" arch="noarch" hdrmd5="e348538064380ab5ed4826ff28b3f559" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Compress-Raw-Bzip2" version="2.212" release="512.el10" arch="x86_64" hdrmd5="37ed7d1e1508a8e90716689ec462b35f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Compress-Raw-Zlib" version="2.212" release="513.el10" arch="x86_64" hdrmd5="71a6065e37e3452fef6e548b39103090" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Config-Perl-V" version="0.36" release="512.el10" arch="noarch" hdrmd5="bbb0cfa5e262971021ebd5d23a5d4a90" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Devel-PPPort" version="3.72" release="512.el10" arch="x86_64" hdrmd5="cc0ad305f82a20547a619b657f4d3b36" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Env" version="1.06" release="511.el10" arch="noarch" hdrmd5="a1e66d99ea1443f88a7af5f03f9050c6" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-ExtUtils-CBuilder" epoch="1" version="0.280240" release="511.el10" arch="noarch" hdrmd5="c413455be3897d1952bc2a3fd4475074" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-ExtUtils-Install" version="2.22" release="511.el10" arch="noarch" hdrmd5="a1596e8679416071bd484e22322e1a52" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-ExtUtils-Manifest" epoch="1" version="1.75" release="511.el10" arch="noarch" hdrmd5="66e982559d999f91a915005a72df4a63" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-File-Fetch" version="1.04" release="511.el10" arch="noarch" hdrmd5="9f527fb3f0e862534d3d1ac785326719" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Filter" epoch="2" version="1.64" release="512.el10" arch="x86_64" hdrmd5="98a38cbdcb55080c24cc1b0335de1ddf" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Filter-Simple" version="0.96" release="511.el10" arch="noarch" hdrmd5="b5545b37624ae3c60593e301438316ba" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-IO-Compress" version="2.212" release="512.el10_2.1" arch="noarch" hdrmd5="b35d02954dceaf9dedf301c48f00b657" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-IO-Zlib" epoch="1" version="1.15" release="511.el10" arch="noarch" hdrmd5="13f0f146aa36f4053d8e585e52dace2b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-IPC-Cmd" epoch="2" version="1.04" release="512.el10" arch="noarch" hdrmd5="cca4ac789d80944f4c042bf52e8f220d" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-IPC-SysV" version="2.09" release="512.el10" arch="x86_64" hdrmd5="ac06a36aebc561a701cf85344761baa5" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-JSON-PP" epoch="1" version="4.16" release="513.el10" arch="noarch" hdrmd5="8fed0b1820c87e4c5450f7ec4f5ae6cd" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Locale-Maketext" version="1.33" release="512.el10" arch="noarch" hdrmd5="522fda4edf7351e15ae5bcee478436e8" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Math-BigInt" epoch="1" version="2.0030.03" release="3.el10" arch="noarch" hdrmd5="d497311b492d53f0c3ce3ed13b3b5bc0" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Math-BigInt-FastCalc" version="0.501.800" release="511.el10" arch="x86_64" hdrmd5="9e7a9349fada37c0b33af2225d9e8b89" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Module-Load" epoch="1" version="0.36" release="511.el10" arch="noarch" hdrmd5="6c00b49abf427654b8e95ab493ec5f75" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Module-Load-Conditional" version="0.74" release="511.el10" arch="noarch" hdrmd5="ffcb77703798c9268e4fcf04d7fe37b4" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Module-Metadata" version="1.000038" release="512.el10" arch="noarch" hdrmd5="10b2edf590c9aa2d27fb43cc97be40c0" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Net-Ping" version="2.76" release="511.el10" arch="noarch" hdrmd5="f3391af55d96e79a909ae86b55666c1d" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Params-Check" epoch="1" version="0.38" release="511.el10" arch="noarch" hdrmd5="ecaf993bd17df581eaab0e7d7c7e03ad" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Perl-OSType" version="1.010" release="512.el10" arch="noarch" hdrmd5="807fa3c9c3eff13c2e659e0664defbc4" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-PerlIO-via-QuotedPrint" version="0.10" release="511.el10" arch="noarch" hdrmd5="4f60af7a36cd0eb6d12c3fe1effb6776" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Pod-Checker" epoch="4" version="1.77" release="511.el10" arch="noarch" hdrmd5="154dc3ebbce3c5861119724f69c015f9" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Sys-Syslog" version="0.36" release="512.el10" arch="x86_64" hdrmd5="495145e243fcb1006ec967599831cc70" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Term-Table" version="0.018" release="513.el10" arch="noarch" hdrmd5="eb8f5de0f2e2b4d06ce966de107633d9" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Test-Harness" epoch="1" version="3.48" release="512.el10" arch="noarch" hdrmd5="8d8513325e6f364f31fff282492a8a32" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Test-Simple" epoch="3" version="1.302199" release="513.el10" arch="noarch" hdrmd5="95799d374a41eaffeb5ae58cf30999c5" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Test2-Suite" version="0.000163" release="4.el10" arch="noarch" hdrmd5="f39ea124776723e5540962b222127ec7" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Text-Balanced" version="2.06" release="511.el10" arch="noarch" hdrmd5="c60dcc9d6f07554411a3d3d558593b5b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Thread-Queue" version="3.14" release="511.el10" arch="noarch" hdrmd5="673afebeca3fe267b28ccd5328e993fb" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Tie-RefHash" version="1.40" release="511.el10" arch="noarch" hdrmd5="88ed4c235ff6613b46d1205d342a05ba" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Unicode-Collate" version="1.31" release="511.el10" arch="x86_64" hdrmd5="1a0a51f7107d051a77be40ab7b25926c" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Unicode-Normalize" version="1.32" release="511.el10" arch="x86_64" hdrmd5="e4c14c1c4570a7be64f47ee9f3606422" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-bignum" version="0.67" release="512.el10" arch="noarch" hdrmd5="7cc9b6fa9be08eec350d72e23912662f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-experimental" version="0.032" release="511.el10" arch="noarch" hdrmd5="5b0a16a8b4eaa3c7b6c5508bcffed1d3" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-perlfaq" version="5.20240218" release="511.el10" arch="noarch" hdrmd5="48aea483c0cf7fffb1acc06e2fe2e6fb" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-threads" epoch="1" version="2.40" release="511.el10" arch="x86_64" hdrmd5="397deb72d13ee724e9b08f03c0e9307f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-threads-shared" version="1.69" release="511.el10" arch="x86_64" hdrmd5="810f7b44434e0c4fd7a42ffaad5575b6" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-utils" version="5.40.2" release="515.el10_2" arch="noarch" hdrmd5="1a3d0bd73ee51ab3b619b36f5d3ac786" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-version" epoch="8" version="0.99.32" release="4.el10" arch="x86_64" hdrmd5="039e2a5956d542d12277ef6e31319a8e" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Attribute-Handlers" version="1.03" release="515.el10_2" arch="noarch" hdrmd5="b4319f7c625701b1925546889fe7262b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-AutoSplit" version="5.74" release="515.el10_2" arch="noarch" hdrmd5="9f53a12d1bac5514ba6af0df981a10a8" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Benchmark" version="1.25" release="515.el10_2" arch="noarch" hdrmd5="849ef78bc0e734e19374db0858fc7201" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Config-Extensions" version="0.03" release="515.el10_2" arch="noarch" hdrmd5="895ef7e2f414d666cdfed45e73cbd210" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-DBM_Filter" version="0.06" release="515.el10_2" arch="noarch" hdrmd5="06aa09076d83dcbf101533f2999fda46" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Devel-Peek" version="1.34" release="515.el10_2" arch="x86_64" hdrmd5="fffc3813f252c8242f115dc0ee85c491" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Devel-SelfStubber" version="1.06" release="515.el10_2" arch="noarch" hdrmd5="eb1b66a714534c2fa5026e8ae6f010ce" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-DirHandle" version="1.05" release="515.el10_2" arch="noarch" hdrmd5="014ddbf9837667b0414f4cbc5e1c511a" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Dumpvalue" version="2.27" release="515.el10_2" arch="noarch" hdrmd5="d8b950ba683a3cd6fe6ebb133a1d19f4" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Encode-devel" epoch="4" version="3.21" release="511.el10" arch="x86_64" hdrmd5="cdbb86bc95b88db57617ca2a1913739f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-English" version="1.11" release="515.el10_2" arch="noarch" hdrmd5="9e6bd9a20a36d0575a868cbd969a4289" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-ExtUtils-Command" epoch="2" version="7.70" release="513.el10" arch="noarch" hdrmd5="460526c7b38b10cd437169dd911b417d" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-ExtUtils-Constant" version="0.25" release="515.el10_2" arch="noarch" hdrmd5="5f5ea10ff4a763416c4c7668812db2b3" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-ExtUtils-Embed" version="1.35" release="515.el10_2" arch="noarch" hdrmd5="25b5c3c4fc66db22bc4f4eedfb5764c0" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-ExtUtils-MM-Utils" epoch="2" version="7.70" release="513.el10" arch="noarch" hdrmd5="c44a3f84b3cb635d060c6cee1041f7cf" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-ExtUtils-Miniperl" version="1.14" release="515.el10_2" arch="noarch" hdrmd5="2d4b2ab58ab22e754bdf0ca7a5be346f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-File-Compare" version="1.100.800" release="515.el10_2" arch="noarch" hdrmd5="83372053547afbbe1924fe894015f644" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-File-Copy" version="2.41" release="515.el10_2" arch="noarch" hdrmd5="98e40ac3c7e747859d7f762d1ae51ab6" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-File-DosGlob" version="1.12" release="515.el10_2" arch="x86_64" hdrmd5="6c09edc1abd444bd1eb6261df5740e36" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-File-Find" version="1.44" release="515.el10_2" arch="noarch" hdrmd5="24aae304a0fb7a1b73bcbd17275625fe" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-FileCache" version="1.10" release="515.el10_2" arch="noarch" hdrmd5="a6beda0480269806d7306548f6fb2a82" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-FindBin" version="1.54" release="515.el10_2" arch="noarch" hdrmd5="16df8223b054900e9d960849e411352f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-GDBM_File" epoch="1" version="1.24" release="515.el10_2" arch="x86_64" hdrmd5="f79a64606721fea8a6fed068d061ac55" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Hash-Util" version="0.32" release="515.el10_2" arch="x86_64" hdrmd5="6a041f27a464b97079f32b4b515e2aaf" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Hash-Util-FieldHash" version="1.27" release="515.el10_2" arch="x86_64" hdrmd5="8cf0510d8df429edf4d7be969523ed95" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-I18N-Collate" version="1.02" release="515.el10_2" arch="noarch" hdrmd5="b0902e919fba219a7fc83768195db305" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-I18N-LangTags" version="0.45" release="515.el10_2" arch="noarch" hdrmd5="3a0f684c806e9928e29229eb11422a58" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-I18N-Langinfo" version="0.24" release="515.el10_2" arch="x86_64" hdrmd5="3d113bad2ac0a85e9d4027f8602aae8f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Locale-Maketext-Simple" epoch="1" version="0.21" release="515.el10_2" arch="noarch" hdrmd5="a7531ba2df2ee4f304605ea1459d2f82" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Math-Complex" version="1.62" release="515.el10_2" arch="noarch" hdrmd5="6a756b95c5786d90841e496ad4153d1c" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Memoize" version="1.16" release="515.el10_2" arch="noarch" hdrmd5="fe8b09eb5f6d4df4c0b74d060bc0f146" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Module-CoreList-tools" epoch="1" version="5.20260119" release="1.el10" arch="noarch" hdrmd5="7dac18d89044ee2e8304211357e3816e" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Module-Loaded" epoch="1" version="0.08" release="515.el10_2" arch="noarch" hdrmd5="6eb545baf2b3746f6f2f3354c44271db" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-NDBM_File" version="1.17" release="515.el10_2" arch="x86_64" hdrmd5="67823608a6e4123dec38aabaad73c7c1" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-NEXT" version="0.69" release="515.el10_2" arch="noarch" hdrmd5="a527a1885034cbed9d974779ff8b2515" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Net" version="1.04" release="515.el10_2" arch="noarch" hdrmd5="aab5fea55dc6db3489c7b7c2ba5d9544" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-ODBM_File" version="1.18" release="515.el10_2" arch="x86_64" hdrmd5="edd45eda69c8b1878c85b812f2f43a14" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Opcode" version="1.65" release="515.el10_2" arch="x86_64" hdrmd5="5f288f3dc2147ae6819c187d9bb378e2" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Pod-Functions" version="1.14" release="515.el10_2" arch="noarch" hdrmd5="440dc776734c6cb92506c528253d98c7" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Pod-Html" version="1.35" release="515.el10_2" arch="noarch" hdrmd5="f60275badee95ac2eb0672e3b891fecb" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Safe" version="2.46" release="515.el10_2" arch="noarch" hdrmd5="a2b0966f1ac3c6aa1a5f55c690aff305" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Search-Dict" version="1.07" release="515.el10_2" arch="noarch" hdrmd5="6dca6e34984fcf1667875a9fb042627f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-SelfLoader" version="1.27" release="515.el10_2" arch="noarch" hdrmd5="6702fdf83a4c8c6292d90e81d0a79101" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Sys-Hostname" version="1.25" release="515.el10_2" arch="x86_64" hdrmd5="bb7cb9c63de9733afac5a92650999d8a" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Term-Complete" version="1.403" release="515.el10_2" arch="noarch" hdrmd5="43f0d16e68c782264af2769d52a7f12f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Term-ReadLine" version="1.17" release="515.el10_2" arch="noarch" hdrmd5="a829de1a390ab76d4db242925a0929ee" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Test" version="1.31" release="515.el10_2" arch="noarch" hdrmd5="71b65682c240497681dee539a733de23" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Text-Abbrev" version="1.02" release="515.el10_2" arch="noarch" hdrmd5="03fccb56e931e96ce2b8054bc196e822" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Thread" version="3.05" release="515.el10_2" arch="noarch" hdrmd5="e48572909b98a17702b49d0325ad89a4" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Thread-Semaphore" version="2.13" release="515.el10_2" arch="noarch" hdrmd5="3af91a279761ae5a480608626456e591" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Tie" version="4.6" release="515.el10_2" arch="noarch" hdrmd5="b544e571455121dc7b2a2a9176101a27" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Tie-File" version="1.09" release="515.el10_2" arch="noarch" hdrmd5="7377a410b3e6ad85a343dcadd09e170d" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Tie-Memoize" version="1.1" release="515.el10_2" arch="noarch" hdrmd5="3d87f780743d306c6a77fc1ca55ad657" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Time" version="1.04" release="515.el10_2" arch="noarch" hdrmd5="f3555099cc4d5e3920f24c1268457451" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Time-Piece" version="1.3401" release="515.el10_2" arch="x86_64" hdrmd5="86c498142d3dcc5fcc56fbf88c37ab0e" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Unicode-UCD" version="0.78" release="515.el10_2" arch="noarch" hdrmd5="053b8d8434a37be5ac1436405cb2188a" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-User-pwent" version="1.05" release="515.el10_2" arch="noarch" hdrmd5="5f9554ea7aaa1b24b420b65b8a7383cc" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-autouse" version="1.11" release="515.el10_2" arch="noarch" hdrmd5="a48cb59036b13cae2a3202031482f529" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-blib" version="1.07" release="515.el10_2" arch="noarch" hdrmd5="63f013caca4cfb4004c759f3665c1324" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-deprecate" version="0.04" release="515.el10_2" arch="noarch" hdrmd5="3fe1352191c8e7d947dd9d26c486c634" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-diagnostics" version="1.40" release="515.el10_2" arch="noarch" hdrmd5="99b2cd7d62767e405e0c11bc856424b5" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-doc" version="5.40.2" release="515.el10_2" arch="noarch" hdrmd5="e846152cc2121c145b75b7f4e6037dbe" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-encoding" epoch="4" version="3.00" release="511.el10" arch="x86_64" hdrmd5="3026acdd391632e1b1f2ff708dbfef5c" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-encoding-warnings" version="0.14" release="515.el10_2" arch="noarch" hdrmd5="8a1e9e95c9e4b9d9687ad4d471fea2c5" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-fields" version="2.27" release="515.el10_2" arch="noarch" hdrmd5="56611c8732b0f278472f4176601a8a18" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-filetest" version="1.03" release="515.el10_2" arch="noarch" hdrmd5="f774c9e3154de295735236c96d0c71dc" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-less" version="0.03" release="515.el10_2" arch="noarch" hdrmd5="27c98044a0d0f2bba79028f3553ef07d" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-libnetcfg" epoch="4" version="5.40.2" release="515.el10_2" arch="noarch" hdrmd5="b59a1af175880f7e4b87a07650c91ac8" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-meta-notation" version="5.40.2" release="515.el10_2" arch="noarch" hdrmd5="c1f978efb88d2e6d55f69aa82b1d3853" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-open" version="1.13" release="515.el10_2" arch="noarch" hdrmd5="ac88660c80f041c2473eed22ec679e1c" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-ph" version="5.40.2" release="515.el10_2" arch="x86_64" hdrmd5="e135c53a3968c65f2a0b83e6066e8e27" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-sort" version="2.05" release="515.el10_2" arch="noarch" hdrmd5="d2769c4ca605a4ce3efc5f31153c4ba1" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-subs" version="1.04" release="515.el10_2" arch="noarch" hdrmd5="293bdcbda92d1847f6571103e1d197bb" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-vmsish" version="1.04" release="515.el10_2" arch="noarch" hdrmd5="eb9e570b58c7897524604699fbc0de75" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-devel" epoch="4" version="5.40.2" release="515.el10_2" arch="x86_64" hdrmd5="96069381950edb058641be13bd8b3814" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="elfutils-libelf" version="0.194" release="2.el10_2" arch="x86_64" hdrmd5="5e671269932d2d02b5e7177e7b308056" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="tar" epoch="2" version="1.35" release="13.el10_2" arch="x86_64" hdrmd5="583b2da057f7877e9090dd007c9b00d7" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="xz" epoch="1" version="5.6.2" release="4.el10_2.1" arch="x86_64" hdrmd5="23135a7ad652fe8f6b87ecd1fdc3bc5c" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="binutils" version="2.41" release="63.el10.alma.1" arch="x86_64" hdrmd5="65a8a9a9d5e571fb5170229067ae54c3" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="diffutils" version="3.10" release="8.el10" arch="x86_64" hdrmd5="dc3dac84318bee7257be6e4c75b23dfc" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="gdb-minimal" version="16.3" release="3.1.el10_2" arch="x86_64" hdrmd5="67690aad5af80a5aee3ad57e8ef10268" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="rpm-build-libs" version="4.19.1.1" release="23.el10.alma.1" arch="x86_64" hdrmd5="1359199297954946078204ed793d0615" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="debugedit" version="5.1" release="8.el10" arch="x86_64" hdrmd5="c3bb1528e3aee250c550fbd312ff8929" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="elfutils" version="0.194" release="2.el10_2" arch="x86_64" hdrmd5="23b79ea75326fa699fe66687d1561ad1" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="glibc-gconv-extra" version="2.39" release="128.el10_2.alma.1" arch="x86_64" hdrmd5="9dcf04fcb2244587dcac16f8471cc67b" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="pkgconf" version="2.1.0" release="3.el10" arch="x86_64" hdrmd5="8e8af64d19b84206c62f00c8de3fbc02" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="pkgconf-m4" version="2.1.0" release="3.el10" arch="noarch" hdrmd5="b3c32290e4f1543b14dc83a4c2513db2" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="pcre2-utf16" version="10.44" release="1.el10.3" arch="x86_64" hdrmd5="dc2d059a580da16e7505a8d4f582e2ac" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="pcre2-utf32" version="10.44" release="1.el10.3" arch="x86_64" hdrmd5="ef420c749792c32687c185a88d0af75e" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="gmp-c++" epoch="1" version="6.2.1" release="12.el10" arch="x86_64" hdrmd5="3db13d497161cde4dfd8d50e1540b345" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="ngtcp2" version="1.25.0" release="1.2" arch="x86_64" hdrmd5="75647684ca3eb6a5878d80a7af4aefe6" project="home:davidnichols:qore:testing" repository="AlmaLinux_10"/>
+  <bdep name="ngtcp2-crypto-ossl" version="1.25.0" release="1.2" arch="x86_64" hdrmd5="ca810c9066b770a129b003b5c9fc2448" project="home:davidnichols:qore:testing" repository="AlmaLinux_10"/>
+  <bdep name="libnghttp3" version="1.18.0" release="1.2" arch="x86_64" hdrmd5="783826d752fe20d8271a392f0b961885" project="home:davidnichols:qore:testing" repository="AlmaLinux_10"/>
+  <bdep name="libbrotli" version="1.1.0" release="7.el10_1" arch="x86_64" hdrmd5="6b8ecad63cdef444fc9968b92b4e184b" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="brotli" version="1.1.0" release="7.el10_1" arch="x86_64" hdrmd5="37cc566ccbe666920a89821efb7f414b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="keyutils-libs-devel" version="1.6.3" release="5.el10" arch="x86_64" hdrmd5="38b70e70e8b7f6d7bf4317e527a7a5ca" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libcom_err-devel" version="1.47.1" release="5.el10" arch="x86_64" hdrmd5="033ac032299640dcb4dbe5fed0bf9f03" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libselinux-devel" version="3.10" release="1.el10" arch="x86_64" hdrmd5="1625a3aead293ca0ef3bf15bcb6d9a16" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libverto-devel" version="0.3.2" release="10.el10" arch="x86_64" hdrmd5="cf1e503bcadb35e1b53124342eac111e" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libkadm5" version="1.21.3" release="10.el10_2" arch="x86_64" hdrmd5="d72140c12c9a1b002c43716a3d2e3ce0" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="tree-sitter" version="0.26.13" release="1.2" arch="x86_64" hdrmd5="9d74a1c6b6e74b2356a12e8500580165" project="home:davidnichols:qore:testing" repository="AlmaLinux_10"/>
+  <bdep name="libicu" version="74.2" release="5.el10_0" arch="x86_64" hdrmd5="bfec39e630bffbea1b1ebd08a0738ceb" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libyaml" version="0.2.5" release="16.el10" arch="x86_64" hdrmd5="d5f81be8679fa313a415a0fde9bec482" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="utf8proc" version="2.7.0" release="9.el10" arch="x86_64" hdrmd5="ca54a75fed4f1cde7e6487e610456070" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libarrow" version="17.0.0" release="9.el10_2" arch="x86_64" hdrmd5="ac3dfb8efd401874b252dd6d2a2f8dba" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="rapidjson-devel" version="1.1.0" release="42.el10_0" arch="x86_64" hdrmd5="ac267cfc0e4b8ac81165927f0f73f068" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="re2-devel" epoch="2" version="20251105" release="1.el10_2" arch="x86_64" hdrmd5="f48280a2290c24f5046bdb6143d2e509" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="snappy-devel" version="1.1.10" release="7.el10" arch="x86_64" hdrmd5="4f07c4a026a754133e9d3a8356c14e61" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="glib2-devel" version="2.80.4" release="12.el10_2.22" arch="x86_64" hdrmd5="1a37f67d7d335d2927e7385b9341c3b4" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libarrow-glib-devel" version="17.0.0" release="9.el10_2" arch="x86_64" hdrmd5="e382f35add3b88c5f732ca2bdc966e0a" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="parquet-libs" version="17.0.0" release="9.el10_2" arch="x86_64" hdrmd5="ac92b06101df2b8b9d2aa9ed2818daed" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="mongo-c-driver-libs" version="1.30.11" release="1.el10_2" arch="x86_64" hdrmd5="3965bb041e296f96df037de8a56cf494" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="libbson-devel" version="1.30.11" release="1.el10_2" arch="x86_64" hdrmd5="5faa368160f6280591ed9bfc93324366" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="libmongocrypt-devel" version="1.15.2" release="1.el10_2" arch="x86_64" hdrmd5="5be018a58e393fd003764800325cebe8" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="mongo-c-driver" version="1.30.11" release="1.el10_2" arch="x86_64" hdrmd5="bd0251550c1567d95e5fac7830ce7c5a" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="tesseract" version="5.3.4" release="7.el10_2" arch="x86_64" hdrmd5="2bbc426c75560d62ab7f64d04b6e4e12" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libidn2-devel" version="2.3.7" release="3.el10" arch="x86_64" hdrmd5="238cccf05514cee2e9a0aff8ae4e76f7" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libpsl-devel" version="0.21.5" release="6.el10" arch="x86_64" hdrmd5="ca7e72002102e3eae43553d4b0c86af2" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libssh-devel" version="0.12.0" release="3.el10_2" arch="x86_64" hdrmd5="f861c63f8262ed561aa212ef61dcacee" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libjpeg-turbo-devel" version="3.0.2" release="4.el10" arch="x86_64" hdrmd5="8f5b8569cf16431d805b3076fd2db359" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libtiff-devel" version="4.6.0" release="8.el10_2.4" arch="x86_64" hdrmd5="4bb2634558716ca6a2afa0cd3c0aae0c" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="leptonica" version="1.84.1" release="5.el10" arch="x86_64" hdrmd5="02c4c44b5138626ae65e0fdac7049455" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libpng-devel" epoch="2" version="1.6.40" release="11.el10_2.1" arch="x86_64" hdrmd5="501e497b87af72a93f56d2d70cde83ae" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libwebp-devel" version="1.3.2" release="10.el10" arch="x86_64" hdrmd5="eefcca600963f61639bae35503b0e8d4" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="liburing" version="2.12" release="1.el10" arch="x86_64" hdrmd5="1f7a8b6a8fb7ba5b2cb7f89e25df2253" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="vim-filesystem" epoch="2" version="9.1.083" release="9.el10_2.20" arch="noarch" hdrmd5="4035b125b41cc6181afa7360e045c5fe" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="emacs-filesystem" epoch="1" version="29.4" release="13.el10_2" arch="noarch" hdrmd5="98be03ec7656ec97c855fc33da5dc396" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="perl-Error" epoch="1" version="0.17029" release="18.el10" arch="noarch" hdrmd5="785c71647c7fbada75887d501a15dbba" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="openssh-clients" version="9.9p1" release="28.el10_2.alma.1" arch="x86_64" hdrmd5="88c677ac0bf017ef94513d371af674bb" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="gdbm-libs" epoch="1" version="1.23" release="12.el10_0" arch="x86_64" hdrmd5="2316777b35d417be0789a01d1ee525be" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="tzdata" version="2026c" release="1.el10_2.alma.1" arch="noarch" hdrmd5="9ab3a8a8b627094351fc6dd3901087c6" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="mpdecimal" version="2.5.1" release="12.el10" arch="x86_64" hdrmd5="5412ab404cf934ac34ed27b29e7db6c9" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="python3-pip-wheel" version="23.3.2" release="11.el10_2" arch="noarch" hdrmd5="2612b96b21296e07955b51fcd954d692" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libedit" version="3.1" release="52.20230828cvs.el10" arch="x86_64" hdrmd5="4c66ca1733d38d5e18c2f98f62a2510a" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="llvm-filesystem" version="21.1.8" release="1.el10.alma.1" arch="x86_64" hdrmd5="d081c15b55f2a5918e661bdd6441b788" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="gnutls" version="3.8.10" release="4.el10_2" arch="x86_64" hdrmd5="523917c15893332e42e1601a70e4a0de" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libxcb" version="1.17.0" release="3.el10" arch="x86_64" hdrmd5="b184d907b96264240ba8330805d1f016" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libX11-common" version="1.8.10" release="1.el10" arch="noarch" hdrmd5="2ad51ada8af27bcaf50108ecee43d18d" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libXext" version="1.3.6" release="3.el10" arch="x86_64" hdrmd5="e3b001cf4bca9007dd4560cd03417f06" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libpng" epoch="2" version="1.6.40" release="11.el10_2.1" arch="x86_64" hdrmd5="b0ccab70d2284ae7f67b3555baf5ada1" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="pixman" version="0.43.4" release="2.el10" arch="x86_64" hdrmd5="455c124c0691aecd3bf44f5524c4192a" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="fribidi" version="1.0.14" release="4.el10" arch="x86_64" hdrmd5="fc12bc5087fbf7d4d4bd2a2494c30839" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libXft" version="2.3.8" release="8.el10" arch="x86_64" hdrmd5="5c6778451bc63941212f4e0241cedcef" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libthai" version="0.1.29" release="10.el10" arch="x86_64" hdrmd5="1968abcf32b896df0bd3d48d28ce2cf8" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libjpeg-turbo" version="3.0.2" release="4.el10" arch="x86_64" hdrmd5="2fe87e725f8b0a9672025b589be3dd5e" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="shared-mime-info" version="2.3" release="8.el10" arch="x86_64" hdrmd5="8d0d5cadae7ccaccc23c4b089ab1a55a" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="fonts-filesystem" epoch="1" version="2.0.5" release="18.el10" arch="noarch" hdrmd5="ba6b39de0c9add2d130ba0523e7c78a7" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="default-fonts-core-sans" version="4.1" release="3.el10" arch="noarch" hdrmd5="1d02f5d6931a15a2c9a2490890c07cf1" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="xml-common" version="0.6.3" release="65.el10" arch="noarch" hdrmd5="37eae03d161b227b06d47ef81e0fc1f8" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="graphite2" version="1.3.14" release="17.el10" arch="x86_64" hdrmd5="a65d456b9d179184f0e422d27f17bc44" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="urw-base35-bookman-fonts" version="20200910" release="21.el10" arch="noarch" hdrmd5="be3a1d52e84558fa78a80cf9764bde43" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="urw-base35-c059-fonts" version="20200910" release="21.el10" arch="noarch" hdrmd5="817d73ff57824580bca6b7bc21162d4d" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="urw-base35-d050000l-fonts" version="20200910" release="21.el10" arch="noarch" hdrmd5="408524a39f161994379d1137e187fe2b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="urw-base35-gothic-fonts" version="20200910" release="21.el10" arch="noarch" hdrmd5="b7ee7056df1f9657a6c7497db499e645" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="urw-base35-nimbus-mono-ps-fonts" version="20200910" release="21.el10" arch="noarch" hdrmd5="b01bc8692d3f25f3701111c0b44cfc85" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="urw-base35-nimbus-roman-fonts" version="20200910" release="21.el10" arch="noarch" hdrmd5="5e400f940ee97de0a68b8b5458f46e77" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="urw-base35-nimbus-sans-fonts" version="20200910" release="21.el10" arch="noarch" hdrmd5="347e82d9e67fdb8dab5b15ff43d81369" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="urw-base35-p052-fonts" version="20200910" release="21.el10" arch="noarch" hdrmd5="4dfaaa37a2737644626b4df9cf0cafa6" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="urw-base35-standard-symbols-ps-fonts" version="20200910" release="21.el10" arch="noarch" hdrmd5="64414b862d0be4800fafbf2250e5ead5" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="urw-base35-z003-fonts" version="20200910" release="21.el10" arch="noarch" hdrmd5="442b154241d4a02397ed13d2e2f63b65" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="urw-base35-fonts-common" version="20200910" release="21.el10" arch="noarch" hdrmd5="a533ece189b979b434de0b4216f34795" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libtiff" version="4.6.0" release="8.el10_2.4" arch="x86_64" hdrmd5="c0f0f3b192c4a3565371f32b0acc23de" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libXpm" version="3.5.17" release="5.el10" arch="x86_64" hdrmd5="7a7dfe9028b42b17e240ff5c3ddd1155" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="cairo-gobject" version="1.18.2" release="2.el10_2.1" arch="x86_64" hdrmd5="0744d32c48ca78e0de0bfdefc8458950" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="rsvg-pixbuf-loader" version="2.57.1" release="9.el10" arch="x86_64" hdrmd5="55827e5b3e5a96747e95c965826891cf" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="cups-libs" epoch="1" version="2.4.10" release="18.el10_2" arch="x86_64" hdrmd5="8fa6e28317898daf4be82962533dd173" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="lcms2" version="2.16" release="6.el10" arch="x86_64" hdrmd5="0998afa5f347adac43f57f2b81a118b0" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="adobe-mappings-cmap" version="20230622" release="5.el10" arch="noarch" hdrmd5="8a10b21ef4f7faab43bba947f0dcbc75" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="openjpeg2" version="2.5.2" release="5.el10" arch="x86_64" hdrmd5="6ec46a8220d849e2e53afd1bb02a4f8a" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="adobe-mappings-pdf" version="20190401" release="9.el10" arch="noarch" hdrmd5="22fb8885047d5e9a21e7e52a641addfe" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libpaper" epoch="1" version="2.1.1" release="7.el10" arch="x86_64" hdrmd5="d1dde38c188dad1e9840f759d621be9a" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="adobe-mappings-cmap-deprecated" version="20230622" release="5.el10" arch="noarch" hdrmd5="083b7f2a07b1f010a8c7e5ad973dc6e2" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="google-droid-sans-fonts" version="20200215" release="22.el10" arch="noarch" hdrmd5="b0ee9ecc39f9b42c30076d89f355bf64" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libijs" version="0.35" release="24.el10" arch="x86_64" hdrmd5="b1736793d5652db093631bec7da8023f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="jbig2dec-libs" version="0.20" release="7.el10" arch="x86_64" hdrmd5="a6ed7510ac18c2367838b704d75b54c1" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="poppler" version="24.02.0" release="7.el10_2.2" arch="x86_64" hdrmd5="915d05f3f3cfd99278f6aa6c38bc7ec9" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="gettext-envsubst" version="0.22.5" release="6.el10" arch="x86_64" hdrmd5="a148a2c18ba317a704e9678b4479c0c3" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="perl-IPC-System-Simple" version="1.30" release="16.el10" arch="noarch" hdrmd5="2aca3d56fc7a345d782e94581b9239c8" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Text-Diff" version="1.45" release="25.el10" arch="noarch" hdrmd5="84ffc023ab342e53e0182fe9c03de628" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-IO-Compress-Lzma" version="2.206" release="8.el10" arch="noarch" hdrmd5="efe41660356d4265c215fa22b678f89b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Archive-Zip" version="1.68" release="17.el10" arch="noarch" hdrmd5="ba98f3589ba8bb65e588432a3a7c944e" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Module-Build" epoch="2" version="0.42.34" release="7.el10" arch="noarch" hdrmd5="601f4d6cc8b9172ad75765ca3402a94f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Module-Signature" version="0.88" release="12.el10" arch="noarch" hdrmd5="4e986438b23acd0c31622861a7e444a8" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-local-lib" version="2.000029" release="9.el10" arch="noarch" hdrmd5="2dcbb957976b682cd6eed574d468f78e" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Compress-Bzip2" version="2.28" release="21.el10" arch="x86_64" hdrmd5="af16fb949c46dde3a3e784ff60890b95" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Devel-Size" version="0.84" release="3.el10" arch="x86_64" hdrmd5="f337e463e5a3203f5ef441161c489ac3" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Text-Glob" version="0.11" release="26.el10" arch="noarch" hdrmd5="1c7ea9cd3265c59a92f6100cec754845" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-File-HomeDir" version="1.006" release="15.el10" arch="noarch" hdrmd5="ba4569e53298e7cd1fb725779a27cc71" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="systemtap-sdt-devel" version="5.4" release="3.el10" arch="x86_64" hdrmd5="7eca5c54a4fc9488ec6112ecd8409940" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="systemtap-sdt-dtrace" version="5.4" release="3.el10" arch="x86_64" hdrmd5="2669a4ce5611aacd70dd920310c72a9f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libxcrypt-devel" version="4.4.36" release="10.el10" arch="x86_64" hdrmd5="9efc5effc6f98a939a173e6687c552ee" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="jansson" version="2.14" release="3.el10" arch="x86_64" hdrmd5="3d49634d0f323df9ddd1cdf2390e9bac" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="elfutils-debuginfod-client" version="0.194" release="2.el10_2" arch="x86_64" hdrmd5="d2aff5c3a4cdf80f82f9e34fa6c7e11c" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="binutils-gold" version="2.41" release="63.el10.alma.1" arch="x86_64" hdrmd5="1c74a43982f690aa99be054d90265583" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="file-libs" version="5.45" release="9.el10" arch="x86_64" hdrmd5="0cfda89881b7a922e66171b7cfc610df" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="elfutils-libs" version="0.194" release="2.el10_2" arch="x86_64" hdrmd5="d487b8127b96f405386b7b813d98053a" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="forge-srpm-macros" version="0.4.0" release="6.el10" arch="noarch" hdrmd5="4c15475beb02fc0b79b32a58f7d20579" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="ocaml-srpm-macros" version="10" release="4.el10" arch="noarch" hdrmd5="a610b0ad19679654a9af8575d4e8923c" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="openblas-srpm-macros" version="2" release="19.el10" arch="noarch" hdrmd5="6993787a9cab21e9aab85c30a0bd442b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-srpm-macros" version="1" release="57.el10" arch="noarch" hdrmd5="3f5c5db2565569d4dace4c85bea37804" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="zip" version="3.0" release="45.el10" arch="x86_64" hdrmd5="5d8186bb574c45c88e8ec5fa628a8ccc" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="efi-srpm-macros" version="6" release="6.el10.alma.1" arch="noarch" hdrmd5="3931350959da64ff1bdcee011ec80a8a" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="fonts-srpm-macros" epoch="1" version="2.0.5" release="18.el10" arch="noarch" hdrmd5="eedab5b50fdbbf1b8cdc83c4f2c8edf5" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="go-srpm-macros" version="3.8.0" release="1.el10" arch="noarch" hdrmd5="56a516ceb50cd6184f68973acdbc8c88" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="lua-srpm-macros" version="1" release="15.el10" arch="noarch" hdrmd5="2ad13a3b28040716f2b0736f0272accf" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="package-notes-srpm-macros" version="0.5" release="13.el10" arch="noarch" hdrmd5="3cde60bb10b67a9550ccb1ae9aa8ac6a" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="pyproject-srpm-macros" version="1.18.5" release="1.el10" arch="noarch" hdrmd5="a784e0acfabe5f523509ba0680db13b7" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="qt6-srpm-macros" version="6.10.1" release="1.el10" arch="noarch" hdrmd5="06529f2a2bd0c79cd0570bafef490907" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="rust-toolset-srpm-macros" version="1.92.0" release="2.el10_2.alma.1" arch="noarch" hdrmd5="dd55dee02d010f1883c62d78044885a7" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="annobin-plugin-gcc" version="13.02" release="2.el10" arch="x86_64" hdrmd5="dd6e5f28895620dc0622c592275c7553" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="gcc-plugin-annobin" version="14.3.1" release="4.4.el10.alma.2" arch="x86_64" hdrmd5="d30ecda1c4b11d36b0bccabe8db0c94f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="dwz" version="0.16" release="1.el10" arch="x86_64" hdrmd5="16929aa2620f73511ea34b15d5a4e5d2" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="kernel-srpm-macros" version="1.0" release="27.el10" arch="noarch" hdrmd5="cf3659ec2ffd3a36112b6a5f4b8b9f03" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="python-srpm-macros" version="3.12" release="11.el10" arch="noarch" hdrmd5="ed3e009071f89e0fd2bd068362d38b8d" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="ed" version="1.20" release="5.el10" arch="x86_64" hdrmd5="d9eb1a6d7f626f07d1d0f6a30b128954" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libpkgconf" version="2.1.0" release="3.el10" arch="x86_64" hdrmd5="d3e54138803062f6f74c4a9139f37417" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libsepol-devel" version="3.10" release="1.el10" arch="x86_64" hdrmd5="422356d5d32fce2b385ec937ec0756b0" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="re2" epoch="2" version="20251105" release="1.el10_2" arch="x86_64" hdrmd5="c52b4b4c2c71a37235fd0dff904adeab" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="snappy" version="1.1.10" release="7.el10" arch="x86_64" hdrmd5="e9bb4ffb733b361e669220c66ae45e5e" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="liborc2" version="2.0.7" release="1.el10_2" arch="x86_64" hdrmd5="7cdfffe30489e66405514ca2ec44845f" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="libarrow-doc" version="17.0.0" release="9.el10_2" arch="noarch" hdrmd5="8eb54f03b5342c66e0296fa1307abc6f" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="abseil-cpp-devel" version="20240722.2" release="1.el10_2" arch="x86_64" hdrmd5="93e7fa6eecd05c2754b3dbb45d2907c3" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="python3-packaging" version="24.2" release="2.el10" arch="noarch" hdrmd5="c12309f1b3d23f8c5228a356d4df3df7" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libffi-devel" version="3.4.4" release="10.el10" arch="x86_64" hdrmd5="91cb82151d99000364df672c682b5982" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libmount-devel" version="2.40.2" release="18.el10" arch="x86_64" hdrmd5="7a6bff3ab99125df7b87a215039793c6" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="sysprof-capture-devel" version="47.2" release="1.el10" arch="x86_64" hdrmd5="e199b9be167e20d294b28b054a701780" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libarrow-glib-libs" version="17.0.0" release="9.el10_2" arch="x86_64" hdrmd5="01670625e88c8d691be24c6fbeaa9945" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="gobject-introspection-devel" version="1.79.1" release="6.el10" arch="x86_64" hdrmd5="55cb8e985181558a7b4b496c6fb1514b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="thrift" version="0.20.0" release="4.el10_1" arch="x86_64" hdrmd5="ae56dedced6ebfa733b45fe25ccc2917" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="boost-program-options" version="1.83.0" release="7.el10" arch="x86_64" hdrmd5="15a13947d05daa65dabd6e6f41964ea6" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="cyrus-sasl-lib" version="2.1.28" release="30.el10_2" arch="x86_64" hdrmd5="5c39a979e0999d6a1a959af8c1b53c65" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libbson" version="1.30.11" release="1.el10_2" arch="x86_64" hdrmd5="65b97a502e9b677e481dd62ae9af6ee2" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="libmongocrypt" version="1.15.2" release="1.el10_2" arch="x86_64" hdrmd5="6e9b0969f5cd233ad4af9c76a94cc7ca" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="tesseract-langpack-eng" version="4.1.0" release="9.el10" arch="noarch" hdrmd5="49ed94173c72fb7cbe1ecc1bafea37e8" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="publicsuffix-list" version="20240107" release="5.el10" arch="noarch" hdrmd5="c39f37a03971c87a78052eec2e7fd226" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libpsl" version="0.21.5" release="6.el10" arch="x86_64" hdrmd5="f9c931353b547cb084a92dbcb87d18fc" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libssh" version="0.12.0" release="3.el10_2" arch="x86_64" hdrmd5="70c66c728e882e31990a021b776ca996" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="giflib" version="5.2.1" release="25.el10_2" arch="x86_64" hdrmd5="bff37800b1869d77c70569fa74e1d258" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="kernel-headers" version="6.12.0" release="211.56.1.el10_2" arch="x86_64" hdrmd5="31301222255584451de5e9594cb50c02" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libfido2" version="1.14.0" release="7.el10" arch="x86_64" hdrmd5="eac10361b07f61d6c4c23716b8fa33c5" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="openssh" version="9.9p1" release="28.el10_2.alma.1" arch="x86_64" hdrmd5="bcac9a08f80dcfa9208bfcaf095c07c6" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="ncurses-c++-libs" version="6.4" release="15.20240127.el10_1" arch="x86_64" hdrmd5="3e8baf949c25068f4dc153fc4a9d3157" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libXau" version="1.0.11" release="8.el10" arch="x86_64" hdrmd5="0fda9e1f32b735adbb60e2cdd705d6bb" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libdatrie" version="0.2.13" release="11.el10" arch="x86_64" hdrmd5="60d6c827b62651ddcd5df8bdc059b727" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="google-noto-sans-vf-fonts" version="20240401" release="5.el10" arch="noarch" hdrmd5="dcb332ad02b44cdea5bb2211f094e87c" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="redhat-text-vf-fonts" version="4.1.0" release="1.el10" arch="noarch" hdrmd5="6f6f24f7139cea8a4fde82d86408281e" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="jbigkit-libs" version="2.1" release="31.el10" arch="x86_64" hdrmd5="787c312ec960a5bb32ba05ccbe7d7fe8" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="liblerc" version="4.0.0" release="8.el10" arch="x86_64" hdrmd5="c19eacb4b8fe23334178cd0e62f15cff" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="avahi-libs" version="0.9~rc2" release="2.el10" arch="x86_64" hdrmd5="c0d29e944bb7bb0545166af159b7b608" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="cups-filesystem" epoch="1" version="2.4.10" release="18.el10_2" arch="noarch" hdrmd5="dc3c4bd33c6f56cac9274f263f7541bf" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="nss" version="3.124.0" release="5.el10_0" arch="x86_64" hdrmd5="4b89a0a93322989aa304d9997ef3d57e" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="poppler-data" version="0.4.11" release="9.el10" arch="noarch" hdrmd5="403a6c99ae94d2801582444a59f4e3a6" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="gpgmepp" version="1.23.2" release="6.el10.alma.1" arch="x86_64" hdrmd5="36794b15952d9baf32ec215839a0a37b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Algorithm-Diff" version="1.2010" release="14.el10" arch="noarch" hdrmd5="9d77bdde9ccd3a0ae53310d707823b67" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Compress-Raw-Lzma" version="2.212" release="3.el10" arch="x86_64" hdrmd5="9d49b4bfe913158446b0bcaea070fd54" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Software-License" version="0.104006" release="4.el10" arch="noarch" hdrmd5="fd9c8ed298dab5b183e065871956eaf0" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-inc-latest" epoch="2" version="0.500" release="30.el10" arch="noarch" hdrmd5="2be1de6efcb31290b71540657600086d" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="gnupg2" version="2.4.5" release="4.el10_1" arch="x86_64" hdrmd5="0765aa494189f5498745acc8c0638de5" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="perl-File-Which" version="1.27" release="14.el10" arch="noarch" hdrmd5="719297ff87a2f5710af39f5b620156e6" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="python3-pyparsing" version="3.1.1" release="7.el10" arch="noarch" hdrmd5="07cd870d1397df3cab18be5ec61914b1" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="json-c" version="0.18" release="3.el10" arch="x86_64" hdrmd5="7f07c17b20a78ac0ca779af334183450" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="elfutils-default-yama-scope" version="0.194" release="2.el10_2" arch="noarch" hdrmd5="08b8a59eb1b4c083483773709df71370" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="annobin-docs" version="13.02" release="2.el10" arch="noarch" hdrmd5="87498c68a624c2ba6cee5aabd2a7e790" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="abseil-cpp" version="20240722.2" release="1.el10_2" arch="x86_64" hdrmd5="ed0771cc895fa46b43ef183fd254bc79" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="abseil-cpp-testing" version="20240722.2" release="1.el10_2" arch="x86_64" hdrmd5="dd291103edb93410682a56eafd391f2e" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="libblkid-devel" version="2.40.2" release="18.el10" arch="x86_64" hdrmd5="eab14caaa5b64f237c6ed312a697a508" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libarrow-acero-libs" version="17.0.0" release="9.el10_2" arch="x86_64" hdrmd5="2946f35b3cb4b225d5f05b53dae0eb38" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="libtool" version="2.4.7" release="13.el10" arch="x86_64" hdrmd5="066a43fb8e025087a4bd6ea11db358a3" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="gobject-introspection" version="1.79.1" release="6.el10" arch="x86_64" hdrmd5="cd15a6db79977436d021ce584beb83e6" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="python3-mako" version="1.2.3" release="9.el10" arch="noarch" hdrmd5="0731437e2619fe3a3de2806d49f6c674" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="python3-markdown" version="3.5.1" release="6.el10_2.1" arch="noarch" hdrmd5="45de9d0e559836784462c07c7b1ef323" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="python3-setuptools" version="69.0.3" release="12.el10_0" arch="noarch" hdrmd5="988622898ab01b82e3de825fca021c24" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="tesseract-tessdata-doc" version="4.1.0" release="9.el10" arch="noarch" hdrmd5="e34a2f35f2cc57adba774db649a25d37" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="publicsuffix-list-dafsa" version="20240107" release="5.el10" arch="noarch" hdrmd5="c775084ba1b508126c5745a0778064b3" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libssh-config" version="0.12.0" release="3.el10_2" arch="noarch" hdrmd5="cdb4de8ad672645b3d888edbf24706ec" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libcbor" version="0.11.0" release="3.el10" arch="x86_64" hdrmd5="4cf35242ab457fd6ed8fd00110801117" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="google-noto-fonts-common" version="20240401" release="5.el10" arch="noarch" hdrmd5="d494884a7ab81681be839b939e901edd" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="dbus-libs" epoch="1" version="1.14.10" release="5.el10" arch="x86_64" hdrmd5="566cdf1b8b15815837d9c95aaf78ff4f" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libevent" version="2.1.13" release="1.el10_2" arch="x86_64" hdrmd5="5d82cd5413b5366cc8f02af1468cccf2" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="nss-sysinit" version="3.124.0" release="5.el10_0" arch="x86_64" hdrmd5="7290e2bcce81a1b8267f0efe29670dec" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="nss-softokn" version="3.124.0" release="5.el10_0" arch="x86_64" hdrmd5="609b81d00a62740fe71bc3bb344b58aa" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="gpgme" version="1.23.2" release="6.el10.alma.1" arch="x86_64" hdrmd5="be231f105c94270720499fcf929207a9" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libassuan" version="2.5.6" release="6.el10" arch="x86_64" hdrmd5="a919fd508639c90edf1ceeb10f1845c3" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="perl-Text-Template" version="1.61" release="8.el10" arch="noarch" hdrmd5="8b866b4d2a8228b5a04be23b9fc1380b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Data-Section" version="0.200008" release="8.el10" arch="noarch" hdrmd5="81bf5603f8a12056b967c5daf04bad0c" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="openldap" version="2.6.10" release="1.el10" arch="x86_64" hdrmd5="f73de235116a332b8151c06b1d97baa4" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libgpg-error" version="1.50" release="2.el10" arch="x86_64" hdrmd5="f59f2c1e7efe74dbbf8400451caf9cf9" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="tpm2-tss" version="4.1.3" release="6.el10" arch="x86_64" hdrmd5="a26e70f13d304fa47d1c7a67b1595cba" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libgcrypt" version="1.11.0" release="7.el10_2" arch="x86_64" hdrmd5="f4c7e68d7e8d909cfead373534d4ac32" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libksba" version="1.6.7" release="2.el10" arch="x86_64" hdrmd5="e09ee8ecfd6d2bbb17dd5866b056b4fc" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="npth" version="1.6" release="21.el10" arch="x86_64" hdrmd5="99d2a3baf0055c72d1484f6239570fc9" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="gtest" version="1.14.0" release="5.el10_0" arch="x86_64" hdrmd5="a4fcc785ba16712eb5f774cd4162b35d" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="gmock" version="1.14.0" release="5.el10_0" arch="x86_64" hdrmd5="66bc6133bac2f80033533cf17af6f9c6" project="Fedora:EPEL:10.2" repository="standard"/>
+  <bdep name="automake" version="1.16.5" release="20.el10" arch="noarch" hdrmd5="16a6a664aefa95769d2f69d10c4d8deb" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="autoconf" version="2.71" release="13.el10" arch="noarch" hdrmd5="547e4c488252d68fbedabe069f443083" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="python3-markupsafe" version="2.1.3" release="6.el10" arch="x86_64" hdrmd5="8eddfdb8e53a7180f03609ebfe1bfa4f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-MRO-Compat" version="0.15" release="12.el10" arch="noarch" hdrmd5="f8cbc9d8bf01b67edcf921a1a30eb0b1" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Sub-Exporter" version="0.991" release="7.el10" arch="noarch" hdrmd5="1521a86f06dadff058196fac53f6c16e" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Package-Generator" version="1.106" release="34.el10" arch="noarch" hdrmd5="023b995cd9bccc13365a2bf5a9f061da" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Data-OptList" version="0.114" release="7.el10" arch="noarch" hdrmd5="79772f9fc927d70c62b480991ac2b7fd" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Params-Util" version="1.102" release="19.el10" arch="x86_64" hdrmd5="f20071c52a198d83bab43544bc47cd11" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Sub-Install" version="0.929" release="8.el10" arch="noarch" hdrmd5="b62c76a6b75003cbd671814c08f51add" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libsemanage" version="3.10" release="1.el10" arch="x86_64" hdrmd5="a0d99858b87e0ab415f93708828f2288" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="flex" notmeta="1" version="2.6.4" release="19.el10" arch="x86_64" hdrmd5="f62fa01edf26405feb228802e9fcdf22" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="bind-libs" notmeta="1" epoch="32" version="9.18.33" release="15.el10_2.11" arch="x86_64" hdrmd5="8793d08b4be6359d4966b50c970f57a6" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="bind-utils" notmeta="1" epoch="32" version="9.18.33" release="15.el10_2.11" arch="x86_64" hdrmd5="a4573c54577f451b89e4055f60c06458" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="cpp" notmeta="1" version="14.3.1" release="4.4.el10.alma.2" arch="x86_64" hdrmd5="46189c8d845987648be365e28a5b5925" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="cracklib" notmeta="1" version="2.9.11" release="8.el10" arch="x86_64" hdrmd5="2f6715332bbe19883333fd39c9a31582" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="cpio" notmeta="1" version="2.15" release="3.el10" arch="x86_64" hdrmd5="6e8723c0f97dddd46fec04164c75aef5" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="e2fsprogs" notmeta="1" version="1.47.1" release="5.el10" arch="x86_64" hdrmd5="8b6cdc8ae26ccf352cbce5d2d00282b4" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="file" notmeta="1" version="5.45" release="9.el10" arch="x86_64" hdrmd5="fff637fce52a61acb6a54d447b615fcc" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="gdbm-devel" notmeta="1" epoch="1" version="1.23" release="12.el10_0" arch="x86_64" hdrmd5="1194ac03b63434b4fc61af35ddc532d9" project="AlmaLinux:10" repository="CRB"/>
+  <bdep name="gettext-devel" notmeta="1" version="0.22.5" release="6.el10" arch="x86_64" hdrmd5="c78a323901677c2bc5b860b4968c96ca" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="glibc-devel" notmeta="1" version="2.39" release="128.el10_2.alma.1" arch="x86_64" hdrmd5="40035857393fdb5562c63d4cfc08f7d2" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="groff" notmeta="1" version="1.23.0" release="10.el10" arch="x86_64" hdrmd5="8d8128d4b70363ba5115f992691a3cdf" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="gzip" notmeta="1" version="1.13" release="4.el10_2" arch="x86_64" hdrmd5="26a86a46e88bcb2088db0ec180ec63b9" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="info" notmeta="1" version="7.1" release="6.el10" arch="x86_64" hdrmd5="f0fc5c8361ad821282ebbae9e05dd70d" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="less" notmeta="1" version="661" release="3.el10" arch="x86_64" hdrmd5="073140e48cf118aa4601cadcccd1a53c" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="man-db" notmeta="1" version="2.12.0" release="10.el10" arch="x86_64" hdrmd5="5acf6e87c37c1a7dd8d54cc948d93021" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="kmod" notmeta="1" version="31" release="13.el10" arch="x86_64" hdrmd5="2eb71c2645b71b7a296e62c6146a2359" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="which" notmeta="1" version="2.21" release="44.el10_0" arch="x86_64" hdrmd5="e17d66bb6c0f405d416b6a1fdb2c38c4" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="ncurses-devel" notmeta="1" version="6.4" release="15.20240127.el10_1" arch="x86_64" hdrmd5="a49cd92f3edcb565fc11f3d2e6e5fa4c" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="net-tools" notmeta="1" version="2.0" release="0.73.20160912git.el10" arch="x86_64" hdrmd5="6c9ce6dc1a23ea9d18488fce556121b1" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="openssl" notmeta="1" epoch="1" version="3.5.8" release="1.el10_2.alma.1" arch="x86_64" hdrmd5="d2210daa13cbab80405cd5214554e68b" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="patch" notmeta="1" version="2.7.6" release="26.el10" arch="x86_64" hdrmd5="3d2b21419101e47f0569feb6397afa13" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="psmisc" notmeta="1" version="23.6" release="8.el10" arch="x86_64" hdrmd5="22065c3bc9975758a4e3aef9c4f19da3" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="strace" notmeta="1" version="6.12" release="3.el10" arch="x86_64" hdrmd5="baddc1e8aed421758e379538b37a4081" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="texinfo" notmeta="1" version="7.1" release="6.el10" arch="x86_64" hdrmd5="3007fca4998a6df31c38589dfcb8a4b9" project="AlmaLinux:10" repository="CRB"/>
+  <bdep name="unzip" notmeta="1" version="6.0" release="69.el10" arch="x86_64" hdrmd5="5a44502ca6a83b2f861ead7e8ab1166a" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="util-linux" notmeta="1" version="2.40.2" release="18.el10" arch="x86_64" hdrmd5="b67e1e4b9d20c59891580e1de1c8b0ab" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="vim-enhanced" notmeta="1" epoch="2" version="9.1.083" release="9.el10_2.20" arch="x86_64" hdrmd5="e910dd28d9ccd12fd4e17b83782d5eb0" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="initscripts" notmeta="1" version="10.26" release="2.el10" arch="x86_64" hdrmd5="cde7062892e9f25ef2e22323016de032" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="shadow-utils" notmeta="1" epoch="2" version="4.15.0" release="11.el10" arch="x86_64" hdrmd5="7106fa9e96d48daa0b1f254b65674e2c" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="redhat-rpm-config" notmeta="1" version="295" release="1.el10.alma.1" arch="noarch" hdrmd5="247322332d4a0c339e7d7dd15d662b3e" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="procps-ng" notmeta="1" version="4.0.4" release="11.el10" arch="x86_64" hdrmd5="71bee82e295ae06940de3990adb53491" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="protobuf-c" notmeta="1" version="1.5.0" release="6.el10" arch="x86_64" hdrmd5="9c1da8f1a4065e1177b05cb78c81c783" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="lmdb-libs" notmeta="1" version="0.9.32" release="4.el10" arch="x86_64" hdrmd5="c71f65457f589e21fe69b3f06bbd7005" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libmaxminddb" notmeta="1" version="1.9.1" release="4.el10" arch="x86_64" hdrmd5="05337fb5e49d09fd355dfc3d63a91a99" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="fstrm" notmeta="1" version="0.6.1" release="12.el10" arch="x86_64" hdrmd5="b7aa28b7c942edd23bd435453e352488" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="bind-license" notmeta="1" epoch="32" version="9.18.33" release="15.el10_2.11" arch="noarch" hdrmd5="b9c330cbc24572b6c658e2d8d303efe0" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="e2fsprogs-libs" notmeta="1" version="1.47.1" release="5.el10" arch="x86_64" hdrmd5="3ccf6e05c13c5ee1b8ec3eccf8dca30a" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="fuse3-libs" notmeta="1" version="3.16.2" release="5.el10" arch="x86_64" hdrmd5="7696d8323c06232b21f2f43c5b728ab3" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libss" notmeta="1" version="1.47.1" release="5.el10" arch="x86_64" hdrmd5="47ab00d401a56370e191ecd09fd3c343" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="gdbm" notmeta="1" epoch="1" version="1.23" release="12.el10_0" arch="x86_64" hdrmd5="b71416d44d94b2d2048116823e379b5a" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="gettext-common-devel" notmeta="1" version="0.22.5" release="6.el10" arch="noarch" hdrmd5="7a1d663adfd65c63b2551a653e846d5a" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libpipeline" notmeta="1" version="1.5.7" release="7.el10" arch="x86_64" hdrmd5="adbe5bdfb840d1afd73baa45f561a70c" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="perl-Unicode-EastAsianWidth" notmeta="1" version="12.0" release="16.el10" arch="noarch" hdrmd5="a17ce7e0f427d0a85eafee3027454278" project="AlmaLinux:10" repository="CRB"/>
+  <bdep name="perl-libintl-perl" notmeta="1" version="1.33" release="11.el10" arch="x86_64" hdrmd5="ae0ee3e77a25d205d7002062665ebd6b" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="perl-Text-Unidecode" notmeta="1" version="1.30" release="27.el10" arch="noarch" hdrmd5="48da5237127d9b6f5f08da3170836938" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="libutempter" notmeta="1" version="1.2.1" release="15.el10" arch="x86_64" hdrmd5="d9a46176e8b210319ad7b5204a4c5ebd" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="pam" notmeta="1" version="1.6.1" release="9.el10_2.1" arch="x86_64" hdrmd5="afaf7b5a86bd67474419f81ef59f50fb" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="vim-common" notmeta="1" epoch="2" version="9.1.083" release="9.el10_2.20" arch="x86_64" hdrmd5="875e6e636e34857671f316134e0436a0" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="chkconfig" notmeta="1" version="1.30" release="2.el10" arch="x86_64" hdrmd5="ce71f795c8205aaa1f29c556c2a8e26a" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="initscripts-service" notmeta="1" version="10.26" release="2.el10" arch="noarch" hdrmd5="0f7f7c76e9fa671d8ae5646a2d855422" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="initscripts-rename-device" notmeta="1" version="10.26" release="2.el10" arch="x86_64" hdrmd5="368346b852fb08ef248f2275a9004ea4" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="systemd-rpm-macros" notmeta="1" version="257" release="23.el10_2.2.alma.1" arch="noarch" hdrmd5="7952ba7ed7d3701a75a19ab19f968b56" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="libpwquality" notmeta="1" version="1.4.5" release="12.el10" arch="x86_64" hdrmd5="223aadacddba621f470dba11c8db4608" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="authselect" notmeta="1" version="1.5.2" release="1.el10" arch="x86_64" hdrmd5="6a6e40809aebb521b907e0b36fd6c44f" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="xxd" notmeta="1" epoch="2" version="9.1.083" release="9.el10_2.20" arch="x86_64" hdrmd5="74202379a225d5214b3d6bf9ea7e9d8f" project="AlmaLinux:10" repository="appstream"/>
+  <bdep name="vim-data" notmeta="1" epoch="2" version="9.1.083" release="9.el10_2.20" arch="noarch" hdrmd5="df21d826821e1ff7859988f44a0e2ca5" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="cracklib-dicts" notmeta="1" version="2.9.11" release="8.el10" arch="x86_64" hdrmd5="bd870a60599f9426447adc7a9faf8f52" project="AlmaLinux:10" repository="baseos"/>
+  <bdep name="authselect-libs" notmeta="1" version="1.5.2" release="1.el10" arch="x86_64" hdrmd5="9addac1a819e858a3780c20b8da701d9" project="AlmaLinux:10" repository="baseos"/>
+  <path project="home:davidnichols:qore:testing" repository="AlmaLinux_10" url="https://download.opensuse.org/repositories/home:/davidnichols:/qore:/testing/AlmaLinux_10/"/>
+  <path project="AlmaLinux:10" repository="update" url="https://download.opensuse.org/repositories/AlmaLinux:/10/update/"/>
+  <path project="Fedora:EPEL:10.2" repository="standard" url="https://download.opensuse.org/repositories/Fedora:/EPEL:/10.2/standard/"/>
+  <path project="AlmaLinux:10" repository="CRB" url="https://download.opensuse.org/repositories/AlmaLinux:/10/CRB/"/>
+  <path project="AlmaLinux:10" repository="standard" url="https://download.opensuse.org/repositories/AlmaLinux:/10/standard/"/>
+  <path project="AlmaLinux:10" repository="extras-common" url="https://download.opensuse.org/repositories/AlmaLinux:/10/extras-common/"/>
+  <path project="AlmaLinux:10" repository="ha" url="https://download.opensuse.org/repositories/AlmaLinux:/10/ha/"/>
+  <path project="AlmaLinux:10" repository="appstream" url="https://download.opensuse.org/repositories/AlmaLinux:/10/appstream/"/>
+  <path project="AlmaLinux:10" repository="baseos" url="https://download.opensuse.org/repositories/AlmaLinux:/10/baseos/"/>
+  <path project="OBS:DefaultKernel" repository="standard" url="https://download.opensuse.org/repositories/OBS:/DefaultKernel/standard/"/>
+</buildinfo>

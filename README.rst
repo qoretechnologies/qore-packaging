@@ -17,7 +17,7 @@ full logs, containers and RPMs are retained under ignored ``results/`` and
 ``work/`` directories. Do not interpret a successfully prepared SRPM as a
 successful binary build.
 
-Twenty-seven external modules have committed RPM packaging and pass builds and
+Twenty-eight external modules have committed RPM packaging and pass builds and
 installed-runtime suites on Fedora 44, Leap 16.0 and EL10. PostgreSQL includes
 mandatory Fedora pgvector coverage. ZeroMQ includes draft sockets and CURVE.
 The original twenty-one modules now have x86_64 OBS builds enabled on all three
@@ -35,7 +35,8 @@ The testing project's build configuration explicitly chooses CPU onnxruntime
 for qore-stdlib's ELF dependencies. Fedora provides those capabilities from
 several runtime, development, ROCm and Python packages; OBS otherwise refuses
 to choose. Verified buildinfo selects the CPU runtime with the revision 15 SDK.
-The project also maps ``/usr/bin/qore`` to its owning package and selects the
+The project also maps ``/usr/bin/qore`` and the GEOS documentation index
+``/usr/share/qore/tags/geos.tag`` to their owning packages and selects the
 qualified libgit2 development provider for each target. OBS omits repository
 file lists from dependency solving; these mappings follow its documented
 ``FileProvides`` and ``Prefer`` configuration rules:
@@ -64,12 +65,21 @@ that dependency are enabled for Leap with publication disabled.
 XML now passes canonical RPM builds and all 304 installed suites on all three
 targets, including 106 Litmus cases against Qore and installed WebDAV CLI checks.
 Its separate native Valgrind and strict-documentation evidence is retained.
-XML is included in the twenty-seven qualified local modules.
+XML and XML Security are included in the twenty-eight qualified local modules.
+XML Security passes canonical builds, installed runtime/SDK tests, documentation,
+and 13 native cases / 65 assertions under Valgrind on all three targets. Its
+parser options and errors are now isolated per document, including worker threads.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is
 explicitly approved and documented. The remaining modules, target matrix and
 release gates still need qualification.
+
+The EL10 OBS path uses ``Fedora:EPEL:10.2`` alongside AlmaLinux 10.2.
+The unversioned EPEL 10 path follows the leading CentOS Stream minor release;
+its newer OpenLDAP server requires a library version absent from AlmaLinux.
+When advancing the Enterprise Linux baseline, update this explicit minor-version
+path and requalify dependency resolution together.
 
 The target matrix is Fedora 44, AlmaLinux 10 as the Enterprise Linux baseline,
 and openSUSE Leap 16.0, initially x86_64. aarch64 requires native qualification

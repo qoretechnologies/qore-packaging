@@ -1,0 +1,1120 @@
+{
+  "schema": 1,
+  "date": "2026-10-02",
+  "qualification": {
+    "fedora": {
+      "xmlsec": {
+        "steps": {
+          "build": {
+            "exit_code": 0,
+            "log": "results/fedora-xmlsec-final-1-build.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/fedora-xmlsec-final-1-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-xmlsec-final-1-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/fedora-xmlsec-final-1-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-xmlsec-final-1-sdk-tests.log"
+          }
+        },
+        "phase": "complete",
+        "build": {
+          "schema": 1,
+          "image": "sha256:7fded42a1b74c338290f981615abf94cc7415d73a19277b995221a652bcbbf79",
+          "source": {
+            "schema": 1,
+            "commit": "811e22c44a96bd6517d4d1e75e48c84cea04ba78",
+            "source_date_epoch": 1790918803,
+            "name": "qore-xmlsec-module",
+            "version": "1.0.1",
+            "exclusions": [],
+            "sources": {
+              "qore-xmlsec-module-1.0.1.tar.xz": "25bcf0e5a041bd64d8e9839b4e1cc5129e79a9f95fb869c680084a4cd9b64193",
+              "qore-xmlsec-module.spec": "319f1e10426af015bed5bdc1e62bb0ec0eee8c5fad9270e7b57286ad92c908fb"
+            },
+            "spec": "qore-xmlsec-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790918803",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/xmlsec-final-source-1:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/fedora-xmlsec-final-1:/work",
+            "sha256:7fded42a1b74c338290f981615abf94cc7415d73a19277b995221a652bcbbf79",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-xmlsec-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-xmlsec-module-doc-1.0.1-2.fc44.noarch.rpm": "e230957ffd16f7c23ece356aeaa8b8a8cd9799612f6713e90016ba51a2fbe5ce",
+            "rpmbuild/RPMS/x86_64/qore-xmlsec-module-1.0.1-2.fc44.x86_64.rpm": "d43007bb820bba1229aadea4c3f59b5bdf07e8bf6f78ca739ee721ea512561bb",
+            "rpmbuild/RPMS/x86_64/qore-xmlsec-module-debuginfo-1.0.1-2.fc44.x86_64.rpm": "d104a7c293ba719d0a987dfa727b146fd3edcfe403f5d0e9dfeaceddeee9ad7c",
+            "rpmbuild/RPMS/x86_64/qore-xmlsec-module-debugsource-1.0.1-2.fc44.x86_64.rpm": "5c5fdc6822c567fb73e24e80cdaa7b2923ab9a757af8638a56ff3344b8f5b476",
+            "rpmbuild/SRPMS/qore-xmlsec-module-1.0.1-2.fc44.src.rpm": "0e37129d6e87dfd37e8cdce33b7b6d7d7487ce4e8bc3f4212400a32e78d0a4f7"
+          }
+        },
+        "runtime_image": "sha256:7e044716f385c3b41ca59c92512f067bea69a08615b715e983177019797206c5",
+        "sdk_image": "sha256:e99476f91adca51b3d9e0441fe8ce3d8562042aca845262fee4c47599b10f1a4",
+        "exit_code": 0
+      },
+      "mysql": {
+        "steps": {
+          "build": {
+            "exit_code": 0,
+            "log": "results/fedora-mysql-installed-final-2-build.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/fedora-mysql-installed-final-2-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-mysql-installed-final-2-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/fedora-mysql-installed-final-2-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-mysql-installed-final-2-sdk-tests.log"
+          }
+        },
+        "core_qualification": {
+          "source_build": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-15",
+          "steps": {
+            "sdk-install": {
+              "exit_code": 0,
+              "log": "results/fedora-core-policy-15-sdk-install.log"
+            },
+            "sdk-tests": {
+              "exit_code": 0,
+              "log": "results/fedora-core-policy-15-sdk-tests.log"
+            },
+            "runtime-install": {
+              "exit_code": 0,
+              "log": "results/fedora-core-policy-15-runtime-install.log"
+            },
+            "runtime-tests": {
+              "exit_code": 0,
+              "log": "results/fedora-core-policy-15-runtime-tests.log"
+            }
+          },
+          "source": {
+            "schema": 1,
+            "commit": "c95c7378da33cc4c68d266c48f409cd4b14108db",
+            "source_date_epoch": 1790911113,
+            "name": "qore",
+            "version": "3.0.0~git20261002.15",
+            "exclusions": [],
+            "sources": {
+              "qore-3.0.0~git20261002.15.tar.xz": "84ead538812b4ebdf12950eaef74f30d4a9a4991a954b6b42eb311b40b83723b",
+              "qore.spec": "6adbddb232bbee8627b957234c26ca7c99bf170935357b2fb3fb3cbdcbfb357e"
+            },
+            "spec": "qore.spec"
+          },
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.15-15.fc44.noarch.rpm": "dfee6f7a947deb607f8a51c6cfa4b992b15cc10db909a9e9e7e7aa0fb19433f6",
+            "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.15-15.fc44.noarch.rpm": "9eec4580c30715e8fd5ebb399efb68b3e8f58c804e7f5041df2a4999e9681172",
+            "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.15-15.fc44.noarch.rpm": "432820854344229725e27a456c566dbfc6ef839e67bf3ca0d641ca6861450699",
+            "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.15-15.fc44.noarch.rpm": "9739419596ba6b78fc983a2b1edba41bc7fb92dbc6395b2e14b262203e4d4bea",
+            "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.15-15.fc44.noarch.rpm": "5f5b290b82fc5aa52287246a5bfe5aafe73a0f90d06bef44bf63323a7d821415",
+            "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "a6a0fa60e11dd3cf45891e03bac156d5f79ae8be4aafde081260368e2a125af5",
+            "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "c2e0340cd1a32b11b4e19555051176eaefcff239ade2440d2c9376d0f462fe1a",
+            "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "6f18a0b824062a9f4a77c011f9c35f9fe72e727be46429628e3e69516f11c887",
+            "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "87c1f3b2e02a8691a113d8ba02e7a8d5ed4aa5d4b1f42656560a552eb27e55f6",
+            "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "5548b1dc449acb37ba15390c6d9b76ef29b14114cadbabbc4598c4f8035d92a6",
+            "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "559b69c6958afca83c19333724f0fc65e81d9a8b782d2e12595ada35fd4471c9",
+            "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "8f11644b4195a1506bed287479b37fbe3fb9ee0c9ec2252316b98b4689e5395c",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "10747480e8358c5a83fa1e57a390f44990f9f0e14114c3f18acb1f407cd56285",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "8632fad9742b588a69257ead7bbca1f3749c71d028855f519897e53ecf3420a1",
+            "rpmbuild/SRPMS/qore-3.0.0~git20261002.15-15.fc44.src.rpm": "82edf4fa0dc25c871ed47055ff8b88da16c24732a6c3f1a1dda8608884c44c58"
+          },
+          "sdk_image": "sha256:005e14a5056d890cd0bd604241091b911bbd5af4cd67bb967b7699ad4459bf0b",
+          "runtime_image": "sha256:c785b589f16457f7fb3ebf0e11e5b9d33a04b4fa97162c418585d96cd2c992c3",
+          "exit_code": 0
+        },
+        "build_sdk_image": "sha256:8bc0928f09d983c4fcbd7ed5b1b2a733a03bf088ba96ad5361aabdfa00feaf81",
+        "build": {
+          "schema": 1,
+          "image": "sha256:8bc0928f09d983c4fcbd7ed5b1b2a733a03bf088ba96ad5361aabdfa00feaf81",
+          "source": {
+            "schema": 1,
+            "commit": "c7ba6b020d76a463d047608eafee5218da0f3c97",
+            "source_date_epoch": 1790919428,
+            "name": "qore-mysql-module",
+            "version": "2.2",
+            "exclusions": [],
+            "sources": {
+              "qore-mysql-module-2.2.tar.xz": "5726248711fbef3ca9595e552684c51674d5be59a2c994bfc7ef89f17709e8d6",
+              "qore-mysql-module.spec": "496d66fe8c60379d3d069afb59b66506c30eb2ed9ae578758b91fe8846d49360"
+            },
+            "spec": "qore-mysql-module.spec"
+          },
+          "jobs": 4,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790919428",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/mysql-final-source-2:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/fedora-mysql-final-build-2:/work",
+            "sha256:8bc0928f09d983c4fcbd7ed5b1b2a733a03bf088ba96ad5361aabdfa00feaf81",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 4",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-mysql-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-mysql-module-doc-2.2-3.fc44.noarch.rpm": "dd6911a15065494076ef316bf23be09d553b8c4d227c38100c627f94cd23cb8f",
+            "rpmbuild/RPMS/x86_64/qore-mysql-module-2.2-3.fc44.x86_64.rpm": "e56470509bdceb2e7b113b2e451da33500c08234a670a39bc1c3a215ac6ccc2a",
+            "rpmbuild/RPMS/x86_64/qore-mysql-module-debuginfo-2.2-3.fc44.x86_64.rpm": "5119d305a3faed18f4d3b3cf5ec1fa41ced9e718d8257b6393afdbe32bbd0fcf",
+            "rpmbuild/RPMS/x86_64/qore-mysql-module-debugsource-2.2-3.fc44.x86_64.rpm": "21523c24162db79ba6bef4fb7b5545b8bd3e63bcae819873056109197ef2dd94",
+            "rpmbuild/SRPMS/qore-mysql-module-2.2-3.fc44.src.rpm": "eb21540eae67dd67dbcc005ce09a02adedffc9e9b63df9b2466b5d5d237c7f14"
+          }
+        },
+        "runtime_image": "sha256:7e3db3eb09a83d0d87c26d077426cf1b8c543dc31a436df47c6f50386b295974",
+        "sdk_image": "sha256:7c393291e0e5db41ca6f28b2f84b1360870383777603cf622bb6df15d8d5de69",
+        "exit_code": 0
+      },
+      "proj": {
+        "steps": {
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/fedora-proj-final-3-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-proj-final-3-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/fedora-proj-final-3-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-proj-final-3-sdk-tests.log"
+          }
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:293b712e529ae846d1b3df5e3393a23edc5135eba7e9f471a5f182c09b6ffc15",
+          "source": {
+            "schema": 1,
+            "commit": "fa13b2451d9fe4a747979071a672540643e2fc56",
+            "source_date_epoch": 1790919518,
+            "name": "qore-proj-module",
+            "version": "1.1.0",
+            "exclusions": [],
+            "sources": {
+              "qore-proj-module-1.1.0.tar.xz": "c9479de1670435cbeb3e44ab256ef2d41a928dedfa9a87addc1abc1c55aa26f3",
+              "qore-proj-module.spec": "73a158495bdb151e9f609d1fe4cb8b9173b4f19eb4b81be2649b28faf507b763"
+            },
+            "spec": "qore-proj-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790919518",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/proj-final-source-2:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/fedora-proj-final-build-2:/work",
+            "sha256:293b712e529ae846d1b3df5e3393a23edc5135eba7e9f471a5f182c09b6ffc15",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-proj-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-proj-module-doc-1.1.0-3.fc44.noarch.rpm": "495b5cd34bf102a2472ad75d3d6cd900fd5b3abfc85e0ac0440adec10e7b642e",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-1.1.0-3.fc44.x86_64.rpm": "0e793c5e79f2175646b0becbc191d9ce6c1b0b6faf0f1ed76dafb1b2b3f9d8b4",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-debuginfo-1.1.0-3.fc44.x86_64.rpm": "90c4007c791520469fdb4738f1da0345772aad2b2b4fb2386c584aa73e71023c",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-debugsource-1.1.0-3.fc44.x86_64.rpm": "bfa267171a2aaed5cd921965796baa6d77267640c75a71521a00fadf37092b2f",
+            "rpmbuild/SRPMS/qore-proj-module-1.1.0-3.fc44.src.rpm": "d00e1ab137e225ff7165b845be67455aa91eb0e6e320d627d8c6ea721e716c1c"
+          }
+        },
+        "phase": "complete",
+        "runtime_image": "sha256:9a6234cf210bde7b9e9255bc711682ba00c49424ec4c67252639d9a78af94267",
+        "sdk_image": "sha256:812e1b3ae2c2426f73b23c610fce454fb320fcf0858be5127176b55c1e5b8f10",
+        "exit_code": 0
+      }
+    },
+    "leap": {
+      "xmlsec": {
+        "steps": {
+          "build": {
+            "exit_code": 0,
+            "log": "results/leap-xmlsec-final-1-build.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/leap-xmlsec-final-1-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/leap-xmlsec-final-1-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/leap-xmlsec-final-1-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/leap-xmlsec-final-1-sdk-tests.log"
+          }
+        },
+        "phase": "complete",
+        "build": {
+          "schema": 1,
+          "image": "sha256:fee4de989aa012d7fded8f47b794d7967b606a2f6dcb5025c6f4bae1b95068f8",
+          "source": {
+            "schema": 1,
+            "commit": "811e22c44a96bd6517d4d1e75e48c84cea04ba78",
+            "source_date_epoch": 1790918803,
+            "name": "qore-xmlsec-module",
+            "version": "1.0.1",
+            "exclusions": [],
+            "sources": {
+              "qore-xmlsec-module-1.0.1.tar.xz": "25bcf0e5a041bd64d8e9839b4e1cc5129e79a9f95fb869c680084a4cd9b64193",
+              "qore-xmlsec-module.spec": "319f1e10426af015bed5bdc1e62bb0ec0eee8c5fad9270e7b57286ad92c908fb"
+            },
+            "spec": "qore-xmlsec-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790918803",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/xmlsec-final-source-1:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/leap-xmlsec-final-1:/work",
+            "sha256:fee4de989aa012d7fded8f47b794d7967b606a2f6dcb5025c6f4bae1b95068f8",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-xmlsec-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-xmlsec-module-doc-1.0.1-2.noarch.rpm": "18830478b4b983b1e623619d5a9d217f8e3146b38698f35c024ff50a6b5397e6",
+            "rpmbuild/RPMS/x86_64/qore-xmlsec-module-1.0.1-2.x86_64.rpm": "3f89ac83e99b766b6dd60f48e4f65889e034e45c79d3abbab1df3e5a60febce6",
+            "rpmbuild/RPMS/x86_64/qore-xmlsec-module-debuginfo-1.0.1-2.x86_64.rpm": "0d0cf645572f9e9a14c75c33d4286cbf55dd0c962c0ca972a13173f8990c8edb",
+            "rpmbuild/RPMS/x86_64/qore-xmlsec-module-debugsource-1.0.1-2.x86_64.rpm": "873f3982019df78f41008c193aa3e7ef5b08f014e7c3da218e3522e4dbe4b0e3",
+            "rpmbuild/SRPMS/qore-xmlsec-module-1.0.1-2.src.rpm": "4cbbb04e93bbfad833a03d1ea73d067435452e8bd994f372042274c464c296c8"
+          }
+        },
+        "runtime_image": "sha256:058e0dadc6f19c7ee306a5d9d4e1a9f0b3b83930708910bd0e6e664801cba95d",
+        "sdk_image": "sha256:3ddb7d868ff4071e0facdc2916d19e308aa98d97187e519a4724184fc740e8ab",
+        "exit_code": 0
+      },
+      "mysql": {
+        "steps": {
+          "build": {
+            "exit_code": 0,
+            "log": "results/leap-mysql-installed-final-2-build.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/leap-mysql-installed-final-2-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/leap-mysql-installed-final-2-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/leap-mysql-installed-final-2-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/leap-mysql-installed-final-2-sdk-tests.log"
+          }
+        },
+        "core_qualification": {
+          "source_build": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-15",
+          "steps": {
+            "sdk-install": {
+              "exit_code": 0,
+              "log": "results/leap-core-policy-15-sdk-install.log"
+            },
+            "sdk-tests": {
+              "exit_code": 0,
+              "log": "results/leap-core-policy-15-sdk-tests.log"
+            },
+            "runtime-install": {
+              "exit_code": 0,
+              "log": "results/leap-core-policy-15-runtime-install.log"
+            },
+            "runtime-tests": {
+              "exit_code": 0,
+              "log": "results/leap-core-policy-15-runtime-tests.log"
+            }
+          },
+          "source": {
+            "schema": 1,
+            "commit": "c95c7378da33cc4c68d266c48f409cd4b14108db",
+            "source_date_epoch": 1790911113,
+            "name": "qore",
+            "version": "3.0.0~git20261002.15",
+            "exclusions": [],
+            "sources": {
+              "qore-3.0.0~git20261002.15.tar.xz": "84ead538812b4ebdf12950eaef74f30d4a9a4991a954b6b42eb311b40b83723b",
+              "qore.spec": "6adbddb232bbee8627b957234c26ca7c99bf170935357b2fb3fb3cbdcbfb357e"
+            },
+            "spec": "qore.spec"
+          },
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.15-15.noarch.rpm": "55dbb2f35357215160c37680de7836caff9bf8a677055f02acdb4e3f9d5c80e4",
+            "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.15-15.noarch.rpm": "8fa1024eb67004cbec23975989dc1c5eb8b6545537a5a418cf71ea82a6e82093",
+            "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.15-15.noarch.rpm": "f87b163c1179c027a8e0bff6061a0975299103f2f132e7ef5bb5bf7c304b980c",
+            "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.15-15.noarch.rpm": "3b30da8d0a4ff2a429d8ae9ca9b1672e01d622e4d47f14d88a8636e1205e7601",
+            "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.15-15.noarch.rpm": "0b6b441f4003f4176650dba8b36dc28b18a3fba982a6329c5f7c196501e9addb",
+            "rpmbuild/RPMS/x86_64/libqore20-3.0.0~git20261002.15-15.x86_64.rpm": "5fdad7e82c625cbde8bec899fda23a6c48ceaf4843ac985086a219d0f0b23fa8",
+            "rpmbuild/RPMS/x86_64/libqore20-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "818f33d1e840f8318ad38ecb3195fcdfc59d0b2b870c52778a7ed58035a18b09",
+            "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.15-15.x86_64.rpm": "9f806b18716ad6deec71eb5c2678c936829af9fac703d2a95aafd51f38cb457a",
+            "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "9a9e0ec1a6f5f77df20659b3d31c3e15466394ba8c9d6e29c93a3090c664e987",
+            "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.15-15.x86_64.rpm": "7cd49da30ec06f18805a85b1f658660ce9d84c7d5d3d555e947608b8474107e4",
+            "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.15-15.x86_64.rpm": "ff7788dd27373e4317a69121b2512e2dab72d3116f9d307260337f6eaf3c9c89",
+            "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "c6f0218ba4bd9b126e065b1032cb49bf6d993ff2acaf979b0b9ab3b3540b1db0",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.15-15.x86_64.rpm": "041d41b480bc9677bd64702134d3d8d18871acfca9ec006b0d32daa06ce7a786",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "2583bd73d67c6f17ce561dcb5215a0abde82431715c4863cac286b946d890217",
+            "rpmbuild/SRPMS/qore-3.0.0~git20261002.15-15.src.rpm": "6a0fb2294794c810988b6ded0f0e3628b8beb0814a59f571ae5bdebc3f4eff79"
+          },
+          "sdk_image": "sha256:b5a2e03cb123ae277e58ffd792b60b6bb43134b444f0c5f8a9e513b7b8a44b12",
+          "runtime_image": "sha256:f8b671f49dbbf7edf0ff29aa2e146ef465d9a2ac4838e352133920f5c91b4a12",
+          "exit_code": 0
+        },
+        "build_sdk_image": "sha256:783118eff486170442c3f9edf394bb17ad4741d4e6e88a85acf0d91a8eaecdf2",
+        "build": {
+          "schema": 1,
+          "image": "sha256:783118eff486170442c3f9edf394bb17ad4741d4e6e88a85acf0d91a8eaecdf2",
+          "source": {
+            "schema": 1,
+            "commit": "c7ba6b020d76a463d047608eafee5218da0f3c97",
+            "source_date_epoch": 1790919428,
+            "name": "qore-mysql-module",
+            "version": "2.2",
+            "exclusions": [],
+            "sources": {
+              "qore-mysql-module-2.2.tar.xz": "5726248711fbef3ca9595e552684c51674d5be59a2c994bfc7ef89f17709e8d6",
+              "qore-mysql-module.spec": "496d66fe8c60379d3d069afb59b66506c30eb2ed9ae578758b91fe8846d49360"
+            },
+            "spec": "qore-mysql-module.spec"
+          },
+          "jobs": 4,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790919428",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/mysql-final-source-2:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/leap-mysql-final-build-2:/work",
+            "sha256:783118eff486170442c3f9edf394bb17ad4741d4e6e88a85acf0d91a8eaecdf2",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 4",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-mysql-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-mysql-module-doc-2.2-3.noarch.rpm": "18eed27915e15a76728cf80aa55f3a344035a76330cec55d16868530740c4ba5",
+            "rpmbuild/RPMS/x86_64/qore-mysql-module-2.2-3.x86_64.rpm": "3114d3ae20a8d8d206b8b6ac95dbf2ac6039d51587ab78040dd19e6072154307",
+            "rpmbuild/RPMS/x86_64/qore-mysql-module-debuginfo-2.2-3.x86_64.rpm": "8780cf4fab86aaa79c4687bc2c4cb16e1a300b3bbeb3cd6e0f84259e9652a136",
+            "rpmbuild/RPMS/x86_64/qore-mysql-module-debugsource-2.2-3.x86_64.rpm": "058b1c82d32aab67364d41e60eb5783a6e1746887bd02d8f2e11f44a71eb44f2",
+            "rpmbuild/SRPMS/qore-mysql-module-2.2-3.src.rpm": "b51a52c895426a589764ad45ec6d048ba8b16e7f3215458fddaadcfeae8fbcbf"
+          }
+        },
+        "runtime_image": "sha256:6fc039d358b428c097eb5785163b9a272747ec0c6f974002a4f9fdfce62211f4",
+        "sdk_image": "sha256:91da01f76ffeade27a98d56e245b86cb8b4eadb2fb74d0528daf259d2b025fff",
+        "exit_code": 0
+      },
+      "proj": {
+        "steps": {
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/leap-proj-final-3-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/leap-proj-final-3-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/leap-proj-final-3-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/leap-proj-final-3-sdk-tests.log"
+          }
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:56d7ca7e23a9518d0ce92c7a4738cca2d1710f5613595f9c380ca9ab73143135",
+          "source": {
+            "schema": 1,
+            "commit": "fa13b2451d9fe4a747979071a672540643e2fc56",
+            "source_date_epoch": 1790919518,
+            "name": "qore-proj-module",
+            "version": "1.1.0",
+            "exclusions": [],
+            "sources": {
+              "qore-proj-module-1.1.0.tar.xz": "c9479de1670435cbeb3e44ab256ef2d41a928dedfa9a87addc1abc1c55aa26f3",
+              "qore-proj-module.spec": "73a158495bdb151e9f609d1fe4cb8b9173b4f19eb4b81be2649b28faf507b763"
+            },
+            "spec": "qore-proj-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790919518",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/proj-final-source-2:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/leap-proj-final-build-2:/work",
+            "sha256:56d7ca7e23a9518d0ce92c7a4738cca2d1710f5613595f9c380ca9ab73143135",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-proj-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-proj-module-doc-1.1.0-3.noarch.rpm": "4b1dad7dd897c927eb2599a77a0c1f5a9d4b2a17c9e35da1613ebceb9d110253",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-1.1.0-3.x86_64.rpm": "c0ccee6d5bc63c5c57fc6e620b1f0e2c175c13b19e4bfdc2a1dbd83b67139c66",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-debuginfo-1.1.0-3.x86_64.rpm": "26b85806decd2d284ae28597df4c405923d31f165a7bcf59f7c873d28c6bbecd",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-debugsource-1.1.0-3.x86_64.rpm": "ad3a0014948b08855d769833b471864ab9f8875445268b19675d5f3a95840a34",
+            "rpmbuild/SRPMS/qore-proj-module-1.1.0-3.src.rpm": "2c09799f71bd7c4e2b158849bc96bd6a88f58793a92bea188cfc0afce15fc27f"
+          }
+        },
+        "phase": "complete",
+        "runtime_image": "sha256:95d47a295774a523b0b7e61eaaec1e6e70008951f825b082ffaaf24fca1370ef",
+        "sdk_image": "sha256:5d7a7df0177161669ed4c4031a7eda34c2cd0b92d2f9e931362dc4e604b9b41c",
+        "exit_code": 0
+      }
+    },
+    "el10": {
+      "xmlsec": {
+        "steps": {
+          "build": {
+            "exit_code": 0,
+            "log": "results/el10-xmlsec-final-1-build.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/el10-xmlsec-final-1-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/el10-xmlsec-final-1-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/el10-xmlsec-final-1-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/el10-xmlsec-final-1-sdk-tests.log"
+          }
+        },
+        "phase": "complete",
+        "build": {
+          "schema": 1,
+          "image": "sha256:010b355ea414c5fa6888e49683afd3da49842d2060b6ce24644152604606e2f5",
+          "source": {
+            "schema": 1,
+            "commit": "811e22c44a96bd6517d4d1e75e48c84cea04ba78",
+            "source_date_epoch": 1790918803,
+            "name": "qore-xmlsec-module",
+            "version": "1.0.1",
+            "exclusions": [],
+            "sources": {
+              "qore-xmlsec-module-1.0.1.tar.xz": "25bcf0e5a041bd64d8e9839b4e1cc5129e79a9f95fb869c680084a4cd9b64193",
+              "qore-xmlsec-module.spec": "319f1e10426af015bed5bdc1e62bb0ec0eee8c5fad9270e7b57286ad92c908fb"
+            },
+            "spec": "qore-xmlsec-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790918803",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/xmlsec-final-source-1:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/el10-xmlsec-final-1:/work",
+            "sha256:010b355ea414c5fa6888e49683afd3da49842d2060b6ce24644152604606e2f5",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-xmlsec-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-xmlsec-module-doc-1.0.1-2.el10.noarch.rpm": "0304739a571003a45e9fe7d600a22b0abe7b7fb346d5ad3f591050dc68834d90",
+            "rpmbuild/RPMS/x86_64/qore-xmlsec-module-1.0.1-2.el10.x86_64.rpm": "7f2daa4ec93e1c52ca303e71826effe0408c51e23b0a72e165dee92f62a91013",
+            "rpmbuild/RPMS/x86_64/qore-xmlsec-module-debuginfo-1.0.1-2.el10.x86_64.rpm": "c326a5973df39a2b8c214f0a3f9a3a598674230de170826c1f66ffac06a73d41",
+            "rpmbuild/RPMS/x86_64/qore-xmlsec-module-debugsource-1.0.1-2.el10.x86_64.rpm": "c2e1277fa8cb3613cddbcb7e46699466af9eaf248d2c465ea59358b03a71dd1d",
+            "rpmbuild/SRPMS/qore-xmlsec-module-1.0.1-2.el10.src.rpm": "51f486d1f6e086ba0059fc0ec676bad180c0b9c31c5765dcbe7dca0156301ccc"
+          }
+        },
+        "runtime_image": "sha256:94fe3bcac0049d8ceeec8c43fd72c289f5c6651394f9a5afe9f078281b695f9d",
+        "sdk_image": "sha256:5d76f688edaecba669aff294891efb9a79431f5dd212bf1300bdb022f011ce17",
+        "exit_code": 0
+      },
+      "mysql": {
+        "steps": {
+          "build": {
+            "exit_code": 0,
+            "log": "results/el10-mysql-installed-final-2-build.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/el10-mysql-installed-final-2-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/el10-mysql-installed-final-2-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/el10-mysql-installed-final-2-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/el10-mysql-installed-final-2-sdk-tests.log"
+          }
+        },
+        "core_qualification": {
+          "source_build": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-15",
+          "steps": {
+            "sdk-install": {
+              "exit_code": 0,
+              "log": "results/el10-core-policy-15-sdk-install.log"
+            },
+            "sdk-tests": {
+              "exit_code": 0,
+              "log": "results/el10-core-policy-15-sdk-tests.log"
+            },
+            "runtime-install": {
+              "exit_code": 0,
+              "log": "results/el10-core-policy-15-runtime-install.log"
+            },
+            "runtime-tests": {
+              "exit_code": 0,
+              "log": "results/el10-core-policy-15-runtime-tests.log"
+            }
+          },
+          "source": {
+            "schema": 1,
+            "commit": "c95c7378da33cc4c68d266c48f409cd4b14108db",
+            "source_date_epoch": 1790911113,
+            "name": "qore",
+            "version": "3.0.0~git20261002.15",
+            "exclusions": [],
+            "sources": {
+              "qore-3.0.0~git20261002.15.tar.xz": "84ead538812b4ebdf12950eaef74f30d4a9a4991a954b6b42eb311b40b83723b",
+              "qore.spec": "6adbddb232bbee8627b957234c26ca7c99bf170935357b2fb3fb3cbdcbfb357e"
+            },
+            "spec": "qore.spec"
+          },
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.15-15.el10.noarch.rpm": "8c576e1267ac7dbd26eb2ee1e1fe50cf3a565371e338a41c7e695cc575036ba6",
+            "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.15-15.el10.noarch.rpm": "debc893ddbcef759752c30f9a80b19a27eaca8cdad2f5eb5296b599e0227100a",
+            "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.15-15.el10.noarch.rpm": "8b669398cf82a5eb2027dc822e928fdd34b40ed6f49303d063229eb44b19cd1a",
+            "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.15-15.el10.noarch.rpm": "e015ba63c3fa3a0503142f5e47b262468f090d8dd842e55b99e05e8b15cc4e12",
+            "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.15-15.el10.noarch.rpm": "2f75fc3fe70b42cba1f560cda65e6d4957c4125b167151d400ecb0d98ff62157",
+            "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.15-15.el10.x86_64.rpm": "831a186675735e366fc1be51f81d401f1fc29a6dd0c77f33ae4bdb8457d1406a",
+            "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "9a4681a55acca5438498de4717eeee17a5f17c12f80e3fb710ee227c9cfa4970",
+            "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.15-15.el10.x86_64.rpm": "de815609d6c1826c91c04ef00880d094ba5af2ae1d7156a4caf35efbb9c90074",
+            "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "86765aba7928f55fc56957f79ea3a563e3761828a7dd17b635c5b7d55ff97382",
+            "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.15-15.el10.x86_64.rpm": "e4dff7e464309a0575d5e4ac2c120d42b8bf0ad5aa799bdd0938a85732d00dac",
+            "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.15-15.el10.x86_64.rpm": "122f57a948c13242fa35e3b7efcde51fc8b2bd1da86f031b0477489487673fcb",
+            "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "3541b39da38dba67d594dba615c1d0bb22d75473f7031e9291fa5adf057286f4",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.15-15.el10.x86_64.rpm": "e3937674c45a826fc3a5d5aaa353561b56e27ca96100af78ee557af0d9d93cc8",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "271b169960a34ad395515d65019d20fc83d0c7debe89bc27a71a88f5f80ffdfc",
+            "rpmbuild/SRPMS/qore-3.0.0~git20261002.15-15.el10.src.rpm": "69de1b8b48b0f918b3eb0f4b2b7099635cfe052e4fd9ea7aa69f032a750c2fd0"
+          },
+          "sdk_image": "sha256:a4babfcc82227fb71574aec479c85a75ddeebedb9f7d51a8157556e47843347d",
+          "runtime_image": "sha256:dd83d34f9e33c45a0bf7479de106759e86a6a4514f32d264a7648e2999b3168f",
+          "exit_code": 0
+        },
+        "build_sdk_image": "sha256:b176adf24fc3cbf47949df73af6286b987ab012b256ea45c014d558ec6ead47b",
+        "build": {
+          "schema": 1,
+          "image": "sha256:b176adf24fc3cbf47949df73af6286b987ab012b256ea45c014d558ec6ead47b",
+          "source": {
+            "schema": 1,
+            "commit": "c7ba6b020d76a463d047608eafee5218da0f3c97",
+            "source_date_epoch": 1790919428,
+            "name": "qore-mysql-module",
+            "version": "2.2",
+            "exclusions": [],
+            "sources": {
+              "qore-mysql-module-2.2.tar.xz": "5726248711fbef3ca9595e552684c51674d5be59a2c994bfc7ef89f17709e8d6",
+              "qore-mysql-module.spec": "496d66fe8c60379d3d069afb59b66506c30eb2ed9ae578758b91fe8846d49360"
+            },
+            "spec": "qore-mysql-module.spec"
+          },
+          "jobs": 4,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790919428",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/mysql-final-source-2:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/el10-mysql-final-build-2:/work",
+            "sha256:b176adf24fc3cbf47949df73af6286b987ab012b256ea45c014d558ec6ead47b",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 4",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-mysql-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-mysql-module-doc-2.2-3.el10.noarch.rpm": "4b1563ac453da3348651921a99fc970972e3fe0b2f9d8cad5f7858d4bdc7bc01",
+            "rpmbuild/RPMS/x86_64/qore-mysql-module-2.2-3.el10.x86_64.rpm": "b5f91cb1c8f629d92c2d660bc4290b7a542837555e9a97258469271c4ab448d1",
+            "rpmbuild/RPMS/x86_64/qore-mysql-module-debuginfo-2.2-3.el10.x86_64.rpm": "78d143cc664b5b139908d6b785f27ea99faee1d3a03dee6e1905b26867757792",
+            "rpmbuild/RPMS/x86_64/qore-mysql-module-debugsource-2.2-3.el10.x86_64.rpm": "bc923b016cba271d4ee00233455dd5004eddc78f454b6f8bf06d02c0001484fd",
+            "rpmbuild/SRPMS/qore-mysql-module-2.2-3.el10.src.rpm": "904fe2355899b12a507608f0b538d22a5fd3bacdf69823854fc897d1087b10f3"
+          }
+        },
+        "runtime_image": "sha256:2529e9fcd147d1486d3ed269d3f33b63ca552de09654202c18087030209b20eb",
+        "sdk_image": "sha256:5c2a95fa1f9215ff8ee5ba4133b9a99849130518f0e5849facfae9878783361d",
+        "exit_code": 0
+      },
+      "proj": {
+        "steps": {
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/el10-proj-final-3-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/el10-proj-final-3-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/el10-proj-final-3-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/el10-proj-final-3-sdk-tests.log"
+          }
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:141dc2527d7528224ff56e2a5371e504a5a0b9bf19dafc1f22930bbbacdd3bdd",
+          "source": {
+            "schema": 1,
+            "commit": "fa13b2451d9fe4a747979071a672540643e2fc56",
+            "source_date_epoch": 1790919518,
+            "name": "qore-proj-module",
+            "version": "1.1.0",
+            "exclusions": [],
+            "sources": {
+              "qore-proj-module-1.1.0.tar.xz": "c9479de1670435cbeb3e44ab256ef2d41a928dedfa9a87addc1abc1c55aa26f3",
+              "qore-proj-module.spec": "73a158495bdb151e9f609d1fe4cb8b9173b4f19eb4b81be2649b28faf507b763"
+            },
+            "spec": "qore-proj-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790919518",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/proj-final-source-2:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/el10-proj-final-build-2:/work",
+            "sha256:141dc2527d7528224ff56e2a5371e504a5a0b9bf19dafc1f22930bbbacdd3bdd",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-proj-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-proj-module-doc-1.1.0-3.el10.noarch.rpm": "25e10756ae88789410cc0c06379e9ce21a22c201296f72ded6dded4295fce77b",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-1.1.0-3.el10.x86_64.rpm": "ed7013a44049bee161fb4db29261a71f5ff642f926b3a44490a32800e3c86c05",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-debuginfo-1.1.0-3.el10.x86_64.rpm": "33976e02afcf3aabe05062c6ad89e760b90aa862ad85b902c6adc27fdfc3b949",
+            "rpmbuild/RPMS/x86_64/qore-proj-module-debugsource-1.1.0-3.el10.x86_64.rpm": "f33223323877b7fafd57d54c7ce230444b66c54df3374a57f0498f4b3bc10b55",
+            "rpmbuild/SRPMS/qore-proj-module-1.1.0-3.el10.src.rpm": "9a5b383c70c28f52df2911d691920add5c6e71f9aa3d278a1456bdcbf5eb3df0"
+          }
+        },
+        "phase": "complete",
+        "runtime_image": "sha256:dc8044f3fa811107094eef40df8bd733817c42831e3bd35824b7df2925230e9f",
+        "sdk_image": "sha256:ab5111f0899a7d366551cea17ba43555b2361da4868b53ca6a4604df461d7afc",
+        "exit_code": 0
+      }
+    }
+  },
+  "obs_uploads": {
+    "qore-xmlsec-module": {
+      "source_commit": "811e22c44a96bd6517d4d1e75e48c84cea04ba78",
+      "revision": "1",
+      "srcmd5": "8a62f19de959dc8ca78a4c49295d5882",
+      "verified_files": {
+        "qore-xmlsec-module-1.0.1.tar.xz": "546b37998906cc3e279e302a2c8d094f",
+        "qore-xmlsec-module.spec": "51b85a75b8819d36b58a64c90cc52aa6",
+        "source-manifest.json": "20bb28f9ff4bde82a78dbc367364c731"
+      }
+    },
+    "qore-mysql-module": {
+      "source_commit": "c7ba6b020d76a463d047608eafee5218da0f3c97",
+      "revision": "2",
+      "srcmd5": "8ec68f95a9a4c934ee9a88f62ef2a8b4",
+      "verified_files": {
+        "qore-mysql-module-2.2.tar.xz": "f556387d3fa2b18319520bb611bc201b",
+        "qore-mysql-module.spec": "912200ab23c2970524a79eecec60585d",
+        "source-manifest.json": "8270c60280a9b7983a09faa53f54d01f"
+      }
+    },
+    "qore-proj-module": {
+      "source_commit": "fa13b2451d9fe4a747979071a672540643e2fc56",
+      "revision": "5",
+      "srcmd5": "df39c4e78ee55c0966dc15b6b000fd72",
+      "verified_files": {
+        "qore-proj-module-1.1.0.tar.xz": "963695369bd5f638b301253e36ac036d",
+        "qore-proj-module.spec": "4ea26165bd59d33dfc82b6194c905612",
+        "source-manifest.json": "0f26e7cfeeacdc044680fe57472d3574"
+      }
+    },
+    "cyrus-sasl-digestmd5": {
+      "source_commit": "d327bec61e187bb82413a6bfa106326a6105b9a1",
+      "revision": "2",
+      "srcmd5": "ef67d284e073d449a39c424c44e3e72f",
+      "verified_files": {
+        "cyrus-sasl-2.1.28.tar.gz": "6f228a692516f5318a64505b46966cfa",
+        "cyrus-sasl-digestmd5-build.patch": "c2e1f7d47c3825fd2a406200f654c159",
+        "cyrus-sasl-digestmd5-openssl3.patch": "71edbacb9f6fe6ba398a5ce457716e84",
+        "cyrus-sasl-digestmd5-test.c": "238199b6b3f2f35bb1d6246b91fe1ec2",
+        "cyrus-sasl-digestmd5.rst": "40ed4a9340efc8aeb6b523642b567201",
+        "cyrus-sasl-digestmd5.spec": "a41f5d16a623d26bc2abbaed772622ce",
+        "source-manifest.json": "1414dd251c10228ef2378ad82c158444"
+      }
+    }
+  },
+  "limitations": [
+    "Fedora aarch64 core HTTPS proxy timeout remains unresolved.",
+    "EL10 core rebuild against EPEL 10.2 must finish before downstream resolution.",
+    "Native ARM installed tests and remaining module/release gates are incomplete."
+  ],
+  "cyrus_build": {
+    "schema": 1,
+    "image": "sha256:c8403136a470b4a557f0a13f09114d8675b86252eaad8f4859fe22a2bafbedcc",
+    "source": {
+      "schema": 1,
+      "name": "cyrus-sasl-digestmd5",
+      "version": "2.1.28",
+      "commit": "d327bec61e187bb82413a6bfa106326a6105b9a1",
+      "source_date_epoch": 1790919431,
+      "spec": "cyrus-sasl-digestmd5.spec",
+      "upstream": {
+        "url": "https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-2.1.28/cyrus-sasl-2.1.28.tar.gz",
+        "sha256": "7ccfc6abd01ed67c1a0924b353e526f1b766b21f42d4562ee635a8ebfc5bb38c"
+      },
+      "sources": {
+        "cyrus-sasl-2.1.28.tar.gz": "7ccfc6abd01ed67c1a0924b353e526f1b766b21f42d4562ee635a8ebfc5bb38c",
+        "cyrus-sasl-digestmd5-build.patch": "4617deefb9e39acf5616e76cad4c523ca6c694b2b2edb292ae7a185c29ee8d72",
+        "cyrus-sasl-digestmd5-openssl3.patch": "12e288b6abc763867e4a176e4bf46ce11e0491d61c353ad567def3181b719628",
+        "cyrus-sasl-digestmd5-test.c": "88e4ee72d8850c292367972fbb17da1871272004331ff1e4cb2756bc17c5db58",
+        "cyrus-sasl-digestmd5.rst": "305fd24e2a84c8d7fbd79fe22c654c8fa815b82a99f38dd440a47e1aa5f82736",
+        "cyrus-sasl-digestmd5.spec": "e1d99044d535dc2d992ee4df2e7ed0f95aa2dd4d1dd38ecfa6d9f525dfa4e9df"
+      }
+    },
+    "jobs": 2,
+    "network": "none",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "--hostname",
+      "qore-rpm-builder",
+      "--user",
+      "1019:100",
+      "-e",
+      "HOME=/work/home",
+      "-e",
+      "SOURCE_DATE_EPOCH=1790919431",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/cyrus-sasl-digestmd5-final-2:/sources:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/leap-cyrus-sasl-digestmd5-final-2:/work",
+      "sha256:c8403136a470b4a557f0a13f09114d8675b86252eaad8f4859fe22a2bafbedcc",
+      "sh",
+      "-c",
+      "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+      "build-local",
+      "-ba",
+      "--define",
+      "_topdir /work/rpmbuild",
+      "--define",
+      "_sourcedir /sources",
+      "--define",
+      "_smp_build_ncpus 2",
+      "--define",
+      "_buildhost qore-rpm-builder",
+      "/sources/cyrus-sasl-digestmd5.spec"
+    ],
+    "source_only": false,
+    "exit_code": 0,
+    "artifacts": {
+      "rpmbuild/RPMS/x86_64/cyrus-sasl-digestmd5-2.1.28-160000.3.3.qore.x86_64.rpm": "e874fcf6bf93adafa5af082c7494a396fc86fb85a8c602e5d1738560377c46ee",
+      "rpmbuild/RPMS/x86_64/cyrus-sasl-digestmd5-debuginfo-2.1.28-160000.3.3.qore.x86_64.rpm": "6690ec6afdf85ecc9fc7083db729916080c495115033e51c40588482d5c4f96b",
+      "rpmbuild/RPMS/x86_64/cyrus-sasl-digestmd5-debugsource-2.1.28-160000.3.3.qore.x86_64.rpm": "1c058e6098aa43a93b17317c62d91b68ec69167fd35d2cf4ccf1cd68b52c08fe",
+      "rpmbuild/SRPMS/cyrus-sasl-digestmd5-2.1.28-160000.3.3.qore.src.rpm": "28aa051f6af434e31afdcd25f4f06163d76abc261e2f8b46692bcd46c74cfa47"
+    }
+  },
+  "cyrus_installed": {
+    "exit_code": 0,
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/leap-cyrus-sasl-digestmd5-final-2/rpmbuild/RPMS/x86_64:/rpms:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/leap-openldap-installed-final-1/qore-openldap-module-2.0:/source:ro",
+      "sha256:c618b2cdaa70cbdd5fda983c32a3dd1ec8cf285d3291c8ca143f7a0864259da0",
+      "sh",
+      "-c",
+      "set -eu\nrpm -q cyrus-sasl-digestmd5 --qf '%{EPOCHNUM}:%{VERSION}-%{RELEASE}\\n'\nrpm -U /rpms/cyrus-sasl-digestmd5-2.1.28-160000.3.3.qore.x86_64.rpm\ntest \"$(rpm -q cyrus-sasl-digestmd5 --qf '%{EPOCHNUM}')\" = 1\nrpm -ql cyrus-sasl-digestmd5 | grep -Fx /usr/lib64/sasl2\nrpm -V cyrus-sasl-digestmd5\nsu -s /bin/sh nobody -c 'python3 -B -W error /source/rpm/test_fixture.py -v && python3 -B -W error /source/rpm/run-tests.py --installed'\n"
+    ]
+  }
+}

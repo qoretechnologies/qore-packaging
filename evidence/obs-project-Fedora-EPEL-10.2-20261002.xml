@@ -1,0 +1,59 @@
+<project name="Fedora:EPEL:10.2">
+  <title>Fedora EPEL 10.2</title>
+  <description>Fedora EPEL 10.2</description>
+  <person userid="adrianSuSE" role="maintainer"/>
+  <build>
+    <disable/>
+  </build>
+  <publish>
+    <disable/>
+  </publish>
+  <debuginfo>
+    <disable/>
+  </debuginfo>
+  <repository name="stream">
+    <path project="Fedora:EPEL:10.2" repository="next"/>
+    <path project="Fedora:EPEL:10.2" repository="standard"/>
+    <path project="CentOS:CentOS-10:Stream" repository="standard"/>
+    <arch>x86_64</arch>
+    <arch>aarch64</arch>
+    <arch>ppc64le</arch>
+    <arch>s390x</arch>
+  </repository>
+  <repository name="standard">
+    <download arch="aarch64" url="https://mirror.netzwerge.de/epel/10.2/Everything/aarch64" repotype="rpmmd">
+      <master url="https://dl.fedoraproject.org/pub/epel/10.2/Everything/aarch64/" sslfingerprint="sha256:b4667491065fe2850316e7fff012ac7777a030a4277ec7d1163cb52706a9cfd0"/>
+    </download>
+    <download arch="s390x" url="https://mirror.netzwerge.de/epel/10.2/Everything/s390x" repotype="rpmmd">
+      <master url="https://dl.fedoraproject.org/pub/epel/10.2/Everything/s390x/" sslfingerprint="sha256:b4667491065fe2850316e7fff012ac7777a030a4277ec7d1163cb52706a9cfd0"/>
+    </download>
+    <download arch="ppc64le" url="https://mirror.netzwerge.de/epel/10.2/Everything/ppc64le" repotype="rpmmd">
+      <master url="https://dl.fedoraproject.org/pub/epel/10.2/Everything/ppc64le/" sslfingerprint="sha256:b4667491065fe2850316e7fff012ac7777a030a4277ec7d1163cb52706a9cfd0"/>
+    </download>
+    <download arch="x86_64" url="https://mirror.netzwerge.de/epel/10.2/Everything/x86_64" repotype="rpmmd">
+      <master url="https://dl.fedoraproject.org/pub/epel/10.2/Everything/x86_64/" sslfingerprint="sha256:b4667491065fe2850316e7fff012ac7777a030a4277ec7d1163cb52706a9cfd0"/>
+    </download>
+    <arch>x86_64</arch>
+    <arch>aarch64</arch>
+    <arch>ppc64le</arch>
+    <arch>s390x</arch>
+  </repository>
+  <repository name="next">
+    <download arch="aarch64" url="https://mirror.netzwerge.de/epel/next/10.2/Everything/aarch64" repotype="rpmmd">
+      <master url="https://dl.fedoraproject.org/pub/epel/next/10.2/Everything/aarch64/" sslfingerprint="sha256:b4667491065fe2850316e7fff012ac7777a030a4277ec7d1163cb52706a9cfd0"/>
+    </download>
+    <download arch="s390x" url="https://mirror.netzwerge.de/epel/next/10.2/Everything/s390x" repotype="rpmmd">
+      <master url="https://dl.fedoraproject.org/pub/epel/next/10.2/Everything/s390x/" sslfingerprint="sha256:b4667491065fe2850316e7fff012ac7777a030a4277ec7d1163cb52706a9cfd0"/>
+    </download>
+    <download arch="ppc64le" url="https://mirror.netzwerge.de/epel/next/10.2/Everything/ppc64le" repotype="rpmmd">
+      <master url="https://dl.fedoraproject.org/pub/epel/next/10.2/Everything/ppc64le/" sslfingerprint="sha256:b4667491065fe2850316e7fff012ac7777a030a4277ec7d1163cb52706a9cfd0"/>
+    </download>
+    <download arch="x86_64" url="https://mirror.netzwerge.de/epel/next/10.2/Everything/x86_64" repotype="rpmmd">
+      <master url="https://dl.fedoraproject.org/pub/epel/next/10.2/Everything/x86_64/" sslfingerprint="sha256:b4667491065fe2850316e7fff012ac7777a030a4277ec7d1163cb52706a9cfd0"/>
+    </download>
+    <arch>x86_64</arch>
+    <arch>aarch64</arch>
+    <arch>ppc64le</arch>
+    <arch>s390x</arch>
+  </repository>
+</project>
