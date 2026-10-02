@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 """Build a verified source bundle offline in an immutable container image."""
 import argparse
+from contextlib import contextmanager
 import hashlib
 import importlib.util
 import json
@@ -11,6 +12,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import uuid
 
 loader = importlib.util.spec_from_file_location("qore_packaging", Path(__file__).with_name("packaging.py"))
 packaging = importlib.util.module_from_spec(loader)
@@ -39,10 +41,40 @@ def verify_bundle(directory):
     return manifest
 
 
-def build(source, image, output, jobs=2, engine="docker", source_only=False):
+@contextmanager
+def build_network(engine, internal_interface=False):
+    """Provide an optional non-loopback interface without host/external routing."""
+    if not internal_interface:
+        yield "none", None
+        return
+    if engine != "docker":
+        raise ValueError("The isolated internal interface requires Docker")
+    name = "qore-rpm-isolated-" + uuid.uuid4().hex
+    options = {"com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+               "com.docker.network.bridge.gateway_mode_ipv6": "isolated"}
+    command = [engine, "network", "create", "--driver", "bridge", "--internal"]
+    for key, value in options.items():
+        command.extend(["--opt", key + "=" + value])
+    created = subprocess.check_output([*command, name], text=True).strip()
+    try:
+        if not re.fullmatch(r"[a-f0-9]{64}", created):
+            raise ValueError("Expected an immutable network ID")
+        info = json.loads(subprocess.check_output([engine, "network", "inspect", created], text=True))[0]
+        if (info.get("Id") != created or info.get("Name") != name or info.get("Driver") != "bridge"
+                or info.get("Internal") is not True or info.get("Containers")
+                or any(info.get("Options", {}).get(k) != v for k, v in options.items())):
+            raise ValueError("Build network is not an empty isolated internal bridge")
+        yield created, info
+    finally:
+        subprocess.run([engine, "network", "rm", name], check=True, stdout=subprocess.DEVNULL)
+
+
+def build(source, image, output, jobs=2, engine="docker", source_only=False, internal_interface=False):
     manifest = verify_bundle(source)
     if jobs < 1 or jobs > 16:
         raise ValueError("Use between 1 and 16 build jobs")
+    if internal_interface and engine != "docker":
+        raise ValueError("The isolated internal interface requires Docker")
     source, output = Path(source).resolve(), Path(output).resolve()
     if output.exists():
         raise ValueError("Use a new build output directory")
@@ -69,9 +101,14 @@ exec rpmbuild "$@"
                "/sources/" + manifest["spec"]]
     record = {"schema": 1, "image": image_id, "source": manifest, "jobs": jobs,
               "network": "none", "command": command, "source_only": source_only}
-    (output / "build.json").write_text(json.dumps(record, indent=2) + "\n")
-    with (output / "build.log").open("w") as log:
-        result = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT)
+    with build_network(engine, internal_interface) as (network, network_info):
+        command[command.index("--network") + 1] = network
+        record["network"] = "isolated-bridge" if internal_interface else "none"
+        if network_info is not None:
+            record["network_info"] = network_info
+        (output / "build.json").write_text(json.dumps(record, indent=2) + "\n")
+        with (output / "build.log").open("w") as log:
+            result = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT)
     record["exit_code"] = result.returncode
     record["artifacts"] = {}
     for path in sorted(output.rglob("*.rpm")):
@@ -81,11 +118,14 @@ exec rpmbuild "$@"
     return result.returncode
 
 
-def launch_background(source, image, output, jobs=2, engine="docker", source_only=False):
+def launch_background(source, image, output, jobs=2, engine="docker", source_only=False,
+                      internal_interface=False):
     """Keep the driver and its completion record alive across terminal closure."""
     verify_bundle(source)
     if jobs < 1 or jobs > 16:
         raise ValueError("Use between 1 and 16 build jobs")
+    if internal_interface and engine != "docker":
+        raise ValueError("The isolated internal interface requires Docker")
     source, output = Path(source).resolve(), Path(output).resolve()
     if output.exists():
         raise ValueError("Use a new build output directory")
@@ -97,6 +137,8 @@ def launch_background(source, image, output, jobs=2, engine="docker", source_onl
                "--image", image_id, "--output", str(output), "--jobs", str(jobs), "--engine", engine]
     if source_only:
         command.append("--source-only")
+    if internal_interface:
+        command.append("--internal-interface")
     output.parent.mkdir(parents=True, exist_ok=True)
     driver_log = output.with_name(output.name + "-driver.log")
     # Exclusive creation prevents launching a second driver for this output.
@@ -120,14 +162,17 @@ def main():
     parser.add_argument("--jobs", type=int, default=2)
     parser.add_argument("--engine", choices=("docker", "podman"), default="docker")
     parser.add_argument("--source-only", action="store_true")
+    parser.add_argument("--internal-interface", action="store_true",
+                        help="Docker only: private internal bridge for tests requiring a non-loopback interface")
     parser.add_argument("--background", action="store_true",
                         help="launch a persistent driver; read build.json for the final result")
     args = parser.parse_args()
     if args.background:
         print(json.dumps(launch_background(args.source, args.image, args.output, args.jobs,
-                                           args.engine, args.source_only), indent=2))
+                                           args.engine, args.source_only, args.internal_interface), indent=2))
         return
-    sys.exit(build(args.source, args.image, args.output, args.jobs, args.engine, args.source_only))
+    sys.exit(build(args.source, args.image, args.output, args.jobs, args.engine, args.source_only,
+                   args.internal_interface))
 
 
 if __name__ == "__main__":

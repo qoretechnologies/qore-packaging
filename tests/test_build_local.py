@@ -8,6 +8,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 import unittest
+from types import SimpleNamespace
 from unittest.mock import patch
 
 loader = importlib.util.spec_from_file_location("build_local", Path(__file__).resolve().parents[1] / "tools/build-local.py")
@@ -102,13 +103,15 @@ class BundleTest(unittest.TestCase):
         output = self.root / "background"
         with patch.object(builder.subprocess, "check_output", return_value=json.dumps([{"Id": image_id}])), \
              patch.object(builder.os, "posix_spawn", return_value=12345) as start:
-            result = builder.launch_background(self.root, "mutable-tag", output, source_only=True)
+            result = builder.launch_background(self.root, "mutable-tag", output, source_only=True,
+                                               internal_interface=True)
             command = start.call_args.args[1]
             options = start.call_args.kwargs
             self.assertIn(image_id, command)
             self.assertNotIn("mutable-tag", command)
             self.assertNotIn("--background", command)
             self.assertIn("--source-only", command)
+            self.assertIn("--internal-interface", command)
             self.assertTrue(options["setsid"])
             actions = options["file_actions"]
             self.assertEqual(actions[0], (os.POSIX_SPAWN_OPEN, 0, os.devnull, os.O_RDONLY, 0))
@@ -164,3 +167,82 @@ else:
         self.assertEqual(record["artifacts"], {"probe.rpm": hashlib.sha256(b"artifact").hexdigest()})
         self.assertEqual((output / "build.log").read_text(), "offline build completed\n")
         self.assertEqual(Path(result["driver_log"]).read_text(), "")
+
+
+class IsolatedNetworkTest(unittest.TestCase):
+    def setUp(self):
+        self.network_id = "b" * 64
+        self.name = "qore-rpm-isolated-test"
+        self.info = {"Id": self.network_id, "Name": self.name, "Driver": "bridge", "Internal": True,
+                     "Containers": {}, "Options": {
+                         "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+                         "com.docker.network.bridge.gateway_mode_ipv6": "isolated"}}
+        self.uuid = patch.object(builder.uuid, "uuid4", return_value=SimpleNamespace(hex="test"))
+        self.uuid.start()
+        self.addCleanup(self.uuid.stop)
+
+    def test_internal_network_is_removed_after_success_and_build_exception(self):
+        for failure in (False, True):
+            with self.subTest(failure=failure), \
+                    patch.object(builder.subprocess, "check_output",
+                                 side_effect=[self.network_id, json.dumps([self.info])]) as query, \
+                    patch.object(builder.subprocess, "run") as remove:
+                try:
+                    with builder.build_network("docker", True) as (network, info):
+                        self.assertEqual(network, self.network_id)
+                        self.assertEqual(info, self.info)
+                        self.assertFalse(remove.called)
+                        if failure:
+                            raise RuntimeError("build failed")
+                except RuntimeError as error:
+                    self.assertTrue(failure)
+                    self.assertEqual(str(error), "build failed")
+                self.assertIn("--internal", query.call_args_list[0].args[0])
+                self.assertIn("com.docker.network.bridge.gateway_mode_ipv4=isolated",
+                              query.call_args_list[0].args[0])
+                remove.assert_called_once_with(["docker", "network", "rm", self.name], check=True,
+                                               stdout=subprocess.DEVNULL)
+
+    def test_invalid_network_is_rejected_and_removed_before_container_start(self):
+        for key, value in [("Internal", False), ("Driver", "host"), ("Id", "c" * 64),
+                           ("Name", "other"), ("Containers", {"unexpected": {}}), ("Options", {})]:
+            info = {**self.info, key: value}
+            with self.subTest(key=key), \
+                    patch.object(builder.subprocess, "check_output",
+                                 side_effect=[self.network_id, json.dumps([info])]), \
+                    patch.object(builder.subprocess, "run") as remove:
+                with self.assertRaisesRegex(ValueError, "empty isolated internal bridge"):
+                    with builder.build_network("docker", True):
+                        self.fail("unsafe network was accepted")
+                remove.assert_called_once()
+
+    def test_malformed_create_response_and_failed_inspect_are_cleaned_up(self):
+        for responses in [["not-a-network-id"],
+                          [self.network_id, subprocess.CalledProcessError(1, ["inspect"])]]:
+            with self.subTest(responses=responses), \
+                    patch.object(builder.subprocess, "check_output", side_effect=responses), \
+                    patch.object(builder.subprocess, "run") as remove:
+                with self.assertRaises((ValueError, subprocess.CalledProcessError)):
+                    with builder.build_network("docker", True):
+                        self.fail("failed network setup was accepted")
+                remove.assert_called_once()
+
+    def test_default_mode_needs_no_network_resource(self):
+        with patch.object(builder.subprocess, "check_output", side_effect=AssertionError("engine called")), \
+                patch.object(builder.subprocess, "run", side_effect=AssertionError("engine called")):
+            with builder.build_network("docker") as (network, info):
+                self.assertEqual(network, "none")
+                self.assertIsNone(info)
+            with self.assertRaisesRegex(ValueError, "requires Docker"):
+                with builder.build_network("podman", True):
+                    self.fail("unsupported engine accepted")
+
+    def test_failed_creation_preserves_error_without_removing_other_networks(self):
+        error = subprocess.CalledProcessError(1, ["create"])
+        with patch.object(builder.subprocess, "check_output", side_effect=error), \
+                patch.object(builder.subprocess, "run") as remove:
+            with self.assertRaises(subprocess.CalledProcessError) as raised:
+                with builder.build_network("docker", True):
+                    self.fail("failed creation accepted")
+            self.assertIs(raised.exception, error)
+            remove.assert_not_called()

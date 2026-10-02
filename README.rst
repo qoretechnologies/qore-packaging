@@ -179,7 +179,7 @@ container as a build image. Builds use only its installed dependencies::
       --image BUILD_DEPENDENCY_IMAGE --output results/qore-build --jobs 2
 
 The builder resolves the image to its immutable ID, verifies all source hashes,
-runs unprivileged with networking disabled, and records the command, installed
+runs unprivileged with loopback-only networking by default, and records the command, installed
 RPMs, log, exit status and artifact hashes. Use a new output directory for each
 build. ``--source-only`` checks SRPM preparation without requiring the target
 SDK. Build images used for runtime tests must define the invoking UID/GID as a
@@ -190,6 +190,26 @@ completed ``build.json`` records the exit status and artifact hashes.
 The container runs with ``--init`` so orphaned child processes are reaped.
 Running ``rpmbuild`` itself as PID 1 leaves zombies after interrupted process
 groups and makes the system/backquote cleanup tests fail.
+
+For tests that enumerate non-loopback interfaces, Docker builds can use
+``--internal-interface``. Each build creates a private internal bridge with
+IPv4/IPv6 gateway mode ``isolated``, verifies the effective configuration, and
+records its immutable ID and metadata. No ports are published and no default
+route or host bridge address is provided. The network is removed after success
+or failure. Unsupported engines or gateway modes fail rather than enabling
+external access. See Docker's gateway-mode documentation:
+https://docs.docker.com/engine/network/port-publishing/#gateway-modes.
+
+Run the real container/RPM regression separately from the unit suite::
+
+    python3 -B -W error tests/check_internal_network.py \
+      --image BUILD_DEPENDENCY_IMAGE --output results/internal-network-probe
+
+The image needs Python 3 and the normal RPM build tools. The check exercises
+non-loopback bind/connect, rejects an external destination with ``ENETUNREACH``,
+verifies the resulting RPM and confirms network cleanup. NATS's wildcard
+gateway and monitor-bind tests require this interface; their assertions remain
+unchanged.
 
 Dependency sources and vendoring
 -------------------------------

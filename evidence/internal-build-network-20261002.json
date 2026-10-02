@@ -1,0 +1,193 @@
+{
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "unit_tests": 76,
+  "integration": {
+    "exit_code": 0,
+    "network_removed": true,
+    "build": {
+      "schema": 1,
+      "image": "sha256:0a9ff67c74949bd69a789cb4cc645d0325df25543b5bd68e543a741493ea0fb3",
+      "source": {
+        "schema": 1,
+        "spec": "probe.spec",
+        "source_date_epoch": 1767225600,
+        "sources": {
+          "probe.spec": "38d28613d06b3ec78ec2336beb3d502356b0c47df49484261fb232578969109c",
+          "probe.py": "fa99b805b0409218010880dcf5451b8403183b3691eb65d2c3e72e963aaf9f39"
+        }
+      },
+      "jobs": 2,
+      "network": "isolated-bridge",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "d3dc817bf578ac98d9993fac6a3f4f2dba89899378e350020c9e2b3ad8435dce",
+        "--hostname",
+        "qore-rpm-builder",
+        "--user",
+        "1019:100",
+        "-e",
+        "HOME=/work/home",
+        "-e",
+        "SOURCE_DATE_EPOCH=1767225600",
+        "-v",
+        "/tmp/qore-network-probe-mayqtz6s:/sources:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/internal-network-probe-build-3:/work",
+        "sha256:0a9ff67c74949bd69a789cb4cc645d0325df25543b5bd68e543a741493ea0fb3",
+        "sh",
+        "-c",
+        "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+        "build-local",
+        "-ba",
+        "--define",
+        "_topdir /work/rpmbuild",
+        "--define",
+        "_sourcedir /sources",
+        "--define",
+        "_smp_build_ncpus 2",
+        "--define",
+        "_buildhost qore-rpm-builder",
+        "/sources/probe.spec"
+      ],
+      "source_only": false,
+      "network_info": {
+        "Name": "qore-rpm-isolated-2f23cf2cea994e15b7a3c91bd2335b84",
+        "Id": "d3dc817bf578ac98d9993fac6a3f4f2dba89899378e350020c9e2b3ad8435dce",
+        "Created": "2026-10-02T15:11:59.362676498+02:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+          "Driver": "default",
+          "Options": {},
+          "Config": [
+            {
+              "Subnet": "172.28.0.0/16"
+            }
+          ]
+        },
+        "Internal": true,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+          "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+          "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+          "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+        },
+        "Labels": {},
+        "Containers": {},
+        "Status": {
+          "IPAM": {
+            "Subnets": {
+              "172.28.0.0/16": {
+                "IPsInUse": 2,
+                "DynamicIPsAvailable": 65534
+              }
+            }
+          }
+        }
+      },
+      "exit_code": 0,
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-rpm-network-probe-1-1.noarch.rpm": "d41afd0caf7369e8f1286a75fcbe61946e0236807cea07174b956cec8b58b6bb",
+        "rpmbuild/SRPMS/qore-rpm-network-probe-1-1.src.rpm": "e9ad141e86678be3e607535709b374c0f68addf716cbe369263a24315c9c6c9a"
+      }
+    }
+  },
+  "nats_unchanged_regressions": {
+    "network_info": {
+      "Name": "qore-rpm-isolated-406a9e217822493b84a59d36ce2fdc87",
+      "Id": "a4dc7311d2e38397cfeaeec65a49f9b44e407f442745faa53ffa4cc96b847141",
+      "Created": "2026-10-02T15:02:28.685876873+02:00",
+      "Scope": "local",
+      "Driver": "bridge",
+      "EnableIPv4": true,
+      "EnableIPv6": false,
+      "IPAM": {
+        "Driver": "default",
+        "Options": {},
+        "Config": [
+          {
+            "Subnet": "172.28.0.0/16"
+          }
+        ]
+      },
+      "Internal": true,
+      "Attachable": false,
+      "Ingress": false,
+      "ConfigFrom": {
+        "Network": ""
+      },
+      "ConfigOnly": false,
+      "Options": {
+        "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+        "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+      },
+      "Labels": {},
+      "Containers": {},
+      "Status": {
+        "IPAM": {
+          "Subnets": {
+            "172.28.0.0/16": {
+              "IPsInUse": 2,
+              "DynamicIPsAvailable": 65534
+            }
+          }
+        }
+      }
+    },
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "a4dc7311d2e38397cfeaeec65a49f9b44e407f442745faa53ffa4cc96b847141",
+      "--user",
+      "1019:100",
+      "-e",
+      "GOTOOLCHAIN=local",
+      "-e",
+      "GOPROXY=off",
+      "-e",
+      "GOSUMDB=off",
+      "-e",
+      "GOCACHE=/source/.gocache",
+      "-e",
+      "GOPATH=/source/.gopath",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/nats-syslog-test-1/nats-server-2.14.7:/source",
+      "-w",
+      "/source",
+      "sha256:0a9ff67c74949bd69a789cb4cc645d0325df25543b5bd68e543a741493ea0fb3",
+      "go",
+      "test",
+      "-mod=vendor",
+      "-short",
+      "-race",
+      "-count=3",
+      "-p",
+      "1",
+      "-timeout",
+      "15m",
+      "-run",
+      "^(TestGatewayWithListenToAny|TestHTTPHost)$",
+      "./server",
+      "./test"
+    ],
+    "exit_code": 0
+  },
+  "logs_sha256": {
+    "results/internal-network-probe-build-3/build.log": "97e94d547ac4150d420712affa1c31f9690860340f25c72e3d501d44a99efb56",
+    "results/internal-network-unit-tests-3.log": "54402eb77673e2033500a162359980ccfdd4fa824d4de5c0b5b0a4a5a47e84e2",
+    "results/nats-internal-interface-tests-1.log": "6820024b0965e5e6700defe3d3e0650265558cb558a2a102c56e940dd0af9399"
+  }
+}
