@@ -24,7 +24,7 @@ packaging-tools:
   stage: test
   tags: [k8s, arm64]
   rules:
-    - if: '$RPM_NATIVE_QUALIFICATION == "core19"'
+    - if: '$RPM_NATIVE_QUALIFICATION == "core20"'
   script:
     - python3 -B -W error tools/qualify-installed.py "$RPM_MANIFEST" --output results/native-installed
   artifacts:
@@ -35,30 +35,30 @@ packaging-tools:
 rpm-fedora-arm64:
   extends: .rpm-native-installed
   rules:
-    - if: '$RPM_NATIVE_QUALIFICATION == "core19" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "fedora")'
+    - if: '$RPM_NATIVE_QUALIFICATION == "core20" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "fedora")'
   image: registry.fedoraproject.org/fedora@sha256:bd539c7c03d6ee316e0f9396d4a44e6a137d2c4cd6bf6a019f608cfa2fba6fa6
   variables:
-    RPM_MANIFEST: qualification/core19-fedora-aarch64.json
+    RPM_MANIFEST: qualification/core20-fedora-aarch64.json
   before_script:
     - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils util-linux findutils
 
 rpm-leap-arm64:
   extends: .rpm-native-installed
   rules:
-    - if: '$RPM_NATIVE_QUALIFICATION == "core19" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "leap")'
+    - if: '$RPM_NATIVE_QUALIFICATION == "core20" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "leap")'
   image: opensuse/leap@sha256:e8997b5b4278bb91ef108750b5d103e2d55bbf1f22965bb46a2ba3b35487b292
   variables:
-    RPM_MANIFEST: qualification/core19-leap-aarch64.json
+    RPM_MANIFEST: qualification/core20-leap-aarch64.json
   before_script:
     - zypper --non-interactive install --no-recommends python3 ca-certificates shadow util-linux findutils
 
 rpm-el10-arm64:
   extends: .rpm-native-installed
   rules:
-    - if: '$RPM_NATIVE_QUALIFICATION == "core19" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
+    - if: '$RPM_NATIVE_QUALIFICATION == "core20" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
   image: almalinux@sha256:957738702313e6ee452cdb17bc1431542c467be9a4e2f4da3b8e551b0ebb9677
   variables:
-    RPM_MANIFEST: qualification/core19-el10-aarch64.json
+    RPM_MANIFEST: qualification/core20-el10-aarch64.json
   before_script:
     - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils util-linux findutils dnf-plugins-core epel-release
     - dnf config-manager --set-enabled crb

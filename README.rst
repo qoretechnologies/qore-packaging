@@ -61,8 +61,10 @@ ONNX, compiler, tools and debugger checks on all three x86_64 distributions.
 The canonical source is ``2a7afda675225f639a698ec289bc218560800485``; it is
 recorded separately from the earlier release-20 candidate in
 ``evidence/core20-local-installed-20261002.json``. OBS revision 15 has matching
-source checksums and is building on all six targets, with publication disabled.
-Release-20 native ARM installed qualification remains pending.
+source checksums and passes all 400 suites on all six native targets, with
+publication disabled. The pinned release-20 manifests are ready for native ARM
+installed qualification; those installation checks remain pending. See
+``evidence/core20-native-builds-20261003.json``.
 
 JNI native fixes and the latest Excel/ODS changes are committed. Release/Debug
 reference, exception and cleanup suites pass; strict documentation and the new
