@@ -337,12 +337,49 @@
     "results/jni-vm-control-3/output.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "results/jni-vm-control-3/valgrind.log": "98233e5c6aa20dbad6467f3f187f001cda7c152850b56c26e1f37521f75e3445",
     "results/jni-vm-control-5/output.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "results/jni-vm-control-5/valgrind.log": "efded0fdf2ed1e681336f6717f70b2706e7f9ccfa751546038557e4f1b9da0c7"
+    "results/jni-vm-control-5/valgrind.log": "efded0fdf2ed1e681336f6717f70b2706e7f9ccfa751546038557e4f1b9da0c7",
+    "results/fedora-jni-pg-tests-19/status.json": "f8ae77cf37b2e14614d54de424c4d71d426dced810b685451c3f3bd91b72a0e6",
+    "results/fedora-jni-flyway-pg17-7/status.json": "61107318bac683fba1c82d4d1e0538efff08c5041ac226140e543d81c34c189a",
+    "results/fedora-jni-flyway-pg17-8/status.json": "7c51b289c3f0307c690737a7a139e73ada65933cec3e748b99a8732db05f313b",
+    "results/fedora-jni-native-3-tests/status.json": "06a6567faf29441bdb83c9d686ca5417efdd6efcf8a77365f494351c36e300b9",
+    "results/jni-transaction-build-7.json": "f0285dfea6c1fe7e55011be9dbffbe6956d4d0d90e10775b10ad3ddc6ed2d44d"
   },
   "approval": {
     "date": "2026-10-02",
     "answer": "Allow this documented exception",
     "scope": "Only the independently reproduced JVM/glibc diagnostics and allocation origins documented in this file; exclusions remain in force."
   },
-  "jni_fix_commit": "4fbc538444b1bc4aed05277686fcd57f9d3efc75"
+  "jni_fix_commit": "4fbc538444b1bc4aed05277686fcd57f9d3efc75",
+  "qualification": {
+    "native_ci": {
+      "pipeline": "https://git.qoretechnologies.com/mirror/module-jni/-/pipelines/58646",
+      "jobs": [
+        {
+          "id": 206947,
+          "name": "test-alpine",
+          "status": "success",
+          "web_url": "https://git.qoretechnologies.com/mirror/module-jni/-/jobs/206947"
+        },
+        {
+          "id": 206946,
+          "name": "test-ubuntu",
+          "status": "success",
+          "web_url": "https://git.qoretechnologies.com/mirror/module-jni/-/jobs/206946"
+        }
+      ]
+    },
+    "final_targeted_functional_runs": [
+      "results/fedora-jni-pg-tests-19/status.json",
+      "results/fedora-jni-flyway-pg17-7/status.json",
+      "results/fedora-jni-flyway-pg17-8/status.json",
+      "results/fedora-jni-native-3-tests/status.json"
+    ],
+    "build": "results/jni-transaction-build-7.json",
+    "audit": {
+      "Pass": 51,
+      "N/A": 11,
+      "Fail": 0
+    },
+    "rpm_status": "In progress; no cross-distribution installed-package qualification claimed."
+  }
 }

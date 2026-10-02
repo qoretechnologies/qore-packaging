@@ -46,9 +46,12 @@ at one/two/four I/O threads, and seven Valgrind suites with zero memory/descript
 errors or lost allocations. The user-approved GCC/Valgrind debug-symbol warning
 is reproduced by a standalone C++ control. The native CI pipeline passes all
 21 jobs. Revision 19 now passes all 400 local suites and installed SDK, compiler,
-debugger and minimal-runtime ONNX checks on all three distributions. Native
-OBS completion and ARM installed-package checks remain separate gates;
+debugger and minimal-runtime ONNX checks on all three distributions. Revision 19
+also passes all six native OBS builds and installed-package qualification on
+Fedora, Leap and AlmaLinux ARM runners. Those checks include minimal-runtime
+ONNX inference, SDK consumers, tools, remote debuggers and RPM file verification;
 see ``evidence/core19-local-installed-20261002.json``,
+``evidence/core19-native-arm-installed-20261002.json``,
 ``evidence/core-close-rpm-qualification-20261002.json``,
 ``evidence/proxy-shutdown-fix-20261002.json`` and
 ``evidence/core17-local-installed-20261002.json``.
@@ -134,6 +137,16 @@ archive excludes historical tracked build files and an editor swap file, and
 retains the verified Sundown/Houdini source and license notices. OBS has the
 verified canonical sources with publication disabled. See
 ``evidence/markdown-rpm-final-20261002.json``.
+
+JNI qualification exposed JDBC transaction, cursor-reference and batch-reuse
+bugs, plus inaccurate Flyway action output types. The fixes are committed and
+pass the module's Alpine and Ubuntu CI jobs. Targeted PostgreSQL, failure-injection
+and source/AOT Flyway tests pass; the Fedora RPM build is in progress. The approved
+JVM/glibc diagnostics retain their raw Valgrind logs and standalone controls in
+``evidence/jni-external-diagnostics-20261002.json``. JNI is not yet included in the
+qualified package count. The corresponding Qore PostgreSQL native-array versus
+JDBC-batch correction is recorded in
+``evidence/core-pgsql-bulk-protocols-20261002.json`` and awaits a new core RPM build.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is
