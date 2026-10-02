@@ -1,0 +1,69 @@
+Fix plugin-only build configuration diagnostics.
+
+Copyright (C) 2026 Qore Technologies, s.r.o.; same BSD-4-Clause terms.
+Do not check optional documentation generators when explicitly disabled, and
+do not pass shared-library version options to uninstalled convenience archives.
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -1280,10 +1280,12 @@
+         [yes],  [AC_PATH_PROG(SPHINX_BUILD, sphinx-build)],
+         [no],   [SPHINX_BUILD=''],
+         [*],    [AC_PATH_PROG(SPHINX_BUILD, sphinx-build, [], [$with_sphinx_build])])
++AS_IF([test "x$with_sphinx_build" != xno], [
+ AS_IF([test -z "$SPHINX_BUILD"],
+       [AC_MSG_WARN([No sphinx-build, won't be able to regenerate docs])])
+ AC_SUBST([SPHINX_BUILD])
+ AX_PROG_PERL_MODULES([Pod::POM::View::Restructured],[have_ppvr=yes],[AC_MSG_WARN([No Pod::POM::View::Restructured, won't be able to regenerate docs])])
++], [have_ppvr=no])
+ AM_CONDITIONAL([HAVE_SPHINX_BUILD], [ test -n "$SPHINX_BUILD" -a x"$have_ppvr" = xyes])
+ 
+ 
+--- a/configure
++++ b/configure
+@@ -21062,6 +21062,7 @@
+   *) :
+      ;;
+ esac
++if test "x$with_sphinx_build" != xno; then
+ if test -z "$SPHINX_BUILD"; then :
+   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: No sphinx-build, won't be able to regenerate docs" >&5
+ $as_echo "$as_me: WARNING: No sphinx-build, won't be able to regenerate docs" >&2;}
+@@ -21144,6 +21145,9 @@
+ else
+   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: could not find perl" >&5
+ $as_echo "$as_me: WARNING: could not find perl" >&2;}
++fi
++else
++  have_ppvr=no
+ fi
+  if  test -n "$SPHINX_BUILD" -a x"$have_ppvr" = xyes; then
+   HAVE_SPHINX_BUILD_TRUE=
+--- a/common/Makefile.am
++++ b/common/Makefile.am
+@@ -53,8 +53,8 @@
+ noinst_LTLIBRARIES = libplugin_common.la libcrypto_compat.la
+ 
+ libplugin_common_la_SOURCES = plugin_common.c plugin_common.h
+-libplugin_common_la_LDFLAGS = -version-info $(plugin_common_version) -no-undefined
++libplugin_common_la_LDFLAGS = -no-undefined
+ libplugin_common_la_LIBADD = $(LIB_SOCKET)
+ 
+ libcrypto_compat_la_SOURCES = crypto-compat.c crypto-compat.h
+-libcrypto_compat_la_LDFLAGS = -version-info $(crypto_compat_version) -no-undefined
++libcrypto_compat_la_LDFLAGS = -no-undefined
+--- a/common/Makefile.in
++++ b/common/Makefile.in
+@@ -431,10 +431,10 @@
+ AM_CPPFLAGS = -fPIC -I$(top_srcdir)/include -I$(top_builddir)/include
+ noinst_LTLIBRARIES = libplugin_common.la libcrypto_compat.la
+ libplugin_common_la_SOURCES = plugin_common.c plugin_common.h
+-libplugin_common_la_LDFLAGS = -version-info $(plugin_common_version) -no-undefined
++libplugin_common_la_LDFLAGS = -no-undefined
+ libplugin_common_la_LIBADD = $(LIB_SOCKET)
+ libcrypto_compat_la_SOURCES = crypto-compat.c crypto-compat.h
+-libcrypto_compat_la_LDFLAGS = -version-info $(crypto_compat_version) -no-undefined
++libcrypto_compat_la_LDFLAGS = -no-undefined
+ all: all-am
+ 
+ .SUFFIXES:

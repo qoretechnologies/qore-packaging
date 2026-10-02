@@ -1,0 +1,83 @@
+{
+  "copyright": "Copyright (C) 2026 Qore Technologies, s.r.o.",
+  "build": {
+    "schema": 1,
+    "image": "sha256:c8403136a470b4a557f0a13f09114d8675b86252eaad8f4859fe22a2bafbedcc",
+    "source": {
+      "schema": 1,
+      "name": "cyrus-sasl-digestmd5",
+      "version": "2.1.28",
+      "commit": null,
+      "source_date_epoch": 1790899200,
+      "spec": "cyrus-sasl-digestmd5.spec",
+      "upstream": {
+        "url": "https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-2.1.28/cyrus-sasl-2.1.28.tar.gz",
+        "sha256": "7ccfc6abd01ed67c1a0924b353e526f1b766b21f42d4562ee635a8ebfc5bb38c"
+      },
+      "sources": {
+        "cyrus-sasl-2.1.28.tar.gz": "7ccfc6abd01ed67c1a0924b353e526f1b766b21f42d4562ee635a8ebfc5bb38c",
+        "cyrus-sasl-digestmd5-build.patch": "4617deefb9e39acf5616e76cad4c523ca6c694b2b2edb292ae7a185c29ee8d72",
+        "cyrus-sasl-digestmd5-openssl3.patch": "12e288b6abc763867e4a176e4bf46ce11e0491d61c353ad567def3181b719628",
+        "cyrus-sasl-digestmd5-test.c": "88e4ee72d8850c292367972fbb17da1871272004331ff1e4cb2756bc17c5db58",
+        "cyrus-sasl-digestmd5.rst": "48d10ffa9482d10ada49a3308c64d1a9ca2525b61b0af0207300c9b148920c9e",
+        "cyrus-sasl-digestmd5.spec": "82a9d8420b8efc1097ec66c2c81e90ba87871793d090e18c41954cfdf2e4fc6d"
+      },
+      "candidate": true
+    },
+    "jobs": 2,
+    "network": "none",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "--hostname",
+      "qore-rpm-builder",
+      "--user",
+      "1019:100",
+      "-e",
+      "HOME=/work/home",
+      "-e",
+      "SOURCE_DATE_EPOCH=1790899200",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/cyrus-sasl-digestmd5-candidate-3:/sources:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/leap-cyrus-sasl-digestmd5-candidate-3:/work",
+      "sha256:c8403136a470b4a557f0a13f09114d8675b86252eaad8f4859fe22a2bafbedcc",
+      "sh",
+      "-c",
+      "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+      "build-local",
+      "-ba",
+      "--define",
+      "_topdir /work/rpmbuild",
+      "--define",
+      "_sourcedir /sources",
+      "--define",
+      "_smp_build_ncpus 2",
+      "--define",
+      "_buildhost qore-rpm-builder",
+      "/sources/cyrus-sasl-digestmd5.spec"
+    ],
+    "source_only": false,
+    "exit_code": 0,
+    "artifacts": {
+      "rpmbuild/RPMS/x86_64/cyrus-sasl-digestmd5-2.1.28-160000.3.2.qore.x86_64.rpm": "de74168dc2d8b9d9e7e109c535d6a71da55f21c48894c278bc36c0a4278699ef",
+      "rpmbuild/RPMS/x86_64/cyrus-sasl-digestmd5-debuginfo-2.1.28-160000.3.2.qore.x86_64.rpm": "76cb229b176ab5c320f013cadaea10a6dece69b559e771d59392951d35c0b7a1",
+      "rpmbuild/RPMS/x86_64/cyrus-sasl-digestmd5-debugsource-2.1.28-160000.3.2.qore.x86_64.rpm": "b53f957f25bd780ebbceb1a762ceaed1129aaf053af4509df693984f4a7f340e",
+      "rpmbuild/SRPMS/cyrus-sasl-digestmd5-2.1.28-160000.3.2.qore.src.rpm": "31b47b59244242318cb06b6bc6a2258eafaf71072b9182edf43953a1853914df"
+    }
+  },
+  "build_log_sha256": "da9db888b60c1720083102a1aa0a4d40b7bc0ccfaf8769e4effcee11b39877a4",
+  "runtime_image": "sha256:2e6a4091f2fab1a60993c9c31deea9de52595f52150288708457884f6d014f87",
+  "runtime_log": "results/leap-openldap-candidate-2-runtime-tests.log",
+  "runtime_log_sha256": "3ff3344cb5f0a7e9afaa4b4a225e8f01e7760cb18c28be1b167a0a470a1b5b32",
+  "approved_diagnostics": {
+    "date": "2026-10-02",
+    "unique_unchanged_DES_call_sites": 10,
+    "compilations": 2
+  },
+  "canonical_and_native_architecture_qualification": "pending"
+}
