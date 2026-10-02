@@ -34,8 +34,18 @@ binary-module metadata ownership fix. A recurring native ARM proxy fixture
 shutdown hang was reproduced locally and root-caused: readiness can disappear
 before a blocking accept, while shutdown previously joined the thread before
 closing the listener. The fix closes the listener first and passes all four
-fixture consumers plus 40 optimized single-CPU stress runs. Revision 18 carries
-that fix and is rebuilding locally and in OBS. See
+fixture consumers plus 40 optimized single-CPU stress runs. Revision 18 passes
+all three x86_64 OBS builds, but all native ARM targets exposed a second race:
+an accept submitted between cancellation and descriptor close never receives
+kernel readiness. Revision 19 explicitly wakes these late operations, releases
+context resources on I/O-thread resizing, and retains descriptor-owning HTTP
+notification objects until their completion actions finish. It also includes
+the independently committed resident-memory accounting fix. Debug and optimized
+builds pass 866 native assertions, twelve functional suites, 900 shutdown cycles
+at one/two/four I/O threads, and seven Valgrind suites with zero memory/descriptor
+errors or lost allocations. The user-approved GCC/Valgrind debug-symbol warning
+is reproduced by a standalone C++ control. RPM requalification is in progress;
+see ``evidence/core-close-rpm-qualification-20261002.json``,
 ``evidence/proxy-shutdown-fix-20261002.json`` and
 ``evidence/core17-local-installed-20261002.json``.
 

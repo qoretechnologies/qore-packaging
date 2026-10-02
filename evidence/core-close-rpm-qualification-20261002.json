@@ -1,0 +1,980 @@
+{
+  "date": "2026-10-02",
+  "qore_base": "ef781b7914e88044a269b7c0bda3b02288919bde",
+  "state": "Native fixes qualified; GCC/Valgrind debug-information diagnostic explicitly approved by user on 2026-10-02",
+  "root_causes": [
+    {
+      "issue": "socket-close race",
+      "cause": "A submission between cancellation and close can wait indefinitely because closing an epoll/kqueue descriptor removes registration without generating readiness.",
+      "fix": "Wake matching socket operations on every live controller context after close, including custom thread routes. Existing descriptor generation checks deliver SOCKET-CLOSED.",
+      "before": "results/core-close-regression-before-tests-1.log",
+      "after": "results/core-close-fixed-native-counts-5.log"
+    },
+    {
+      "issue": "I/O controller resize leak",
+      "cause": "Replacing contexts cleared unique_ptr contexts whose raw event loop and notifier resources had no owning destructor.",
+      "fix": "IoThreadContext owns and destroys its resources; prepare all replacement contexts before swapping.",
+      "before": "results/core-close-native-valgrind-1.log"
+    },
+    {
+      "issue": "HTTP completion signals a closed notifier",
+      "cause": "Promise actions held private notifier data after the descriptor-owning Qore EventNotifier object was destroyed.",
+      "fix": "PromiseNotifierAction and StreamingHeadersPromiseNotifierAction retain the Qore object until completion cleanup.",
+      "before": "results/core-close-async-fd-valgrind-1.log",
+      "before_fd_errors": 195
+    }
+  ],
+  "native_assertions": {
+    "total": 866,
+    "passed": 866,
+    "failed": 0
+  },
+  "tests": [
+    {
+      "exit_code": 0,
+      "seconds": 3.6204003100283444,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/asyncio_unit_tests.log",
+      "command": [
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qore/classes/AsyncIoController/asyncio_unit_tests.qtest",
+        "-v"
+      ],
+      "name": "asyncio_unit_tests",
+      "counts": [
+        [
+          "1",
+          "1",
+          "2"
+        ]
+      ],
+      "log_sha256": "fd9b4f8dc7ef3ecb89fb9cc7f173112b7a6befdbb349c3a6b73b7d7053b4af94"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 1.9172946058679372,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/HttpClientHttpsProxy.log",
+      "command": [
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qore/classes/HTTPClient/HttpClientHttpsProxy.qtest",
+        "-v"
+      ],
+      "name": "HttpClientHttpsProxy",
+      "counts": [
+        [
+          "6",
+          "6",
+          "98"
+        ]
+      ],
+      "log_sha256": "b95bca33982a14c6de7a5aa5032843f1ba2e110e197a599a5e2af9c37f7a89ee"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 0.9151603130158037,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/HttpClientProxyAuth.log",
+      "command": [
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qore/classes/HTTPClient/HttpClientProxyAuth.qtest",
+        "-v"
+      ],
+      "name": "HttpClientProxyAuth",
+      "counts": [
+        [
+          "4",
+          "4",
+          "58"
+        ]
+      ],
+      "log_sha256": "24bff9add72fe32fe5d019ca25d552cb690fdf2a4cc117073a51f2f0dce78ca7"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 3.619743224931881,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/UrlDownloader.log",
+      "command": [
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qlib/UrlDownloader/UrlDownloader.qtest",
+        "-v"
+      ],
+      "name": "UrlDownloader",
+      "counts": [
+        [
+          "14",
+          "14",
+          "300"
+        ]
+      ],
+      "log_sha256": "7bba2870946cc69120e6487ae0fc00a930b03ca12d49c7f457fefb9f13743356"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 17.943084531929344,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/qget.log",
+      "command": [
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/bin/qget/qget.qtest",
+        "-v"
+      ],
+      "name": "qget",
+      "counts": [
+        [
+          "18",
+          "18",
+          "158"
+        ]
+      ],
+      "log_sha256": "011b2ebe31e496c9fa0b26867a8ca8a2c8972dbd4a3f0f1cd518934bbd5d49ad"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 5.524719259003177,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/AsyncSocketIo.log",
+      "command": [
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qlib/AsyncSocketIo/AsyncSocketIo.qtest",
+        "-v"
+      ],
+      "name": "AsyncSocketIo",
+      "counts": [
+        [
+          "41",
+          "41",
+          "254"
+        ]
+      ],
+      "log_sha256": "f1ccf2a4f6e581442910e01ed5fea8357032206c8d5a6ba49b8b5feab7505872"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 42.0409416819457,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/HttpClientRedirect.log",
+      "command": [
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qore/classes/HTTPClient/HttpClientRedirect.qtest",
+        "-v"
+      ],
+      "name": "HttpClientRedirect",
+      "counts": [
+        [
+          "19",
+          "19",
+          "850"
+        ]
+      ],
+      "log_sha256": "be33f8ee4f6638365701ed18eedf6355f21f1e855df1e74ec0c39f332d6e5ded"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 58.66354765207507,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/asyncio_unit_tests-valgrind.log",
+      "command": [
+        "valgrind",
+        "--track-fds=bad",
+        "--leak-check=full",
+        "--show-leak-kinds=all",
+        "--errors-for-leak-kinds=definite,indirect,possible",
+        "--error-exitcode=97",
+        "--log-file=/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/asyncio_unit_tests-valgrind.valgrind.log",
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qore/classes/AsyncIoController/asyncio_unit_tests.qtest",
+        "-v"
+      ],
+      "name": "asyncio_unit_tests-valgrind",
+      "counts": [
+        [
+          "1",
+          "1",
+          "2"
+        ]
+      ],
+      "log_sha256": "fd9b4f8dc7ef3ecb89fb9cc7f173112b7a6befdbb349c3a6b73b7d7053b4af94",
+      "memory_diagnostics": [
+        "--1827050-- Warning: zero subprog, missing DW_AT_abstract_origin in DW_TAG_inlined_subroutine in /home/david/src/qore/git/qore/build-debug/libqore.so.20.0.0",
+        "==1827050==    definitely lost: 0 bytes in 0 blocks",
+        "==1827050==    indirectly lost: 0 bytes in 0 blocks",
+        "==1827050==      possibly lost: 0 bytes in 0 blocks",
+        "==1827050== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+      ],
+      "valgrind_log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/asyncio_unit_tests-valgrind.valgrind.log",
+      "valgrind_log_sha256": "ed4d380ed2c1ac2ffe1ba059f4c073768a848f48dc961ecf5c2a0a39943ce00a"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 84.0562728990335,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/HttpClientHttpsProxy-valgrind.log",
+      "command": [
+        "valgrind",
+        "--track-fds=bad",
+        "--leak-check=full",
+        "--show-leak-kinds=all",
+        "--errors-for-leak-kinds=definite,indirect,possible",
+        "--error-exitcode=97",
+        "--log-file=/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/HttpClientHttpsProxy-valgrind.valgrind.log",
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qore/classes/HTTPClient/HttpClientHttpsProxy.qtest",
+        "-v"
+      ],
+      "name": "HttpClientHttpsProxy-valgrind",
+      "counts": [
+        [
+          "6",
+          "6",
+          "98"
+        ]
+      ],
+      "log_sha256": "b95bca33982a14c6de7a5aa5032843f1ba2e110e197a599a5e2af9c37f7a89ee",
+      "memory_diagnostics": [
+        "--1827051-- Warning: zero subprog, missing DW_AT_abstract_origin in DW_TAG_inlined_subroutine in /home/david/src/qore/git/qore/build-debug/libqore.so.20.0.0",
+        "==1827051==    definitely lost: 0 bytes in 0 blocks",
+        "==1827051==    indirectly lost: 0 bytes in 0 blocks",
+        "==1827051==      possibly lost: 0 bytes in 0 blocks",
+        "==1827051== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+      ],
+      "valgrind_log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/HttpClientHttpsProxy-valgrind.valgrind.log",
+      "valgrind_log_sha256": "12927b6863bc680e3c8e32c135229cc0e61ed70cf7c82959c85d21312c91452f"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 159.22327288705856,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/AsyncSocketIo-valgrind.log",
+      "command": [
+        "valgrind",
+        "--track-fds=bad",
+        "--leak-check=full",
+        "--show-leak-kinds=all",
+        "--errors-for-leak-kinds=definite,indirect,possible",
+        "--error-exitcode=97",
+        "--log-file=/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/AsyncSocketIo-valgrind.valgrind.log",
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qlib/AsyncSocketIo/AsyncSocketIo.qtest",
+        "-v"
+      ],
+      "name": "AsyncSocketIo-valgrind",
+      "counts": [
+        [
+          "41",
+          "41",
+          "254"
+        ]
+      ],
+      "log_sha256": "f1ccf2a4f6e581442910e01ed5fea8357032206c8d5a6ba49b8b5feab7505872",
+      "memory_diagnostics": [
+        "--1829825-- Warning: zero subprog, missing DW_AT_abstract_origin in DW_TAG_inlined_subroutine in /home/david/src/qore/git/qore/build-debug/libqore.so.20.0.0",
+        "==1829825==    definitely lost: 0 bytes in 0 blocks",
+        "==1829825==    indirectly lost: 0 bytes in 0 blocks",
+        "==1829825==      possibly lost: 0 bytes in 0 blocks",
+        "==1829825== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+      ],
+      "valgrind_log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/AsyncSocketIo-valgrind.valgrind.log",
+      "valgrind_log_sha256": "c52c606711e3a811f4e22e2679bef42abf6a5d60a7f0f43c505b3c480faddd06"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 159.72445926791988,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/HttpClientRedirect-valgrind.log",
+      "command": [
+        "valgrind",
+        "--track-fds=bad",
+        "--leak-check=full",
+        "--show-leak-kinds=all",
+        "--errors-for-leak-kinds=definite,indirect,possible",
+        "--error-exitcode=97",
+        "--log-file=/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/HttpClientRedirect-valgrind.valgrind.log",
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qore/classes/HTTPClient/HttpClientRedirect.qtest",
+        "-v"
+      ],
+      "name": "HttpClientRedirect-valgrind",
+      "counts": [
+        [
+          "19",
+          "19",
+          "850"
+        ]
+      ],
+      "log_sha256": "be33f8ee4f6638365701ed18eedf6355f21f1e855df1e74ec0c39f332d6e5ded",
+      "memory_diagnostics": [
+        "--1831051-- Warning: zero subprog, missing DW_AT_abstract_origin in DW_TAG_inlined_subroutine in /home/david/src/qore/git/qore/build-debug/libqore.so.20.0.0",
+        "==1831051==    definitely lost: 0 bytes in 0 blocks",
+        "==1831051==    indirectly lost: 0 bytes in 0 blocks",
+        "==1831051==      possibly lost: 0 bytes in 0 blocks",
+        "==1831051== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+      ],
+      "valgrind_log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-tests-5/HttpClientRedirect-valgrind.valgrind.log",
+      "valgrind_log_sha256": "875d0324c290eea9ec996d848c79446c6ed7d0fd7930c144f8c7225b6fa80520"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 0.7153464090079069,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-http-tests-5/HttpClientCloseRace.log",
+      "command": [
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qore/classes/HTTPClient/HttpClientCloseRace.qtest",
+        "-v"
+      ],
+      "name": "HttpClientCloseRace",
+      "counts": [
+        [
+          "1",
+          "1",
+          "200"
+        ]
+      ],
+      "log_sha256": "0878ee60e24430618cb9f453f4a55a34bd56d41587961c7ae7136e11c296ec3e"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 0.3646689080633223,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-http-tests-5/HttpClientCancelRequest.log",
+      "command": [
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qore/classes/HTTPClient/HttpClientCancelRequest.qtest",
+        "-v"
+      ],
+      "name": "HttpClientCancelRequest",
+      "counts": [
+        [
+          "4",
+          "4",
+          "34"
+        ]
+      ],
+      "log_sha256": "7b7371bed21695553cea4de938bda88b4259c54c5fbfe82e2f0c472aa20d4209"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 3.8690024269744754,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-http-tests-5/HttpServerAsyncHttp2Streaming.log",
+      "command": [
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qlib/HttpServer/HttpServerAsyncHttp2Streaming.qtest",
+        "-v"
+      ],
+      "name": "HttpServerAsyncHttp2Streaming",
+      "counts": [
+        [
+          "15",
+          "15",
+          "48"
+        ]
+      ],
+      "log_sha256": "d900d69222c9a2ecd19d9b1822cbbc43e86b62064638cfbf0648ad418ad458d1"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 1.0152370389550924,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-http-tests-5/SseStreaming.log",
+      "command": [
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qlib/HttpClientIo/SseStreaming.qtest",
+        "-v"
+      ],
+      "name": "SseStreaming",
+      "counts": [
+        [
+          "6",
+          "6",
+          "36"
+        ]
+      ],
+      "log_sha256": "17ddbc34ac65088168ea40cbd5496515af452ffc2b096db094b5607aa78fc6f8"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 0.8150142761878669,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-http-tests-5/StreamLimits.log",
+      "command": [
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qlib/HttpClientStreamingIo/StreamLimits.qtest",
+        "-v"
+      ],
+      "name": "StreamLimits",
+      "counts": [
+        [
+          "4",
+          "4",
+          "89"
+        ]
+      ],
+      "log_sha256": "38a647117454faddd6b61d0125b88a011dd00c6f8c89c90e080d51b58309fbea"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 71.20956224296242,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-http-tests-5/HttpClientCloseRace-valgrind.log",
+      "command": [
+        "valgrind",
+        "--track-fds=bad",
+        "--leak-check=full",
+        "--show-leak-kinds=all",
+        "--errors-for-leak-kinds=definite,indirect,possible",
+        "--error-exitcode=97",
+        "--log-file=/home/david/src/qore/git/qore-packaging/results/core-close-http-tests-5/HttpClientCloseRace-valgrind.valgrind.log",
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qore/classes/HTTPClient/HttpClientCloseRace.qtest",
+        "-v"
+      ],
+      "name": "HttpClientCloseRace-valgrind",
+      "counts": [
+        [
+          "1",
+          "1",
+          "200"
+        ]
+      ],
+      "log_sha256": "0878ee60e24430618cb9f453f4a55a34bd56d41587961c7ae7136e11c296ec3e",
+      "memory_diagnostics": [
+        "--1846146-- Warning: zero subprog, missing DW_AT_abstract_origin in DW_TAG_inlined_subroutine in /home/david/src/qore/git/qore/build-debug/libqore.so.20.0.0",
+        "==1846146==    definitely lost: 0 bytes in 0 blocks",
+        "==1846146==    indirectly lost: 0 bytes in 0 blocks",
+        "==1846146==      possibly lost: 0 bytes in 0 blocks",
+        "==1846146== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+      ],
+      "valgrind_log": "/home/david/src/qore/git/qore-packaging/results/core-close-http-tests-5/HttpClientCloseRace-valgrind.valgrind.log",
+      "valgrind_log_sha256": "6c6867556d5485fb51040fcd8e9bce1639a61c528a9e92187cf02f8c6a4cb57f"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 84.53278413508087,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-http-tests-5/HttpServerAsyncHttp2Streaming-valgrind.log",
+      "command": [
+        "valgrind",
+        "--track-fds=bad",
+        "--leak-check=full",
+        "--show-leak-kinds=all",
+        "--errors-for-leak-kinds=definite,indirect,possible",
+        "--error-exitcode=97",
+        "--log-file=/home/david/src/qore/git/qore-packaging/results/core-close-http-tests-5/HttpServerAsyncHttp2Streaming-valgrind.valgrind.log",
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qlib/HttpServer/HttpServerAsyncHttp2Streaming.qtest",
+        "-v"
+      ],
+      "name": "HttpServerAsyncHttp2Streaming-valgrind",
+      "counts": [
+        [
+          "15",
+          "15",
+          "48"
+        ]
+      ],
+      "log_sha256": "d900d69222c9a2ecd19d9b1822cbbc43e86b62064638cfbf0648ad418ad458d1",
+      "memory_diagnostics": [
+        "--1846147-- Warning: zero subprog, missing DW_AT_abstract_origin in DW_TAG_inlined_subroutine in /home/david/src/qore/git/qore/build-debug/libqore.so.20.0.0",
+        "==1846147==    definitely lost: 0 bytes in 0 blocks",
+        "==1846147==    indirectly lost: 0 bytes in 0 blocks",
+        "==1846147==      possibly lost: 0 bytes in 0 blocks",
+        "==1846147== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+      ],
+      "valgrind_log": "/home/david/src/qore/git/qore-packaging/results/core-close-http-tests-5/HttpServerAsyncHttp2Streaming-valgrind.valgrind.log",
+      "valgrind_log_sha256": "93bde536fcf64c33f1946b916bec3d264f0bd3b45f467958eb63f4f35fb94e44"
+    },
+    {
+      "exit_code": 0,
+      "seconds": 62.120958094950765,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-http-tests-5/SseStreaming-valgrind.log",
+      "command": [
+        "valgrind",
+        "--track-fds=bad",
+        "--leak-check=full",
+        "--show-leak-kinds=all",
+        "--errors-for-leak-kinds=definite,indirect,possible",
+        "--error-exitcode=97",
+        "--log-file=/home/david/src/qore/git/qore-packaging/results/core-close-http-tests-5/SseStreaming-valgrind.valgrind.log",
+        "/home/david/src/qore/git/qore/build-debug/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qlib/HttpClientIo/SseStreaming.qtest",
+        "-v"
+      ],
+      "name": "SseStreaming-valgrind",
+      "counts": [
+        [
+          "6",
+          "6",
+          "36"
+        ]
+      ],
+      "log_sha256": "17ddbc34ac65088168ea40cbd5496515af452ffc2b096db094b5607aa78fc6f8",
+      "memory_diagnostics": [
+        "--1857691-- Warning: zero subprog, missing DW_AT_abstract_origin in DW_TAG_inlined_subroutine in /home/david/src/qore/git/qore/build-debug/libqore.so.20.0.0",
+        "==1857691==    definitely lost: 0 bytes in 0 blocks",
+        "==1857691==    indirectly lost: 0 bytes in 0 blocks",
+        "==1857691==      possibly lost: 0 bytes in 0 blocks",
+        "==1857691== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+      ],
+      "valgrind_log": "/home/david/src/qore/git/qore-packaging/results/core-close-http-tests-5/SseStreaming-valgrind.valgrind.log",
+      "valgrind_log_sha256": "91c9e0ad5e059a9c02eb7d8e19038044e88afc76efca31edd23300db010c2ffa"
+    }
+  ],
+  "release_proxy_matrix": {
+    "threads-1-state-0": {
+      "exit_code": 0,
+      "seconds": 0.16508993599563837,
+      "command": [
+        "/home/david/src/qore/git/qore/build/qore",
+        "-b",
+        "--enable-debug",
+        "/home/david/src/qore/git/qore-packaging/work/proxy-shutdown-native-repro-1.qr",
+        "0"
+      ],
+      "threads": 1,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-release-tests-5/threads-1-state-0.log"
+    },
+    "threads-1-state-1": {
+      "exit_code": 0,
+      "seconds": 0.21460656798444688,
+      "command": [
+        "/home/david/src/qore/git/qore/build/qore",
+        "-b",
+        "--enable-debug",
+        "/home/david/src/qore/git/qore-packaging/work/proxy-shutdown-native-repro-1.qr",
+        "1"
+      ],
+      "threads": 1,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-release-tests-5/threads-1-state-1.log"
+    },
+    "threads-1-state-2": {
+      "exit_code": 0,
+      "seconds": 0.21452996297739446,
+      "command": [
+        "/home/david/src/qore/git/qore/build/qore",
+        "-b",
+        "--enable-debug",
+        "/home/david/src/qore/git/qore-packaging/work/proxy-shutdown-native-repro-1.qr",
+        "2"
+      ],
+      "threads": 1,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-release-tests-5/threads-1-state-2.log"
+    },
+    "threads-2-state-0": {
+      "exit_code": 0,
+      "seconds": 0.16421486996114254,
+      "command": [
+        "/home/david/src/qore/git/qore/build/qore",
+        "-b",
+        "--enable-debug",
+        "/home/david/src/qore/git/qore-packaging/work/proxy-shutdown-native-repro-1.qr",
+        "0"
+      ],
+      "threads": 2,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-release-tests-5/threads-2-state-0.log"
+    },
+    "threads-2-state-1": {
+      "exit_code": 0,
+      "seconds": 0.2643255109433085,
+      "command": [
+        "/home/david/src/qore/git/qore/build/qore",
+        "-b",
+        "--enable-debug",
+        "/home/david/src/qore/git/qore-packaging/work/proxy-shutdown-native-repro-1.qr",
+        "1"
+      ],
+      "threads": 2,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-release-tests-5/threads-2-state-1.log"
+    },
+    "threads-2-state-2": {
+      "exit_code": 0,
+      "seconds": 0.21424936596304178,
+      "command": [
+        "/home/david/src/qore/git/qore/build/qore",
+        "-b",
+        "--enable-debug",
+        "/home/david/src/qore/git/qore-packaging/work/proxy-shutdown-native-repro-1.qr",
+        "2"
+      ],
+      "threads": 2,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-release-tests-5/threads-2-state-2.log"
+    },
+    "threads-4-state-0": {
+      "exit_code": 0,
+      "seconds": 0.16441520699299872,
+      "command": [
+        "/home/david/src/qore/git/qore/build/qore",
+        "-b",
+        "--enable-debug",
+        "/home/david/src/qore/git/qore-packaging/work/proxy-shutdown-native-repro-1.qr",
+        "0"
+      ],
+      "threads": 4,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-release-tests-5/threads-4-state-0.log"
+    },
+    "threads-4-state-1": {
+      "exit_code": 0,
+      "seconds": 0.21423425804823637,
+      "command": [
+        "/home/david/src/qore/git/qore/build/qore",
+        "-b",
+        "--enable-debug",
+        "/home/david/src/qore/git/qore-packaging/work/proxy-shutdown-native-repro-1.qr",
+        "1"
+      ],
+      "threads": 4,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-release-tests-5/threads-4-state-1.log"
+    },
+    "threads-4-state-2": {
+      "exit_code": 0,
+      "seconds": 0.2141355520579964,
+      "command": [
+        "/home/david/src/qore/git/qore/build/qore",
+        "-b",
+        "--enable-debug",
+        "/home/david/src/qore/git/qore-packaging/work/proxy-shutdown-native-repro-1.qr",
+        "2"
+      ],
+      "threads": 4,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-release-tests-5/threads-4-state-2.log"
+    }
+  },
+  "release_asyncsocketio": [
+    {
+      "exit_code": 0,
+      "command": [
+        "/home/david/src/qore/git/qore/build/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qlib/AsyncSocketIo/AsyncSocketIo.qtest",
+        "-v"
+      ],
+      "threads": 2
+    },
+    {
+      "exit_code": 0,
+      "command": [
+        "/home/david/src/qore/git/qore/build/qore",
+        "-b",
+        "--enable-debug",
+        "examples/test/qlib/AsyncSocketIo/AsyncSocketIo.qtest",
+        "-v"
+      ],
+      "threads": 4
+    }
+  ],
+  "builds": {
+    "build-debug": {
+      "exit_code": 0,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-build-debug-build-5.log"
+    },
+    "build": {
+      "exit_code": 0,
+      "log": "/home/david/src/qore/git/qore-packaging/results/core-close-fixed-build-build-5.log"
+    }
+  },
+  "pipeline": {
+    "url": "https://git.qoretechnologies.com/mirror/qore/-/pipelines/58541",
+    "tested_sha": "cc79a5be1055a850e9c685fe45ad4e495d235a75",
+    "proxy_timeout_jobs": [
+      206731,
+      206723,
+      206719
+    ],
+    "rss_fix_by_other_session": "ef781b7914e88044a269b7c0bda3b02288919bde",
+    "infrastructure_failure_jobs": [
+      206729,
+      206728
+    ]
+  },
+  "debug_information_diagnostic": {
+    "status": "approved by user: Allow this documented diagnostic",
+    "message": "Warning: zero subprog, missing DW_AT_abstract_origin in DW_TAG_inlined_subroutine",
+    "compiler": "c++ (GCC) 16.2.1 20260819 (Red Hat 16.2.1-2)",
+    "valgrind": "valgrind-3.27.1",
+    "root_cause": "GCC emits DW_TAG_inlined_subroutine entries for external thread_local initialization wrappers without DW_AT_abstract_origin. Nonempty instances trigger Valgrind resolve_subprograms(), which labels that inline frame UnknownInlinedFun. A standalone three-file C++ control reproduces the exact warning with no Qore code.",
+    "upstream_reader": "https://sourceware.org/git/?p=valgrind.git;a=blob;f=coregrind/m_debuginfo/readdwarf3.c;hb=HEAD",
+    "control_sources": {
+      "main.cpp": "extern \"C\" void exercise();\nint main() { exercise(); }\n",
+      "library.cpp": "#include <cassert>\n#include <string>\n#include <valgrind/valgrind.h>\nextern thread_local std::string error;\nextern \"C\" const char* last_error() { return error.empty() ? nullptr : error.c_str(); }\nextern \"C\" void exercise() {\n    error = \"expected\";\n    assert(std::string(last_error()) == \"expected\");\n    error.clear();\n    assert(last_error() == nullptr);\n    VALGRIND_PRINTF_BACKTRACE(\"Standalone external TLS debug-info control\\n\");\n}\n",
+      "data.cpp": "#include <string>\nthread_local std::string error;\n"
+    },
+    "control_log": "['g++', '-shared', '-std=c++20', '-g', '-Og', '-fPIC', '-fno-strict-aliasing', 'library.cpp', 'data.cpp', '-o', 'libcontrol.so']\n['g++', '-g', 'main.cpp', '-L.', '-lcontrol', '-Wl,-rpath,$ORIGIN', '-o', 'control']\n['valgrind', '--track-fds=bad', '--leak-check=full', '--show-leak-kinds=all', '--error-exitcode=97', './control']\n==1868983== Memcheck, a memory error detector\n==1868983== Copyright (C) 2002-2026, and GNU GPL'd, by Julian Seward et al.\n==1868983== Using Valgrind-3.27.1 and LibVEX; rerun with -h for copyright info\n==1868983== Command: ./control\n==1868983== \n--1868983-- Warning: zero subprog, missing DW_AT_abstract_origin in DW_TAG_inlined_subroutine in /home/david/src/qore/git/qore-packaging/work/core-dwarf-control-4/libcontrol.so\n**1868983** Standalone external TLS debug-info control\n==1868983==    at 0x486357E: VALGRIND_PRINTF_BACKTRACE(char const*, ...) (valgrind.h:7381)\n==1868983==    by 0x4863652: exercise (library.cpp:11)\n==1868983==    by 0x40046E: main (main.cpp:2)\n==1868983== \n==1868983== HEAP SUMMARY:\n==1868983==     in use at exit: 0 bytes in 0 blocks\n==1868983==   total heap usage: 2 allocs, 2 frees, 73,760 bytes allocated\n==1868983== \n==1868983== All heap blocks were freed -- no leaks are possible\n==1868983== \n==1868983== For lists of detected and suppressed errors, rerun with: -s\n==1868983== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)\n",
+    "qore_nonempty_dies": [
+      {
+        "die": [
+          " <3><1e3b693>: Abbrev Number: 446 (DW_TAG_inlined_subroutine)",
+          "    <1e3b695>   DW_AT_entry_pc    : 0x680aa7",
+          "    <1e3b69d>   DW_AT_GNU_entry_view: 0x1",
+          "    <1e3b6a1>   DW_AT_low_pc      : 0x680aa7",
+          "    <1e3b6a9>   DW_AT_high_pc     : 0xc",
+          "    <1e3b6b1>   DW_AT_call_file   : 507",
+          "    <1e3b6b3>   DW_AT_call_line   : 14128",
+          "    <1e3b6b5>   DW_AT_call_column : 18"
+        ],
+        "parents": {
+          "1": [
+            " <1><1e3ab84>: Abbrev Number: 269 (DW_TAG_subprogram)",
+            "    <1e3ab86>   DW_AT_name        : (indirect string, offset: 0x18b6ed1): qore_aot_module_ns_init_impl",
+            "    <1e3ab8a>   DW_AT_decl_file   : 507",
+            "    <1e3ab8c>   DW_AT_decl_line   : 14062",
+            "    <1e3ab8e>   DW_AT_decl_column : 13",
+            "    <1e3ab8f>   DW_AT_low_pc      : 0x68082b",
+            "    <1e3ab97>   DW_AT_high_pc     : 0xb43",
+            "    <1e3ab9f>   DW_AT_frame_base  : 1 byte block: 9c \t(DW_OP_call_frame_cfa)",
+            "    <1e3aba1>   DW_AT_call_all_calls: 1",
+            "    <1e3aba1>   DW_AT_sibling     : <0x1e3e09e>"
+          ]
+        }
+      },
+      {
+        "die": [
+          " <2><1f0aeb8>: Abbrev Number: 446 (DW_TAG_inlined_subroutine)",
+          "    <1f0aeba>   DW_AT_entry_pc    : 0xaec2a",
+          "    <1f0aec2>   DW_AT_GNU_entry_view: 0x2",
+          "    <1f0aec6>   DW_AT_low_pc      : 0xaec2a",
+          "    <1f0aece>   DW_AT_high_pc     : 0xc",
+          "    <1f0aed6>   DW_AT_call_file   : 504",
+          "    <1f0aed8>   DW_AT_call_line   : 36521",
+          "    <1f0aeda>   DW_AT_call_column : 12"
+        ],
+        "parents": {
+          "1": [
+            " <1><1f0ae7d>: Abbrev Number: 209 (DW_TAG_subprogram)",
+            "    <1f0ae7f>   DW_AT_external    : 1",
+            "    <1f0ae7f>   DW_AT_name        : (indirect string, offset: 0x1e8a3f8): qore_last_error",
+            "    <1f0ae83>   DW_AT_decl_file   : 504",
+            "    <1f0ae85>   DW_AT_decl_line   : 36519",
+            "    <1f0ae87>   DW_AT_decl_column : 34",
+            "    <1f0ae88>   DW_AT_type        : <0xac20aa>",
+            "    <1f0ae8c>   DW_AT_low_pc      : 0xaec29",
+            "    <1f0ae94>   DW_AT_high_pc     : 0x2c",
+            "    <1f0ae9c>   DW_AT_frame_base  : 1 byte block: 9c \t(DW_OP_call_frame_cfa)",
+            "    <1f0ae9e>   DW_AT_call_all_calls: 1",
+            "    <1f0ae9e>   DW_AT_sibling     : <0x1f0afa7>"
+          ]
+        }
+      },
+      {
+        "die": [
+          " <4><2e1ffef>: Abbrev Number: 610 (DW_TAG_inlined_subroutine)",
+          "    <2e1fff1>   DW_AT_entry_pc    : 0x1282c2",
+          "    <2e1fff9>   DW_AT_GNU_entry_view: 0x1",
+          "    <2e1fffd>   DW_AT_low_pc      : 0x1282c2",
+          "    <2e20005>   DW_AT_high_pc     : 0xf",
+          "    <2e2000d>   DW_AT_call_file   : 245",
+          "    <2e2000e>   DW_AT_call_line   : 374",
+          "    <2e20010>   DW_AT_call_column : 15"
+        ],
+        "parents": {
+          "1": [
+            " <1><2e1fee5>: Abbrev Number: 76 (DW_TAG_subprogram)",
+            "    <2e1fee6>   DW_AT_abstract_origin: <0x2e1fe90>",
+            "    <2e1feea>   DW_AT_linkage_name: (indirect string, offset: 0x216a03): _ZN24HttpClientConnectionBase11MethodGuardD2Ev",
+            "    <2e1feee>   DW_AT_object_pointer: <0x2e1ff08>",
+            "    <2e1fef2>   DW_AT_low_pc      : 0x1282b0",
+            "    <2e1fefa>   DW_AT_high_pc     : 0xeb",
+            "    <2e1ff02>   DW_AT_frame_base  : 1 byte block: 9c \t(DW_OP_call_frame_cfa)",
+            "    <2e1ff04>   DW_AT_call_all_calls: 1",
+            "    <2e1ff04>   DW_AT_sibling     : <0x2e203d2>"
+          ]
+        }
+      },
+      {
+        "die": [
+          " <3><2f0ac84>: Abbrev Number: 883 (DW_TAG_inlined_subroutine)",
+          "    <2f0ac86>   DW_AT_entry_pc    : 0x8e889",
+          "    <2f0ac8e>   DW_AT_GNU_entry_view: 0",
+          "    <2f0ac92>   DW_AT_low_pc      : 0x8e889",
+          "    <2f0ac9a>   DW_AT_high_pc     : 0xc",
+          "    <2f0aca2>   DW_AT_call_file   : 236",
+          "    <2f0aca3>   DW_AT_call_line   : 5551",
+          "    <2f0aca5>   DW_AT_call_column : 53",
+          "    <2f0aca6>   DW_AT_GNU_discriminator: 1"
+        ],
+        "parents": {
+          "1": [
+            " <1><2f0a925>: Abbrev Number: 76 (DW_TAG_subprogram)",
+            "    <2f0a926>   DW_AT_abstract_origin: <0x2f0a8e4>",
+            "    <2f0a92a>   DW_AT_linkage_name: (indirect string, offset: 0xa4c16f): _ZN21SSLSocketHelperHelperC2EP19qore_socket_privateb",
+            "    <2f0a92e>   DW_AT_object_pointer: <0x2f0a948>",
+            "    <2f0a932>   DW_AT_low_pc      : 0x8e7f0",
+            "    <2f0a93a>   DW_AT_high_pc     : 0xe6",
+            "    <2f0a942>   DW_AT_frame_base  : 1 byte block: 9c \t(DW_OP_call_frame_cfa)",
+            "    <2f0a944>   DW_AT_call_all_calls: 1",
+            "    <2f0a944>   DW_AT_sibling     : <0x2f0accb>"
+          ]
+        }
+      }
+    ],
+    "qualification_impact": "Inline stack-symbol metadata warning only. No suppression, compiler-flag change, threshold relaxation, or disabled descriptor checking. All seven Valgrind suites report zero errors and zero definite/indirect/possible lost bytes."
+  },
+  "native_commit": "8e7588ec41349d9cb2c25df7300e71e2a5376a21",
+  "packaging_commit": "1fd59409a765a219a62f800ae21213f305302fc5",
+  "rpm_metadata_preflight": {
+    "fedora": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-e",
+        "QORE_RPM_VERIFY_INSTALLED_DEPS=1",
+        "-v",
+        "/home/david/src/qore/git/qore:/source:ro",
+        "-w",
+        "/source",
+        "sha256:a437efbf23f3bf7b180f7d58a5ad3dd70d524372ae60a57380dff115a2b5feda",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "rpm/tests",
+        "-p",
+        "test_spec_metadata.py",
+        "-v"
+      ]
+    },
+    "leap": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-e",
+        "QORE_RPM_VERIFY_INSTALLED_DEPS=1",
+        "-v",
+        "/home/david/src/qore/git/qore:/source:ro",
+        "-w",
+        "/source",
+        "sha256:48f1246678238c3d1b479f5cffc69c511443b4855b7f548fc4b22bf793fb975b",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "rpm/tests",
+        "-p",
+        "test_spec_metadata.py",
+        "-v"
+      ]
+    },
+    "el10": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-e",
+        "QORE_RPM_VERIFY_INSTALLED_DEPS=1",
+        "-v",
+        "/home/david/src/qore/git/qore:/source:ro",
+        "-w",
+        "/source",
+        "sha256:50db5ec21c50dffb918d77c420f6c39d0c3c2c4c286b6150741de8c3dd80baeb",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "rpm/tests",
+        "-p",
+        "test_spec_metadata.py",
+        "-v"
+      ]
+    }
+  },
+  "orchestration_tests": {
+    "passed": 71,
+    "log": "results/core-policy-19-orchestration-tests.log"
+  },
+  "rpm_state": "Revision 19 local builds and installed checks launched; OBS revision 14 uploaded and source checksums verified, publication disabled",
+  "ci": {
+    "pipeline": 58577,
+    "url": "https://git.qoretechnologies.com/mirror/qore/-/pipelines/58577",
+    "observed_status": "running",
+    "sha": "8e7588ec41349d9cb2c25df7300e71e2a5376a21"
+  },
+  "source_manifest": {
+    "schema": 1,
+    "commit": "1fd59409a765a219a62f800ae21213f305302fc5",
+    "source_date_epoch": 1790942825,
+    "name": "qore",
+    "version": "3.0.0~git20261002.19",
+    "exclusions": [],
+    "sources": {
+      "qore-3.0.0~git20261002.19.tar.xz": "d9259095e2a7abe3545f117dc832d7c468b4f960f6e556c00085e5f805843abd",
+      "qore.spec": "c415a720fbd7288d18ca5b60a55c2a9a860ab8eb8f26c899df51f1ce694b2139"
+    },
+    "spec": "qore.spec"
+  },
+  "build_launch": {
+    "fedora": 1963356,
+    "leap": 1963357,
+    "el10": 1963360
+  },
+  "qualification_launch": {
+    "fedora": 1963361,
+    "leap": 1963362,
+    "el10": 1963363
+  },
+  "obs_upload": {
+    "qore": {
+      "source_commit": "1fd59409a765a219a62f800ae21213f305302fc5",
+      "revision": "14",
+      "srcmd5": "cd52ae0f3c9cdc9a09fbc9c09c1c3674",
+      "verified_files": {
+        "qore-3.0.0~git20261002.19.tar.xz": "b2cc0908d371c94be18dd7e426bb69a5",
+        "qore.spec": "ab0a2d19e7f0dbc83bea9fa1da83e17a",
+        "source-manifest.json": "ec7bfadd3e78e401de256d367a938efd"
+      }
+    }
+  }
+}
