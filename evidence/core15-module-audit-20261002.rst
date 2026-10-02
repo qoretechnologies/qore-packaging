@@ -262,3 +262,16 @@ backports have separate audits. Native ARM and release gates remain open.
    * - Correctness: Algorithms verified against reference implementations; edge cases tested (empty data, single sample, all-zero features)
      - Pass
      - 71 orchestration tests pass; all three distributions pass canonical core, SSH, MySQL and tree-sitter qualification; OBS provider/build flags were read back.
+
+Additional packaging-only scope reviewed on 2026-10-02
+-----------------------------------------------------
+
+The same complete checklist covers the LDAP/SSH2 canonical evidence, their two
+new package metadata files, Leap-only Cyrus SASL metadata and the OBS resolver
+configuration. All new metadata preserves disabled publication. LDAP final
+RPM, runtime and SDK checks pass on all targets; SSH2 final RPM and runtime
+steps pass independently of the still-running XML worker. OBS buildinfo verifies
+the interpreter and the same libgit2 provider families used locally. Canonical
+Cyrus SASL is built and exercised by Leap's installed LDAP suite. Its native
+backport audit is separate. The original three module uploads and Cyrus upload
+are verified against every remote source MD5, including the pinned manifests.

@@ -1,0 +1,950 @@
+{
+  "copyright": "Copyright (C) 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-02",
+  "targets": {
+    "fedora": {
+      "openldap": {
+        "result": "results/fedora-openldap-final-1-installed.json",
+        "sha256": "5a66005b004e4528f50655d817795e6505dd3f7a89a14f25b55d03bfd2eb5410",
+        "qualification": {
+          "steps": {
+            "sdk-dependencies": {
+              "exit_code": 0,
+              "log": "results/fedora-openldap-final-1-sdk-dependencies.log"
+            },
+            "build": {
+              "exit_code": 0,
+              "log": "results/fedora-openldap-final-1-build.log"
+            },
+            "runtime-install": {
+              "exit_code": 0,
+              "log": "results/fedora-openldap-final-1-runtime-install.log"
+            },
+            "runtime-tests": {
+              "exit_code": 0,
+              "log": "results/fedora-openldap-final-1-runtime-tests.log"
+            },
+            "sdk-install": {
+              "exit_code": 0,
+              "log": "results/fedora-openldap-final-1-sdk-install.log"
+            },
+            "sdk-tests": {
+              "exit_code": 0,
+              "log": "results/fedora-openldap-final-1-sdk-tests.log"
+            }
+          },
+          "core_qualification": {
+            "source_build": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-15",
+            "steps": {
+              "sdk-install": {
+                "exit_code": 0,
+                "log": "results/fedora-core-policy-15-sdk-install.log"
+              },
+              "sdk-tests": {
+                "exit_code": 0,
+                "log": "results/fedora-core-policy-15-sdk-tests.log"
+              },
+              "runtime-install": {
+                "exit_code": 0,
+                "log": "results/fedora-core-policy-15-runtime-install.log"
+              },
+              "runtime-tests": {
+                "exit_code": 0,
+                "log": "results/fedora-core-policy-15-runtime-tests.log"
+              }
+            },
+            "source": {
+              "schema": 1,
+              "commit": "c95c7378da33cc4c68d266c48f409cd4b14108db",
+              "source_date_epoch": 1790911113,
+              "name": "qore",
+              "version": "3.0.0~git20261002.15",
+              "exclusions": [],
+              "sources": {
+                "qore-3.0.0~git20261002.15.tar.xz": "84ead538812b4ebdf12950eaef74f30d4a9a4991a954b6b42eb311b40b83723b",
+                "qore.spec": "6adbddb232bbee8627b957234c26ca7c99bf170935357b2fb3fb3cbdcbfb357e"
+              },
+              "spec": "qore.spec"
+            },
+            "artifacts": {
+              "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.15-15.fc44.noarch.rpm": "dfee6f7a947deb607f8a51c6cfa4b992b15cc10db909a9e9e7e7aa0fb19433f6",
+              "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.15-15.fc44.noarch.rpm": "9eec4580c30715e8fd5ebb399efb68b3e8f58c804e7f5041df2a4999e9681172",
+              "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.15-15.fc44.noarch.rpm": "432820854344229725e27a456c566dbfc6ef839e67bf3ca0d641ca6861450699",
+              "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.15-15.fc44.noarch.rpm": "9739419596ba6b78fc983a2b1edba41bc7fb92dbc6395b2e14b262203e4d4bea",
+              "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.15-15.fc44.noarch.rpm": "5f5b290b82fc5aa52287246a5bfe5aafe73a0f90d06bef44bf63323a7d821415",
+              "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "a6a0fa60e11dd3cf45891e03bac156d5f79ae8be4aafde081260368e2a125af5",
+              "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "c2e0340cd1a32b11b4e19555051176eaefcff239ade2440d2c9376d0f462fe1a",
+              "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "6f18a0b824062a9f4a77c011f9c35f9fe72e727be46429628e3e69516f11c887",
+              "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "87c1f3b2e02a8691a113d8ba02e7a8d5ed4aa5d4b1f42656560a552eb27e55f6",
+              "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "5548b1dc449acb37ba15390c6d9b76ef29b14114cadbabbc4598c4f8035d92a6",
+              "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "559b69c6958afca83c19333724f0fc65e81d9a8b782d2e12595ada35fd4471c9",
+              "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "8f11644b4195a1506bed287479b37fbe3fb9ee0c9ec2252316b98b4689e5395c",
+              "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "10747480e8358c5a83fa1e57a390f44990f9f0e14114c3f18acb1f407cd56285",
+              "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "8632fad9742b588a69257ead7bbca1f3749c71d028855f519897e53ecf3420a1",
+              "rpmbuild/SRPMS/qore-3.0.0~git20261002.15-15.fc44.src.rpm": "82edf4fa0dc25c871ed47055ff8b88da16c24732a6c3f1a1dda8608884c44c58"
+            },
+            "sdk_image": "sha256:005e14a5056d890cd0bd604241091b911bbd5af4cd67bb967b7699ad4459bf0b",
+            "runtime_image": "sha256:c785b589f16457f7fb3ebf0e11e5b9d33a04b4fa97162c418585d96cd2c992c3",
+            "exit_code": 0
+          },
+          "phase": "complete",
+          "sdk_base": "sha256:9f2d9a391ce3e8525b0c05a622b5d6780233523ebffa8c46baba9f9f3ff088a2",
+          "build": {
+            "schema": 1,
+            "image": "sha256:9f2d9a391ce3e8525b0c05a622b5d6780233523ebffa8c46baba9f9f3ff088a2",
+            "source": {
+              "schema": 1,
+              "commit": "bd1858adb0acdc5d9c1e906f5adee9886b5cefa2",
+              "source_date_epoch": 1790917244,
+              "name": "qore-openldap-module",
+              "version": "2.0",
+              "exclusions": [
+                "m4/acx_pthread.m4"
+              ],
+              "sources": {
+                "qore-openldap-module-2.0.tar.xz": "838d7c4d09f1b0cb11cfcf06db6c59a5973c371090c3cb87eb430db78bcbd1e3",
+                "qore-openldap-module.spec": "5df502ec04d4fbf117da1f0206ab2e21084f9469f427670f1d0bb2e346ea6685"
+              },
+              "spec": "qore-openldap-module.spec"
+            },
+            "jobs": 2,
+            "network": "none",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--hostname",
+              "qore-rpm-builder",
+              "--user",
+              "1019:100",
+              "-e",
+              "HOME=/work/home",
+              "-e",
+              "SOURCE_DATE_EPOCH=1790917244",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/openldap-final-1:/sources:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-openldap-final-1:/work",
+              "sha256:9f2d9a391ce3e8525b0c05a622b5d6780233523ebffa8c46baba9f9f3ff088a2",
+              "sh",
+              "-c",
+              "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+              "build-local",
+              "-ba",
+              "--define",
+              "_topdir /work/rpmbuild",
+              "--define",
+              "_sourcedir /sources",
+              "--define",
+              "_smp_build_ncpus 2",
+              "--define",
+              "_buildhost qore-rpm-builder",
+              "/sources/qore-openldap-module.spec"
+            ],
+            "source_only": false,
+            "exit_code": 0,
+            "artifacts": {
+              "rpmbuild/RPMS/noarch/qore-openldap-module-doc-2.0-2.fc44.noarch.rpm": "1b18ae8bdebee88d64c07cad659568183e11919ce2a500360616edcb0cfb3c79",
+              "rpmbuild/RPMS/x86_64/qore-openldap-module-2.0-2.fc44.x86_64.rpm": "986ced45162092ba76233768efd2820007e817919ed9e40b4dd556ab031c579f",
+              "rpmbuild/RPMS/x86_64/qore-openldap-module-debuginfo-2.0-2.fc44.x86_64.rpm": "53f585c926d9518d6b1a75ea1672e2821db00ad00dd8c7cd4e2bac602229c8fd",
+              "rpmbuild/RPMS/x86_64/qore-openldap-module-debugsource-2.0-2.fc44.x86_64.rpm": "a680ab399db1fbe6b34888f7bdf662d1f7862d398e2cb36b3de49d47c1cf2821",
+              "rpmbuild/SRPMS/qore-openldap-module-2.0-2.fc44.src.rpm": "21022b86e466c09a1fc89bc22d6df92de4d895c309e31d6bdc2cccd36e1b176a"
+            }
+          },
+          "runtime_image": "sha256:b78765b5519cc98a70f2f8d99c483e0e045eb4b0858fe5a8dc6ff046bc5e4b84",
+          "sdk_image": "sha256:57b9774598f0cb1ff5783eb1ab530574fc9e56269ea22f823f2659096bb81693",
+          "exit_code": 0
+        }
+      },
+      "ssh2": {
+        "steps": {
+          "ssh2-build": {
+            "exit_code": 0,
+            "log": "results/fedora-xml-ssh2-final-2-ssh2-build.log"
+          },
+          "ssh2-runtime-install": {
+            "exit_code": 0,
+            "log": "results/fedora-xml-ssh2-final-2-ssh2-runtime-install.log"
+          },
+          "ssh2-runtime-check": {
+            "exit_code": 0,
+            "log": "results/fedora-xml-ssh2-final-2-ssh2-runtime-check.log"
+          },
+          "ssh2-installed-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-xml-ssh2-final-2-ssh2-installed-tests.log"
+          }
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:fe45118a3c91979c8b5fef9726a80f7b40aadc427eeaa28457dbd00c4139560b",
+          "source": {
+            "schema": 1,
+            "commit": "b72614a6a23be351c7d44a8c3334d883c0857564",
+            "source_date_epoch": 1790887854,
+            "name": "qore-ssh2-module",
+            "version": "2.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-ssh2-module-2.0.0.tar.xz": "0b74e30843f7ccc2f59f6f056cbcc8d21c3fffe500e176e58b126c90b2c7fae2",
+              "qore-ssh2-module.spec": "c540c87ea2bb096b807893c1ec6e841ac91f05684b793dd76aacfe15d6ddb9e0"
+            },
+            "spec": "qore-ssh2-module.spec"
+          },
+          "jobs": 4,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790887854",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/ssh2-final-source-1:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/fedora-ssh2-final-build-2:/work",
+            "sha256:fe45118a3c91979c8b5fef9726a80f7b40aadc427eeaa28457dbd00c4139560b",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 4",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-ssh2-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-ssh2-module-doc-2.0.0-2.fc44.noarch.rpm": "67ae1db936bff7a0a32dafc057efe96aa2f100e010f45c5ed31f5ab06766fa10",
+            "rpmbuild/RPMS/x86_64/qore-ssh2-module-2.0.0-2.fc44.x86_64.rpm": "260207cec185dc59242def2d6456b6789b7b897c28765b7d16ee1c0b187876ba",
+            "rpmbuild/RPMS/x86_64/qore-ssh2-module-debuginfo-2.0.0-2.fc44.x86_64.rpm": "7e57a1d8447c7c756fb7aa87cbaa51298d37209bf441cbc02379db124f276a25",
+            "rpmbuild/RPMS/x86_64/qore-ssh2-module-debugsource-2.0.0-2.fc44.x86_64.rpm": "d3aac7b685ce8d895fd399cc96c603dea38dc4a984bdf5056e2efbb27b4c80a4",
+            "rpmbuild/SRPMS/qore-ssh2-module-2.0.0-2.fc44.src.rpm": "f7b32777d6cdb2fedeacc71d23952eeed6ccd3eb31baa0e2ac52e56da91fe875"
+          }
+        },
+        "runtime_image": "sha256:6bab2e560cbbaf56dedefebf1bc22ec049bac425e30d585e9168c16be2cf4571",
+        "sdk_image": "sha256:fe45118a3c91979c8b5fef9726a80f7b40aadc427eeaa28457dbd00c4139560b"
+      }
+    },
+    "leap": {
+      "openldap": {
+        "result": "results/leap-openldap-final-1-installed.json",
+        "sha256": "5b7097f7829e6ddf80bbdd089431fef2bca3c41e0310482d5cf111c2e601a1a1",
+        "qualification": {
+          "steps": {
+            "sdk-dependencies": {
+              "exit_code": 0,
+              "log": "results/leap-openldap-final-1-sdk-dependencies.log"
+            },
+            "build": {
+              "exit_code": 0,
+              "log": "results/leap-openldap-final-1-build.log"
+            },
+            "runtime-install": {
+              "exit_code": 0,
+              "log": "results/leap-openldap-final-1-runtime-install.log"
+            },
+            "runtime-tests": {
+              "exit_code": 0,
+              "log": "results/leap-openldap-final-1-runtime-tests.log"
+            },
+            "sdk-install": {
+              "exit_code": 0,
+              "log": "results/leap-openldap-final-1-sdk-install.log"
+            },
+            "sdk-tests": {
+              "exit_code": 0,
+              "log": "results/leap-openldap-final-1-sdk-tests.log"
+            }
+          },
+          "core_qualification": {
+            "source_build": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-15",
+            "steps": {
+              "sdk-install": {
+                "exit_code": 0,
+                "log": "results/leap-core-policy-15-sdk-install.log"
+              },
+              "sdk-tests": {
+                "exit_code": 0,
+                "log": "results/leap-core-policy-15-sdk-tests.log"
+              },
+              "runtime-install": {
+                "exit_code": 0,
+                "log": "results/leap-core-policy-15-runtime-install.log"
+              },
+              "runtime-tests": {
+                "exit_code": 0,
+                "log": "results/leap-core-policy-15-runtime-tests.log"
+              }
+            },
+            "source": {
+              "schema": 1,
+              "commit": "c95c7378da33cc4c68d266c48f409cd4b14108db",
+              "source_date_epoch": 1790911113,
+              "name": "qore",
+              "version": "3.0.0~git20261002.15",
+              "exclusions": [],
+              "sources": {
+                "qore-3.0.0~git20261002.15.tar.xz": "84ead538812b4ebdf12950eaef74f30d4a9a4991a954b6b42eb311b40b83723b",
+                "qore.spec": "6adbddb232bbee8627b957234c26ca7c99bf170935357b2fb3fb3cbdcbfb357e"
+              },
+              "spec": "qore.spec"
+            },
+            "artifacts": {
+              "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.15-15.noarch.rpm": "55dbb2f35357215160c37680de7836caff9bf8a677055f02acdb4e3f9d5c80e4",
+              "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.15-15.noarch.rpm": "8fa1024eb67004cbec23975989dc1c5eb8b6545537a5a418cf71ea82a6e82093",
+              "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.15-15.noarch.rpm": "f87b163c1179c027a8e0bff6061a0975299103f2f132e7ef5bb5bf7c304b980c",
+              "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.15-15.noarch.rpm": "3b30da8d0a4ff2a429d8ae9ca9b1672e01d622e4d47f14d88a8636e1205e7601",
+              "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.15-15.noarch.rpm": "0b6b441f4003f4176650dba8b36dc28b18a3fba982a6329c5f7c196501e9addb",
+              "rpmbuild/RPMS/x86_64/libqore20-3.0.0~git20261002.15-15.x86_64.rpm": "5fdad7e82c625cbde8bec899fda23a6c48ceaf4843ac985086a219d0f0b23fa8",
+              "rpmbuild/RPMS/x86_64/libqore20-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "818f33d1e840f8318ad38ecb3195fcdfc59d0b2b870c52778a7ed58035a18b09",
+              "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.15-15.x86_64.rpm": "9f806b18716ad6deec71eb5c2678c936829af9fac703d2a95aafd51f38cb457a",
+              "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "9a9e0ec1a6f5f77df20659b3d31c3e15466394ba8c9d6e29c93a3090c664e987",
+              "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.15-15.x86_64.rpm": "7cd49da30ec06f18805a85b1f658660ce9d84c7d5d3d555e947608b8474107e4",
+              "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.15-15.x86_64.rpm": "ff7788dd27373e4317a69121b2512e2dab72d3116f9d307260337f6eaf3c9c89",
+              "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "c6f0218ba4bd9b126e065b1032cb49bf6d993ff2acaf979b0b9ab3b3540b1db0",
+              "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.15-15.x86_64.rpm": "041d41b480bc9677bd64702134d3d8d18871acfca9ec006b0d32daa06ce7a786",
+              "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "2583bd73d67c6f17ce561dcb5215a0abde82431715c4863cac286b946d890217",
+              "rpmbuild/SRPMS/qore-3.0.0~git20261002.15-15.src.rpm": "6a0fb2294794c810988b6ded0f0e3628b8beb0814a59f571ae5bdebc3f4eff79"
+            },
+            "sdk_image": "sha256:b5a2e03cb123ae277e58ffd792b60b6bb43134b444f0c5f8a9e513b7b8a44b12",
+            "runtime_image": "sha256:f8b671f49dbbf7edf0ff29aa2e146ef465d9a2ac4838e352133920f5c91b4a12",
+            "exit_code": 0
+          },
+          "sasl_dependency": {
+            "schema": 1,
+            "image": "sha256:c8403136a470b4a557f0a13f09114d8675b86252eaad8f4859fe22a2bafbedcc",
+            "source": {
+              "schema": 1,
+              "name": "cyrus-sasl-digestmd5",
+              "version": "2.1.28",
+              "commit": "bb93fb7c2316572adc8d359b5f565f084a3fd6e1",
+              "source_date_epoch": 1790917157,
+              "spec": "cyrus-sasl-digestmd5.spec",
+              "upstream": {
+                "url": "https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-2.1.28/cyrus-sasl-2.1.28.tar.gz",
+                "sha256": "7ccfc6abd01ed67c1a0924b353e526f1b766b21f42d4562ee635a8ebfc5bb38c"
+              },
+              "sources": {
+                "cyrus-sasl-2.1.28.tar.gz": "7ccfc6abd01ed67c1a0924b353e526f1b766b21f42d4562ee635a8ebfc5bb38c",
+                "cyrus-sasl-digestmd5-build.patch": "4617deefb9e39acf5616e76cad4c523ca6c694b2b2edb292ae7a185c29ee8d72",
+                "cyrus-sasl-digestmd5-openssl3.patch": "12e288b6abc763867e4a176e4bf46ce11e0491d61c353ad567def3181b719628",
+                "cyrus-sasl-digestmd5-test.c": "88e4ee72d8850c292367972fbb17da1871272004331ff1e4cb2756bc17c5db58",
+                "cyrus-sasl-digestmd5.rst": "48d10ffa9482d10ada49a3308c64d1a9ca2525b61b0af0207300c9b148920c9e",
+                "cyrus-sasl-digestmd5.spec": "82a9d8420b8efc1097ec66c2c81e90ba87871793d090e18c41954cfdf2e4fc6d"
+              }
+            },
+            "jobs": 2,
+            "network": "none",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--hostname",
+              "qore-rpm-builder",
+              "--user",
+              "1019:100",
+              "-e",
+              "HOME=/work/home",
+              "-e",
+              "SOURCE_DATE_EPOCH=1790917157",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/cyrus-sasl-digestmd5-final-1:/sources:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-cyrus-sasl-digestmd5-final-1:/work",
+              "sha256:c8403136a470b4a557f0a13f09114d8675b86252eaad8f4859fe22a2bafbedcc",
+              "sh",
+              "-c",
+              "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+              "build-local",
+              "-ba",
+              "--define",
+              "_topdir /work/rpmbuild",
+              "--define",
+              "_sourcedir /sources",
+              "--define",
+              "_smp_build_ncpus 2",
+              "--define",
+              "_buildhost qore-rpm-builder",
+              "/sources/cyrus-sasl-digestmd5.spec"
+            ],
+            "source_only": false,
+            "exit_code": 0,
+            "artifacts": {
+              "rpmbuild/RPMS/x86_64/cyrus-sasl-digestmd5-2.1.28-160000.3.2.qore.x86_64.rpm": "164f3154d3bf1c097aa8bae9d520d40a8c960272163a1c8dea44556bfdb2a525",
+              "rpmbuild/RPMS/x86_64/cyrus-sasl-digestmd5-debuginfo-2.1.28-160000.3.2.qore.x86_64.rpm": "8e345ff2c4bed8490cf25cf171c55d60adad64987b16fafdb4aaffd81783e994",
+              "rpmbuild/RPMS/x86_64/cyrus-sasl-digestmd5-debugsource-2.1.28-160000.3.2.qore.x86_64.rpm": "df5507b33e4b2f69c54a7b0535d0f440e0b96c668cfb9f01215cf34528f6611f",
+              "rpmbuild/SRPMS/cyrus-sasl-digestmd5-2.1.28-160000.3.2.qore.src.rpm": "e39d9a3646dcdd8e01e92255619d8665fa6923a7d99162cfd5eddd1b3d9adff3"
+            }
+          },
+          "phase": "complete",
+          "sdk_base": "sha256:4db6f38af0d713974229203b6eab34053f7ba255695f177d0671421b510e2619",
+          "build": {
+            "schema": 1,
+            "image": "sha256:4db6f38af0d713974229203b6eab34053f7ba255695f177d0671421b510e2619",
+            "source": {
+              "schema": 1,
+              "commit": "bd1858adb0acdc5d9c1e906f5adee9886b5cefa2",
+              "source_date_epoch": 1790917244,
+              "name": "qore-openldap-module",
+              "version": "2.0",
+              "exclusions": [
+                "m4/acx_pthread.m4"
+              ],
+              "sources": {
+                "qore-openldap-module-2.0.tar.xz": "838d7c4d09f1b0cb11cfcf06db6c59a5973c371090c3cb87eb430db78bcbd1e3",
+                "qore-openldap-module.spec": "5df502ec04d4fbf117da1f0206ab2e21084f9469f427670f1d0bb2e346ea6685"
+              },
+              "spec": "qore-openldap-module.spec"
+            },
+            "jobs": 2,
+            "network": "none",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--hostname",
+              "qore-rpm-builder",
+              "--user",
+              "1019:100",
+              "-e",
+              "HOME=/work/home",
+              "-e",
+              "SOURCE_DATE_EPOCH=1790917244",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/openldap-final-1:/sources:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-openldap-final-1:/work",
+              "sha256:4db6f38af0d713974229203b6eab34053f7ba255695f177d0671421b510e2619",
+              "sh",
+              "-c",
+              "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+              "build-local",
+              "-ba",
+              "--define",
+              "_topdir /work/rpmbuild",
+              "--define",
+              "_sourcedir /sources",
+              "--define",
+              "_smp_build_ncpus 2",
+              "--define",
+              "_buildhost qore-rpm-builder",
+              "/sources/qore-openldap-module.spec"
+            ],
+            "source_only": false,
+            "exit_code": 0,
+            "artifacts": {
+              "rpmbuild/RPMS/noarch/qore-openldap-module-doc-2.0-2.noarch.rpm": "e0d35aab9c319964d9aff5430f3ebcfc5bbcbc08d024462b386d7bd3cfc763e2",
+              "rpmbuild/RPMS/x86_64/qore-openldap-module-2.0-2.x86_64.rpm": "6948bc52df985ac77fe0fcebd5065c8bdd25330c65d0eb366db3681648efeced",
+              "rpmbuild/RPMS/x86_64/qore-openldap-module-debuginfo-2.0-2.x86_64.rpm": "a324c50f07e2b95d67fde5b5982b9ed7859ae76c008b3144db5af25b04303d0f",
+              "rpmbuild/RPMS/x86_64/qore-openldap-module-debugsource-2.0-2.x86_64.rpm": "895ff63c1de37f25e93d937f6f4a812a755954699379cb1e4a47b794d8663c28",
+              "rpmbuild/SRPMS/qore-openldap-module-2.0-2.src.rpm": "8610a7ede0f082ee199270d00e63e5a991d3059d97fc844c9fe555de69437e9e"
+            }
+          },
+          "runtime_image": "sha256:c618b2cdaa70cbdd5fda983c32a3dd1ec8cf285d3291c8ca143f7a0864259da0",
+          "sdk_image": "sha256:9f94380848567df509c70f25e9dae34e4c93b45e8db83a9aa4efd1ae2a18dbe1",
+          "exit_code": 0
+        }
+      },
+      "ssh2": {
+        "steps": {
+          "ssh2-build": {
+            "exit_code": 0,
+            "log": "results/leap-xml-ssh2-final-2-ssh2-build.log"
+          },
+          "ssh2-runtime-install": {
+            "exit_code": 0,
+            "log": "results/leap-xml-ssh2-final-2-ssh2-runtime-install.log"
+          },
+          "ssh2-runtime-check": {
+            "exit_code": 0,
+            "log": "results/leap-xml-ssh2-final-2-ssh2-runtime-check.log"
+          },
+          "ssh2-installed-tests": {
+            "exit_code": 0,
+            "log": "results/leap-xml-ssh2-final-2-ssh2-installed-tests.log"
+          }
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:eba82b9b3966e12c8363455ca8c89fa8b5d9f50d9741739280040422b5ebb4a0",
+          "source": {
+            "schema": 1,
+            "commit": "b72614a6a23be351c7d44a8c3334d883c0857564",
+            "source_date_epoch": 1790887854,
+            "name": "qore-ssh2-module",
+            "version": "2.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-ssh2-module-2.0.0.tar.xz": "0b74e30843f7ccc2f59f6f056cbcc8d21c3fffe500e176e58b126c90b2c7fae2",
+              "qore-ssh2-module.spec": "c540c87ea2bb096b807893c1ec6e841ac91f05684b793dd76aacfe15d6ddb9e0"
+            },
+            "spec": "qore-ssh2-module.spec"
+          },
+          "jobs": 4,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790887854",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/ssh2-final-source-1:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/leap-ssh2-final-build-2:/work",
+            "sha256:eba82b9b3966e12c8363455ca8c89fa8b5d9f50d9741739280040422b5ebb4a0",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 4",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-ssh2-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-ssh2-module-doc-2.0.0-2.noarch.rpm": "f9981ed033ce883d87a607ebcb5fbff3275953d39b7b46b38bf4c29251a7ae3e",
+            "rpmbuild/RPMS/x86_64/qore-ssh2-module-2.0.0-2.x86_64.rpm": "4df1d9204f5a271541aa722c59f2cd03ffb35581f2e05c69f0e57d10133c7231",
+            "rpmbuild/RPMS/x86_64/qore-ssh2-module-debuginfo-2.0.0-2.x86_64.rpm": "a22b3d009a3de3e1074579f833370845db3ff0e1a31237e29308ad6e18e15924",
+            "rpmbuild/RPMS/x86_64/qore-ssh2-module-debugsource-2.0.0-2.x86_64.rpm": "efbb7d466fd205ef739cb8f53936e49a2f29660313db4d99bdf166758b39635d",
+            "rpmbuild/SRPMS/qore-ssh2-module-2.0.0-2.src.rpm": "1a25ad844d44dc5a85daa6cc4e290fe71d45e85ac4d68db0ff1c01cdf8b8aa09"
+          }
+        },
+        "runtime_image": "sha256:364d490bd034690d439f186487267079773774238a6f20e9b4c02c27b6090c16",
+        "sdk_image": "sha256:eba82b9b3966e12c8363455ca8c89fa8b5d9f50d9741739280040422b5ebb4a0"
+      }
+    },
+    "el10": {
+      "openldap": {
+        "result": "results/el10-openldap-final-1-installed.json",
+        "sha256": "6a062cf6be1a99f55bb971d9bad0bcf9b316f4d2e36b98c6705d6996f37ff5dd",
+        "qualification": {
+          "steps": {
+            "sdk-dependencies": {
+              "exit_code": 0,
+              "log": "results/el10-openldap-final-1-sdk-dependencies.log"
+            },
+            "build": {
+              "exit_code": 0,
+              "log": "results/el10-openldap-final-1-build.log"
+            },
+            "runtime-install": {
+              "exit_code": 0,
+              "log": "results/el10-openldap-final-1-runtime-install.log"
+            },
+            "runtime-tests": {
+              "exit_code": 0,
+              "log": "results/el10-openldap-final-1-runtime-tests.log"
+            },
+            "sdk-install": {
+              "exit_code": 0,
+              "log": "results/el10-openldap-final-1-sdk-install.log"
+            },
+            "sdk-tests": {
+              "exit_code": 0,
+              "log": "results/el10-openldap-final-1-sdk-tests.log"
+            }
+          },
+          "core_qualification": {
+            "source_build": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-15",
+            "steps": {
+              "sdk-install": {
+                "exit_code": 0,
+                "log": "results/el10-core-policy-15-sdk-install.log"
+              },
+              "sdk-tests": {
+                "exit_code": 0,
+                "log": "results/el10-core-policy-15-sdk-tests.log"
+              },
+              "runtime-install": {
+                "exit_code": 0,
+                "log": "results/el10-core-policy-15-runtime-install.log"
+              },
+              "runtime-tests": {
+                "exit_code": 0,
+                "log": "results/el10-core-policy-15-runtime-tests.log"
+              }
+            },
+            "source": {
+              "schema": 1,
+              "commit": "c95c7378da33cc4c68d266c48f409cd4b14108db",
+              "source_date_epoch": 1790911113,
+              "name": "qore",
+              "version": "3.0.0~git20261002.15",
+              "exclusions": [],
+              "sources": {
+                "qore-3.0.0~git20261002.15.tar.xz": "84ead538812b4ebdf12950eaef74f30d4a9a4991a954b6b42eb311b40b83723b",
+                "qore.spec": "6adbddb232bbee8627b957234c26ca7c99bf170935357b2fb3fb3cbdcbfb357e"
+              },
+              "spec": "qore.spec"
+            },
+            "artifacts": {
+              "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.15-15.el10.noarch.rpm": "8c576e1267ac7dbd26eb2ee1e1fe50cf3a565371e338a41c7e695cc575036ba6",
+              "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.15-15.el10.noarch.rpm": "debc893ddbcef759752c30f9a80b19a27eaca8cdad2f5eb5296b599e0227100a",
+              "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.15-15.el10.noarch.rpm": "8b669398cf82a5eb2027dc822e928fdd34b40ed6f49303d063229eb44b19cd1a",
+              "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.15-15.el10.noarch.rpm": "e015ba63c3fa3a0503142f5e47b262468f090d8dd842e55b99e05e8b15cc4e12",
+              "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.15-15.el10.noarch.rpm": "2f75fc3fe70b42cba1f560cda65e6d4957c4125b167151d400ecb0d98ff62157",
+              "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.15-15.el10.x86_64.rpm": "831a186675735e366fc1be51f81d401f1fc29a6dd0c77f33ae4bdb8457d1406a",
+              "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "9a4681a55acca5438498de4717eeee17a5f17c12f80e3fb710ee227c9cfa4970",
+              "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.15-15.el10.x86_64.rpm": "de815609d6c1826c91c04ef00880d094ba5af2ae1d7156a4caf35efbb9c90074",
+              "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "86765aba7928f55fc56957f79ea3a563e3761828a7dd17b635c5b7d55ff97382",
+              "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.15-15.el10.x86_64.rpm": "e4dff7e464309a0575d5e4ac2c120d42b8bf0ad5aa799bdd0938a85732d00dac",
+              "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.15-15.el10.x86_64.rpm": "122f57a948c13242fa35e3b7efcde51fc8b2bd1da86f031b0477489487673fcb",
+              "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "3541b39da38dba67d594dba615c1d0bb22d75473f7031e9291fa5adf057286f4",
+              "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.15-15.el10.x86_64.rpm": "e3937674c45a826fc3a5d5aaa353561b56e27ca96100af78ee557af0d9d93cc8",
+              "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "271b169960a34ad395515d65019d20fc83d0c7debe89bc27a71a88f5f80ffdfc",
+              "rpmbuild/SRPMS/qore-3.0.0~git20261002.15-15.el10.src.rpm": "69de1b8b48b0f918b3eb0f4b2b7099635cfe052e4fd9ea7aa69f032a750c2fd0"
+            },
+            "sdk_image": "sha256:a4babfcc82227fb71574aec479c85a75ddeebedb9f7d51a8157556e47843347d",
+            "runtime_image": "sha256:dd83d34f9e33c45a0bf7479de106759e86a6a4514f32d264a7648e2999b3168f",
+            "exit_code": 0
+          },
+          "phase": "complete",
+          "sdk_base": "sha256:7b81e1706d05e5e7212cce936f208ccfc4f9136667bae8682a05d857635e8b0b",
+          "build": {
+            "schema": 1,
+            "image": "sha256:7b81e1706d05e5e7212cce936f208ccfc4f9136667bae8682a05d857635e8b0b",
+            "source": {
+              "schema": 1,
+              "commit": "bd1858adb0acdc5d9c1e906f5adee9886b5cefa2",
+              "source_date_epoch": 1790917244,
+              "name": "qore-openldap-module",
+              "version": "2.0",
+              "exclusions": [
+                "m4/acx_pthread.m4"
+              ],
+              "sources": {
+                "qore-openldap-module-2.0.tar.xz": "838d7c4d09f1b0cb11cfcf06db6c59a5973c371090c3cb87eb430db78bcbd1e3",
+                "qore-openldap-module.spec": "5df502ec04d4fbf117da1f0206ab2e21084f9469f427670f1d0bb2e346ea6685"
+              },
+              "spec": "qore-openldap-module.spec"
+            },
+            "jobs": 2,
+            "network": "none",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--hostname",
+              "qore-rpm-builder",
+              "--user",
+              "1019:100",
+              "-e",
+              "HOME=/work/home",
+              "-e",
+              "SOURCE_DATE_EPOCH=1790917244",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/openldap-final-1:/sources:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-openldap-final-1:/work",
+              "sha256:7b81e1706d05e5e7212cce936f208ccfc4f9136667bae8682a05d857635e8b0b",
+              "sh",
+              "-c",
+              "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+              "build-local",
+              "-ba",
+              "--define",
+              "_topdir /work/rpmbuild",
+              "--define",
+              "_sourcedir /sources",
+              "--define",
+              "_smp_build_ncpus 2",
+              "--define",
+              "_buildhost qore-rpm-builder",
+              "/sources/qore-openldap-module.spec"
+            ],
+            "source_only": false,
+            "exit_code": 0,
+            "artifacts": {
+              "rpmbuild/RPMS/noarch/qore-openldap-module-doc-2.0-2.el10.noarch.rpm": "8e1fd4b556389be33bebe3a3cbc40ec545ab2d863d3d9c18f7d60d7cc76f91c2",
+              "rpmbuild/RPMS/x86_64/qore-openldap-module-2.0-2.el10.x86_64.rpm": "ae2abd8bd32dce20e9ca223b8275bb1b07bc385f3e8eacfcc0ec8c4ebdb6ccb3",
+              "rpmbuild/RPMS/x86_64/qore-openldap-module-debuginfo-2.0-2.el10.x86_64.rpm": "13cf26a1c7e4920648e8f21619a1bc50b034fbeb1273a70d96ce38d19fe6f31b",
+              "rpmbuild/RPMS/x86_64/qore-openldap-module-debugsource-2.0-2.el10.x86_64.rpm": "e7f0b2e4ab139aea8af67142f859605312317b3319c99bbed4dac9a89da4d836",
+              "rpmbuild/SRPMS/qore-openldap-module-2.0-2.el10.src.rpm": "7c8388d541a61175f75ae57d19239637e056583beb3fee0380b5a41e0e803c85"
+            }
+          },
+          "runtime_image": "sha256:29c5468cc207707d52531762013471baae1040d00065f44d5b273c3f1de6303f",
+          "sdk_image": "sha256:ece6108e1e71804cbf9dd4326031546aead628fca45ab53f5f9f369f8b3dc1b8",
+          "exit_code": 0
+        }
+      },
+      "ssh2": {
+        "steps": {
+          "ssh2-build": {
+            "exit_code": 0,
+            "log": "results/el10-xml-ssh2-final-2-ssh2-build.log"
+          },
+          "ssh2-runtime-install": {
+            "exit_code": 0,
+            "log": "results/el10-xml-ssh2-final-2-ssh2-runtime-install.log"
+          },
+          "ssh2-runtime-check": {
+            "exit_code": 0,
+            "log": "results/el10-xml-ssh2-final-2-ssh2-runtime-check.log"
+          },
+          "ssh2-installed-tests": {
+            "exit_code": 0,
+            "log": "results/el10-xml-ssh2-final-2-ssh2-installed-tests.log"
+          }
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:652e598d89b0e53fd57de3b96ca1a99d8dea8c35760386892646d817679e88dc",
+          "source": {
+            "schema": 1,
+            "commit": "b72614a6a23be351c7d44a8c3334d883c0857564",
+            "source_date_epoch": 1790887854,
+            "name": "qore-ssh2-module",
+            "version": "2.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-ssh2-module-2.0.0.tar.xz": "0b74e30843f7ccc2f59f6f056cbcc8d21c3fffe500e176e58b126c90b2c7fae2",
+              "qore-ssh2-module.spec": "c540c87ea2bb096b807893c1ec6e841ac91f05684b793dd76aacfe15d6ddb9e0"
+            },
+            "spec": "qore-ssh2-module.spec"
+          },
+          "jobs": 4,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790887854",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/ssh2-final-source-1:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/el10-ssh2-final-build-2:/work",
+            "sha256:652e598d89b0e53fd57de3b96ca1a99d8dea8c35760386892646d817679e88dc",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 4",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-ssh2-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-ssh2-module-doc-2.0.0-2.el10.noarch.rpm": "88796d53e450421748cc69d640edc1ac2617897e91e82d03cd5f71f23a6ab8da",
+            "rpmbuild/RPMS/x86_64/qore-ssh2-module-2.0.0-2.el10.x86_64.rpm": "4e12ea227e85f12b315417e7aa741a19d2c2de3e9e2ae0d1f3982391c6d24b05",
+            "rpmbuild/RPMS/x86_64/qore-ssh2-module-debuginfo-2.0.0-2.el10.x86_64.rpm": "6cf554acbd466bb13361f3776c0c4d4869a33513c295cc55a83e7063644ed92c",
+            "rpmbuild/RPMS/x86_64/qore-ssh2-module-debugsource-2.0.0-2.el10.x86_64.rpm": "3cb7c47404ff24e1cfc7b48ead3a9afde8e6439ed2dd72040a102cafe7152b37",
+            "rpmbuild/SRPMS/qore-ssh2-module-2.0.0-2.el10.src.rpm": "b5b01a2c8af2c7891b47c72e9b5a03884844322cedd2f9c8772904467abd8af3"
+          }
+        },
+        "runtime_image": "sha256:8d8f6df99862a8146940e8b84b52b9508525194116b98d9c43a8b5b54ea440a5",
+        "sdk_image": "sha256:652e598d89b0e53fd57de3b96ca1a99d8dea8c35760386892646d817679e88dc"
+      }
+    }
+  },
+  "uploads": {
+    "obs-qualified-modules-20261002-upload.json": {
+      "qore-ssh-module": {
+        "source_commit": "a25c586896e60e6499f60562d98ab62e73d17683",
+        "revision": "1",
+        "srcmd5": "c113d95a299ab38adf0636cc40388e51",
+        "verified_files": {
+          "qore-ssh-module-1.0.0.tar.xz": "928fe5a81636971d286690f80d911fd5",
+          "qore-ssh-module.spec": "b64f7400af99e49a278d6fb36243688e",
+          "source-manifest.json": "3e3c93f9e5661c0575207e7ff9d94784"
+        }
+      },
+      "qore-mysql-module": {
+        "source_commit": "46448fbbdc6ed47467d819b0a1fca702aa4d46d7",
+        "revision": "1",
+        "srcmd5": "dbfcef7a475411bc932563ea2aad6db4",
+        "verified_files": {
+          "qore-mysql-module-2.2.tar.xz": "1e8c8bcdc8cc59eefad9fc8562f58b88",
+          "qore-mysql-module.spec": "6ddfb2d276c25de3cf71e9464782906a",
+          "source-manifest.json": "42c5ca4deae1505c935256584fee101f"
+        }
+      },
+      "qore-treesitter-module": {
+        "source_commit": "31dad5f9090518fd2ab6e84a239f670ef3a31873",
+        "revision": "1",
+        "srcmd5": "e18c617bba4068e615c9f1c3ee677596",
+        "verified_files": {
+          "qore-treesitter-module-1.0.0.tar.xz": "9acb170dc1503538e1b7757eb46038cc",
+          "qore-treesitter-module.spec": "ffb7932fb53292260a9c26eae06b3422",
+          "tree-sitter-python-0.25.0.tar.xz": "ab411b63e1d9179ba1b2a47d217a8ed0",
+          "tree-sitter-java-0.23.5.tar.xz": "7076afb2d5a132e9d907c55b91779f99",
+          "tree-sitter-json-0.24.8.tar.xz": "4c5ac56dfbed34bcad37e58e165f6062",
+          "tree-sitter-yaml-0.7.2.tar.xz": "72db28d539128c4e7a812a8d925f6d23",
+          "tree-sitter-javascript-0.25.0.tar.xz": "d8dd6baa754488137900529c7294aaab",
+          "tree-sitter-kotlin-0.3.8.tar.xz": "b10b8525149ca0eedb7eb4467ec78a0d",
+          "tree-sitter-typescript-0.23.2.tar.xz": "78fa430e80c3c0ba3337484ffab094a4",
+          "tree-sitter-sql-0.3.11.tar.xz": "0ca35a94471d2197c82c02f27fe70498",
+          "tree-sitter-markdown-0.5.3.tar.xz": "0a7c16db5d3524bfefa5c65bbced4057",
+          "source-manifest.json": "c654f19682256d120e1f043e90e668a1"
+        }
+      }
+    },
+    "obs-cyrus-sasl-digestmd5-final-1-upload.json": {
+      "commit": "bb93fb7c2316572adc8d359b5f565f084a3fd6e1",
+      "rev": "1",
+      "srcmd5": "c8045aef7ace1adfb4d8b1b332c1a1e8",
+      "files": {
+        "cyrus-sasl-2.1.28.tar.gz": "6f228a692516f5318a64505b46966cfa",
+        "cyrus-sasl-digestmd5-build.patch": "c2e1f7d47c3825fd2a406200f654c159",
+        "cyrus-sasl-digestmd5-openssl3.patch": "71edbacb9f6fe6ba398a5ce457716e84",
+        "cyrus-sasl-digestmd5-test.c": "238199b6b3f2f35bb1d6246b91fe1ec2",
+        "cyrus-sasl-digestmd5.rst": "bc654e975a6a5dc3e00bfc85ee20c51c",
+        "cyrus-sasl-digestmd5.spec": "1ed870470518501c967469d07c9420a1",
+        "source-manifest.json": "d1a6de5127051d0ae1296cc74e269e4d"
+      }
+    }
+  },
+  "resolver_checks": {
+    "obs-qore-uuid-module-openSUSE_Leap_16.0-resolver-20261002.xml": {
+      "sha256": "866bfd4cb197d7fa983f0eadffa122da948b2c50b6a4471e4707455a109e598f",
+      "providers": [
+        {
+          "name": "qore-devel",
+          "version": "3.0.0~git20261002.15",
+          "release": "lp160.15.1",
+          "arch": "x86_64",
+          "hdrmd5": "f587341233403cdbae5545c966a9180d",
+          "project": "home:davidnichols:qore:testing",
+          "repository": "openSUSE_Leap_16.0"
+        },
+        {
+          "name": "qore",
+          "version": "3.0.0~git20261002.15",
+          "release": "lp160.15.1",
+          "arch": "x86_64",
+          "hdrmd5": "2490b3308be43e5473bb26c98aa5dea9",
+          "project": "home:davidnichols:qore:testing",
+          "repository": "openSUSE_Leap_16.0"
+        }
+      ]
+    },
+    "obs-qore-git-module-Fedora_44-resolver-20261002.xml": {
+      "sha256": "f9e8c400be0e44b36d5cea57f4afe1a26ed6e95dd446a63fc9c915e1d85fe921",
+      "providers": [
+        {
+          "name": "qore-devel",
+          "version": "3.0.0~git20261002.15",
+          "release": "15.1",
+          "arch": "x86_64",
+          "hdrmd5": "4ab35fe9ff847fcd87b1e57e0c6e5fd9",
+          "project": "home:davidnichols:qore:testing",
+          "repository": "Fedora_44"
+        },
+        {
+          "name": "qore",
+          "version": "3.0.0~git20261002.15",
+          "release": "15.1",
+          "arch": "x86_64",
+          "hdrmd5": "bbd455d0d0c5e30afeeb927cc81a8795",
+          "project": "home:davidnichols:qore:testing",
+          "repository": "Fedora_44"
+        },
+        {
+          "name": "libgit2-devel",
+          "version": "1.9.7",
+          "release": "1.fc44",
+          "arch": "x86_64",
+          "hdrmd5": "742cac796f9d36fd6865d456a54eef37",
+          "project": "Fedora:44",
+          "repository": "update"
+        }
+      ]
+    },
+    "obs-qore-git-module-AlmaLinux_10-resolver-20261002.xml": {
+      "sha256": "b5fd96fdd76a9812e04233af62965ad65c44a73d6f7d687de460b39bd463eda2",
+      "providers": [
+        {
+          "name": "qore-devel",
+          "version": "3.0.0~git20261002.15",
+          "release": "15.1",
+          "arch": "x86_64",
+          "hdrmd5": "abde56a015e9e28dcc9ce4cdf55856b6",
+          "project": "home:davidnichols:qore:testing",
+          "repository": "AlmaLinux_10"
+        },
+        {
+          "name": "qore",
+          "version": "3.0.0~git20261002.15",
+          "release": "15.1",
+          "arch": "x86_64",
+          "hdrmd5": "46f6cad9e9eff727883445b9d3d07f56",
+          "project": "home:davidnichols:qore:testing",
+          "repository": "AlmaLinux_10"
+        },
+        {
+          "name": "libgit2_1.9-devel",
+          "version": "1.9.7",
+          "release": "1.el10_3",
+          "arch": "x86_64",
+          "hdrmd5": "18e259eda2de812a9ca9f504786208b0",
+          "project": "Fedora:EPEL:10",
+          "repository": "standard"
+        }
+      ]
+    }
+  }
+}

@@ -17,7 +17,7 @@ full logs, containers and RPMs are retained under ignored ``results/`` and
 ``work/`` directories. Do not interpret a successfully prepared SRPM as a
 successful binary build.
 
-Twenty-four external modules have committed RPM packaging and pass builds and
+Twenty-six external modules have committed RPM packaging and pass builds and
 installed-runtime suites on Fedora 44, Leap 16.0 and EL10. PostgreSQL includes
 mandatory Fedora pgvector coverage. ZeroMQ includes draft sockets and CURVE.
 The original twenty-one modules now have x86_64 OBS builds enabled on all three
@@ -26,14 +26,20 @@ distributions and Fedora aarch64 builds enabled, with publication disabled.
 Core revision 15 passes all 400 local suites plus SDK, compiler, debugger and
 minimal-runtime ONNX qualification on all three distributions. OBS x86_64 builds
 also pass on all three. Native aarch64 remains a release gate: Fedora passed
-399/400 suites but timed out in HttpClientHttpsProxy; twenty x86_64 stress runs (four at a time)
-pass, so the native failure is still under investigation.
-Leap and EL10 native results must also be qualified before publication.
+399/400 suites but timed out in HttpClientHttpsProxy. Twenty Leap and 100 Fedora
+x86_64 stress runs pass, so the native failure remains under investigation.
+Leap and EL10 aarch64 core builds pass; native installed-package checks remain
+required before publication.
 
 The testing project's build configuration explicitly chooses CPU onnxruntime
 for qore-stdlib's ELF dependencies. Fedora provides those capabilities from
 several runtime, development, ROCm and Python packages; OBS otherwise refuses
 to choose. Verified buildinfo selects the CPU runtime with the revision 15 SDK.
+The project also maps ``/usr/bin/qore`` to its owning package and selects the
+qualified libgit2 development provider for each target. OBS omits repository
+file lists from dependency solving; these mappings follow its documented
+``FileProvides`` and ``Prefer`` configuration rules:
+https://openbuildservice.org/help/manuals/obs-user-guide/cha-obs-prjconfig.
 
 SSH, MySQL and tree-sitter now pass canonical builds and installed runtime/SDK
 checks against revision 15 on all three targets. SSH includes runnable installed
@@ -44,19 +50,21 @@ corrects copied-node source and cursor reset behavior, and adds ownership and
 concurrency regressions. All 99 cases / 371 assertions pass normally and under
 Valgrind on all three targets, with zero errors, losses or suppressions.
 
-XML and SSH2 have committed recipes and source fixes. SSH2's final builds and
-installed suites pass on all three targets. XML passes its final Leap build;
-remaining canonical XML runtime/target checks are still running. Their earlier
-qualification includes 304 XML suites, 106 Litmus cases against Qore, native
-Valgrind and strict documentation. They remain outside the twenty-four count
-until their final qualification evidence is recorded separately.
+SSH2 and OpenLDAP now pass canonical builds and installed-runtime checks on
+all three distributions and are included in the twenty-six count. OpenLDAP
+also passes SDK/compiler and seven installed-reference checks. Each target runs
+all 86 LDAP cases / 501 assertions, SASL, CLI and verified StartTLS checks.
+Its Leap fixture exposed a distribution DIGEST-MD5 initialization crash; the
+committed plugin backport uses a private OpenSSL context and complete cleanup.
+Both its candidate and canonical RPM checks pass Valgrind with zero errors or
+lost allocations. The ten unchanged DES/3DES deprecation call sites retain
+their explicitly approved build-diagnostic exception. Native OBS builds of
+that dependency are enabled for Leap with publication disabled.
 
-OpenLDAP's strict references pass on all three targets. Its Leap SASL fixture
-exposed a distribution DIGEST-MD5 initialization crash. A tested plugin backport
-uses a private OpenSSL context and correct cleanup; all 86 LDAP cases pass with
-the installed plugin. Only the ten unchanged DES/3DES build-deprecation call
-sites have an explicitly approved diagnostic exception. Package qualification
-and native architecture coverage are still in progress.
+XML passes its final builds on all three targets and final installed checks on
+Leap. Fedora and EL10 installed checks are still running. Earlier qualification
+includes 304 XML suites, 106 Litmus cases against Qore, native Valgrind and strict
+documentation; XML remains outside the qualified count until final checks finish.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is
