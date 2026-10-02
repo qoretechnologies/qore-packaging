@@ -1,7 +1,7 @@
 {
   "date": "2026-10-02",
   "qore_base": "ef781b7914e88044a269b7c0bda3b02288919bde",
-  "state": "Native fixes qualified; GCC/Valgrind debug-information diagnostic explicitly approved by user on 2026-10-02",
+  "state": "Native fixes, 21-job CI and all three local RPM/installed targets pass; native OBS and ARM installed qualification remain pending",
   "root_causes": [
     {
       "issue": "socket-close race",
@@ -976,5 +976,140 @@
         "source-manifest.json": "ec7bfadd3e78e401de256d367a938efd"
       }
     }
-  }
+  },
+  "native_ci": {
+    "pipeline": "https://git.qoretechnologies.com/mirror/qore/-/pipelines/58577",
+    "commit": "8e7588ec41349d9cb2c25df7300e71e2a5376a21",
+    "status": "success",
+    "jobs": 21,
+    "job_results": [
+      {
+        "id": 206824,
+        "name": "test-perf",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206824"
+      },
+      {
+        "id": 206823,
+        "name": "test-macos",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206823"
+      },
+      {
+        "id": 206822,
+        "name": "test-tiered-ubuntu-amd64 2/2",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206822"
+      },
+      {
+        "id": 206821,
+        "name": "test-tiered-ubuntu-amd64 1/2",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206821"
+      },
+      {
+        "id": 206820,
+        "name": "test-jit-ubuntu-amd64 2/2",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206820"
+      },
+      {
+        "id": 206819,
+        "name": "test-jit-ubuntu-amd64 1/2",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206819"
+      },
+      {
+        "id": 206818,
+        "name": "test-ir-ubuntu-amd64 2/2",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206818"
+      },
+      {
+        "id": 206817,
+        "name": "test-ir-ubuntu-amd64 1/2",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206817"
+      },
+      {
+        "id": 206816,
+        "name": "test-alpine-arm64 2/2",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206816"
+      },
+      {
+        "id": 206815,
+        "name": "test-alpine-arm64 1/2",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206815"
+      },
+      {
+        "id": 206814,
+        "name": "test-alpine-amd64 2/2",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206814"
+      },
+      {
+        "id": 206813,
+        "name": "test-alpine-amd64 1/2",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206813"
+      },
+      {
+        "id": 206812,
+        "name": "test-ubuntu-arm64 2/2",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206812"
+      },
+      {
+        "id": 206811,
+        "name": "test-ubuntu-arm64 1/2",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206811"
+      },
+      {
+        "id": 206810,
+        "name": "test-ubuntu-amd64 2/2",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206810"
+      },
+      {
+        "id": 206809,
+        "name": "test-ubuntu-amd64 1/2",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206809"
+      },
+      {
+        "id": 206808,
+        "name": "build-perf",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206808"
+      },
+      {
+        "id": 206807,
+        "name": "build-alpine-arm64",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206807"
+      },
+      {
+        "id": 206806,
+        "name": "build-alpine-amd64",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206806"
+      },
+      {
+        "id": 206805,
+        "name": "build-ubuntu-arm64",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206805"
+      },
+      {
+        "id": 206804,
+        "name": "build-ubuntu-amd64",
+        "status": "success",
+        "web_url": "https://git.qoretechnologies.com/mirror/qore/-/jobs/206804"
+      }
+    ]
+  },
+  "rpm_local_qualification": "evidence/core19-local-installed-20261002.json"
 }

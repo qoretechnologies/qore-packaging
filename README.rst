@@ -44,8 +44,12 @@ the independently committed resident-memory accounting fix. Debug and optimized
 builds pass 866 native assertions, twelve functional suites, 900 shutdown cycles
 at one/two/four I/O threads, and seven Valgrind suites with zero memory/descriptor
 errors or lost allocations. The user-approved GCC/Valgrind debug-symbol warning
-is reproduced by a standalone C++ control. RPM requalification is in progress;
-see ``evidence/core-close-rpm-qualification-20261002.json``,
+is reproduced by a standalone C++ control. The native CI pipeline passes all
+21 jobs. Revision 19 now passes all 400 local suites and installed SDK, compiler,
+debugger and minimal-runtime ONNX checks on all three distributions. Native
+OBS completion and ARM installed-package checks remain separate gates;
+see ``evidence/core19-local-installed-20261002.json``,
+``evidence/core-close-rpm-qualification-20261002.json``,
 ``evidence/proxy-shutdown-fix-20261002.json`` and
 ``evidence/core17-local-installed-20261002.json``.
 
