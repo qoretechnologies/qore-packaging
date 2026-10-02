@@ -17,7 +17,7 @@ full logs, containers and RPMs are retained under ignored ``results/`` and
 ``work/`` directories. Do not interpret a successfully prepared SRPM as a
 successful binary build.
 
-Twenty-six external modules have committed RPM packaging and pass builds and
+Twenty-seven external modules have committed RPM packaging and pass builds and
 installed-runtime suites on Fedora 44, Leap 16.0 and EL10. PostgreSQL includes
 mandatory Fedora pgvector coverage. ZeroMQ includes draft sockets and CURVE.
 The original twenty-one modules now have x86_64 OBS builds enabled on all three
@@ -51,7 +51,7 @@ concurrency regressions. All 99 cases / 371 assertions pass normally and under
 Valgrind on all three targets, with zero errors, losses or suppressions.
 
 SSH2 and OpenLDAP now pass canonical builds and installed-runtime checks on
-all three distributions and are included in the twenty-six count. OpenLDAP
+all three distributions and are included in the qualified count. OpenLDAP
 also passes SDK/compiler and seven installed-reference checks. Each target runs
 all 86 LDAP cases / 501 assertions, SASL, CLI and verified StartTLS checks.
 Its Leap fixture exposed a distribution DIGEST-MD5 initialization crash; the
@@ -61,10 +61,10 @@ lost allocations. The ten unchanged DES/3DES deprecation call sites retain
 their explicitly approved build-diagnostic exception. Native OBS builds of
 that dependency are enabled for Leap with publication disabled.
 
-XML passes its final builds on all three targets and final installed checks on
-Leap. Fedora and EL10 installed checks are still running. Earlier qualification
-includes 304 XML suites, 106 Litmus cases against Qore, native Valgrind and strict
-documentation; XML remains outside the qualified count until final checks finish.
+XML now passes canonical RPM builds and all 304 installed suites on all three
+targets, including 106 Litmus cases against Qore and installed WebDAV CLI checks.
+Its separate native Valgrind and strict-documentation evidence is retained.
+XML is included in the twenty-seven qualified local modules.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is

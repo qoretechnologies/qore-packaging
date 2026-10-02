@@ -1,0 +1,347 @@
+{
+  "copyright": "Copyright (C) 2026 Qore Technologies, s.r.o.",
+  "targets": {
+    "fedora": {
+      "result": "results/fedora-xml-ssh2-final-2.json",
+      "sha256": "3105ac096cdf9bbb062e47b97cb54701e8df9712eaae368d8790f7ee52124b8d",
+      "build": {
+        "schema": 1,
+        "image": "sha256:fe45118a3c91979c8b5fef9726a80f7b40aadc427eeaa28457dbd00c4139560b",
+        "source": {
+          "schema": 1,
+          "commit": "d32601505b85b07823f98cc006fe438baa6dd3bc",
+          "source_date_epoch": 1790887855,
+          "name": "qore-xml-module",
+          "version": "2.3.0",
+          "exclusions": [
+            "test/wsdl-interop/oracle/*.jar",
+            "test/wsdl-interop/axis-peer/jars/*.jar",
+            "test/wsdl-interop/cxf-peer/jars/*.jar",
+            "test/enterprise.wsdl",
+            "test/partner.wsdl",
+            "test/wsdl-interop/normative/rfc2392.txt"
+          ],
+          "sources": {
+            "qore-xml-module-2.3.0.tar.xz": "1be5b414fec3dae283823aa8985f2d4704d538fb059842c20f692e71131aa297",
+            "qore-xml-module.spec": "a08361fb8ccfbd0f1d733dae97b9aadceb8c101e6927fadc5aba7efdbfb3db54",
+            "libxml2-2.15.4.tar.xz": "aebc730eae36cd4677255e9d4cb14f26dbf17192ace5aee9e5cba99cb0f09085"
+          },
+          "spec": "qore-xml-module.spec",
+          "vendor_manifest": "rpm/vendor-sources.json",
+          "components": [
+            {
+              "version": "2.15.4",
+              "url": "https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.4.tar.xz",
+              "sha256": "98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821",
+              "excluded": [
+                "test",
+                "result"
+              ],
+              "name": "libxml2",
+              "archive": "libxml2-2.15.4.tar.xz",
+              "top": "libxml2-2.15.4",
+              "licenses": [
+                "Copyright"
+              ]
+            }
+          ]
+        },
+        "jobs": 4,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790887855",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/xml-final-source-1:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-xml-final-build-2:/work",
+          "sha256:fe45118a3c91979c8b5fef9726a80f7b40aadc427eeaa28457dbd00c4139560b",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 4",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-xml-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-xml-module-doc-2.3.0-1.fc44.noarch.rpm": "fcd9a9875caa4acd9022d58011119b872eabf2d100de8ecb3c6012704f9ecde5",
+          "rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.fc44.x86_64.rpm": "e0883c042984614e2907bee093959bc39d0d84863354ab13eadf3053e606cbb3",
+          "rpmbuild/RPMS/x86_64/qore-xml-module-debuginfo-2.3.0-1.fc44.x86_64.rpm": "5411454f200e5440be82a77ce47d761a5bb9021a5df5cf79f64cd8d1045890f9",
+          "rpmbuild/RPMS/x86_64/qore-xml-module-debugsource-2.3.0-1.fc44.x86_64.rpm": "6caca21f4a8f5d88f4668a58443c6b48c9269b6e5f905c15d49473d1b43e8fe3",
+          "rpmbuild/SRPMS/qore-xml-module-2.3.0-1.fc44.src.rpm": "0139b5cb9fea07ac7295436a491f7a92e64e26a7c1540741db601bf02be53483"
+        }
+      },
+      "steps": {
+        "xml-build": {
+          "exit_code": 0,
+          "log": "results/fedora-xml-ssh2-final-2-xml-build.log"
+        },
+        "xml-runtime-install": {
+          "exit_code": 0,
+          "log": "results/fedora-xml-ssh2-final-2-xml-runtime-install.log"
+        },
+        "xml-runtime-check": {
+          "exit_code": 0,
+          "log": "results/fedora-xml-ssh2-final-2-xml-runtime-check.log"
+        },
+        "xml-installed-tests": {
+          "exit_code": 0,
+          "log": "results/fedora-xml-ssh2-final-2-xml-installed-tests.log"
+        }
+      },
+      "runtime_image": "sha256:019014d774cf75057908e69b917e222a9b5b2b33de5e2e6fa73e21b44712f35c",
+      "log_sha256": "1152dfd78980d87e27e0b771c8ba08c2d57da4353af2cb0ea5740f246437e375",
+      "suite_count": 304
+    },
+    "leap": {
+      "result": "results/leap-xml-ssh2-final-2.json",
+      "sha256": "8fd8917729e80782b7808b866d4fa44405035fe0025f12dca2ad851504e8fe61",
+      "build": {
+        "schema": 1,
+        "image": "sha256:eba82b9b3966e12c8363455ca8c89fa8b5d9f50d9741739280040422b5ebb4a0",
+        "source": {
+          "schema": 1,
+          "commit": "d32601505b85b07823f98cc006fe438baa6dd3bc",
+          "source_date_epoch": 1790887855,
+          "name": "qore-xml-module",
+          "version": "2.3.0",
+          "exclusions": [
+            "test/wsdl-interop/oracle/*.jar",
+            "test/wsdl-interop/axis-peer/jars/*.jar",
+            "test/wsdl-interop/cxf-peer/jars/*.jar",
+            "test/enterprise.wsdl",
+            "test/partner.wsdl",
+            "test/wsdl-interop/normative/rfc2392.txt"
+          ],
+          "sources": {
+            "qore-xml-module-2.3.0.tar.xz": "1be5b414fec3dae283823aa8985f2d4704d538fb059842c20f692e71131aa297",
+            "qore-xml-module.spec": "a08361fb8ccfbd0f1d733dae97b9aadceb8c101e6927fadc5aba7efdbfb3db54",
+            "libxml2-2.15.4.tar.xz": "aebc730eae36cd4677255e9d4cb14f26dbf17192ace5aee9e5cba99cb0f09085"
+          },
+          "spec": "qore-xml-module.spec",
+          "vendor_manifest": "rpm/vendor-sources.json",
+          "components": [
+            {
+              "version": "2.15.4",
+              "url": "https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.4.tar.xz",
+              "sha256": "98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821",
+              "excluded": [
+                "test",
+                "result"
+              ],
+              "name": "libxml2",
+              "archive": "libxml2-2.15.4.tar.xz",
+              "top": "libxml2-2.15.4",
+              "licenses": [
+                "Copyright"
+              ]
+            }
+          ]
+        },
+        "jobs": 4,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790887855",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/xml-final-source-1:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-xml-final-build-2:/work",
+          "sha256:eba82b9b3966e12c8363455ca8c89fa8b5d9f50d9741739280040422b5ebb4a0",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 4",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-xml-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-xml-module-doc-2.3.0-1.noarch.rpm": "ae5332db31ea481808631419622140d9b81f94d3313b76ef2155ac7e951081fe",
+          "rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.x86_64.rpm": "91aea0be90122912796a6e59a8f952c45686eba550df237812cd35958cc62e9b",
+          "rpmbuild/RPMS/x86_64/qore-xml-module-debuginfo-2.3.0-1.x86_64.rpm": "b34ca84b6535411342a91d45f9f0f418caacf6750fa5e5b9a63d8416a4e6105b",
+          "rpmbuild/RPMS/x86_64/qore-xml-module-debugsource-2.3.0-1.x86_64.rpm": "81c025cc86c100b03e219a173151d328ba649b529969886769f6dd5276961c81",
+          "rpmbuild/SRPMS/qore-xml-module-2.3.0-1.src.rpm": "c6fbaf5ee76f2e18c333f09bb56d3b066bd10a862781faaff312187007b68c2e"
+        }
+      },
+      "steps": {
+        "xml-build": {
+          "exit_code": 0,
+          "log": "results/leap-xml-ssh2-final-2-xml-build.log"
+        },
+        "xml-runtime-install": {
+          "exit_code": 0,
+          "log": "results/leap-xml-ssh2-final-2-xml-runtime-install.log"
+        },
+        "xml-runtime-check": {
+          "exit_code": 0,
+          "log": "results/leap-xml-ssh2-final-2-xml-runtime-check.log"
+        },
+        "xml-installed-tests": {
+          "exit_code": 0,
+          "log": "results/leap-xml-ssh2-final-2-xml-installed-tests.log"
+        }
+      },
+      "runtime_image": "sha256:f7756d35c36f3c04542b9dcfef93d3322b126df4673e183b40e9fa804f601a3c",
+      "log_sha256": "5fe26c85e0358f41ef3832e2ab6b2792c2ecf18a68aceec38e4087084f4f52f0",
+      "suite_count": 304
+    },
+    "el10": {
+      "result": "results/el10-xml-ssh2-final-2.json",
+      "sha256": "48331f47b5fd827cb5b9f380f864e447f6f9ee4b6fc55bf49be9629c72d58cc4",
+      "build": {
+        "schema": 1,
+        "image": "sha256:652e598d89b0e53fd57de3b96ca1a99d8dea8c35760386892646d817679e88dc",
+        "source": {
+          "schema": 1,
+          "commit": "d32601505b85b07823f98cc006fe438baa6dd3bc",
+          "source_date_epoch": 1790887855,
+          "name": "qore-xml-module",
+          "version": "2.3.0",
+          "exclusions": [
+            "test/wsdl-interop/oracle/*.jar",
+            "test/wsdl-interop/axis-peer/jars/*.jar",
+            "test/wsdl-interop/cxf-peer/jars/*.jar",
+            "test/enterprise.wsdl",
+            "test/partner.wsdl",
+            "test/wsdl-interop/normative/rfc2392.txt"
+          ],
+          "sources": {
+            "qore-xml-module-2.3.0.tar.xz": "1be5b414fec3dae283823aa8985f2d4704d538fb059842c20f692e71131aa297",
+            "qore-xml-module.spec": "a08361fb8ccfbd0f1d733dae97b9aadceb8c101e6927fadc5aba7efdbfb3db54",
+            "libxml2-2.15.4.tar.xz": "aebc730eae36cd4677255e9d4cb14f26dbf17192ace5aee9e5cba99cb0f09085"
+          },
+          "spec": "qore-xml-module.spec",
+          "vendor_manifest": "rpm/vendor-sources.json",
+          "components": [
+            {
+              "version": "2.15.4",
+              "url": "https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.4.tar.xz",
+              "sha256": "98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821",
+              "excluded": [
+                "test",
+                "result"
+              ],
+              "name": "libxml2",
+              "archive": "libxml2-2.15.4.tar.xz",
+              "top": "libxml2-2.15.4",
+              "licenses": [
+                "Copyright"
+              ]
+            }
+          ]
+        },
+        "jobs": 4,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790887855",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/xml-final-source-1:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-xml-final-build-2:/work",
+          "sha256:652e598d89b0e53fd57de3b96ca1a99d8dea8c35760386892646d817679e88dc",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 4",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-xml-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-xml-module-doc-2.3.0-1.el10.noarch.rpm": "9843d1c7f917d10774547ef2500994ee6990659728ccce9a51207154b4d3c8d6",
+          "rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.el10.x86_64.rpm": "78dd32e1849a26c0fb1cb9e9db87f376c8a395932b73d0e767bf4a440e4e250d",
+          "rpmbuild/RPMS/x86_64/qore-xml-module-debuginfo-2.3.0-1.el10.x86_64.rpm": "394c003144c01da0370e7c699903abec9fa18f155b8cc1c61dded2f9668d519b",
+          "rpmbuild/RPMS/x86_64/qore-xml-module-debugsource-2.3.0-1.el10.x86_64.rpm": "e46e16b736cec68045c31b2ce659ce711092c4726dc7d10a963535d97f980f62",
+          "rpmbuild/SRPMS/qore-xml-module-2.3.0-1.el10.src.rpm": "96ece396800265d44961c0eb138652c5ee8776b1a1da1289db764f694714c8de"
+        }
+      },
+      "steps": {
+        "xml-build": {
+          "exit_code": 0,
+          "log": "results/el10-xml-ssh2-final-2-xml-build.log"
+        },
+        "xml-runtime-install": {
+          "exit_code": 0,
+          "log": "results/el10-xml-ssh2-final-2-xml-runtime-install.log"
+        },
+        "xml-runtime-check": {
+          "exit_code": 0,
+          "log": "results/el10-xml-ssh2-final-2-xml-runtime-check.log"
+        },
+        "xml-installed-tests": {
+          "exit_code": 0,
+          "log": "results/el10-xml-ssh2-final-2-xml-installed-tests.log"
+        }
+      },
+      "runtime_image": "sha256:055f1bde3ec83b653ac9ce34c8e3713f0108bb7736a24dd788df28f36e9531ea",
+      "log_sha256": "73288b60345e79e742f40f8fac5818355c4c02aa32cdb355bc3aec0c2dc45663",
+      "suite_count": 304
+    }
+  }
+}

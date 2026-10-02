@@ -275,3 +275,12 @@ the interpreter and the same libgit2 provider families used locally. Canonical
 Cyrus SASL is built and exercised by Leap's installed LDAP suite. Its native
 backport audit is separate. The original three module uploads and Cyrus upload
 are verified against every remote source MD5, including the pinned manifests.
+
+Final XML evidence review
+-------------------------
+
+The complete checklist also covers xml-canonical-20261002.json, its testing
+metadata, and the catalog/README status update. All three final manifests
+report success, and each installed log contains 304 suites. The runtime RPM
+was verified without compiler/SDK packages. XML is now counted as qualified
+locally; its new metadata preserves disabled publication.
