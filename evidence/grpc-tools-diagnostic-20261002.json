@@ -1,0 +1,45 @@
+{
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Approved narrow fixture diagnostic exception.",
+  "date": "2026-10-02",
+  "cause": "Fedora python3-grpcio-tools-1.48.4-57.fc44 imports deprecated pkg_resources in grpc_tools/protoc.py:20 for resource_filename lookup. A Python-only import reproduces the warning without Qore. The generated stubs import and all offline interoperation cases succeed.",
+  "control": {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "sha256:4e77906b5026c2edd755a34755cd295a8769ced264aa2e1d5b6a0fc8e77f8b40",
+      "python3",
+      "-W",
+      "always",
+      "-c",
+      "import grpc_tools.protoc; print(\"standalone compiler import succeeded\")"
+    ],
+    "exit_code": 0,
+    "log": "results/grpc-tools-deprecation-control-1.log"
+  },
+  "qualification": {
+    "suites": 13,
+    "registered_cases": 378,
+    "assertions": 1768,
+    "optional_skips": {
+      "grpcurl_absent": 2,
+      "live_salesforce_no_account_fixture": 5
+    },
+    "doxygen": "All five references pass strict warning checks; five generated-output tests pass.",
+    "results": "results/grpc-docs-6/build-and-tests.log"
+  },
+  "scope": "Only pkg_resources deprecation from the distribution grpc_tools compiler fixture. No warning filter, package pin or lowered compiler check; no runtime Qore warning exempted.",
+  "sources": [
+    "https://github.com/grpc/grpc/blob/v1.48.4/tools/distrib/python/grpcio_tools/grpc_tools/protoc.py",
+    "https://setuptools.pypa.io/en/latest/pkg_resources.html"
+  ],
+  "logs_sha256": {
+    "results/grpc-tools-deprecation-control-1.log": "fc8c1e0df313e55d8b51197a99235ba873e0adacbe11453ffaecf8ac8d71098f",
+    "results/grpc-docs-6/build-and-tests.log": "3f7aa29d909bc469b8a841295bc55d5b364a76866af50a664afa93ee3232107a",
+    "results/grpc-docs-4/build-and-tests.log": "79db670a8ee2e7d116f6f0c133ae440814a6f4fa4923a0988150069caec301a9"
+  },
+  "approval": "User approved: Allow this documented fixture diagnostic (2026-10-02)."
+}
