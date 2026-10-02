@@ -1,0 +1,445 @@
+{
+  "schema": 1,
+  "date": "2026-10-02",
+  "qore_commit": "1fd59409a765a219a62f800ae21213f305302fc5",
+  "obs_srcmd5": "cd52ae0f3c9cdc9a09fbc9c09c1c3674",
+  "publication": "disabled",
+  "targets": {
+    "fedora": {
+      "native_job": "https://git.qoretechnologies.com/mirror/qore-packaging/-/jobs/206910",
+      "pipeline": 58622,
+      "machine": "aarch64",
+      "runner_arch": "linux/arm64",
+      "manifest": "qualification/core19-fedora-aarch64.json",
+      "obs_suites": {
+        "passed": 400,
+        "failed": 0
+      },
+      "obs_build_log_sha256": "70896a1bdc9c88d0107c302d8cdf91807d2da7c38820f01474f9de07903b3c60",
+      "installed_steps": [
+        {
+          "name": "create-user",
+          "command": [
+            "useradd",
+            "-M",
+            "-U",
+            "qoretester"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "runtime-install",
+          "command": [
+            "dnf",
+            "-y",
+            "--nogpgcheck",
+            "--setopt=install_weak_deps=False",
+            "install",
+            "/tmp/qore-rpm-native-ago7lpm5/rpms/libqore-3.0.0~git20261002.19-19.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-ago7lpm5/rpms/qore-3.0.0~git20261002.19-19.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-ago7lpm5/rpms/qore-stdlib-3.0.0~git20261002.19-19.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-ago7lpm5/rpms/libnghttp2-1.70.0-3.2.aarch64.rpm",
+            "/tmp/qore-rpm-native-ago7lpm5/rpms/ngtcp2-1.25.0-1.2.aarch64.rpm",
+            "/tmp/qore-rpm-native-ago7lpm5/rpms/ngtcp2-crypto-ossl-1.25.0-1.2.aarch64.rpm",
+            "/tmp/qore-rpm-native-ago7lpm5/rpms/c-ares-1.34.8-3.2.aarch64.rpm"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "runtime-rpm-verify",
+          "command": [
+            "rpm",
+            "-V",
+            "libqore",
+            "qore",
+            "qore-stdlib",
+            "libnghttp2",
+            "ngtcp2",
+            "ngtcp2-crypto-ossl",
+            "c-ares"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "runtime-inventory",
+          "command": [
+            "rpm",
+            "-qa",
+            "--qf",
+            "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "runtime-runtime",
+          "command": [
+            "runuser",
+            "-u",
+            "qoretester",
+            "--",
+            "env",
+            "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-ago7lpm5/runtime-runtime",
+            "/tmp/qore-rpm-native-ago7lpm5/source/rpm/tests-installed/runtime"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-install",
+          "command": [
+            "dnf",
+            "-y",
+            "--nogpgcheck",
+            "--setopt=install_weak_deps=False",
+            "install",
+            "/tmp/qore-rpm-native-ago7lpm5/rpms/qore-debug-tools-3.0.0~git20261002.19-19.1.noarch.rpm",
+            "/tmp/qore-rpm-native-ago7lpm5/rpms/qore-devel-3.0.0~git20261002.19-19.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-ago7lpm5/rpms/qore-misc-tools-3.0.0~git20261002.19-19.1.noarch.rpm",
+            "/tmp/qore-rpm-native-ago7lpm5/rpms/qore-rpm-macros-3.0.0~git20261002.19-19.1.noarch.rpm",
+            "cmake"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-rpm-verify",
+          "command": [
+            "rpm",
+            "-V",
+            "qore-debug-tools",
+            "qore-devel",
+            "qore-misc-tools",
+            "qore-rpm-macros"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-inventory",
+          "command": [
+            "rpm",
+            "-qa",
+            "--qf",
+            "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-runtime",
+          "command": [
+            "runuser",
+            "-u",
+            "qoretester",
+            "--",
+            "env",
+            "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-ago7lpm5/sdk-runtime",
+            "/tmp/qore-rpm-native-ago7lpm5/source/rpm/tests-installed/runtime"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-development",
+          "command": [
+            "runuser",
+            "-u",
+            "qoretester",
+            "--",
+            "env",
+            "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-ago7lpm5/sdk-development",
+            "/tmp/qore-rpm-native-ago7lpm5/source/rpm/tests-installed/development"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-tools",
+          "command": [
+            "runuser",
+            "-u",
+            "qoretester",
+            "--",
+            "env",
+            "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-ago7lpm5/sdk-tools",
+            "/tmp/qore-rpm-native-ago7lpm5/source/rpm/tests-installed/tools"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-remote-debuggers",
+          "command": [
+            "runuser",
+            "-u",
+            "qoretester",
+            "--",
+            "env",
+            "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-ago7lpm5/sdk-remote-debuggers",
+            "/tmp/qore-rpm-native-ago7lpm5/source/rpm/tests-installed/remote-debuggers"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "logs": {
+        "results/native-core19-fedora-ci-3/results/native-installed/create-user.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "results/native-core19-fedora-ci-3/results/native-installed/runtime-install.log": {
+          "sha256": "4d2265a2d37f1bbb0278fd8bb7243df0a6b3f095d42d2435726c45266d6bd3ab"
+        },
+        "results/native-core19-fedora-ci-3/results/native-installed/runtime-inventory.log": {
+          "sha256": "d0a967c6b483c753eeb49effbabb97d9a065c19ffb824619fffb0241cbffce9d"
+        },
+        "results/native-core19-fedora-ci-3/results/native-installed/runtime-rpm-verify.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "results/native-core19-fedora-ci-3/results/native-installed/runtime-runtime.log": {
+          "sha256": "34b64411be56884578ed530faef03984f9409c5076fed763408b44ff002157e3"
+        },
+        "results/native-core19-fedora-ci-3/results/native-installed/sdk-development.log": {
+          "sha256": "6309489d8cf52262d984195c4e68096ff6fb4f226b1595ee50ebc3e1ca9a6370"
+        },
+        "results/native-core19-fedora-ci-3/results/native-installed/sdk-install.log": {
+          "sha256": "53bde53a337901d4e839d03a4502a76a505506fbd370513b2ac096f351403034"
+        },
+        "results/native-core19-fedora-ci-3/results/native-installed/sdk-inventory.log": {
+          "sha256": "99af83743f2c9829d2cccac94d2402ccd4d58613af23f1a1f85db82b1bd01721"
+        },
+        "results/native-core19-fedora-ci-3/results/native-installed/sdk-remote-debuggers.log": {
+          "sha256": "be36d4749f67fe0e1c73f24532c132b762e3370b4f7f41b62eba1ba7478bd42b"
+        },
+        "results/native-core19-fedora-ci-3/results/native-installed/sdk-rpm-verify.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "results/native-core19-fedora-ci-3/results/native-installed/sdk-runtime.log": {
+          "sha256": "34b64411be56884578ed530faef03984f9409c5076fed763408b44ff002157e3"
+        },
+        "results/native-core19-fedora-ci-3/results/native-installed/sdk-tools.log": {
+          "sha256": "2ec31de3d009b9caf4d599d341bc7b044baa8a60a2c27969eb6ddf0991f25760"
+        }
+      }
+    },
+    "leap": {
+      "native_job": "https://git.qoretechnologies.com/mirror/qore-packaging/-/jobs/206901",
+      "pipeline": 58614,
+      "machine": "aarch64",
+      "runner_arch": "linux/arm64",
+      "manifest": "qualification/core19-leap-aarch64.json",
+      "obs_suites": {
+        "passed": 400,
+        "failed": 0
+      },
+      "obs_build_log_sha256": "4445454f530ca7be2c42fbada4ae119294dc7a0044a6008aeb227c081393bd31",
+      "installed_steps": [
+        {
+          "name": "create-user",
+          "command": [
+            "useradd",
+            "-M",
+            "-U",
+            "qoretester"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "runtime-install",
+          "command": [
+            "zypper",
+            "--non-interactive",
+            "--no-gpg-checks",
+            "install",
+            "--no-recommends",
+            "--allow-unsigned-rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/libqore20-3.0.0~git20261002.19-lp160.19.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/qore-3.0.0~git20261002.19-lp160.19.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/qore-stdlib-3.0.0~git20261002.19-lp160.19.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/libcares2-1.34.8-lp160.3.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/libnghttp2-14-1.70.0-lp160.3.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/libnghttp3-9-1.18.0-lp160.1.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/libngtcp2-16-1.25.0-lp160.1.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/libngtcp2_crypto_ossl0-1.25.0-lp160.1.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/libonnxruntime1-1.22.2-lp160.2.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/libtree-sitter0_26-0.26.13-lp160.1.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/libarrow2500-25.0.1-lp160.1.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/libparquet2500-25.0.1-lp160.1.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/libmongoc2-2.5.5-lp160.2.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/libbson2-2.5.5-lp160.2.1.aarch64.rpm"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "runtime-rpm-verify",
+          "command": [
+            "rpm",
+            "-V",
+            "libqore20",
+            "qore",
+            "qore-stdlib",
+            "libcares2",
+            "libnghttp2-14",
+            "libnghttp3-9",
+            "libngtcp2-16",
+            "libngtcp2_crypto_ossl0",
+            "libonnxruntime1",
+            "libtree-sitter0_26",
+            "libarrow2500",
+            "libparquet2500",
+            "libmongoc2",
+            "libbson2"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "runtime-inventory",
+          "command": [
+            "rpm",
+            "-qa",
+            "--qf",
+            "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "runtime-runtime",
+          "command": [
+            "runuser",
+            "-u",
+            "qoretester",
+            "--",
+            "env",
+            "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-3i4d15r1/runtime-runtime",
+            "/tmp/qore-rpm-native-3i4d15r1/source/rpm/tests-installed/runtime"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-install",
+          "command": [
+            "zypper",
+            "--non-interactive",
+            "--no-gpg-checks",
+            "install",
+            "--no-recommends",
+            "--allow-unsigned-rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/qore-debug-tools-3.0.0~git20261002.19-lp160.19.1.noarch.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/qore-devel-3.0.0~git20261002.19-lp160.19.1.aarch64.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/qore-misc-tools-3.0.0~git20261002.19-lp160.19.1.noarch.rpm",
+            "/tmp/qore-rpm-native-3i4d15r1/rpms/qore-rpm-macros-3.0.0~git20261002.19-lp160.19.1.noarch.rpm",
+            "cmake"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-rpm-verify",
+          "command": [
+            "rpm",
+            "-V",
+            "qore-debug-tools",
+            "qore-devel",
+            "qore-misc-tools",
+            "qore-rpm-macros"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-inventory",
+          "command": [
+            "rpm",
+            "-qa",
+            "--qf",
+            "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-runtime",
+          "command": [
+            "runuser",
+            "-u",
+            "qoretester",
+            "--",
+            "env",
+            "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-3i4d15r1/sdk-runtime",
+            "/tmp/qore-rpm-native-3i4d15r1/source/rpm/tests-installed/runtime"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-development",
+          "command": [
+            "runuser",
+            "-u",
+            "qoretester",
+            "--",
+            "env",
+            "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-3i4d15r1/sdk-development",
+            "/tmp/qore-rpm-native-3i4d15r1/source/rpm/tests-installed/development"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-tools",
+          "command": [
+            "runuser",
+            "-u",
+            "qoretester",
+            "--",
+            "env",
+            "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-3i4d15r1/sdk-tools",
+            "/tmp/qore-rpm-native-3i4d15r1/source/rpm/tests-installed/tools"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-remote-debuggers",
+          "command": [
+            "runuser",
+            "-u",
+            "qoretester",
+            "--",
+            "env",
+            "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-3i4d15r1/sdk-remote-debuggers",
+            "/tmp/qore-rpm-native-3i4d15r1/source/rpm/tests-installed/remote-debuggers"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "logs": {
+        "results/native-core19-leap-ci-1/results/native-installed/create-user.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "results/native-core19-leap-ci-1/results/native-installed/runtime-install.log": {
+          "sha256": "16ae39c6498ca757916bfadb3ffcd2eff4875b86f2facce706550a188469d2c7"
+        },
+        "results/native-core19-leap-ci-1/results/native-installed/runtime-inventory.log": {
+          "sha256": "aceafc7a4809cccc684139ed60259ff2f6aadd5903898aceab16c164dda0009d"
+        },
+        "results/native-core19-leap-ci-1/results/native-installed/runtime-rpm-verify.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "results/native-core19-leap-ci-1/results/native-installed/runtime-runtime.log": {
+          "sha256": "49eb49e980b41942d6150a4989381ebb41b929fda4f49e6d6bcceb85c905aabc"
+        },
+        "results/native-core19-leap-ci-1/results/native-installed/sdk-development.log": {
+          "sha256": "a7459d0c04ff4a6bc3f941fa8f3a0b4fa27e58a87e12498929a0c344e0dd9097"
+        },
+        "results/native-core19-leap-ci-1/results/native-installed/sdk-install.log": {
+          "sha256": "a631b3b21bacd9b4e23ef9922623fba795404729d8cd52a5d357f5d101ccf176"
+        },
+        "results/native-core19-leap-ci-1/results/native-installed/sdk-inventory.log": {
+          "sha256": "8c42ec5e59c670a867d43990282f96cff1e233c98a10f2c9d74ca2b248eed6c0"
+        },
+        "results/native-core19-leap-ci-1/results/native-installed/sdk-remote-debuggers.log": {
+          "sha256": "be36d4749f67fe0e1c73f24532c132b762e3370b4f7f41b62eba1ba7478bd42b"
+        },
+        "results/native-core19-leap-ci-1/results/native-installed/sdk-rpm-verify.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "results/native-core19-leap-ci-1/results/native-installed/sdk-runtime.log": {
+          "sha256": "49eb49e980b41942d6150a4989381ebb41b929fda4f49e6d6bcceb85c905aabc"
+        },
+        "results/native-core19-leap-ci-1/results/native-installed/sdk-tools.log": {
+          "sha256": "2ec31de3d009b9caf4d599d341bc7b044baa8a60a2c27969eb6ddf0991f25760"
+        }
+      }
+    }
+  },
+  "remaining": [
+    "Enterprise Linux native ARM build and installed qualification",
+    "Combined-module installation and repository release gates"
+  ]
+}

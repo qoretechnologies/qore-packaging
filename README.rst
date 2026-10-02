@@ -383,3 +383,9 @@ as an unprivileged user. It then adds the SDK and exercises CMake, pkg-config,
 qcc, metadata extraction, utilities and debugger startup. Logs and package
 inventories are retained as CI artifacts. Never run this installation tool
 on a workstation; use a fresh disposable distribution container.
+
+Release 19 native ARM evidence is recorded in
+``evidence/core19-native-arm-installed-20261002.json``. Fedora 44 and Leap 16
+both passed all 400 OBS suites and native installed runtime/SDK qualification,
+including ONNX inference. Enterprise Linux ARM and combined-module/repository
+release gates are still pending; OBS testing publication remains disabled.
