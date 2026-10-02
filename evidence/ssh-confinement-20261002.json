@@ -1,0 +1,651 @@
+{
+  "schema": 1,
+  "date": "2026-10-02",
+  "module": "ssh",
+  "qualification": {
+    "fedora": {
+      "installed": {
+        "steps": {
+          "build": {
+            "exit_code": 0,
+            "log": "results/fedora-ssh-installed-final-2-build.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/fedora-ssh-installed-final-2-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-ssh-installed-final-2-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/fedora-ssh-installed-final-2-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-ssh-installed-final-2-sdk-tests.log"
+          }
+        },
+        "core_qualification": {
+          "source_build": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-15",
+          "steps": {
+            "sdk-install": {
+              "exit_code": 0,
+              "log": "results/fedora-core-policy-15-sdk-install.log"
+            },
+            "sdk-tests": {
+              "exit_code": 0,
+              "log": "results/fedora-core-policy-15-sdk-tests.log"
+            },
+            "runtime-install": {
+              "exit_code": 0,
+              "log": "results/fedora-core-policy-15-runtime-install.log"
+            },
+            "runtime-tests": {
+              "exit_code": 0,
+              "log": "results/fedora-core-policy-15-runtime-tests.log"
+            }
+          },
+          "source": {
+            "schema": 1,
+            "commit": "c95c7378da33cc4c68d266c48f409cd4b14108db",
+            "source_date_epoch": 1790911113,
+            "name": "qore",
+            "version": "3.0.0~git20261002.15",
+            "exclusions": [],
+            "sources": {
+              "qore-3.0.0~git20261002.15.tar.xz": "84ead538812b4ebdf12950eaef74f30d4a9a4991a954b6b42eb311b40b83723b",
+              "qore.spec": "6adbddb232bbee8627b957234c26ca7c99bf170935357b2fb3fb3cbdcbfb357e"
+            },
+            "spec": "qore.spec"
+          },
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.15-15.fc44.noarch.rpm": "dfee6f7a947deb607f8a51c6cfa4b992b15cc10db909a9e9e7e7aa0fb19433f6",
+            "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.15-15.fc44.noarch.rpm": "9eec4580c30715e8fd5ebb399efb68b3e8f58c804e7f5041df2a4999e9681172",
+            "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.15-15.fc44.noarch.rpm": "432820854344229725e27a456c566dbfc6ef839e67bf3ca0d641ca6861450699",
+            "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.15-15.fc44.noarch.rpm": "9739419596ba6b78fc983a2b1edba41bc7fb92dbc6395b2e14b262203e4d4bea",
+            "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.15-15.fc44.noarch.rpm": "5f5b290b82fc5aa52287246a5bfe5aafe73a0f90d06bef44bf63323a7d821415",
+            "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "a6a0fa60e11dd3cf45891e03bac156d5f79ae8be4aafde081260368e2a125af5",
+            "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "c2e0340cd1a32b11b4e19555051176eaefcff239ade2440d2c9376d0f462fe1a",
+            "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "6f18a0b824062a9f4a77c011f9c35f9fe72e727be46429628e3e69516f11c887",
+            "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "87c1f3b2e02a8691a113d8ba02e7a8d5ed4aa5d4b1f42656560a552eb27e55f6",
+            "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "5548b1dc449acb37ba15390c6d9b76ef29b14114cadbabbc4598c4f8035d92a6",
+            "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "559b69c6958afca83c19333724f0fc65e81d9a8b782d2e12595ada35fd4471c9",
+            "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "8f11644b4195a1506bed287479b37fbe3fb9ee0c9ec2252316b98b4689e5395c",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "10747480e8358c5a83fa1e57a390f44990f9f0e14114c3f18acb1f407cd56285",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "8632fad9742b588a69257ead7bbca1f3749c71d028855f519897e53ecf3420a1",
+            "rpmbuild/SRPMS/qore-3.0.0~git20261002.15-15.fc44.src.rpm": "82edf4fa0dc25c871ed47055ff8b88da16c24732a6c3f1a1dda8608884c44c58"
+          },
+          "sdk_image": "sha256:005e14a5056d890cd0bd604241091b911bbd5af4cd67bb967b7699ad4459bf0b",
+          "runtime_image": "sha256:c785b589f16457f7fb3ebf0e11e5b9d33a04b4fa97162c418585d96cd2c992c3",
+          "exit_code": 0
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:fa8903f159b11230623ddebd4acc44eaa53e5031637ad978256351b1af7a4c89",
+          "source": {
+            "schema": 1,
+            "commit": "4a45cf2fc87dae2ad1aa879827dd448629dda871",
+            "source_date_epoch": 1790919515,
+            "name": "qore-ssh-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-ssh-module-1.0.0.tar.xz": "141bbad0e0a1e229d405b74983344c7b03f240afaea96422e70b6b5a0bc89424",
+              "qore-ssh-module.spec": "baf910231699f585c49616df7e2a61e8b151486b3acb8974d2d3e7e9dcd83a1b"
+            },
+            "spec": "qore-ssh-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790919515",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/ssh-final-source-2:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/fedora-ssh-final-build-2:/work",
+            "sha256:fa8903f159b11230623ddebd4acc44eaa53e5031637ad978256351b1af7a4c89",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-ssh-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-ssh-module-doc-1.0.0-1.fc44.noarch.rpm": "a9fc96817832919a3d4d34cee7fd61544e1be31b95db775aa030657f841d0f68",
+            "rpmbuild/RPMS/x86_64/qore-ssh-module-1.0.0-1.fc44.x86_64.rpm": "c3dd11a24d1677875db9f1f5364545ab341d2188b76af1692e88644ca2ece1d9",
+            "rpmbuild/RPMS/x86_64/qore-ssh-module-debuginfo-1.0.0-1.fc44.x86_64.rpm": "ca124cf84529de81ca07a5521adff194d77c7787a1da2d4516b69997ba33ef75",
+            "rpmbuild/RPMS/x86_64/qore-ssh-module-debugsource-1.0.0-1.fc44.x86_64.rpm": "209294d9cfa494878b38d7655536a64b6c61d9ebd6c2cf737a24cfa8deee211a",
+            "rpmbuild/SRPMS/qore-ssh-module-1.0.0-1.fc44.src.rpm": "415bc6394e8aa6e78686b5d5bc981c767d1bcbfba22060a632f14bb48fd96148"
+          }
+        },
+        "runtime_image": "sha256:5b6149827c777ea2bd2854f0c0339408a6dba6137145ee90a02da6da33bde66c",
+        "sdk_image": "sha256:e5b4104717075d3d8e5311056063f635462c661ca96c6c3e0a6b7fdcf321a32b",
+        "exit_code": 0
+      },
+      "build": {
+        "schema": 1,
+        "image": "sha256:fa8903f159b11230623ddebd4acc44eaa53e5031637ad978256351b1af7a4c89",
+        "source": {
+          "schema": 1,
+          "commit": "4a45cf2fc87dae2ad1aa879827dd448629dda871",
+          "source_date_epoch": 1790919515,
+          "name": "qore-ssh-module",
+          "version": "1.0.0",
+          "exclusions": [],
+          "sources": {
+            "qore-ssh-module-1.0.0.tar.xz": "141bbad0e0a1e229d405b74983344c7b03f240afaea96422e70b6b5a0bc89424",
+            "qore-ssh-module.spec": "baf910231699f585c49616df7e2a61e8b151486b3acb8974d2d3e7e9dcd83a1b"
+          },
+          "spec": "qore-ssh-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790919515",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/ssh-final-source-2:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-ssh-final-build-2:/work",
+          "sha256:fa8903f159b11230623ddebd4acc44eaa53e5031637ad978256351b1af7a4c89",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-ssh-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-ssh-module-doc-1.0.0-1.fc44.noarch.rpm": "a9fc96817832919a3d4d34cee7fd61544e1be31b95db775aa030657f841d0f68",
+          "rpmbuild/RPMS/x86_64/qore-ssh-module-1.0.0-1.fc44.x86_64.rpm": "c3dd11a24d1677875db9f1f5364545ab341d2188b76af1692e88644ca2ece1d9",
+          "rpmbuild/RPMS/x86_64/qore-ssh-module-debuginfo-1.0.0-1.fc44.x86_64.rpm": "ca124cf84529de81ca07a5521adff194d77c7787a1da2d4516b69997ba33ef75",
+          "rpmbuild/RPMS/x86_64/qore-ssh-module-debugsource-1.0.0-1.fc44.x86_64.rpm": "209294d9cfa494878b38d7655536a64b6c61d9ebd6c2cf737a24cfa8deee211a",
+          "rpmbuild/SRPMS/qore-ssh-module-1.0.0-1.fc44.src.rpm": "415bc6394e8aa6e78686b5d5bc981c767d1bcbfba22060a632f14bb48fd96148"
+        }
+      }
+    },
+    "leap": {
+      "installed": {
+        "steps": {
+          "build": {
+            "exit_code": 0,
+            "log": "results/leap-ssh-installed-final-2-build.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/leap-ssh-installed-final-2-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/leap-ssh-installed-final-2-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/leap-ssh-installed-final-2-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/leap-ssh-installed-final-2-sdk-tests.log"
+          }
+        },
+        "core_qualification": {
+          "source_build": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-15",
+          "steps": {
+            "sdk-install": {
+              "exit_code": 0,
+              "log": "results/leap-core-policy-15-sdk-install.log"
+            },
+            "sdk-tests": {
+              "exit_code": 0,
+              "log": "results/leap-core-policy-15-sdk-tests.log"
+            },
+            "runtime-install": {
+              "exit_code": 0,
+              "log": "results/leap-core-policy-15-runtime-install.log"
+            },
+            "runtime-tests": {
+              "exit_code": 0,
+              "log": "results/leap-core-policy-15-runtime-tests.log"
+            }
+          },
+          "source": {
+            "schema": 1,
+            "commit": "c95c7378da33cc4c68d266c48f409cd4b14108db",
+            "source_date_epoch": 1790911113,
+            "name": "qore",
+            "version": "3.0.0~git20261002.15",
+            "exclusions": [],
+            "sources": {
+              "qore-3.0.0~git20261002.15.tar.xz": "84ead538812b4ebdf12950eaef74f30d4a9a4991a954b6b42eb311b40b83723b",
+              "qore.spec": "6adbddb232bbee8627b957234c26ca7c99bf170935357b2fb3fb3cbdcbfb357e"
+            },
+            "spec": "qore.spec"
+          },
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.15-15.noarch.rpm": "55dbb2f35357215160c37680de7836caff9bf8a677055f02acdb4e3f9d5c80e4",
+            "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.15-15.noarch.rpm": "8fa1024eb67004cbec23975989dc1c5eb8b6545537a5a418cf71ea82a6e82093",
+            "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.15-15.noarch.rpm": "f87b163c1179c027a8e0bff6061a0975299103f2f132e7ef5bb5bf7c304b980c",
+            "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.15-15.noarch.rpm": "3b30da8d0a4ff2a429d8ae9ca9b1672e01d622e4d47f14d88a8636e1205e7601",
+            "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.15-15.noarch.rpm": "0b6b441f4003f4176650dba8b36dc28b18a3fba982a6329c5f7c196501e9addb",
+            "rpmbuild/RPMS/x86_64/libqore20-3.0.0~git20261002.15-15.x86_64.rpm": "5fdad7e82c625cbde8bec899fda23a6c48ceaf4843ac985086a219d0f0b23fa8",
+            "rpmbuild/RPMS/x86_64/libqore20-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "818f33d1e840f8318ad38ecb3195fcdfc59d0b2b870c52778a7ed58035a18b09",
+            "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.15-15.x86_64.rpm": "9f806b18716ad6deec71eb5c2678c936829af9fac703d2a95aafd51f38cb457a",
+            "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "9a9e0ec1a6f5f77df20659b3d31c3e15466394ba8c9d6e29c93a3090c664e987",
+            "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.15-15.x86_64.rpm": "7cd49da30ec06f18805a85b1f658660ce9d84c7d5d3d555e947608b8474107e4",
+            "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.15-15.x86_64.rpm": "ff7788dd27373e4317a69121b2512e2dab72d3116f9d307260337f6eaf3c9c89",
+            "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "c6f0218ba4bd9b126e065b1032cb49bf6d993ff2acaf979b0b9ab3b3540b1db0",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.15-15.x86_64.rpm": "041d41b480bc9677bd64702134d3d8d18871acfca9ec006b0d32daa06ce7a786",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "2583bd73d67c6f17ce561dcb5215a0abde82431715c4863cac286b946d890217",
+            "rpmbuild/SRPMS/qore-3.0.0~git20261002.15-15.src.rpm": "6a0fb2294794c810988b6ded0f0e3628b8beb0814a59f571ae5bdebc3f4eff79"
+          },
+          "sdk_image": "sha256:b5a2e03cb123ae277e58ffd792b60b6bb43134b444f0c5f8a9e513b7b8a44b12",
+          "runtime_image": "sha256:f8b671f49dbbf7edf0ff29aa2e146ef465d9a2ac4838e352133920f5c91b4a12",
+          "exit_code": 0
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:a48d76a70146112a239561d136a6c6fa865e7802cd28ff0543955258f7599448",
+          "source": {
+            "schema": 1,
+            "commit": "4a45cf2fc87dae2ad1aa879827dd448629dda871",
+            "source_date_epoch": 1790919515,
+            "name": "qore-ssh-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-ssh-module-1.0.0.tar.xz": "141bbad0e0a1e229d405b74983344c7b03f240afaea96422e70b6b5a0bc89424",
+              "qore-ssh-module.spec": "baf910231699f585c49616df7e2a61e8b151486b3acb8974d2d3e7e9dcd83a1b"
+            },
+            "spec": "qore-ssh-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790919515",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/ssh-final-source-2:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/leap-ssh-final-build-2:/work",
+            "sha256:a48d76a70146112a239561d136a6c6fa865e7802cd28ff0543955258f7599448",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-ssh-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-ssh-module-doc-1.0.0-1.noarch.rpm": "be4f4715f4fe9cb72cdc76ec4a501c8603a551a08779687842d140d4342a809f",
+            "rpmbuild/RPMS/x86_64/qore-ssh-module-1.0.0-1.x86_64.rpm": "8ab36914db707733dc9ceb4be087a87edd340be30a4583440d85865c574785e2",
+            "rpmbuild/RPMS/x86_64/qore-ssh-module-debuginfo-1.0.0-1.x86_64.rpm": "2d41538ad928a001bbdfce3eea3d8b3c32087679e59d80df25933038a421820c",
+            "rpmbuild/RPMS/x86_64/qore-ssh-module-debugsource-1.0.0-1.x86_64.rpm": "04e4f748c7296b06d83301a0fc8a9095bf148a507fd7cd6da4d0dc4727f0590c",
+            "rpmbuild/SRPMS/qore-ssh-module-1.0.0-1.src.rpm": "a29da06fbdc53fe62e115959a6a4dbf8f84799b6c198dc276787a6b11684c971"
+          }
+        },
+        "runtime_image": "sha256:322f893ab35641319138423f9c26b9d658378f8f8f5f59495aff6c04bc2c9bca",
+        "sdk_image": "sha256:e4330ac2309b878959fb765f79a15245368648891a8d8da4517e5cc02b7463d7",
+        "exit_code": 0
+      },
+      "build": {
+        "schema": 1,
+        "image": "sha256:a48d76a70146112a239561d136a6c6fa865e7802cd28ff0543955258f7599448",
+        "source": {
+          "schema": 1,
+          "commit": "4a45cf2fc87dae2ad1aa879827dd448629dda871",
+          "source_date_epoch": 1790919515,
+          "name": "qore-ssh-module",
+          "version": "1.0.0",
+          "exclusions": [],
+          "sources": {
+            "qore-ssh-module-1.0.0.tar.xz": "141bbad0e0a1e229d405b74983344c7b03f240afaea96422e70b6b5a0bc89424",
+            "qore-ssh-module.spec": "baf910231699f585c49616df7e2a61e8b151486b3acb8974d2d3e7e9dcd83a1b"
+          },
+          "spec": "qore-ssh-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790919515",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/ssh-final-source-2:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-ssh-final-build-2:/work",
+          "sha256:a48d76a70146112a239561d136a6c6fa865e7802cd28ff0543955258f7599448",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-ssh-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-ssh-module-doc-1.0.0-1.noarch.rpm": "be4f4715f4fe9cb72cdc76ec4a501c8603a551a08779687842d140d4342a809f",
+          "rpmbuild/RPMS/x86_64/qore-ssh-module-1.0.0-1.x86_64.rpm": "8ab36914db707733dc9ceb4be087a87edd340be30a4583440d85865c574785e2",
+          "rpmbuild/RPMS/x86_64/qore-ssh-module-debuginfo-1.0.0-1.x86_64.rpm": "2d41538ad928a001bbdfce3eea3d8b3c32087679e59d80df25933038a421820c",
+          "rpmbuild/RPMS/x86_64/qore-ssh-module-debugsource-1.0.0-1.x86_64.rpm": "04e4f748c7296b06d83301a0fc8a9095bf148a507fd7cd6da4d0dc4727f0590c",
+          "rpmbuild/SRPMS/qore-ssh-module-1.0.0-1.src.rpm": "a29da06fbdc53fe62e115959a6a4dbf8f84799b6c198dc276787a6b11684c971"
+        }
+      }
+    },
+    "el10": {
+      "installed": {
+        "steps": {
+          "build": {
+            "exit_code": 0,
+            "log": "results/el10-ssh-installed-final-2-build.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/el10-ssh-installed-final-2-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/el10-ssh-installed-final-2-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/el10-ssh-installed-final-2-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/el10-ssh-installed-final-2-sdk-tests.log"
+          }
+        },
+        "core_qualification": {
+          "source_build": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-15",
+          "steps": {
+            "sdk-install": {
+              "exit_code": 0,
+              "log": "results/el10-core-policy-15-sdk-install.log"
+            },
+            "sdk-tests": {
+              "exit_code": 0,
+              "log": "results/el10-core-policy-15-sdk-tests.log"
+            },
+            "runtime-install": {
+              "exit_code": 0,
+              "log": "results/el10-core-policy-15-runtime-install.log"
+            },
+            "runtime-tests": {
+              "exit_code": 0,
+              "log": "results/el10-core-policy-15-runtime-tests.log"
+            }
+          },
+          "source": {
+            "schema": 1,
+            "commit": "c95c7378da33cc4c68d266c48f409cd4b14108db",
+            "source_date_epoch": 1790911113,
+            "name": "qore",
+            "version": "3.0.0~git20261002.15",
+            "exclusions": [],
+            "sources": {
+              "qore-3.0.0~git20261002.15.tar.xz": "84ead538812b4ebdf12950eaef74f30d4a9a4991a954b6b42eb311b40b83723b",
+              "qore.spec": "6adbddb232bbee8627b957234c26ca7c99bf170935357b2fb3fb3cbdcbfb357e"
+            },
+            "spec": "qore.spec"
+          },
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.15-15.el10.noarch.rpm": "8c576e1267ac7dbd26eb2ee1e1fe50cf3a565371e338a41c7e695cc575036ba6",
+            "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.15-15.el10.noarch.rpm": "debc893ddbcef759752c30f9a80b19a27eaca8cdad2f5eb5296b599e0227100a",
+            "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.15-15.el10.noarch.rpm": "8b669398cf82a5eb2027dc822e928fdd34b40ed6f49303d063229eb44b19cd1a",
+            "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.15-15.el10.noarch.rpm": "e015ba63c3fa3a0503142f5e47b262468f090d8dd842e55b99e05e8b15cc4e12",
+            "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.15-15.el10.noarch.rpm": "2f75fc3fe70b42cba1f560cda65e6d4957c4125b167151d400ecb0d98ff62157",
+            "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.15-15.el10.x86_64.rpm": "831a186675735e366fc1be51f81d401f1fc29a6dd0c77f33ae4bdb8457d1406a",
+            "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "9a4681a55acca5438498de4717eeee17a5f17c12f80e3fb710ee227c9cfa4970",
+            "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.15-15.el10.x86_64.rpm": "de815609d6c1826c91c04ef00880d094ba5af2ae1d7156a4caf35efbb9c90074",
+            "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "86765aba7928f55fc56957f79ea3a563e3761828a7dd17b635c5b7d55ff97382",
+            "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.15-15.el10.x86_64.rpm": "e4dff7e464309a0575d5e4ac2c120d42b8bf0ad5aa799bdd0938a85732d00dac",
+            "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.15-15.el10.x86_64.rpm": "122f57a948c13242fa35e3b7efcde51fc8b2bd1da86f031b0477489487673fcb",
+            "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "3541b39da38dba67d594dba615c1d0bb22d75473f7031e9291fa5adf057286f4",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.15-15.el10.x86_64.rpm": "e3937674c45a826fc3a5d5aaa353561b56e27ca96100af78ee557af0d9d93cc8",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "271b169960a34ad395515d65019d20fc83d0c7debe89bc27a71a88f5f80ffdfc",
+            "rpmbuild/SRPMS/qore-3.0.0~git20261002.15-15.el10.src.rpm": "69de1b8b48b0f918b3eb0f4b2b7099635cfe052e4fd9ea7aa69f032a750c2fd0"
+          },
+          "sdk_image": "sha256:a4babfcc82227fb71574aec479c85a75ddeebedb9f7d51a8157556e47843347d",
+          "runtime_image": "sha256:dd83d34f9e33c45a0bf7479de106759e86a6a4514f32d264a7648e2999b3168f",
+          "exit_code": 0
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:c44148f1be06fab0f978c02c6048bce8e91cd2f6a0f20f6f78314e3ffa066b22",
+          "source": {
+            "schema": 1,
+            "commit": "4a45cf2fc87dae2ad1aa879827dd448629dda871",
+            "source_date_epoch": 1790919515,
+            "name": "qore-ssh-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-ssh-module-1.0.0.tar.xz": "141bbad0e0a1e229d405b74983344c7b03f240afaea96422e70b6b5a0bc89424",
+              "qore-ssh-module.spec": "baf910231699f585c49616df7e2a61e8b151486b3acb8974d2d3e7e9dcd83a1b"
+            },
+            "spec": "qore-ssh-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790919515",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/ssh-final-source-2:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/el10-ssh-final-build-2:/work",
+            "sha256:c44148f1be06fab0f978c02c6048bce8e91cd2f6a0f20f6f78314e3ffa066b22",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-ssh-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-ssh-module-doc-1.0.0-1.el10.noarch.rpm": "f69c56846d34c1fbabf68ab03644daccf61a579f160dea1cc59f378c062c832a",
+            "rpmbuild/RPMS/x86_64/qore-ssh-module-1.0.0-1.el10.x86_64.rpm": "84b23e88671a0d7be2bf97e9ab8bf6d3fe67a563e1478301f3b989508395abab",
+            "rpmbuild/RPMS/x86_64/qore-ssh-module-debuginfo-1.0.0-1.el10.x86_64.rpm": "ace18d67a8c5bbeb49d740d2a3380d5f2a012d31e5266eff738410ea308ae6d0",
+            "rpmbuild/RPMS/x86_64/qore-ssh-module-debugsource-1.0.0-1.el10.x86_64.rpm": "8308f4988b92bbb657aba3c6fdcd6e971821535b6b4c28a4ef7716130ed2c854",
+            "rpmbuild/SRPMS/qore-ssh-module-1.0.0-1.el10.src.rpm": "f370f396f68a15cf1cb5772659dda841f054ad44a4469c5645ea90ebcf09b81b"
+          }
+        },
+        "runtime_image": "sha256:1e1d87f99ed8fd60c244efd8df8b5aa69e4f76da482e41cbd87173e96973a6fa",
+        "sdk_image": "sha256:1fb2e9f37d3f50387f470d9846aea371db87a79b6bc35b8546f13b698f70d6e3",
+        "exit_code": 0
+      },
+      "build": {
+        "schema": 1,
+        "image": "sha256:c44148f1be06fab0f978c02c6048bce8e91cd2f6a0f20f6f78314e3ffa066b22",
+        "source": {
+          "schema": 1,
+          "commit": "4a45cf2fc87dae2ad1aa879827dd448629dda871",
+          "source_date_epoch": 1790919515,
+          "name": "qore-ssh-module",
+          "version": "1.0.0",
+          "exclusions": [],
+          "sources": {
+            "qore-ssh-module-1.0.0.tar.xz": "141bbad0e0a1e229d405b74983344c7b03f240afaea96422e70b6b5a0bc89424",
+            "qore-ssh-module.spec": "baf910231699f585c49616df7e2a61e8b151486b3acb8974d2d3e7e9dcd83a1b"
+          },
+          "spec": "qore-ssh-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790919515",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/ssh-final-source-2:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-ssh-final-build-2:/work",
+          "sha256:c44148f1be06fab0f978c02c6048bce8e91cd2f6a0f20f6f78314e3ffa066b22",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-ssh-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-ssh-module-doc-1.0.0-1.el10.noarch.rpm": "f69c56846d34c1fbabf68ab03644daccf61a579f160dea1cc59f378c062c832a",
+          "rpmbuild/RPMS/x86_64/qore-ssh-module-1.0.0-1.el10.x86_64.rpm": "84b23e88671a0d7be2bf97e9ab8bf6d3fe67a563e1478301f3b989508395abab",
+          "rpmbuild/RPMS/x86_64/qore-ssh-module-debuginfo-1.0.0-1.el10.x86_64.rpm": "ace18d67a8c5bbeb49d740d2a3380d5f2a012d31e5266eff738410ea308ae6d0",
+          "rpmbuild/RPMS/x86_64/qore-ssh-module-debugsource-1.0.0-1.el10.x86_64.rpm": "8308f4988b92bbb657aba3c6fdcd6e971821535b6b4c28a4ef7716130ed2c854",
+          "rpmbuild/SRPMS/qore-ssh-module-1.0.0-1.el10.src.rpm": "f370f396f68a15cf1cb5772659dda841f054ad44a4469c5645ea90ebcf09b81b"
+        }
+      }
+    }
+  },
+  "obs": {
+    "qore-ssh-module": {
+      "source_commit": "4a45cf2fc87dae2ad1aa879827dd448629dda871",
+      "revision": "2",
+      "srcmd5": "db2117520086108e89c2b8f7030dd2a4",
+      "verified_files": {
+        "qore-ssh-module-1.0.0.tar.xz": "577269a1fdf2a48904d895783dc3733a",
+        "qore-ssh-module.spec": "b64f7400af99e49a278d6fb36243688e",
+        "source-manifest.json": "e8290c2dc75b7163ffb7f35a12db8ee4"
+      }
+    }
+  },
+  "notes": [
+    "The SFTP confinement suite creates its own outside-root file; no /etc/hostname dependency remains.",
+    "Canonical source and installed documentation examples pass for all three target distributions.",
+    "Publication remains disabled; native ARM installed-package qualification remains pending."
+  ]
+}

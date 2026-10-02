@@ -44,7 +44,9 @@ https://openbuildservice.org/help/manuals/obs-user-guide/cha-obs-prjconfig.
 
 SSH, MySQL and tree-sitter now pass canonical builds and installed runtime/SDK
 checks against revision 15 on all three targets. SSH includes runnable installed
-documentation examples. MySQL runs all 34 cases against an isolated MariaDB,
+documentation examples. Its confinement regression now owns both its allowed
+directory and the outside-root file, so it also works in OBS build roots that
+lack ``/etc/hostname``. MySQL runs all 34 cases against an isolated MariaDB,
 allowing only the two approved fixture diagnostics. Final tree-sitter testing
 exposed a borrowed-tree lifetime bug; its fix retains trees for nodes/cursors,
 corrects copied-node source and cursor reset behavior, and adds ownership and
