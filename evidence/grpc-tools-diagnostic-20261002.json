@@ -2,7 +2,7 @@
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "status": "Approved narrow fixture diagnostic exception.",
   "date": "2026-10-02",
-  "cause": "Fedora python3-grpcio-tools-1.48.4-57.fc44 imports deprecated pkg_resources in grpc_tools/protoc.py:20 for resource_filename lookup. A Python-only import reproduces the warning without Qore. The generated stubs import and all offline interoperation cases succeed.",
+  "cause": "Fedora python3-grpcio-tools-1.48.4-57.fc44 imports deprecated pkg_resources in grpc_tools/protoc.py:20 for resource_filename lookup. A Python-only import reproduces the warning without Qore. The generated stubs import and all offline interoperation cases succeed. EL10 grpc_tools uses the same deprecated import and reports it as DeprecationWarning; its Python-only control also succeeds.",
   "control": {
     "command": [
       "docker",
@@ -28,8 +28,8 @@
       "grpcurl_absent": 2,
       "live_salesforce_no_account_fixture": 5
     },
-    "doxygen": "All five references pass strict warning checks; five generated-output tests pass.",
-    "results": "results/grpc-docs-6/build-and-tests.log"
+    "doxygen": "All five references pass strict warning checks; six generated-output checks pass.",
+    "results": "results/grpc-docs-9/build-and-tests.log"
   },
   "scope": "Only pkg_resources deprecation from the distribution grpc_tools compiler fixture. No warning filter, package pin or lowered compiler check; no runtime Qore warning exempted.",
   "sources": [
@@ -39,7 +39,14 @@
   "logs_sha256": {
     "results/grpc-tools-deprecation-control-1.log": "fc8c1e0df313e55d8b51197a99235ba873e0adacbe11453ffaecf8ac8d71098f",
     "results/grpc-docs-6/build-and-tests.log": "3f7aa29d909bc469b8a841295bc55d5b364a76866af50a664afa93ee3232107a",
-    "results/grpc-docs-4/build-and-tests.log": "79db670a8ee2e7d116f6f0c133ae440814a6f4fa4923a0988150069caec301a9"
+    "results/grpc-docs-4/build-and-tests.log": "79db670a8ee2e7d116f6f0c133ae440814a6f4fa4923a0988150069caec301a9",
+    "results/grpc-docs-9/build-and-tests.log": "25cfb86effcbc8e059aaa1d3dd07dbda0c87d4fc9c37b12ec295baa321612903",
+    "results/fedora-grpc-artifacts-5/fixture-control.log": "fc8c1e0df313e55d8b51197a99235ba873e0adacbe11453ffaecf8ac8d71098f",
+    "results/el10-grpc-artifacts-5/fixture-control.log": "c45fadfeda667411d4fdfad13c214c50e8694441f6e17d078c24676190fb63c3"
   },
-  "approval": "User approved: Allow this documented fixture diagnostic (2026-10-02)."
+  "approval": "User approved: Allow this documented fixture diagnostic (2026-10-02).",
+  "additional_controls": {
+    "fedora": "results/fedora-grpc-artifacts-5/fixture-control.log",
+    "el10": "results/el10-grpc-artifacts-5/fixture-control.log"
+  }
 }
