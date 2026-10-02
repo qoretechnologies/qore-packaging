@@ -17,7 +17,7 @@ full logs, containers and RPMs are retained under ignored ``results/`` and
 ``work/`` directories. Do not interpret a successfully prepared SRPM as a
 successful binary build.
 
-Twenty-nine external modules have committed RPM packaging and pass builds and
+Thirty external modules have committed RPM packaging and pass builds and
 installed-runtime suites on Fedora 44, Leap 16.0 and EL10. PostgreSQL includes
 mandatory Fedora pgvector coverage. ZeroMQ includes draft sockets and CURVE.
 The original twenty-one modules now have x86_64 OBS builds enabled on all three
@@ -82,7 +82,7 @@ that dependency are enabled for Leap with publication disabled.
 XML now passes canonical RPM builds and all 304 installed suites on all three
 targets, including 106 Litmus cases against Qore and installed WebDAV CLI checks.
 Its separate native Valgrind and strict-documentation evidence is retained.
-XML and XML Security are included in the twenty-nine qualified local modules.
+XML and XML Security are included in the thirty qualified local modules.
 XML Security passes canonical builds, installed runtime/SDK tests, documentation,
 and 13 native cases / 65 assertions under Valgrind on all three targets. Its
 parser options and errors are now isolated per document, including worker threads.
@@ -102,6 +102,14 @@ disabled. JNI/Python and native ARM qualification remain separate gates. See
 ``evidence/python-rpm-final-20261002.json``,
 ``evidence/python-native-qualification-20261002.json`` and
 ``evidence/python-external-diagnostics-20261002.json``.
+
+FreeTDS packaging now passes canonical builds and installed runtime/SDK checks
+on all three targets. Its offline suite covers driver capabilities, invalid
+protocol and missing-username errors, and unopened-connection cleanup (four
+cases, fourteen assertions). Strict documentation and compiler checks also pass.
+OBS has verified the canonical sources with publication disabled. Live SQL
+Server/ASE behavior and proprietary Sybase OCS remain separate integration gates.
+See ``evidence/freetds-rpm-final-20261002.json``.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is

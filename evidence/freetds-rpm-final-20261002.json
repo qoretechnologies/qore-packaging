@@ -1,0 +1,513 @@
+{
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "scope": "Canonical FreeTDS RPM builds and installed offline runtime/SDK checks on Fedora 44, Leap 16.0 and AlmaLinux 10. Server-backed SQL/ASE and proprietary Sybase OCS remain separate integration gates.",
+  "targets": {
+    "fedora": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:fb40ab34ee0ad3a042947d3ae6ccf236a72baacad1427662025d4d8eb899e59a",
+        "source": {
+          "schema": 1,
+          "commit": "2b35358523ff5f397e415203e0df37d38825e8eb",
+          "source_date_epoch": 1790935849,
+          "name": "qore-freetds-module",
+          "version": "1.4",
+          "exclusions": [
+            "m4/acx_pthread.m4"
+          ],
+          "sources": {
+            "qore-freetds-module-1.4.tar.xz": "54f6b89a510c9741b457563baed49927d8f50ed3685c2ba6efbd09fd07fcdae8",
+            "qore-freetds-module.spec": "414c3bf16c0cdf99f8a3aa774d6b1ee1dc83b977b22647e212f6ed6fa0fce9d7"
+          },
+          "spec": "qore-freetds-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790935849",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/freetds-source-final-1:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-freetds-final-1:/work",
+          "sha256:fb40ab34ee0ad3a042947d3ae6ccf236a72baacad1427662025d4d8eb899e59a",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-freetds-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-freetds-module-doc-1.4-2.fc44.noarch.rpm": "e4400ca9fafab26c3ea41b521055ae5c98bf4bf3f9ca46efa67abe71b4a7fceb",
+          "rpmbuild/RPMS/x86_64/qore-freetds-module-1.4-2.fc44.x86_64.rpm": "92426321f50ac2863070895ca3f0ae0b8b06266263fe26584f7536800ae96b26",
+          "rpmbuild/RPMS/x86_64/qore-freetds-module-debuginfo-1.4-2.fc44.x86_64.rpm": "f413109f5c7329b6735276fdaf588cfc3f6261f1e8fed7efcd94d9e70a35540e",
+          "rpmbuild/RPMS/x86_64/qore-freetds-module-debugsource-1.4-2.fc44.x86_64.rpm": "c19166d82283bb8a16b91a6892bd378be4ded8029f57ee01a46bcaf4bb56b895",
+          "rpmbuild/SRPMS/qore-freetds-module-1.4-2.fc44.src.rpm": "e5a5a06f953e65fd6ba1054ec90610b9c5cd04f225adc5797645ff3ccb68c2f2"
+        }
+      },
+      "installed": {
+        "steps": {
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/fedora-freetds-final-1-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-freetds-final-1-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/fedora-freetds-final-1-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-freetds-final-1-sdk-tests.log"
+          }
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:fb40ab34ee0ad3a042947d3ae6ccf236a72baacad1427662025d4d8eb899e59a",
+          "source": {
+            "schema": 1,
+            "commit": "2b35358523ff5f397e415203e0df37d38825e8eb",
+            "source_date_epoch": 1790935849,
+            "name": "qore-freetds-module",
+            "version": "1.4",
+            "exclusions": [
+              "m4/acx_pthread.m4"
+            ],
+            "sources": {
+              "qore-freetds-module-1.4.tar.xz": "54f6b89a510c9741b457563baed49927d8f50ed3685c2ba6efbd09fd07fcdae8",
+              "qore-freetds-module.spec": "414c3bf16c0cdf99f8a3aa774d6b1ee1dc83b977b22647e212f6ed6fa0fce9d7"
+            },
+            "spec": "qore-freetds-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790935849",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/freetds-source-final-1:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/fedora-freetds-final-1:/work",
+            "sha256:fb40ab34ee0ad3a042947d3ae6ccf236a72baacad1427662025d4d8eb899e59a",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-freetds-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-freetds-module-doc-1.4-2.fc44.noarch.rpm": "e4400ca9fafab26c3ea41b521055ae5c98bf4bf3f9ca46efa67abe71b4a7fceb",
+            "rpmbuild/RPMS/x86_64/qore-freetds-module-1.4-2.fc44.x86_64.rpm": "92426321f50ac2863070895ca3f0ae0b8b06266263fe26584f7536800ae96b26",
+            "rpmbuild/RPMS/x86_64/qore-freetds-module-debuginfo-1.4-2.fc44.x86_64.rpm": "f413109f5c7329b6735276fdaf588cfc3f6261f1e8fed7efcd94d9e70a35540e",
+            "rpmbuild/RPMS/x86_64/qore-freetds-module-debugsource-1.4-2.fc44.x86_64.rpm": "c19166d82283bb8a16b91a6892bd378be4ded8029f57ee01a46bcaf4bb56b895",
+            "rpmbuild/SRPMS/qore-freetds-module-1.4-2.fc44.src.rpm": "e5a5a06f953e65fd6ba1054ec90610b9c5cd04f225adc5797645ff3ccb68c2f2"
+          }
+        },
+        "phase": "complete",
+        "runtime_image": "sha256:fd7f3879b4e0c6721a5ecf78c136db9e40d5a1cf530cd908e7382f1c49107d1f",
+        "sdk_image": "sha256:d09c18e1b981714c2e4a44971882957337c91ee698a2f820e4d99e5f786d55d8",
+        "exit_code": 0
+      },
+      "logs_sha256": {
+        "results/fedora-freetds-final-1/build.log": "4a3704c5d58d278751088f34d7ca2adc2c345116c8fa30810f3e833ca1d154bb",
+        "results/fedora-freetds-final-1-runtime-install.log": "ad926d6f786ba8825fc0c592da7ad5f9f2bc91804f84a14d932a32eaa3942c2b",
+        "results/fedora-freetds-final-1-runtime-tests.log": "e2ec35cc17b2a9742ecef5d25e6d69bab8c31f6444b280cbd3367219135b1758",
+        "results/fedora-freetds-final-1-sdk-install.log": "a9f12f6d0ad6ce854dcd50b81620c24a329675281ac9f31213189cd592dbf442",
+        "results/fedora-freetds-final-1-sdk-tests.log": "098872f2233d6b1e2145d705c1d1aaaba1fa185cd55cef25f547258afe7429ab"
+      }
+    },
+    "leap": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:41f3f6cbc8036cc5b837f6b2ef8fca13fe07880930ac60c68ff09d45f2884830",
+        "source": {
+          "schema": 1,
+          "commit": "2b35358523ff5f397e415203e0df37d38825e8eb",
+          "source_date_epoch": 1790935849,
+          "name": "qore-freetds-module",
+          "version": "1.4",
+          "exclusions": [
+            "m4/acx_pthread.m4"
+          ],
+          "sources": {
+            "qore-freetds-module-1.4.tar.xz": "54f6b89a510c9741b457563baed49927d8f50ed3685c2ba6efbd09fd07fcdae8",
+            "qore-freetds-module.spec": "414c3bf16c0cdf99f8a3aa774d6b1ee1dc83b977b22647e212f6ed6fa0fce9d7"
+          },
+          "spec": "qore-freetds-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790935849",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/freetds-source-final-1:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-freetds-final-1:/work",
+          "sha256:41f3f6cbc8036cc5b837f6b2ef8fca13fe07880930ac60c68ff09d45f2884830",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-freetds-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-freetds-module-doc-1.4-2.noarch.rpm": "b6ffbfaf93e9e02dd970adb0f74a5108b8407fab2165a65e8accc8f534a310b4",
+          "rpmbuild/RPMS/x86_64/qore-freetds-module-1.4-2.x86_64.rpm": "2fad3440fddd6d4794dad62eabed8b00aee483ed34a3ad1e6b70c631b8642ae8",
+          "rpmbuild/RPMS/x86_64/qore-freetds-module-debuginfo-1.4-2.x86_64.rpm": "6100f601ca5690fee9606bc4c2de9129d175d15de3797e4f371d5f91d762004f",
+          "rpmbuild/RPMS/x86_64/qore-freetds-module-debugsource-1.4-2.x86_64.rpm": "a1fada64d27c2a61cdf7cef3a6a447654496a8ceb6ccb75e2b3ae6086fc3ed18",
+          "rpmbuild/SRPMS/qore-freetds-module-1.4-2.src.rpm": "7bce83fd8cb062b3da21ceb2df74834185067a320314e1b8c63989aa5079cf9f"
+        }
+      },
+      "installed": {
+        "steps": {
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/leap-freetds-final-1-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/leap-freetds-final-1-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/leap-freetds-final-1-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/leap-freetds-final-1-sdk-tests.log"
+          }
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:41f3f6cbc8036cc5b837f6b2ef8fca13fe07880930ac60c68ff09d45f2884830",
+          "source": {
+            "schema": 1,
+            "commit": "2b35358523ff5f397e415203e0df37d38825e8eb",
+            "source_date_epoch": 1790935849,
+            "name": "qore-freetds-module",
+            "version": "1.4",
+            "exclusions": [
+              "m4/acx_pthread.m4"
+            ],
+            "sources": {
+              "qore-freetds-module-1.4.tar.xz": "54f6b89a510c9741b457563baed49927d8f50ed3685c2ba6efbd09fd07fcdae8",
+              "qore-freetds-module.spec": "414c3bf16c0cdf99f8a3aa774d6b1ee1dc83b977b22647e212f6ed6fa0fce9d7"
+            },
+            "spec": "qore-freetds-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790935849",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/freetds-source-final-1:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/leap-freetds-final-1:/work",
+            "sha256:41f3f6cbc8036cc5b837f6b2ef8fca13fe07880930ac60c68ff09d45f2884830",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-freetds-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-freetds-module-doc-1.4-2.noarch.rpm": "b6ffbfaf93e9e02dd970adb0f74a5108b8407fab2165a65e8accc8f534a310b4",
+            "rpmbuild/RPMS/x86_64/qore-freetds-module-1.4-2.x86_64.rpm": "2fad3440fddd6d4794dad62eabed8b00aee483ed34a3ad1e6b70c631b8642ae8",
+            "rpmbuild/RPMS/x86_64/qore-freetds-module-debuginfo-1.4-2.x86_64.rpm": "6100f601ca5690fee9606bc4c2de9129d175d15de3797e4f371d5f91d762004f",
+            "rpmbuild/RPMS/x86_64/qore-freetds-module-debugsource-1.4-2.x86_64.rpm": "a1fada64d27c2a61cdf7cef3a6a447654496a8ceb6ccb75e2b3ae6086fc3ed18",
+            "rpmbuild/SRPMS/qore-freetds-module-1.4-2.src.rpm": "7bce83fd8cb062b3da21ceb2df74834185067a320314e1b8c63989aa5079cf9f"
+          }
+        },
+        "phase": "complete",
+        "runtime_image": "sha256:4ba86130443cbe9edf2cf66dcf1cac2d2ab78bae25d1f66af7e4fb9886f8586a",
+        "sdk_image": "sha256:d3ea9a5de02ca3e46113dfdca7088371f2e958142168a64869ddd29f7d1a7772",
+        "exit_code": 0
+      },
+      "logs_sha256": {
+        "results/leap-freetds-final-1/build.log": "e6b448d02f6451bc61cc8bb006c91fe64522b3d3bd4cc49766473d9f1bedcfcc",
+        "results/leap-freetds-final-1-runtime-install.log": "cdbfb226bc1577dea9c224b601fe6fbc681135aeee7b48a59e55c90c8a16eb87",
+        "results/leap-freetds-final-1-runtime-tests.log": "e2ec35cc17b2a9742ecef5d25e6d69bab8c31f6444b280cbd3367219135b1758",
+        "results/leap-freetds-final-1-sdk-install.log": "f3a385709ecd25263e1cfb097a812a7178b454074c98028a75563205102902c9",
+        "results/leap-freetds-final-1-sdk-tests.log": "492f29b422b824f0a9c2b8dcd4ade52cdea4019a9eafebfd2d6de4a9a11f53b9"
+      }
+    },
+    "el10": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:89d0b8708fdde0479d95ea845f24085917678dcb5762a6c8a2c0cad375b581b3",
+        "source": {
+          "schema": 1,
+          "commit": "2b35358523ff5f397e415203e0df37d38825e8eb",
+          "source_date_epoch": 1790935849,
+          "name": "qore-freetds-module",
+          "version": "1.4",
+          "exclusions": [
+            "m4/acx_pthread.m4"
+          ],
+          "sources": {
+            "qore-freetds-module-1.4.tar.xz": "54f6b89a510c9741b457563baed49927d8f50ed3685c2ba6efbd09fd07fcdae8",
+            "qore-freetds-module.spec": "414c3bf16c0cdf99f8a3aa774d6b1ee1dc83b977b22647e212f6ed6fa0fce9d7"
+          },
+          "spec": "qore-freetds-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790935849",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/freetds-source-final-1:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-freetds-final-1:/work",
+          "sha256:89d0b8708fdde0479d95ea845f24085917678dcb5762a6c8a2c0cad375b581b3",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-freetds-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-freetds-module-doc-1.4-2.el10.noarch.rpm": "1c9280249484096ab1b1dc467174b6edbb288e509fc6feba37ffbc7530493624",
+          "rpmbuild/RPMS/x86_64/qore-freetds-module-1.4-2.el10.x86_64.rpm": "0dd1e9dc234b5a19d0ff492ddc7e8e1687df00da0a7ead8fa5b6723978e871d5",
+          "rpmbuild/RPMS/x86_64/qore-freetds-module-debuginfo-1.4-2.el10.x86_64.rpm": "46198ae0b0f07fa2efcae44033335dda66a7b996c141d6a1668c4e373ee6a953",
+          "rpmbuild/RPMS/x86_64/qore-freetds-module-debugsource-1.4-2.el10.x86_64.rpm": "51e548c4f3149f10d7e00a559243c5ffff076d1a3e018fbdc5db6eaa650a8b57",
+          "rpmbuild/SRPMS/qore-freetds-module-1.4-2.el10.src.rpm": "828057af36f212693654aebc106f01370b91b1a5c8df739cdf730e9d6f1a7948"
+        }
+      },
+      "installed": {
+        "steps": {
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/el10-freetds-final-1-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/el10-freetds-final-1-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/el10-freetds-final-1-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/el10-freetds-final-1-sdk-tests.log"
+          }
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:89d0b8708fdde0479d95ea845f24085917678dcb5762a6c8a2c0cad375b581b3",
+          "source": {
+            "schema": 1,
+            "commit": "2b35358523ff5f397e415203e0df37d38825e8eb",
+            "source_date_epoch": 1790935849,
+            "name": "qore-freetds-module",
+            "version": "1.4",
+            "exclusions": [
+              "m4/acx_pthread.m4"
+            ],
+            "sources": {
+              "qore-freetds-module-1.4.tar.xz": "54f6b89a510c9741b457563baed49927d8f50ed3685c2ba6efbd09fd07fcdae8",
+              "qore-freetds-module.spec": "414c3bf16c0cdf99f8a3aa774d6b1ee1dc83b977b22647e212f6ed6fa0fce9d7"
+            },
+            "spec": "qore-freetds-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790935849",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/freetds-source-final-1:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/el10-freetds-final-1:/work",
+            "sha256:89d0b8708fdde0479d95ea845f24085917678dcb5762a6c8a2c0cad375b581b3",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-freetds-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-freetds-module-doc-1.4-2.el10.noarch.rpm": "1c9280249484096ab1b1dc467174b6edbb288e509fc6feba37ffbc7530493624",
+            "rpmbuild/RPMS/x86_64/qore-freetds-module-1.4-2.el10.x86_64.rpm": "0dd1e9dc234b5a19d0ff492ddc7e8e1687df00da0a7ead8fa5b6723978e871d5",
+            "rpmbuild/RPMS/x86_64/qore-freetds-module-debuginfo-1.4-2.el10.x86_64.rpm": "46198ae0b0f07fa2efcae44033335dda66a7b996c141d6a1668c4e373ee6a953",
+            "rpmbuild/RPMS/x86_64/qore-freetds-module-debugsource-1.4-2.el10.x86_64.rpm": "51e548c4f3149f10d7e00a559243c5ffff076d1a3e018fbdc5db6eaa650a8b57",
+            "rpmbuild/SRPMS/qore-freetds-module-1.4-2.el10.src.rpm": "828057af36f212693654aebc106f01370b91b1a5c8df739cdf730e9d6f1a7948"
+          }
+        },
+        "phase": "complete",
+        "runtime_image": "sha256:ca1e20fcf763d69a3ccb01bb751f8826047517c385214bfac73851ee0cdfb6ec",
+        "sdk_image": "sha256:4073c7f66658d552f80364e561cdfe802c40d9131e570472c5fd0c52f917bc2b",
+        "exit_code": 0
+      },
+      "logs_sha256": {
+        "results/el10-freetds-final-1/build.log": "163fe14a87859663d43b014cac095d055aa1dcf4e493d10c8cfe3210dc938d95",
+        "results/el10-freetds-final-1-runtime-install.log": "35abd74686e481a34c548aca8342c24727388ed8db0678151480bacb4a2a5a1b",
+        "results/el10-freetds-final-1-runtime-tests.log": "e2ec35cc17b2a9742ecef5d25e6d69bab8c31f6444b280cbd3367219135b1758",
+        "results/el10-freetds-final-1-sdk-install.log": "37fec66d7281cfebbf2aadafc4191c76f63e0acb1d2a423a2da6f80db5c0bad4",
+        "results/el10-freetds-final-1-sdk-tests.log": "0e955b1e067e456ec147a190002697dfddd8f633dfbeb1b33372b3c5e0364417"
+      }
+    }
+  },
+  "obs": {
+    "qore-freetds-module": {
+      "source_commit": "2b35358523ff5f397e415203e0df37d38825e8eb",
+      "revision": "1",
+      "srcmd5": "b22b45fb5cb035cf130e2b3e23b40180",
+      "verified_files": {
+        "qore-freetds-module-1.4.tar.xz": "63443c441de82f678b95d7a1b8c1115c",
+        "qore-freetds-module.spec": "ebb07a6d6733f8202e109ef4cc3f267b",
+        "source-manifest.json": "ca768c082f0cd13dd9886ace30b687c0"
+      }
+    }
+  },
+  "gates_remaining": [
+    "Native ARM installed qualification",
+    "Live SQL Server/ASE integration",
+    "Proprietary Sybase OCS qualification if offered",
+    "Combined installation, upgrade/removal, reproducibility and publication gates"
+  ]
+}

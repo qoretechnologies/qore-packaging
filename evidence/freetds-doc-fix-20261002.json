@@ -1,0 +1,75 @@
+{
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "scope": "Resolve the local sybase_timezone anchor and load BulkSqlUtil documentation tags from the Qore SDK. No native implementation changes. Optional Java binding generation is explicitly off for the FreeTDS RPM payload.",
+  "source_sha256": {
+    "CMakeLists.txt": "fb633f26af7dc5b443e026736a690e6f879597c4cf62fdcab26dfaeb378bceda",
+    "docs/mainpage.dox.tmpl": "544ecf971a10486be246082dd5c6d85a2f6758f773510a6f9a3aa5ead80781fe"
+  },
+  "targets": {
+    "fedora": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/fedora-freetds-native-1/qore-freetds-module-1.4:/source",
+        "sha256:fb40ab34ee0ad3a042947d3ae6ccf236a72baacad1427662025d4d8eb899e59a",
+        "sh",
+        "-c",
+        "set -eu\n. /usr/lib/rpm/qore/module-env.sh\ncd /source\ncmake -S . -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DWITH_FREETDS=ON -DWITH_SYBASE=OFF -DQORE_GENERATE_JAVA_BINDINGS=OFF\ncmake --build build -j2\nprintf '\\nWARN_AS_ERROR = FAIL_ON_WARNINGS\\n' >> build/Doxyfile\ncmake --build build --target docs -j2\npython3 -B -W error rpm/test_fixture.py -v\npython3 -B -W error rpm/run-tests.py --build-dir /source/build\n"
+      ],
+      "source": "/home/david/src/qore/git/qore-packaging/work/fedora-freetds-native-1/qore-freetds-module-1.4"
+    },
+    "leap": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/leap-freetds-native-1/qore-freetds-module-1.4:/source",
+        "sha256:41f3f6cbc8036cc5b837f6b2ef8fca13fe07880930ac60c68ff09d45f2884830",
+        "sh",
+        "-c",
+        "set -eu\n. /usr/lib/rpm/qore/module-env.sh\ncd /source\ncmake -S . -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DWITH_FREETDS=ON -DWITH_SYBASE=OFF -DQORE_GENERATE_JAVA_BINDINGS=OFF\ncmake --build build -j2\nprintf '\\nWARN_AS_ERROR = FAIL_ON_WARNINGS\\n' >> build/Doxyfile\ncmake --build build --target docs -j2\npython3 -B -W error rpm/test_fixture.py -v\npython3 -B -W error rpm/run-tests.py --build-dir /source/build\n"
+      ],
+      "source": "/home/david/src/qore/git/qore-packaging/work/leap-freetds-native-1/qore-freetds-module-1.4"
+    },
+    "el10": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/el10-freetds-native-1/qore-freetds-module-1.4:/source",
+        "sha256:89d0b8708fdde0479d95ea845f24085917678dcb5762a6c8a2c0cad375b581b3",
+        "sh",
+        "-c",
+        "set -eu\n. /usr/lib/rpm/qore/module-env.sh\ncd /source\ncmake -S . -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DWITH_FREETDS=ON -DWITH_SYBASE=OFF -DQORE_GENERATE_JAVA_BINDINGS=OFF\ncmake --build build -j2\nprintf '\\nWARN_AS_ERROR = FAIL_ON_WARNINGS\\n' >> build/Doxyfile\ncmake --build build --target docs -j2\npython3 -B -W error rpm/test_fixture.py -v\npython3 -B -W error rpm/run-tests.py --build-dir /source/build\n"
+      ],
+      "source": "/home/david/src/qore/git/qore-packaging/work/el10-freetds-native-1/qore-freetds-module-1.4"
+    }
+  },
+  "logs_sha256": {
+    "results/fedora-freetds-doc-fix-2.log": "e0d7a13b8c2b01ec80df63eaeb6502a687ac4491ed2895c933effe5fc0c969a0",
+    "results/leap-freetds-doc-fix-2.log": "553b5d5cf0f8858109b3c5b3265f009b60ab220c444c99c2f2caa3d7c2a1ce58",
+    "results/el10-freetds-doc-fix-2.log": "0b68a255af68a8f06f2225645fe5be3d6a74b8c586aa7351a589b18f07d12677"
+  }
+}
