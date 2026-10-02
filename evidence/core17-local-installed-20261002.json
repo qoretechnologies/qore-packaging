@@ -1,0 +1,419 @@
+{
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "scope": "Core release 17 local RPM and installed qualification; OBS Leap aarch64 proxy fixture hang is fixed by release 18 and is not accepted as a qualified native build.",
+  "local": {
+    "fedora": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:a437efbf23f3bf7b180f7d58a5ad3dd70d524372ae60a57380dff115a2b5feda",
+        "source": {
+          "schema": 1,
+          "commit": "0d95b0ecae07402c13909ab7d2bb30ad7592e209",
+          "source_date_epoch": 1790926958,
+          "name": "qore",
+          "version": "3.0.0~git20261002.17",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261002.17.tar.xz": "0fff12fee397d24de69422b3c667cef0647f04cf9341f2bbd65efbbd6b514db4",
+            "qore.spec": "a742ee02d9a427699efcc5e2c1ac6b49cd569fe509e09812f8bb696e23e8ef15"
+          },
+          "spec": "qore.spec"
+        },
+        "jobs": 4,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790926958",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/qore-source-policy-17:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-17:/work",
+          "sha256:a437efbf23f3bf7b180f7d58a5ad3dd70d524372ae60a57380dff115a2b5feda",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 4",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.17-17.fc44.noarch.rpm": "4e6de3403367f4050cba18626a01127b685d3ef785cbbcfb00cd3a5e7aad5193",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.17-17.fc44.noarch.rpm": "c06b06a5287109d7ea74f71b849dfd9edeb5acdf00baf7a679af2c782872ba5c",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.17-17.fc44.noarch.rpm": "c5e19ec0605ae33bbddd7ca1147d7e159ca9edbc3ef5a522a825f4015a3987e2",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.17-17.fc44.noarch.rpm": "b61e857a7d1f9d747275d5480541078e9568d2aa1d499ca429803c35857764a0",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.17-17.fc44.noarch.rpm": "727f4f3625675d5c500c75816dc4643c2b81ea5c3bfe072d6001e87a8cdfe454",
+          "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "60248697330b9b7cd12d985027865a3f25381862101e5f6926996e7b6e79aa72",
+          "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "3333d640df44270e5e3cce3edb284975b081868d8f4ca03f735903f71d9273d6",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "ea4d68b139df6c4f556446f1afb34e919f8bb5ec799d4b3cae8ee9a6442d4afa",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "f5c7722a978aebbf5481a84a87e99bbf4606841d731e764d213311efcee4cc32",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "77230bad7afed09d44b3534e692eae502e9f2d2800825510618763be561576a4",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "2685419d01544ef9a8942a6d550f3270f8b145f5050064c77acda70d5bbf7157",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "a66ddd5395e5d161f1363a35a81ceb8b6935f47557a53190434a630f46b386da",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "2fb69af1eee32e65c2573175b528fa146513134d04e434682e23ea57a71399dc",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "651ac6cd6e5395a05132a1b690bf290c94827c372a518191f130f2241662dfb9",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261002.17-17.fc44.src.rpm": "db7823584829db06904dc7c4f2505152ae02bb74a1b46de661e5953ff795b433"
+        }
+      },
+      "installed": {
+        "source_build": "results/fedora-qore-policy-17",
+        "steps": {
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/fedora-core-policy-17-sdk-install-2.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-core-policy-17-sdk-tests-2.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/fedora-core-policy-17-runtime-install-2.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-core-policy-17-runtime-tests-2.log"
+          }
+        },
+        "source": {
+          "schema": 1,
+          "commit": "0d95b0ecae07402c13909ab7d2bb30ad7592e209",
+          "source_date_epoch": 1790926958,
+          "name": "qore",
+          "version": "3.0.0~git20261002.17",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261002.17.tar.xz": "0fff12fee397d24de69422b3c667cef0647f04cf9341f2bbd65efbbd6b514db4",
+            "qore.spec": "a742ee02d9a427699efcc5e2c1ac6b49cd569fe509e09812f8bb696e23e8ef15"
+          },
+          "spec": "qore.spec"
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.17-17.fc44.noarch.rpm": "4e6de3403367f4050cba18626a01127b685d3ef785cbbcfb00cd3a5e7aad5193",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.17-17.fc44.noarch.rpm": "c06b06a5287109d7ea74f71b849dfd9edeb5acdf00baf7a679af2c782872ba5c",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.17-17.fc44.noarch.rpm": "c5e19ec0605ae33bbddd7ca1147d7e159ca9edbc3ef5a522a825f4015a3987e2",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.17-17.fc44.noarch.rpm": "b61e857a7d1f9d747275d5480541078e9568d2aa1d499ca429803c35857764a0",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.17-17.fc44.noarch.rpm": "727f4f3625675d5c500c75816dc4643c2b81ea5c3bfe072d6001e87a8cdfe454",
+          "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "60248697330b9b7cd12d985027865a3f25381862101e5f6926996e7b6e79aa72",
+          "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "3333d640df44270e5e3cce3edb284975b081868d8f4ca03f735903f71d9273d6",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "ea4d68b139df6c4f556446f1afb34e919f8bb5ec799d4b3cae8ee9a6442d4afa",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "f5c7722a978aebbf5481a84a87e99bbf4606841d731e764d213311efcee4cc32",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "77230bad7afed09d44b3534e692eae502e9f2d2800825510618763be561576a4",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "2685419d01544ef9a8942a6d550f3270f8b145f5050064c77acda70d5bbf7157",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "a66ddd5395e5d161f1363a35a81ceb8b6935f47557a53190434a630f46b386da",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "2fb69af1eee32e65c2573175b528fa146513134d04e434682e23ea57a71399dc",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.17-17.fc44.x86_64.rpm": "651ac6cd6e5395a05132a1b690bf290c94827c372a518191f130f2241662dfb9",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261002.17-17.fc44.src.rpm": "db7823584829db06904dc7c4f2505152ae02bb74a1b46de661e5953ff795b433"
+        },
+        "sdk_image": "sha256:2e1db150e871568f92bf94f8aea8ac29651116c07843b2219b0af1f8f010db14",
+        "runtime_image": "sha256:f68beb94fc9281f271c371f56fbd21198be83d75fd446fd6455496b6532bf4ff",
+        "exit_code": 0
+      },
+      "logs_sha256": {
+        "results/fedora-qore-policy-17/build.log": "4ed993cf7170b12fef1c1bf115d46f2d64aeea35380860f74178b7c9f3bab7bd",
+        "results/fedora-core-policy-17-sdk-install-2.log": "a74bc5b1b025d8b25373ab7db9e0a5887b1639b5d6a9c5d1567e209752e3a937",
+        "results/fedora-core-policy-17-sdk-tests-2.log": "013c6e43e2a180c7d9091fc0d56427e477c6bded8db2ba84a329a9226e0d87bd",
+        "results/fedora-core-policy-17-runtime-install-2.log": "c8c17d7c0332bf7d59cbe9463e8156c0af44090fa3ad3cbdaf92037eb680c02c",
+        "results/fedora-core-policy-17-runtime-tests-2.log": "9558a8c25fb7d9164e1db835c75f1d0a85d7a07e40877afdf864bd8fd180128b"
+      }
+    },
+    "leap": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:48f1246678238c3d1b479f5cffc69c511443b4855b7f548fc4b22bf793fb975b",
+        "source": {
+          "schema": 1,
+          "commit": "0d95b0ecae07402c13909ab7d2bb30ad7592e209",
+          "source_date_epoch": 1790926958,
+          "name": "qore",
+          "version": "3.0.0~git20261002.17",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261002.17.tar.xz": "0fff12fee397d24de69422b3c667cef0647f04cf9341f2bbd65efbbd6b514db4",
+            "qore.spec": "a742ee02d9a427699efcc5e2c1ac6b49cd569fe509e09812f8bb696e23e8ef15"
+          },
+          "spec": "qore.spec"
+        },
+        "jobs": 4,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790926958",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/qore-source-policy-17:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-17:/work",
+          "sha256:48f1246678238c3d1b479f5cffc69c511443b4855b7f548fc4b22bf793fb975b",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 4",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.17-17.noarch.rpm": "717195c3caccd92a5c3e39e98292afe7e9b83d793fefa2ae0fa885c13ed12b2d",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.17-17.noarch.rpm": "152bcea2ae0c4e8315d170f249d9218606fdb77a68984b3ae1e4bfa1b3ad49aa",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.17-17.noarch.rpm": "34af4de34a03a19af50c51265fd74cf815657264b829c5aa0706bce5eaec330b",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.17-17.noarch.rpm": "979e02632c1a10f6aad97f324e02316038ee0303db0bb2be64e264eed59565e9",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.17-17.noarch.rpm": "016bb3321c10a2812e8633c5ffa4e767804101613e043c6e5b41b325fb00b577",
+          "rpmbuild/RPMS/x86_64/libqore20-3.0.0~git20261002.17-17.x86_64.rpm": "3fc454ebf46c45073c11d3738f1e324ed27edd3ed7a06479715a4685c98a6d74",
+          "rpmbuild/RPMS/x86_64/libqore20-debuginfo-3.0.0~git20261002.17-17.x86_64.rpm": "4dd00385bf2072251677fa9ee97d50b680d8f2db326ac5b8d00d5b19ca6e7c5f",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.17-17.x86_64.rpm": "c50a9138322ee8c83731a69ce6d5d49d900700675ee1932a90a737b63f21303d",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.17-17.x86_64.rpm": "04db10b46fb82b4680d9f6dd35f542c7301faf06640f942de4b51a1036fc08f9",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.17-17.x86_64.rpm": "d114890bfc0f8eedcaca6707ab73cb51c3ba6689bc81e166ee0872d178070a38",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.17-17.x86_64.rpm": "4451325de8a1f61aa6c60ef9b27c91dd77466b8402c8ab1ca414f35538f7be8a",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.17-17.x86_64.rpm": "8244b01666f11ae0518ea13e657e5a02db993e5ccf65400028d6a7ccd92facfb",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.17-17.x86_64.rpm": "beb6007539c22a548eab3a49faa621a8072b1a5f42246c3a4977a9ae44974d82",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.17-17.x86_64.rpm": "ff730ff46601ea2b1de3d2e8cad44f509be871af96bebd2bf71d1732d01a815c",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261002.17-17.src.rpm": "40cb1b2646e2854dc19d3abc0e1b9f040ac382f2e7cfcdc141993b43f9dcb40d"
+        }
+      },
+      "installed": {
+        "source_build": "results/leap-qore-policy-17",
+        "steps": {
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/leap-core-policy-17-sdk-install-2.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/leap-core-policy-17-sdk-tests-2.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/leap-core-policy-17-runtime-install-2.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/leap-core-policy-17-runtime-tests-2.log"
+          }
+        },
+        "source": {
+          "schema": 1,
+          "commit": "0d95b0ecae07402c13909ab7d2bb30ad7592e209",
+          "source_date_epoch": 1790926958,
+          "name": "qore",
+          "version": "3.0.0~git20261002.17",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261002.17.tar.xz": "0fff12fee397d24de69422b3c667cef0647f04cf9341f2bbd65efbbd6b514db4",
+            "qore.spec": "a742ee02d9a427699efcc5e2c1ac6b49cd569fe509e09812f8bb696e23e8ef15"
+          },
+          "spec": "qore.spec"
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.17-17.noarch.rpm": "717195c3caccd92a5c3e39e98292afe7e9b83d793fefa2ae0fa885c13ed12b2d",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.17-17.noarch.rpm": "152bcea2ae0c4e8315d170f249d9218606fdb77a68984b3ae1e4bfa1b3ad49aa",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.17-17.noarch.rpm": "34af4de34a03a19af50c51265fd74cf815657264b829c5aa0706bce5eaec330b",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.17-17.noarch.rpm": "979e02632c1a10f6aad97f324e02316038ee0303db0bb2be64e264eed59565e9",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.17-17.noarch.rpm": "016bb3321c10a2812e8633c5ffa4e767804101613e043c6e5b41b325fb00b577",
+          "rpmbuild/RPMS/x86_64/libqore20-3.0.0~git20261002.17-17.x86_64.rpm": "3fc454ebf46c45073c11d3738f1e324ed27edd3ed7a06479715a4685c98a6d74",
+          "rpmbuild/RPMS/x86_64/libqore20-debuginfo-3.0.0~git20261002.17-17.x86_64.rpm": "4dd00385bf2072251677fa9ee97d50b680d8f2db326ac5b8d00d5b19ca6e7c5f",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.17-17.x86_64.rpm": "c50a9138322ee8c83731a69ce6d5d49d900700675ee1932a90a737b63f21303d",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.17-17.x86_64.rpm": "04db10b46fb82b4680d9f6dd35f542c7301faf06640f942de4b51a1036fc08f9",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.17-17.x86_64.rpm": "d114890bfc0f8eedcaca6707ab73cb51c3ba6689bc81e166ee0872d178070a38",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.17-17.x86_64.rpm": "4451325de8a1f61aa6c60ef9b27c91dd77466b8402c8ab1ca414f35538f7be8a",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.17-17.x86_64.rpm": "8244b01666f11ae0518ea13e657e5a02db993e5ccf65400028d6a7ccd92facfb",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.17-17.x86_64.rpm": "beb6007539c22a548eab3a49faa621a8072b1a5f42246c3a4977a9ae44974d82",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.17-17.x86_64.rpm": "ff730ff46601ea2b1de3d2e8cad44f509be871af96bebd2bf71d1732d01a815c",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261002.17-17.src.rpm": "40cb1b2646e2854dc19d3abc0e1b9f040ac382f2e7cfcdc141993b43f9dcb40d"
+        },
+        "sdk_image": "sha256:4de407a22bd4a318b9ffb6474a27d90576629945ff7bca114aa6a1dbc923e752",
+        "runtime_image": "sha256:4fe62c8832f99d994cb54451f763bef5dfe508d8bb5c8b2c6b95f896f6939ef0",
+        "exit_code": 0
+      },
+      "logs_sha256": {
+        "results/leap-qore-policy-17/build.log": "47b02f08f5827ca60df591d0e0eb8436d9dc086f3f855c161c3698c6d46ddf8d",
+        "results/leap-core-policy-17-sdk-install-2.log": "e1f713f7aedee3a0ffa74638e5a45e216d0f6331cffd40aa67f6ba34ad7aec1b",
+        "results/leap-core-policy-17-sdk-tests-2.log": "4a8424f0acea02929fa1fdca47fabfa27ba8832b4ec76c69e9f550a4c526a1b4",
+        "results/leap-core-policy-17-runtime-install-2.log": "2c97af4af26e0a3161eb7021df9806d603cb7aa60ccbaaaf6ab0f262b3dfd7f4",
+        "results/leap-core-policy-17-runtime-tests-2.log": "e51f3dc1cb2d08e0bddf06b03042ba9464ca4a7603205edc8dbeea403cfc4f5f"
+      }
+    },
+    "el10": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:50db5ec21c50dffb918d77c420f6c39d0c3c2c4c286b6150741de8c3dd80baeb",
+        "source": {
+          "schema": 1,
+          "commit": "0d95b0ecae07402c13909ab7d2bb30ad7592e209",
+          "source_date_epoch": 1790926958,
+          "name": "qore",
+          "version": "3.0.0~git20261002.17",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261002.17.tar.xz": "0fff12fee397d24de69422b3c667cef0647f04cf9341f2bbd65efbbd6b514db4",
+            "qore.spec": "a742ee02d9a427699efcc5e2c1ac6b49cd569fe509e09812f8bb696e23e8ef15"
+          },
+          "spec": "qore.spec"
+        },
+        "jobs": 4,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790926958",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/qore-source-policy-17:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-17:/work",
+          "sha256:50db5ec21c50dffb918d77c420f6c39d0c3c2c4c286b6150741de8c3dd80baeb",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 4",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.17-17.el10.noarch.rpm": "0f030e05edb8a62d928a5b29016fff46e848e1cd85fa00380a4fb1742fd82ca9",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.17-17.el10.noarch.rpm": "9527f1e27ba2e0d64e78c6ad570d09f0148708e563153a88ef16647def259602",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.17-17.el10.noarch.rpm": "081012478259c4a2047f7e7ffc0ef4b9999c8c847cbf9342561b8e364cdee4a6",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.17-17.el10.noarch.rpm": "97d94a2114f72d3a03e98d4f9a868b5c0be52f2159f4d2d29666d9b3ef09bc83",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.17-17.el10.noarch.rpm": "8e78b96493aca97ca65999d2dea45921d7e5029ccd32a882570a8ad663a675ee",
+          "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.17-17.el10.x86_64.rpm": "794a642bfd4963df0dffc5399815ce92952a109eb9fc78a21ab229f113f8ac5a",
+          "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.17-17.el10.x86_64.rpm": "46d453a5d86c602f98645c60772ed7237b6f872b9b0a9843672862688bb1a9c9",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.17-17.el10.x86_64.rpm": "bcc058fecf1e2bb5f4c97fa40a8dfd52b93a53f08eac51da423a0bea25c71779",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.17-17.el10.x86_64.rpm": "64042016216b7e9b66dfef25830244093fcab140b91e713fd3091dde231170d3",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.17-17.el10.x86_64.rpm": "d1f20d9faef0521aa16a723d9c691c3a47bf22f3c112231a455ba5e1630ee979",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.17-17.el10.x86_64.rpm": "bd9e531624a64c55b4b19c5cf044dff9b3f757ed1179853c14afd5290b6a05b0",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.17-17.el10.x86_64.rpm": "ac1ecfa735eb902daca3e7608590ff46a691d7fc6324a298dd1ba10cf07a38c2",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.17-17.el10.x86_64.rpm": "999d08469e1d3109a6ca8ffbf907edf847e4ba583f89e70e0d08893ef524deb9",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.17-17.el10.x86_64.rpm": "75ea41aa75ba78dd01f15a503c3a2b850398054da275c722a244c82ac4175f78",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261002.17-17.el10.src.rpm": "5c0f4bcf8c6dc7cbd3267163adbd560871fbdf130f94395fbd42b2be409b2cf2"
+        }
+      },
+      "installed": {
+        "source_build": "results/el10-qore-policy-17",
+        "steps": {
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/el10-core-policy-17-sdk-install-2.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/el10-core-policy-17-sdk-tests-2.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/el10-core-policy-17-runtime-install-2.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/el10-core-policy-17-runtime-tests-2.log"
+          }
+        },
+        "source": {
+          "schema": 1,
+          "commit": "0d95b0ecae07402c13909ab7d2bb30ad7592e209",
+          "source_date_epoch": 1790926958,
+          "name": "qore",
+          "version": "3.0.0~git20261002.17",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261002.17.tar.xz": "0fff12fee397d24de69422b3c667cef0647f04cf9341f2bbd65efbbd6b514db4",
+            "qore.spec": "a742ee02d9a427699efcc5e2c1ac6b49cd569fe509e09812f8bb696e23e8ef15"
+          },
+          "spec": "qore.spec"
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.17-17.el10.noarch.rpm": "0f030e05edb8a62d928a5b29016fff46e848e1cd85fa00380a4fb1742fd82ca9",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.17-17.el10.noarch.rpm": "9527f1e27ba2e0d64e78c6ad570d09f0148708e563153a88ef16647def259602",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.17-17.el10.noarch.rpm": "081012478259c4a2047f7e7ffc0ef4b9999c8c847cbf9342561b8e364cdee4a6",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.17-17.el10.noarch.rpm": "97d94a2114f72d3a03e98d4f9a868b5c0be52f2159f4d2d29666d9b3ef09bc83",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.17-17.el10.noarch.rpm": "8e78b96493aca97ca65999d2dea45921d7e5029ccd32a882570a8ad663a675ee",
+          "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.17-17.el10.x86_64.rpm": "794a642bfd4963df0dffc5399815ce92952a109eb9fc78a21ab229f113f8ac5a",
+          "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.17-17.el10.x86_64.rpm": "46d453a5d86c602f98645c60772ed7237b6f872b9b0a9843672862688bb1a9c9",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.17-17.el10.x86_64.rpm": "bcc058fecf1e2bb5f4c97fa40a8dfd52b93a53f08eac51da423a0bea25c71779",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.17-17.el10.x86_64.rpm": "64042016216b7e9b66dfef25830244093fcab140b91e713fd3091dde231170d3",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.17-17.el10.x86_64.rpm": "d1f20d9faef0521aa16a723d9c691c3a47bf22f3c112231a455ba5e1630ee979",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.17-17.el10.x86_64.rpm": "bd9e531624a64c55b4b19c5cf044dff9b3f757ed1179853c14afd5290b6a05b0",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.17-17.el10.x86_64.rpm": "ac1ecfa735eb902daca3e7608590ff46a691d7fc6324a298dd1ba10cf07a38c2",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.17-17.el10.x86_64.rpm": "999d08469e1d3109a6ca8ffbf907edf847e4ba583f89e70e0d08893ef524deb9",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.17-17.el10.x86_64.rpm": "75ea41aa75ba78dd01f15a503c3a2b850398054da275c722a244c82ac4175f78",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261002.17-17.el10.src.rpm": "5c0f4bcf8c6dc7cbd3267163adbd560871fbdf130f94395fbd42b2be409b2cf2"
+        },
+        "sdk_image": "sha256:d8747cca3d9510216dfa61a7469601ac3c67d7f73ea1c09bc5ab925646fe86a6",
+        "runtime_image": "sha256:dd0fdf9e17f34d18fc6f295e302a4edd74b0a0fed0f295989bd074f37dc38f4c",
+        "exit_code": 0
+      },
+      "logs_sha256": {
+        "results/el10-qore-policy-17/build.log": "3d6e04ce7598c061e2a523d40d3a444eae23ae43be8ec9fb8c7fba9d8cd7bc0d",
+        "results/el10-core-policy-17-sdk-install-2.log": "510ef581ca08e81dfe32388110f8db78c090d54f4f5a1cc62879f68e3ce6681f",
+        "results/el10-core-policy-17-sdk-tests-2.log": "b87608c30a8d4a42d386e5742a4a6a8912a02efa7c535135998ce32d72eb4f57",
+        "results/el10-core-policy-17-runtime-install-2.log": "9333977e540fcee381becbf62ea055e8d6e0edbb39512ba83c85187b7c6bdb2a",
+        "results/el10-core-policy-17-runtime-tests-2.log": "6f5f47e900893f79055482de1d0da1cd76ceb7c9c2ad17a29af57f7945057bd0"
+      }
+    }
+  },
+  "native_failure": {
+    "log": "results/obs-core17-leap-aarch64-failed.log",
+    "sha256": "9d4b09fe0fbeb904b4d57820484fe477628e8e1ffec1d4805b87b9c6bfdb51bd",
+    "root_cause_evidence": "proxy-shutdown-fix-20261002.json"
+  }
+}

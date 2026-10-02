@@ -1,0 +1,308 @@
+{
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Native changes qualified with explicitly approved external diagnostics; RPM build and installed-package qualification remains separate.",
+  "source_sha256": {
+    "CMakeLists.txt": "3be04c9dac66aee306fb322906a526043357eaad7c2ab71efdd649efb66e7869",
+    "debian/tests/runtime": "11b7a48797e9853266346f0fa2fe6fb115e2960e8d912e3cc7b6c45383d39f49",
+    "design/python-module.md": "3ea244945cc589c2ba76c31bd6409f324ee9601045463961f5476762f4c16f28",
+    "docs/mainpage.dox.tmpl": "ff2a3df5c09ad7fb8030f940ea62b9d87bf3fa4da4074208305eaad8bd32bd81",
+    "src/PythonCallableCallReferenceNode.cpp": "ed63c88c165626797dc6ef2e91ba6577b0fc47c3de1b5601492bf831807e43ec",
+    "src/PythonCallableCallReferenceNode.h": "03e4951fa39749be5e7f48e4cfe13ef75203a60248a2e038595d5c5bf7a419a7",
+    "src/PythonQoreClass.cpp": "fb41e3005af1f58d6f7bbb704081c9b8576986f1c70e0107cd132a544426a7fc",
+    "src/PythonQoreClass.h": "d148711167596fa95e958f29d71329ff67c399785bce3a6eff81463d9dcac822",
+    "src/QoreMetaPathFinder.cpp": "e322037729b414e938b5c0c4dd5379da093fd543883d25e9596b3255a658fd02",
+    "src/QoreMetaPathFinder.h": "f10d5114a5269e1b561d984a42cb6f39126f4d79f8e888075cf4caaf7dbcebd8",
+    "src/QorePythonClass.cpp": "10586bd03d23bf8440d56742b80e627c73d5431461df7083c9abc7d1fb5f7ef3",
+    "src/QorePythonPrivateData.h": "1632ad8197d7b471d3ed2b31fd547e1da4e2ed6a45afa864a64fbf858c76db93",
+    "src/QorePythonProgram.cpp": "2617bb7fa287c643dec59db72ba2d78d988b02b738052e43b9c3018950ce5ff1",
+    "src/QorePythonProgram.h": "be935474f9640143ec011fa26db22045bfda953931e8b58ced3b8d5bd4d8d1ed",
+    "src/QorePythonStackLocationHelper.cpp": "2b461623a0644a2b54ae36304a2eb110efe413a0dc574759347d4ca13c51f622",
+    "src/QorePythonStackLocationHelper.h": "e7b73a9708cd2e2c7fbfbccf3c039112b6c8be3e1c7ae96d814eace32030822e",
+    "src/python-module.cpp": "b14f2ecff012b1658f3cedd05466bb3bbe5ee5e7ee6a7b87d60c11ea3f68086f",
+    "src/python-module.h": "40ceb6ef2773710801ae6e86fe8df5df9a2085e3ea112b80c703c6c4fdae291b",
+    "src/python314_internals.h": "85a3d453aabd8be063e908be8830cd87b8c252a24acb516a92625b390d191808",
+    "src/qoreloadermodule.cpp": "241fd41849aaf6d274432c10db7b09331dbb2e3b8ce365e3a77123551edab678",
+    "test/docker_test/test-alpine.sh": "e0bcd64c4b3ee9176677a06e3c9a9bc52b074d0b26e254e07d2b563d18e5fb18",
+    "test/docker_test/test-ubuntu.sh": "4e25fee0e99f62ffaf7a50f2eb10960481bfcdf7b8fe605c89a5014acb662fac",
+    "test/python.qtest": "6fb851c6b4a2cb470059262f450dd6dd99b9728b413126db4c15f72b04a61c32",
+    "test/standalone-lifecycle.py": "fa338e9bbc6dda19090ad0007d533b58e99ee1dd6c8dba6193d41efed1a8ebad"
+  },
+  "functional": "Python 3.12, 3.13 and 3.14: Release and Debug/Valgrind each pass 30 cases / 270 assertions, strict documentation and standalone ownership tests. Free-threaded Python 3.14 passes 30 cases / 209 assertions with existing unsupported-operation and JNI skips. JNI integration remains a separate gate.",
+  "memory_review": "All reported Valgrind contexts are loss records. No invalid memory accesses, uninitialized values, indirect losses or suppressed contexts. Fedora embedded has zero definite loss; standalone adds only the independently reproduced 40-byte glibc loader allocation. CPython 3.12/3.13 retain immortal strings during release-interpreter teardown; independent CPython controls and upstream source identify that behavior. Static-type metadata contributes the load-only possible-loss baseline.",
+  "exceptions": "python-external-diagnostics-20261002.json records the exact approved external causes. Raw Valgrind status 97 and loss counts are retained, not presented as a clean run. No general suppression or additional native leak is accepted.",
+  "logs": {
+    "results/fedora-python-native-18-build-valgrind.log": {
+      "sha256": "3285f5ba72c584f00736ec5c384a3de094984410c288cc261c595843700333ba",
+      "leak_summary_bytes_blocks": {
+        "definitely lost": [
+          0,
+          0
+        ],
+        "indirectly lost": [
+          0,
+          0
+        ],
+        "possibly lost": [
+          4373,
+          55
+        ]
+      },
+      "loss_contexts": 49,
+      "invalid_memory_contexts": 0,
+      "raw_valgrind_exit": 97,
+      "suppression_count": 0,
+      "compiler_warnings": [
+        "/source/src/QorePythonProgram.h:648:5: warning: \u2018void operator delete(void*, std::size_t)\u2019 called on pointer \u2018<unknown>\u2019 with nonzero offset 16 [-Wfree-nonheap-object]",
+        "/source/src/QorePythonProgram.h:648:5: warning: \u2018void operator delete(void*, std::size_t)\u2019 called on pointer \u2018pp\u2019 with nonzero offset 16 [-Wfree-nonheap-object]",
+        "/source/src/QorePythonProgram.h:648:5: warning: \u2018void operator delete(void*, std::size_t)\u2019 called on pointer \u2018<unknown>\u2019 with nonzero offset 16 [-Wfree-nonheap-object]"
+      ]
+    },
+    "results/leap-python-native-18-build-valgrind.log": {
+      "sha256": "a32e26855a0e2f7e76ff668f5f07fd1120521c3ea111cdcd41be35ae4717a83d",
+      "leak_summary_bytes_blocks": {
+        "definitely lost": [
+          495430,
+          8908
+        ],
+        "indirectly lost": [
+          0,
+          0
+        ],
+        "possibly lost": [
+          4417,
+          58
+        ]
+      },
+      "loss_contexts": 583,
+      "invalid_memory_contexts": 0,
+      "raw_valgrind_exit": 97,
+      "suppression_count": 0,
+      "compiler_warnings": []
+    },
+    "results/el10-python-native-19-build-valgrind.log": {
+      "sha256": "3c492ab14e7fdcc2eb8ca647fc1ddf2e4453a7b7635483f497977e8436c47059",
+      "leak_summary_bytes_blocks": {
+        "definitely lost": [
+          353944,
+          6415
+        ],
+        "indirectly lost": [
+          0,
+          0
+        ],
+        "possibly lost": [
+          1780,
+          31
+        ]
+      },
+      "loss_contexts": 673,
+      "invalid_memory_contexts": 0,
+      "raw_valgrind_exit": 97,
+      "suppression_count": 0,
+      "compiler_warnings": []
+    },
+    "results/fedora-python-standalone-valgrind-5-load.log": {
+      "sha256": "65300d22895802920ad70ca93c1026cdd6e5b92a51c6cf2b9edfe430d14b6ef7",
+      "leak_summary_bytes_blocks": {
+        "definitely lost": [
+          40,
+          1
+        ],
+        "indirectly lost": [
+          0,
+          0
+        ],
+        "possibly lost": [
+          4373,
+          55
+        ]
+      },
+      "loss_contexts": 50,
+      "invalid_memory_contexts": 0,
+      "raw_valgrind_exit": 97,
+      "suppression_count": 0,
+      "compiler_warnings": []
+    },
+    "results/fedora-python-standalone-valgrind-5-full.log": {
+      "sha256": "ff700f6db2c6958e9e63011f9e0d537f9c6e387fd4f4bd5fb8557c9e8ac53346",
+      "leak_summary_bytes_blocks": {
+        "definitely lost": [
+          40,
+          1
+        ],
+        "indirectly lost": [
+          0,
+          0
+        ],
+        "possibly lost": [
+          4373,
+          55
+        ]
+      },
+      "loss_contexts": 50,
+      "invalid_memory_contexts": 0,
+      "raw_valgrind_exit": 97,
+      "suppression_count": 0,
+      "compiler_warnings": []
+    },
+    "results/fedora-python-standalone-valgrind-5-lifecycle.log": {
+      "sha256": "2f2aef7f73a0c7bf4c3a77b64688ce571578e2d45b6e9f841cc0835199e9d54c",
+      "leak_summary_bytes_blocks": {
+        "definitely lost": [
+          40,
+          1
+        ],
+        "indirectly lost": [
+          0,
+          0
+        ],
+        "possibly lost": [
+          4373,
+          55
+        ]
+      },
+      "loss_contexts": 47,
+      "invalid_memory_contexts": 0,
+      "raw_valgrind_exit": 97,
+      "suppression_count": 0,
+      "compiler_warnings": []
+    },
+    "results/leap-python-standalone-valgrind-5-load.log": {
+      "sha256": "8982b65edaaa0fb42a2effbaeb5ef7c2ec17bdd5529d81037539dde25b6141fe",
+      "leak_summary_bytes_blocks": {
+        "definitely lost": [
+          157187,
+          2933
+        ],
+        "indirectly lost": [
+          0,
+          0
+        ],
+        "possibly lost": [
+          4417,
+          58
+        ]
+      },
+      "loss_contexts": 539,
+      "invalid_memory_contexts": 0,
+      "raw_valgrind_exit": 97,
+      "suppression_count": 0,
+      "compiler_warnings": []
+    },
+    "results/leap-python-standalone-valgrind-5-full.log": {
+      "sha256": "e75e6e4684dee5f3b331f281b4f0b4fae8c2973f281d6b7e081975c0d3ff6fc7",
+      "leak_summary_bytes_blocks": {
+        "definitely lost": [
+          214899,
+          3976
+        ],
+        "indirectly lost": [
+          0,
+          0
+        ],
+        "possibly lost": [
+          1028,
+          17
+        ]
+      },
+      "loss_contexts": 534,
+      "invalid_memory_contexts": 0,
+      "raw_valgrind_exit": 97,
+      "suppression_count": 0,
+      "compiler_warnings": []
+    },
+    "results/leap-python-standalone-valgrind-5-lifecycle.log": {
+      "sha256": "a3ce85089a890434b2cf1374a2365a545a9d3acd04d2c5da3e3e231ef247f744",
+      "leak_summary_bytes_blocks": {
+        "definitely lost": [
+          463096,
+          8643
+        ],
+        "indirectly lost": [
+          0,
+          0
+        ],
+        "possibly lost": [
+          1084,
+          18
+        ]
+      },
+      "loss_contexts": 784,
+      "invalid_memory_contexts": 0,
+      "raw_valgrind_exit": 97,
+      "suppression_count": 0,
+      "compiler_warnings": []
+    },
+    "results/el10-python-standalone-valgrind-6-load.log": {
+      "sha256": "250d56f1471a5e727302ba21381417a0642f8e08f1ac534231a067283668f193",
+      "leak_summary_bytes_blocks": {
+        "definitely lost": [
+          59322,
+          1146
+        ],
+        "indirectly lost": [
+          0,
+          0
+        ],
+        "possibly lost": [
+          1780,
+          31
+        ]
+      },
+      "loss_contexts": 442,
+      "invalid_memory_contexts": 0,
+      "raw_valgrind_exit": 97,
+      "suppression_count": 0,
+      "compiler_warnings": []
+    },
+    "results/el10-python-standalone-valgrind-6-full.log": {
+      "sha256": "ae9cfa907e231d8daca98d863fa87b85ee34607bf2d2ce829bc993ded4cf238f",
+      "leak_summary_bytes_blocks": {
+        "definitely lost": [
+          117616,
+          2200
+        ],
+        "indirectly lost": [
+          0,
+          0
+        ],
+        "possibly lost": [
+          1780,
+          31
+        ]
+      },
+      "loss_contexts": 473,
+      "invalid_memory_contexts": 0,
+      "raw_valgrind_exit": 97,
+      "suppression_count": 0,
+      "compiler_warnings": []
+    },
+    "results/el10-python-standalone-valgrind-6-lifecycle.log": {
+      "sha256": "d1e8c7823a6afe54173d99d787dc415d7a0a4d189bd7bcd0f14b2320df4d0cbf",
+      "leak_summary_bytes_blocks": {
+        "definitely lost": [
+          301416,
+          5860
+        ],
+        "indirectly lost": [
+          0,
+          0
+        ],
+        "possibly lost": [
+          1780,
+          31
+        ]
+      },
+      "loss_contexts": 1076,
+      "invalid_memory_contexts": 0,
+      "raw_valgrind_exit": 97,
+      "suppression_count": 0,
+      "compiler_warnings": []
+    }
+  },
+  "additional_evidence_sha256": {
+    "results/python-free-native-13.json": "b79248d88b350f7f43005d8c421e7f956fbbd2d3bf501e45430574e34e68931a",
+    "results/python-lifecycle-matrix-1.json": "67044ce16d3fe30a133002d679d8a93808f5a2ab8fefa57117b55406bbd27d3b",
+    "results/python-free-native-13.log": "7ab59099e5cc31cf3cc7ae2a56f170f6543529a969f7a03eea536b864a47b113"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "root_cause": "The proxy checked readiness before a blocking accept. A connection can disappear between those operations, leaving accept blocked. shutdown waited for that thread before closing the listener. The captured trace shows other timers continuing normally while a single accept remains outstanding.",
+  "fix": "Close the listener before joining threads; directly accept connections and treat only SOCKET-CLOSED/SOCKET-NOT-OPEN during requested shutdown as normal completion.",
+  "regression": "The unchanged optimized fixture hung on iteration 9 after all five functional cases passed. The fixed fixture passes 40 single-CPU optimized runs with asynchronous I/O tracing, six cases and 98 assertions per run.",
+  "consumers": {
+    "qore/classes/HTTPClient/HttpClientHttpsProxy.qtest": {
+      "exit_code": 0,
+      "log": "/home/david/src/qore/git/qore-packaging/results/proxy-fixture-fix/HttpClientHttpsProxy.log"
+    },
+    "qore/classes/HTTPClient/HttpClientProxyAuth.qtest": {
+      "exit_code": 0,
+      "log": "/home/david/src/qore/git/qore-packaging/results/proxy-fixture-fix/HttpClientProxyAuth.log"
+    },
+    "qlib/UrlDownloader/UrlDownloader.qtest": {
+      "exit_code": 0,
+      "log": "/home/david/src/qore/git/qore-packaging/results/proxy-fixture-fix/UrlDownloader.log"
+    },
+    "bin/qget/qget.qtest": {
+      "exit_code": 0,
+      "log": "/home/david/src/qore/git/qore-packaging/results/proxy-fixture-fix/qget.log"
+    }
+  },
+  "source_sha256": {
+    "examples/test/qore/classes/TestConnectProxy.qc": "41149ea15ba4205d5f4b88eef2ebaa6184b8936876cae66dc4e034fed57cd808",
+    "examples/test/qore/classes/HTTPClient/HttpClientHttpsProxy.qtest": "0a4116b790a7695b915a36ca86842c4eacb3252ca0ee2f82cece897926577d23"
+  },
+  "logs_sha256": {
+    "results/https-proxy-shutdown-repro-5/9.log": "68b1b34796588d04e510a422fa4a66c89a882fcf3f1d6a9e85646e5f1219e7a2",
+    "results/https-proxy-shutdown-repro-5/9-gdb.log": "8504681cef7f529ee81e15f72715865d912c6f3463f4af181ad6c831a9ab5c6a",
+    "results/https-proxy-shutdown-repro-5/status.json": "86e2d49724e0f136fec9f45bca0f79e3cfe4650398db6393614655966bd82bdf",
+    "results/https-proxy-shutdown-fixed-stress-1/30.log": "4dc45455ec79817baefc54d057670a159b20c5e148321cbd01603b3302d0d607",
+    "results/https-proxy-shutdown-fixed-stress-1/21.log": "d461062be3b5545b21b4d116859ad846a6b3bf05543d42d4839e112c361f4b70",
+    "results/https-proxy-shutdown-fixed-stress-1/1.log": "748e5eb643745212be4805222f5cba19d1948bf8008a0908cc29f53965433c04",
+    "results/https-proxy-shutdown-fixed-stress-1/20.log": "e950a91ce02fb669949fe5f5e15bbae6fa53e8969833da32d06f1dbccacb3c10",
+    "results/https-proxy-shutdown-fixed-stress-1/34.log": "5cf17ddb74e0a1dd3f46ffd0c14eb959725f2c66ffe3972780bd4c527ce117f2",
+    "results/https-proxy-shutdown-fixed-stress-1/6.log": "445bb6d222667e2d3e8dce52f1eb24513a6e2c0c808cb0cc4fb9797c9901fb1b",
+    "results/https-proxy-shutdown-fixed-stress-1/8.log": "9963c341b343fdde476831067d02fb2e2596fe4b956a51a2da4cce214f1e7f96",
+    "results/https-proxy-shutdown-fixed-stress-1/11.log": "ddfd24f824ed5ba5fb30eca1fe09faeae4787b1573b9d90be5193c18dd023a6e",
+    "results/https-proxy-shutdown-fixed-stress-1/31.log": "26e481ad29cffe2caf5434da763a4f3bc791b16ffd575522ffb2e0ca7078e756",
+    "results/https-proxy-shutdown-fixed-stress-1/24.log": "ba3f8638cf3d7682d3e23a22a109475fe50be203b20329e6ea1c24f5e74448cb",
+    "results/https-proxy-shutdown-fixed-stress-1/23.log": "e75c2f2ca7a650e2a01bff0b38649e40219adfc857b82bec6db52c9a213b20fe",
+    "results/https-proxy-shutdown-fixed-stress-1/7.log": "74068e557e14f6e5eb8afecb255212a1d579191086e84b36f016b1202467adbc",
+    "results/https-proxy-shutdown-fixed-stress-1/39.log": "560768433f5f768ec4756d389dd6e7e7368fa60d4d894fcf9c6d48602f111a92",
+    "results/https-proxy-shutdown-fixed-stress-1/12.log": "e7b6cfffb616287ac006648f809a829bd2f22143900881710a0c7b446b981086",
+    "results/https-proxy-shutdown-fixed-stress-1/19.log": "8fdcac8c55b3087c0b16c18f3acbec5aa21a7ade5a1ccb0faa8f4636dd2afbbf",
+    "results/https-proxy-shutdown-fixed-stress-1/15.log": "2f505d3d24b10ccc4bb5b52ca77ed42271dd2484143e7c6f3eda68fdba5ff3ad",
+    "results/https-proxy-shutdown-fixed-stress-1/16.log": "3aedd946e2dae59b80ff08175e3ecf1578a4ab92846d4e0b91f5f5554038531c",
+    "results/https-proxy-shutdown-fixed-stress-1/3.log": "62ae5c6618d3a85110a490db4ac3a48db51955afc46597118069929c2c325ec5",
+    "results/https-proxy-shutdown-fixed-stress-1/29.log": "d14d65d2e7508e2dae6789608f64fdd2efd7cebc913e9398673d51db1b09636d",
+    "results/https-proxy-shutdown-fixed-stress-1/35.log": "c6507cba451a1aae5d2e9b5ee9f7f290e65752c665f92f27262c7a1de0c1a9dc",
+    "results/https-proxy-shutdown-fixed-stress-1/22.log": "4f71ae4dee81d5e1a8294d4ad7d13cb1499df9b899107e30da59285b58f8fddc",
+    "results/https-proxy-shutdown-fixed-stress-1/14.log": "b4b25269c9267ebebbbc18a2877b4dfefb03f31b263ab2354f1c700910d932dd",
+    "results/https-proxy-shutdown-fixed-stress-1/2.log": "945190405f052813b827eb1ec3699140e0123027d13d4d10d58c27efbf8af3b9",
+    "results/https-proxy-shutdown-fixed-stress-1/28.log": "c42a0b450cf2743653c8e60d2ea728beeb4db4a41f3843a12357377c2a0ed566",
+    "results/https-proxy-shutdown-fixed-stress-1/5.log": "690910615055186d15085cf452e73a77e39fc727489c4ff4a9f887664822d2da",
+    "results/https-proxy-shutdown-fixed-stress-1/26.log": "482d5593eb2a59c7c5bbd69ee36a4f9410b539183bc6451f05a48e3d55ede214",
+    "results/https-proxy-shutdown-fixed-stress-1/17.log": "f4cb515c586be27c2628a5d37c3f3484708c5e8c6c2d0f293fd516bedbd9e50b",
+    "results/https-proxy-shutdown-fixed-stress-1/4.log": "417bef7163b584d56779cd0097460ffd70ae161437ac30f8a18464971ea74f47",
+    "results/https-proxy-shutdown-fixed-stress-1/33.log": "a34388b2a724d103ef28ee6b688439b817110110e0bf57cf8443a1a77f3ffc8e",
+    "results/https-proxy-shutdown-fixed-stress-1/25.log": "b607f86874327a07c0b83e044cf93cfdffe8d94e9271214458056f2802f3372e",
+    "results/https-proxy-shutdown-fixed-stress-1/37.log": "65362a018fd78a1e3a55f7e2b4067f9d1dff2d47be822d689819b250b2a23a30",
+    "results/https-proxy-shutdown-fixed-stress-1/18.log": "9daaf41fb1dbda2d733819b44c0d1c07989c576e503ca0412c38c5ea835ffebe",
+    "results/https-proxy-shutdown-fixed-stress-1/32.log": "b0e9490b16ebfadf8a004629dea0d7b24698cc6e9deeb1791a348e1c46c4055e",
+    "results/https-proxy-shutdown-fixed-stress-1/36.log": "1123c41d24454fce990d7cd051ca549238dbf925be217b51647ba261dccc5f8a",
+    "results/https-proxy-shutdown-fixed-stress-1/38.log": "bc65cf6093113bd8240476991051a0336807a3020aa028a712e9d18dc56e16be",
+    "results/https-proxy-shutdown-fixed-stress-1/9.log": "f388f72c61e84a791dc9c03a4eca34991c48c0f09ab82b58d12cd6edb048b0a8",
+    "results/https-proxy-shutdown-fixed-stress-1/13.log": "98131bbad792f4e5511e8c2a33df6c3286ff95903015a6d12c3c81b3f8972a15",
+    "results/https-proxy-shutdown-fixed-stress-1/10.log": "3d09d3710da1ce8d164d183abafa920ce73713a86b106b0624e88e6ee67aec44",
+    "results/https-proxy-shutdown-fixed-stress-1/27.log": "df4793d69787f3295554e10b8580bcf02fc52ad01499f4a4c95307df788e4885",
+    "results/https-proxy-shutdown-fixed-stress-1/0.log": "7e24160e73b81b3c030376ae1293191e21751099deccbfd8e41d3f22b44d41d0",
+    "results/https-proxy-shutdown-fixed-stress-1/status.json": "6bf8cc3a56a3a740a4e8e03dfa91420bf66d94ef6fe1cbc0b351446315bfbe28",
+    "results/proxy-fixture-fix/status.json": "ba176225fa26fea28458025e4f5144f7200a012272bd5ed977ecffa71e73590d",
+    "results/proxy-fixture-fix/HttpClientHttpsProxy.log": "b95bca33982a14c6de7a5aa5032843f1ba2e110e197a599a5e2af9c37f7a89ee",
+    "results/proxy-fixture-fix/UrlDownloader.log": "7bba2870946cc69120e6487ae0fc00a930b03ca12d49c7f457fefb9f13743356",
+    "results/proxy-fixture-fix/HttpClientProxyAuth.log": "24bff9add72fe32fe5d019ca25d552cb690fdf2a4cc117073a51f2f0dce78ca7",
+    "results/proxy-fixture-fix/qget.log": "7dc7da2c5f0fbfa043d929129329932937f32c79c4c746af08b27f1a9dae0cf4"
+  },
+  "scope": "Test fixture and regression only; no native implementation changes. Full RPM and native ARM qualification follows separately."
+}

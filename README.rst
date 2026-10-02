@@ -29,7 +29,15 @@ pass all 400 suites on all six x86_64/aarch64 targets. The earlier Fedora ARM
 HttpClientHttpsProxy timeout did not recur; its diagnostic evidence is retained.
 Native ARM installed-package checks remain required before publication. Evidence
 is recorded in ``evidence/core16-native-installed-20261002.json``. Revision 17
-is rebuilding the separately tested binary-module metadata ownership fix.
+passes all 400 local suites and installed checks on all three targets with the
+binary-module metadata ownership fix. A recurring native ARM proxy fixture
+shutdown hang was reproduced locally and root-caused: readiness can disappear
+before a blocking accept, while shutdown previously joined the thread before
+closing the listener. The fix closes the listener first and passes all four
+fixture consumers plus 40 optimized single-CPU stress runs. Revision 18 carries
+that fix and is rebuilding locally and in OBS. See
+``evidence/proxy-shutdown-fix-20261002.json`` and
+``evidence/core17-local-installed-20261002.json``.
 
 The testing project's build configuration explicitly chooses CPU onnxruntime
 for qore-stdlib's ELF dependencies. Fedora provides those capabilities from
@@ -76,6 +84,18 @@ XML and XML Security are included in the twenty-eight qualified local modules.
 XML Security passes canonical builds, installed runtime/SDK tests, documentation,
 and 13 native cases / 65 assertions under Valgrind on all three targets. Its
 parser options and errors are now isolated per document, including worker threads.
+
+Python native qualification now covers Python 3.12, 3.13 and 3.14 on the three
+targets, plus free-threaded Python 3.14. The bridge fixes interpreter ownership,
+finalization, wrapper references and retained callable metadata. Each default
+interpreter passes 30 cases / 270 assertions in Release and Debug/Valgrind;
+standalone shutdown regressions also pass. Explicitly approved exceptions cover
+CPython shutdown retention, GCC bug 125913 and an independently reproduced
+40-byte glibc loader allocation. Raw Valgrind diagnostics remain recorded; no
+invalid access or additional native leak is accepted. RPM qualification is in
+progress and Python is not yet included in the qualified module count. See
+``evidence/python-native-qualification-20261002.json`` and
+``evidence/python-external-diagnostics-20261002.json``.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is

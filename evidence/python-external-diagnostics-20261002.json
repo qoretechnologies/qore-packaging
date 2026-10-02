@@ -1,0 +1,78 @@
+{
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User approved the three narrowly scoped diagnostic exceptions on 2026-10-02; native/package qualification remains in progress.",
+  "retention": {
+    "cpython_release_strings": "CPython 3.12/3.13 _PyUnicode_ClearInterned makes immortal strings mortal only under Py_DEBUG; pure CPython controls without Qore reproduce shutdown retention.",
+    "native_static_types": "Fedora full embedded and standalone tests retain the same 4373 possible bytes in 55 allocations as load-only. Pure C PyType_Ready reproduction retains static type metadata. No additional bridge allocation is proposed for exemption."
+  },
+  "compiler": "GCC bug 125913 standalone reproduction emits the same nonzero-offset delete false positive; its Valgrind run has zero errors and all allocations freed.",
+  "excluded": [
+    "Only the independently reproduced 40-byte glibc loader allocation is exempted in standalone Python runs.",
+    "Old SDK Qore module metadata allocations are fixed by Qore release 17, not exempted.",
+    "No invalid reads/writes, use-after-free, uninitialized values, other leaks or warnings are accepted."
+  ],
+  "sources": [
+    "https://github.com/python/cpython/blob/3.12/Objects/unicodeobject.c",
+    "https://github.com/python/cpython/blob/3.13/Objects/unicodeobject.c",
+    "https://github.com/python/cpython/issues/113993",
+    "https://gcc.gnu.org/bugzilla/show_bug.cgi?id=125913",
+    "https://github.com/bminor/glibc/blob/master/elf/dl-scope.c",
+    "https://github.com/bminor/glibc/blob/master/elf/dl-libc_freeres.c",
+    "https://github.com/bminor/glibc/blob/master/elf/dl-deps.c"
+  ],
+  "logs_sha256": {
+    "results/gcc-125913-reproduction.log": "76e4b9954af0af5a6bf556f646cbf96ee9414bd804c9caef53940455dc0f9ceb",
+    "work/gcc-125913.cpp": "bfa8c33d60977c56ca6116d40ce252eb764ce86a59ea477cbace38fdbb09a90c",
+    "results/fedora-python-native-16-build-valgrind.log": "7d9fdad3ded2a7a2b0a7c2ee5bf542585c4ef74d32c9b2fec6f5ab3aec695d70",
+    "results/leap-python-native-16-build-valgrind.log": "dcc4b2c8c7a5523f27dafb09d042c9a06560d157e5cbac6091c5bc31c98bbabb",
+    "results/el10-python-native-16-build-valgrind.log": "ffc569ee93dd6fb61545978583677a5cf72e03949dc63ea7686d3bcb69598061",
+    "results/python-free-native-13.log": "7ab59099e5cc31cf3cc7ae2a56f170f6543529a969f7a03eea536b864a47b113",
+    "results/fedora-python-native-controls-2/main-only.log": "54dc1db5cc7a3e26bbc7e10b2fe706f59fa40d6085270a7e567446363d6bbcb8",
+    "results/fedora-python-native-controls-2/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/fedora-python-native-controls-2/end.log": "704d78cb52aff92cf53de586ffffe4a2bc125b1e42ee54270eb90b4ed203dd9a",
+    "results/el10-python-native-controls-1/main-api.log": "3096e3eed507e797c25a03193f444d572be187c8641ba31f69de0a445708a9d2",
+    "results/el10-python-native-controls-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/el10-python-native-controls-1/static-type.log": "81135bebe8a952f9e8e9610ab36dfc07e65188f156749034b58c3c7b3beb4aca",
+    "results/el10-python-native-controls-1/load-only.log": "a70213a899eb0db49386d7a83a1c81f6fda26579e711c23ad704db0b9253d113",
+    "results/el10-python-native-controls-2/main-only.log": "722a9b9c02fd081d6a5464e0d10ea65a08d7b73b892eae03d69f828d69e6ae1e",
+    "results/el10-python-native-controls-2/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/el10-python-native-controls-2/end.log": "99535eb07a6601cc679c3dad3c8026a1aa053ef62ba9f2f228248324a62c18f5",
+    "results/leap-python-native-controls-1/main-api.log": "0866b6cd039995699c9e942db4eb74a28915f90b16eb5a3c2dc162bba7a50607",
+    "results/leap-python-native-controls-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/leap-python-native-controls-1/static-type.log": "afd31c721d32490edd4e22389cdefe719d89c93f9fb29b88031eeae46b1301d7",
+    "results/leap-python-native-controls-1/load-only.log": "99c13d7f2fd187671ff80cb16e48a6d26c87c243dcc347997bc4f21d5fc08893",
+    "results/leap-python-native-controls-2/main-only.log": "1cc001234ad441ebe077306a81323b591fcd3d50eefefb7c234e71a5e1e5922f",
+    "results/leap-python-native-controls-2/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/leap-python-native-controls-2/end.log": "eef49cfa78ccf2fae6c886b75c0256381408ebc96aa8db4a5bb5b5a80039e9ca",
+    "work/glibc-scope-control.c": "4284c254ea6bfc454aed6ca883bda2982700a99c6bc6c7801cbe658ee4b86374",
+    "results/glibc-scope-control-1.log": "173f753295e3d7f2ba286606a6030f2ba0ccb65db6c0c1cc716d9889afbb94f8",
+    "results/python-loader-scope-2.log": "10ef412132e79cb28b90d4efe03b24927cff905508649e2ca7b440fbede8065f",
+    "results/python-standalone-valgrind-4-load.log": "05f630b8e9374eb7e450413b1706073a5e9f9c92fc3a9079423c642268d6fbe5",
+    "results/python-standalone-valgrind-4-full.log": "9c25b5af1a1dcdb3513ad53ea7c490d2ec73b2bab57a7a150b3585e39c3780eb",
+    "results/fedora-python-native-18-build-valgrind.log": "3285f5ba72c584f00736ec5c384a3de094984410c288cc261c595843700333ba",
+    "results/leap-python-native-18-build-valgrind.log": "a32e26855a0e2f7e76ff668f5f07fd1120521c3ea111cdcd41be35ae4717a83d",
+    "results/el10-python-native-19-build-valgrind.log": "3c492ab14e7fdcc2eb8ca647fc1ddf2e4453a7b7635483f497977e8436c47059",
+    "results/fedora-python-standalone-valgrind-5-load.log": "65300d22895802920ad70ca93c1026cdd6e5b92a51c6cf2b9edfe430d14b6ef7",
+    "results/fedora-python-standalone-valgrind-5-full.log": "ff700f6db2c6958e9e63011f9e0d537f9c6e387fd4f4bd5fb8557c9e8ac53346",
+    "results/fedora-python-standalone-valgrind-5-lifecycle.log": "2f2aef7f73a0c7bf4c3a77b64688ce571578e2d45b6e9f841cc0835199e9d54c",
+    "results/leap-python-standalone-valgrind-5-load.log": "8982b65edaaa0fb42a2effbaeb5ef7c2ec17bdd5529d81037539dde25b6141fe",
+    "results/leap-python-standalone-valgrind-5-full.log": "e75e6e4684dee5f3b331f281b4f0b4fae8c2973f281d6b7e081975c0d3ff6fc7",
+    "results/leap-python-standalone-valgrind-5-lifecycle.log": "a3ce85089a890434b2cf1374a2365a545a9d3acd04d2c5da3e3e231ef247f744",
+    "results/el10-python-standalone-valgrind-6-load.log": "250d56f1471a5e727302ba21381417a0642f8e08f1ac534231a067283668f193",
+    "results/el10-python-standalone-valgrind-6-full.log": "ae9cfa907e231d8daca98d863fa87b85ee34607bf2d2ce829bc993ded4cf238f",
+    "results/el10-python-standalone-valgrind-6-lifecycle.log": "d1e8c7823a6afe54173d99d787dc415d7a0a4d189bd7bcd0f14b2320df4d0cbf"
+  },
+  "glibc_loader": {
+    "status": "User approved documented exception on 2026-10-02",
+    "root_cause": "After a library dependency is opened from a second thread, _dl_scope_free queues the old l_initfini list. __rtld_libc_freeres frees the queue container without freeing its entries.",
+    "reproduction": "Pure C pthread/dlopen reproduction uses libstdc++ and libgcc_s only, with neither Qore nor Python: 40 bytes definitely lost in one allocation; zero indirect/possible leaks or invalid accesses. Explicit dlclose does not unload NODELETE libstdc++ and reproduces the same result.",
+    "bridge_evidence": "Standalone load-only and full bridge tests have the same 40-byte allocation; GDB records exactly one call to _dl_scope_free with an initially empty queue.",
+    "limit": "Only this exact one-block 40-byte dependency-list allocation; no other definite/indirect loss is accepted."
+  },
+  "approvals": {
+    "cpython_shutdown_retention": "Allow this documented exception",
+    "gcc_16_nonzero_offset_delete": "Allow these documented build diagnostics",
+    "glibc_loader_40_bytes": "Allow this documented exception"
+  },
+  "qualification": "python-native-qualification-20261002.json"
+}
