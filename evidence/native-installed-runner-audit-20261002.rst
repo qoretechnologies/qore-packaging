@@ -259,3 +259,14 @@ Scope: explicit native ARM GitLab jobs, pinned release 19 manifests, installatio
    * - 62. Correctness: Algorithms verified against reference implementations; edge cases tested (empty data, single sample, all-zero features)
      - Pass
      - 84 packaging unit tests pass; the new native jobs provide end-to-end validation of installed RPMs after this tested runner is committed.
+
+Initial native execution
+------------------------
+
+Pipeline 58614 at 0e38487436b154075254512a4d9c5774ed84da9f: openSUSE job
+206901 passed minimal runtime and all SDK suites on native ARM. Fedora job
+206900 correctly rejected an incomplete package set: its manifest omitted the
+required c-ares(qore-query-lifecycle-fixes) backport. The Fedora manifest now
+includes the exact ARM backport providing that capability; no dependency was
+relaxed. RPM_NATIVE_TARGET selects one target to avoid repeating passed work.
+84 unit tests and GitLab CI lint pass with no warnings or errors.

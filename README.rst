@@ -369,7 +369,8 @@ Native installed RPM qualification
 
 The GitLab jobs ``rpm-fedora-arm64`` and ``rpm-leap-arm64`` run only when a
 pipeline is explicitly started with ``RPM_NATIVE_QUALIFICATION=core19``.
-They use native ARM runners and pinned distribution images. Their manifests
+Set ``RPM_NATIVE_TARGET=fedora`` or ``RPM_NATIVE_TARGET=leap`` to run only
+one target. They use native ARM runners and pinned distribution images. Their manifests
 pin each OBS binary and core test fixture by SHA-256; no OBS credentials or
 published repository are needed. Package installation in these disposable
 containers accepts the pinned, unpublished testing RPMs. Public release
