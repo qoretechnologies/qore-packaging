@@ -1,0 +1,806 @@
+{
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "scope": "Canonical Markdown RPM builds and installed runtime/SDK qualification on Fedora 44, Leap 16.0 and AlmaLinux 10.",
+  "targets": {
+    "fedora": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:cb7bbb955d4dacefca6991a76d43d26678e1edf9adcef53e6a3d3349a88906d5",
+        "source": {
+          "schema": 1,
+          "commit": "6193794b4edfd7f906c96533cb305d58eacf39af",
+          "source_date_epoch": 1790946436,
+          "name": "qore-markdown-module",
+          "version": "1.0.0",
+          "exclusions": [
+            "build",
+            "src/sundown/html/.html.c.swp"
+          ],
+          "sources": {
+            "qore-markdown-module-1.0.0.tar.xz": "49db1c11fb280c52e903dc636ad9e55e826e4eac88df27227acc74673a05c4f9",
+            "qore-markdown-module.spec": "44626ee51a207881ab6f886afbccac201801c6e8f5c7a766953b2a87ed5e9489"
+          },
+          "spec": "qore-markdown-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790946436",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/markdown-source-final-2:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-markdown-final-2:/work",
+          "sha256:cb7bbb955d4dacefca6991a76d43d26678e1edf9adcef53e6a3d3349a88906d5",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-markdown-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-markdown-module-doc-1.0.0-2.fc44.noarch.rpm": "db828acd44a21511c48b9901d915806c326522d6e7abe577dedeb28ef4987533",
+          "rpmbuild/RPMS/x86_64/qore-markdown-module-1.0.0-2.fc44.x86_64.rpm": "ebeed57c49ba63e2fab52c8e06175c8deb0dd0e6a0cbb83ecd06f5268b2df2bf",
+          "rpmbuild/RPMS/x86_64/qore-markdown-module-debuginfo-1.0.0-2.fc44.x86_64.rpm": "5df66688f5ee652bd8ee6480dc87ef6bb2a9f4568e38e98a342a47dc2570c5e8",
+          "rpmbuild/RPMS/x86_64/qore-markdown-module-debugsource-1.0.0-2.fc44.x86_64.rpm": "5145e3f004c9f3ca706ffc49bdac7bf20548fa1be33d3caaa4ef87c6b3c21e7c",
+          "rpmbuild/SRPMS/qore-markdown-module-1.0.0-2.fc44.src.rpm": "2fc2caa27e250b5191a9b872dc28b260b8c131fce581930aa9686ac188f4114d"
+        }
+      },
+      "installed": {
+        "steps": {
+          "sdk-install": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--network",
+              "none",
+              "--name",
+              "qore-fedora-markdown-final-2-sdk-install",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-markdown-final-2:/rpms:ro",
+              "sha256:cb7bbb955d4dacefca6991a76d43d26678e1edf9adcef53e6a3d3349a88906d5",
+              "rpm",
+              "-Uvh",
+              "--includedocs",
+              "/rpms/rpmbuild/RPMS/noarch/qore-markdown-module-doc-1.0.0-2.fc44.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-markdown-module-1.0.0-2.fc44.x86_64.rpm"
+            ],
+            "log": "results/fedora-markdown-final-2-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/fedora-markdown-final-2-installed/qore-markdown-module-1.0.0:/source:ro",
+              "sha256:ecf1e803e3219a27183aeafe29b51272036d1da8f10f74454a7d42ce1d1d2334",
+              "sh",
+              "-c",
+              "set -eu\nrpm -V qore-markdown-module qore-markdown-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/markdown.qtest -v\ndoc_index=$(rpm -ql qore-markdown-module-doc | grep \"/html/index.html$\")\ntest -s \"$doc_index\"\nqcc -o /tmp/markdown-sdk-smoke /source/rpm/compiler.qr\n/tmp/markdown-sdk-smoke\n"
+            ],
+            "log": "results/fedora-markdown-final-2-sdk-tests.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--network",
+              "none",
+              "--name",
+              "qore-fedora-markdown-final-2-runtime-install",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-markdown-final-2:/rpms:ro",
+              "sha256:d118cd32491587e13f72c417b8d3ed6b6e7ab13ce1f6c408c493fd71ee260f63",
+              "rpm",
+              "-Uvh",
+              "--includedocs",
+              "/rpms/rpmbuild/RPMS/noarch/qore-markdown-module-doc-1.0.0-2.fc44.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-markdown-module-1.0.0-2.fc44.x86_64.rpm"
+            ],
+            "log": "results/fedora-markdown-final-2-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/fedora-markdown-final-2-installed/qore-markdown-module-1.0.0:/source:ro",
+              "sha256:5af6deb02a3d26ac74a0f8fd6ec95cd7d17bddaef346422efecee839f9c70211",
+              "sh",
+              "-c",
+              "set -eu\nrpm -V qore-markdown-module qore-markdown-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/markdown.qtest -v\ndoc_index=$(rpm -ql qore-markdown-module-doc | grep \"/html/index.html$\")\ntest -s \"$doc_index\"\nfor package in qore-devel gcc gcc-c++; do if rpm -q \"$package\"; then exit 1; fi; done\n"
+            ],
+            "log": "results/fedora-markdown-final-2-runtime-tests.log"
+          }
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:cb7bbb955d4dacefca6991a76d43d26678e1edf9adcef53e6a3d3349a88906d5",
+          "source": {
+            "schema": 1,
+            "commit": "6193794b4edfd7f906c96533cb305d58eacf39af",
+            "source_date_epoch": 1790946436,
+            "name": "qore-markdown-module",
+            "version": "1.0.0",
+            "exclusions": [
+              "build",
+              "src/sundown/html/.html.c.swp"
+            ],
+            "sources": {
+              "qore-markdown-module-1.0.0.tar.xz": "49db1c11fb280c52e903dc636ad9e55e826e4eac88df27227acc74673a05c4f9",
+              "qore-markdown-module.spec": "44626ee51a207881ab6f886afbccac201801c6e8f5c7a766953b2a87ed5e9489"
+            },
+            "spec": "qore-markdown-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790946436",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/markdown-source-final-2:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/fedora-markdown-final-2:/work",
+            "sha256:cb7bbb955d4dacefca6991a76d43d26678e1edf9adcef53e6a3d3349a88906d5",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-markdown-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-markdown-module-doc-1.0.0-2.fc44.noarch.rpm": "db828acd44a21511c48b9901d915806c326522d6e7abe577dedeb28ef4987533",
+            "rpmbuild/RPMS/x86_64/qore-markdown-module-1.0.0-2.fc44.x86_64.rpm": "ebeed57c49ba63e2fab52c8e06175c8deb0dd0e6a0cbb83ecd06f5268b2df2bf",
+            "rpmbuild/RPMS/x86_64/qore-markdown-module-debuginfo-1.0.0-2.fc44.x86_64.rpm": "5df66688f5ee652bd8ee6480dc87ef6bb2a9f4568e38e98a342a47dc2570c5e8",
+            "rpmbuild/RPMS/x86_64/qore-markdown-module-debugsource-1.0.0-2.fc44.x86_64.rpm": "5145e3f004c9f3ca706ffc49bdac7bf20548fa1be33d3caaa4ef87c6b3c21e7c",
+            "rpmbuild/SRPMS/qore-markdown-module-1.0.0-2.fc44.src.rpm": "2fc2caa27e250b5191a9b872dc28b260b8c131fce581930aa9686ac188f4114d"
+          }
+        },
+        "runtime_requires": "libc.so.6()(64bit)\nlibc.so.6(GLIBC_2.14)(64bit)\nlibc.so.6(GLIBC_2.2.5)(64bit)\nlibc.so.6(GLIBC_2.3)(64bit)\nlibc.so.6(GLIBC_2.3.4)(64bit)\nlibc.so.6(GLIBC_2.4)(64bit)\nlibc.so.6(GLIBC_ABI_DT_RELR)(64bit)\nlibgcc_s.so.1()(64bit)\nlibgcc_s.so.1(GCC_3.0)(64bit)\nlibgcc_s.so.1(GCC_3.3.1)(64bit)\nlibqore(x86-64) >= 0:3.0.0~git20261002.18-18.fc44\nlibstdc++.so.6()(64bit)\nlibstdc++.so.6(GLIBCXX_3.4)(64bit)\nqore(x86-64) >= 0:3.0.0~git20261002.18-18.fc44\nqore-module(abi)(x86-64) = 2.0\nrpmlib(CompressedFileNames) <= 3.0.4-1\nrpmlib(FileDigests) <= 4.6.0-1\nrpmlib(PayloadFilesHavePrefix) <= 4.0-1\nrpmlib(PayloadIsZstd) <= 5.4.18-1\nrpmlib(TildeInVersions) <= 4.10.0-1\nrtld(GNU_HASH)\n",
+        "sdk_smoke_sha256": "434bb54a9fa36ae6017e3222e68550088d39b20199eec6d1db8aa3d7a3760ce0",
+        "sdk_image": "sha256:ecf1e803e3219a27183aeafe29b51272036d1da8f10f74454a7d42ce1d1d2334",
+        "runtime_image": "sha256:5af6deb02a3d26ac74a0f8fd6ec95cd7d17bddaef346422efecee839f9c70211",
+        "exit_code": 0
+      },
+      "logs_sha256": {
+        "results/fedora-markdown-final-2/build.log": "5c466082ffee035aa02d83266f0bec1b74801977f22195a3c5bef23e96bcba8d",
+        "results/fedora-markdown-final-2-sdk-install.log": "d749e8fadce3635fcc2d1fe1733e1350f86d8004b7c7c8df3b319289d40f9fd7",
+        "results/fedora-markdown-final-2-sdk-tests.log": "e3c14cc9e4631b5f2e40e9b37e0c042defab5c606bfcc5133a7438652b317834",
+        "results/fedora-markdown-final-2-runtime-install.log": "d749e8fadce3635fcc2d1fe1733e1350f86d8004b7c7c8df3b319289d40f9fd7",
+        "results/fedora-markdown-final-2-runtime-tests.log": "ed4812b46df89348da06396fa14a768f23324ddf9bf490b2b79af1dd01683f38"
+      }
+    },
+    "leap": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:32f418e28b53b613d0f249d8ef531ece4c8cdc5e2e49a3c9508269b99e9aa32d",
+        "source": {
+          "schema": 1,
+          "commit": "6193794b4edfd7f906c96533cb305d58eacf39af",
+          "source_date_epoch": 1790946436,
+          "name": "qore-markdown-module",
+          "version": "1.0.0",
+          "exclusions": [
+            "build",
+            "src/sundown/html/.html.c.swp"
+          ],
+          "sources": {
+            "qore-markdown-module-1.0.0.tar.xz": "49db1c11fb280c52e903dc636ad9e55e826e4eac88df27227acc74673a05c4f9",
+            "qore-markdown-module.spec": "44626ee51a207881ab6f886afbccac201801c6e8f5c7a766953b2a87ed5e9489"
+          },
+          "spec": "qore-markdown-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790946436",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/markdown-source-final-2:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-markdown-final-2:/work",
+          "sha256:32f418e28b53b613d0f249d8ef531ece4c8cdc5e2e49a3c9508269b99e9aa32d",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-markdown-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-markdown-module-doc-1.0.0-2.noarch.rpm": "50b01886c194b73057796d102d08062e5a1e3964e29532aa08c4ceba794b03c5",
+          "rpmbuild/RPMS/x86_64/qore-markdown-module-1.0.0-2.x86_64.rpm": "f76526fd2d0019490d1db842fee9571bee8786d02b3c55be3dec4d919e932621",
+          "rpmbuild/RPMS/x86_64/qore-markdown-module-debuginfo-1.0.0-2.x86_64.rpm": "9db5625c40b695baf0131de7619d7f96d43aa0fe118b02dbd932b52085aee779",
+          "rpmbuild/RPMS/x86_64/qore-markdown-module-debugsource-1.0.0-2.x86_64.rpm": "bf29665733241962950dc0f71574742fd1352eeda46e2ebf02100230a449e190",
+          "rpmbuild/SRPMS/qore-markdown-module-1.0.0-2.src.rpm": "c4c441d0f384e3b569781a4410abd6a8c7567710d0fdb6e98b117296a40f474f"
+        }
+      },
+      "installed": {
+        "steps": {
+          "sdk-install": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--network",
+              "none",
+              "--name",
+              "qore-leap-markdown-final-2-sdk-install",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-markdown-final-2:/rpms:ro",
+              "sha256:32f418e28b53b613d0f249d8ef531ece4c8cdc5e2e49a3c9508269b99e9aa32d",
+              "rpm",
+              "-Uvh",
+              "--includedocs",
+              "/rpms/rpmbuild/RPMS/noarch/qore-markdown-module-doc-1.0.0-2.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-markdown-module-1.0.0-2.x86_64.rpm"
+            ],
+            "log": "results/leap-markdown-final-2-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/leap-markdown-final-2-installed/qore-markdown-module-1.0.0:/source:ro",
+              "sha256:4a76811e2448f61365110d898da3039e6226a2f028e8eae0c01f8ec344cfe2f8",
+              "sh",
+              "-c",
+              "set -eu\nrpm -V qore-markdown-module qore-markdown-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/markdown.qtest -v\ndoc_index=$(rpm -ql qore-markdown-module-doc | grep \"/html/index.html$\")\ntest -s \"$doc_index\"\nqcc -o /tmp/markdown-sdk-smoke /source/rpm/compiler.qr\n/tmp/markdown-sdk-smoke\n"
+            ],
+            "log": "results/leap-markdown-final-2-sdk-tests.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--network",
+              "none",
+              "--name",
+              "qore-leap-markdown-final-2-runtime-install",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-markdown-final-2:/rpms:ro",
+              "sha256:e8e2d7311ebea388564f26019d86c058fc118cb925ac4b8eddebee3cad1674a4",
+              "rpm",
+              "-Uvh",
+              "--includedocs",
+              "/rpms/rpmbuild/RPMS/noarch/qore-markdown-module-doc-1.0.0-2.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-markdown-module-1.0.0-2.x86_64.rpm"
+            ],
+            "log": "results/leap-markdown-final-2-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/leap-markdown-final-2-installed/qore-markdown-module-1.0.0:/source:ro",
+              "sha256:014ba6ef2bfb510ee7bcf366fe7c2261c6e55192dda099fa23408d7349b015fe",
+              "sh",
+              "-c",
+              "set -eu\nrpm -V qore-markdown-module qore-markdown-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/markdown.qtest -v\ndoc_index=$(rpm -ql qore-markdown-module-doc | grep \"/html/index.html$\")\ntest -s \"$doc_index\"\nfor package in qore-devel gcc gcc-c++; do if rpm -q \"$package\"; then exit 1; fi; done\n"
+            ],
+            "log": "results/leap-markdown-final-2-runtime-tests.log"
+          }
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:32f418e28b53b613d0f249d8ef531ece4c8cdc5e2e49a3c9508269b99e9aa32d",
+          "source": {
+            "schema": 1,
+            "commit": "6193794b4edfd7f906c96533cb305d58eacf39af",
+            "source_date_epoch": 1790946436,
+            "name": "qore-markdown-module",
+            "version": "1.0.0",
+            "exclusions": [
+              "build",
+              "src/sundown/html/.html.c.swp"
+            ],
+            "sources": {
+              "qore-markdown-module-1.0.0.tar.xz": "49db1c11fb280c52e903dc636ad9e55e826e4eac88df27227acc74673a05c4f9",
+              "qore-markdown-module.spec": "44626ee51a207881ab6f886afbccac201801c6e8f5c7a766953b2a87ed5e9489"
+            },
+            "spec": "qore-markdown-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790946436",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/markdown-source-final-2:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/leap-markdown-final-2:/work",
+            "sha256:32f418e28b53b613d0f249d8ef531ece4c8cdc5e2e49a3c9508269b99e9aa32d",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-markdown-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-markdown-module-doc-1.0.0-2.noarch.rpm": "50b01886c194b73057796d102d08062e5a1e3964e29532aa08c4ceba794b03c5",
+            "rpmbuild/RPMS/x86_64/qore-markdown-module-1.0.0-2.x86_64.rpm": "f76526fd2d0019490d1db842fee9571bee8786d02b3c55be3dec4d919e932621",
+            "rpmbuild/RPMS/x86_64/qore-markdown-module-debuginfo-1.0.0-2.x86_64.rpm": "9db5625c40b695baf0131de7619d7f96d43aa0fe118b02dbd932b52085aee779",
+            "rpmbuild/RPMS/x86_64/qore-markdown-module-debugsource-1.0.0-2.x86_64.rpm": "bf29665733241962950dc0f71574742fd1352eeda46e2ebf02100230a449e190",
+            "rpmbuild/SRPMS/qore-markdown-module-1.0.0-2.src.rpm": "c4c441d0f384e3b569781a4410abd6a8c7567710d0fdb6e98b117296a40f474f"
+          }
+        },
+        "runtime_requires": "libc.so.6()(64bit)\nlibc.so.6(GLIBC_2.14)(64bit)\nlibc.so.6(GLIBC_2.2.5)(64bit)\nlibc.so.6(GLIBC_2.3)(64bit)\nlibc.so.6(GLIBC_2.3.4)(64bit)\nlibc.so.6(GLIBC_2.4)(64bit)\nlibgcc_s.so.1()(64bit)\nlibgcc_s.so.1(GCC_3.0)(64bit)\nlibm.so.6()(64bit)\nlibqore20(x86-64) >= 0:3.0.0~git20261002.18-18\nlibstdc++.so.6()(64bit)\nlibstdc++.so.6(CXXABI_1.3)(64bit)\nlibstdc++.so.6(GLIBCXX_3.4)(64bit)\nqore(x86-64) >= 0:3.0.0~git20261002.18-18\nqore-module(abi)(x86-64) = 2.0\nrpmlib(CompressedFileNames) <= 3.0.4-1\nrpmlib(FileDigests) <= 4.6.0-1\nrpmlib(PayloadFilesHavePrefix) <= 4.0-1\nrpmlib(PayloadIsZstd) <= 5.4.18-1\nrpmlib(TildeInVersions) <= 4.10.0-1\n",
+        "sdk_smoke_sha256": "434bb54a9fa36ae6017e3222e68550088d39b20199eec6d1db8aa3d7a3760ce0",
+        "sdk_image": "sha256:4a76811e2448f61365110d898da3039e6226a2f028e8eae0c01f8ec344cfe2f8",
+        "runtime_image": "sha256:014ba6ef2bfb510ee7bcf366fe7c2261c6e55192dda099fa23408d7349b015fe",
+        "exit_code": 0
+      },
+      "logs_sha256": {
+        "results/leap-markdown-final-2/build.log": "263f7b3e9031177525d6b9f7defdb7a18e028c445e3757c36843d623484659de",
+        "results/leap-markdown-final-2-sdk-install.log": "0396e1a1e6d8ca7ad8bd8a05ed5fbf20c57414b49e1ebae3f4483a74327ae838",
+        "results/leap-markdown-final-2-sdk-tests.log": "455adc99c4fd5277feb679a8119ef358614b39d451c1d0e33bd2fce0530986bc",
+        "results/leap-markdown-final-2-runtime-install.log": "0396e1a1e6d8ca7ad8bd8a05ed5fbf20c57414b49e1ebae3f4483a74327ae838",
+        "results/leap-markdown-final-2-runtime-tests.log": "ed4812b46df89348da06396fa14a768f23324ddf9bf490b2b79af1dd01683f38"
+      }
+    },
+    "el10": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:d8747cca3d9510216dfa61a7469601ac3c67d7f73ea1c09bc5ab925646fe86a6",
+        "source": {
+          "schema": 1,
+          "commit": "6193794b4edfd7f906c96533cb305d58eacf39af",
+          "source_date_epoch": 1790946436,
+          "name": "qore-markdown-module",
+          "version": "1.0.0",
+          "exclusions": [
+            "build",
+            "src/sundown/html/.html.c.swp"
+          ],
+          "sources": {
+            "qore-markdown-module-1.0.0.tar.xz": "49db1c11fb280c52e903dc636ad9e55e826e4eac88df27227acc74673a05c4f9",
+            "qore-markdown-module.spec": "44626ee51a207881ab6f886afbccac201801c6e8f5c7a766953b2a87ed5e9489"
+          },
+          "spec": "qore-markdown-module.spec"
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790946436",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/markdown-source-final-2:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-markdown-final-2:/work",
+          "sha256:d8747cca3d9510216dfa61a7469601ac3c67d7f73ea1c09bc5ab925646fe86a6",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-markdown-module.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-markdown-module-doc-1.0.0-2.el10.noarch.rpm": "25723cad407232fbc9d4c2703d98f8c1f773a87e8ac6fdb6fbbebb0810a53af3",
+          "rpmbuild/RPMS/x86_64/qore-markdown-module-1.0.0-2.el10.x86_64.rpm": "8f29497b6810dcafcc131b476bcedddc4b087433403acc174fc74d956a5ee9fc",
+          "rpmbuild/RPMS/x86_64/qore-markdown-module-debuginfo-1.0.0-2.el10.x86_64.rpm": "2b917dadb05e17e389f34baab66c15780b6e4b6119f41a80624ae5244c0baae1",
+          "rpmbuild/RPMS/x86_64/qore-markdown-module-debugsource-1.0.0-2.el10.x86_64.rpm": "c67b1717d223ee0f199f4dbf55e42c8580b45a72926325d718fcff003c0a0c9b",
+          "rpmbuild/SRPMS/qore-markdown-module-1.0.0-2.el10.src.rpm": "7394edeed969c92f2f18c2c3a63310b07f32ec8e763f4dc4fdb92273d2bfedd6"
+        }
+      },
+      "installed": {
+        "steps": {
+          "sdk-install": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--network",
+              "none",
+              "--name",
+              "qore-el10-markdown-final-2-sdk-install",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-markdown-final-2:/rpms:ro",
+              "sha256:d8747cca3d9510216dfa61a7469601ac3c67d7f73ea1c09bc5ab925646fe86a6",
+              "rpm",
+              "-Uvh",
+              "--includedocs",
+              "/rpms/rpmbuild/RPMS/noarch/qore-markdown-module-doc-1.0.0-2.el10.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-markdown-module-1.0.0-2.el10.x86_64.rpm"
+            ],
+            "log": "results/el10-markdown-final-2-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/el10-markdown-final-2-installed/qore-markdown-module-1.0.0:/source:ro",
+              "sha256:e626b8d724ceb34d8fe9d435d38531f4b2c5f89751107500a859d828166ddf75",
+              "sh",
+              "-c",
+              "set -eu\nrpm -V qore-markdown-module qore-markdown-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/markdown.qtest -v\ndoc_index=$(rpm -ql qore-markdown-module-doc | grep \"/html/index.html$\")\ntest -s \"$doc_index\"\nqcc -o /tmp/markdown-sdk-smoke /source/rpm/compiler.qr\n/tmp/markdown-sdk-smoke\n"
+            ],
+            "log": "results/el10-markdown-final-2-sdk-tests.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--network",
+              "none",
+              "--name",
+              "qore-el10-markdown-final-2-runtime-install",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-markdown-final-2:/rpms:ro",
+              "sha256:dd0fdf9e17f34d18fc6f295e302a4edd74b0a0fed0f295989bd074f37dc38f4c",
+              "rpm",
+              "-Uvh",
+              "--includedocs",
+              "/rpms/rpmbuild/RPMS/noarch/qore-markdown-module-doc-1.0.0-2.el10.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-markdown-module-1.0.0-2.el10.x86_64.rpm"
+            ],
+            "log": "results/el10-markdown-final-2-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/el10-markdown-final-2-installed/qore-markdown-module-1.0.0:/source:ro",
+              "sha256:8defab93bc1ef6f419b15d743034917eb8330115f979813b89f410236141d971",
+              "sh",
+              "-c",
+              "set -eu\nrpm -V qore-markdown-module qore-markdown-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/markdown.qtest -v\ndoc_index=$(rpm -ql qore-markdown-module-doc | grep \"/html/index.html$\")\ntest -s \"$doc_index\"\nfor package in qore-devel gcc gcc-c++; do if rpm -q \"$package\"; then exit 1; fi; done\n"
+            ],
+            "log": "results/el10-markdown-final-2-runtime-tests.log"
+          }
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:d8747cca3d9510216dfa61a7469601ac3c67d7f73ea1c09bc5ab925646fe86a6",
+          "source": {
+            "schema": 1,
+            "commit": "6193794b4edfd7f906c96533cb305d58eacf39af",
+            "source_date_epoch": 1790946436,
+            "name": "qore-markdown-module",
+            "version": "1.0.0",
+            "exclusions": [
+              "build",
+              "src/sundown/html/.html.c.swp"
+            ],
+            "sources": {
+              "qore-markdown-module-1.0.0.tar.xz": "49db1c11fb280c52e903dc636ad9e55e826e4eac88df27227acc74673a05c4f9",
+              "qore-markdown-module.spec": "44626ee51a207881ab6f886afbccac201801c6e8f5c7a766953b2a87ed5e9489"
+            },
+            "spec": "qore-markdown-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1790946436",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/markdown-source-final-2:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/el10-markdown-final-2:/work",
+            "sha256:d8747cca3d9510216dfa61a7469601ac3c67d7f73ea1c09bc5ab925646fe86a6",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-markdown-module.spec"
+          ],
+          "source_only": false,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-markdown-module-doc-1.0.0-2.el10.noarch.rpm": "25723cad407232fbc9d4c2703d98f8c1f773a87e8ac6fdb6fbbebb0810a53af3",
+            "rpmbuild/RPMS/x86_64/qore-markdown-module-1.0.0-2.el10.x86_64.rpm": "8f29497b6810dcafcc131b476bcedddc4b087433403acc174fc74d956a5ee9fc",
+            "rpmbuild/RPMS/x86_64/qore-markdown-module-debuginfo-1.0.0-2.el10.x86_64.rpm": "2b917dadb05e17e389f34baab66c15780b6e4b6119f41a80624ae5244c0baae1",
+            "rpmbuild/RPMS/x86_64/qore-markdown-module-debugsource-1.0.0-2.el10.x86_64.rpm": "c67b1717d223ee0f199f4dbf55e42c8580b45a72926325d718fcff003c0a0c9b",
+            "rpmbuild/SRPMS/qore-markdown-module-1.0.0-2.el10.src.rpm": "7394edeed969c92f2f18c2c3a63310b07f32ec8e763f4dc4fdb92273d2bfedd6"
+          }
+        },
+        "runtime_requires": "libc.so.6()(64bit)\nlibc.so.6(GLIBC_2.14)(64bit)\nlibc.so.6(GLIBC_2.2.5)(64bit)\nlibc.so.6(GLIBC_2.3)(64bit)\nlibc.so.6(GLIBC_2.3.4)(64bit)\nlibc.so.6(GLIBC_2.4)(64bit)\nlibc.so.6(GLIBC_ABI_DT_RELR)(64bit)\nlibgcc_s.so.1()(64bit)\nlibgcc_s.so.1(GCC_3.0)(64bit)\nlibgcc_s.so.1(GCC_3.3.1)(64bit)\nlibqore(x86-64) >= 0:3.0.0~git20261002.17-17.el10\nlibstdc++.so.6()(64bit)\nlibstdc++.so.6(GLIBCXX_3.4)(64bit)\nqore(x86-64) >= 0:3.0.0~git20261002.17-17.el10\nqore-module(abi)(x86-64) = 2.0\nrpmlib(CompressedFileNames) <= 3.0.4-1\nrpmlib(FileDigests) <= 4.6.0-1\nrpmlib(PayloadFilesHavePrefix) <= 4.0-1\nrpmlib(PayloadIsZstd) <= 5.4.18-1\nrpmlib(TildeInVersions) <= 4.10.0-1\nrtld(GNU_HASH)\n",
+        "sdk_smoke_sha256": "434bb54a9fa36ae6017e3222e68550088d39b20199eec6d1db8aa3d7a3760ce0",
+        "sdk_image": "sha256:e626b8d724ceb34d8fe9d435d38531f4b2c5f89751107500a859d828166ddf75",
+        "runtime_image": "sha256:8defab93bc1ef6f419b15d743034917eb8330115f979813b89f410236141d971",
+        "exit_code": 0
+      },
+      "logs_sha256": {
+        "results/el10-markdown-final-2/build.log": "a358e224f143a2eaa971a7d56e7cea42075d96f5d12f797ffb18fa972e077348",
+        "results/el10-markdown-final-2-sdk-install.log": "d6cbc2d697a60306329b8840b11fe35454a6e6a43903b9814c115088225cf2b2",
+        "results/el10-markdown-final-2-sdk-tests.log": "d2370d75ccb1a101c3af794e1e4da2a88d0095fb540860ca9928d4284b6c1add",
+        "results/el10-markdown-final-2-runtime-install.log": "d6cbc2d697a60306329b8840b11fe35454a6e6a43903b9814c115088225cf2b2",
+        "results/el10-markdown-final-2-runtime-tests.log": "ed4812b46df89348da06396fa14a768f23324ddf9bf490b2b79af1dd01683f38"
+      }
+    }
+  },
+  "obs": {
+    "qore-markdown-module": {
+      "source_commit": "6193794b4edfd7f906c96533cb305d58eacf39af",
+      "revision": "2",
+      "srcmd5": "aed3b28665fcad496a038c0b5bcee908",
+      "verified_files": {
+        "qore-markdown-module-1.0.0.tar.xz": "f5dae7200801755522ab11d0a427e16d",
+        "qore-markdown-module.spec": "fde530c172609a7ea3af86e95b9b3bfc",
+        "source-manifest.json": "e8ee9517b33748959d76882ffcaad149"
+      }
+    }
+  },
+  "native_compatibility_commit": "70213766f15371a1ed290dc7f8fc10b0466dd74a",
+  "bundled_provenance": {
+    "repository": "https://github.com/vmg/sundown",
+    "commit": "37728fb2d7137ff7c37d0a474cb827a8d6d846d8",
+    "files": {
+      "html/houdini.h": {
+        "git_blob": "b4954c02f67909ea3b57b73c56d5844981068000",
+        "upstream_blob": "b4954c02f67909ea3b57b73c56d5844981068000",
+        "matches": true
+      },
+      "html/houdini_href_e.c": {
+        "git_blob": "981b3b17e4153dce7cccaa7672471bb26280bde4",
+        "upstream_blob": "981b3b17e4153dce7cccaa7672471bb26280bde4",
+        "matches": true
+      },
+      "html/houdini_html_e.c": {
+        "git_blob": "d9bbf187d825cec7e1d339dbb2f5b01956359545",
+        "upstream_blob": "d9bbf187d825cec7e1d339dbb2f5b01956359545",
+        "matches": true
+      },
+      "html/html.c": {
+        "git_blob": "7f08ee8ef1b97387ab96ab9a66b11d57d62cd1c9",
+        "upstream_blob": "7f08ee8ef1b97387ab96ab9a66b11d57d62cd1c9",
+        "matches": true
+      },
+      "html/html.h": {
+        "git_blob": "4c8810d471c92b7edb592398a6b9bcaa99508f92",
+        "upstream_blob": "4c8810d471c92b7edb592398a6b9bcaa99508f92",
+        "matches": true
+      },
+      "html/html_smartypants.c": {
+        "git_blob": "367c26aeb9cc9840f32bc0b1591224a4667c0544",
+        "upstream_blob": "367c26aeb9cc9840f32bc0b1591224a4667c0544",
+        "matches": true
+      },
+      "src/autolink.c": {
+        "git_blob": "6f8d6ab9902b597f3acd68d8f11749f88689bd8c",
+        "upstream_blob": "6f8d6ab9902b597f3acd68d8f11749f88689bd8c",
+        "matches": true
+      },
+      "src/autolink.h": {
+        "git_blob": "65e0fe6f14489ae62085933d58ea6bec86f06e93",
+        "upstream_blob": "65e0fe6f14489ae62085933d58ea6bec86f06e93",
+        "matches": true
+      },
+      "src/buffer.c": {
+        "git_blob": "47b40ce2f75e75d42756a386d29431b6de674b7a",
+        "upstream_blob": "47b40ce2f75e75d42756a386d29431b6de674b7a",
+        "matches": true
+      },
+      "src/buffer.h": {
+        "git_blob": "221d142eda337547db55266e1705021964cdd4c9",
+        "upstream_blob": "221d142eda337547db55266e1705021964cdd4c9",
+        "matches": true
+      },
+      "src/html_blocks.h": {
+        "git_blob": "09a758fe275f701010582a44bbc01a1905554a98",
+        "upstream_blob": "09a758fe275f701010582a44bbc01a1905554a98",
+        "matches": true
+      },
+      "src/markdown.c": {
+        "git_blob": "ea3cf23253ad3fe07af31a047db75e4e4a1c017d",
+        "upstream_blob": "ea3cf23253ad3fe07af31a047db75e4e4a1c017d",
+        "matches": true
+      },
+      "src/markdown.h": {
+        "git_blob": "6f6553ec87df5ce680f476fce70db3ee5faeabac",
+        "upstream_blob": "6f6553ec87df5ce680f476fce70db3ee5faeabac",
+        "matches": true
+      },
+      "src/stack.c": {
+        "git_blob": "ce069ff3b9d09c2d56ffc88b10b9d1effb541221",
+        "upstream_blob": "ce069ff3b9d09c2d56ffc88b10b9d1effb541221",
+        "matches": true
+      },
+      "src/stack.h": {
+        "git_blob": "08ff030a33b0fba0743509307ec12676215ad729",
+        "upstream_blob": "08ff030a33b0fba0743509307ec12676215ad729",
+        "matches": true
+      }
+    },
+    "houdini_permission_notice": {
+      "repository": "https://github.com/vmg/houdini",
+      "commit": "59727b85553b70d468743076219e620d6c0d3cad",
+      "file": "COPYING"
+    },
+    "local_modification": "ANSI parameter declarations only in src/sundown/src/html_blocks.h; hash table and parser behavior unchanged"
+  },
+  "gates_remaining": [
+    "Native ARM build and installed qualification",
+    "Combined installation, upgrade/removal, reproducibility and publication gates"
+  ]
+}
