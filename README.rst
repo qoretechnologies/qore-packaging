@@ -263,6 +263,10 @@ and ignored build outputs are not read. ``--packaging-overlay`` can include
 spec files and ``rpm/`` from a separate directory for pre-commit testing. Such
 bundles are explicitly marked ``candidate`` and must not be published.
 
+Recipe identity and source declarations are checked in the RPM preamble.
+Metadata in descriptions or generated files, such as a pkg-config ``Version``
+field in ``%install``, is preserved without treating it as package metadata.
+
 Prepare dependencies in a disposable target container, then save that
 container as a build image. Builds use only its installed dependencies::
 

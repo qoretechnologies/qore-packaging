@@ -53,8 +53,9 @@ def prepare(repo, name, cache, output, ref=None, candidate=False):
             raise ValueError("Source archive changed while preparing the bundle")
         payloads[entry["archive"]] = data
     recipe = payloads[name + ".spec"].decode()
+    preamble, _ = packaging.split_spec_preamble(recipe)
     for field, value in (("Name", name), ("Version", info["version"])):
-        if re.findall(r"^" + field + r":\s+(\S+)\s*$", recipe, re.M) != [value]:
+        if re.findall(r"^" + field + r":\s+(\S+)\s*$", preamble, re.M) != [value]:
             raise ValueError("Dependency spec and source pin disagree: " + field)
     timestamp = info["source_date_epoch"] if candidate else int(
         packaging.git(repo, "show", "-s", "--format=%ct", commit).decode())

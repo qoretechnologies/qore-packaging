@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Accepted narrow qualification diagnostic; no warning suppression used.",
+  "diagnostic": "ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time",
+  "root_cause": "The distribution Node 24 runtime deliberately labels the module.stripTypeScriptTypes API experimental. The same standalone transform executes successfully and emits the identical notice without Qore.",
+  "controls": {
+    "fedora": {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "qore-rpm-keep:fedora-v8-integration-1",
+        "node",
+        "-e",
+        "const assert = require('node:assert/strict'); const result = require('node:module').stripTypeScriptTypes('const value: number = 42; value;', { mode: 'transform' }); assert.equal(require('node:vm').runInNewContext(result), 42); console.log('TypeScript transform and execution passed');"
+      ],
+      "exit_code": 0,
+      "stdout": "TypeScript transform and execution passed\n",
+      "stderr": "(node:1) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    "el10": {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "qore-rpm-keep:el10-v8-integration-1",
+        "/usr/bin/node-24",
+        "-e",
+        "const assert = require('node:assert/strict'); const result = require('node:module').stripTypeScriptTypes('const value: number = 42; value;', { mode: 'transform' }); assert.equal(require('node:vm').runInNewContext(result), 42); console.log('TypeScript transform and execution passed');"
+      ],
+      "exit_code": 0,
+      "stdout": "TypeScript transform and execution passed\n",
+      "stderr": "(node:1) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time\n(Use `node-24 --trace-warnings ...` to show where the warning was created)\n"
+    }
+  },
+  "qualification": {
+    "fedora": {
+      "typescript_cases": 39,
+      "assertions": 139,
+      "build_exit_code": 0
+    },
+    "el10": {
+      "typescript_cases": 39,
+      "assertions": 139,
+      "build_exit_code": 0
+    }
+  },
+  "logs": {
+    "results/fedora-v8-integration-1/build.log": "480987bb8c7c597b854d4afa54036aa4bea660275898b56d18009fd002b70c2b",
+    "results/v8-typescript-diagnostic-1/fedora.stdout": "0ddba54850d5fa74006f3c53e7da15956756f7ab141a7778f2f251a451eb45e9",
+    "results/v8-typescript-diagnostic-1/fedora.stderr": "857c8381e4b9f6ce5b2608115691c8c151927479713a6687d1d4bffd70d4d8aa",
+    "results/el10-v8-integration-1/build.log": "215a7bb3b0d7f97f71e195b1f3082a02844d179d14cdc1a5db627083fd5da4c8",
+    "results/v8-typescript-diagnostic-1/el10.stdout": "0ddba54850d5fa74006f3c53e7da15956756f7ab141a7778f2f251a451eb45e9",
+    "results/v8-typescript-diagnostic-1/el10.stderr": "ded62954391a8d09262b8261166a1a7e54afb94280ade8ee824d810e12ff0404"
+  },
+  "approval": {
+    "date": "2026-10-03",
+    "decision": "accepted",
+    "user_statement": "Allow this documented diagnostic",
+    "scope": "The recorded Node stripTypeScriptTypes experimental API notice, reproduced by standalone Node on both distribution runtimes."
+  }
+}

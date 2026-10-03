@@ -43,6 +43,17 @@ class CatalogTests(unittest.TestCase):
 
 
 class RecipeSourceTests(unittest.TestCase):
+    def test_sources_only_come_from_the_package_preamble(self):
+        header = "Name: probe\nVersion: 1.0\nSource0: source.tar\n"
+        for section in ("%description", "%package devel", " %prep", "%generate_buildrequires",
+                        "%conf", "%build", "%install", "%check", "%clean", "%files",
+                        "%changelog", "%pre", "%post", "%preun", "%postun",
+                        "%pretrans", "%posttrans"):
+            with self.subTest(section=section):
+                body = section + "\nSource1: not-a-declared-source\nVersion: embedded\n"
+                self.assertEqual(packaging.split_spec_preamble(header + body), (header, body))
+                packaging.validate_recipe_sources(header + body, {"sources": {"source.tar": "digest"}})
+
     def test_local_sources_urls_renamed_downloads_and_patches(self):
         manifest = {"name": "probe", "version": "1.2", "sources": {
             "probe-1.2.tar.xz": "digest", "vendor.tar.gz": "digest", "fix.patch": "digest"}}
@@ -192,6 +203,28 @@ class SourceTests(SourceFixture):
         path = self.root / "result" / manifest["spec"]
         self.assertIn("Version: 1.0.0~git20261001.1\n", path.read_text())
         packaging.verify_download(path, manifest["sources"][path.name])
+
+    def test_snapshot_preserves_metadata_inside_install_script(self):
+        recipe = self.repo / "qore-test-module.spec"
+        body = ("%install\ncat > example.pc <<'PC'\nName: Example library\n"
+                "Version: %{version}\nSource: documentation only\nPC\n")
+        recipe.write_text("Name: qore-test-module\nVersion: 1.0.0\n" + body)
+        self.git("add", recipe.name)
+        self.git("commit", "-qm", "recipe with generated metadata")
+        manifest = self.prepare(spec_path=recipe.name)
+        content = (self.root / "result" / manifest["spec"]).read_text()
+        self.assertEqual(content, "Name: qore-test-module\nVersion: 1.0.0~git20261001.1\n" + body)
+        packaging.verify_download(self.root / "result" / manifest["spec"],
+                                  manifest["sources"][manifest["spec"]])
+
+    def test_description_cannot_supply_missing_snapshot_version(self):
+        recipe = self.repo / "qore-test-module.spec"
+        recipe.write_text("Name: qore-test-module\n%description\nVersion: 1.0.0\n")
+        self.git("add", recipe.name)
+        self.git("commit", "-qm", "missing package version")
+        with self.assertRaisesRegex(ValueError, "Expected one explicit Version"):
+            self.prepare(spec_path=recipe.name)
+        self.assertFalse((self.root / "result").exists())
 
     def test_mismatching_recipe_is_rejected(self):
         recipe = self.repo / "bad.spec"

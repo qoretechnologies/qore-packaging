@@ -21,13 +21,24 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def split_spec_preamble(recipe):
+    """Separate package metadata from descriptions, scripts and generated files."""
+    section = re.search(
+        r"^[ \t]*%(?:description|package|prep|generate_buildrequires|conf|build|install|"
+        r"check|clean|files|changelog|pre|post|preun|postun|pretrans|posttrans)(?:\s|$)",
+        recipe, re.M)
+    offset = section.start() if section else len(recipe)
+    return recipe[:offset], recipe[offset:]
+
+
 def validate_recipe_sources(recipe, manifest):
     """Require every declared Source/Patch to be present in an offline bundle.
 
     Recipes use literal filenames or the pinned name/version macros. Refuse
     other expansion instead of silently creating an incomplete OBS upload.
     """
-    for value in re.findall(r"^\s*(?:Source|Patch)\d*:\s*(\S+)", recipe, re.M | re.I):
+    preamble, _ = split_spec_preamble(recipe)
+    for value in re.findall(r"^\s*(?:Source|Patch)\d*:\s*(\S+)", preamble, re.M | re.I):
         for key in ("name", "version"):
             value = value.replace("%{" + key + "}", manifest.get(key, ""))
         if "%" in value:
@@ -98,12 +109,14 @@ def prepare_source(repo, ref, name, version, output, exclusions=(), packaging_ov
             raise ValueError("Spec path must be inside the repository")
         recipe = (overlays[spec_path].read_text() if spec_path in overlays
                   else git(repo, "show", commit + ":" + spec_path).decode())
-        names = re.findall(r"^Name:\s+(\S+)\s*$", recipe, flags=re.M)
+        preamble, body = split_spec_preamble(recipe)
+        names = re.findall(r"^Name:\s+(\S+)\s*$", preamble, flags=re.M)
         if names != [name]:
             raise ValueError("Spec name does not match the archive name")
-        recipe, count = re.subn(r"^Version:[^\n]+", "Version: " + version, recipe, flags=re.M)
+        preamble, count = re.subn(r"^Version:[^\n]+", "Version: " + version, preamble, flags=re.M)
         if count != 1:
             raise ValueError("Expected one explicit Version in the spec")
+        recipe = preamble + body
     # Construct everything in memory before creating the destination. A failed
     # Git command or invalid archive must not leave a plausible release upload.
     compressed = io.BytesIO()

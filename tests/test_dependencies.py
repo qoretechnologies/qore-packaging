@@ -114,6 +114,21 @@ class DependencyTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "disagree: Version"):
             self.prepare(candidate=True)
 
+    def test_generated_pkgconfig_metadata_is_not_package_metadata(self):
+        spec = self.repo / "dependencies/probe.spec"
+        spec.write_text(spec.read_text() + "\n%install\ncat > probe.pc <<'PC'\n"
+                        "Name: Embedded library\nVersion: %{version}\nSource: upstream\nPC\n")
+        result = self.prepare(candidate=True)
+        self.assertEqual(result["version"], "1.0")
+        self.assertEqual((self.root / "output/probe.spec").read_text(), spec.read_text())
+
+    def test_generated_version_cannot_supply_missing_package_version(self):
+        spec = self.repo / "dependencies/probe.spec"
+        spec.write_text("Name: probe\n%description\nExample:\nVersion: 1.0\n")
+        with self.assertRaisesRegex(ValueError, "disagree: Version"):
+            self.prepare(candidate=True)
+        self.assertFalse((self.root / "output").exists())
+
     def test_failed_atomic_write_leaves_no_output(self):
         with patch.object(dependencies.os, "replace", side_effect=OSError("disk failure")):
             with self.assertRaisesRegex(OSError, "disk failure"):
