@@ -270,8 +270,9 @@ and verified on both architectures; a single rebuild was triggered. See
 ``evidence/fedora-pdfium-obs-retrieval-20261003.json``. Leap's bootstrap now
 selects its matching LLVM archiver/linker with the full OBS LTO flags;
 all 1,819 upstream tests and installed API, debugger and Valgrind checks pass
-on all three local targets. Source and binary lint also pass. The committed
-rebuild and OBS update remain pending; see
+on all three local targets. The committed rebuilds and installed checks also
+pass, including source and binary lint. The exact sources are staged as OBS
+revision 2 with publication disabled; native OBS rebuilds remain pending. See
 ``evidence/pdfium-lto-qualification-20261003.json``.
 
 Preparing and building

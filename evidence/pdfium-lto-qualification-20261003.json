@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-03",
-  "status": "Toolchain changes fully qualified on all three x86_64 targets; final source URL/description metadata passed offline SRPM generation and source/binary lint. Canonical committed rebuild and OBS revision 2 pending.",
+  "status": "Committed canonical builds and installed qualification passed on all three x86_64 targets; exact sources uploaded as OBS revision 2 with publication disabled. OBS rebuild and aarch64 qualification remain pending.",
   "root_cause": "OBS enables LTO on Leap. GN bootstrap used Clang with GNU ld and GNU ar, requiring an absent or mismatched LLVMgold plugin. Use the matching selected LLVM archiver and LLD, including the C API check, while preserving every distribution compile/link flag.",
   "source": {
     "schema": 1,
@@ -161,6 +161,154 @@
     "results/leap-pdfium-source-16-lint.log": "30c1c75fd45cb723b3d92e40eb079b45d05564292325596ed962d9b915473030",
     "results/leap-pdfium-candidate-16-source/build.json": "4723d50c87185f3e9d9ac7610df94af579b8c2f171501ab012544fc7fd4e87ae",
     "results/pdfium-repack-source-urls-20261003.json": "934cb11f8892b3b5e71ef5a76753813bc02e6e5e7b1d0379986a77e79f423c6d",
-    "results/obs-build-recipe-spec-20261003": "81f1ea2eb2f7734b3874167677e82ca126cf104caebdaea2b6c4a4bc2fbbcc73"
+    "results/obs-build-recipe-spec-20261003": "81f1ea2eb2f7734b3874167677e82ca126cf104caebdaea2b6c4a4bc2fbbcc73",
+    "results/fedora-pdfium-final-2/build.json": "915dd1e4a5c46e1242541460b90bf358771ac6647ed88b7ba7eee4a9926a11f6",
+    "results/fedora-pdfium-final-2/build.log": "56d75bb24dab9dc7a6c8b4f52c81f93b3750438e9b00c5b6405e5bb2853f9d5d",
+    "results/fedora-pdfium-installed-8/status.json": "a38f57402b2ec1b2b76581d4a54421eeda6c4870cb751e9e8b6cfeb7f1f54454",
+    "results/fedora-pdfium-installed-8/installed.log": "c345d9a3ec9fb14d631fd6d367b637e8700c8ec051f45758d8fa9b12fb1239fc",
+    "results/fedora-pdfium-installed-8/gdb.txt": "29cd13392b44a494c16ec3e93c0882a816b3691c1178bc7419a5f66d30b21e36",
+    "results/fedora-pdfium-installed-8/valgrind.log": "9f3f7b47920464236bad91e4e64e88b6f8a0f3ec0e9087d8110ac407425dca40",
+    "results/fedora-pdfium-installed-8/unload-1.log": "25097f65b3cf9579d66d15061553df65fdec91c759b382ce4d7e7379f0913556",
+    "results/fedora-pdfium-installed-8/unload-10.log": "b98948471853a3f3cf852394db2061f349b3dfa991a8b7b11b80d344cf8ceafc",
+    "results/leap-pdfium-final-2/build.json": "87130bfadf6c2f02ff6604e4c7acc0372096654b180ef86f143cfa96ffe78d6f",
+    "results/leap-pdfium-final-2/build.log": "feee592de53fa736386e8c3f91ea1e7c0fb57f9962408fccdc4fb39f5d5b0e42",
+    "results/leap-pdfium-installed-8/status.json": "d10c55b07d784c12102358b25b76e80aa6649c25e2e5760ce218475bdab0fba7",
+    "results/leap-pdfium-installed-8/installed.log": "510b9e64477314e2a7b6d487760ed109ef20adc3cf77fd490df1b256235ba0e2",
+    "results/leap-pdfium-installed-8/gdb.txt": "59dc5ea9a85ec71ab2d0796c0e51ff9bcf434bcf149f6c0fc8007cc10f21996d",
+    "results/leap-pdfium-installed-8/valgrind.log": "9ea759813ac706cfd53f11fd17d42224a8aaaada7c1de812ff1e157c678ebf73",
+    "results/leap-pdfium-installed-8/unload-1.log": "f05476a2ccd9a983f807ad8c9f9722e7441a991706d92b9fa614c2d02a52daf5",
+    "results/leap-pdfium-installed-8/unload-10.log": "95da8dbab7bd2303022a4d48e84995bf7c914962b98cff93bdcad0d4ea93b4cc",
+    "results/el10-pdfium-final-2/build.json": "03f03746fdc7e853930443a47884fd72643cbf1ce52d7199eb47d722d3ba4e01",
+    "results/el10-pdfium-final-2/build.log": "4bdc5e0eab7c3047732d8f07be7737edee6f5da4300583cab8cc4270b15f3481",
+    "results/el10-pdfium-installed-8/status.json": "4f6e93c698090db157c77abea9139ea5e207e81d9c5bf7ed4ccd7de10c209a14",
+    "results/el10-pdfium-installed-8/installed.log": "a1b244296d07cb810523e2b7259f22c8ef178d77d7bd1d4e6431552f59996c7b",
+    "results/el10-pdfium-installed-8/gdb.txt": "aaa7dde7cde03df390e494a35d91a3d5f8fa5c5184cfdad1af7c547b6973027b",
+    "results/el10-pdfium-installed-8/valgrind.log": "9ca9a8643b654e37ab5b03cab40ecbdc7d8eb858aae43fed2a16793877b30343",
+    "results/el10-pdfium-installed-8/unload-1.log": "2efff36c74c44928791985948cfffb825d418f0b4d6228d37b358a790ce82c5e",
+    "results/el10-pdfium-installed-8/unload-10.log": "eb02fb7aa08bc58749f0dc1d49dea8d835c6fd2012b804901680ef5c1ab01ef3",
+    "results/obs-pdfium-final-2-upload-20261003.json": "87a7bcda34a6e73cebc6f9abd37005c336eca9b822110d3feb3fbd77995dea33",
+    "results/obs-pdfium-final-2-directory-20261003.xml": "fa7123525fc71266c24b7f8698f8285c23d2f114b929ab3788701e585f37219b",
+    "results/obs-testing-meta-pdfium-2-20261003.xml": "7dbbe7712d7e4f9284a934a47f1e71268a7189403e8f48611f850dd4c86d2ff2",
+    "results/leap-pdfium-installed-8/lint.log": "30c1c75fd45cb723b3d92e40eb079b45d05564292325596ed962d9b915473030",
+    "results/pdfium-canonical-final-unit-tests-20261003.log": "c0c23264e848a0bc9519c2d0655018801c605e651efaf77038f20bdbe85ada36"
+  },
+  "canonical": {
+    "source": {
+      "schema": 1,
+      "name": "qore-pdfium",
+      "version": "148.0.7778",
+      "commit": "1972ba98043f3ce753616f110527af5f108108a7",
+      "source_date_epoch": 1791028360,
+      "spec": "qore-pdfium.spec",
+      "upstream": {
+        "url": "https://pdfium.googlesource.com/pdfium/+/72ea487e4399c44c3a53a48b104f9612ca772008",
+        "sha256": "7e3465f432a31696486c8505cbe59a06c85247101651621630fd9adaf033689d"
+      },
+      "sources": {
+        "MuktiNarrow-0.94.tar.bz2": "bb8af9b9437f1d13ff8cdc8784188ebf0c2ee8b97e328281cd814a3afd4f82f3",
+        "fonts-tlwg-0.6.3.tar.xz": "bcb0136b4ea26ddbb341f5673327e02826c65d2f0b68465010e8ce7412ec87c8",
+        "pdfium-COPYRIGHT": "3fde9d9600473e8d9ad2a9dd616f3e38fd8ce79b1e1215a057ff6450726b470c",
+        "pdfium-api-test.c": "e5589fd3aa551d774e5eafe02930ef83e6041beb7d69800a1faa93f40ae80623",
+        "pdfium-freetype-99b479dc.tar.xz": "be46e6d08e32d99179a6e0a6059b22713ba359caaeb3798e52b74efac2d49096",
+        "pdfium-rpm-build.py": "bdd585fad30af265bd54c8e5a679892a934ccc3356736b6ccbf34b45567108b8",
+        "pdfium-rpm-shared-library.patch": "c9371d280099a1ca538c646acea8c0786709bf5ff51eefcec11b27e871f87f51",
+        "pdfium-rpm-tests.patch": "37addf62acc16c69f2c78fadaa37c728580a497a4a647d820e3f4e909e4600ea",
+        "pdfium-rpmlintrc": "42ca574484d6fe01aeaf5c04dabca46a0b762cc73c257bda8e36c8d2ab6fc4ba",
+        "pdfium-system-freetype-hinting.patch": "03d6aa1a74b7ca79e1895ba134a7add1e8916f1ec6147ea2441fdce396469363",
+        "pdfium-test-font-sources.json": "f9f059c703645b612d5e0474603ecf203d2165df3a95990e8b7e6bcdf3e0b678",
+        "pdfium-test-fonts-cd96fc55.tar.gz": "ec973eccd669d417fbf2d0a4dac730744a3174268ff062db5451b55c82bc3492",
+        "pdfium-test-resources-72ea487e.tar.xz": "a62d083b088f86083f9ed4c8bfa954411a4544ebd643e53da43e599cd7fa3d89",
+        "qore-pdfium.spec": "1c631f827006bbd2b87bd8385116d640cf83ea84eddb267930f3ad0d48bab286",
+        "qore-pdfium_148.0.7778+ds.orig.tar.xz": "7e3465f432a31696486c8505cbe59a06c85247101651621630fd9adaf033689d"
+      },
+      "components": [
+        {
+          "archive": "pdfium-test-fonts-cd96fc55.tar.gz",
+          "url": "https://storage.googleapis.com/chromium-fonts/cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb",
+          "sha256": "ec973eccd669d417fbf2d0a4dac730744a3174268ff062db5451b55c82bc3492",
+          "upstream_sha1": "cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb"
+        },
+        {
+          "archive": "pdfium-test-resources-72ea487e.tar.xz",
+          "url": "https://pdfium.googlesource.com/pdfium/+/72ea487e4399c44c3a53a48b104f9612ca772008/testing/",
+          "sha256": "a62d083b088f86083f9ed4c8bfa954411a4544ebd643e53da43e599cd7fa3d89",
+          "generated": "git archive --format=tar 72ea487e4399c44c3a53a48b104f9612ca772008 LICENSE AUTHORS testing/resources, compressed with Python lzma preset 6."
+        },
+        {
+          "archive": "fonts-tlwg-0.6.3.tar.xz",
+          "url": "https://github.com/tlwg/fonts-tlwg/releases/download/v0.6.3/fonts-tlwg-0.6.3.tar.xz",
+          "sha256": "bcb0136b4ea26ddbb341f5673327e02826c65d2f0b68465010e8ce7412ec87c8"
+        },
+        {
+          "archive": "MuktiNarrow-0.94.tar.bz2",
+          "url": "https://download.savannah.nongnu.org/releases/freebangfont/MuktiNarrow-0.94.tar.bz2",
+          "sha256": "bb8af9b9437f1d13ff8cdc8784188ebf0c2ee8b97e328281cd814a3afd4f82f3"
+        },
+        {
+          "archive": "pdfium-freetype-99b479dc.tar.xz",
+          "url": "https://chromium.googlesource.com/chromium/src/third_party/freetype2/+/99b479dc34728936b006679a31e12b8cf432fc55",
+          "sha256": "be46e6d08e32d99179a6e0a6059b22713ba359caaeb3798e52b74efac2d49096",
+          "generated": "git archive --format=tar 99b479dc34728936b006679a31e12b8cf432fc55, compressed with Python lzma preset 6; exact PDFium DEPS revision, built privately on Enterprise Linux."
+        }
+      ]
+    },
+    "targets": {
+      "fedora": {
+        "build": "results/fedora-pdfium-final-2",
+        "installed": "results/fedora-pdfium-installed-8",
+        "build_exit_code": 0,
+        "installed_exit_code": 0,
+        "artifact_sha256": {
+          "rpmbuild/RPMS/x86_64/libpdfium-qore-devel-148.0.7778-1.qore.fc44.x86_64.rpm": "64631acad7c77c62a5468cfcfe5015205e97786910e8b024c6297c581d3fd931",
+          "rpmbuild/RPMS/x86_64/libpdfium-qore148-0-148.0.7778-1.qore.fc44.x86_64.rpm": "3c63cb67aad5576666a8bc931d9e637764e29fe9783dfb201634de86b83e6789",
+          "rpmbuild/RPMS/x86_64/libpdfium-qore148-0-debuginfo-148.0.7778-1.qore.fc44.x86_64.rpm": "73c2e70a9b7dcb714c93693c1d2f170de1c42ff8d61444bf2bc1d7355e96b001",
+          "rpmbuild/RPMS/x86_64/qore-pdfium-debugsource-148.0.7778-1.qore.fc44.x86_64.rpm": "eb8d3fb8295aff2a6817d1b629e7e8f42bb8961748f12b9e1561b35a25534e89",
+          "rpmbuild/SRPMS/qore-pdfium-148.0.7778-1.qore.fc44.src.rpm": "7357594bcf4e6cc7df103b5d9e8da3fff8021886447257930984e2d663c8743b"
+        },
+        "upstream_tests": 1819,
+        "valgrind": "Zero errors and zero definite, indirect or possible losses in API and 1/10 unload controls; reachable library caches retained in raw reports"
+      },
+      "leap": {
+        "build": "results/leap-pdfium-final-2",
+        "installed": "results/leap-pdfium-installed-8",
+        "build_exit_code": 0,
+        "installed_exit_code": 0,
+        "artifact_sha256": {
+          "rpmbuild/RPMS/x86_64/libpdfium-qore-devel-148.0.7778-1.qore.x86_64.rpm": "7189a7f94d00a0f879a51d80d7d527ff3d56cb9d11176d4ba697eaf1b0216423",
+          "rpmbuild/RPMS/x86_64/libpdfium-qore148-0-148.0.7778-1.qore.x86_64.rpm": "373b5d5367d745ac4a194a0122aaa7d69a2f20b07fe5e7b9df9c37db5a88793b",
+          "rpmbuild/RPMS/x86_64/libpdfium-qore148-0-debuginfo-148.0.7778-1.qore.x86_64.rpm": "0211361ee0acaaae9361ff658a0a1e24eba4b7308ec3d9b8a5a96a2a3e06e596",
+          "rpmbuild/RPMS/x86_64/qore-pdfium-debugsource-148.0.7778-1.qore.x86_64.rpm": "9659ed187ae6e9f212f278081a5a94482e5dcf56e87914bd9ea1899813441943",
+          "rpmbuild/SRPMS/qore-pdfium-148.0.7778-1.qore.src.rpm": "5963add60a06154f0e4842138a2cd40f9372dff6d83fd55a44717d9bee3c6cb4"
+        },
+        "upstream_tests": 1819,
+        "valgrind": "Zero errors and zero definite, indirect or possible losses in API and 1/10 unload controls; reachable library caches retained in raw reports",
+        "lint": "0 errors, 0 warnings; existing approved exact license-name filters only"
+      },
+      "el10": {
+        "build": "results/el10-pdfium-final-2",
+        "installed": "results/el10-pdfium-installed-8",
+        "build_exit_code": 0,
+        "installed_exit_code": 0,
+        "artifact_sha256": {
+          "rpmbuild/RPMS/x86_64/libpdfium-qore-devel-148.0.7778-1.qore.el10.x86_64.rpm": "60599f8002286b02d2dc65a349e6170c55361a09edb286445c78937ef09e33cc",
+          "rpmbuild/RPMS/x86_64/libpdfium-qore148-0-148.0.7778-1.qore.el10.x86_64.rpm": "52f1ad21e7857b87e18b1f30ce42a6a1af6603f86eba4a46c53e63f8b0d7176c",
+          "rpmbuild/RPMS/x86_64/libpdfium-qore148-0-debuginfo-148.0.7778-1.qore.el10.x86_64.rpm": "2c3de90e25e0147f19b13d27054bcc21c3ea3d626c31f6b8072f2f86e2e454b0",
+          "rpmbuild/RPMS/x86_64/qore-pdfium-debugsource-148.0.7778-1.qore.el10.x86_64.rpm": "c3f3ba37568608e1764ca55512e42921f550201e6f6e8ad832d45d4ae75e8606",
+          "rpmbuild/SRPMS/qore-pdfium-148.0.7778-1.qore.el10.src.rpm": "b55950c361155cc111943b0383238131852afb0da4bb1323445169cf937b8189"
+        },
+        "upstream_tests": 1819,
+        "valgrind": "Zero errors and zero definite, indirect or possible losses in API and 1/10 unload controls; reachable library caches retained in raw reports"
+      }
+    },
+    "obs": {
+      "project": "home:davidnichols:qore:testing",
+      "package": "qore-pdfium",
+      "name": "qore-pdfium",
+      "rev": "2",
+      "vrev": "2",
+      "srcmd5": "0a64f20f306d5b99447c24ab21a79f83",
+      "publication_enabled": false,
+      "all_remote_source_checksums_match": true
+    }
   }
 }
