@@ -76,9 +76,9 @@ has no unclassified contexts or native losses; only the previously approved
 JVM/glibc and CPython origins remain. Evidence is in
 ``evidence/jni-native-final-qualification-20261002.json`` and
 ``evidence/jni-headless-merge-20261002.json``. JNI canonical builds and installed
-runtime/SDK/artifact checks pass on all three targets from ``7527901``. Every build
-and SDK run passes 37 suites (619 cases, 8,574 assertions); the minimal runtime
-passes 23 suites (465 cases, 4,248 assertions). All 22 AOT providers, debug symbols
+runtime/SDK/artifact checks pass on all three targets from ``33367ce``. Every build
+and SDK run passes 37 suites (632 cases, 8,662 assertions); the minimal runtime
+passes 23 suites (478 cases, 4,336 assertions). All 22 AOT providers, debug symbols
 and sources, 195 JAR copies and 176 provenance records are verified. The OpenJDK 21 font-layout
 exception was accepted on 2026-10-03, with standalone Java controls retained in
 ``evidence/jni-awt-diagnostic-20261003.json``. Final results are recorded in
