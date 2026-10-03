@@ -97,6 +97,37 @@ class BundleTest(unittest.TestCase):
                 self.assertEqual(expected, record["artifacts"])
                 self.assertEqual("build log\n", (output / "build.log").read_text())
 
+    def test_tmpfs_capacity_validation_precedes_engine_and_filesystem_changes(self):
+        self.verify()
+        for size in (0, -1, 127, 32769, True, 1024.5, "1024m,exec"):
+            for start in (builder.build, builder.launch_background):
+                with self.subTest(size=size, start=start.__name__), \
+                        patch.object(builder.subprocess, "check_output") as engine, \
+                        patch.object(builder.os, "posix_spawn") as spawn:
+                    with self.assertRaisesRegex(ValueError, "128..32768 MiB"):
+                        start(self.root, "image", self.root / "invalid", tmpfs_mib=size)
+                    engine.assert_not_called()
+                    spawn.assert_not_called()
+                    self.assertFalse((self.root / "invalid").exists())
+
+    def test_tmpfs_is_optional_and_recorded_with_exact_bounded_capacity(self):
+        self.verify()
+        for size in (None, 128, 4096, 32768):
+            output = self.root / str(size)
+            with self.subTest(size=size), \
+                    patch.object(builder.subprocess, "check_output",
+                                 return_value=json.dumps([{"Id": "sha256:" + "a" * 64}])), \
+                    patch.object(builder.subprocess, "run", return_value=SimpleNamespace(returncode=0)) as run:
+                self.assertEqual(builder.build(self.root, "image", output, tmpfs_mib=size), 0)
+                command = run.call_args.args[0]
+                self.assertEqual(command.count("--tmpfs"), int(size is not None))
+                if size is not None:
+                    self.assertEqual(command[command.index("--tmpfs") + 1],
+                                     f"/tmp:rw,exec,nosuid,nodev,size={size}m,mode=1777")
+                record = json.loads((output / "build.json").read_text())
+                self.assertEqual(record["tmpfs_mib"], size)
+                self.assertEqual(record["command"], command)
+
     def test_background_driver_pins_image_and_detaches_all_terminal_streams(self):
         self.verify()
         image_id = "sha256:" + "a" * 64
@@ -104,7 +135,7 @@ class BundleTest(unittest.TestCase):
         with patch.object(builder.subprocess, "check_output", return_value=json.dumps([{"Id": image_id}])), \
              patch.object(builder.os, "posix_spawn", return_value=12345) as start:
             result = builder.launch_background(self.root, "mutable-tag", output, source_only=True,
-                                               internal_interface=True)
+                                               internal_interface=True, tmpfs_mib=4096)
             command = start.call_args.args[1]
             options = start.call_args.kwargs
             self.assertIn(image_id, command)
@@ -112,6 +143,7 @@ class BundleTest(unittest.TestCase):
             self.assertNotIn("--background", command)
             self.assertIn("--source-only", command)
             self.assertIn("--internal-interface", command)
+            self.assertEqual(command[command.index("--tmpfs-mib") + 1], "4096")
             self.assertTrue(options["setsid"])
             actions = options["file_actions"]
             self.assertEqual(actions[0], (os.POSIX_SPAWN_OPEN, 0, os.devnull, os.O_RDONLY, 0))

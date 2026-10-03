@@ -69,12 +69,24 @@ def build_network(engine, internal_interface=False):
         subprocess.run([engine, "network", "rm", name], check=True, stdout=subprocess.DEVNULL)
 
 
-def build(source, image, output, jobs=2, engine="docker", source_only=False, internal_interface=False):
+def temporary_filesystem_options(size_mib):
+    """Give filesystem-capacity tests a volume unaffected by other host builds."""
+    if size_mib is None:
+        return []
+    if type(size_mib) is not int or not 128 <= size_mib <= 32768:
+        raise ValueError("Temporary filesystem size must be 128..32768 MiB")
+    # Go executes compiled tests below TMPDIR; Docker tmpfs defaults to noexec.
+    return ["--tmpfs", f"/tmp:rw,exec,nosuid,nodev,size={size_mib}m,mode=1777"]
+
+
+def build(source, image, output, jobs=2, engine="docker", source_only=False, internal_interface=False,
+          tmpfs_mib=None):
     manifest = verify_bundle(source)
     if jobs < 1 or jobs > 16:
         raise ValueError("Use between 1 and 16 build jobs")
     if internal_interface and engine != "docker":
         raise ValueError("The isolated internal interface requires Docker")
+    temporary_options = temporary_filesystem_options(tmpfs_mib)
     source, output = Path(source).resolve(), Path(output).resolve()
     if output.exists():
         raise ValueError("Use a new build output directory")
@@ -94,13 +106,14 @@ exec rpmbuild "$@"
     command = [engine, "run", "--rm", "--init", "--network", "none", "--hostname", "qore-rpm-builder",
                "--user", f"{os.getuid()}:{os.getgid()}", "-e", "HOME=/work/home",
                "-e", f"SOURCE_DATE_EPOCH={manifest['source_date_epoch']}",
-               "-v", f"{source}:/sources:ro", "-v", f"{output}:/work", image_id,
+               "-v", f"{source}:/sources:ro", "-v", f"{output}:/work", *temporary_options, image_id,
                "sh", "-c", script, "build-local", "-bs" if source_only else "-ba",
                "--define", "_topdir /work/rpmbuild", "--define", "_sourcedir /sources",
                "--define", f"_smp_build_ncpus {jobs}", "--define", "_buildhost qore-rpm-builder",
                "/sources/" + manifest["spec"]]
     record = {"schema": 1, "image": image_id, "source": manifest, "jobs": jobs,
-              "network": "none", "command": command, "source_only": source_only}
+              "network": "none", "command": command, "source_only": source_only,
+              "tmpfs_mib": tmpfs_mib}
     with build_network(engine, internal_interface) as (network, network_info):
         command[command.index("--network") + 1] = network
         record["network"] = "isolated-bridge" if internal_interface else "none"
@@ -119,13 +132,14 @@ exec rpmbuild "$@"
 
 
 def launch_background(source, image, output, jobs=2, engine="docker", source_only=False,
-                      internal_interface=False):
+                      internal_interface=False, tmpfs_mib=None):
     """Keep the driver and its completion record alive across terminal closure."""
     verify_bundle(source)
     if jobs < 1 or jobs > 16:
         raise ValueError("Use between 1 and 16 build jobs")
     if internal_interface and engine != "docker":
         raise ValueError("The isolated internal interface requires Docker")
+    temporary_filesystem_options(tmpfs_mib)
     source, output = Path(source).resolve(), Path(output).resolve()
     if output.exists():
         raise ValueError("Use a new build output directory")
@@ -139,6 +153,8 @@ def launch_background(source, image, output, jobs=2, engine="docker", source_onl
         command.append("--source-only")
     if internal_interface:
         command.append("--internal-interface")
+    if tmpfs_mib is not None:
+        command.extend(["--tmpfs-mib", str(tmpfs_mib)])
     output.parent.mkdir(parents=True, exist_ok=True)
     driver_log = output.with_name(output.name + "-driver.log")
     # Exclusive creation prevents launching a second driver for this output.
@@ -164,15 +180,18 @@ def main():
     parser.add_argument("--source-only", action="store_true")
     parser.add_argument("--internal-interface", action="store_true",
                         help="Docker only: private internal bridge for tests requiring a non-loopback interface")
+    parser.add_argument("--tmpfs-mib", type=int,
+                        help="private /tmp capacity in MiB (128..32768); consumes memory as files are written")
     parser.add_argument("--background", action="store_true",
                         help="launch a persistent driver; read build.json for the final result")
     args = parser.parse_args()
     if args.background:
         print(json.dumps(launch_background(args.source, args.image, args.output, args.jobs,
-                                           args.engine, args.source_only, args.internal_interface), indent=2))
+                                           args.engine, args.source_only, args.internal_interface,
+                                           args.tmpfs_mib), indent=2))
         return
     sys.exit(build(args.source, args.image, args.output, args.jobs, args.engine, args.source_only,
-                   args.internal_interface))
+                   args.internal_interface, args.tmpfs_mib))
 
 
 if __name__ == "__main__":

@@ -336,6 +336,18 @@ The container runs with ``--init`` so orphaned child processes are reaped.
 Running ``rpmbuild`` itself as PID 1 leaves zombies after interrupted process
 groups and makes the system/backquote cleanup tests fail.
 
+Tests that measure free disk space can use ``--tmpfs-mib 4096`` to give each
+build a private 4 GiB ``/tmp``. Concurrent host builds then cannot change that
+test volume's capacity. The bound is recorded in ``build.json`` and applies in
+foreground and background modes. Files consume memory as they are written;
+choose a limit appropriate for the test workload. Execution is enabled for
+Go's temporary test binaries, with ``nosuid`` and ``nodev`` retained. The mount
+disappears with the container. Unit tests cover invalid sizes and both launch
+modes; the real mount and RPM check can be run with::
+
+    python3 -B -W error tests/check_tmpfs.py --image BUILD_DEPENDENCY_IMAGE \
+      --output results/tmpfs-probe --background
+
 For tests that enumerate non-loopback interfaces, Docker builds can use
 ``--internal-interface``. Each build creates a private internal bridge with
 IPv4/IPv6 gateway mode ``isolated``, verifies the effective configuration, and

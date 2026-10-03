@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "change": "Optional bounded private /tmp for RPM test filesystems; default unchanged; explicit exec for Go, nosuid/nodev and mode 1777",
+  "root_cause": "NATS dynamic storage test samples statfs on its temporary store twice. Other builds can consume more than its 16 MiB slack on the shared host volume. A private mount isolates free-space accounting without changing product calculations, the test threshold or coverage.",
+  "tests": {
+    "unit": 17,
+    "integration": {
+      "fedora": {
+        "path": "results/fedora-tmpfs-probe-2",
+        "exit_code": 0,
+        "background": true,
+        "checks": [
+          "nonroot RPM build",
+          "128 MiB exact mount capacity",
+          "1777 permissions",
+          "temporary executable runs",
+          "8 MiB external write leaves capacity unchanged",
+          "8 MiB internal write consumes exactly 8 MiB",
+          "file close restores capacity",
+          "temporary paths cleaned"
+        ]
+      },
+      "leap": {
+        "path": "results/leap-tmpfs-probe-1",
+        "exit_code": 0,
+        "background": false,
+        "checks": [
+          "nonroot RPM build",
+          "128 MiB exact mount capacity",
+          "1777 permissions",
+          "temporary executable runs",
+          "8 MiB external write leaves capacity unchanged",
+          "8 MiB internal write consumes exactly 8 MiB",
+          "file close restores capacity",
+          "temporary paths cleaned"
+        ]
+      },
+      "el10": {
+        "path": "results/el10-tmpfs-probe-1",
+        "exit_code": 0,
+        "background": false,
+        "checks": [
+          "nonroot RPM build",
+          "128 MiB exact mount capacity",
+          "1777 permissions",
+          "temporary executable runs",
+          "8 MiB external write leaves capacity unchanged",
+          "8 MiB internal write consumes exactly 8 MiB",
+          "file close restores capacity",
+          "temporary paths cleaned"
+        ]
+      }
+    },
+    "nats_control": "Unchanged TestJetStreamDynamicMaxStoreStableAcrossRestart: 100 Go-race repetitions on AlmaLinux private /tmp, all passed. Full NATS qualification remains separate and incomplete."
+  },
+  "limitations": "tmpfs consumes memory/swap for written files; default has no tmpfs; size constrained to 128..32768 MiB. Full workload must fit requested capacity.",
+  "log_sha256": {
+    "results/fedora-tmpfs-probe-2/build.json": "9047b775dddc940503d0e8fc5d566881767bb97698c4115514458cdc4cec3654",
+    "results/fedora-tmpfs-probe-2/build.log": "4c47f3bddd33231f267b6413e2e6e2a1f1fe4a8416798d1d8ba30756988b382e",
+    "results/leap-tmpfs-probe-1/build.json": "6e8709da63a716d9f7c4c9291e3d71a5f4a4b337a78a258440222b95157da0a8",
+    "results/leap-tmpfs-probe-1/build.log": "e12fe682298c51f53e21bcc6bb1570ab29622b0d7d022c9be34c1a591c209494",
+    "results/el10-tmpfs-probe-1/build.json": "49d273e8c43952255f4715eaa3ac22d75ad44fdc890a0016b17bc1ccf4065724",
+    "results/el10-tmpfs-probe-1/build.log": "896fa5464aead3b6cde34442e911b8bfe647fea37776770ebf4b861dbab7748f",
+    "results/build-local-tmpfs-unit-2.log": "ef31d2576a860913beade621c38ba3b8908543af612889bf5fbbc9daa2593ee9",
+    "results/nats-focused-el10-2/status.json": "a63913f2471f3aca57d74ffc66a17c7942e9cf80b235635ff13e5f489f5bda88",
+    "results/nats-focused-el10-2/tests.log": "c8968da75413d49e49470927624933856674b77b4c1e6efa672dad4d31514fa9"
+  }
+}
