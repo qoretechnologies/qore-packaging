@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Approved and qualified on all three distributions with full DWARF, preserved AOT metadata, source lookup and GDB breakpoints; no debug-tool warning",
+  "root_cause": "LLVM emits a standard DWARF .debug_names accelerator. debugedit 5.1 does not recognize the section; distribution GDB requires its own augmentation and explicitly ignores LLVM indexes. Full DWARF and Qore source data remain usable.",
+  "proposal": "Use the same no-precomputed-index configuration approved for PDFium, scoped to OracleExtensions.qmod. Remove only .debug_names before RPM debug extraction, using Qore metadata preservation to retain EOF trailers; keep complete DWARF, debug sources and native/AOT functionality. Initial debugger loading may be slower.",
+  "reference": "https://sourceware.org/gdb/current/onlinedocs/gdb.html/Debug-Names.html",
+  "targets": {
+    "fedora": {
+      "exit_code": 0,
+      "standalone": "Clang C++ reproduces debugedit notice; no-index GDB breakpoint, local variable and source lookup pass; Valgrind zero errors and all heap blocks freed",
+      "oracle": "Original GDB warns and ignores LLVM index; no-index copy preserves .debug_info/.debug_abbrev/.debug_line/.debug_str/.debug_addr byte for byte, identical 82 AOT symbols, source and breakpoint lookup pass without warning"
+    },
+    "leap": {
+      "exit_code": 0,
+      "standalone": "Clang C++ reproduces debugedit notice; no-index GDB breakpoint, local variable and source lookup pass; Valgrind zero errors and all heap blocks freed",
+      "oracle": "Original GDB warns and ignores LLVM index; no-index copy preserves .debug_info/.debug_abbrev/.debug_line/.debug_str/.debug_addr byte for byte, identical 82 AOT symbols, source and breakpoint lookup pass without warning"
+    },
+    "el10": {
+      "exit_code": 0,
+      "standalone": "Clang C++ reproduces debugedit notice; no-index GDB breakpoint, local variable and source lookup pass; Valgrind zero errors and all heap blocks freed",
+      "oracle": "Original GDB warns and ignores LLVM index; no-index copy preserves .debug_info/.debug_abbrev/.debug_line/.debug_str/.debug_addr byte for byte, identical 82 AOT symbols, source and breakpoint lookup pass without warning"
+    }
+  },
+  "log_sha256": {
+    "results/fedora-oracle-debug-index-1/oracle-original-gdb.txt": "e2d147975a771d4a3a0d64d6e9b09763ff4c5e9f035bdf84ba7ab2a9045188ec",
+    "results/fedora-oracle-debug-index-1/status.json": "9796cd976dbb3d8c087b2ec5c7fc5364819b4534b6ee3cdf7f4d6c560b522f1e",
+    "results/fedora-oracle-debug-index-1/tests.log": "15aa9760a58c88618993fe8642ba40f8fe6053e009462e810994f49fd56bb4fd",
+    "results/fedora-oracle-debug-index-1/control-valgrind.txt": "fd682d7e14c4339669e2539233ac1c578a2999b649186eab4225dde9a047ffc8",
+    "results/fedora-oracle-debug-index-1/control.cpp": "6b6210f5bb5316c66efd8000d6ad05428a35eabc338510509165c48731841517",
+    "results/fedora-oracle-debug-index-1/control-gdb.txt": "f6551932ddfce241aa382ba5f0540c79fd44697e0a4eb053edfbfc496014e9f0",
+    "results/fedora-oracle-debug-index-1/debugedit.txt": "0a119be29bd6155f1beee838aa1d0e359ba4a92c8a8dd6f61fb253ffd74e5e6f",
+    "results/fedora-oracle-debug-index-1/oracle-no-index-gdb.txt": "888d50c57ed9a4753f8c3ac075bc860b048d9a219208d983aa2e9a25682ee6dc",
+    "results/leap-oracle-debug-index-1/oracle-original-gdb.txt": "bc0c02a7a0c07b0d3a6cb0e22544fdcfc433dbaa5a72f9b7d350a1bc5c9bcc14",
+    "results/leap-oracle-debug-index-1/status.json": "1a5f6aded2619ef4f1168680334afd630bff0799cf9eb2fdb34972b6ba358711",
+    "results/leap-oracle-debug-index-1/tests.log": "15aa9760a58c88618993fe8642ba40f8fe6053e009462e810994f49fd56bb4fd",
+    "results/leap-oracle-debug-index-1/control-valgrind.txt": "fd682d7e14c4339669e2539233ac1c578a2999b649186eab4225dde9a047ffc8",
+    "results/leap-oracle-debug-index-1/control.cpp": "6b6210f5bb5316c66efd8000d6ad05428a35eabc338510509165c48731841517",
+    "results/leap-oracle-debug-index-1/control-gdb.txt": "7bd9c9202a6e99d76aa80a458f708d48482f531901e5dbb37307895deadf090b",
+    "results/leap-oracle-debug-index-1/debugedit.txt": "168490b92cf54336fbe76ed81d54927cfa5813c740bc5a9dc48f17919379e3a1",
+    "results/leap-oracle-debug-index-1/oracle-no-index-gdb.txt": "b46b6cf9a5f8debc3c91607747b4c9fec9e9e9281ea480c421b7ad0b0c716183",
+    "results/el10-oracle-debug-index-1/oracle-original-gdb.txt": "54afade58efe0fd7fee77fdaf7fc2e534645382a1c4b49e7d822772523de0d5d",
+    "results/el10-oracle-debug-index-1/status.json": "e2a72282e79ea08568b5883aef63776d7adaea60470f6b37428d81547ad12713",
+    "results/el10-oracle-debug-index-1/tests.log": "15aa9760a58c88618993fe8642ba40f8fe6053e009462e810994f49fd56bb4fd",
+    "results/el10-oracle-debug-index-1/control-valgrind.txt": "ee01b194433772d88f71de54460d6bbe5f18143d17db8b6b5b12bc297eafdf05",
+    "results/el10-oracle-debug-index-1/control.cpp": "6b6210f5bb5316c66efd8000d6ad05428a35eabc338510509165c48731841517",
+    "results/el10-oracle-debug-index-1/control-gdb.txt": "f6551932ddfce241aa382ba5f0540c79fd44697e0a4eb053edfbfc496014e9f0",
+    "results/el10-oracle-debug-index-1/debugedit.txt": "80b915e72b33730369e36c20584118e30db00c37cea6457884e0846282c9abc3",
+    "results/el10-oracle-debug-index-1/oracle-no-index-gdb.txt": "ead8108294a318cb8beb57d1f7b297232befc436c513ee286915dd8742ca8f73"
+  },
+  "approval": "Approve the same debugger configuration",
+  "qualification": "evidence/oracle-rpm-qualification-20261003.json"
+}

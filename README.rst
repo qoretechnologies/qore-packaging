@@ -17,7 +17,7 @@ full logs, containers and RPMs are retained under ignored ``results/`` and
 ``work/`` directories. Do not interpret a successfully prepared SRPM as a
 successful binary build.
 
-Thirty-three external modules have committed RPM packaging and pass builds and
+Thirty-four external modules have committed RPM packaging and pass builds and
 installed-runtime suites on Fedora 44, Leap 16.0 and EL10. PostgreSQL includes
 mandatory Fedora pgvector coverage. ZeroMQ includes draft sockets and CURVE.
 The original twenty-one modules now have x86_64 OBS builds enabled on all three
@@ -274,6 +274,18 @@ on all three local targets. The committed rebuilds and installed checks also
 pass, including source and binary lint. The exact sources are staged as OBS
 revision 2 with publication disabled; native OBS rebuilds remain pending. See
 ``evidence/pdfium-lto-qualification-20261003.json``.
+
+Oracle now has canonical local RPM builds and offline runtime/SDK checks on all
+three distributions, including source/AOT extensions, compiler metadata,
+debug-source lookup, removal and reinstallation. All build diagnostics and
+source/runtime/doc lint are clean. Oracle's signed Instant Client 23 RPMs remain
+an external dependency. Only the open-source module sources are staged in OBS;
+builds and publication are disabled. An existing home-project client package
+does not confirm a hosting exception: OBS explicitly lists oracle-instantclient
+as not approved for normal hosting. A confirmed exception or separate permitted
+client route is required. Live Oracle server and native ARM qualification remain
+outstanding. See ``evidence/oracle-rpm-qualification-20261003.json`` and
+``evidence/oracle-debugger-configuration-20261003.json``.
 
 Preparing and building
 ----------------------

@@ -1,0 +1,309 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Canonical committed builds and offline installed runtime/SDK, artifact, lifecycle and debugger checks passed on all three x86_64 distributions. Open-source module uploaded as OBS revision 1; build and publication disabled pending confirmed permitted client dependency route.",
+  "source": {
+    "schema": 1,
+    "commit": "a4eae96e1c475f14af5df1326aceab270e456854",
+    "source_date_epoch": 1791031441,
+    "name": "qore-oracle-module",
+    "version": "3.4.1",
+    "exclusions": [
+      "packaging/instantclient",
+      "m4/acx_pthread.m4",
+      "cmake/FindOracle.cmake"
+    ],
+    "sources": {
+      "qore-oracle-module-3.4.1.tar.xz": "54149c8c0a89920e426db8320b01861510367e82adf27f2cb7fe0cf7187b6496",
+      "qore-oracle-module.spec": "c58bd08f825489157f362d03a0cde6897250a1121d18145e8d0c3e7d651d1b5b"
+    },
+    "candidate": true,
+    "packaging_overlay": {
+      "qore-oracle-module.spec": "c58bd08f825489157f362d03a0cde6897250a1121d18145e8d0c3e7d651d1b5b",
+      "rpm/AUDIT.rst": "cc519da67d3025f5b10a11d824ffe4d29b6c898a9ecd52c689988c00f0c6e55e",
+      "rpm/README.rst": "94bc0ddd49937cdcc36f114f505fc5abf9b31c63c99fbd6b5361d4128d39e105",
+      "rpm/run-tests.py": "94ad02e41b6b7d12c21b35e44e80369b7e213af7b0ee5cfeae3ed0ba368b0f49",
+      "rpm/test_fixture.py": "dfd50ce17ee4cbd9b567503ae8f9de2a41b206596c17de743edfd60b274d68bd"
+    },
+    "spec": "qore-oracle-module.spec"
+  },
+  "native_source": "a0450b7b29e2df48e15229bf8f10935ad549975c",
+  "targets": {
+    "fedora": {
+      "build": "results/fedora-oracle-module-candidate-8",
+      "installed": "results/fedora-oracle-installed-7",
+      "controls": "results/fedora-oracle-final-controls-3",
+      "exit_code": 0,
+      "artifact_sha256": {
+        "rpmbuild/RPMS/noarch/qore-oracle-module-doc-3.4.1-2.fc44.noarch.rpm": "ce0236a9fb60ff320d23ac7cd5c59c1b6234e94a8a715768e175bada85f61b17",
+        "rpmbuild/RPMS/x86_64/qore-oracle-module-3.4.1-2.fc44.x86_64.rpm": "ccb616923127c7f19fa5218a396ee9305c624438ee33db30a9c32bfd2cb46612",
+        "rpmbuild/RPMS/x86_64/qore-oracle-module-debuginfo-3.4.1-2.fc44.x86_64.rpm": "d7640951ff13fc6e4607dea2d069125efe66a4cf64a1ec013ea0349f2770840f",
+        "rpmbuild/RPMS/x86_64/qore-oracle-module-debugsource-3.4.1-2.fc44.x86_64.rpm": "e2a3996a056d26d64d859330fddfb7325c45c43d8653792322f2f0dab335161f",
+        "rpmbuild/SRPMS/qore-oracle-module-3.4.1-2.fc44.src.rpm": "bf5b0da67845c63f1f2d69b63ec25a13ccb11d29b275a40203a7d31e3c715881"
+      },
+      "tests": {
+        "fixture_cases": 5,
+        "source_cases": 4,
+        "source_assertions": 19,
+        "aot_cases": 4,
+        "aot_assertions": 19,
+        "native_utf8_regression": "passed",
+        "sdk_consumer": "compiled and executed",
+        "minimal_runtime": "passed without SDK, compiler or Oracle development package",
+        "lifecycle": "removal, negative load check, reinstall and both extension forms passed",
+        "debugger": "82 AOT symbols, source lookup and breakpoint, no warning",
+        "artifacts": "four metadata files, native/AOT separated DWARF, Qore and native debug sources, preserved AOT trailer, directory ownership"
+      },
+      "sdk_image": "sha256:39478bbe6c1ba7d17908d768e8f9c05393772188d7b2c999dbd6b5f8a76b1f6a",
+      "runtime_image": "sha256:21482e09bf5c43b9be9786c10a398451c63e43d0037fd18293f0676392412ed6"
+    },
+    "leap": {
+      "build": "results/leap-oracle-module-candidate-8",
+      "installed": "results/leap-oracle-installed-7",
+      "controls": "results/leap-oracle-final-controls-3",
+      "exit_code": 0,
+      "artifact_sha256": {
+        "rpmbuild/RPMS/noarch/qore-oracle-module-doc-3.4.1-2.noarch.rpm": "144709c1e2918689601ccde4c0a895bd6f6bc62b5e60b568ab1be9e238f5bef5",
+        "rpmbuild/RPMS/x86_64/qore-oracle-module-3.4.1-2.x86_64.rpm": "a57a7bc035176d705a676014f3e53f5cfc500b29162245992012d6e0bd18f79a",
+        "rpmbuild/RPMS/x86_64/qore-oracle-module-debuginfo-3.4.1-2.x86_64.rpm": "bd75e266a5fd651d42266a319d6b81d5d6d5cbd06653f5f6135fe196efa0b67c",
+        "rpmbuild/RPMS/x86_64/qore-oracle-module-debugsource-3.4.1-2.x86_64.rpm": "0e2831a6721ea92e0cb0101c147ce12506ba57306136c61a1a9b6cb3dbf0b727",
+        "rpmbuild/SRPMS/qore-oracle-module-3.4.1-2.src.rpm": "91fcee066dfcbd896a423c6ccb49e585c8fbdab189086d2d1085df389af4ab74"
+      },
+      "tests": {
+        "fixture_cases": 5,
+        "source_cases": 4,
+        "source_assertions": 19,
+        "aot_cases": 4,
+        "aot_assertions": 19,
+        "native_utf8_regression": "passed",
+        "sdk_consumer": "compiled and executed",
+        "minimal_runtime": "passed without SDK, compiler or Oracle development package",
+        "lifecycle": "removal, negative load check, reinstall and both extension forms passed",
+        "debugger": "82 AOT symbols, source lookup and breakpoint, no warning",
+        "artifacts": "four metadata files, native/AOT separated DWARF, Qore and native debug sources, preserved AOT trailer, directory ownership"
+      },
+      "sdk_image": "sha256:28d1cec7d937edfc887760fb13fb86e864af2fa0f206997ed2a96c101a824fa0",
+      "runtime_image": "sha256:c2af26b26d509543669df206afc934001478bac51c18909dfe1297454cf83caa",
+      "lint": "Runtime, docs and source RPMs; 0 errors, 0 warnings; no package-specific filter"
+    },
+    "el10": {
+      "build": "results/el10-oracle-module-candidate-8",
+      "installed": "results/el10-oracle-installed-7",
+      "controls": "results/el10-oracle-final-controls-3",
+      "exit_code": 0,
+      "artifact_sha256": {
+        "rpmbuild/RPMS/noarch/qore-oracle-module-doc-3.4.1-2.el10.noarch.rpm": "1fa87fe25cfac07f70bc88935ed3a343e5c869b83683340cf88af24c2aa80f25",
+        "rpmbuild/RPMS/x86_64/qore-oracle-module-3.4.1-2.el10.x86_64.rpm": "e15fdb419922c881a3b711cf73bf85b652ca57e94eb3937cabf0a058f4b038d6",
+        "rpmbuild/RPMS/x86_64/qore-oracle-module-debuginfo-3.4.1-2.el10.x86_64.rpm": "272c577e3d3bc936483a19228aa43986b5a8b7177ba653cea2d97a3527883f6e",
+        "rpmbuild/RPMS/x86_64/qore-oracle-module-debugsource-3.4.1-2.el10.x86_64.rpm": "9d68b3ce1bf2db450c966b03c766af96238116617ea30f43e114aff77ae0c8e1",
+        "rpmbuild/SRPMS/qore-oracle-module-3.4.1-2.el10.src.rpm": "a6bd11a4577b623eb1e1a28b90f368cbe9dd555869a053b2725307893c47ca66"
+      },
+      "tests": {
+        "fixture_cases": 5,
+        "source_cases": 4,
+        "source_assertions": 19,
+        "aot_cases": 4,
+        "aot_assertions": 19,
+        "native_utf8_regression": "passed",
+        "sdk_consumer": "compiled and executed",
+        "minimal_runtime": "passed without SDK, compiler or Oracle development package",
+        "lifecycle": "removal, negative load check, reinstall and both extension forms passed",
+        "debugger": "82 AOT symbols, source lookup and breakpoint, no warning",
+        "artifacts": "four metadata files, native/AOT separated DWARF, Qore and native debug sources, preserved AOT trailer, directory ownership"
+      },
+      "sdk_image": "sha256:3c0f51ab3d4e87fa7ae3a56c8857251500c52ab4f3bb2680f63cddba6c0c49c5",
+      "runtime_image": "sha256:3f7411e56c35d12be992466ec8aa4b5d5a2dab4ed0519c940d5c58a513941748"
+    }
+  },
+  "limits": [
+    "Offline tests do not connect to Oracle; live database and server-version integration remains unqualified.",
+    "Oracle client hosting exception is not confirmed. Existing home package is not evidence of an exception; no new client upload was performed.",
+    "Native aarch64 qualification pending."
+  ],
+  "hosting_policy": {
+    "url": "https://en.opensuse.org/openSUSE:Build_Service_application_blacklist",
+    "saved_response": "results/obs-hosting-policy-api-20261003.json"
+  },
+  "vendor": "results/oracle-vendor-rpms-23-20261003.json",
+  "approved_configuration": "evidence/oracle-debugger-configuration-20261003.json",
+  "fixes": [
+    "Explicit SDK module paths for compiler metadata generation.",
+    "SDK strip wrapper preserves AOT metadata; source files installed in debug-source package; post-strip %check detects lost trailers.",
+    "Approved removal of the GDB-incompatible optional LLVM index preserves full DWARF and sources.",
+    "Combined MIT/OCILIB LGPL license metadata and notices; source exclusions match existing Debian policy.",
+    "CMake uses SDK install directories and normalized destination policy, and does not request optional Java bindings that are not part of the RPM."
+  ],
+  "harness_corrections": [
+    "Installed-1 exposed actual lost AOT metadata; fixed in candidate 3.",
+    "Installed-2 used an image without rpmlint; subsequent runs use the qualified Leap lint image.",
+    "Controls-1 expected MODULE-LOAD-ERROR; controls-2 and later check the actual LOAD-MODULE-ERROR after removal.",
+    "The final case-insensitive scan caught CMake/Java warnings missed by earlier lowercase-only scans. The first packaging commit a4eae96 passed functional tests but retained these configuration diagnostics; candidate 8 corrects them before OBS staging."
+  ],
+  "log_sha256": {
+    "results/fedora-oracle-module-candidate-8/build.json": "b9ef8893d3cbdd587ac0a6e0a9459f387a968de8f802d13ba67a040ddecd3b89",
+    "results/fedora-oracle-module-candidate-8/build.log": "f4e090e01849c9dc62f1ab72d2c2ceacb6759ff71334120deb98a3c347b9b567",
+    "results/fedora-oracle-installed-7/artifacts.log": "4af77e9f20ad60dff084be5ab245cef530c0637a1217833a7078b271f00ca3c3",
+    "results/fedora-oracle-installed-7/sdk-install.log": "be3e97ff4d431f3512820cbd50dedcb66dfe8eaa18b673ee05c2b1134d344cde",
+    "results/fedora-oracle-installed-7/directories.log": "464ef60864ebd136e76325f9b1274a666754daa5194efb6695775d0706f17398",
+    "results/fedora-oracle-installed-7/sdk-tests.log": "a5b2f732d0272c8015a2eee5817e04607712dc1f9772e1872deaeee2fbea71dc",
+    "results/fedora-oracle-installed-7/runtime-install.log": "251ac4cf770b9306c949a852b0a5788294db0b2375f9d42421392a533528d0c1",
+    "results/fedora-oracle-installed-7/runtime-tests.log": "25d1cc320358d42ab689262f375910c7dfab802dec42ff95f00681051ff567d2",
+    "results/fedora-oracle-installed-7/status.json": "f4d59326effda71b87488e49084e5b89e7027b1e7be01e9ee4a8fa602f4676bf",
+    "results/fedora-oracle-final-controls-3/lifecycle.log": "c35be2ac0d5885ca2a5dcf4a4fa6fa7fa5141edf44b5cc7cab0ad913abe1d94c",
+    "results/fedora-oracle-final-controls-3/debugger.log": "f731dd102db0d310ca74bc38fa72268c279cabd6f2ad0dc4a226640daecb0ebb",
+    "results/fedora-oracle-final-controls-3/status.json": "6f3409117bf833d8cadd7aae12735e69a495b1ec29385d809411350edd11ef5c",
+    "results/fedora-oracle-final-controls-3/gdb.txt": "888d50c57ed9a4753f8c3ac075bc860b048d9a219208d983aa2e9a25682ee6dc",
+    "results/leap-oracle-module-candidate-8/build.json": "1ff613ec7934211ae27711cedd69d7e10f43a3f1c45127ab49933a53a09752dd",
+    "results/leap-oracle-module-candidate-8/build.log": "b6dafb0b828f711fc2f7069547a3de598ca0d96c4d8db03d2407242df9bb7435",
+    "results/leap-oracle-installed-7/artifacts.log": "4af77e9f20ad60dff084be5ab245cef530c0637a1217833a7078b271f00ca3c3",
+    "results/leap-oracle-installed-7/lint.log": "7f3090de398b375542bd114b00af88169641ba33b95312ecad0ef78dd0480c9c",
+    "results/leap-oracle-installed-7/sdk-install.log": "d481b480ea8cfe6db7c5c0899f2e05d23810e493754cb628a71b845962a4c5dd",
+    "results/leap-oracle-installed-7/directories.log": "2fe895f1e2ca67449a088153e97537d03713627f7958579202e38107caa3c3f6",
+    "results/leap-oracle-installed-7/sdk-tests.log": "5d01f91d7bbf5aaf7bb5af56dc224c32142a173ab49171bf7fa0123f789d78e5",
+    "results/leap-oracle-installed-7/runtime-install.log": "76238f811c03812ab18662260d12d5bfab947335a5cb5456d9f450ec4fc35898",
+    "results/leap-oracle-installed-7/runtime-tests.log": "2cf4b5aec46ad8f70c499c07247311ef2fa2a23becf8bcccebb07bd8e904c2ef",
+    "results/leap-oracle-installed-7/status.json": "0ce3a8cdfc5b65c9030eed7bc27f303aab7e41b2b9d737c78aec5af9a00c395c",
+    "results/leap-oracle-final-controls-3/lifecycle.log": "e6468543677e0b53ca11092cf027cf1d56abdf2fb567e53934cd2b2cd67f1386",
+    "results/leap-oracle-final-controls-3/debugger.log": "f731dd102db0d310ca74bc38fa72268c279cabd6f2ad0dc4a226640daecb0ebb",
+    "results/leap-oracle-final-controls-3/status.json": "94aa36c4f416ac029efe110200c51a68de4b7c76dba3dfecd6b0df14547020de",
+    "results/leap-oracle-final-controls-3/gdb.txt": "b46b6cf9a5f8debc3c91607747b4c9fec9e9e9281ea480c421b7ad0b0c716183",
+    "results/el10-oracle-module-candidate-8/build.json": "23d0c1be38a3eb7d4bec2a5b41d084f70255cb877e67c793bb75d2af2f2cb28e",
+    "results/el10-oracle-module-candidate-8/build.log": "f4b7295069ca73b28ed2a932f0038eac83a8016adc0733e5260e96a85c1c0b27",
+    "results/el10-oracle-installed-7/artifacts.log": "4af77e9f20ad60dff084be5ab245cef530c0637a1217833a7078b271f00ca3c3",
+    "results/el10-oracle-installed-7/sdk-install.log": "dfe6e02577d5f98ea27d19e0b1196f9d0ff850dcbb875b542d878403bdf8869d",
+    "results/el10-oracle-installed-7/directories.log": "4c062242115b74d1601f642465bc8589ba7ed2f96d60be7d3026eb906de7fa29",
+    "results/el10-oracle-installed-7/sdk-tests.log": "18a8983bc16aecd02a9e7b7a28114cf938a9483f166552c37d3c6bd77d25068f",
+    "results/el10-oracle-installed-7/runtime-install.log": "c39f227aa6cba14e6c981d8a78b90f38425c961a51f687b4196ce9c6606afa9a",
+    "results/el10-oracle-installed-7/runtime-tests.log": "f52f144daaae3a1165daf68633ddf5ef1b6f93a718be837a5e1e97a1e0b35a1b",
+    "results/el10-oracle-installed-7/status.json": "51d5dfa12a5163a8584d0fbf1f79020f68144aea7dacddce59392a354b6f6cdb",
+    "results/el10-oracle-final-controls-3/lifecycle.log": "2aa7ce36ec8c25ee4c3f64d2ad29a548725399cfb090bd35c7c138ca2a7c47b7",
+    "results/el10-oracle-final-controls-3/debugger.log": "f731dd102db0d310ca74bc38fa72268c279cabd6f2ad0dc4a226640daecb0ebb",
+    "results/el10-oracle-final-controls-3/status.json": "16f092ebca85204247d0550958e8b7b29323b5dcf04b5fc0ab9e105c4518eaab",
+    "results/el10-oracle-final-controls-3/gdb.txt": "ead8108294a318cb8beb57d1f7b297232befc436c513ee286915dd8742ca8f73",
+    "results/oracle-orchestration-unit-20261003.log": "044b0a1b126bc894d2ac677c2a4e7f121523c16fcee24f60a1878576b152fd06",
+    "results/oracle-fixture-final-unit-20261003.log": "3b4100f426981dc9a056c329251e4c5114351291831e44c7a9ac1c04f07b2455",
+    "results/oracle-vendor-rpms-23-20261003.json": "899ffecf0debaa2b1cd24ae17a8ad7691b4f553096a6a8442acc36de3891213b",
+    "results/obs-hosting-policy-api-20261003.json": "189c34b157c44598ef1b520d216721cb6234871bbe76564bd63e88bca45b12b7",
+    "results/fedora-oracle-module-final-1/build.json": "4f1f5d518683b4ace2aee837240793ab44e0537b2d1734cf11eeaeab5e8b405e",
+    "results/fedora-oracle-module-final-1/build.log": "9b9cdb2dbd2d21a4d91eb24161d8569df234fcc45c1ee3429debfd1be6c4895a",
+    "results/fedora-oracle-installed-8/artifacts.log": "4af77e9f20ad60dff084be5ab245cef530c0637a1217833a7078b271f00ca3c3",
+    "results/fedora-oracle-installed-8/sdk-install.log": "be3e97ff4d431f3512820cbd50dedcb66dfe8eaa18b673ee05c2b1134d344cde",
+    "results/fedora-oracle-installed-8/directories.log": "464ef60864ebd136e76325f9b1274a666754daa5194efb6695775d0706f17398",
+    "results/fedora-oracle-installed-8/sdk-tests.log": "6e1e4f18e3dda26e425c99ed75fea52c1c84c89f2533f78dbdc6e5d84490abb7",
+    "results/fedora-oracle-installed-8/runtime-install.log": "9482f57a890dba4a9f440734c6333b2758c4f3b85351c56bcf715541614b7747",
+    "results/fedora-oracle-installed-8/runtime-tests.log": "b70645a79b56d7a05144722fcc6ea3e4132558169d25b88dd43628bd120169fe",
+    "results/fedora-oracle-installed-8/status.json": "9009e1f45d74d530052e4beeceab515f92c2e5fdd7a8f1619f76abdd3dc97a2c",
+    "results/fedora-oracle-final-controls-4/lifecycle.log": "f50458a895e32959b17670eedbac84265c2eb4d4d25f03a4f7ae27b445d1d404",
+    "results/fedora-oracle-final-controls-4/debugger.log": "f731dd102db0d310ca74bc38fa72268c279cabd6f2ad0dc4a226640daecb0ebb",
+    "results/fedora-oracle-final-controls-4/status.json": "20772a4bfc8e833fb1a1bab197dba3e7ba78f7cc5ec333e7f3845f9ce5f8a6ad",
+    "results/fedora-oracle-final-controls-4/gdb.txt": "888d50c57ed9a4753f8c3ac075bc860b048d9a219208d983aa2e9a25682ee6dc",
+    "results/leap-oracle-module-final-1/build.json": "0055a83278ae6d23e3015f9c21bca8fc3ac3e07946f557ac9136192d75629be6",
+    "results/leap-oracle-module-final-1/build.log": "94c215db11b3fbd9a7cef1afbe8cd312af3ea05d36cd58ae68e3fb9fa742f038",
+    "results/leap-oracle-installed-8/artifacts.log": "4af77e9f20ad60dff084be5ab245cef530c0637a1217833a7078b271f00ca3c3",
+    "results/leap-oracle-installed-8/lint.log": "8f3de763e5bceb34d5c11a787928715059a49685b6987db86b322b5e0d68eb7e",
+    "results/leap-oracle-installed-8/sdk-install.log": "d481b480ea8cfe6db7c5c0899f2e05d23810e493754cb628a71b845962a4c5dd",
+    "results/leap-oracle-installed-8/directories.log": "2fe895f1e2ca67449a088153e97537d03713627f7958579202e38107caa3c3f6",
+    "results/leap-oracle-installed-8/sdk-tests.log": "962a79b03950620dfab9493af4ed1aab2ae12f92f0d2d423cdbd5a2f5c667fda",
+    "results/leap-oracle-installed-8/runtime-install.log": "3f8e44628155892f1d3351aea6e8924c65bb491917765c1e3f3bd09def3efef0",
+    "results/leap-oracle-installed-8/runtime-tests.log": "6f462cadb2fce1a663c6a4184b791b0a6c8074144ff6a5e6ff53b852bc7b7daa",
+    "results/leap-oracle-installed-8/status.json": "7fa8a1edecfddc66001c36e516d6e46b27ef76449c5e878291b046feabd2bdd1",
+    "results/leap-oracle-final-controls-4/lifecycle.log": "ca883b30ec20ce60aca9bbb1fc4aa8792f97d95abe33ce0a624fff9b9c154324",
+    "results/leap-oracle-final-controls-4/debugger.log": "f731dd102db0d310ca74bc38fa72268c279cabd6f2ad0dc4a226640daecb0ebb",
+    "results/leap-oracle-final-controls-4/status.json": "726d902a315c489cbfd5972deb96db926dab09973887c0e3e0167e9cad34cfc3",
+    "results/leap-oracle-final-controls-4/gdb.txt": "b46b6cf9a5f8debc3c91607747b4c9fec9e9e9281ea480c421b7ad0b0c716183",
+    "results/el10-oracle-module-final-1/build.json": "e3238d7e7931344b254c04d1ef1affe607d932810cb0276338faabaf9f4db674",
+    "results/el10-oracle-module-final-1/build.log": "bba2280cf5edf3e906633275268e38215c8590f4515153300a33c63526861f52",
+    "results/el10-oracle-installed-8/artifacts.log": "4af77e9f20ad60dff084be5ab245cef530c0637a1217833a7078b271f00ca3c3",
+    "results/el10-oracle-installed-8/sdk-install.log": "dfe6e02577d5f98ea27d19e0b1196f9d0ff850dcbb875b542d878403bdf8869d",
+    "results/el10-oracle-installed-8/directories.log": "4c062242115b74d1601f642465bc8589ba7ed2f96d60be7d3026eb906de7fa29",
+    "results/el10-oracle-installed-8/sdk-tests.log": "a5c7764ad6603d60ece250f73648c8db97ed4627c62bb0eae44bfce3b7aecd27",
+    "results/el10-oracle-installed-8/runtime-install.log": "de132fca57061da183f91806c9d74dd14718b9147849b3f46f687a2456dfe37c",
+    "results/el10-oracle-installed-8/runtime-tests.log": "6f462cadb2fce1a663c6a4184b791b0a6c8074144ff6a5e6ff53b852bc7b7daa",
+    "results/el10-oracle-installed-8/status.json": "6c48e148955cd66160f87994f9c0385e715d631667bbc02345de2144c46a3fbf",
+    "results/el10-oracle-final-controls-4/lifecycle.log": "14d630f1591d8b8311a952cb347ee2d6f3a358b91af60add3e2e97d51b91ec99",
+    "results/el10-oracle-final-controls-4/debugger.log": "f731dd102db0d310ca74bc38fa72268c279cabd6f2ad0dc4a226640daecb0ebb",
+    "results/el10-oracle-final-controls-4/status.json": "1e1f90ee220e87bf949937aeff3e826c0340f6cb3d4ee4928f412b7911cc97c0",
+    "results/el10-oracle-final-controls-4/gdb.txt": "ead8108294a318cb8beb57d1f7b297232befc436c513ee286915dd8742ca8f73",
+    "results/obs-oracle-final-1-meta-20261003.xml": "9c1f71b4561918d4e199ea30cd451fde196c522e22837a53030e5fca1607660c",
+    "results/obs-oracle-final-1-directory-20261003.xml": "51d6f43a71d76cc45102dad5a7233c2b5c7aa896b765df9a71c42fe256f3a7c7",
+    "results/obs-oracle-final-1-upload-20261003.log": "f634912926e8a297dc02bf626cdfe4e9382aa365a548e9fd817bd69df4956705"
+  },
+  "canonical": {
+    "source": {
+      "schema": 1,
+      "commit": "06c7667be8e19f21afc5923551b94df5ddb461a9",
+      "source_date_epoch": 1791031942,
+      "name": "qore-oracle-module",
+      "version": "3.4.1",
+      "exclusions": [
+        "packaging/instantclient",
+        "m4/acx_pthread.m4",
+        "cmake/FindOracle.cmake"
+      ],
+      "sources": {
+        "qore-oracle-module-3.4.1.tar.xz": "36904a626bdfa2efb3a3697442fcf37f2927282bdbc9cf321dc88511bd6d38c1",
+        "qore-oracle-module.spec": "c58bd08f825489157f362d03a0cde6897250a1121d18145e8d0c3e7d651d1b5b"
+      },
+      "spec": "qore-oracle-module.spec"
+    },
+    "targets": {
+      "fedora": {
+        "build": "results/fedora-oracle-module-final-1",
+        "installed": "results/fedora-oracle-installed-8",
+        "controls": "results/fedora-oracle-final-controls-4",
+        "exit_code": 0,
+        "artifact_sha256": {
+          "rpmbuild/RPMS/noarch/qore-oracle-module-doc-3.4.1-2.fc44.noarch.rpm": "619c4036b01bbbcdc474bafec678a3e66e1a5df789f3c22e21eb3077ebad5105",
+          "rpmbuild/RPMS/x86_64/qore-oracle-module-3.4.1-2.fc44.x86_64.rpm": "61e84b7052a89b839e7f7277c86c4195e38ccb604779ac36d6125e9395cb64a8",
+          "rpmbuild/RPMS/x86_64/qore-oracle-module-debuginfo-3.4.1-2.fc44.x86_64.rpm": "507ed7cfa17e680eee5c0319a5fb0e506debf73fe22a9130b70e2cb116e1b6f2",
+          "rpmbuild/RPMS/x86_64/qore-oracle-module-debugsource-3.4.1-2.fc44.x86_64.rpm": "f425f514c62024047b805cd8f2c7003abc600e0387f4796ba2108efb580dad11",
+          "rpmbuild/SRPMS/qore-oracle-module-3.4.1-2.fc44.src.rpm": "e133c75d85536fff335bc37e24687ffd94cabc53d5c2e8d45588aa3a73beeeef"
+        },
+        "sdk_image": "sha256:24bc37d587e69813f2ce5221b2f3fd7544b954f515c5c2079edb0e518aa3cc94",
+        "runtime_image": "sha256:91de13608acfa8125ae663cf78932b9f428c692cb02fe001d4097f1b4ff5e84f"
+      },
+      "leap": {
+        "build": "results/leap-oracle-module-final-1",
+        "installed": "results/leap-oracle-installed-8",
+        "controls": "results/leap-oracle-final-controls-4",
+        "exit_code": 0,
+        "artifact_sha256": {
+          "rpmbuild/RPMS/noarch/qore-oracle-module-doc-3.4.1-2.noarch.rpm": "b664313c81733372e83d3ee25678d9dfcb7b2cfe42e93b568c6b0ea41ea94b5c",
+          "rpmbuild/RPMS/x86_64/qore-oracle-module-3.4.1-2.x86_64.rpm": "f1ea49f34c43ae51c401575f8742a5a49ac47ebe5fc047c29c7677daf41f9482",
+          "rpmbuild/RPMS/x86_64/qore-oracle-module-debuginfo-3.4.1-2.x86_64.rpm": "9d4a09c6d99da6273b9793991c97f288efbd28255b17469ea23d614df96c28b8",
+          "rpmbuild/RPMS/x86_64/qore-oracle-module-debugsource-3.4.1-2.x86_64.rpm": "a746beba911861837b9270eae58724c763bc827dccf302403ac12a5ad603c578",
+          "rpmbuild/SRPMS/qore-oracle-module-3.4.1-2.src.rpm": "4c519034dca9d4bd4e1057e362f0545e8cc341001e042a2b4fc08d3a46eda208"
+        },
+        "sdk_image": "sha256:0aaac4d4d0a36ae698536ece8b4edf2fab1d2fa639da2cface77de0070ec0397",
+        "runtime_image": "sha256:e03001541f927b40958bd80ccf387c545dcc2837deb46d5972c2beeaf7510cad"
+      },
+      "el10": {
+        "build": "results/el10-oracle-module-final-1",
+        "installed": "results/el10-oracle-installed-8",
+        "controls": "results/el10-oracle-final-controls-4",
+        "exit_code": 0,
+        "artifact_sha256": {
+          "rpmbuild/RPMS/noarch/qore-oracle-module-doc-3.4.1-2.el10.noarch.rpm": "a941689a39a64e7006b8cb53763ac69a0bd450ecb24f78754f2c703fb06f5729",
+          "rpmbuild/RPMS/x86_64/qore-oracle-module-3.4.1-2.el10.x86_64.rpm": "7af985e8031eaf0204aa6b0fd25e7100a3426091829db48a404c0dd9e6aa771c",
+          "rpmbuild/RPMS/x86_64/qore-oracle-module-debuginfo-3.4.1-2.el10.x86_64.rpm": "0d7422af79728c2f0e9585d81f6433a64a0d7725b282d9639425911393ff2b17",
+          "rpmbuild/RPMS/x86_64/qore-oracle-module-debugsource-3.4.1-2.el10.x86_64.rpm": "a4d4c117a921d2302085776744113cb59030078233a5d50317630976815cab5d",
+          "rpmbuild/SRPMS/qore-oracle-module-3.4.1-2.el10.src.rpm": "f37cb97c75e0d0e16f8f0c6d51c18309d6b41d0772c6dc192252c51de2e69ed5"
+        },
+        "sdk_image": "sha256:584a2e0a9fba5690238b7c0f1fb5738dcdf276402a6501f48f21f1bd09c62044",
+        "runtime_image": "sha256:5a67918574c8bf7fcd357e0e139f66d3834d9a745752f9afd36d1baa7e6074fc"
+      }
+    },
+    "obs": {
+      "project": "home:davidnichols:qore:testing",
+      "package": "qore-oracle-module",
+      "name": "qore-oracle-module",
+      "rev": "1",
+      "vrev": "2",
+      "srcmd5": "dd2b98b1eec1cc172e6b99851ec4937f",
+      "build_enabled": false,
+      "publication_enabled": false,
+      "all_source_checksums_match": true
+    }
+  }
+}
