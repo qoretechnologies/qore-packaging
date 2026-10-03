@@ -363,5 +363,53 @@
       "debugedit-workaround-missing-linked-file.patch",
       "debugedit.keyring"
     ]
+  },
+  "qore-pdfium": {
+    "version": "148.0.7778",
+    "url": "https://pdfium.googlesource.com/pdfium/+/72ea487e4399c44c3a53a48b104f9612ca772008",
+    "archive": "qore-pdfium_148.0.7778+ds.orig.tar.xz",
+    "sha256": "7e3465f432a31696486c8505cbe59a06c85247101651621630fd9adaf033689d",
+    "source_date_epoch": 1790985600,
+    "generated": "Pinned 19-repository source repack from module-pdf b06b05158fc46ccf2e9eeaf0f184a491e5605b02; full revisions and exclusions in QORE-SOURCE-MANIFEST.json.",
+    "extra_sources": [
+      "pdfium-rpm-build.py",
+      "pdfium-rpm-shared-library.patch",
+      "pdfium-COPYRIGHT",
+      "pdfium-api-test.c",
+      "pdfium-rpm-tests.patch",
+      "pdfium-system-freetype-hinting.patch",
+      "pdfium-test-font-sources.json",
+      "pdfium-rpmlintrc"
+    ],
+    "components": [
+      {
+        "archive": "pdfium-test-fonts-cd96fc55.tar.gz",
+        "url": "https://storage.googleapis.com/chromium-fonts/cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb",
+        "sha256": "ec973eccd669d417fbf2d0a4dac730744a3174268ff062db5451b55c82bc3492",
+        "upstream_sha1": "cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb"
+      },
+      {
+        "archive": "pdfium-test-resources-72ea487e.tar.xz",
+        "url": "https://pdfium.googlesource.com/pdfium/+/72ea487e4399c44c3a53a48b104f9612ca772008/testing/",
+        "sha256": "a62d083b088f86083f9ed4c8bfa954411a4544ebd643e53da43e599cd7fa3d89",
+        "generated": "git archive --format=tar 72ea487e4399c44c3a53a48b104f9612ca772008 LICENSE AUTHORS testing/resources, compressed with Python lzma preset 6."
+      },
+      {
+        "archive": "fonts-tlwg-0.6.3.tar.xz",
+        "url": "https://github.com/tlwg/fonts-tlwg/releases/download/v0.6.3/fonts-tlwg-0.6.3.tar.xz",
+        "sha256": "bcb0136b4ea26ddbb341f5673327e02826c65d2f0b68465010e8ce7412ec87c8"
+      },
+      {
+        "archive": "MuktiNarrow-0.94.tar.bz2",
+        "url": "https://download.savannah.nongnu.org/releases/freebangfont/MuktiNarrow-0.94.tar.bz2",
+        "sha256": "bb8af9b9437f1d13ff8cdc8784188ebf0c2ee8b97e328281cd814a3afd4f82f3"
+      },
+      {
+        "archive": "pdfium-freetype-99b479dc.tar.xz",
+        "url": "https://chromium.googlesource.com/chromium/src/third_party/freetype2/+/99b479dc34728936b006679a31e12b8cf432fc55",
+        "sha256": "be46e6d08e32d99179a6e0a6059b22713ba359caaeb3798e52b74efac2d49096",
+        "generated": "git archive --format=tar 99b479dc34728936b006679a31e12b8cf432fc55, compressed with Python lzma preset 6; exact PDFium DEPS revision, built privately on Enterprise Linux."
+      }
+    ]
   }
 }

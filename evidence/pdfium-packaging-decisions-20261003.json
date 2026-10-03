@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "All three proposals approved and qualified in candidate RPMs on Fedora, openSUSE and AlmaLinux x86_64",
+  "proposals": {
+    "allocator": {
+      "root_cause": "PDFium intentionally never deletes its general and string PartitionAllocator instances. The MemoryReclaimer registry nodes become unreachable at shared-library unload. A standalone C API plugin reproduces 96 lost bytes per unload and 960 bytes after 10 unloads on all three distributions.",
+      "proposed_configuration": "Use the upstream pdf_use_partition_alloc=false GN option for the standalone shared library.",
+      "tradeoff": "Use the distribution system allocator instead of PDFium PartitionAlloc pools and their allocator-specific hardening. Normal distribution compiler/linker hardening remains enabled.",
+      "validation": "AlmaLinux control: all 989 unit and 830 embedder tests pass; standalone C API plugin passes Valgrind after 1, 10 and 100 load/render/text-extract/unload cycles with zero memory errors and zero lost allocations. Fedora/openSUSE RPM rebuilds remain required.",
+      "approval": {
+        "date": "2026-10-03",
+        "user_statement": "Approve the system allocator"
+      }
+    },
+    "debug_index": {
+      "root_cause": "Distribution GDB rejects the LLVM DWARF 5 name-index augmentation. Generating a GNU index instead produces overlapping address-table entries on Fedora, including without DWZ.",
+      "proposed_configuration": "Keep full DWARF 5 symbols and source, disable optional GN/RPM precomputed name indexes and DWZ for this Clang-built dependency.",
+      "tradeoff": "GDB scans the complete DWARF information itself, so initial symbol loading may be slower; no debug information is removed.",
+      "validation": "Installed candidate-11 RPM controls on Fedora, Leap and AlmaLinux: after removing only optional .debug_names/.gdb_index sections, GDB breaks inside FPDF_InitLibraryWithConfig, locates installed source, lists lines and prints config->version=2 without warnings.",
+      "approval": {
+        "date": "2026-10-03",
+        "user_statement": "Approve the debugger configuration"
+      }
+    },
+    "license_vocabulary": {
+      "root_cause": "The SPDX vocabulary used by openSUSE rpmlint does not recognize the accurate custom identifiers for the AGG 2.3 license and public-domain bigint notice. Complete corresponding notices are shipped in COPYRIGHT.",
+      "proposed_configuration": "Apply dependencies/pdfium-rpmlintrc, limited to the exact PDFium package family, two known architectures and two exact LicenseRef identifiers at warning severity.",
+      "validation": "Actual two application RPMs: raw lint has four invalid-license warnings; proposed config has zero errors and zero warnings. Two regression tests cover the intended messages and reject other package names, licenses, severities, architectures and unrelated errors.",
+      "approval": {
+        "date": "2026-10-03",
+        "user_statement": "Approve the narrow license filters"
+      }
+    }
+  },
+  "sha256": {
+    "dependencies/pdfium-rpmlintrc": "42ca574484d6fe01aeaf5c04dabca46a0b762cc73c257bda8e36c8d2ab6fc4ba",
+    "tests/test_pdfium_rpmlint.py": "976eccc32962664e7e914454ea719174495f85719a521d5b4356cd7993555e73",
+    "results/pdfium-allocator-unload-1/unload.c": "de962a16a8104050cf4486ce40e95430acfe07a343ed4c359dcf09085644a4f0",
+    "results/pdfium-allocator-unload-1/plugin.c": "9d4152df70d49c8cdfa8b48cc45eecdb28011b8e3f8f0b261ade621f10e8611f",
+    "results/pdfium-allocator-unload-1/fedora/1.log": "54da32f836a77bd57ab2ccfb2d25a8246e1bc41192b00ebd7b33b3a9b38fae15",
+    "results/pdfium-allocator-unload-1/fedora/valgrind-1.log": "2405664b2c1a6af8f2cc1d843b8b3240a6f3695e6468491c14bcfbd7035b089e",
+    "results/pdfium-allocator-unload-1/fedora/status.json": "fa78ea2fc0f697aa600ea785bb4a180e76a2d3d5cfa2c1367112b0cb24b6a82c",
+    "results/pdfium-allocator-unload-1/fedora/valgrind-10.log": "66b5ae44b730531ed820ab1e0bbac130b93ee5bb2ca3ea8d0a710bb6b69c7b50",
+    "results/pdfium-allocator-unload-1/fedora/build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/pdfium-allocator-unload-1/fedora/10.log": "7877d3625167d2351e771a0f24b578ba9c9fa6d9f1c8904743a059976acafcd9",
+    "results/pdfium-allocator-unload-1/leap/1.log": "54da32f836a77bd57ab2ccfb2d25a8246e1bc41192b00ebd7b33b3a9b38fae15",
+    "results/pdfium-allocator-unload-1/leap/valgrind-1.log": "984dd8b5310a02f1b66c1b538d7e126caa0ec72e983be0816b6eb1018ffa5429",
+    "results/pdfium-allocator-unload-1/leap/status.json": "061cb9372c311a9b8930bf1bc65b37209a69fc767ed0beeb2c6d1f5fb51f4eef",
+    "results/pdfium-allocator-unload-1/leap/valgrind-10.log": "28b480eed10997be8a9cb4c1925e388d2aece0b3ebb817c23d16241821d857b9",
+    "results/pdfium-allocator-unload-1/leap/build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/pdfium-allocator-unload-1/leap/10.log": "7877d3625167d2351e771a0f24b578ba9c9fa6d9f1c8904743a059976acafcd9",
+    "results/pdfium-allocator-unload-1/el10/1.log": "54da32f836a77bd57ab2ccfb2d25a8246e1bc41192b00ebd7b33b3a9b38fae15",
+    "results/pdfium-allocator-unload-1/el10/valgrind-1.log": "fb9956f23e29e4d520d1471469778df8dd26c21acf83acefcf5db72a615189e8",
+    "results/pdfium-allocator-unload-1/el10/status.json": "6a6cd146b8a95bb5c61ecb98b73f17ec5b87f15851a2d73d925431de995168d4",
+    "results/pdfium-allocator-unload-1/el10/valgrind-10.log": "067b5f9f4d7b2bf0b41c3e53ab407ff0e5390133eefb386969b30401cfc10cd7",
+    "results/pdfium-allocator-unload-1/el10/build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/pdfium-allocator-unload-1/el10/10.log": "7877d3625167d2351e771a0f24b578ba9c9fa6d9f1c8904743a059976acafcd9",
+    "results/pdfium-allocator-unload-system-1/unload.c": "de962a16a8104050cf4486ce40e95430acfe07a343ed4c359dcf09085644a4f0",
+    "results/pdfium-allocator-unload-system-1/plugin.c": "9d4152df70d49c8cdfa8b48cc45eecdb28011b8e3f8f0b261ade621f10e8611f",
+    "results/pdfium-allocator-unload-system-1/el10/100.log": "e682f4005693d0b4d2c779ef3eecfba3df29e3a5fcea06fa25c3e040e78ff2e2",
+    "results/pdfium-allocator-unload-system-1/el10/1.log": "54da32f836a77bd57ab2ccfb2d25a8246e1bc41192b00ebd7b33b3a9b38fae15",
+    "results/pdfium-allocator-unload-system-1/el10/valgrind-1.log": "f2fa4c66466a18c0120619aa3d1f7ef222f227ba3c2200bca484db8aef9b03b8",
+    "results/pdfium-allocator-unload-system-1/el10/status.json": "8197dcd34a706a284a0a1bae8b1354c2904054516317bce182ef6f4c259fcb4b",
+    "results/pdfium-allocator-unload-system-1/el10/valgrind-10.log": "0a5a52c610bfc5496464aad6e88273ad41cc23f97c7d685e575715f9c67995d2",
+    "results/pdfium-allocator-unload-system-1/el10/build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/pdfium-allocator-unload-system-1/el10/valgrind-100.log": "ff97283b4b8fa618d2fd321848df3c21c8cb3ff2a9097a41dbee842d1ab4c18f",
+    "results/pdfium-allocator-unload-system-1/el10/10.log": "7877d3625167d2351e771a0f24b578ba9c9fa6d9f1c8904743a059976acafcd9",
+    "results/el10-pdfium-system-allocator-1/status.json": "9486f3228f3fb52a4fb6cb0cf1c0cafdae4460134e7002d276c4d9b6f7247fc1",
+    "results/el10-pdfium-system-allocator-1/unit.log": "e8c2ecb0c4f8edc95b3ce7a32d9ce73e9ca1d6b900b338023258b3f92b32df9f",
+    "results/el10-pdfium-system-allocator-1/embedder.log": "334b855893ea3e8ce1378bb00e1b9a79a898dffc0a6f405196dac1a354233a82",
+    "results/el10-pdfium-system-allocator-1/original-args.gn": "5d129ba4f0e54a6ce09b5a9a546e421a1c6d1484fe6ba3c52dc9265dbf61a689",
+    "results/el10-pdfium-system-allocator-1/build.log": "0845fd623f8beaf02b2ef02389ebeb8b6e4c07244812d98fa49a1c5f29b5b5dd",
+    "results/leap-pdfium-lint-proposal-3/status.json": "e5bb1850b41c5d4fcb385b41ae14365126c33d28965048876e1bf7e9e185cd7e",
+    "results/leap-pdfium-lint-proposal-3/raw.log": "e4f35422eef30ced43221fe7231770b4392225eecde6ae477755cc96440703e0",
+    "results/leap-pdfium-lint-proposal-3/proposed.log": "9e256b931ca5f256be4f35ab7b4c572398ee834d4ae0d41fdfa76d2fcdedba4f",
+    "results/fedora-pdfium-debug-index-control-2/gdb.log": "7427bc8c2f50cef05ce9e3b82f6bad590488e3a7fae8e45314bfc4894da13f5c",
+    "results/fedora-pdfium-debug-index-control-2/control.log": "b7b1164179733826416482519d0c27833faffd57194964d19230ab0419146431",
+    "results/fedora-pdfium-debug-index-control-2/status.json": "99ec1d7dbe1535f738e952bffc6bbc8daa801581b2573963a5fd1223d9806d8e",
+    "results/leap-pdfium-debug-index-control-2/gdb.log": "40b680f36b9468338cbe772478dd2c42eb9b957ea9f98d3a50d4be588f2de3e1",
+    "results/leap-pdfium-debug-index-control-2/control.log": "c50edd298c4536a62132ff258248fa3383695f41ff7a602165adcdda91519265",
+    "results/leap-pdfium-debug-index-control-2/status.json": "1533ed10ab3de5d5ac85452f3cb81788e237e504b756a77a3878e83c7d4250df",
+    "results/el10-pdfium-debug-index-control-2/gdb.log": "8365fbe82067b5f0fb67c8e0c493c30259f0b54c427bbbc83c9b5222bcbbb905",
+    "results/el10-pdfium-debug-index-control-2/control.log": "85771db94154c2c749e5beb5266709f3049fd5bbed890c294de46f48e569a7b6",
+    "results/el10-pdfium-debug-index-control-2/status.json": "98da8ca45b25eb1751340ec01037de3a6aafceb61ac2394faf05cfc6fd88dbce"
+  },
+  "qualification": "pdfium-rpm-candidate-20261003.json"
+}

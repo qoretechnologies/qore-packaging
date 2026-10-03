@@ -1,0 +1,103 @@
+# Copyright 2026 Qore Technologies, s.r.o.; BSD-3-Clause.
+# Test decompression compatibility and balanced references across distribution libraries.
+--- a/core/fxcodec/flate/flatemodule_unittest.cpp
++++ b/core/fxcodec/flate/flatemodule_unittest.cpp
+@@ -67,7 +67,18 @@
+   size_t i = 0;
+   for (const pdfium::StrFuncTestData& data : flate_encode_cases) {
+     DataVector<uint8_t> result = FlateModule::Encode(data.input_span());
+-    EXPECT_THAT(result, ElementsAreArray(data.expected_span()))
++    // Compression streams can differ between compatible zlib versions. Verify
++    // both the new stream and the historical fixture decode to the same input.
++    DataAndBytesConsumed decoded = FlateModule::FlateOrLZWDecode(
++        false, result, false, 0, 0, 0, 0, 0);
++    EXPECT_EQ(result.size(), decoded.bytes_consumed) << " for case " << i;
++    EXPECT_THAT(decoded.data, ElementsAreArray(data.input_span()))
++        << " for case " << i;
++    DataAndBytesConsumed historical = FlateModule::FlateOrLZWDecode(
++        false, data.expected_span(), false, 0, 0, 0, 0, 0);
++    EXPECT_EQ(data.expected_span().size(), historical.bytes_consumed)
++        << " for case " << i;
++    EXPECT_THAT(historical.data, ElementsAreArray(data.input_span()))
+         << " for case " << i;
+     ++i;
+   }
+--- a/core/fxcrt/retain_ptr_unittest.cpp
++++ b/core/fxcrt/retain_ptr_unittest.cpp
+@@ -488,24 +488,18 @@
+   EXPECT_EQ(2, obj2.retain_count());
+   EXPECT_EQ(0, obj2.release_count());
+ 
+-  // These involve const-removing conversions which seem to churn when sets
+-  // contain the pointer.
++  // Heterogeneous lookup may create temporary const-converting RetainPtrs.
++  // The comparison count depends on the library's tree search and pointer
++  // ordering; membership and the net number of owned references must not.
+   EXPECT_NE(the_set.end(), the_set.find(ptr1));
+   EXPECT_EQ(the_set.end(), the_set.find(ptr2));
+   EXPECT_TRUE(pdfium::Contains(the_set, ptr1));
+   EXPECT_FALSE(pdfium::Contains(the_set, ptr2));
+-#if !BUILDFLAG(IS_WIN) &&                                       \
+-    (defined(ADDRESS_SANITIZER) || defined(MEMORY_SANITIZER) || \
+-     defined(UNDEFINED_SANITIZER))
+-  constexpr int kExpectedObj2RetainCount = 4;
+-  constexpr int kExpectedObj2ReleaseCount = 2;
+-#else
+-  constexpr int kExpectedObj2RetainCount = 2;
+-  constexpr int kExpectedObj2ReleaseCount = 0;
+-#endif  // !BUILDFLAG(IS_WIN) && (defined(ADDRESS_SANITIZER) ||
+-        // defined(MEMORY_SANITIZER))
+-  EXPECT_EQ(kExpectedObj2RetainCount, obj2.retain_count());
+-  EXPECT_EQ(kExpectedObj2ReleaseCount, obj2.release_count());
++  EXPECT_EQ(3, obj1.retain_count() - obj1.release_count());
++  EXPECT_EQ(2, obj2.retain_count() - obj2.release_count());
++  the_set.clear();
++  EXPECT_EQ(2, obj1.retain_count() - obj1.release_count());
++  EXPECT_EQ(2, obj2.retain_count() - obj2.release_count());
+ }
+ 
+ TEST(RetainPtr, VectorContains) {
+--- a/fpdfsdk/fpdf_save_embeddertest.cpp
++++ b/fpdfsdk/fpdf_save_embeddertest.cpp
+@@ -410,11 +410,21 @@
+   // font.
+   EXPECT_TRUE(FPDF_SaveAsCopy(document(), this, 0));
+   EXPECT_THAT(GetString(), StartsWith("%PDF-1.7\r\n"));
+-  EXPECT_EQ(5004u, GetString().size());
++  // The compressed size varies with the system zlib version. Compare both
++  // save modes on this document, preserving the render/text checks below.
++  const size_t full_font_size = GetString().size();
++  EXPECT_GT(full_font_size, 805u);
+ 
+   // Verify the text is visible.
+   VerifySavedDocumentWithExpectationSuffix(kSaveNewTextFilename);
+ 
++  TestExtractedFont(kExpectedSingleTextAdded);
++
++  ClearString();
++  ASSERT_TRUE(FPDF_SaveAsCopy(document(), this, FPDF_SUBSET_NEW_FONTS));
++  EXPECT_GT(GetString().size(), 805u);
++  EXPECT_LT(GetString().size(), full_font_size);
++  VerifySavedDocumentWithExpectationSuffix(kSaveNewTextFilename);
+   TestExtractedFont(kExpectedSingleTextAdded);
+ }
+ 
+@@ -434,11 +444,17 @@
+   ScopedFPDFBitmap bitmap = RenderLoadedPage(page.get());
+   CompareBitmapWithExpectationSuffix(bitmap.get(), kSaveNewTextFilename);
+ 
++  ASSERT_TRUE(FPDF_SaveAsCopy(document(), this, 0));
++  const size_t full_font_size = GetString().size();
++  EXPECT_GT(full_font_size, 805u);
++  ClearString();
++
+   // Verify the file size increase is smaller when subsetting the new text's
+   // font, since text only contains a subset of the characters in the test font.
+   EXPECT_TRUE(FPDF_SaveAsCopy(document(), this, FPDF_SUBSET_NEW_FONTS));
+   EXPECT_THAT(GetString(), StartsWith("%PDF-1.7\r\n"));
+-  EXPECT_EQ(4453u, GetString().size());
++  EXPECT_GT(GetString().size(), 805u);
++  EXPECT_LT(GetString().size(), full_font_size);
+ 
+   // Verify the text is visible.
+   VerifySavedDocumentWithExpectationSuffix(kSaveNewTextFilename);

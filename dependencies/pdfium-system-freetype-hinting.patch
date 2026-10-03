@@ -1,0 +1,15 @@
+# Copyright 2026 Qore Technologies, s.r.o.; BSD-3-Clause.
+# Preserve PDFium glyph hinting with a distribution FreeType auto-hinter.
+--- a/core/fxge/cfx_face.cpp
++++ b/core/fxge/cfx_face.cpp
+@@ -516,7 +516,9 @@
+   }
+ 
+   ScopedFaceTransform scoped_transform(GetRec(), &ft_matrix);
+-  int load_flags = FT_LOAD_NO_BITMAP | FT_LOAD_PEDANTIC;
++  // PDFium's bundled FreeType omits the auto-hinter. Select the same glyph
++  // policy explicitly when using a system FreeType that includes it.
++  int load_flags = FT_LOAD_NO_BITMAP | FT_LOAD_PEDANTIC | FT_LOAD_NO_AUTOHINT;
+   if (!IsTtOt()) {
+     load_flags |= FT_LOAD_NO_HINTING;
+   }

@@ -1,0 +1,602 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Candidate RPM and installed qualification passed on Fedora 44, openSUSE Leap 16.0 and AlmaLinux 10 x86_64; committed rebuild and native OBS architecture qualification pending.",
+  "source": {
+    "schema": 1,
+    "name": "qore-pdfium",
+    "version": "148.0.7778",
+    "commit": null,
+    "source_date_epoch": 1790985600,
+    "spec": "qore-pdfium.spec",
+    "upstream": {
+      "url": "https://pdfium.googlesource.com/pdfium/+/72ea487e4399c44c3a53a48b104f9612ca772008",
+      "sha256": "7e3465f432a31696486c8505cbe59a06c85247101651621630fd9adaf033689d"
+    },
+    "sources": {
+      "MuktiNarrow-0.94.tar.bz2": "bb8af9b9437f1d13ff8cdc8784188ebf0c2ee8b97e328281cd814a3afd4f82f3",
+      "fonts-tlwg-0.6.3.tar.xz": "bcb0136b4ea26ddbb341f5673327e02826c65d2f0b68465010e8ce7412ec87c8",
+      "pdfium-COPYRIGHT": "3fde9d9600473e8d9ad2a9dd616f3e38fd8ce79b1e1215a057ff6450726b470c",
+      "pdfium-api-test.c": "e5589fd3aa551d774e5eafe02930ef83e6041beb7d69800a1faa93f40ae80623",
+      "pdfium-freetype-99b479dc.tar.xz": "be46e6d08e32d99179a6e0a6059b22713ba359caaeb3798e52b74efac2d49096",
+      "pdfium-rpm-build.py": "e0d739de9f3484012255b786e944170e321208259cfa270383af28f7498f9df8",
+      "pdfium-rpm-shared-library.patch": "c9371d280099a1ca538c646acea8c0786709bf5ff51eefcec11b27e871f87f51",
+      "pdfium-rpm-tests.patch": "37addf62acc16c69f2c78fadaa37c728580a497a4a647d820e3f4e909e4600ea",
+      "pdfium-rpmlintrc": "42ca574484d6fe01aeaf5c04dabca46a0b762cc73c257bda8e36c8d2ab6fc4ba",
+      "pdfium-system-freetype-hinting.patch": "03d6aa1a74b7ca79e1895ba134a7add1e8916f1ec6147ea2441fdce396469363",
+      "pdfium-test-font-sources.json": "f9f059c703645b612d5e0474603ecf203d2165df3a95990e8b7e6bcdf3e0b678",
+      "pdfium-test-fonts-cd96fc55.tar.gz": "ec973eccd669d417fbf2d0a4dac730744a3174268ff062db5451b55c82bc3492",
+      "pdfium-test-resources-72ea487e.tar.xz": "a62d083b088f86083f9ed4c8bfa954411a4544ebd643e53da43e599cd7fa3d89",
+      "qore-pdfium.spec": "ab4b70e311ed2988bb97749a17c7cc07badef0e795d8235d93977253029ca8b9",
+      "qore-pdfium_148.0.7778+ds.orig.tar.xz": "7e3465f432a31696486c8505cbe59a06c85247101651621630fd9adaf033689d"
+    },
+    "candidate": true,
+    "components": [
+      {
+        "archive": "pdfium-test-fonts-cd96fc55.tar.gz",
+        "url": "https://storage.googleapis.com/chromium-fonts/cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb",
+        "sha256": "ec973eccd669d417fbf2d0a4dac730744a3174268ff062db5451b55c82bc3492",
+        "upstream_sha1": "cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb"
+      },
+      {
+        "archive": "pdfium-test-resources-72ea487e.tar.xz",
+        "url": "https://pdfium.googlesource.com/pdfium/+/72ea487e4399c44c3a53a48b104f9612ca772008/testing/",
+        "sha256": "a62d083b088f86083f9ed4c8bfa954411a4544ebd643e53da43e599cd7fa3d89",
+        "generated": "git archive --format=tar 72ea487e4399c44c3a53a48b104f9612ca772008 LICENSE AUTHORS testing/resources, compressed with Python lzma preset 6."
+      },
+      {
+        "archive": "fonts-tlwg-0.6.3.tar.xz",
+        "url": "https://github.com/tlwg/fonts-tlwg/releases/download/v0.6.3/fonts-tlwg-0.6.3.tar.xz",
+        "sha256": "bcb0136b4ea26ddbb341f5673327e02826c65d2f0b68465010e8ce7412ec87c8"
+      },
+      {
+        "archive": "MuktiNarrow-0.94.tar.bz2",
+        "url": "https://download.savannah.nongnu.org/releases/freebangfont/MuktiNarrow-0.94.tar.bz2",
+        "sha256": "bb8af9b9437f1d13ff8cdc8784188ebf0c2ee8b97e328281cd814a3afd4f82f3"
+      },
+      {
+        "archive": "pdfium-freetype-99b479dc.tar.xz",
+        "url": "https://chromium.googlesource.com/chromium/src/third_party/freetype2/+/99b479dc34728936b006679a31e12b8cf432fc55",
+        "sha256": "be46e6d08e32d99179a6e0a6059b22713ba359caaeb3798e52b74efac2d49096",
+        "generated": "git archive --format=tar 99b479dc34728936b006679a31e12b8cf432fc55, compressed with Python lzma preset 6; exact PDFium DEPS revision, built privately on Enterprise Linux."
+      }
+    ]
+  },
+  "targets": {
+    "fedora": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:b5b631ae11fd308b8fbe57a3998c15a0436e0c86b3d6874a75cfa5af15254859",
+        "source": {
+          "schema": 1,
+          "name": "qore-pdfium",
+          "version": "148.0.7778",
+          "commit": null,
+          "source_date_epoch": 1790985600,
+          "spec": "qore-pdfium.spec",
+          "upstream": {
+            "url": "https://pdfium.googlesource.com/pdfium/+/72ea487e4399c44c3a53a48b104f9612ca772008",
+            "sha256": "7e3465f432a31696486c8505cbe59a06c85247101651621630fd9adaf033689d"
+          },
+          "sources": {
+            "MuktiNarrow-0.94.tar.bz2": "bb8af9b9437f1d13ff8cdc8784188ebf0c2ee8b97e328281cd814a3afd4f82f3",
+            "fonts-tlwg-0.6.3.tar.xz": "bcb0136b4ea26ddbb341f5673327e02826c65d2f0b68465010e8ce7412ec87c8",
+            "pdfium-COPYRIGHT": "3fde9d9600473e8d9ad2a9dd616f3e38fd8ce79b1e1215a057ff6450726b470c",
+            "pdfium-api-test.c": "e5589fd3aa551d774e5eafe02930ef83e6041beb7d69800a1faa93f40ae80623",
+            "pdfium-freetype-99b479dc.tar.xz": "be46e6d08e32d99179a6e0a6059b22713ba359caaeb3798e52b74efac2d49096",
+            "pdfium-rpm-build.py": "e0d739de9f3484012255b786e944170e321208259cfa270383af28f7498f9df8",
+            "pdfium-rpm-shared-library.patch": "c9371d280099a1ca538c646acea8c0786709bf5ff51eefcec11b27e871f87f51",
+            "pdfium-rpm-tests.patch": "37addf62acc16c69f2c78fadaa37c728580a497a4a647d820e3f4e909e4600ea",
+            "pdfium-rpmlintrc": "42ca574484d6fe01aeaf5c04dabca46a0b762cc73c257bda8e36c8d2ab6fc4ba",
+            "pdfium-system-freetype-hinting.patch": "03d6aa1a74b7ca79e1895ba134a7add1e8916f1ec6147ea2441fdce396469363",
+            "pdfium-test-font-sources.json": "f9f059c703645b612d5e0474603ecf203d2165df3a95990e8b7e6bcdf3e0b678",
+            "pdfium-test-fonts-cd96fc55.tar.gz": "ec973eccd669d417fbf2d0a4dac730744a3174268ff062db5451b55c82bc3492",
+            "pdfium-test-resources-72ea487e.tar.xz": "a62d083b088f86083f9ed4c8bfa954411a4544ebd643e53da43e599cd7fa3d89",
+            "qore-pdfium.spec": "ab4b70e311ed2988bb97749a17c7cc07badef0e795d8235d93977253029ca8b9",
+            "qore-pdfium_148.0.7778+ds.orig.tar.xz": "7e3465f432a31696486c8505cbe59a06c85247101651621630fd9adaf033689d"
+          },
+          "candidate": true,
+          "components": [
+            {
+              "archive": "pdfium-test-fonts-cd96fc55.tar.gz",
+              "url": "https://storage.googleapis.com/chromium-fonts/cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb",
+              "sha256": "ec973eccd669d417fbf2d0a4dac730744a3174268ff062db5451b55c82bc3492",
+              "upstream_sha1": "cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb"
+            },
+            {
+              "archive": "pdfium-test-resources-72ea487e.tar.xz",
+              "url": "https://pdfium.googlesource.com/pdfium/+/72ea487e4399c44c3a53a48b104f9612ca772008/testing/",
+              "sha256": "a62d083b088f86083f9ed4c8bfa954411a4544ebd643e53da43e599cd7fa3d89",
+              "generated": "git archive --format=tar 72ea487e4399c44c3a53a48b104f9612ca772008 LICENSE AUTHORS testing/resources, compressed with Python lzma preset 6."
+            },
+            {
+              "archive": "fonts-tlwg-0.6.3.tar.xz",
+              "url": "https://github.com/tlwg/fonts-tlwg/releases/download/v0.6.3/fonts-tlwg-0.6.3.tar.xz",
+              "sha256": "bcb0136b4ea26ddbb341f5673327e02826c65d2f0b68465010e8ce7412ec87c8"
+            },
+            {
+              "archive": "MuktiNarrow-0.94.tar.bz2",
+              "url": "https://download.savannah.nongnu.org/releases/freebangfont/MuktiNarrow-0.94.tar.bz2",
+              "sha256": "bb8af9b9437f1d13ff8cdc8784188ebf0c2ee8b97e328281cd814a3afd4f82f3"
+            },
+            {
+              "archive": "pdfium-freetype-99b479dc.tar.xz",
+              "url": "https://chromium.googlesource.com/chromium/src/third_party/freetype2/+/99b479dc34728936b006679a31e12b8cf432fc55",
+              "sha256": "be46e6d08e32d99179a6e0a6059b22713ba359caaeb3798e52b74efac2d49096",
+              "generated": "git archive --format=tar 99b479dc34728936b006679a31e12b8cf432fc55, compressed with Python lzma preset 6; exact PDFium DEPS revision, built privately on Enterprise Linux."
+            }
+          ]
+        },
+        "jobs": 3,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790985600",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/qore-pdfium-candidate-12:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-pdfium-candidate-12:/work",
+          "sha256:b5b631ae11fd308b8fbe57a3998c15a0436e0c86b3d6874a75cfa5af15254859",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 3",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-pdfium.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/x86_64/libpdfium-qore-devel-148.0.7778-1.qore.fc44.x86_64.rpm": "9ab8698337fefdc031c1e92cd4578125ac7d295fb5c115b1af7ee067b7843593",
+          "rpmbuild/RPMS/x86_64/libpdfium-qore148-0-148.0.7778-1.qore.fc44.x86_64.rpm": "e7cf503f59ec2d495f9ce696019a22e3581d038d2f556ed21a43715e06449d7b",
+          "rpmbuild/RPMS/x86_64/libpdfium-qore148-0-debuginfo-148.0.7778-1.qore.fc44.x86_64.rpm": "cf6c27ce68369269eeee3b272c51a7f168053cd8856ed12f95973d2ec307898b",
+          "rpmbuild/RPMS/x86_64/qore-pdfium-debugsource-148.0.7778-1.qore.fc44.x86_64.rpm": "a125775646827cc27d90861dc5cc8e29ec7f3b6befb672e008369c1ffa655e77",
+          "rpmbuild/SRPMS/qore-pdfium-148.0.7778-1.qore.fc44.src.rpm": "cf497f451a226810c0b4dbd7ecefc6cd038d596973b9dd7b244d6fe12060d0f8"
+        }
+      },
+      "installed": {
+        "command": [
+          "docker",
+          "run",
+          "--init",
+          "--name",
+          "qore-fedora-pdfium-installed-5",
+          "--network",
+          "none",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-pdfium-candidate-12/rpmbuild/RPMS:/rpms:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-pdfium-installed-5:/results",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/dependencies:/inputs:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/pdfium-allocator-unload-1:/unload:ro",
+          "qore-rpm-keep:fedora-pdf-module-sdk-1",
+          "sh",
+          "-ec",
+          "set -eu\nrpm -Uvh /rpms/*/*.rpm\nrpm -V libpdfium-qore148-0 libpdfium-qore-devel\npython3 -B /tools/check-rpm-directories.py /rpms/*/libpdfium-qore148-0-[0-9]*.rpm /rpms/*/libpdfium-qore-devel-*.rpm > /results/directories.json\ncc -g -Wall -Wextra -Werror -UNDEBUG /inputs/pdfium-api-test.c $(pkg-config --cflags --libs pdfium-qore) -o /results/api-test\n/results/api-test\nnm -D --defined-only /usr/lib64/libpdfium-qore148.so.0 > /results/exports.txt\nif grep -Eq '[[:space:]](_Z|FT_|ft_)' /results/exports.txt; then exit 1; fi\nrpm -ql qore-pdfium-debugsource > /results/debugsources.txt\nsource_file=$(find /usr/src/debug/qore-pdfium* -name fpdf_view.cpp)\ntest -s \"$source_file\"\ngdb -q -batch -ex 'set debuginfod enabled off' -ex 'set disable-randomization off' -ex 'set breakpoint pending on' -ex 'break FPDF_InitLibraryWithConfig' -ex run -ex 'info source' -ex list -ex 'print config->version' --args /results/api-test > /results/gdb.txt 2>&1\ngrep -q 'Located in /usr/src/debug/' /results/gdb.txt\ngrep -q '\\$1 = 2' /results/gdb.txt\nif grep -E 'warning:|No such file|No symbol' /results/gdb.txt; then exit 1; fi\nvalgrind --default-suppressions=no --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=definite,indirect,possible --error-exitcode=91 --log-file=/results/valgrind.log /results/api-test\ncc -g -Wall -Wextra -Werror -fPIC -shared /unload/plugin.c $(pkg-config --cflags --libs pdfium-qore) -o /results/plugin.so\ncc -g -Wall -Wextra -Werror /unload/unload.c -ldl -o /results/unload\nfor count in 1 10; do\n valgrind --default-suppressions=no --keep-debuginfo=yes --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=definite,indirect,possible --error-exitcode=91 --log-file=/results/unload-$count.log /results/unload \"$count\"\ndone\n"
+        ],
+        "exit_code": 0,
+        "image": "sha256:ba8a766b81e490f097a69b39dc7cb0015ed39cac1e56450de37c0db632b74a26"
+      },
+      "unit_tests": 989,
+      "embedder_tests": 830,
+      "compiler_warning_count": 0,
+      "valgrind": {
+        "valgrind.log": {
+          "errors": 0,
+          "lost_bytes": 0
+        },
+        "unload-1.log": {
+          "errors": 0,
+          "lost_bytes": 0
+        },
+        "unload-10.log": {
+          "errors": 0,
+          "lost_bytes": 0
+        }
+      },
+      "debugger": "Installed source, breakpoint and config->version=2 verified without warnings",
+      "private_symbols": "No exported C++ or FreeType implementation symbols"
+    },
+    "leap": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:3dd221e3df2046239b2480b836facacc17ec6dc6656b3c530dffd0f0e695cf95",
+        "source": {
+          "schema": 1,
+          "name": "qore-pdfium",
+          "version": "148.0.7778",
+          "commit": null,
+          "source_date_epoch": 1790985600,
+          "spec": "qore-pdfium.spec",
+          "upstream": {
+            "url": "https://pdfium.googlesource.com/pdfium/+/72ea487e4399c44c3a53a48b104f9612ca772008",
+            "sha256": "7e3465f432a31696486c8505cbe59a06c85247101651621630fd9adaf033689d"
+          },
+          "sources": {
+            "MuktiNarrow-0.94.tar.bz2": "bb8af9b9437f1d13ff8cdc8784188ebf0c2ee8b97e328281cd814a3afd4f82f3",
+            "fonts-tlwg-0.6.3.tar.xz": "bcb0136b4ea26ddbb341f5673327e02826c65d2f0b68465010e8ce7412ec87c8",
+            "pdfium-COPYRIGHT": "3fde9d9600473e8d9ad2a9dd616f3e38fd8ce79b1e1215a057ff6450726b470c",
+            "pdfium-api-test.c": "e5589fd3aa551d774e5eafe02930ef83e6041beb7d69800a1faa93f40ae80623",
+            "pdfium-freetype-99b479dc.tar.xz": "be46e6d08e32d99179a6e0a6059b22713ba359caaeb3798e52b74efac2d49096",
+            "pdfium-rpm-build.py": "e0d739de9f3484012255b786e944170e321208259cfa270383af28f7498f9df8",
+            "pdfium-rpm-shared-library.patch": "c9371d280099a1ca538c646acea8c0786709bf5ff51eefcec11b27e871f87f51",
+            "pdfium-rpm-tests.patch": "37addf62acc16c69f2c78fadaa37c728580a497a4a647d820e3f4e909e4600ea",
+            "pdfium-rpmlintrc": "42ca574484d6fe01aeaf5c04dabca46a0b762cc73c257bda8e36c8d2ab6fc4ba",
+            "pdfium-system-freetype-hinting.patch": "03d6aa1a74b7ca79e1895ba134a7add1e8916f1ec6147ea2441fdce396469363",
+            "pdfium-test-font-sources.json": "f9f059c703645b612d5e0474603ecf203d2165df3a95990e8b7e6bcdf3e0b678",
+            "pdfium-test-fonts-cd96fc55.tar.gz": "ec973eccd669d417fbf2d0a4dac730744a3174268ff062db5451b55c82bc3492",
+            "pdfium-test-resources-72ea487e.tar.xz": "a62d083b088f86083f9ed4c8bfa954411a4544ebd643e53da43e599cd7fa3d89",
+            "qore-pdfium.spec": "ab4b70e311ed2988bb97749a17c7cc07badef0e795d8235d93977253029ca8b9",
+            "qore-pdfium_148.0.7778+ds.orig.tar.xz": "7e3465f432a31696486c8505cbe59a06c85247101651621630fd9adaf033689d"
+          },
+          "candidate": true,
+          "components": [
+            {
+              "archive": "pdfium-test-fonts-cd96fc55.tar.gz",
+              "url": "https://storage.googleapis.com/chromium-fonts/cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb",
+              "sha256": "ec973eccd669d417fbf2d0a4dac730744a3174268ff062db5451b55c82bc3492",
+              "upstream_sha1": "cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb"
+            },
+            {
+              "archive": "pdfium-test-resources-72ea487e.tar.xz",
+              "url": "https://pdfium.googlesource.com/pdfium/+/72ea487e4399c44c3a53a48b104f9612ca772008/testing/",
+              "sha256": "a62d083b088f86083f9ed4c8bfa954411a4544ebd643e53da43e599cd7fa3d89",
+              "generated": "git archive --format=tar 72ea487e4399c44c3a53a48b104f9612ca772008 LICENSE AUTHORS testing/resources, compressed with Python lzma preset 6."
+            },
+            {
+              "archive": "fonts-tlwg-0.6.3.tar.xz",
+              "url": "https://github.com/tlwg/fonts-tlwg/releases/download/v0.6.3/fonts-tlwg-0.6.3.tar.xz",
+              "sha256": "bcb0136b4ea26ddbb341f5673327e02826c65d2f0b68465010e8ce7412ec87c8"
+            },
+            {
+              "archive": "MuktiNarrow-0.94.tar.bz2",
+              "url": "https://download.savannah.nongnu.org/releases/freebangfont/MuktiNarrow-0.94.tar.bz2",
+              "sha256": "bb8af9b9437f1d13ff8cdc8784188ebf0c2ee8b97e328281cd814a3afd4f82f3"
+            },
+            {
+              "archive": "pdfium-freetype-99b479dc.tar.xz",
+              "url": "https://chromium.googlesource.com/chromium/src/third_party/freetype2/+/99b479dc34728936b006679a31e12b8cf432fc55",
+              "sha256": "be46e6d08e32d99179a6e0a6059b22713ba359caaeb3798e52b74efac2d49096",
+              "generated": "git archive --format=tar 99b479dc34728936b006679a31e12b8cf432fc55, compressed with Python lzma preset 6; exact PDFium DEPS revision, built privately on Enterprise Linux."
+            }
+          ]
+        },
+        "jobs": 3,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790985600",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/qore-pdfium-candidate-12:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-pdfium-candidate-12:/work",
+          "sha256:3dd221e3df2046239b2480b836facacc17ec6dc6656b3c530dffd0f0e695cf95",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 3",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-pdfium.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/x86_64/libpdfium-qore-devel-148.0.7778-1.qore.x86_64.rpm": "b2190f76662d7a5bc15e6ce91df393da556a05c796413e20cf2be9f7e93cb0a7",
+          "rpmbuild/RPMS/x86_64/libpdfium-qore148-0-148.0.7778-1.qore.x86_64.rpm": "ef0b5205b828c16bdbd6d4695871bb2ffe48c05df5946e4eded8326878651f1a",
+          "rpmbuild/RPMS/x86_64/libpdfium-qore148-0-debuginfo-148.0.7778-1.qore.x86_64.rpm": "797359e4ebd9c093af33af030be5ebd78e4a7bb80858f05d46e8a2acb658e651",
+          "rpmbuild/RPMS/x86_64/qore-pdfium-debugsource-148.0.7778-1.qore.x86_64.rpm": "b42c7e062f55bdb96d0d155cb58742b63854f9f2f2db97ed26b032f27c245365",
+          "rpmbuild/SRPMS/qore-pdfium-148.0.7778-1.qore.src.rpm": "b0a10e68a26be277385c85638357568a2eccb66a3487d57f37a27d39669fbfbb"
+        }
+      },
+      "installed": {
+        "command": [
+          "docker",
+          "run",
+          "--init",
+          "--name",
+          "qore-leap-pdfium-installed-5",
+          "--network",
+          "none",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-pdfium-candidate-12/rpmbuild/RPMS:/rpms:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-pdfium-installed-5:/results",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/dependencies:/inputs:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/pdfium-allocator-unload-1:/unload:ro",
+          "qore-rpm-keep:leap-pdf-module-sdk-3",
+          "sh",
+          "-ec",
+          "set -eu\nrpm -Uvh /rpms/*/*.rpm\nrpm -V libpdfium-qore148-0 libpdfium-qore-devel\npython3 -B /tools/check-rpm-directories.py /rpms/*/libpdfium-qore148-0-[0-9]*.rpm /rpms/*/libpdfium-qore-devel-*.rpm > /results/directories.json\ncc -g -Wall -Wextra -Werror -UNDEBUG /inputs/pdfium-api-test.c $(pkg-config --cflags --libs pdfium-qore) -o /results/api-test\n/results/api-test\nnm -D --defined-only /usr/lib64/libpdfium-qore148.so.0 > /results/exports.txt\nif grep -Eq '[[:space:]](_Z|FT_|ft_)' /results/exports.txt; then exit 1; fi\nrpm -ql qore-pdfium-debugsource > /results/debugsources.txt\nsource_file=$(find /usr/src/debug/qore-pdfium* -name fpdf_view.cpp)\ntest -s \"$source_file\"\ngdb -q -batch -ex 'set debuginfod enabled off' -ex 'set disable-randomization off' -ex 'set breakpoint pending on' -ex 'break FPDF_InitLibraryWithConfig' -ex run -ex 'info source' -ex list -ex 'print config->version' --args /results/api-test > /results/gdb.txt 2>&1\ngrep -q 'Located in /usr/src/debug/' /results/gdb.txt\ngrep -q '\\$1 = 2' /results/gdb.txt\nif grep -E 'warning:|No such file|No symbol' /results/gdb.txt; then exit 1; fi\nvalgrind --default-suppressions=no --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=definite,indirect,possible --error-exitcode=91 --log-file=/results/valgrind.log /results/api-test\ncc -g -Wall -Wextra -Werror -fPIC -shared /unload/plugin.c $(pkg-config --cflags --libs pdfium-qore) -o /results/plugin.so\ncc -g -Wall -Wextra -Werror /unload/unload.c -ldl -o /results/unload\nfor count in 1 10; do\n valgrind --default-suppressions=no --keep-debuginfo=yes --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=definite,indirect,possible --error-exitcode=91 --log-file=/results/unload-$count.log /results/unload \"$count\"\ndone\n"
+        ],
+        "exit_code": 0,
+        "image": "sha256:a8561351ee2146159cf85ba218b5b47ddcb8bf0b4e3dbf4d26b9b508ef4a31f6",
+        "lint_exit_code": 0
+      },
+      "unit_tests": 989,
+      "embedder_tests": 830,
+      "compiler_warning_count": 0,
+      "valgrind": {
+        "valgrind.log": {
+          "errors": 0,
+          "lost_bytes": 0
+        },
+        "unload-1.log": {
+          "errors": 0,
+          "lost_bytes": 0
+        },
+        "unload-10.log": {
+          "errors": 0,
+          "lost_bytes": 0
+        }
+      },
+      "debugger": "Installed source, breakpoint and config->version=2 verified without warnings",
+      "private_symbols": "No exported C++ or FreeType implementation symbols"
+    },
+    "el10": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:830932bef85bb5461351fc8f2d994249201bb5b7098d3955ab01783a8d3a2d7a",
+        "source": {
+          "schema": 1,
+          "name": "qore-pdfium",
+          "version": "148.0.7778",
+          "commit": null,
+          "source_date_epoch": 1790985600,
+          "spec": "qore-pdfium.spec",
+          "upstream": {
+            "url": "https://pdfium.googlesource.com/pdfium/+/72ea487e4399c44c3a53a48b104f9612ca772008",
+            "sha256": "7e3465f432a31696486c8505cbe59a06c85247101651621630fd9adaf033689d"
+          },
+          "sources": {
+            "MuktiNarrow-0.94.tar.bz2": "bb8af9b9437f1d13ff8cdc8784188ebf0c2ee8b97e328281cd814a3afd4f82f3",
+            "fonts-tlwg-0.6.3.tar.xz": "bcb0136b4ea26ddbb341f5673327e02826c65d2f0b68465010e8ce7412ec87c8",
+            "pdfium-COPYRIGHT": "3fde9d9600473e8d9ad2a9dd616f3e38fd8ce79b1e1215a057ff6450726b470c",
+            "pdfium-api-test.c": "e5589fd3aa551d774e5eafe02930ef83e6041beb7d69800a1faa93f40ae80623",
+            "pdfium-freetype-99b479dc.tar.xz": "be46e6d08e32d99179a6e0a6059b22713ba359caaeb3798e52b74efac2d49096",
+            "pdfium-rpm-build.py": "e0d739de9f3484012255b786e944170e321208259cfa270383af28f7498f9df8",
+            "pdfium-rpm-shared-library.patch": "c9371d280099a1ca538c646acea8c0786709bf5ff51eefcec11b27e871f87f51",
+            "pdfium-rpm-tests.patch": "37addf62acc16c69f2c78fadaa37c728580a497a4a647d820e3f4e909e4600ea",
+            "pdfium-rpmlintrc": "42ca574484d6fe01aeaf5c04dabca46a0b762cc73c257bda8e36c8d2ab6fc4ba",
+            "pdfium-system-freetype-hinting.patch": "03d6aa1a74b7ca79e1895ba134a7add1e8916f1ec6147ea2441fdce396469363",
+            "pdfium-test-font-sources.json": "f9f059c703645b612d5e0474603ecf203d2165df3a95990e8b7e6bcdf3e0b678",
+            "pdfium-test-fonts-cd96fc55.tar.gz": "ec973eccd669d417fbf2d0a4dac730744a3174268ff062db5451b55c82bc3492",
+            "pdfium-test-resources-72ea487e.tar.xz": "a62d083b088f86083f9ed4c8bfa954411a4544ebd643e53da43e599cd7fa3d89",
+            "qore-pdfium.spec": "ab4b70e311ed2988bb97749a17c7cc07badef0e795d8235d93977253029ca8b9",
+            "qore-pdfium_148.0.7778+ds.orig.tar.xz": "7e3465f432a31696486c8505cbe59a06c85247101651621630fd9adaf033689d"
+          },
+          "candidate": true,
+          "components": [
+            {
+              "archive": "pdfium-test-fonts-cd96fc55.tar.gz",
+              "url": "https://storage.googleapis.com/chromium-fonts/cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb",
+              "sha256": "ec973eccd669d417fbf2d0a4dac730744a3174268ff062db5451b55c82bc3492",
+              "upstream_sha1": "cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb"
+            },
+            {
+              "archive": "pdfium-test-resources-72ea487e.tar.xz",
+              "url": "https://pdfium.googlesource.com/pdfium/+/72ea487e4399c44c3a53a48b104f9612ca772008/testing/",
+              "sha256": "a62d083b088f86083f9ed4c8bfa954411a4544ebd643e53da43e599cd7fa3d89",
+              "generated": "git archive --format=tar 72ea487e4399c44c3a53a48b104f9612ca772008 LICENSE AUTHORS testing/resources, compressed with Python lzma preset 6."
+            },
+            {
+              "archive": "fonts-tlwg-0.6.3.tar.xz",
+              "url": "https://github.com/tlwg/fonts-tlwg/releases/download/v0.6.3/fonts-tlwg-0.6.3.tar.xz",
+              "sha256": "bcb0136b4ea26ddbb341f5673327e02826c65d2f0b68465010e8ce7412ec87c8"
+            },
+            {
+              "archive": "MuktiNarrow-0.94.tar.bz2",
+              "url": "https://download.savannah.nongnu.org/releases/freebangfont/MuktiNarrow-0.94.tar.bz2",
+              "sha256": "bb8af9b9437f1d13ff8cdc8784188ebf0c2ee8b97e328281cd814a3afd4f82f3"
+            },
+            {
+              "archive": "pdfium-freetype-99b479dc.tar.xz",
+              "url": "https://chromium.googlesource.com/chromium/src/third_party/freetype2/+/99b479dc34728936b006679a31e12b8cf432fc55",
+              "sha256": "be46e6d08e32d99179a6e0a6059b22713ba359caaeb3798e52b74efac2d49096",
+              "generated": "git archive --format=tar 99b479dc34728936b006679a31e12b8cf432fc55, compressed with Python lzma preset 6; exact PDFium DEPS revision, built privately on Enterprise Linux."
+            }
+          ]
+        },
+        "jobs": 3,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790985600",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/qore-pdfium-candidate-12:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-pdfium-candidate-12:/work",
+          "sha256:830932bef85bb5461351fc8f2d994249201bb5b7098d3955ab01783a8d3a2d7a",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 3",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-pdfium.spec"
+        ],
+        "source_only": false,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/x86_64/libpdfium-qore-devel-148.0.7778-1.qore.el10.x86_64.rpm": "bd6de4dbecbbe5206b3453002632e2ab78b1ce4aa18a77da37417efa3128f69b",
+          "rpmbuild/RPMS/x86_64/libpdfium-qore148-0-148.0.7778-1.qore.el10.x86_64.rpm": "01b16c40a732a4329ad16a9ea497a90eb73d85fdd0179654d6743d3a1a423387",
+          "rpmbuild/RPMS/x86_64/libpdfium-qore148-0-debuginfo-148.0.7778-1.qore.el10.x86_64.rpm": "114f8e1c860c3451c4cd365e8c1b73bd7efb9234f4fe0d4ff39a34a393ce97d3",
+          "rpmbuild/RPMS/x86_64/qore-pdfium-debugsource-148.0.7778-1.qore.el10.x86_64.rpm": "20b3e0b04ca049974fe9556bd631918ae2ef9939436dc39549e2fcdd594552bf",
+          "rpmbuild/SRPMS/qore-pdfium-148.0.7778-1.qore.el10.src.rpm": "1ea463a222f79ea0d554249750af5500735ae33a38349853577cefe82927b167"
+        }
+      },
+      "installed": {
+        "command": [
+          "docker",
+          "run",
+          "--init",
+          "--name",
+          "qore-el10-pdfium-installed-5",
+          "--network",
+          "none",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-pdfium-candidate-12/rpmbuild/RPMS:/rpms:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-pdfium-installed-5:/results",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/dependencies:/inputs:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/pdfium-allocator-unload-1:/unload:ro",
+          "qore-rpm-keep:el10-pdf-module-sdk-1",
+          "sh",
+          "-ec",
+          "set -eu\nrpm -Uvh /rpms/*/*.rpm\nrpm -V libpdfium-qore148-0 libpdfium-qore-devel\npython3 -B /tools/check-rpm-directories.py /rpms/*/libpdfium-qore148-0-[0-9]*.rpm /rpms/*/libpdfium-qore-devel-*.rpm > /results/directories.json\ncc -g -Wall -Wextra -Werror -UNDEBUG /inputs/pdfium-api-test.c $(pkg-config --cflags --libs pdfium-qore) -o /results/api-test\n/results/api-test\nnm -D --defined-only /usr/lib64/libpdfium-qore148.so.0 > /results/exports.txt\nif grep -Eq '[[:space:]](_Z|FT_|ft_)' /results/exports.txt; then exit 1; fi\nrpm -ql qore-pdfium-debugsource > /results/debugsources.txt\nsource_file=$(find /usr/src/debug/qore-pdfium* -name fpdf_view.cpp)\ntest -s \"$source_file\"\ngdb -q -batch -ex 'set debuginfod enabled off' -ex 'set disable-randomization off' -ex 'set breakpoint pending on' -ex 'break FPDF_InitLibraryWithConfig' -ex run -ex 'info source' -ex list -ex 'print config->version' --args /results/api-test > /results/gdb.txt 2>&1\ngrep -q 'Located in /usr/src/debug/' /results/gdb.txt\ngrep -q '\\$1 = 2' /results/gdb.txt\nif grep -E 'warning:|No such file|No symbol' /results/gdb.txt; then exit 1; fi\nvalgrind --default-suppressions=no --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=definite,indirect,possible --error-exitcode=91 --log-file=/results/valgrind.log /results/api-test\ncc -g -Wall -Wextra -Werror -fPIC -shared /unload/plugin.c $(pkg-config --cflags --libs pdfium-qore) -o /results/plugin.so\ncc -g -Wall -Wextra -Werror /unload/unload.c -ldl -o /results/unload\nfor count in 1 10; do\n valgrind --default-suppressions=no --keep-debuginfo=yes --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=definite,indirect,possible --error-exitcode=91 --log-file=/results/unload-$count.log /results/unload \"$count\"\ndone\n"
+        ],
+        "exit_code": 0,
+        "image": "sha256:ab7edacde8d20c39e2ff0aaf0473ff7788883e024fe933868a63dbd909d2804b"
+      },
+      "unit_tests": 989,
+      "embedder_tests": 830,
+      "compiler_warning_count": 0,
+      "valgrind": {
+        "valgrind.log": {
+          "errors": 0,
+          "lost_bytes": 0
+        },
+        "unload-1.log": {
+          "errors": 0,
+          "lost_bytes": 0
+        },
+        "unload-10.log": {
+          "errors": 0,
+          "lost_bytes": 0
+        }
+      },
+      "debugger": "Installed source, breakpoint and config->version=2 verified without warnings",
+      "private_symbols": "No exported C++ or FreeType implementation symbols"
+    }
+  },
+  "sha256": {
+    "results/fedora-pdfium-installed-5/valgrind.log": "9f3f7b47920464236bad91e4e64e88b6f8a0f3ec0e9087d8110ac407425dca40",
+    "results/fedora-pdfium-installed-5/unload-1.log": "25097f65b3cf9579d66d15061553df65fdec91c759b382ce4d7e7379f0913556",
+    "results/fedora-pdfium-installed-5/unload-10.log": "b98948471853a3f3cf852394db2061f349b3dfa991a8b7b11b80d344cf8ceafc",
+    "results/fedora-pdfium-candidate-12/build.log": "0cf3624b10f5c421199cb090bb151fd8445d7850e4712b6512ba27e0ae26add8",
+    "results/fedora-pdfium-candidate-12/build.json": "2a2d6acffee3301c569174546c0516bf5030531075ba98b7d49aa7ef20131a9b",
+    "results/fedora-pdfium-installed-5/status.json": "08c85441005860d894aed441211be230a4fd21c8c39e36ebf313c4c6bfa12b7f",
+    "results/fedora-pdfium-installed-5/installed.log": "c345d9a3ec9fb14d631fd6d367b637e8700c8ec051f45758d8fa9b12fb1239fc",
+    "results/fedora-pdfium-installed-5/gdb.txt": "37a091d7a17719d257b6ed7a4beed679891e5cb51eb31b17fee94d343f42bddc",
+    "results/fedora-pdfium-installed-5/exports.txt": "f185f3d27b05733f9ae29fc20fe563478502adbf87080817d92796d3f33c1d31",
+    "results/fedora-pdfium-installed-5/directories.json": "2a731b50ac840a82ad7950ad73a3a413a7c137f9296ecbca228a5b841d41b3c3",
+    "results/leap-pdfium-installed-5/valgrind.log": "9ea759813ac706cfd53f11fd17d42224a8aaaada7c1de812ff1e157c678ebf73",
+    "results/leap-pdfium-installed-5/unload-1.log": "fd4eb6e0e8c63c590fc165cb45b41824a418db9e9cbef255ef0522966326dccc",
+    "results/leap-pdfium-installed-5/unload-10.log": "db82fd55cc4e51cf7ab8391ef8e03780e2d0db698d600eb06b7876d27dff8b05",
+    "results/leap-pdfium-candidate-12/build.log": "5e347526d9f174e2f9d38a2688afae7dc3bbc8ddd242afad5ef5c316d8f61495",
+    "results/leap-pdfium-candidate-12/build.json": "ee1c6506121c0e44d963b7aa44995b8e14e66daa5dd9d3d1bf668fc9558a38db",
+    "results/leap-pdfium-installed-5/status.json": "07f87a330c6ad27c89ea98b14df18c8566c86391d881737ef67e46a96284ed7b",
+    "results/leap-pdfium-installed-5/installed.log": "510b9e64477314e2a7b6d487760ed109ef20adc3cf77fd490df1b256235ba0e2",
+    "results/leap-pdfium-installed-5/gdb.txt": "a6f80482f9a135916ecabbc87c0c796e50a8ad4dc40083b5ce30257ab9743f8a",
+    "results/leap-pdfium-installed-5/exports.txt": "c99bfac41847b50c939fd4ab5e8371e670f36adadb5f494d0d09f1f81509bea3",
+    "results/leap-pdfium-installed-5/directories.json": "6f5872488341ad57ef5b22f3b88616c3bb798ca58097aa276ff4f18cb628bc91",
+    "results/el10-pdfium-installed-5/valgrind.log": "568cd20ed95f2c8b01821f986d2ac743df88065013349a2effccfc34810924af",
+    "results/el10-pdfium-installed-5/unload-1.log": "66bfe33b06e3436ddae9d7bb5e95bb9bcf05ecaec78e58e718295a29036afa35",
+    "results/el10-pdfium-installed-5/unload-10.log": "8ea84804bb779273ca54a143ded5e3aaa5ecbb066b2732b41fb736bec79fd5f5",
+    "results/el10-pdfium-candidate-12/build.log": "d22f096d640dfdc1e3fe2d01b8035b62c6be6f0c5f1c7062b7c8246f296d5a75",
+    "results/el10-pdfium-candidate-12/build.json": "4b7d901b3a2617674b372048e93e25c1a078cfb91c0ecaff7459d691e9c8aa9f",
+    "results/el10-pdfium-installed-5/status.json": "0f7c8fdf63e1937a781666adfa7b8a778ed4739b32cc3b8cd4d237b3e00b10d9",
+    "results/el10-pdfium-installed-5/installed.log": "a1b244296d07cb810523e2b7259f22c8ef178d77d7bd1d4e6431552f59996c7b",
+    "results/el10-pdfium-installed-5/gdb.txt": "cb205fd03c8535dbda22a9b239672944b97919fbbf85f5960ac8eb0e628b3f53",
+    "results/el10-pdfium-installed-5/exports.txt": "d1f61a46da34249a4cdd6266d348bca5fbbc01d010a5248d8d69a272fda610b3",
+    "results/el10-pdfium-installed-5/directories.json": "a87ef74df8dd1380719c60c93d60f8e0123e2fc97ddb4ea198cad17b563183b6",
+    "results/leap-pdfium-portable-tests-1/status.json": "29a9e96d2f6727e1a3b0b80706b362c59630073f78b7731155982db34f28bc35",
+    "results/leap-pdfium-portable-tests-1/unit.log": "4d1814409ba983fa730c4dc34762f54e43514ce3f2966d1ac4f3f478b462e17c",
+    "results/leap-pdfium-portable-tests-1/valgrind.txt": "4c0fe310db7f5f7647daf8639ed764592c4253197fd82243710ee0c063a3f790",
+    "results/leap-pdfium-portable-tests-1/build.log": "20a1bb3a83148dba76001759816502bc03b968a590823ebdb8613b133428500d",
+    "results/leap-pdfium-portable-tests-1/build-bundled-freetype-control.log": "41ab0d395017b66317f6f10284c69ba51b73c92e7b1a2fb9b99b9aa1c04120e2",
+    "results/leap-pdfium-portable-tests-1/valgrind.log": "d55363cb90b50501de0223888bbf9f38f8194ec32a371bd51b42f233741a8a94",
+    "results/leap-pdfium-portable-tests-1/embedder-system-freetype.log": "90a2e342a4f4a4838bea146b95212deb41d22ca91952a1c283c6be4f2242dcf8",
+    "results/pdfium-system-hinting-1/status.json": "a9ea121fb0534921810c131f2c4c9046454f6af3c45e274982da70506a60b29b",
+    "results/pdfium-system-hinting-1/unit.log": "08dcc2f48453c21072a81d04d5dd8a6b9abef0edf8e3d899f7483c261bd105d5",
+    "results/pdfium-system-hinting-1/valgrind.txt": "6f79619fb1880c25769d3f47a87f9d7d9e5e1b8776e2c07bcd2593511148311d",
+    "results/pdfium-system-hinting-1/embedder.log": "3686ee6c1a8872d2f99a0e098359afa95a71b1aabf38286ade2c2622a60fa59e",
+    "results/pdfium-system-hinting-1/build.log": "6bc8eae3b90753b8a631b84a9e7295c50e94a72089e4238480411a2ff35786f3",
+    "results/pdfium-system-hinting-1/valgrind.log": "0557c82dacc0b6b3963981e52cb634c1dd167e6e8c9afe085e928280afaac766"
+  },
+  "limitations": [
+    "Candidate manifests cannot be uploaded to OBS.",
+    "Native aarch64 builds remain required.",
+    "Source-level debugging has full DWARF 5 and source without optional precomputed indexes, as explicitly approved."
+  ],
+  "targeted_patch_valgrind": {
+    "portable_tests": "31 affected unit cases: zero errors and zero lost allocations",
+    "system_freetype_hinting": "8 affected rendering cases: zero errors and zero lost allocations",
+    "allocator": "All three installed packages: standalone C API and 1/10 library-unload cycles; AlmaLinux additional 100-cycle control is in pdfium-packaging-decisions-20261003.json"
+  },
+  "helper_tests": {
+    "toolchain_configuration": 12,
+    "lint_scope": 2
+  }
+}

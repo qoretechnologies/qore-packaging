@@ -1,0 +1,6 @@
+# Copyright 2026 Qore Technologies, s.r.o.
+# SPDX-License-Identifier: MIT
+# These two LicenseRef identifiers name full notices shipped in COPYRIGHT.
+# rpmlint's SPDX vocabulary omits the older AGG 2.3 permissive license and the
+# public-domain bigint implementation. Restrict recognition to these packages.
+addFilter(r'^(?:(?:libpdfium-qore148-0(?:-debuginfo)?|libpdfium-qore-devel|qore-pdfium-debugsource)\.(?:x86_64|aarch64)|qore-pdfium\.(?:src|x86_64|aarch64)): W: invalid-license LicenseRef-(?:AGG-2\.3|Public-Domain)$')
