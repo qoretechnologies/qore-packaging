@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "All four Fedora build dependencies are retrievable from OBS for both architectures. A single failed-package rebuild was triggered after verifying their RPM identities.",
+  "previous_failure": "qore-pdfium revision 1 failed before compilation: OBS getbinaries returned missing gnome-srpm-macros and harfbuzz-raster/vector/gpu.",
+  "verification": "All 24 HEAD probes across Fedora master, HTTP mirror and HTTPS mirror returned 200. OBS unversioned binary API returned all eight expected RPM files; their names, versions and architectures were checked with rpm --nosignature -qp.",
+  "cache": [
+    {
+      "arch": "x86_64",
+      "name": "gnome-srpm-macros",
+      "url": "/build/Fedora:44/update/x86_64/_repository/gnome-srpm-macros.rpm",
+      "exit_code": 0,
+      "bytes": 8866,
+      "stderr": "",
+      "rpm_identity": "gnome-srpm-macros 1.0-1.fc44 noarch",
+      "sha256": "1f8f4e9cbf0cb531780c8443ff9ab7739be7da234f360e107df9fab470d66de5"
+    },
+    {
+      "arch": "x86_64",
+      "name": "harfbuzz-raster",
+      "url": "/build/Fedora:44/update/x86_64/_repository/harfbuzz-raster.rpm",
+      "exit_code": 0,
+      "bytes": 109791,
+      "stderr": "",
+      "rpm_identity": "harfbuzz-raster 14.1.0-2.fc44 x86_64",
+      "sha256": "72480bb20c332fc803678b3e251cab00f96395ce10b5f3f81415fc3f5c7ba53f"
+    },
+    {
+      "arch": "x86_64",
+      "name": "harfbuzz-vector",
+      "url": "/build/Fedora:44/update/x86_64/_repository/harfbuzz-vector.rpm",
+      "exit_code": 0,
+      "bytes": 58815,
+      "stderr": "",
+      "rpm_identity": "harfbuzz-vector 14.1.0-2.fc44 x86_64",
+      "sha256": "b6a369d15072f467e2493bf8ae3f3daf18fcc1979bb1d291e27cffc34182400b"
+    },
+    {
+      "arch": "x86_64",
+      "name": "harfbuzz-gpu",
+      "url": "/build/Fedora:44/update/x86_64/_repository/harfbuzz-gpu.rpm",
+      "exit_code": 0,
+      "bytes": 33749,
+      "stderr": "",
+      "rpm_identity": "harfbuzz-gpu 14.1.0-2.fc44 x86_64",
+      "sha256": "bea98075d0a89a6f39819c25b1be15936d834c2738ae4f6fff2bd5af5274dafd"
+    },
+    {
+      "arch": "aarch64",
+      "name": "gnome-srpm-macros",
+      "url": "/build/Fedora:44/update/aarch64/_repository/gnome-srpm-macros.rpm",
+      "exit_code": 0,
+      "bytes": 8866,
+      "stderr": "",
+      "rpm_identity": "gnome-srpm-macros 1.0-1.fc44 noarch",
+      "sha256": "1f8f4e9cbf0cb531780c8443ff9ab7739be7da234f360e107df9fab470d66de5"
+    },
+    {
+      "arch": "aarch64",
+      "name": "harfbuzz-raster",
+      "url": "/build/Fedora:44/update/aarch64/_repository/harfbuzz-raster.rpm",
+      "exit_code": 0,
+      "bytes": 99127,
+      "stderr": "",
+      "rpm_identity": "harfbuzz-raster 14.1.0-2.fc44 aarch64",
+      "sha256": "22ca7af846e79f5830948738b18c723cd5a2e684dda2dc1fbd97295dfae18699"
+    },
+    {
+      "arch": "aarch64",
+      "name": "harfbuzz-vector",
+      "url": "/build/Fedora:44/update/aarch64/_repository/harfbuzz-vector.rpm",
+      "exit_code": 0,
+      "bytes": 56264,
+      "stderr": "",
+      "rpm_identity": "harfbuzz-vector 14.1.0-2.fc44 aarch64",
+      "sha256": "c39c0fd3a8e909a5cf06d9ca236e28f9887ed39b0948104b2485721cc07578c2"
+    },
+    {
+      "arch": "aarch64",
+      "name": "harfbuzz-gpu",
+      "url": "/build/Fedora:44/update/aarch64/_repository/harfbuzz-gpu.rpm",
+      "exit_code": 0,
+      "bytes": 32281,
+      "stderr": "",
+      "rpm_identity": "harfbuzz-gpu 14.1.0-2.fc44 aarch64",
+      "sha256": "4f955dba34be9ab0e487eb734e49e228ebb2f0d3f628815fc95c54d17f4c2967"
+    }
+  ],
+  "rebuild_log": "results/obs-pdfium-fedora-cache-rebuild-20261003.log",
+  "root_cause_limit": "The failed worker could not retrieve the OBS download-on-demand binaries. Current direct downloads prove availability; the server-side reason for the earlier cache miss is not visible. Versioned filename API 404 responses from the earlier diagnostic are not evidence that upstream RPMs are missing. No mirror or dependency substitution was applied.",
+  "sha256": {
+    "results/fedora-pdfium-mirror-probes-20261003.json": "4ea7d5cd00dd622d06fbbf88f9c64c7a93df731b8aeeb8ee07f18232a9cc3c10",
+    "results/obs-fedora-cache-probes-20261003/status.json": "9903416570ec2188aeb6b3e940de3ab0527b1ac0032b9f917d715af8fe7a7d10",
+    "results/obs-pdfium-fedora-cache-rebuild-20261003.log": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22"
+  }
+}

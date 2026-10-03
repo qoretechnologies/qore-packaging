@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Versioned openSUSE LLVM SDK dependency qualified by all three target RPM parsers, real installed dependency solvers and compiled header checks. Canonical core rebuilds and OBS upload pending.",
+  "root_cause": "The default llvm-devel selector from the additional compiler repository points to LLVM 23. Qore exports LLVM 19 plugin headers on openSUSE; llvm19-devel itself supplies the headers and CMake/pkg-config interfaces. Depending on the default selector unnecessarily made the existing SDK unresolvable.",
+  "change": "Require llvm19-devel for both the Qore build and qore-devel package on openSUSE, with an architecture-qualified runtime dependency. Retain Fedora/EL major ranges. Increment RPM release to 21.",
+  "tests": {
+    "fedora": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-e",
+        "QORE_RPM_VERIFY_INSTALLED_DEPS=1",
+        "-v",
+        "/home/david/src/qore/git/qore:/source:ro",
+        "-w",
+        "/source",
+        "sha256:a437efbf23f3bf7b180f7d58a5ad3dd70d524372ae60a57380dff115a2b5feda",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "rpm/tests",
+        "-p",
+        "test_spec_metadata.py",
+        "-v"
+      ]
+    },
+    "leap": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-e",
+        "QORE_RPM_VERIFY_INSTALLED_DEPS=1",
+        "-v",
+        "/home/david/src/qore/git/qore:/source:ro",
+        "-w",
+        "/source",
+        "sha256:48f1246678238c3d1b479f5cffc69c511443b4855b7f548fc4b22bf793fb975b",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "rpm/tests",
+        "-p",
+        "test_spec_metadata.py",
+        "-v"
+      ]
+    },
+    "el10": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-e",
+        "QORE_RPM_VERIFY_INSTALLED_DEPS=1",
+        "-v",
+        "/home/david/src/qore/git/qore:/source:ro",
+        "-w",
+        "/source",
+        "sha256:50db5ec21c50dffb918d77c420f6c39d0c3c2c4c286b6150741de8c3dd80baeb",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "rpm/tests",
+        "-p",
+        "test_spec_metadata.py",
+        "-v"
+      ]
+    }
+  },
+  "baseline": "The new dependency regression rejects the original unversioned openSUSE spec.",
+  "obs": "POST buildinfo for the updated spec resolves LLVM 19.1.7 development headers on the mixed Leap/compiler repository; no resolver error. Native rebuild qualification is separate.",
+  "repository_order": "Explicitly putting inherited SLFO paths before the compiler path causes the upstream compiler configuration to be evaluated before suse_version is defined. The temporary ordering was reverted. No dependency ignore or configuration workaround is retained.",
+  "sha256": {
+    "results/llvm-sdk-baseline-20261003.log": "927349f1505a74923d133abfa7c7417dc9b2b676e51863dd751db3f47f4e892c",
+    "results/obs-qore-llvm19-buildinfo-20261003.xml": "94b1c7d4c7c9c14c7987b75acecb6cd39f51d5452344354d0bdf5f901a6cc052",
+    "results/fedora-llvm-sdk-spec-tests-20261003.log": "7ed443a40aa44a1c2df1ea0a5be662801479c3922e51a354400a315b7003b41e",
+    "results/leap-llvm-sdk-spec-tests-20261003.log": "a7ab9225ca3978faae79c3a65ff8a2c43f8b8b1e1ac95e654d1bd8f9df35bde3",
+    "results/el10-llvm-sdk-spec-tests-20261003.log": "aaaa9773117551e8d1d43b70d27e02689d1f9ad96f14c6fc420bfeccbe99ea50"
+  },
+  "commits": {
+    "develop_packaging": "a459fd92e7e7ef4ef074d5b863e7d26c89fb1aaa",
+    "regression_test": "5694ef6f24565d43d4a7eaf037a399c211317571",
+    "qualified_snapshot_branch": "rpm/llvm19-sdk",
+    "qualified_snapshot": "d58eec0b2ab721ef5da0e2136c4cddb3579874e2",
+    "snapshot_parent": "2a7afda675225f639a698ec289bc218560800485"
+  },
+  "source_scope": "The regression test was included by the concurrently active documentation session before the two packaging files were committed. The isolated RPM snapshot carries only these three changes over the qualified release-20 parent.",
+  "source_changes": [
+    "qore.spec-multi",
+    "rpm/README.rst",
+    "rpm/tests/test_spec_metadata.py"
+  ],
+  "build_launch": {
+    "fedora": {
+      "pid": 145523,
+      "image": "sha256:a437efbf23f3bf7b180f7d58a5ad3dd70d524372ae60a57380dff115a2b5feda",
+      "output": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-21",
+      "driver_log": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-21-driver.log",
+      "status": "launched; build.json records completion",
+      "installed_driver_pid": 145563
+    },
+    "leap": {
+      "pid": 145538,
+      "image": "sha256:48f1246678238c3d1b479f5cffc69c511443b4855b7f548fc4b22bf793fb975b",
+      "output": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-21",
+      "driver_log": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-21-driver.log",
+      "status": "launched; build.json records completion",
+      "installed_driver_pid": 145564
+    },
+    "el10": {
+      "pid": 145555,
+      "image": "sha256:50db5ec21c50dffb918d77c420f6c39d0c3c2c4c286b6150741de8c3dd80baeb",
+      "output": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-21",
+      "driver_log": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-21-driver.log",
+      "status": "launched; build.json records completion",
+      "installed_driver_pid": 145565
+    }
+  }
+}
