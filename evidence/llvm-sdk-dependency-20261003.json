@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-03",
-  "status": "Versioned openSUSE LLVM SDK dependency qualified by all three target RPM parsers, real installed dependency solvers and compiled header checks. Canonical core rebuilds and OBS upload pending.",
+  "status": "Versioned openSUSE LLVM SDK dependency passes 24 target metadata/dependency tests, all three canonical RPM builds (400 suites each), and installed SDK/minimal-runtime qualification. OBS revision 16 sources verified; publication disabled.",
   "root_cause": "The default llvm-devel selector from the additional compiler repository points to LLVM 23. Qore exports LLVM 19 plugin headers on openSUSE; llvm19-devel itself supplies the headers and CMake/pkg-config interfaces. Depending on the default selector unnecessarily made the existing SDK unresolvable.",
   "change": "Require llvm19-devel for both the Qore build and qore-devel package on openSUSE, with an architecture-qualified runtime dependency. Retain Fedora/EL major ranges. Increment RPM release to 21.",
   "tests": {
@@ -151,5 +151,6 @@
       "status": "launched; build.json records completion",
       "installed_driver_pid": 145565
     }
-  }
+  },
+  "completed_qualification": "evidence/core21-local-installed-20261003.json"
 }

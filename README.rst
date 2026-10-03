@@ -70,9 +70,14 @@ and ``evidence/core20-native-arm-installed-20261003.json``.
 Release 21's packaging change names openSUSE's versioned LLVM 19 SDK, so adding
 PDFium's LLVM 21 toolchain cannot switch Qore to a newer default SDK. All 24
 target metadata/dependency tests pass and OBS resolves the required headers.
-Canonical rebuilds and installed checks are in progress from ``d58eec0b2`` on
-``rpm/llvm19-sdk``, which retains the qualified release-20 runtime sources.
-See ``evidence/llvm-sdk-dependency-20261003.json``.
+Canonical builds pass all 400 suites on each distribution; installed runtime/SDK
+upgrades, ONNX, compiler, tools and debugger checks also pass. Source ``d58eec0b2``
+on ``rpm/llvm19-sdk`` retains the qualified release-20 runtime sources. OBS
+revision 16 has matching checksums and publication disabled; native rebuilds and
+ARM installed checks remain pending. Existing core build diagnostics are
+unchanged after normalizing source and temporary paths. See
+``evidence/llvm-sdk-dependency-20261003.json`` and
+``evidence/core21-local-installed-20261003.json``.
 
 JNI native fixes and the latest Excel/ODS changes are committed. Release/Debug
 reference, exception and cleanup suites pass; strict documentation and the new
