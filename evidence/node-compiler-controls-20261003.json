@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Accepted on 2026-10-03; other Node warnings remain outside scope.",
+  "approval": {
+    "date": "2026-10-03",
+    "decision": "Allow these two compiler diagnostics",
+    "scope": "Only these four repeated GCC 15 source diagnostics. Preserve normal flags and implementation; no suppression. Other Node/SQLite/V8 warning families remain unresolved."
+  },
+  "diagnostics": {
+    "inspector_vector_insert": {
+      "occurrences": 2,
+      "site": "src/inspector_socket.cc:287, reported at GCC 15 bits/stl_uninitialized.h:273",
+      "kind": "-Warray-bounds",
+      "root_cause": "GCC analyzes the vector range-insertion copy as if it writes into the old two-byte header allocation; std::vector allocates or expands storage to accommodate the inserted range. The insertion uses valid begin/end iterators even for an empty payload.",
+      "control": "The exact upstream encoder body reproduces the warning. 1,000 frame cases verify every header length and payload byte at empty, single-byte, 125/126, 65535/65536 and 1 MiB boundaries. Valgrind reports zero errors and all 4,302 allocations freed."
+    },
+    "uvwasi_timestamp": {
+      "occurrences": 2,
+      "site": "deps/uvwasi/src/uvwasi.c:107",
+      "kind": "-Wmaybe-uninitialized",
+      "root_cause": "The stat fallback is read only when neither explicit nor current-time flags are set. That condition necessarily enters the earlier fstat/lstat initialization branch; failed stat returns before either field read. GCC does not carry this combined bitmask condition to the later branch.",
+      "control": "Including the unchanged helper with its real libuv path reproduces the exact warning. All 1,800 combinations across descriptor/path mode and retained/explicit/current access/modification time pass; missing path and closed descriptor fail without modifying outputs. Valgrind reports zero errors and zero definite/indirect/possible losses.",
+      "control_note": "The harness additionally enables -Wextra, which reports unused upstream callback parameters. Those extra harness-only warnings are not requested as package exceptions."
+    }
+  },
+  "scope": "Only these four repeated GCC 15 source diagnostics. Preserve normal flags and implementation; no suppression. Other Node/SQLite/V8 warning families remain unresolved.",
+  "sha256": {
+    "results/node-compiler-controls-1/inspector.run.log": "717aeb58dc53e804130da538040b8692bd26e6e92de437f7736d6d60a8aed1a8",
+    "results/node-compiler-controls-1/inspector.valgrind.log": "777cd8567286ddc6907a2cd85f18870be913fdfd663f7066dacabff0bdde77e2",
+    "results/node-compiler-controls-1/inspector.compile.log": "601b3ec095cde5f4882fa2bde7b1e928ce78fed4a0d59953f2544644bc74ebce",
+    "results/node-compiler-controls-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-compiler-controls-1/inspector.valgrind-run.log": "717aeb58dc53e804130da538040b8692bd26e6e92de437f7736d6d60a8aed1a8",
+    "results/node-compiler-controls-1/status.json": "e695c1f6921b6388a9812b5c2d21a655014df1936bb9359e7e4382ee65f67c0c",
+    "results/node-uvwasi-control-1/valgrind-run.log": "6ed7d65aabf0e29de3ae6000879706041a5d658d8ac18898b8fbcb664a815bdc",
+    "results/node-uvwasi-control-1/run.log": "6ed7d65aabf0e29de3ae6000879706041a5d658d8ac18898b8fbcb664a815bdc",
+    "results/node-uvwasi-control-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-uvwasi-control-1/compile.log": "0e7a19167898aac3c7a0ed18b7917d37a88b4e5444642df614fd2127e37e6929",
+    "results/node-uvwasi-control-1/valgrind.log": "93d1994c0606c755fce26298596debbf843cff76009d890aeb326d6a435a18a4",
+    "results/node-uvwasi-control-1/status.json": "de7350f8f58816ec8d3cc75affdf9e683daf5b00b7edd8bcf341d90e871aa555",
+    "work/node-compiler-controls-1/inspector.cc": "1ccc06c12928553fb7727d77517601068c1118041d90eb93938d1d43dd26cefc",
+    "work/node-uvwasi-control-1/control.c": "fc1dded63efbc14a54cf692d8511c1a7ee567bc83bddd9b7bd174cf8c6466fc7"
+  }
+}

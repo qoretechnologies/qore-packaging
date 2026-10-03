@@ -1,0 +1,275 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Poll initialization cleanup fix passes candidate 12 RPM, exact C++17 native fault control, nine installed Valgrind controls and both Qore runtime/SDK suites. Remaining compiler/manifest diagnostics still gate dependency completion.",
+  "source": {
+    "schema": 1,
+    "name": "python-grpcio",
+    "version": "1.69.0",
+    "commit": null,
+    "source_date_epoch": 1790985600,
+    "spec": "python-grpcio.spec",
+    "upstream": {
+      "url": "https://files.pythonhosted.org/packages/source/g/grpcio/grpcio-1.69.0.tar.gz",
+      "sha256": "936fa44241b5379c5afc344e1260d467bee495747eaf478de825bab2791da6f5"
+    },
+    "sources": {
+      "grpc-v1.69.0.tar.gz": "cd256d91781911d46a57506978b3979bfee45d5086a1b6668a3ae19c5e77f8dc",
+      "grpcio-1.69.0.tar.gz": "936fa44241b5379c5afc344e1260d467bee495747eaf478de825bab2791da6f5",
+      "grpcio-ABSEIL-LICENSE": "c79a7fea0e3cac04cd43f20e7b648e5a0ff8fa5344e644b0ee09ca1162b62747",
+      "grpcio-ADDRESS-LICENSE": "be1227afc73a4d58af895a0f95eb21f67697e0a6a0c5b1a3e17436280e9158a6",
+      "grpcio-UPB-LICENSE": "6e5e117324afd944dcf67f36cf329843bc1a92229a8cd9bb573d7a83130fea7d",
+      "grpcio-UTF8-LICENSE": "02de69b64fc36d9e938f418e52723e42f0b2b226d58a9cb3c8dcbdf7059f5074",
+      "grpcio-XXHASH-LICENSE": "553d0035773ddd1590045f8fdc3a4c6ead31e36336721aeca8421e88ed1c9f80",
+      "grpcio-aio-batch-ownership.patch": "22ca5da0977974801e246d4d9044a85c9c90843057ab1e782b2e9f4fff0e7da8",
+      "grpcio-aio-queue-release.patch": "fb400b6089a368993169cae9e36cc7f1139bdc4b37fc409c492bccabba3782ac",
+      "grpcio-aio-wakeup.patch": "a0caa4e7512cf7161c8254f17350433ac773a496bc25aeff57cd04e607901382",
+      "grpcio-coexistence-test.py": "75bed5df2d86961fb5c9ac7f097344d0f9fa52f98922c51420cc7395dcdcaaf0",
+      "grpcio-cython-if.patch": "cba2f185954974f332d27c611a9a88e54dc1f0f5305864b00e0f900de18e4fa9",
+      "grpcio-fix-return-values.patch": "f95233608cc733f8b357865e710166158c66e85fc9a6c6a713d54de6cbed4022",
+      "grpcio-license-sources.json": "25ba723261b77f3a876509d22f129753292cb1bd25b9057adc6bbeb3cee2983c",
+      "grpcio-lifecycle-build.patch": "06ca26bb431107c22dd923a05db3848f743c4f7ac223d534406da98c88fc6ebc",
+      "grpcio-native-types-test.cc": "487053bc68831e37efeafd597d4f8b2634a745a0472b880304b23cb4887cb249",
+      "grpcio-native-types.patch": "4fded14edc0d45e890566c3d4deb8c4e43182b8646c1fbf9aa808f1cec37e3aa",
+      "grpcio-poll-init-cleanup.patch": "e37e086e9f8e8491774ba844a8fbc19efd7e6561494288b4fac52ed5f96f5cc0",
+      "grpcio-poll-init-test.cc": "668cc20f756a9bbe7313640029e0d5465856b8f088796a747b14263982eae7a3",
+      "grpcio-thread-pool-shutdown.patch": "03e8c667695cb146703915efd3b25c6a856cf64033c385b9ac7f656c5236e248",
+      "grpcio-wakeup-inject.c": "4ad7a8b67912e705be4c0517d16af8686cadb8b3901735dc8545a28f3f42c6b8",
+      "grpcio-wakeup-test.cc": "43a7451fa51529bbca241234d358830f6cf9403e91a7532bb3eb6c94c7f14a89",
+      "grpcio-wakeup-test.py": "26d5370fe225542ea7cc63c806625f6685e425e8ace6bacb11e97bf9d88f372b",
+      "grpcio-xxhash-avoid-armv6-unaligned-access.patch": "f8a30d315ff8e6c489660926d2cfde05f6cce267d5ac3912fa9d23c2c3db2960",
+      "grpcio-xxhash-ppc64le-gcc7.patch": "3cf29ccc778e0800e63e501b3471b67ec826971f249484208cc2265a547b12b8",
+      "python-grpcio.spec": "1acab1c046cfd6f248c3e995742c17959a88e82b92cf7ca83bb7e14678d8f917"
+    },
+    "candidate": true,
+    "components": [
+      {
+        "url": "https://codeload.github.com/grpc/grpc/tar.gz/refs/tags/v1.69.0",
+        "archive": "grpc-v1.69.0.tar.gz",
+        "sha256": "cd256d91781911d46a57506978b3979bfee45d5086a1b6668a3ae19c5e77f8dc"
+      }
+    ]
+  },
+  "root_cause": "pollset_work published a stack worker handle before wakeup-fd initialization. Failed initialization leaked its wrapper and could register an invalid descriptor in the fork-tracking list.",
+  "fix": "Initialize output handle to null, free the wrapper on initialization failure, and register/publish only after successful initialization.",
+  "native_control": {
+    "initializations": 200,
+    "injected_failures": 100,
+    "invalid_cleanup_states": 0,
+    "valgrind_exit_code": 0,
+    "valgrind_errors": 0,
+    "definite_indirect_possible_lost_bytes": 0,
+    "scope": "Actual RPM C++17 test binary; fork tracking on/off, output handle present/absent, failed initialization, recovery and cache reuse."
+  },
+  "installed_native_controls": {
+    "load": {
+      "raw_exit_code": 97,
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 757,206 bytes in 13,580 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 71,668 bytes in 870 blocks",
+        "ERROR SUMMARY: 2313 errors from 2313 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "async-single": {
+      "raw_exit_code": 97,
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [
+        "2,112 bytes in 6 blocks are possibly lost in loss record 4,551 of 4,655"
+      ],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 714,633 bytes in 12,801 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 283,870 bytes in 2,736 blocks",
+        "ERROR SUMMARY: 2767 errors from 2767 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "async-repeated": {
+      "raw_exit_code": 97,
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [
+        "1,408 bytes in 4 blocks are possibly lost in loss record 4,499 of 4,654"
+      ],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 714,624 bytes in 12,801 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 283,095 bytes in 2,732 blocks",
+        "ERROR SUMMARY: 2767 errors from 2767 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "queue-lifetimes": {
+      "raw_exit_code": 97,
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [
+        "2,112 bytes in 6 blocks are possibly lost in loss record 4,465 of 4,565"
+      ],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 712,416 bytes in 12,765 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 266,530 bytes in 2,595 blocks",
+        "ERROR SUMMARY: 2719 errors from 2719 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "fork-disabled": {
+      "raw_exit_code": 97,
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 757,409 bytes in 13,584 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 71,756 bytes in 872 blocks",
+        "ERROR SUMMARY: 2315 errors from 2315 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "fork-enabled": {
+      "raw_exit_code": 97,
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 757,409 bytes in 13,584 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 71,756 bytes in 872 blocks",
+        "ERROR SUMMARY: 2315 errors from 2315 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "wakeup-1": {
+      "raw_exit_code": 97,
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [
+        "1,056 bytes in 3 blocks are possibly lost in loss record 4,407 of 4,605"
+      ],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 714,776 bytes in 12,803 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 264,608 bytes in 2,612 blocks",
+        "ERROR SUMMARY: 2752 errors from 2752 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "wakeup-2": {
+      "raw_exit_code": 97,
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [
+        "1,760 bytes in 5 blocks are possibly lost in loss record 4,482 of 4,603"
+      ],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 714,776 bytes in 12,803 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 264,690 bytes in 2,611 blocks",
+        "ERROR SUMMARY: 2751 errors from 2751 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "wakeup-3": {
+      "raw_exit_code": 97,
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [
+        "2,112 bytes in 6 blocks are possibly lost in loss record 4,504 of 4,607"
+      ],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 714,702 bytes in 12,802 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 265,738 bytes in 2,616 blocks",
+        "ERROR SUMMARY: 2753 errors from 2753 contexts (suppressed: 0 from 0)"
+      ]
+    }
+  },
+  "installed_bridge": {
+    "runtime_and_sdk_exit_code": 0,
+    "summaries": {
+      "runtime": [
+        "Ran 25 test cases, 25 succeeded (129 assertions)",
+        "Ran 43 test cases, 43 succeeded (184 assertions)",
+        "Ran 9 test cases, 9 succeeded (31 assertions)",
+        "Ran 22 test cases, 22 succeeded (86 assertions)",
+        "Ran 54 test cases, 54 succeeded (223 assertions)",
+        "Ran 29 test cases, 29 succeeded (164 assertions)",
+        "Ran 7 test cases, 7 succeeded (21 assertions)",
+        "Ran 19 test cases, 19 succeeded (94 assertions)",
+        "Ran 19 test cases, 19 succeeded (51 assertions)",
+        "Ran 12 test cases, 12 succeeded (94 assertions)",
+        "Ran 11 test cases, 11 succeeded (38 assertions)",
+        "Ran 89 test cases, 89 succeeded (297 assertions)",
+        "Ran 39 test cases, 39 succeeded (356 assertions)"
+      ],
+      "sdk": [
+        "Ran 25 test cases, 25 succeeded (129 assertions)",
+        "Ran 43 test cases, 43 succeeded (184 assertions)",
+        "Ran 9 test cases, 9 succeeded (31 assertions)",
+        "Ran 22 test cases, 22 succeeded (86 assertions)",
+        "Ran 54 test cases, 54 succeeded (223 assertions)",
+        "Ran 29 test cases, 29 succeeded (164 assertions)",
+        "Ran 7 test cases, 7 succeeded (21 assertions)",
+        "Ran 19 test cases, 19 succeeded (94 assertions)",
+        "Ran 19 test cases, 19 succeeded (51 assertions)",
+        "Ran 12 test cases, 12 succeeded (94 assertions)",
+        "Ran 11 test cases, 11 succeeded (38 assertions)",
+        "Ran 89 test cases, 89 succeeded (297 assertions)",
+        "Ran 39 test cases, 39 succeeded (356 assertions)"
+      ]
+    }
+  },
+  "approvals": "Only previously accepted CPython/Cython startup/cache and Abseil allocation sites; callback TLS/enum compiler and injected wakeup-error messages are recorded in grpcio-context-diagnostics-20261003.json. Raw exit 97 is retained and is not represented as a clean raw run.",
+  "sha256": {
+    "results/leap-grpcio-native-12/status.json": "7424882c64cc8ca3a8e34f1746e967f7f39dea7cde01b1afa55d251b2b0b1060",
+    "results/leap-grpcio-native-12/load-valgrind.log": "ac3cedce6d0152034777b4a490351ee3b18442fa8b91c8068144c6222fd6db16",
+    "results/leap-grpcio-native-12/load.log": "200a3d8f4bbefc1db87c34fd031653895b2879b8cd449e94eb3dd34d8075780b",
+    "results/leap-grpcio-native-12/async-single-valgrind.log": "5273e1e0c18fe8d973dd8c2982dd455d66d158297e8011aba3267cfd3bb030e8",
+    "results/leap-grpcio-native-12/async-single.log": "50d05988342be595df88ef60900f67c39cffc29dfd120238f6711b7eeaa801e1",
+    "results/leap-grpcio-native-12/async-repeated-valgrind.log": "723bf4846159a15d6dc52da762121f42ef1646c04374f83ddcc65ef0338bed11",
+    "results/leap-grpcio-native-12/async-repeated.log": "1309d1288bc8d753e2cd5855a8b0d3b034ebc9a8902536595f09276c61861d8c",
+    "results/leap-grpcio-native-12/queue-lifetimes-valgrind.log": "a73fa394a2ef32baa1a154ad821af70d23d117b08fe66a1d6ae1246e919f60fb",
+    "results/leap-grpcio-native-12/queue-lifetimes.log": "8a89beaedcbc9451cc133009de5fcc4d2eb29807fa225fadb514242062465830",
+    "results/leap-grpcio-native-12/fork-disabled-valgrind.log": "f475b02bf16550374f15e1de4ce207fb20d647472f1ebb9689ad22637ee2db1f",
+    "results/leap-grpcio-native-12/fork-disabled.log": "544df69038c99cd948bed7effbd71f31bbd4de204cedc41ad254561bf330439e",
+    "results/leap-grpcio-native-12/fork-enabled-valgrind.log": "2510707c7c44b71f9368929917443c80b35f69849434bf5b7698634720da3413",
+    "results/leap-grpcio-native-12/fork-enabled.log": "544df69038c99cd948bed7effbd71f31bbd4de204cedc41ad254561bf330439e",
+    "results/leap-grpcio-native-12/wakeup-1-valgrind.log": "e2536ba49cb8efbd4c0c25fbdcb5db9dc4530b9695157e95496206157009e252",
+    "results/leap-grpcio-native-12/wakeup-1.log": "0d1f595e05b8710744123277ebe4700b89eafa3729b91aca09a03acb9df2b95a",
+    "results/leap-grpcio-native-12/wakeup-2-valgrind.log": "5b1a2be3628a5490fd888546a72f97597e58d7c76a990b882ba6fdb8dad37fec",
+    "results/leap-grpcio-native-12/wakeup-2.log": "da081328b2a330c9722da34f4d486902c93bf3d67f65011898c652790102fb09",
+    "results/leap-grpcio-native-12/wakeup-3-valgrind.log": "36d0064075bef06401db8a79526b5852adc41ac9566362f8701513fc07b671c6",
+    "results/leap-grpcio-native-12/wakeup-3.log": "4c5015a9c2aff5e65f49f8ff0c329ee32a00d1addcc8fcb49ec62bb39c7f2684",
+    "results/leap-grpcio12-bridge-1/status.json": "3c3c6a03cd759bccd3304a683d7c65742b43a2b7a363768cc3503cf2cca87bb1",
+    "results/leap-grpcio12-bridge-1/sdk-install.log": "73288ceca515a413e3b40773abe9d6c07b318657f6734b6fc6137caf7c692a89",
+    "results/leap-grpcio12-bridge-1/sdk-tests.log": "3acc2483a2a8ad0841fe080288d60ea6cd3ecf3fbd10c40a4c37dfecc571aa7d",
+    "results/leap-grpcio12-bridge-1/runtime-install.log": "73288ceca515a413e3b40773abe9d6c07b318657f6734b6fc6137caf7c692a89",
+    "results/leap-grpcio12-bridge-1/runtime-tests.log": "5f46595ef1a17a197c3bf8a6fd0203b978d27a00a3246ef186882a4ad67d078f",
+    "results/leap-python-grpcio-candidate-12/build.log": "60187d1f56bfaca18339d26d2cfeeaaf537d5fa4df9f9d61d5824db1201c6a0d",
+    "results/leap-python-grpcio-candidate-12/build.json": "a92d28d013ece4d3c454e289531724ac628495e06088f22bb0f02696f4984411",
+    "results/grpcio-native-build-12/build.log": "a67390382177e056963f2738c774a688eea55f0f777f42483dc2d2ccb118d115",
+    "results/grpcio-native-build-12/status.json": "9ca4c4ec212fbc8204eff9dfe4c9f0b04623f391297ba7694e3f14df5db6b75f",
+    "results/grpcio-native-build-12/poll-init.test.log": "f78f8073be887d0cc105eed7f26a3ad1866f2da0267457c4175492c2920103ce",
+    "results/grpcio-native-build-12/poll-init.valgrind.log": "ca484a0b4a7c0f3158d0ac8938651dfee4e6d8e8465800f512818ecc2d398469",
+    "dependencies/grpcio-poll-init-cleanup.patch": "e37e086e9f8e8491774ba844a8fbc19efd7e6561494288b4fac52ed5f96f5cc0",
+    "dependencies/grpcio-poll-init-test.cc": "668cc20f756a9bbe7313640029e0d5465856b8f088796a747b14263982eae7a3"
+  }
+}

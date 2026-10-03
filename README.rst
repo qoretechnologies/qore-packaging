@@ -229,6 +229,11 @@ and its Compute/Acero/Dataset dependencies pass candidate qualification:
 regressions. The upstream/compiler diagnostic exceptions were explicitly accepted
 on 2026-10-03. Canonical Arrow/PyArrow rebuilds and installed Qore interoperation now pass.
 The grpcio dependency remains a candidate until its compiler review is complete.
+Candidate 12 also fixes failed poll-worker initialization: the exact native
+fault-injection binary passes 100 failures and recovery cycles without memory
+or descriptor errors, and all nine installed native controls retain only
+approved external allocation sites. Both installed Qore runtime/SDK suites
+pass with this RPM. See ``evidence/grpcio-poll-init-20261003.json``.
 See ``dependencies/arrow-flight.rst`` and
 ``evidence/grpcio-tools-rpm-final-20261003.json``.
 
@@ -257,13 +262,18 @@ diagnostic family and no unsuppressed lost allocations. The custom Node RPM
 passes 192 native cases and 5,249 reported JavaScript results (including upstream
 skips). Node compiler diagnostics and native ARM qualification remain open. See
 ``evidence/v8-leap-installed-20261003.json``.
+The inspector frame-vector and uvwasi timestamp compiler diagnostics are
+explicitly accepted after standalone functional and Valgrind checks; the scope
+is recorded in ``evidence/node-compiler-controls-20261003.json``. Other compiler
+diagnostic families remain separate release gates.
 
 The NATS broker candidate now fixes lost shutdown events caused by closing
 cluster sockets with unread TCP input. All three distributions pass twenty
 race-detector repetitions of the affected cluster test and eleven socket
 regressions, plus three runs of nineteen existing shutdown/TLS/buffer tests.
 The consumer-election fixture also passes both storage modes on all targets.
-Full candidate 17 RPM qualification remains in progress; see
+Full candidate 17 RPM qualification is running with the prepared build SDKs
+(the first launcher selected older images missing declared dependencies); see
 ``evidence/nats-shutdown-drain-20261003.json`` and
 ``evidence/nats-no-interest-fixture-20261003.json``.
 
