@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-03",
-  "status": "Final canonical process RPMs and installed runtime/SDK suites pass on all three distributions. Native CI passed. OBS revision 2 has verified source checksums, with publication disabled; native build results remain a separate gate.",
+  "status": "Final canonical process RPMs and installed runtime/SDK suites pass on all three distributions. Native CI passed. OBS revision 2 matches verified sources and passes all four enabled targets, including Fedora aarch64; publication remains disabled.",
   "pid_race": {
     "root_cause": "Linux wait_task_zombie claims EXIT_DEAD before release_task unhashes the PID. A competing waiter can see ECHILD while kill(pid,0) still succeeds. Missing /proc data was then interpreted as running.",
     "kernel_source": "https://raw.githubusercontent.com/torvalds/linux/v6.4/kernel/exit.c",
@@ -81,7 +81,15 @@
     "results/el10-process-state-installed-final-1/runtime-tests.log": "e6a0d07862c54a14ce7d5ddf7f88eb9a03901179e3b0eb4c4f4465d8494aa792",
     "results/process-docs-configure-2.log": "61331a568481090709dbdbb624431f7933d6e27444b4f254ba935227c7b5c173",
     "results/process-docs-build-2.log": "1f1204b0e90a51af50d8be7a50f0ae649af46e5ec690896b4767f24a21be709c",
-    "results/obs-process-state-source-20261003.xml": "53abc74472c633eb3a705420d478dab6ce7abc4225c4da7b0035130a70000b2f"
+    "results/obs-process-state-source-20261003.xml": "53abc74472c633eb3a705420d478dab6ce7abc4225c4da7b0035130a70000b2f",
+    "results/obs-process-state-native-20261003/AlmaLinux_10-x86_64-buildinfo": "925cba2bd461c749d72b79573cd7a9a7f9276ee3eadeed2d79286fe7edd3356a",
+    "results/obs-process-state-native-20261003/AlmaLinux_10-x86_64-log": "7824e51d298630fe01ce77576c0a8dd589ba3115c08a6c8791a90508bc90e571",
+    "results/obs-process-state-native-20261003/Fedora_44-aarch64-buildinfo": "a446db2f25f02e05f3cf3bc5c0e1a39a044c7345c6ee3f884300d101e515a872",
+    "results/obs-process-state-native-20261003/Fedora_44-aarch64-log": "5a443f617817f28ad45aef66f4ae3d69b72fa784027df63400a797af37453da3",
+    "results/obs-process-state-native-20261003/Fedora_44-x86_64-buildinfo": "2f6ecd7329b591318be8a8703288d377652f66ffa352f85b29c89fd827f469ca",
+    "results/obs-process-state-native-20261003/Fedora_44-x86_64-log": "83f02b2d8220efa2f74081e5b681b56fb74fc25218c2180fb768c524d10fcd40",
+    "results/obs-process-state-native-20261003/openSUSE_Leap_16.0-x86_64-buildinfo": "cc5239259dc0dcbaa1f56909d1b7358cdf3da3a0668880e58053bd1857b8a520",
+    "results/obs-process-state-native-20261003/openSUSE_Leap_16.0-x86_64-log": "bd8f804b0dc3108b919bcd13ba85329915d71b6b6fe5a990235b8a58c51e15dd"
   },
   "commits": {
     "runtime": "d3380738277c418fc76ee54ddcb25ae2195f992d",
@@ -168,6 +176,55 @@
     "srcmd5": "3d18f54085dd5ff18db026be4f737283",
     "source_checksums_verified": true,
     "publication": "disabled",
-    "native_builds": "queued; not claimed as passed"
+    "native_builds": {
+      "AlmaLinux_10-x86_64": {
+        "status": "succeeded",
+        "srcmd5": "3d18f54085dd5ff18db026be4f737283",
+        "cases": 70,
+        "assertions": 468,
+        "test_diagnostics": [],
+        "service_setup_or_postbuild_messages": [
+          "[   17s] useradd: Warning: missing or non-executable shell '/usr/sbin/nologin'",
+          "[  111s] Warning: mkbaselibs missing in build root, skipping baselibs"
+        ]
+      },
+      "Fedora_44-aarch64": {
+        "status": "succeeded",
+        "srcmd5": "3d18f54085dd5ff18db026be4f737283",
+        "cases": 70,
+        "assertions": 468,
+        "test_diagnostics": [],
+        "service_setup_or_postbuild_messages": [
+          "[  139s] Warning: mkbaselibs missing in build root, skipping baselibs"
+        ]
+      },
+      "Fedora_44-x86_64": {
+        "status": "succeeded",
+        "srcmd5": "3d18f54085dd5ff18db026be4f737283",
+        "cases": 70,
+        "assertions": 468,
+        "test_diagnostics": [],
+        "service_setup_or_postbuild_messages": [
+          "[  113s] Warning: mkbaselibs missing in build root, skipping baselibs"
+        ]
+      },
+      "openSUSE_Leap_16.0-x86_64": {
+        "status": "succeeded",
+        "srcmd5": "3d18f54085dd5ff18db026be4f737283",
+        "cases": 70,
+        "assertions": 468,
+        "test_diagnostics": [],
+        "service_setup_or_postbuild_messages": [
+          "[    9s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2",
+          "[   20s] WARNING could not set SOURCE_DATE_EPOCH, ensure mtime is in $TOPDIR/SOURCES/_scmsync.obsinfo or BUILD_CHANGELOG_TIMESTAMP is set in /.buildenv",
+          "[   20s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv",
+          "[   22s] WARNING could not set SOURCE_DATE_EPOCH, ensure mtime is in $TOPDIR/SOURCES/_scmsync.obsinfo or BUILD_CHANGELOG_TIMESTAMP is set in /.buildenv",
+          "[   22s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv",
+          "[   89s] WARNING could not set SOURCE_DATE_EPOCH, ensure mtime is in $TOPDIR/SOURCES/_scmsync.obsinfo or BUILD_CHANGELOG_TIMESTAMP is set in /.buildenv",
+          "[   89s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv"
+        ]
+      }
+    },
+    "service_messages_scope": "Recorded worker setup and post-build messages occur outside Qore compilation and tests. This is a verified OBS build result, not an exception or warning filter for these distribution-service messages."
   }
 }

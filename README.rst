@@ -91,7 +91,8 @@ filesystems. Canonical RPMs and installed runtime/SDK checks pass all 70 cases
 and 468 assertions on each distribution. Thirteen deterministic Valgrind cases
 are clean; three affected existing cases retain only approved external
 diagnostics. Normal native CI passes. OBS revision 2 has verified sources and
-publication disabled; native builds remain pending. See
+publication disabled. All four enabled native OBS targets pass the same 70
+cases and 468 assertions, including Fedora aarch64. See
 ``evidence/process-state-qualification-20261003.json`` and its complete audit.
 
 JNI native fixes and the latest Excel/ODS changes are committed. Release/Debug
