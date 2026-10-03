@@ -17,7 +17,7 @@ full logs, containers and RPMs are retained under ignored ``results/`` and
 ``work/`` directories. Do not interpret a successfully prepared SRPM as a
 successful binary build.
 
-Thirty-one external modules have committed RPM packaging and pass builds and
+Thirty-two external modules have committed RPM packaging and pass builds and
 installed-runtime suites on Fedora 44, Leap 16.0 and EL10. PostgreSQL includes
 mandatory Fedora pgvector coverage. ZeroMQ includes draft sockets and CURVE.
 The original twenty-one modules now have x86_64 OBS builds enabled on all three
@@ -75,13 +75,17 @@ compilation. Source and AOT spreadsheet suites pass 782 assertions. Valgrind
 has no unclassified contexts or native losses; only the previously approved
 JVM/glibc and CPython origins remain. Evidence is in
 ``evidence/jni-native-final-qualification-20261002.json`` and
-``evidence/jni-headless-merge-20261002.json``. JNI candidate builds and installed
-runtime/SDK/artifact checks pass on all three targets. The RPM recipe is committed
-as ``7527901``; canonical rebuilds are in progress. The OpenJDK 21 font-layout
+``evidence/jni-headless-merge-20261002.json``. JNI canonical builds and installed
+runtime/SDK/artifact checks pass on all three targets from ``7527901``. Every build
+and SDK run passes 37 suites (619 cases, 8,574 assertions); the minimal runtime
+passes 23 suites (465 cases, 4,248 assertions). All 22 AOT providers, debug symbols
+and sources, 195 JAR copies and 176 provenance records are verified. The OpenJDK 21 font-layout
 exception was accepted on 2026-10-03, with standalone Java controls retained in
-``evidence/jni-awt-diagnostic-20261003.json``. Candidate results are recorded in
-``evidence/jni-rpm-candidate-20261003.json``; JNI is not yet in the canonical
-qualified-module count.
+``evidence/jni-awt-diagnostic-20261003.json``. Final results are recorded in
+``evidence/jni-rpm-final-20261003.json``. Installed tests use an isolated bridge
+without external routing, supplying the hardware address required by Netty; the
+earlier loopback-only fixture warning is fixed. JNI is included in the local
+qualified-module count; OBS and native ARM checks remain separate.
 
 The testing project's build configuration explicitly chooses CPU onnxruntime
 for qore-stdlib's ELF dependencies. Fedora provides those capabilities from
@@ -168,10 +172,9 @@ verified canonical sources with publication disabled. See
 JNI qualification exposed JDBC transaction, cursor-reference and batch-reuse
 bugs, plus inaccurate Flyway action output types. The fixes are committed and
 pass the module's Alpine and Ubuntu CI jobs. Targeted PostgreSQL, failure-injection
-and source/AOT Flyway tests pass; current RPM builds cover all three targets. The approved
+and source/AOT Flyway tests pass; canonical RPM and installed checks pass on all three targets. The approved
 JVM/glibc diagnostics retain their raw Valgrind logs and standalone controls in
-``evidence/jni-external-diagnostics-20261002.json``. JNI is not yet included in the
-qualified package count. The corresponding Qore PostgreSQL native-array versus
+``evidence/jni-external-diagnostics-20261002.json``. The corresponding Qore PostgreSQL native-array versus
 JDBC-batch correction is recorded in
 ``evidence/core-pgsql-bulk-protocols-20261002.json`` and is included in the
 canonical release-20 core RPMs.

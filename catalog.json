@@ -74,12 +74,18 @@
     },
     "module-jni": {
       "repository": "https://github.com/qoretechnologies/module-jni.git",
-      "commit": "e709a0a0b8e6e6a771c8070017b84927d7ffb0e1",
+      "commit": "7527901a65d8886b507a1cf935d0223f5b170724",
       "spec": "qore-jni-module.spec",
-      "status": "inventory",
+      "status": "packaging committed; all three x86_64 canonical builds and installed runtime/SDK/artifact checks pass; OBS and native ARM qualification pending",
       "build_after": [
         "qore",
         "module-process"
+      ],
+      "vendor_manifest": "rpm/vendor-sources.json",
+      "exclusions": [
+        "test/kotlin-test.jar",
+        "test/opcua-test-server.jar",
+        "src/java/org/qore/lang/JdbcDatasource.class"
       ]
     },
     "module-kalman": {

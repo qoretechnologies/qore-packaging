@@ -1,0 +1,799 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "All three canonical RPM builds, installed runtime/SDK checks and artifact checks passed. OBS and native ARM qualification remain separate gates.",
+  "packaging_commit": "7527901a65d8886b507a1cf935d0223f5b170724",
+  "core_commit": "2a7afda675225f639a698ec289bc218560800485",
+  "targets": {
+    "fedora": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:3e1ece1094a8c66c10d76964c1c2ec0f991015322f905d9842515ad22d29f561",
+        "source": {
+          "schema": 1,
+          "commit": "7527901a65d8886b507a1cf935d0223f5b170724",
+          "source_date_epoch": 1790995698,
+          "name": "qore-jni-module",
+          "version": "2.7.0",
+          "exclusions": [
+            "test/kotlin-test.jar",
+            "test/opcua-test-server.jar",
+            "src/java/org/qore/lang/JdbcDatasource.class"
+          ],
+          "sources": {
+            "qore-jni-module-2.7.0.tar.xz": "6daffbceba7680bd9180f7393ccb73103ce595e07ed8ffeec884b7b0818a32d6",
+            "qore-jni-module.spec": "b8f60cc3836b0a827d2ca60f6fa08d05b24aa4203789921bb9b492987bcc484d",
+            "qore-jni-vendor-2.7.0.tar.xz": "0c91dff3193cb99a413fd96ce460d80a1cf1c691dac81647f1ca2b06966d35a5"
+          },
+          "spec": "qore-jni-module.spec",
+          "vendor_manifest": "rpm/vendor-sources.json",
+          "components": [
+            {
+              "archive": "qore-jni-vendor-2.7.0.tar.xz",
+              "top": "qore-jni-vendor-2.7.0",
+              "sha256": "d8ebc84f3fe03204079f9a98b2b0d2d786120b12c1dc2bf4e739b6a2d2c7e194",
+              "generated_from": {
+                "debian/java-dependencies.json": "038c18f91a001b8172a63718b75812f361107f208503bd8777dbb1c876d80391",
+                "debian/prepare-vendor.py": "648994c45007f220f53eb98669dc95161b486785799819774030ea1cc5d1ee13",
+                "debian/copyright": "3be65eb215b7924e170aee5bd9792809e38e4d2a68d20618de1a797c8428707a",
+                "rpm/prepare-vendor.py": "bc476652436ff7dbf20abc2ddd451bd7c2beb471397841fbdf97163bc8c5c7b4"
+              },
+              "licenses": [
+                "COPYRIGHT"
+              ]
+            }
+          ]
+        },
+        "jobs": 2,
+        "network": "isolated-bridge",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "cacddce4c86eaf37fed952ad350e651e6dcbe55d9a8f283d11075c61bae92747",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790995698",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/jni-rpm-source-final-1:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-jni-rpm-final-1:/work",
+          "sha256:3e1ece1094a8c66c10d76964c1c2ec0f991015322f905d9842515ad22d29f561",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-jni-module.spec"
+        ],
+        "source_only": false,
+        "network_info": {
+          "Name": "qore-rpm-isolated-bf84b736207b4df4a548bb6def56056b",
+          "Id": "cacddce4c86eaf37fed952ad350e651e6dcbe55d9a8f283d11075c61bae92747",
+          "Created": "2026-10-03T04:51:24.797938149+02:00",
+          "Scope": "local",
+          "Driver": "bridge",
+          "EnableIPv4": true,
+          "EnableIPv6": false,
+          "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+              {
+                "Subnet": "172.28.0.0/16"
+              }
+            ]
+          },
+          "Internal": true,
+          "Attachable": false,
+          "Ingress": false,
+          "ConfigFrom": {
+            "Network": ""
+          },
+          "ConfigOnly": false,
+          "Options": {
+            "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+            "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+          },
+          "Labels": {},
+          "Containers": {},
+          "Status": {
+            "IPAM": {
+              "Subnets": {
+                "172.28.0.0/16": {
+                  "IPsInUse": 2,
+                  "DynamicIPsAvailable": 65534
+                }
+              }
+            }
+          }
+        },
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-jni-kotlin-2.7.0-1.fc44.noarch.rpm": "610a5848adb6e95c66df55da4082c7565c43079e0467d0cf5774964645e25c4e",
+          "rpmbuild/RPMS/noarch/qore-jni-module-doc-2.7.0-1.fc44.noarch.rpm": "42bd98b7d85a8d041c9c155a1c12668907f9b61177fd90534a946d70225a0ebe",
+          "rpmbuild/RPMS/noarch/qore-jni-tools-2.7.0-1.fc44.noarch.rpm": "4fc97fd8ff15b7a9c40d263ab4fd49e3ad07def94cd171802ba2b234fd39f497",
+          "rpmbuild/RPMS/x86_64/qore-jni-module-2.7.0-1.fc44.x86_64.rpm": "6f593a67e1bf653d40501423bb1dbe9786637b3c40437fbb4699f67ed9b8abc8",
+          "rpmbuild/RPMS/x86_64/qore-jni-module-debuginfo-2.7.0-1.fc44.x86_64.rpm": "ec2da4712451e0b8fd09744a6df1082878fd5f4138f873f17cf5ff5de3b0b4bb",
+          "rpmbuild/RPMS/x86_64/qore-jni-module-debugsource-2.7.0-1.fc44.x86_64.rpm": "8fdea4d05f290094913245d41015a4fb5fac22610a5e28aba730699913fd8495",
+          "rpmbuild/SRPMS/qore-jni-module-2.7.0-1.fc44.src.rpm": "438ac5b5221b66c0231dd21f85b29e75b32365eaef73c38f8b43658033bfca8e"
+        }
+      },
+      "installed_test_networks": {
+        "sdk": {
+          "Name": "qore-rpm-isolated-3d04d1a6e5954c21a7feaeeeada68ae3",
+          "Id": "0d342ab3863c4a42eae704f9c2a851225b080e6ff14841ba683fefd258ba09c1",
+          "Created": "2026-10-03T05:05:13.5332807+02:00",
+          "Scope": "local",
+          "Driver": "bridge",
+          "EnableIPv4": true,
+          "EnableIPv6": false,
+          "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+              {
+                "Subnet": "172.30.0.0/16"
+              }
+            ]
+          },
+          "Internal": true,
+          "Attachable": false,
+          "Ingress": false,
+          "ConfigFrom": {
+            "Network": ""
+          },
+          "ConfigOnly": false,
+          "Options": {
+            "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+            "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+          },
+          "Labels": {},
+          "Containers": {},
+          "Status": {
+            "IPAM": {
+              "Subnets": {
+                "172.30.0.0/16": {
+                  "IPsInUse": 2,
+                  "DynamicIPsAvailable": 65534
+                }
+              }
+            }
+          }
+        },
+        "runtime": {
+          "Name": "qore-rpm-isolated-cedb82e4cf8040cd879c1685ebbec2ed",
+          "Id": "f58d569b399e5b5b246fd9893be449cd6d408171c8a13e1d498d13db4a9e202f",
+          "Created": "2026-10-03T05:07:26.166269964+02:00",
+          "Scope": "local",
+          "Driver": "bridge",
+          "EnableIPv4": true,
+          "EnableIPv6": false,
+          "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+              {
+                "Subnet": "172.30.0.0/16"
+              }
+            ]
+          },
+          "Internal": true,
+          "Attachable": false,
+          "Ingress": false,
+          "ConfigFrom": {
+            "Network": ""
+          },
+          "ConfigOnly": false,
+          "Options": {
+            "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+            "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+          },
+          "Labels": {},
+          "Containers": {},
+          "Status": {
+            "IPAM": {
+              "Subnets": {
+                "172.30.0.0/16": {
+                  "IPsInUse": 2,
+                  "DynamicIPsAvailable": 65534
+                }
+              }
+            }
+          }
+        }
+      },
+      "installed_images": {
+        "sdk_image": "sha256:23f49cb40d7f93e17b2d1f1ca9484b0214df33ba3c91242037f35df356f348a6",
+        "runtime_image": "sha256:62d8d2c825fab4b057a676eef32047979ff5161c5234b9167cf053f6c4e8c3c7"
+      },
+      "counts": {
+        "build": {
+          "suites": 37,
+          "cases": 619,
+          "assertions": 8574
+        },
+        "sdk": {
+          "suites": 37,
+          "cases": 619,
+          "assertions": 8574
+        },
+        "runtime": {
+          "suites": 23,
+          "cases": 465,
+          "assertions": 4248
+        }
+      },
+      "diagnostic_counts": {
+        "build": {
+          "/work/rpmbuild/BUILD/qore-jni-module-2.7.0-build/qore-jni-module-2.7.0/src/GlobalReference.h:68:5: warning: array subscript 3 is outside array bounds of \u2018void[24]\u2019 [-Warray-bounds=]": 2,
+          "/work/rpmbuild/BUILD/qore-jni-module-2.7.0-build/qore-jni-module-2.7.0/src/Array.h:69:5: warning: array subscript \u2018struct __as_base [0]\u2019 is partly outside array bounds of \u2018unsigned char[24]\u2019 [-Warray-bounds=]": 2
+        },
+        "sdk": {},
+        "runtime": {}
+      },
+      "artifacts": {
+        "aot_providers": 22,
+        "debug_sources_and_symbols": true,
+        "verified_jar_copies": 195,
+        "third_party_notice_records": 176,
+        "kotlin_notices_verbatim": true
+      },
+      "sha256": {
+        "results/fedora-jni-rpm-final-1/build.json": "93c7ea0ad250fc63aae63bc3eab48e54b7a28998b33dbff4a26564289d48b543",
+        "results/fedora-jni-rpm-final-1/build.log": "a5c17627fc89f797d134c68a49a069867e12bf8aaec95a6a8c097f19b3827746",
+        "results/fedora-jni-installed-final-2/sdk-tests.log": "af9e1a2c253b9872c6fae241251a7639b497fc872764afa13f853a6680e3cd7a",
+        "results/fedora-jni-installed-final-2/runtime-tests.log": "34d7c8e3e23ebebec8d9bc4b8b123acdbf52262fb59a0b1ccae276167987f30a",
+        "results/fedora-jni-installed-final-2/status.json": "24e7c7676cc0e4353e660502b5cfe996fc1ba0733ecf965a4fbdcd63c112bbdf",
+        "results/fedora-jni-artifacts-final-1/status.json": "f952f567b866875a61ceb547017d2a6ece73807cf3ed27ea485423680d337944",
+        "results/fedora-jni-artifacts-final-1/check.log": "9260744a1007ec8173f09bba68612116bc1ec5f2ad7ed117bfaec530c0d57873"
+      }
+    },
+    "leap": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:7ed5d90f940d87b9ee17e70512f45681330043159cae5685904b1194152f4da6",
+        "source": {
+          "schema": 1,
+          "commit": "7527901a65d8886b507a1cf935d0223f5b170724",
+          "source_date_epoch": 1790995698,
+          "name": "qore-jni-module",
+          "version": "2.7.0",
+          "exclusions": [
+            "test/kotlin-test.jar",
+            "test/opcua-test-server.jar",
+            "src/java/org/qore/lang/JdbcDatasource.class"
+          ],
+          "sources": {
+            "qore-jni-module-2.7.0.tar.xz": "6daffbceba7680bd9180f7393ccb73103ce595e07ed8ffeec884b7b0818a32d6",
+            "qore-jni-module.spec": "b8f60cc3836b0a827d2ca60f6fa08d05b24aa4203789921bb9b492987bcc484d",
+            "qore-jni-vendor-2.7.0.tar.xz": "0c91dff3193cb99a413fd96ce460d80a1cf1c691dac81647f1ca2b06966d35a5"
+          },
+          "spec": "qore-jni-module.spec",
+          "vendor_manifest": "rpm/vendor-sources.json",
+          "components": [
+            {
+              "archive": "qore-jni-vendor-2.7.0.tar.xz",
+              "top": "qore-jni-vendor-2.7.0",
+              "sha256": "d8ebc84f3fe03204079f9a98b2b0d2d786120b12c1dc2bf4e739b6a2d2c7e194",
+              "generated_from": {
+                "debian/java-dependencies.json": "038c18f91a001b8172a63718b75812f361107f208503bd8777dbb1c876d80391",
+                "debian/prepare-vendor.py": "648994c45007f220f53eb98669dc95161b486785799819774030ea1cc5d1ee13",
+                "debian/copyright": "3be65eb215b7924e170aee5bd9792809e38e4d2a68d20618de1a797c8428707a",
+                "rpm/prepare-vendor.py": "bc476652436ff7dbf20abc2ddd451bd7c2beb471397841fbdf97163bc8c5c7b4"
+              },
+              "licenses": [
+                "COPYRIGHT"
+              ]
+            }
+          ]
+        },
+        "jobs": 2,
+        "network": "isolated-bridge",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "fa92d1617cff27297902ec5dd070a3a5444d9d2002ba830e448f2941b89d1882",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790995698",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/jni-rpm-source-final-1:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-jni-rpm-final-1:/work",
+          "sha256:7ed5d90f940d87b9ee17e70512f45681330043159cae5685904b1194152f4da6",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-jni-module.spec"
+        ],
+        "source_only": false,
+        "network_info": {
+          "Name": "qore-rpm-isolated-7aeecc6440244e80bd8ef0feb373d816",
+          "Id": "fa92d1617cff27297902ec5dd070a3a5444d9d2002ba830e448f2941b89d1882",
+          "Created": "2026-10-03T04:51:25.070684505+02:00",
+          "Scope": "local",
+          "Driver": "bridge",
+          "EnableIPv4": true,
+          "EnableIPv6": false,
+          "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+              {
+                "Subnet": "172.29.0.0/16"
+              }
+            ]
+          },
+          "Internal": true,
+          "Attachable": false,
+          "Ingress": false,
+          "ConfigFrom": {
+            "Network": ""
+          },
+          "ConfigOnly": false,
+          "Options": {
+            "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+            "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+          },
+          "Labels": {},
+          "Containers": {},
+          "Status": {
+            "IPAM": {
+              "Subnets": {
+                "172.29.0.0/16": {
+                  "IPsInUse": 2,
+                  "DynamicIPsAvailable": 65534
+                }
+              }
+            }
+          }
+        },
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-jni-kotlin-2.7.0-1.noarch.rpm": "c157228c98e2fc4a70ba7818a273e11edb93df80af33dd6578f042d21b24ffdf",
+          "rpmbuild/RPMS/noarch/qore-jni-module-doc-2.7.0-1.noarch.rpm": "b0762f5cc46b344149d59eea51707f010784f429a50bedc10561fb9db0df6b42",
+          "rpmbuild/RPMS/noarch/qore-jni-tools-2.7.0-1.noarch.rpm": "77b24ba5b70e9fe58d102dd8cb3c2221c176e1be5f3ac74b0425046dfe28b766",
+          "rpmbuild/RPMS/x86_64/qore-jni-module-2.7.0-1.x86_64.rpm": "5ab824d01e6503ab56c5b035bbfa445ba6f1acc191bccc39c6aa512b83f8f7ad",
+          "rpmbuild/RPMS/x86_64/qore-jni-module-debuginfo-2.7.0-1.x86_64.rpm": "a980a877e369b9a146c8f6cd06b062f39cccc289b774be2cd52c07420fef6ade",
+          "rpmbuild/RPMS/x86_64/qore-jni-module-debugsource-2.7.0-1.x86_64.rpm": "d23262e1c9a465ed9651df299aa2117788674eaa11d780595202a15502d18f8e",
+          "rpmbuild/SRPMS/qore-jni-module-2.7.0-1.src.rpm": "46523240cc2eb2541d00084b86f4aa798c79b7b4fe29bb8931da6a19a6986b87"
+        }
+      },
+      "installed_test_networks": {
+        "sdk": {
+          "Name": "qore-rpm-isolated-8e853054c5364bb5bc64393029669c65",
+          "Id": "fdb5f8c610e41555eb6da102fc60b3662a0e56c9f950d769863164de460aedd6",
+          "Created": "2026-10-03T05:05:13.533251004+02:00",
+          "Scope": "local",
+          "Driver": "bridge",
+          "EnableIPv4": true,
+          "EnableIPv6": false,
+          "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+              {
+                "Subnet": "172.29.0.0/16"
+              }
+            ]
+          },
+          "Internal": true,
+          "Attachable": false,
+          "Ingress": false,
+          "ConfigFrom": {
+            "Network": ""
+          },
+          "ConfigOnly": false,
+          "Options": {
+            "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+            "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+          },
+          "Labels": {},
+          "Containers": {},
+          "Status": {
+            "IPAM": {
+              "Subnets": {
+                "172.29.0.0/16": {
+                  "IPsInUse": 2,
+                  "DynamicIPsAvailable": 65534
+                }
+              }
+            }
+          }
+        },
+        "runtime": {
+          "Name": "qore-rpm-isolated-520aa6c14a114744b9536651af7b51a3",
+          "Id": "464b008a02bd0beee37410124afa5f5f3d6ccce8cee5d2868dc479f1aeaaa481",
+          "Created": "2026-10-03T05:07:29.298734176+02:00",
+          "Scope": "local",
+          "Driver": "bridge",
+          "EnableIPv4": true,
+          "EnableIPv6": false,
+          "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+              {
+                "Subnet": "172.29.0.0/16"
+              }
+            ]
+          },
+          "Internal": true,
+          "Attachable": false,
+          "Ingress": false,
+          "ConfigFrom": {
+            "Network": ""
+          },
+          "ConfigOnly": false,
+          "Options": {
+            "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+            "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+          },
+          "Labels": {},
+          "Containers": {},
+          "Status": {
+            "IPAM": {
+              "Subnets": {
+                "172.29.0.0/16": {
+                  "IPsInUse": 2,
+                  "DynamicIPsAvailable": 65534
+                }
+              }
+            }
+          }
+        }
+      },
+      "installed_images": {
+        "sdk_image": "sha256:925d4c780537b0ff3d546c4efc0bd9e331da3c833dd40118f60912c910b20a0e",
+        "runtime_image": "sha256:b6030df83ea4426cc6862dca1a932c4cc8c1bd3e003c0bfafc06b277a7bd73ae"
+      },
+      "counts": {
+        "build": {
+          "suites": 37,
+          "cases": 619,
+          "assertions": 8574
+        },
+        "sdk": {
+          "suites": 37,
+          "cases": 619,
+          "assertions": 8574
+        },
+        "runtime": {
+          "suites": 23,
+          "cases": 465,
+          "assertions": 4248
+        }
+      },
+      "diagnostic_counts": {
+        "build": {
+          "WARNING in native method: JNI call made without checking exceptions when required to from CallObjectMethodV": 133
+        },
+        "sdk": {
+          "WARNING in native method: JNI call made without checking exceptions when required to from CallObjectMethodV": 133
+        },
+        "runtime": {
+          "WARNING in native method: JNI call made without checking exceptions when required to from CallObjectMethodV": 133
+        }
+      },
+      "artifacts": {
+        "aot_providers": 22,
+        "debug_sources_and_symbols": true,
+        "verified_jar_copies": 195,
+        "third_party_notice_records": 176,
+        "kotlin_notices_verbatim": true
+      },
+      "sha256": {
+        "results/leap-jni-rpm-final-1/build.json": "e6476be22ef0c1e35d621b397a1bfb4d2513cb98754695881cdfdebafc457735",
+        "results/leap-jni-rpm-final-1/build.log": "9155447006eb735b34ab1a3897da6e378ac1e65d5f4b0026101036188db6dd81",
+        "results/leap-jni-installed-final-2/sdk-tests.log": "a8737e2ae22834244d94fe70d2f297b3946cc03805357e6c0ab013f9c04df544",
+        "results/leap-jni-installed-final-2/runtime-tests.log": "8ed99463d5956d08a97ce4debf3852775338454e787a6befa50ff30749288c30",
+        "results/leap-jni-installed-final-2/status.json": "263590497f4bc9e56a3a0b71433df1f9708fc4919ca5b26de2571e281aac6b14",
+        "results/leap-jni-artifacts-final-1/status.json": "444be2c6464375fe5fc6cea6a9f6e06ea3b6efe93e918ef826b1d0b28777e659",
+        "results/leap-jni-artifacts-final-1/check.log": "9260744a1007ec8173f09bba68612116bc1ec5f2ad7ed117bfaec530c0d57873"
+      }
+    },
+    "el10": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:5e8465fde823b73867e226bd550a89127ec8a8ff829cb45adc5435da415e5cb1",
+        "source": {
+          "schema": 1,
+          "commit": "7527901a65d8886b507a1cf935d0223f5b170724",
+          "source_date_epoch": 1790995698,
+          "name": "qore-jni-module",
+          "version": "2.7.0",
+          "exclusions": [
+            "test/kotlin-test.jar",
+            "test/opcua-test-server.jar",
+            "src/java/org/qore/lang/JdbcDatasource.class"
+          ],
+          "sources": {
+            "qore-jni-module-2.7.0.tar.xz": "6daffbceba7680bd9180f7393ccb73103ce595e07ed8ffeec884b7b0818a32d6",
+            "qore-jni-module.spec": "b8f60cc3836b0a827d2ca60f6fa08d05b24aa4203789921bb9b492987bcc484d",
+            "qore-jni-vendor-2.7.0.tar.xz": "0c91dff3193cb99a413fd96ce460d80a1cf1c691dac81647f1ca2b06966d35a5"
+          },
+          "spec": "qore-jni-module.spec",
+          "vendor_manifest": "rpm/vendor-sources.json",
+          "components": [
+            {
+              "archive": "qore-jni-vendor-2.7.0.tar.xz",
+              "top": "qore-jni-vendor-2.7.0",
+              "sha256": "d8ebc84f3fe03204079f9a98b2b0d2d786120b12c1dc2bf4e739b6a2d2c7e194",
+              "generated_from": {
+                "debian/java-dependencies.json": "038c18f91a001b8172a63718b75812f361107f208503bd8777dbb1c876d80391",
+                "debian/prepare-vendor.py": "648994c45007f220f53eb98669dc95161b486785799819774030ea1cc5d1ee13",
+                "debian/copyright": "3be65eb215b7924e170aee5bd9792809e38e4d2a68d20618de1a797c8428707a",
+                "rpm/prepare-vendor.py": "bc476652436ff7dbf20abc2ddd451bd7c2beb471397841fbdf97163bc8c5c7b4"
+              },
+              "licenses": [
+                "COPYRIGHT"
+              ]
+            }
+          ]
+        },
+        "jobs": 2,
+        "network": "isolated-bridge",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "0e8c7b0e3b48b92374673737ddc309e293ea662e4637104387b7d47ddb732a29",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1790995698",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/jni-rpm-source-final-1:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-jni-rpm-final-1:/work",
+          "sha256:5e8465fde823b73867e226bd550a89127ec8a8ff829cb45adc5435da415e5cb1",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-jni-module.spec"
+        ],
+        "source_only": false,
+        "network_info": {
+          "Name": "qore-rpm-isolated-98c1b63de10146ed96b30e2f179c9ba7",
+          "Id": "0e8c7b0e3b48b92374673737ddc309e293ea662e4637104387b7d47ddb732a29",
+          "Created": "2026-10-03T04:51:25.342140613+02:00",
+          "Scope": "local",
+          "Driver": "bridge",
+          "EnableIPv4": true,
+          "EnableIPv6": false,
+          "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+              {
+                "Subnet": "172.30.0.0/16"
+              }
+            ]
+          },
+          "Internal": true,
+          "Attachable": false,
+          "Ingress": false,
+          "ConfigFrom": {
+            "Network": ""
+          },
+          "ConfigOnly": false,
+          "Options": {
+            "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+            "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+          },
+          "Labels": {},
+          "Containers": {},
+          "Status": {
+            "IPAM": {
+              "Subnets": {
+                "172.30.0.0/16": {
+                  "IPsInUse": 2,
+                  "DynamicIPsAvailable": 65534
+                }
+              }
+            }
+          }
+        },
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-jni-kotlin-2.7.0-1.el10.noarch.rpm": "ab3ef8632c62e300d20fda1d9a580a9147aad0cc6bd6b33700a6da0f60fa0df2",
+          "rpmbuild/RPMS/noarch/qore-jni-module-doc-2.7.0-1.el10.noarch.rpm": "3754ab825bc48f9054067cb728655739db8024f80b8b2eae0157e353282fc6f8",
+          "rpmbuild/RPMS/noarch/qore-jni-tools-2.7.0-1.el10.noarch.rpm": "959ff5269d8434183dd296f152bf488c0579c0ba18ee784b1830e7d8fe8e70b2",
+          "rpmbuild/RPMS/x86_64/qore-jni-module-2.7.0-1.el10.x86_64.rpm": "195ef89d32ae3be382d7125670a39f2a835d52ce7e408cc7bb6b80d8d6a9d84b",
+          "rpmbuild/RPMS/x86_64/qore-jni-module-debuginfo-2.7.0-1.el10.x86_64.rpm": "71295e0e1d10ca61581040a7241a313b7cc9141475b8638e28dc8b6adb67b610",
+          "rpmbuild/RPMS/x86_64/qore-jni-module-debugsource-2.7.0-1.el10.x86_64.rpm": "704718408c1481f4190fa8ca3c2315959f5b2549328054aefbf959b947879532",
+          "rpmbuild/SRPMS/qore-jni-module-2.7.0-1.el10.src.rpm": "d33637a27a9c0b6830c5bfc0161b00232d6258004a3b4405b3a2b5ec190e9ffc"
+        }
+      },
+      "installed_test_networks": {
+        "sdk": {
+          "Name": "qore-rpm-isolated-1500e464d7594105b16d0b468f93f55c",
+          "Id": "84abb605c715d6dcd017b0a620d317b5cb6a117d4e7cc988ed6a638df9416b92",
+          "Created": "2026-10-03T05:05:13.458692441+02:00",
+          "Scope": "local",
+          "Driver": "bridge",
+          "EnableIPv4": true,
+          "EnableIPv6": false,
+          "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+              {
+                "Subnet": "172.28.0.0/16"
+              }
+            ]
+          },
+          "Internal": true,
+          "Attachable": false,
+          "Ingress": false,
+          "ConfigFrom": {
+            "Network": ""
+          },
+          "ConfigOnly": false,
+          "Options": {
+            "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+            "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+          },
+          "Labels": {},
+          "Containers": {},
+          "Status": {
+            "IPAM": {
+              "Subnets": {
+                "172.28.0.0/16": {
+                  "IPsInUse": 2,
+                  "DynamicIPsAvailable": 65534
+                }
+              }
+            }
+          }
+        },
+        "runtime": {
+          "Name": "qore-rpm-isolated-7578d2405e904932b25b7af220d3d2b9",
+          "Id": "5c53dcab8c023daf8be558f886a6bbd24bd25e20e37766dd71aae781c294cab6",
+          "Created": "2026-10-03T05:07:30.330456935+02:00",
+          "Scope": "local",
+          "Driver": "bridge",
+          "EnableIPv4": true,
+          "EnableIPv6": false,
+          "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+              {
+                "Subnet": "172.28.0.0/16"
+              }
+            ]
+          },
+          "Internal": true,
+          "Attachable": false,
+          "Ingress": false,
+          "ConfigFrom": {
+            "Network": ""
+          },
+          "ConfigOnly": false,
+          "Options": {
+            "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+            "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+          },
+          "Labels": {},
+          "Containers": {},
+          "Status": {
+            "IPAM": {
+              "Subnets": {
+                "172.28.0.0/16": {
+                  "IPsInUse": 2,
+                  "DynamicIPsAvailable": 65534
+                }
+              }
+            }
+          }
+        }
+      },
+      "installed_images": {
+        "sdk_image": "sha256:9bdea8c6ce7bf30453bf3af9633916e397a44b06d1c59fd42d7fe292e86af2e1",
+        "runtime_image": "sha256:5f0747be48d6ef8182b1442730c3e6c05d1bc822026fc0b67fbb9b3ce9e39541"
+      },
+      "counts": {
+        "build": {
+          "suites": 37,
+          "cases": 619,
+          "assertions": 8574
+        },
+        "sdk": {
+          "suites": 37,
+          "cases": 619,
+          "assertions": 8574
+        },
+        "runtime": {
+          "suites": 23,
+          "cases": 465,
+          "assertions": 4248
+        }
+      },
+      "diagnostic_counts": {
+        "build": {
+          "WARNING in native method: JNI call made without checking exceptions when required to from CallObjectMethodV": 121
+        },
+        "sdk": {
+          "WARNING in native method: JNI call made without checking exceptions when required to from CallObjectMethodV": 121
+        },
+        "runtime": {
+          "WARNING in native method: JNI call made without checking exceptions when required to from CallObjectMethodV": 121
+        }
+      },
+      "artifacts": {
+        "aot_providers": 22,
+        "debug_sources_and_symbols": true,
+        "verified_jar_copies": 195,
+        "third_party_notice_records": 176,
+        "kotlin_notices_verbatim": true
+      },
+      "sha256": {
+        "results/el10-jni-rpm-final-1/build.json": "c8062b516a068c72f40003216d71c1bbcf88704406a88c27650d6e4bd059aef7",
+        "results/el10-jni-rpm-final-1/build.log": "103fdae3d951d8bdabef278d3918c32f3779538582c6c897383712e9c7bb2e8a",
+        "results/el10-jni-installed-final-2/sdk-tests.log": "ed8f2ce46c69ebd97f8c3f34b105ff7cf9e9960e3b72799eb13a4af32c7a06c9",
+        "results/el10-jni-installed-final-2/runtime-tests.log": "dd12cbfcbc6cb30c862c6bac8bcf9607c716c91a64923df3a67703e9c070f1e9",
+        "results/el10-jni-installed-final-2/status.json": "678ec1c440fa6ce636fb5da078880fcf2807483883c5f4d58d6fcbc4b1676d45",
+        "results/el10-jni-artifacts-final-1/status.json": "d6c40ae506126920c57434338ca7ca89c19f59c3973398ddf4a557a95a75b698",
+        "results/el10-jni-artifacts-final-1/check.log": "9260744a1007ec8173f09bba68612116bc1ec5f2ad7ed117bfaec530c0d57873"
+      }
+    }
+  },
+  "diagnostics": [
+    "evidence/jni-external-diagnostics-20261002.json",
+    "evidence/jni-compiler-diagnostics-20261002.json",
+    "evidence/jni-awt-diagnostic-20261003.json"
+  ],
+  "fixture_correction": "Canonical installed suites use the isolated, non-routed bridge also used by RPM builds. Netty needs a non-loopback hardware address; loopback-only candidate and first canonical installed runs passed functionally but emitted a random-address fallback warning. Final installed runs retain all tests and have no such warning."
+}
