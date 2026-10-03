@@ -331,6 +331,12 @@ retained license files. It never downloads a missing generated component.
 This supports JNI's aggregate of pinned Java/Kotlin archives while preserving
 the original per-dependency URLs, sources and notices inside the component.
 
+Leap's PDFium toolchain needs debugedit 5.1 for indexed DWARF in Clang runtime
+objects. The openSUSE backport preserves the distribution helper layout and
+passes 35 upstream tests, installed lint, hardlink/debug-index controls and
+Valgrind with no errors or lost allocations. Both executables use PIE. See
+``evidence/debugedit-leap-20261003.json``; canonical OBS qualification follows.
+
 ``dependencies/sources.json`` pins upstream dependency downloads. The nghttp2
 backport preserves the client/server applications and their matching library;
 ngtcp2 preserves matching OpenSSL and GnuTLS providers. c-ares carries both
