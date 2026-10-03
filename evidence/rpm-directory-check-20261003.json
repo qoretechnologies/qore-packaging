@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Passed",
+  "tests": {
+    "orchestration": 94,
+    "new_directory_ownership_tests": 8
+  },
+  "integration": {
+    "target": "openSUSE Leap 16 x86_64",
+    "old_jni_payload": "Correctly rejected the unowned Kotlin documentation parent.",
+    "corrected_jni_payload": "All runtime/tools/Kotlin/documentation parents are owned.",
+    "scope": "Automatic debug packages have their separate artifact gate, matching the scope of openSUSE 50-check-filelist."
+  },
+  "upstream_scope": "https://github.com/openSUSE/post-build-checks/blob/master/checks/50-check-filelist",
+  "sha256": {
+    "results/rpm-directory-unit-tests-3.log": "d934163c9caac42d8af58b7a36bb6e0c724da123027f2a7c8d71d3a59a045e29",
+    "results/jni-directory-ownership-2.json": "a3931cc5b7ba17e71d7143b4b803404701f4c691994af7d356454aa18df95f0a",
+    "results/leap-jni-rpm-final-1-directory-ownership.json": "1fc40737ad086d305d3b3d6b1d630a2eceada64b424d5b22519f18cb04150d58",
+    "results/leap-jni-rpm-candidate-7-directory-ownership.json": "e9b0f96f02370620fcd33082005593f06ff9e8c25ed250eee0c76ade9ecb2686"
+  }
+}

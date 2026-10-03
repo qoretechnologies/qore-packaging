@@ -238,6 +238,19 @@ Run the inexpensive orchestration tests before changing a source pin::
     python3 -B -W error -m unittest discover -s tests -v
     python3 tools/packaging.py order
 
+Check package directory ownership in the matching target SDK before uploading
+to OBS. Supply the runtime, development, tools and documentation RPMs from one
+build together; their dependencies must be installed in that SDK::
+
+    python3 -B -W error tools/check-rpm-directories.py /rpms/runtime.rpm /rpms/tools.rpm
+
+The command reports unowned parent directories per RPM and fails if any remain.
+It queries the target RPM database without installing or changing packages.
+Leave automatic debuginfo/debugsource RPMs to the separate debug-artifact gate,
+matching openSUSE's ``50-check-filelist`` application-package scope. This check
+catches missing ``%dir`` entries such as a license directory's parent; dependency
+resolution, file verification and installed functionality have separate checks.
+
 Prepare a source bundle from a committed revision::
 
     python3 tools/packaging.py prepare --repo ../qore --ref COMMIT \
