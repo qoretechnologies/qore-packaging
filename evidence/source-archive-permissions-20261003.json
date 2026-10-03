@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "date": "2026-10-03",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "root_cause": "git archive honors per-user/repository tar.umask. Committed PDF packaging files inherited mode 0664 while candidate overlays were 0644, making source bundles environment-dependent.",
+  "fix": "Pass git -c tar.umask=0022 for the archive operation, preserving executable and symlink semantics without changing repository configuration.",
+  "baseline": "The new regression fails for all three hostile/different repository settings (0000,0002,0077) and byte reproducibility before the fix.",
+  "qualification": "116 orchestration tests pass with -W error. Regression checks exact file, executable, directory and symlink modes and byte-identical archives across all three settings.",
+  "sha256": {
+    "results/packaging-orchestration-tests-20261003-umask.log": "5fb3646a158ef2121391af44c7f85a59b20d245206fa4d6b797291e6f4cd5fa9",
+    "results/source-archive-umask-baseline-20261003.log": "18707098bc0e7e6cfef7fd7e86d4481457379ca44388256118631dea49d6e34c",
+    "tools/packaging.py": "093ea25bb117ddad2cfb012c9b7131106b2bed1315af0747e6c5ecdc2b37b0d1",
+    "tests/test_packaging.py": "d1ec399abd5a7a5bad21f0b5cd4a19e1fc954f69ce2cd64a43cc7423697f4f38"
+  }
+}

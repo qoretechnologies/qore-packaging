@@ -283,6 +283,9 @@ contains the commit, timestamp and SHA-256 of each input. Working-tree changes
 and ignored build outputs are not read. ``--packaging-overlay`` can include
 spec files and ``rpm/`` from a separate directory for pre-commit testing. Such
 bundles are explicitly marked ``candidate`` and must not be published.
+Archive permissions use a fixed Git ``tar.umask=0022`` so a developer's local
+Git configuration cannot change the source bundle or make committed package
+files group-writable. Executable bits and safe symlink targets are retained.
 
 Recipe identity and source declarations are checked in the RPM preamble.
 Metadata in descriptions or generated files, such as a pkg-config ``Version``

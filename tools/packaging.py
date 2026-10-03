@@ -90,7 +90,9 @@ def prepare_source(repo, ref, name, version, output, exclusions=(), packaging_ov
         raise ValueError("Vendor manifest and source cache must be supplied together")
     commit = git(repo, "rev-parse", "--verify", "--end-of-options", ref + "^{commit}").decode().strip()
     timestamp = int(git(repo, "show", "-s", "--format=%ct", commit).decode())
-    archive = git(repo, "archive", "--format=tar", commit)
+    # Git's tar.umask is user/repository configurable. Fix it so committed
+    # sources and candidate overlays use the same reproducible permissions.
+    archive = git(repo, "-c", "tar.umask=0022", "archive", "--format=tar", commit)
     prefix = f"{name}-{version}"
     overlays = {}
     if packaging_overlay is not None:

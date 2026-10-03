@@ -102,6 +102,32 @@ class SourceFixture(unittest.TestCase):
 
 
 class SourceTests(SourceFixture):
+    def test_repository_tar_umask_does_not_change_source_bundle_permissions(self):
+        script = self.repo / 'run.sh'
+        script.write_text('#!/bin/sh\nexit 0\n')
+        script.chmod(0o755)
+        self.git('add', 'run.sh')
+        self.git('commit', '-qm', 'executable fixture')
+        payloads = []
+        for mask in ('0000', '0002', '0077'):
+            with self.subTest(mask=mask):
+                self.git('config', 'tar.umask', mask)
+                manifest = self.prepare('mask-' + mask)
+                filename = next(iter(manifest['sources']))
+                payload = (self.root / ('mask-' + mask) / filename).read_bytes()
+                payloads.append(payload)
+                with tarfile.open(fileobj=io.BytesIO(payload)) as archive:
+                    prefix = manifest['name'] + '-' + manifest['version'] + '/'
+                    self.assertEqual(archive.getmember(prefix + 'source.txt').mode, 0o644)
+                    self.assertEqual(archive.getmember(prefix + 'run.sh').mode, 0o755)
+                    self.assertEqual(archive.getmember(prefix + 'excluded').mode, 0o755)
+                    link = archive.getmember(prefix + 'link')
+                    self.assertTrue(link.issym())
+                    self.assertEqual(link.linkname, 'source.txt')
+                    self.assertEqual(link.mode, 0o777)
+        self.assertEqual(payloads[0], payloads[1])
+        self.assertEqual(payloads[0], payloads[2])
+
     def test_missing_recipe_source_leaves_no_output_or_temporary_files(self):
         recipe = self.repo / "qore-test-module.spec"
         recipe.write_text("Name: qore-test-module\nVersion: 1.0.0\n"
