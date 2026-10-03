@@ -73,11 +73,15 @@ target metadata/dependency tests pass and OBS resolves the required headers.
 Canonical builds pass all 400 suites on each distribution; installed runtime/SDK
 upgrades, ONNX, compiler, tools and debugger checks also pass. Source ``d58eec0b2``
 on ``rpm/llvm19-sdk`` retains the qualified release-20 runtime sources. OBS
-revision 16 has matching checksums and publication disabled; native rebuilds and
-ARM installed checks remain pending. Existing core build diagnostics are
-unchanged after normalizing source and temporary paths. See
-``evidence/llvm-sdk-dependency-20261003.json`` and
-``evidence/core21-local-installed-20261003.json``.
+revision 16 has matching checksums and passes all 400 suites on all six native
+OBS targets. Native ARM installed-package checks pass on Fedora, Leap and
+AlmaLinux, covering minimal-runtime ONNX inference, SDK consumers, tools,
+remote debuggers and RPM verification. Publication remains disabled. Existing
+core build diagnostics are unchanged after normalizing source and temporary
+paths. See ``evidence/llvm-sdk-dependency-20261003.json``,
+``evidence/core21-local-installed-20261003.json``,
+``evidence/core21-native-builds-20261003.json`` and
+``evidence/core21-native-arm-installed-20261003.json``.
 
 JNI native fixes and the latest Excel/ODS changes are committed. Release/Debug
 reference, exception and cleanup suites pass; strict documentation and the new
@@ -277,8 +281,11 @@ selects its matching LLVM archiver/linker with the full OBS LTO flags;
 all 1,819 upstream tests and installed API, debugger and Valgrind checks pass
 on all three local targets. The committed rebuilds and installed checks also
 pass, including source and binary lint. The exact sources are staged as OBS
-revision 2 with publication disabled; native OBS rebuilds remain pending. See
-``evidence/pdfium-lto-qualification-20261003.json``.
+revision 2 with publication disabled. Both Leap and AlmaLinux native
+architectures pass all 1,819 upstream tests. Fedora's two builds still fail
+before compilation because OBS cannot retrieve dependency RPMs, despite their
+verified availability upstream. The single explicit rebuild reproduced that
+infrastructure failure. See ``evidence/pdfium-lto-qualification-20261003.json``.
 
 Oracle now has canonical local RPM builds and offline runtime/SDK checks on all
 three distributions, including source/AOT extensions, compiler metadata,
@@ -534,10 +541,11 @@ them.
 Native installed RPM qualification
 ---------------------------------
 
-The GitLab jobs ``rpm-fedora-arm64`` and ``rpm-leap-arm64`` run only when a
-pipeline is explicitly started with ``RPM_NATIVE_QUALIFICATION=core19``.
-Set ``RPM_NATIVE_TARGET=fedora`` or ``RPM_NATIVE_TARGET=leap`` to run only
-one target. They use native ARM runners and pinned distribution images. Their manifests
+The GitLab jobs ``rpm-fedora-arm64``, ``rpm-leap-arm64`` and ``rpm-el10-arm64``
+run only when a pipeline is explicitly started with
+``RPM_NATIVE_QUALIFICATION=core21``. Set ``RPM_NATIVE_TARGET`` to ``fedora``,
+``leap`` or ``el10`` to select one target. They use native ARM runners and pinned
+distribution images. Their manifests
 pin each OBS binary and core test fixture by SHA-256; no OBS credentials or
 published repository are needed. Package installation in these disposable
 containers accepts the pinned, unpublished testing RPMs. Public release
@@ -551,8 +559,8 @@ qcc, metadata extraction, utilities and debugger startup. Logs and package
 inventories are retained as CI artifacts. Never run this installation tool
 on a workstation; use a fresh disposable distribution container.
 
-Release 19 native ARM evidence is recorded in
-``evidence/core19-native-arm-installed-20261002.json``. Fedora 44 and Leap 16
-both passed all 400 OBS suites and native installed runtime/SDK qualification,
-including ONNX inference. Enterprise Linux ARM also passed release-19 installed qualification;
-combined-module/repository release gates are still pending; OBS testing publication remains disabled.
+Release 21 native ARM evidence is recorded in
+``evidence/core21-native-arm-installed-20261003.json``. Fedora 44, Leap 16 and
+AlmaLinux 10 all passed the 400 OBS suites and installed runtime/SDK qualification,
+including ONNX inference. Combined-module and repository release gates remain
+pending; OBS testing publication remains disabled.
