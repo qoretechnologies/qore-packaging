@@ -35,12 +35,13 @@
 %{?sle15_python_module_pythons}
 Name:           python-Cython
 Version:        3.2.9
-Release:        1.qore%{?dist}
+Release:        2.qore%{?dist}
 Summary:        The Cython compiler for writing C extensions for the Python language
 License:        Apache-2.0
 URL:            https://cython.org/
 # SourceRepository: https://github.com/cython/cython
 Source:         https://files.pythonhosted.org/packages/source/c/cython/cython-%{version}.tar.gz
+Source1:        python-Cython-rpmlintrc
 BuildRequires:  %{python_module devel >= 3.8}
 BuildRequires:  %{python_module pip}
 BuildRequires:  %{python_module setuptools}
@@ -50,6 +51,8 @@ BuildRequires:  %{python_module cffi}
 BuildRequires:  fdupes
 BuildRequires:  gcc-c++
 BuildRequires:  python-rpm-macros
+# Provides Python ABI and distribution metadata generators in OBS build roots.
+BuildRequires:  python-rpm-packaging
 Requires:       python-devel >= 3.8
 Conflicts:      python-Cython < 3
 Provides:       python-Cython3 = %{version}
@@ -89,8 +92,7 @@ for p in cython cythonize cygdb ; do
 done
 %python_group_libalternatives cython cythonize cygdb
 
-%{python_expand chmod a+x %{buildroot}%{$python_sitearch}/Cython/Build/Cythonize.py
-sed -i "s|^#!%{_bindir}/env python$|#!%{__$python}|" %{buildroot}%{$python_sitearch}/Cython/Build/Cythonize.py
+%{python_expand chmod 0644 %{buildroot}%{$python_sitearch}/Cython/Build/Cythonize.py
 $python -m compileall -d %{$python_sitearch} %{buildroot}%{$python_sitearch}/Cython/Build/
 $python -O -m compileall -d %{$python_sitearch} %{buildroot}%{$python_sitearch}/Cython/Build/
 %fdupes %{buildroot}%{$python_sitearch}
@@ -125,5 +127,8 @@ $python runtests.py -v -j %{_smp_build_ncpus}
 %{python_sitearch}/pyximport/
 
 %changelog
+* Sat Oct 03 2026 David Nichols <david@qore.org> - 3.2.9-2.qore
+- Declare the exact interpreter ABI and keep the imported Cythonize module non-executable.
+- Classify only the reviewed compiler templates and Python header dependency in rpmlint.
 * Fri Oct 02 2026 David Nichols <david@qore.org> - 3.2.9-1.qore
 - Backport Factory revision 93 for Leap PyArrow builds; enable upstream tests.

@@ -199,6 +199,13 @@ on 2026-10-03. Canonical rebuilds and installed Qore interoperation remain pendi
 See ``dependencies/arrow-flight.rst`` and
 ``evidence/grpcio-tools-rpm-final-20261003.json``.
 
+The Cython update supplies OBS's missing Python dependency generator and corrects
+the imported Cythonize module's executable mode. Its complete local suite passes
+(17,533 reported tests across eight workers, 49 skips), as do installed compiler
+positive/negative cases and ABI checks. Only the exact approved compiler-template
+classification rules are applied; unrelated lint errors remain visible. See
+``evidence/cython-package-classification-20261003.json``.
+
 V8 canonical RPMs from ``664eaf58`` pass Fedora and AlmaLinux builds and
 installed runtime/SDK qualification. Each target completes 14 suites (138
 executed cases, 10 explicit skips, 1,153 assertions), compiler and CLI consumers,

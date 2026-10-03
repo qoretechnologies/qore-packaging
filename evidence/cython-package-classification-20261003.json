@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Approved exact lint rules and Python ABI/module-mode corrections passed the full upstream suite and installed RPM checks; canonical OBS update is next.",
+  "root_cause": "rpmlint classifies C/C++/header files and a dependency on Python development headers by the package name suffix. Cython is itself a compiler and ships these files as runtime code-generation templates and debugger fixtures; its source translation/build features require Python development headers. openSUSE Factory already carries corresponding Cython filters.",
+  "proposal": "Limit filters to python313-Cython on x86_64/aarch64, 31 exact Cython file paths, and its exact python313-devel dependency. Do not filter the missing Python ABI dependency, script-without-shebang, new template paths, other package names or other dependency names.",
+  "upstream_packaging": "https://build.opensuse.org/projects/openSUSE:Factory/packages/python-Cython/files/python-Cython-rpmlintrc?expand=1",
+  "tests": {
+    "x86_64_OBS": 17527,
+    "aarch64_OBS": 17527,
+    "filter_scope_regressions": 2,
+    "real_rpmlint_control": "Exactly 32 classification messages removed; executable-bit error remains visible. Local standalone lint additionally reports the declared alts dependency symlinks; these are absent from both OBS lint outputs."
+  },
+  "actual_defects_corrected": [
+    "BuildRequire python-rpm-packaging, which supplies Python ABI metadata generators and was absent from both OBS build roots. An explicit Requires: python(abi) was rejected by installed-package tests because the single-spec macros rewrite it to python313(abi).",
+    "Install Cython/Build/Cythonize.py with mode 0644; the /usr/bin/cythonize entry point remains executable."
+  ],
+  "approval": {
+    "date": "2026-10-03",
+    "decision": "Allow this narrow lint exception",
+    "scope": "Only the 31 exact compiler-template paths and python313-devel dependency recorded in python-Cython-rpmlintrc."
+  },
+  "sha256": {
+    "dependencies/python-Cython-rpmlintrc": "a335589f84a4680f7a61a5431f6bf2ba3611401165543820cfb188a8e58435d6",
+    "tests/test_cython_rpmlint.py": "8fe478a2d7b530def19f3f6d7bd396bfb0c87e1b4a25240635346a1a65280c99",
+    "results/cython-lint-scope-tests-20261003.log": "73910f042f368541ad6dbc809c2df6bbff9c695823e82b1b46cdce1a56a84153",
+    "results/cython-rpmlint-before-20261003.log": "7c0e361bf779620f23dabfc028334be90c5ce1404bc9b62bc03aec66ed4cfda0",
+    "results/cython-rpmlint-proposed-2-20261003.log": "e80bd558956ba8098a190def54cdf547f380ac073f825feced39b4e688d5fe33",
+    "results/cython-factory-rpmlintrc-20261003.txt": "7f7b71f9a24cf02187ed3773392198d6c918955e6f543afb0abb93c14f94326b",
+    "results/obs-cython-x86_64-20261003.log": "b6692735c001a1aaf0c34ee59823b78c100d6127b285654a0d39ce2346792ee5",
+    "results/obs-cython-aarch64-20261003.log": "3779a25ddcbdc0ed501f4174ada71d05f778c45e01225e3defcf8d566c2167e6",
+    "dependencies/python-Cython.spec": "72a57b35bcad7f730f859fbfc155602a37842e0001cdb9165f3f66894f0c0fa4",
+    "results/leap-python-Cython-candidate-5/build.json": "2f99f742bd884bd56d4bdcd53f8dcfcd8cb16e36be1aa9791b0e2cc1825408bc",
+    "results/leap-python-Cython-candidate-5/build.log": "7eef99fba5959cc136df3e8f4b5df5ee56ded496b02666cb653cf3d8d5f20f9f",
+    "results/leap-cython-installed-candidate-5/consumer-lint.log": "118b6ca6fbaae13695486d0627994d14b6daa029547648b01aaec1f5b5b11c68",
+    "results/leap-cython-installed-candidate-5/status.json": "ab345ceafeb044f5733f717895ef5c4a1b14821393e805f44a2b93fe559e8b3f",
+    "results/leap-cython-installed-candidate-5/requires.txt": "33fa16f2516f56f633d2ef93cb2094d6ad8b0a23d40b02f1c48171c32d53feb1",
+    "results/cython-lint-scope-tests-20261003-final.log": "b360fcad7b340cf35c78f4848dd61a024b980a736b59c53cc59243dbce369d0a",
+    "results/python-abi-generator-4/status.json": "1d0454525ba518d75df38db2ffaefd554601aed6fbbdd4ec32f1415df2421f01"
+  },
+  "qualification": {
+    "build": {
+      "schema": 1,
+      "image": "sha256:f0ae3b38b63f2407a8f05daee5e05758fad2e5c42f5a8580a9793b049027d15d",
+      "source": {
+        "schema": 1,
+        "name": "python-Cython",
+        "version": "3.2.9",
+        "commit": null,
+        "source_date_epoch": 1785518455,
+        "spec": "python-Cython.spec",
+        "upstream": {
+          "url": "https://files.pythonhosted.org/packages/source/c/cython/cython-3.2.9.tar.gz",
+          "sha256": "d249c9022ab13286b17bd66f30609e800c5f95efeecb06168990c7a66cecde6c"
+        },
+        "sources": {
+          "cython-3.2.9.tar.gz": "d249c9022ab13286b17bd66f30609e800c5f95efeecb06168990c7a66cecde6c",
+          "python-Cython-rpmlintrc": "a335589f84a4680f7a61a5431f6bf2ba3611401165543820cfb188a8e58435d6",
+          "python-Cython.spec": "72a57b35bcad7f730f859fbfc155602a37842e0001cdb9165f3f66894f0c0fa4"
+        },
+        "candidate": true
+      },
+      "jobs": 8,
+      "network": "none",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--hostname",
+        "qore-rpm-builder",
+        "--user",
+        "1019:100",
+        "-e",
+        "HOME=/work/home",
+        "-e",
+        "SOURCE_DATE_EPOCH=1785518455",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/python-Cython-candidate-5:/sources:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/leap-python-Cython-candidate-5:/work",
+        "sha256:f0ae3b38b63f2407a8f05daee5e05758fad2e5c42f5a8580a9793b049027d15d",
+        "sh",
+        "-c",
+        "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+        "build-local",
+        "-ba",
+        "--define",
+        "_topdir /work/rpmbuild",
+        "--define",
+        "_sourcedir /sources",
+        "--define",
+        "_smp_build_ncpus 8",
+        "--define",
+        "_buildhost qore-rpm-builder",
+        "/sources/python-Cython.spec"
+      ],
+      "source_only": false,
+      "exit_code": 0,
+      "artifacts": {
+        "rpmbuild/RPMS/x86_64/python-Cython-debugsource-3.2.9-2.qore.x86_64.rpm": "5213e4be2dddb45d97b0e4b421e60b642f0a144d3e091702190d310e804c2f9a",
+        "rpmbuild/RPMS/x86_64/python313-Cython-3.2.9-2.qore.x86_64.rpm": "e4d273f5ad06bef3305fdfe6c74082d7136aa2e61a4ce0a646611820a3cfc08c",
+        "rpmbuild/RPMS/x86_64/python313-Cython-debuginfo-3.2.9-2.qore.x86_64.rpm": "f8e366f7b3e7e3b894130c5a01371559ee3070961c847523276bf2b6a1c14e11",
+        "rpmbuild/SRPMS/python-Cython-3.2.9-2.qore.src.rpm": "d59d0b6df259587644f6f67103cc759c778c6be08ced8062238399c708d50ee4"
+      }
+    },
+    "test_counts": [
+      2354,
+      1987,
+      1986,
+      2302,
+      2366,
+      2035,
+      2335,
+      2168
+    ],
+    "reported_tests": 17533,
+    "skips": 49,
+    "installed": {
+      "exit_code": 0,
+      "python_abi": "python(abi) = 3.13",
+      "Cythonize_mode": "0644",
+      "cli_tools": [
+        "cython",
+        "cythonize",
+        "cygdb"
+      ],
+      "compiled_extension_cases": [
+        "positive",
+        "zero",
+        "negative",
+        "wrong type"
+      ],
+      "lint": "0 errors; three already-approved libalternatives link diagnostics"
+    },
+    "root_cause_control": "results/python-abi-generator-4 proves the identical Python payload acquires python(abi) = 3.13 only when python-rpm-packaging supplies the generator; no explicit ABI requirement is used.",
+    "diagnostics": "The same unchanged upstream fixture diagnostic families and alts links covered by evidence/cython-external-diagnostics-20261003.json; no new compiler flag or warning suppression."
+  }
+}
