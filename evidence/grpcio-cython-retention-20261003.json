@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "User approved the exact process-lifetime Cython startup retention diagnostic on 2026-10-03.",
+  "root_cause": "Cython 3.2.9 defaults generate_cleanup_code to False. Generated module globals retain constants, functions, types and references to imported Python modules until process exit. The compiler documents that forced global/type cleanup has no safe ordering guarantee, so packaging retains the normal default.",
+  "control": {
+    "scope": "Cython-only extension and CPython, without Qore, gRPC or Abseil. Class construction/methods, positive/negative arguments, coroutine calls and teardown after 1 and 10000 lifetimes.",
+    "results": {
+      "1": {
+        "definitely lost": 676945,
+        "indirectly lost": 0,
+        "possibly lost": 2181,
+        "still reachable": 49900
+      },
+      "10000": {
+        "definitely lost": 676945,
+        "indirectly lost": 0,
+        "possibly lost": 2181,
+        "still reachable": 49900
+      }
+    },
+    "raw_valgrind_exit": 97,
+    "unclassified_memory_access_errors": 0,
+    "suppressions": 0
+  },
+  "requested_scope": "Only process-lifetime startup objects rooted by generated Cython extension globals and their imported-module references. CPython Unicode retention is covered by the earlier exception. No invalid memory access or growing per-operation allocation is covered. Native gRPC allocations, other warnings and diagnostic sites remain separate.",
+  "upstream_source": "https://github.com/cython/cython/blob/3.2.9/Cython/Compiler/Options.py",
+  "approval": {
+    "date": "2026-10-03",
+    "decision": "Allow this narrow diagnostic",
+    "scope": "Only process-lifetime startup objects rooted by generated Cython extension globals and their imported-module references. CPython Unicode retention is covered by the earlier exception. No invalid memory access or growing per-operation allocation is covered. Native gRPC allocations, other warnings and diagnostic sites remain separate."
+  },
+  "sha256": {
+    "work/qualify-cython-retention-control-1.py": "9c0457cc377097c9ad7f9fb8e08c886bd9a7a8bdd0f1ab7f8965e469ee2ee60a",
+    "results/cython-retention-control-1/1.log": "eff6169bda7080d5311fb38281df8c62a6ee9f2dbe8832bae5232844f5b6c69a",
+    "results/cython-retention-control-1/status.json": "04b1331ce64a023851961ce573783b74eb596f034c4b8ddcc918db05e1b434d2",
+    "results/cython-retention-control-1/1-valgrind.log": "2dc5aeda0133815baedab7063bf7a54eb38bff8a33fc43690a02f84fa07456a7",
+    "results/cython-retention-control-1/10000-valgrind.log": "19111ad6d9c42261c425a6202d3695691ec1a0e164e4e2e7f0327602cce9580c",
+    "results/cython-retention-control-1/build.log": "4ef1acb287b8fdebac375d8ae019cb730e70fe7e3a9f832df02819fbd3a244c3",
+    "results/cython-retention-control-1/10000.log": "d1928044b88b708942133e876518e8b4f87577e39161d7c9ac303c8060d5ae35",
+    "results/cython-retention-control-1/run.py": "54f254d4f2b9bfabc47ce8d8d8b1de28b8989266072f70c88001c3936dce6c8c",
+    "results/cython-retention-control-1/retention.pyx": "dafcb3fe0afd3ac598ce063a9365f4d4320409b4394b6e50d26bfaf6d39d91f6"
+  }
+}
