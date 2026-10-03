@@ -249,6 +249,18 @@ remains a separate gate.
 No target may silently omit
 ONNX to produce an apparently successful package.
 
+PDF packaging now requires the pinned PDFium renderer and retains the private
+PoDoFo library with complete notices. Canonical x86_64 builds and installed
+runtime/SDK/artifact checks pass on all three distributions: 79 cases and
+616 assertions per distribution. Serialization, split-error and content-view
+ownership fixes have separate native regression/Valgrind evidence. See
+``evidence/pdf-rpm-candidate-20261003.json`` and
+``evidence/pdf-native-fixes-20261003.json``. Sources are staged in OBS with
+publication disabled; native OBS and ARM module qualification remain pending.
+PDFium itself has passed all 1,819 upstream tests on both AlmaLinux OBS
+architectures. Fedora dependency retrieval and Leap's LLVM 21 build path
+remain tracked separately in ``evidence/pdfium-rpm-candidate-20261003.json``.
+
 Preparing and building
 ----------------------
 

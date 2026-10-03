@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Accepted narrow packaging diagnostic",
+  "root_cause": "Qore deliberately installs its per-project catalog reconciliation manifest below .qore-catalog-manifests. The dot directory prevents catalog discovery and cleanup globs from mistaking these records for catalog domains. Paths are relative and deterministic. Generic rpmlint hidden-file-or-dir classification reports the same directory twice for the PDF runtime package.",
+  "scope": "Only qore-pdf-module.x86_64 or .aarch64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests; no subpath wildcard, other package or diagnostic.",
+  "implementation_reference": "../qore/design/catalog-install-reconciliation.md:164 and ../qore/cmake/QoreMacros.cmake:3105",
+  "qualification": "Candidate-6 RPMs pass all seven installed runtime suites (79 cases / 616 assertions), SDK consumer, directory ownership, AOT trailers and separate debug artifacts on Fedora, Leap and AlmaLinux. Package example interpreters are fixed. Leap RPM lint has zero errors and only the two approved catalog-directory warnings; no filter applied.",
+  "sha256": {
+    "results/leap-pdf-artifacts-candidate-5/lint.log": "b1ca764b9f09777014ef14c0b5043f6fd4c68e1aa9b317fcf3fbd4a6096dcbb1",
+    "results/leap-pdf-artifacts-candidate-6/lint.log": "6bf701f939e7fd494173eeece4a346c898121b8b6db9ecae0eaad1154f383b5c"
+  },
+  "approval": {
+    "decision": "accepted",
+    "date": "2026-10-03",
+    "user_statement": "Allow this narrow diagnostic"
+  }
+}

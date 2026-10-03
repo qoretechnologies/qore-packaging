@@ -10,6 +10,12 @@ maintained in ``module-pdf/packaging/pdfium``. The repack's
 The build uses distribution Clang, compiler-rt and GN built from source, with
 the distribution RPM optimization and hardening flags. Builds run offline.
 
+Leap obtains the versioned LLVM 21 toolchain from the openSUSE
+``devel:tools:compiler/16.0`` repository, after the base distribution in OBS's
+dependency search order. The local qualification uses that same repository at
+lower priority; it supplies LLVM 21.1.8 for both x86_64 and aarch64. This is a
+build dependency: the PDFium runtime does not require the compiler repository.
+
 The exported C API uses ``libpdfium-qore148.so.0`` and the
 ``pdfium-qore`` pkg-config name. Implementation C++ and private FreeType symbols
 are hidden; the package check rejects exported implementation symbols. A future

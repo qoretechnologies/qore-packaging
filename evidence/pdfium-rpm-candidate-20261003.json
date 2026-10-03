@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-03",
-  "status": "Local x86_64 qualification passed on all three distributions. Committed-source Fedora rebuild passed; canonical sources uploaded and verified as OBS revision 1. Native OBS architecture qualification pending; publication disabled.",
+  "status": "Local x86_64 qualification passed on all three distributions; committed-source Fedora rebuild passed. OBS AlmaLinux native x86_64/aarch64 passed all 1,819 tests each. Fedora mirror dependency retrieval and Leap rebuild remain pending. Publication disabled.",
   "source": {
     "schema": 1,
     "name": "qore-pdfium",
@@ -738,5 +738,29 @@
       }
     }
   },
-  "lint": "Actual candidate-12 runtime/development RPM files: 0 errors, 0 warnings with approved exact LicenseRef filter. Installed-package-name inspection produced a no-library-dependency-for artifact from rpmlint installed mode; file-mode validation is the package qualification gate."
+  "lint": "Actual candidate-12 runtime/development RPM files: 0 errors, 0 warnings with approved exact LicenseRef filter. Installed-package-name inspection produced a no-library-dependency-for artifact from rpmlint installed mode; file-mode validation is the package qualification gate.",
+  "obs_native": {
+    "AlmaLinux_10/x86_64": {
+      "source_revision": "1",
+      "status": "succeeded",
+      "unit_tests": 989,
+      "embedder_tests": 830,
+      "compiler_diagnostics": 0,
+      "log": "results/obs-pdfium-el10-x86_64-rev1.log",
+      "sha256": "5931ae3828f674f4ccf16dbef8348b0f249873161d6956ceeac51a538ba40fe5"
+    },
+    "AlmaLinux_10/aarch64": {
+      "source_revision": "1",
+      "status": "succeeded",
+      "unit_tests": 989,
+      "embedder_tests": 830,
+      "compiler_diagnostics": 0,
+      "log": "results/obs-pdfium-el10-aarch64-rev1.log",
+      "sha256": "dc223226c778c54139f3386fd6037c4004c6c78764ead60470b41fbd0840a100"
+    }
+  },
+  "obs_blockers": {
+    "Fedora_44": "OBS getbinaries returned 404 for gnome-srpm-macros and harfbuzz-raster/vector/gpu on both architectures before compilation. Local canonical Fedora build passed.",
+    "openSUSE_Leap_16.0": "Added the same devel:tools:compiler/16.0 LLVM21 dependency path used by local qualification, after the base distribution; native OBS rebuild pending."
+  }
 }

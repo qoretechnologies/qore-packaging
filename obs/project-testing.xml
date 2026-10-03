@@ -28,6 +28,8 @@
   </repository>
   <repository name="openSUSE_Leap_16.0">
     <path project="openSUSE:Leap:16.0" repository="standard" />
+    <!-- PDFium requires LLVM 21; keep base distribution packages first. -->
+    <path project="devel:tools:compiler" repository="16.0" />
     <arch>x86_64</arch>
     <arch>aarch64</arch>
   </repository>
