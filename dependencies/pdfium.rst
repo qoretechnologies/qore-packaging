@@ -11,10 +11,22 @@ The build uses distribution Clang, compiler-rt and GN built from source, with
 the distribution RPM optimization and hardening flags. Builds run offline.
 
 Leap obtains the versioned LLVM 21 toolchain from the openSUSE
-``devel:tools:compiler/16.0`` repository, after the base distribution in OBS's
-dependency search order. The local qualification uses that same repository at
-lower priority; it supplies LLVM 21.1.8 for both x86_64 and aarch64. This is a
-build dependency: the PDFium runtime does not require the compiler repository.
+``devel:tools:compiler/16.0`` repository; it supplies LLVM 21.1.8 for both x86_64
+and aarch64. Local qualification uses the same repository. This is a build
+dependency: the PDFium runtime does not require the compiler repository.
+Qore's SDK requires its own versioned LLVM 19 development package; the PDFium
+toolchain is independent of that SDK dependency. OBS traverses inherited
+repository paths breadth-first, so a path after Leap itself can precede Leap's
+inherited SLFO packages and change the default unversioned LLVM selection.
+The GN bootstrap selects that toolchain's LLVM archiver and LLD explicitly,
+as PDFium itself does. The C API check also selects LLD, so OBS's LTO flags do
+not require an unrelated LLVMgold plugin. Distribution compiler and linker
+flags remain enabled.
+
+Original archive URLs refer to upstream downloads. Generated source repacks
+have immutable OBS download URLs for the already staged source revision;
+their upstream revisions, generation recipes and SHA-256 hashes remain in
+``sources.json`` and the embedded manifest. No network access is used to build.
 
 The exported C API uses ``libpdfium-qore148.so.0`` and the
 ``pdfium-qore`` pkg-config name. Implementation C++ and private FreeType symbols

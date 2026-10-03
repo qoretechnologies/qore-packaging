@@ -22,19 +22,19 @@ License: BSD-3-Clause AND Apache-2.0 AND MIT AND LicenseRef-AGG-2.3 AND LicenseR
 URL: https://pdfium.googlesource.com/pdfium/
 # Reproducible repack: all 19 pinned repositories and exclusions are recorded
 # in QORE-SOURCE-MANIFEST.json, with full redistribution notices in COPYRIGHT.
-Source0: qore-pdfium_148.0.7778+ds.orig.tar.xz
+Source0: https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-pdfium/qore-pdfium_148.0.7778+ds.orig.tar.xz?rev=5152d5f455babf8eae235c3428119ff4#/qore-pdfium_148.0.7778+ds.orig.tar.xz
 Source1: pdfium-rpm-build.py
 Source2: pdfium-COPYRIGHT
 Source3: pdfium-api-test.c
-Source4: pdfium-test-fonts-cd96fc55.tar.gz
-Source5: pdfium-test-resources-72ea487e.tar.xz
+Source4: https://storage.googleapis.com/chromium-fonts/cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb#/pdfium-test-fonts-cd96fc55.tar.gz
+Source5: https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-pdfium/pdfium-test-resources-72ea487e.tar.xz?rev=5152d5f455babf8eae235c3428119ff4#/pdfium-test-resources-72ea487e.tar.xz
 # Corresponding editable sources for the two GPL-covered test fonts.
-Source6: fonts-tlwg-0.6.3.tar.xz
-Source7: MuktiNarrow-0.94.tar.bz2
+Source6: https://github.com/tlwg/fonts-tlwg/releases/download/v0.6.3/fonts-tlwg-0.6.3.tar.xz
+Source7: https://download.savannah.nongnu.org/releases/freebangfont/MuktiNarrow-0.94.tar.bz2
 Source8: pdfium-test-font-sources.json
 # Exact PDFium DEPS revision, used privately on Enterprise Linux because its
 # FreeType 2.13 glyph rasterization differs from the upstream image fixtures.
-Source9: pdfium-freetype-99b479dc.tar.xz
+Source9: https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-pdfium/pdfium-freetype-99b479dc.tar.xz?rev=5152d5f455babf8eae235c3428119ff4#/pdfium-freetype-99b479dc.tar.xz
 Source10: pdfium-rpmlintrc
 Patch0: pdfium-rpm-shared-library.patch
 Patch1: pdfium-rpm-tests.patch
@@ -83,8 +83,8 @@ BuildRequires: pkgconfig(glib-2.0)
 %description
 PDFium renders PDF pages and extracts text using distribution font, image,
 color, compression and Unicode libraries. Enterprise Linux uses the pinned
-private FreeType renderer to match PDFium's glyph rasterization.
-The distribution allocator supports repeated shared-library unloads without
+private FreeType library to match PDFium's glyph rendering.
+Distribution memory allocation supports repeated shared-library unloads without
 retaining PDFium's process-lifetime PartitionAlloc registry.
 JavaScript, XFA and Skia are disabled.
 The exported C API has a milestone-specific SONAME; C++ implementation symbols
@@ -140,6 +140,7 @@ fi
 out/Release/pdfium_unittests
 out/Release/pdfium_embeddertests
 rpm/toolchain/bin/clang %{optflags} -UNDEBUG -DFPDF_SHARED -Ipublic rpm/api-test.c \
+    --ld-path="$PWD/rpm/toolchain/bin/ld.lld" \
     -Lout/Release -l:libpdfium-qore148.so.0 %{?build_ldflags} -o out/Release/api-test
 out/Release/api-test
 

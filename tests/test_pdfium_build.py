@@ -89,6 +89,21 @@ class PdfiumBuildTest(unittest.TestCase):
             pdfium.configure(2, bundled_freetype=True)
         self.run.assert_not_called()
 
+    def test_bootstrap_preserves_lto_and_uses_the_selected_llvm_linker(self):
+        with patch.dict(os.environ, {"CFLAGS": "-O2 -g -flto=auto",
+                                     "CXXFLAGS": "-O2 -g -flto=auto",
+                                     "LDFLAGS": "-flto=auto -Wl,-z,relro"}):
+            self.configure()
+        bootstrap = next(call for call in self.run.call_args_list
+                         if call.args[0][:2] == ["python3", "build/gen.py"])
+        env = bootstrap.kwargs["env"]
+        self.assertEqual(env["AR"], str(self.root / "rpm/toolchain/bin/llvm-ar"))
+        self.assertEqual(env["CXXFLAGS"], "-O2 -g -flto=auto")
+        self.assertEqual(env["LDFLAGS"].split(), ["-flto=auto", "-Wl,-z,relro",
+                         "--ld-path=" + str(self.root / "rpm/toolchain/bin/ld.lld")])
+        self.assertIn("-flto=auto", self.variables()["qore_common_cflags"])
+        self.assertEqual(self.variables()["qore_ldflags"], ["-flto=auto", "-Wl,-z,relro"])
+
     def test_bundled_freetype_disables_the_system_library(self):
         header = Path("third_party/freetype/src/include/freetype/freetype.h")
         header.parent.mkdir(parents=True)

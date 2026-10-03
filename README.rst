@@ -17,7 +17,7 @@ full logs, containers and RPMs are retained under ignored ``results/`` and
 ``work/`` directories. Do not interpret a successfully prepared SRPM as a
 successful binary build.
 
-Thirty-two external modules have committed RPM packaging and pass builds and
+Thirty-three external modules have committed RPM packaging and pass builds and
 installed-runtime suites on Fedora 44, Leap 16.0 and EL10. PostgreSQL includes
 mandatory Fedora pgvector coverage. ZeroMQ includes draft sockets and CURVE.
 The original twenty-one modules now have x86_64 OBS builds enabled on all three
@@ -66,6 +66,13 @@ publication disabled. Native ARM installed qualification also passes on Fedora,
 Leap and AlmaLinux: minimal-runtime ONNX inference, SDK consumers, tools, remote
 debuggers and RPM verification. See ``evidence/core20-native-builds-20261003.json``
 and ``evidence/core20-native-arm-installed-20261003.json``.
+
+Release 21's packaging change names openSUSE's versioned LLVM 19 SDK, so adding
+PDFium's LLVM 21 toolchain cannot switch Qore to a newer default SDK. All 24
+target metadata/dependency tests pass and OBS resolves the required headers.
+Canonical rebuilds and installed checks are in progress from ``d58eec0b2`` on
+``rpm/llvm19-sdk``, which retains the qualified release-20 runtime sources.
+See ``evidence/llvm-sdk-dependency-20261003.json``.
 
 JNI native fixes and the latest Excel/ODS changes are committed. Release/Debug
 reference, exception and cleanup suites pass; strict documentation and the new
@@ -258,8 +265,14 @@ ownership fixes have separate native regression/Valgrind evidence. See
 ``evidence/pdf-native-fixes-20261003.json``. Sources are staged in OBS with
 publication disabled; native OBS and ARM module qualification remain pending.
 PDFium itself has passed all 1,819 upstream tests on both AlmaLinux OBS
-architectures. Fedora dependency retrieval and Leap's LLVM 21 build path
-remain tracked separately in ``evidence/pdfium-rpm-candidate-20261003.json``.
+architectures. Fedora's previously missing OBS dependencies are now retrievable
+and verified on both architectures; a single rebuild was triggered. See
+``evidence/fedora-pdfium-obs-retrieval-20261003.json``. Leap's bootstrap now
+selects its matching LLVM archiver/linker with the full OBS LTO flags;
+all 1,819 upstream tests and installed API, debugger and Valgrind checks pass
+on all three local targets. Source and binary lint also pass. The committed
+rebuild and OBS update remain pending; see
+``evidence/pdfium-lto-qualification-20261003.json``.
 
 Preparing and building
 ----------------------

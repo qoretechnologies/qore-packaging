@@ -92,7 +92,15 @@ def configure(jobs, bundled_freetype=False):
     for library in ("icu", "brotli"):
         shutil.copy2(Path("build/linux/unbundle")/(library+".gn"),
                      Path("third_party")/library/"BUILD.gn")
-    env = dict(os.environ, CC=str(toolchain/"bin/clang"), CXX=str(toolchain/"bin/clang++"))
+    # OBS enables LTO in its RPM flags. Clang's default GNU linker requires a
+    # separately installed LLVMgold plugin; GNU ar can also discover a plugin
+    # from a different LLVM major. Use PDFium's matching LLD and LLVM archiver
+    # while bootstrapping GN as well.
+    bootstrap_ldflags = shlex.split(os.environ.get("LDFLAGS", ""))
+    bootstrap_ldflags.append("--ld-path=" + str(toolchain/"bin/ld.lld"))
+    env = dict(os.environ, CC=str(toolchain/"bin/clang"), CXX=str(toolchain/"bin/clang++"),
+               AR=str(toolchain/"bin/llvm-ar"),
+               LDFLAGS=shlex.join(bootstrap_ldflags))
     subprocess.run(["python3", "build/gen.py", "--no-last-commit-position", "--no-static-libstdc++"],
                    cwd="gn-src", env=env, check=True)
     Path("gn-src/out/last_commit_position.h").write_text(
