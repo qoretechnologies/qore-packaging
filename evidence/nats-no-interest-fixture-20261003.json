@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Focused qualification passes; complete NATS dependency qualification remains pending.",
+  "root_cause": "The prior leader helper could return the old leader. After observing the requested election, its advisory still precedes local consumer initialization and account-route request/acknowledgement subscription propagation.",
+  "change": "Observe the preferred election, verify consumer info on the selected server, then order account-route interest with an acknowledged marker before fetching. Preserve original fetch deadline, storage modes and all message/acknowledgement assertions.",
+  "tests": {
+    "fedora": {
+      "exit_code": 0,
+      "top_level_pass": 20,
+      "subcase_pass": 40,
+      "race_detector": true
+    },
+    "leap": {
+      "exit_code": 0,
+      "top_level_pass": 20,
+      "subcase_pass": 40,
+      "race_detector": true
+    },
+    "el10": {
+      "exit_code": 0,
+      "top_level_pass": 20,
+      "subcase_pass": 40,
+      "race_detector": true
+    }
+  },
+  "sha256": {
+    "dependencies/nats-server-no-interest-election-tests.patch": "5afa42de105ca28a8fbab52543cb56b370004ab62d885c26506e41b82a53ed67",
+    "work/nats-next-controls-1/no-interest-ready.go": "d5153e661b12e7dbd3794ab051085de516a704c334563ed57a49a6959aab7c38",
+    "work/nats-next-controls-1/consumer-and-stream-route-test.go": "8c147175932bbb6a0b5e60305c47985e4e4b032a52e540575eed66b8d50ddb45",
+    "results/nats-no-interest-ready-fedora-matrix-1/status.json": "8ba8c2077dd89018d2f83febcf24119f9e612e174291c0bb9d9205fa151d33c3",
+    "results/nats-no-interest-ready-fedora-matrix-1/tests.log": "6aa56a8b5473a124eadcd421fd9c2fc4326dac751bb02e77872fb73492b45ee9",
+    "results/nats-no-interest-ready-leap-matrix-1/status.json": "3d5a9c4fea1b34a383df2d0de134ab9fbed53bf48514cac91162f5c6f6f2df64",
+    "results/nats-no-interest-ready-leap-matrix-1/tests.log": "fec029d06c9dc9ca4721dec380e3a0657e0a59947f15031d37fc2668c53ef6b1",
+    "results/nats-no-interest-ready-el10-matrix-1/status.json": "8f924c2539e6ceb10ee77b63981446aeaf0ca550b77525dd15dc8786214b77c9",
+    "results/nats-no-interest-ready-el10-matrix-1/tests.log": "13555b0ba97bacaf3e7e7f189cd2d6a635eaf58edf9c54f517673a35f2abfc21"
+  }
+}

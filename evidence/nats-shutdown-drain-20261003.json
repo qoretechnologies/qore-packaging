@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Shutdown delivery fix passes focused Go race qualification on all three distributions. Full candidate 17 package tests are running; NATS dependency qualification is not complete.",
+  "root_cause": "A departing server closes its TCP socket while peer data remains unread. Linux resets the connection. A hub writev receives ECONNRESET and closes its local socket before its reader handles the departing server shutdown event; this leaves a stale JetStream peer.",
+  "diagnostic_trace": "Failed iteration 14 records the missing R3-S3 event and the corresponding hub leaf connection writev reset, followed by use-of-closed-connection in its reader.",
+  "standalone_control": {
+    "immediate_close": {
+      "iterations": 100,
+      "delivered_events": 0,
+      "writer_errors": {
+        "104": 100
+      }
+    },
+    "half_close_and_drain": {
+      "iterations": 100,
+      "delivered_events": 100,
+      "writer_errors": {}
+    }
+  },
+  "change": "For ServerShutdown on ROUTER/GATEWAY/LEAF links, join any active flush, half-close the write side and allow the read loop to finish draining. Both joins share a one-second deadline. Failed or timed-out writes, unsupported transports, WebSocket and ordinary client closure preserve the existing close path. No protocol or production timeout is relaxed.",
+  "regressions": {
+    "socket_cases": [
+      "graceful",
+      "active-flush",
+      "ordinary-close",
+      "no-reader",
+      "unsupported",
+      "half-close-error",
+      "write-error",
+      "flush-error",
+      "deadline-error",
+      "slow-peer",
+      "active-flush-timeout"
+    ],
+    "positive": {
+      "fedora": {
+        "matrix": {
+          "exit_code": 0,
+          "top_level_pass": 40,
+          "subcase_pass": 220,
+          "race_detector": true
+        },
+        "related": {
+          "exit_code": 0,
+          "top_level_pass": 57,
+          "subcase_pass": 12,
+          "race_detector": true
+        }
+      },
+      "leap": {
+        "matrix": {
+          "exit_code": 0,
+          "top_level_pass": 40,
+          "subcase_pass": 220,
+          "race_detector": true
+        },
+        "related": {
+          "exit_code": 0,
+          "top_level_pass": 57,
+          "subcase_pass": 12,
+          "race_detector": true
+        }
+      },
+      "el10": {
+        "matrix": {
+          "exit_code": 0,
+          "top_level_pass": 40,
+          "subcase_pass": 220,
+          "race_detector": true
+        },
+        "related": {
+          "exit_code": 0,
+          "top_level_pass": 57,
+          "subcase_pass": 12,
+          "race_detector": true
+        }
+      }
+    },
+    "mutation": "Removing only the half-close/drain block makes the graceful delivery test fail immediately with ECONNRESET.",
+    "integration": "Original TestJetStreamClusterLeafnodeSpokes passes 20 repetitions on each target; 19 existing buffer/shutdown/TLS tests pass three repetitions per target.",
+    "source_preparation": "All 23 candidate patches apply without fuzz; candidate client.go and client_test.go match the qualified final source byte-for-byte."
+  },
+  "excluded_experiments": "unit-1 had a harness deadlock: net.Buffers used the embedded TCPConn writeBuffers method instead of the injected Write method. The corrected harness embeds net.Conn and sets normal server options explicitly; unit-1 is not qualification evidence.",
+  "sha256": {
+    "dependencies/nats-server-shutdown-drain.patch": "80b9b28ae63d18fd49e991174bae7e271c9bd4d306e0b6994a139902fee40ca9",
+    "work/nats-shutdown-tcp-control-1.py": "5b79106c740c90eb06ae8fe50a363093a3774327809de6f93bfb4b5f9982ced7",
+    "results/nats-shutdown-tcp-control-1.json": "d4a5ab082409b2eaf3c96eda8c9f72ceb6f1c6069f407b51dd379f1e3e157aa0",
+    "results/nats-leaf-error-trace-7/failed-14.log": "ff2f62f2a75195fbf9d10d4c0a80eb21d515a175ccffdbb7660c58c9f52af433",
+    "results/nats-shutdown-drain-mutant-1/status.json": "90542bdc1cf16f3b19a0bb095d9fbc2ad075931de9438d65e4c8cf21db8ad1b7",
+    "results/nats-shutdown-drain-mutant-1/tests.log": "5d6943fb0bab78d166de9b04e260aec1ab6e08f8fdddfe2a337c8398be7ab752",
+    "results/nats-candidate-17-preparation.log": "1a5c9fa2ec31c2f4e47b46492b4d4d6fdc08a75a58dc849dca332791fd2b6054",
+    "results/nats-shutdown-drain-fedora-matrix-1/status.json": "dd0c3789fb86b64f66cdf389adc05cb8de768c19101bdf1167d12ce911f96d51",
+    "results/nats-shutdown-drain-fedora-matrix-1/tests.log": "c4f4671535fc5182f719accf961818b0525ea3b33285219ac0d34d19fd2ae010",
+    "results/nats-shutdown-drain-fedora-related-1/status.json": "8cc77405467530064da6ac8378a1e27a657e09e4cdb51fceeccc74d9e19d53d9",
+    "results/nats-shutdown-drain-fedora-related-1/tests.log": "746639e4201fa00d7c90fec2087cd0b37808590d4f92b33a3a38d75b5deb030e",
+    "results/nats-shutdown-drain-leap-matrix-1/status.json": "7d9c08b04757643db257450d3738cbf27b240be44e6ce4d8abe65ada6c1e1d20",
+    "results/nats-shutdown-drain-leap-matrix-1/tests.log": "6edc532442dc4d0d4e41236192d389b5ccc116e356d1d667cbc36875a7fd5306",
+    "results/nats-shutdown-drain-leap-related-1/status.json": "962b6aae5b8f6bbc7479f0f234653add32d7b9b8831d83b3b5de52c5cf2f5dbd",
+    "results/nats-shutdown-drain-leap-related-1/tests.log": "442bf815bef74d4165ef81ab7dedc1c6e21f83c9522b813621b916f1ad70c32a",
+    "results/nats-shutdown-drain-el10-matrix-1/status.json": "2716b575ea8faa8041f1e6606e2dfb67be98a92315d2cd7ed4d8adc65ef50187",
+    "results/nats-shutdown-drain-el10-matrix-1/tests.log": "6257868a7926f60305160824de663a985405ec74cb4b160b8979e33e86a842fc",
+    "results/nats-shutdown-drain-el10-related-1/status.json": "933ad2b64844f10d5b1cf4ac3b41e686ed7e7641f2ba8b6e50d349bab2d4d9b0",
+    "results/nats-shutdown-drain-el10-related-1/tests.log": "a708eb8d5b07a1cdc744e0926fbbcb453267f9eb98226ad67f0fb837f686f3ad"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "The two recorded compiler diagnostics and the exact fault-injection log family were accepted on 2026-10-03. Other gRPC compiler/manifest diagnostics remain outside this scope.",
+  "approval": {
+    "date": "2026-10-03",
+    "compiler_decision": "Allow these two compiler diagnostics",
+    "negative_log_decision": "Allow this fault-injection diagnostic",
+    "scope": "Only callback-context TLS lifetime, exhaustive CallState enum switch and exactly 100 injected wakeup-initialization error messages."
+  },
+  "compiler_diagnostics": {
+    "callback_context": {
+      "site": "src/core/lib/iomgr/exec_ctx.h:341",
+      "kind": "GCC 15 -Wdangling-pointer",
+      "root_cause": "The compiler sees a stack address stored in TLS but does not credit the RAII destructor that removes the active context before its stack lifetime ends. Nested constructors preserve the outer context instead of replacing it.",
+      "control": "The upstream Executor::RunClosures body reproduces the exact warning. 18,000 callback/nested/thread cases verify TLS is cleared or restored after every scope. Valgrind reports zero errors and zero definite/indirect/possible losses."
+    },
+    "call_state": {
+      "site": "src/core/lib/transport/call_state.h:740",
+      "kind": "GCC 15 -Wmaybe-uninitialized",
+      "root_cause": "All valid private ServerToClientPullState enumerators either initialize reading or return/terminate before it is read. GCC retains a path for an out-of-domain enum value; the type is initialized and modified only through enumerated state transitions.",
+      "control": "The actual upstream call_state_test.cc reproduces the warning. All 18 native tests pass; all 16 nonfatal tests pass Valgrind with zero errors/losses. Two intentional abort tests pass natively; their broad Valgrind run reports GTest restoring its captured stderr descriptor, so that run is not claimed clean."
+    }
+  },
+  "negative_test_diagnostic": {
+    "site": "src/core/lib/iomgr/ev_poll_posix.cc wakeup initialization error log",
+    "text": "RESOURCE_EXHAUSTED:injected wakeup initialization failure",
+    "expected_count": 100,
+    "purpose": "The regression deliberately fails wakeup-fd initialization 100 times and verifies wrapper deallocation, null worker handles and no fork-list membership. It then checks recovery and cached descriptor reuse. The actual C++17 RPM binary passes Valgrind with zero errors/losses.",
+    "exclusion": "Real resource exhaustion, other wakeup errors and extra/missing injected-error records are not accepted."
+  },
+  "sha256": {
+    "work/grpcio-compiler-controls-1/exec-context.cc": "0c5345f79b11d3196e4042b33668599b1ce5d486528b8e3e9a652d32986b35bb",
+    "work/grpcio-compiler-controls-1/call-state-upstream.cc": "21a27c624f75b9ce4774b715d2744355892f0140e5e874f022d985e04f8501c5",
+    "results/grpcio-compiler-controls-1/status.json": "9250f976a168598963e364beed1abe76c137a91bbeaebffb6dd8fc26b567ca4b",
+    "results/grpcio-compiler-controls-1/exec-context.compile.log": "6159a89fcfdca09d8ad838f241443d9476c38da408b8dabf8b3e6c8dea6d72b6",
+    "results/grpcio-compiler-controls-1/exec-context.run.log": "229a1613cc38274dfe9f2e94bae0514c57827692bc15e32301785c52e24c656d",
+    "results/grpcio-compiler-controls-1/exec-context.valgrind.log": "973755bb5da46b19e89b389b978fb4a930c037a7f4228576311d2845755b50dc",
+    "results/grpcio-call-state-1/tests.log": "f4807537efc34beaf86ffb2c5bcef4cb7690c077a943a770427d530103f7fdef",
+    "results/grpcio-call-state-1/compile.log": "09f528448a4e9d76c265cdff8826ca4cae985d98217e741e6ef25a8cfc038332",
+    "results/grpcio-call-state-1/nonfatal-status.json": "dddbeeed4d93587ccbd2cae3bab755d12198ef2f739ef7a1fbbbdd495a0dec72",
+    "results/grpcio-call-state-1/valgrind-nonfatal.log": "1db3858b01b394bceb807da06df20a5c7fbc4129c93ff60bc9eae85bbaf36ef2",
+    "results/grpcio-call-state-1/valgrind-nonfatal-tests.log": "27f1e6b4337a0d156a25e11ef68a8e8c5ef136ddc8fa5e31f3d721d2c93ee2fa",
+    "results/grpcio-native-build-12/status.json": "9ca4c4ec212fbc8204eff9dfe4c9f0b04623f391297ba7694e3f14df5db6b75f",
+    "results/grpcio-native-build-12/poll-init.test.log": "f78f8073be887d0cc105eed7f26a3ad1866f2da0267457c4175492c2920103ce",
+    "results/grpcio-native-build-12/poll-init.valgrind.log": "ca484a0b4a7c0f3158d0ac8938651dfee4e6d8e8465800f512818ecc2d398469",
+    "dependencies/grpcio-poll-init-test.cc": "668cc20f756a9bbe7313640029e0d5465856b8f088796a747b14263982eae7a3",
+    "dependencies/grpcio-poll-init-cleanup.patch": "e37e086e9f8e8491774ba844a8fbc19efd7e6561494288b4fac52ed5f96f5cc0"
+  }
+}

@@ -251,7 +251,21 @@ The TypeScript experimental-API notice is explicitly accepted. See
 ``evidence/v8-integration-20261003.json``. Leap needs the libnode dependency;
 OBS revision 1 has verified source checksums and publication disabled.
 Fedora and AlmaLinux x86_64 OBS builds succeeded.
-Leap and native ARM qualification remain pending.
+Leap now also passes the canonical build and installed runtime/SDK checks,
+including five native Valgrind runs with only the approved conservative-GC
+diagnostic family and no unsuppressed lost allocations. The custom Node RPM
+passes 192 native cases and 5,249 reported JavaScript results (including upstream
+skips). Node compiler diagnostics and native ARM qualification remain open. See
+``evidence/v8-leap-installed-20261003.json``.
+
+The NATS broker candidate now fixes lost shutdown events caused by closing
+cluster sockets with unread TCP input. All three distributions pass twenty
+race-detector repetitions of the affected cluster test and eleven socket
+regressions, plus three runs of nineteen existing shutdown/TLS/buffer tests.
+The consumer-election fixture also passes both storage modes on all targets.
+Full candidate 17 RPM qualification remains in progress; see
+``evidence/nats-shutdown-drain-20261003.json`` and
+``evidence/nats-no-interest-fixture-20261003.json``.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is
