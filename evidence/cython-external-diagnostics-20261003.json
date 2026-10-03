@@ -203,5 +203,110 @@
     "decision": "accepted",
     "user_statement": "I accept all 4",
     "scope": "Only the diagnostics and limitations documented in this file; retain normal compiler flags, tests and diagnostics."
+  },
+  "canonical": {
+    "build": {
+      "schema": 1,
+      "image": "sha256:5f368759279cfd773dbc720049a374514f2b0c10158d4657ac3f67b0c9e5a06b",
+      "source": {
+        "schema": 1,
+        "name": "python-Cython",
+        "version": "3.2.9",
+        "commit": "a2d68df4bca986e6ba7c1f1e66fa929e28e98da9",
+        "source_date_epoch": 1790995769,
+        "spec": "python-Cython.spec",
+        "upstream": {
+          "url": "https://files.pythonhosted.org/packages/source/c/cython/cython-3.2.9.tar.gz",
+          "sha256": "d249c9022ab13286b17bd66f30609e800c5f95efeecb06168990c7a66cecde6c"
+        },
+        "sources": {
+          "cython-3.2.9.tar.gz": "d249c9022ab13286b17bd66f30609e800c5f95efeecb06168990c7a66cecde6c",
+          "python-Cython.spec": "58080dcab2b25c2c4e8be44a6d59e8faeeb397636375d0d980fcba28b79f87d4"
+        }
+      },
+      "jobs": 3,
+      "network": "none",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--hostname",
+        "qore-rpm-builder",
+        "--user",
+        "1019:100",
+        "-e",
+        "HOME=/work/home",
+        "-e",
+        "SOURCE_DATE_EPOCH=1790995769",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/python-Cython-final-1:/sources:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/leap-python-Cython-final-1:/work",
+        "sha256:5f368759279cfd773dbc720049a374514f2b0c10158d4657ac3f67b0c9e5a06b",
+        "sh",
+        "-c",
+        "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+        "build-local",
+        "-ba",
+        "--define",
+        "_topdir /work/rpmbuild",
+        "--define",
+        "_sourcedir /sources",
+        "--define",
+        "_smp_build_ncpus 3",
+        "--define",
+        "_buildhost qore-rpm-builder",
+        "/sources/python-Cython.spec"
+      ],
+      "source_only": false,
+      "exit_code": 0,
+      "artifacts": {
+        "rpmbuild/RPMS/x86_64/python-Cython-debugsource-3.2.9-1.qore.x86_64.rpm": "92fb9b2a9296eb8d594e970ab94f62f750e202de280748a6e35ddaaefb2ef705",
+        "rpmbuild/RPMS/x86_64/python313-Cython-3.2.9-1.qore.x86_64.rpm": "f8944e618ff87d0885bbec10cf6182d540745b6870985a9d7560d0954a7747fe",
+        "rpmbuild/RPMS/x86_64/python313-Cython-debuginfo-3.2.9-1.qore.x86_64.rpm": "43029f5857400ebafa331576c6ae9ee8ea9a3d7033c63af63b08cc4e3a02aff8",
+        "rpmbuild/SRPMS/python-Cython-3.2.9-1.qore.src.rpm": "ef53e140f2a39ba6d2b39f8c0d143718e0543746005f4c1611fb76ddddd3684a"
+      }
+    },
+    "test_counts": [
+      6125,
+      5735,
+      5667
+    ],
+    "total_tests": 17527,
+    "skips": 49,
+    "warning_lines": 223,
+    "warning_comparison": "Both raw build logs contain 223 warning-bearing lines and the same distinct diagnostic lines after removing test progress dots. No new diagnostic site.",
+    "installed_sdk": {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-e",
+        "HOME=/work",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/leap-flight-installed-final-1-sdk:/work",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/dependencies/pyarrow-runtime-test.py:/runtime-test.py:ro",
+        "-w",
+        "/work",
+        "sha256:6b16e194e9ccaf21bdd1c1d38adcfcb0850d46c30f9d41077b4e948fc79dfe75",
+        "sh",
+        "-c",
+        "set -eu\ncython --version\npkg-config --modversion arrow arrow-compute arrow-acero arrow-dataset arrow-flight parquet\nif rpm -ql apache-arrow-devel apache-arrow-flight-devel | grep -E 'arrow_testing|arrow_flight_testing|/testing/|/flight/test_|/acero/test_util.h'; then exit 1; fi\ncat > cython_control.pyx <<'CONTROL'\ncpdef long sum_squares(long n):\n    cdef long i, total = 0\n    if n < 0:\n        raise ValueError(\"negative count\")\n    for i in range(n):\n        total += i * i\n    return total\nCONTROL\ncythonize -i cython_control.pyx\npython3 -W error - <<'CONTROL'\nimport cython_control\nassert cython_control.sum_squares(0) == 0\nassert cython_control.sum_squares(1) == 0\nassert cython_control.sum_squares(100) == sum(i * i for i in range(100))\ntry:\n    cython_control.sum_squares(-1)\nexcept ValueError as error:\n    assert str(error) == \"negative count\"\nelse:\n    raise AssertionError(\"negative input did not fail\")\nprint(\"installed Cython compiler and native module passed\")\nCONTROL\n"
+      ],
+      "exit_code": 0
+    },
+    "sha256": {
+      "results/leap-python-Cython-final-1/build.log": "7e7ee4895d3ac203bca0745cf318eabfcf32dd75399092815c1a5c77e64d41f2",
+      "results/leap-cython-installed-final-1/test.log": "26e4a832b236f6c859be16b6b24670caaf1ea87935cf9bedbe08b7d043af17c1"
+    }
   }
 }
