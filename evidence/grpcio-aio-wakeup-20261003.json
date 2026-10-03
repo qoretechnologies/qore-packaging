@@ -1,0 +1,213 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Candidate 11 RPM passed 12 packaging regressions, 101 upstream tests (one upstream skip), native helper controls and all three 100-RPC injection runs. Nine installed Valgrind controls complete. Remaining unrelated compiler diagnostics are reviewed separately.",
+  "root_cause": "The async completion queue pushes a Core completion and ignores the notification write result. EINTR can lose the wakeup; an unavailable wakeup descriptor leaves queued callbacks undelivered.",
+  "change": "Retry EINTR/WSAEINTR and return whether one notification byte was written. If notification is unavailable, drain the queue and schedule callbacks via the bound event loops thread-safe API, without trying to read a nonexistent notification.",
+  "tests": {
+    "native_baseline": "Original helper loses the wakeup on the first injected EINTR; control fails its exact byte-delivery assertion.",
+    "native_fixed": [
+      "successful write",
+      "two consecutive EINTR then success",
+      "EBADF",
+      "zero-byte return",
+      "EAGAIN"
+    ],
+    "valgrind": {
+      "errors": 0,
+      "allocations": 2,
+      "frees": 2,
+      "bytes_at_exit": 0
+    },
+    "baseline_integration": "Actual installed candidate 9 extension strands an async RPC when notification writes return EBADF. Two writes/failures are captured; timeout control exits 42 as expected.",
+    "rpm_injections": {
+      "EINTR": {
+        "rpc_count": 100,
+        "writes": 502,
+        "injected_failures": 2
+      },
+      "EBADF": {
+        "rpc_count": 100,
+        "writes": 500,
+        "injected_failures": 500
+      },
+      "zero_byte_return": {
+        "rpc_count": 100,
+        "writes": 500,
+        "injected_failures": 500
+      }
+    }
+  },
+  "upstream_context": "The current upstream helper discards the write result through a variable; that removes a compiler warning but does not handle the failed notification. This patch addresses event delivery instead.",
+  "upstream_source": "https://raw.githubusercontent.com/grpc/grpc/master/src/python/grpcio/grpc/_cython/_cygrpc/aio/completion_queue.pxd.pxi",
+  "sha256": {
+    "dependencies/grpcio-aio-wakeup.patch": "a0caa4e7512cf7161c8254f17350433ac773a496bc25aeff57cd04e607901382",
+    "dependencies/grpcio-wakeup-test.cc": "43a7451fa51529bbca241234d358830f6cf9403e91a7532bb3eb6c94c7f14a89",
+    "dependencies/grpcio-wakeup-inject.c": "4ad7a8b67912e705be4c0517d16af8686cadb8b3901735dc8545a28f3f42c6b8",
+    "dependencies/grpcio-wakeup-test.py": "26d5370fe225542ea7cc63c806625f6685e425e8ace6bacb11e97bf9d88f372b",
+    "results/grpcio-wakeup-controls-1/baseline.log": "e62b8cd723265707830130000896154e1a3f0653107383d4e56ea3c775e7ebb0",
+    "results/grpcio-wakeup-controls-1/fixed.log": "6eefeefa67108a6449af59f87ca1a4b1443e37543e81f3cd80106e4aea56e33d",
+    "results/grpcio-wakeup-controls-1/status.json": "995832e56716e61d6f3068845dab97f02a7d5491768b9efdb0135c72c0ae375c",
+    "results/grpcio-wakeup-controls-1/baseline-integration.log": "2fdf03c46908d18355e9706ce93d91066a265fedb1e99d963541b4c07436d7c7",
+    "results/grpcio-wakeup-controls-1/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-wakeup-controls-1/fixed/grpcio-wakeup-impl.h": "a7ae992027ecd93125df1d1c4eaf1ad8e70efd4cc426a57c9aba6d1480541a0c",
+    "results/grpcio-wakeup-controls-1/fixed/valgrind.log": "f89099b4a8c09cbbc9a233a9277528c31ccaf5bc24a1c0261a1943b9bbc3819e",
+    "results/grpcio-wakeup-controls-1/baseline/grpcio-wakeup-impl.h": "334bf58ed9be56e8f89db850cfd513768e039e84629fabae2d4cb747724dc3ea",
+    "results/leap-grpcio-native-11/status.json": "2382d76674300762944e0f7223a4c67177095c3ea6fb8a19cf8f3f5c4340fa13",
+    "results/leap-grpcio-native-11/wakeup-2-valgrind.log": "0061c567b3e70be0cf5fbcbd1b5ae0dfd14c3347a86a7604a1ee454c599d0903",
+    "results/leap-grpcio-native-11/wakeup-3-valgrind.log": "70bbbd54ee9403af600733b39b74bca6a8e38349db780441828a59439abbbd10",
+    "results/leap-grpcio-native-11/async-single-valgrind.log": "5b0ced430621543959252718804644c01854427ea43790aa7ba946a118250db1",
+    "results/leap-grpcio-native-11/fork-enabled-valgrind.log": "73a6c65bb9dd894837de7f93868f35bbbae599601542bbe848e479254474e343",
+    "results/leap-grpcio-native-11/wakeup-1-valgrind.log": "c231d2579ac00633aea41238f8ba41fe7cb09a171bd06339a0cd42d461a56b42",
+    "results/leap-grpcio-native-11/fork-disabled-valgrind.log": "c476c8fb91293421ee375a8c4d796e235002e963ace35e9d84b7077e7b8574db",
+    "results/leap-grpcio-native-11/async-repeated-valgrind.log": "39c359921285c584630e924a3c06b1f2b15906f3b3789ddf218252b3981ed9bb",
+    "results/leap-grpcio-native-11/load-valgrind.log": "854748cde7af6c895465f3c61b8fb879ddc4ebaea937c2c7f43fd9b0f2c9fbd0",
+    "results/leap-grpcio-native-11/queue-lifetimes-valgrind.log": "4a69d1c24e56c639a06f75f8b3216e64bc5f4ec2a06e71cad806ae17d37a9147",
+    "results/leap-grpcio-native-11/async-single.log": "4c799ec426cb7cc79597c0854eb20217da045e5ce8cb8baff609c6efed38b967",
+    "results/leap-grpcio-native-11/fork-disabled.log": "544df69038c99cd948bed7effbd71f31bbd4de204cedc41ad254561bf330439e",
+    "results/leap-grpcio-native-11/load.log": "200a3d8f4bbefc1db87c34fd031653895b2879b8cd449e94eb3dd34d8075780b",
+    "results/leap-grpcio-native-11/wakeup-2.log": "da081328b2a330c9722da34f4d486902c93bf3d67f65011898c652790102fb09",
+    "results/leap-grpcio-native-11/wakeup-3.log": "4c5015a9c2aff5e65f49f8ff0c329ee32a00d1addcc8fcb49ec62bb39c7f2684",
+    "results/leap-grpcio-native-11/inject-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/leap-grpcio-native-11/wakeup-1.log": "0d1f595e05b8710744123277ebe4700b89eafa3729b91aca09a03acb9df2b95a",
+    "results/leap-grpcio-native-11/async-repeated.log": "7f60678d35cabfb0e8a46e2f2f2ad16cdcde7b234ad7135039fe2edbe8e59b2b",
+    "results/leap-grpcio-native-11/install.log": "6281c305cca7fe14261405e7ea29bf85853bd62a8c816ee0725ce5cdfde85814",
+    "results/leap-grpcio-native-11/fork-enabled.log": "544df69038c99cd948bed7effbd71f31bbd4de204cedc41ad254561bf330439e",
+    "results/leap-grpcio-native-11/queue-lifetimes.log": "8a89beaedcbc9451cc133009de5fcc4d2eb29807fa225fadb514242062465830",
+    "results/leap-python-grpcio-candidate-11/build.json": "d6f34a89eb171071213b36190873f0ec0e3d0f9a8e7dbe3293cf274832e84f37",
+    "results/leap-python-grpcio-candidate-11/build.log": "3249f88e3fdafb72eb6a53b63be482dd3eed5775e8ee3eacdf97ced1330ef9cd"
+  },
+  "installed_native_controls": {
+    "load": {
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 757,206 bytes in 13,580 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 71,668 bytes in 870 blocks",
+        "ERROR SUMMARY: 2313 errors from 2313 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "async-single": {
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [
+        "2,112 bytes in 6 blocks are possibly lost in loss record 4,550 of 4,654"
+      ],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 714,633 bytes in 12,801 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 283,614 bytes in 2,733 blocks",
+        "ERROR SUMMARY: 2767 errors from 2767 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "async-repeated": {
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [
+        "2,464 bytes in 7 blocks are possibly lost in loss record 4,566 of 4,654"
+      ],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 714,706 bytes in 12,802 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 284,149 bytes in 2,736 blocks",
+        "ERROR SUMMARY: 2766 errors from 2766 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "queue-lifetimes": {
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [
+        "2,112 bytes in 6 blocks are possibly lost in loss record 4,467 of 4,567"
+      ],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 712,285 bytes in 12,763 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 266,661 bytes in 2,597 blocks",
+        "ERROR SUMMARY: 2721 errors from 2721 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "fork-disabled": {
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 757,409 bytes in 13,584 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 71,756 bytes in 872 blocks",
+        "ERROR SUMMARY: 2315 errors from 2315 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "fork-enabled": {
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 757,409 bytes in 13,584 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 71,756 bytes in 872 blocks",
+        "ERROR SUMMARY: 2315 errors from 2315 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "wakeup-1": {
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [
+        "1,760 bytes in 5 blocks are possibly lost in loss record 4,485 of 4,606"
+      ],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 714,776 bytes in 12,803 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 265,400 bytes in 2,615 blocks",
+        "ERROR SUMMARY: 2752 errors from 2752 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "wakeup-2": {
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [
+        "2,464 bytes in 7 blocks are possibly lost in loss record 4,518 of 4,606"
+      ],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 714,776 bytes in 12,803 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 265,906 bytes in 2,614 blocks",
+        "ERROR SUMMARY: 2752 errors from 2752 contexts (suppressed: 0 from 0)"
+      ]
+    },
+    "wakeup-3": {
+      "functional_and_native_shutdown": true,
+      "invalid_access_contexts": 0,
+      "native_allocation_sites_outside_python_allocator_origins": [
+        "1,408 bytes in 4 blocks are possibly lost in loss record 4,451 of 4,606"
+      ],
+      "native_allocation_origin": "Only previously approved Abseil PoolAlignedAlloc, when present.",
+      "raw_summary": [
+        "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+        "   definitely lost: 714,702 bytes in 12,802 blocks",
+        "   indirectly lost: 0 bytes in 0 blocks",
+        "     possibly lost: 265,122 bytes in 2,615 blocks",
+        "ERROR SUMMARY: 2753 errors from 2753 contexts (suppressed: 0 from 0)"
+      ]
+    }
+  },
+  "interpretation": "No invalid accesses or new native allocation sites. Raw Valgrind exit 97 and Python-origin startup/cache reports are retained, with the existing narrow CPython/Cython and Abseil exceptions; this is not a zero-error raw run."
+}

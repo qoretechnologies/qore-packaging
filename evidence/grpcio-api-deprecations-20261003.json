@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "approval": "User approved the exact 32 recorded upstream API deprecations on 2026-10-03: Allow these documented deprecations. Other compiler diagnostics remain outside this approval.",
+  "scope": {
+    "c_ares": {
+      "count": 21,
+      "cause": "The chosen upstream gRPC release uses legacy c-ares DNS APIs, still declared and exported by the distribution library. The declarations mark their replacement APIs; no ABI failure or missing symbol occurs.",
+      "sites": [
+        "src/core/lib/event_engine/ares_resolver.cc:147:38: warning: \u2018int ares_set_servers_ports(ares_channel_t*, const ares_addr_port_node*)\u2019 is deprecated: Use ares_set_servers_ports_csv instead [-Wdeprecated-declarations]",
+        "src/core/lib/event_engine/ares_resolver.cc:330:23: warning: \u2018void ares_gethostbyname(ares_channel_t*, const char*, int, ares_host_callback, void*)\u2019 is deprecated: Use ares_getaddrinfo instead [-Wdeprecated-declarations]",
+        "src/core/lib/event_engine/ares_resolver.cc:332:23: warning: \u2018void ares_gethostbyname(ares_channel_t*, const char*, int, ares_host_callback, void*)\u2019 is deprecated: Use ares_getaddrinfo instead [-Wdeprecated-declarations]",
+        "src/core/lib/event_engine/ares_resolver.cc:336:23: warning: \u2018void ares_gethostbyname(ares_channel_t*, const char*, int, ares_host_callback, void*)\u2019 is deprecated: Use ares_getaddrinfo instead [-Wdeprecated-declarations]",
+        "src/core/lib/event_engine/ares_resolver.cc:372:13: warning: \u2018void ares_query(ares_channel_t*, const char*, int, int, ares_callback, void*)\u2019 is deprecated: Use ares_query_dnsrec instead [-Wdeprecated-declarations]",
+        "src/core/lib/event_engine/ares_resolver.cc:407:14: warning: \u2018void ares_search(ares_channel_t*, const char*, int, int, ares_callback, void*)\u2019 is deprecated: Use ares_search_dnsrec instead [-Wdeprecated-declarations]",
+        "src/core/lib/event_engine/ares_resolver.cc:417:37: warning: \u2018int ares_getsock(const ares_channel_t*, ares_socket_t*, int)\u2019 is deprecated: Use ARES_OPT_EVENT_THREAD or ARES_OPT_SOCK_STATE_CB instead [-Wdeprecated-declarations]",
+        "src/core/lib/event_engine/ares_resolver.cc:721:32: warning: \u2018int ares_parse_srv_reply(const unsigned char*, int, ares_srv_reply**)\u2019 is deprecated: Use ares_dns_parse instead [-Wdeprecated-declarations]",
+        "src/core/lib/event_engine/ares_resolver.cc:782:36: warning: \u2018int ares_parse_txt_reply_ext(const unsigned char*, int, ares_txt_ext**)\u2019 is deprecated: Use ares_dns_parse instead [-Wdeprecated-declarations]",
+        "./src/core/lib/event_engine/posix_engine/grpc_polled_fd_posix.h:121:30: warning: \u2018void ares_set_socket_functions(ares_channel_t*, const ares_socket_functions*, void*)\u2019 is deprecated: Use ares_set_socket_functions_ex instead [-Wdeprecated-declarations]",
+        "src/core/resolver/dns/c_ares/grpc_ares_ev_driver_posix.cc:121:30: warning: \u2018void ares_set_socket_functions(ares_channel_t*, const ares_socket_functions*, void*)\u2019 is deprecated: Use ares_set_socket_functions_ex instead [-Wdeprecated-declarations]",
+        "src/core/resolver/dns/c_ares/grpc_ares_wrapper.cc:427:21: warning: \u2018int ares_getsock(const ares_channel_t*, ares_socket_t*, int)\u2019 is deprecated: Use ARES_OPT_EVENT_THREAD or ARES_OPT_SOCK_STATE_CB instead [-Wdeprecated-declarations]",
+        "src/core/resolver/dns/c_ares/grpc_ares_wrapper.cc:761:50: warning: \u2018int ares_parse_srv_reply(const unsigned char*, int, ares_srv_reply**)\u2019 is deprecated: Use ares_dns_parse instead [-Wdeprecated-declarations]",
+        "src/core/resolver/dns/c_ares/grpc_ares_wrapper.cc:772:29: warning: \u2018void ares_gethostbyname(ares_channel_t*, const char*, int, ares_host_callback, void*)\u2019 is deprecated: Use ares_getaddrinfo instead [-Wdeprecated-declarations]",
+        "src/core/resolver/dns/c_ares/grpc_ares_wrapper.cc:777:27: warning: \u2018void ares_gethostbyname(ares_channel_t*, const char*, int, ares_host_callback, void*)\u2019 is deprecated: Use ares_getaddrinfo instead [-Wdeprecated-declarations]",
+        "src/core/resolver/dns/c_ares/grpc_ares_wrapper.cc:814:36: warning: \u2018int ares_parse_txt_reply_ext(const unsigned char*, int, ares_txt_ext**)\u2019 is deprecated: Use ares_dns_parse instead [-Wdeprecated-declarations]",
+        "src/core/resolver/dns/c_ares/grpc_ares_wrapper.cc:888:31: warning: \u2018int ares_set_servers_ports(ares_channel_t*, const ares_addr_port_node*)\u2019 is deprecated: Use ares_set_servers_ports_csv instead [-Wdeprecated-declarations]",
+        "src/core/resolver/dns/c_ares/grpc_ares_wrapper.cc:1091:23: warning: \u2018void ares_gethostbyname(ares_channel_t*, const char*, int, ares_host_callback, void*)\u2019 is deprecated: Use ares_getaddrinfo instead [-Wdeprecated-declarations]",
+        "src/core/resolver/dns/c_ares/grpc_ares_wrapper.cc:1097:21: warning: \u2018void ares_gethostbyname(ares_channel_t*, const char*, int, ares_host_callback, void*)\u2019 is deprecated: Use ares_getaddrinfo instead [-Wdeprecated-declarations]",
+        "src/core/resolver/dns/c_ares/grpc_ares_wrapper.cc:1137:13: warning: \u2018void ares_query(ares_channel_t*, const char*, int, int, ares_callback, void*)\u2019 is deprecated: Use ares_query_dnsrec instead [-Wdeprecated-declarations]",
+        "src/core/resolver/dns/c_ares/grpc_ares_wrapper.cc:1176:14: warning: \u2018void ares_search(ares_channel_t*, const char*, int, int, ares_callback, void*)\u2019 is deprecated: Use ares_search_dnsrec instead [-Wdeprecated-declarations]"
+      ],
+      "primary_source": "https://raw.githubusercontent.com/c-ares/c-ares/main/include/ares.h"
+    },
+    "openssl_engine": {
+      "count": 11,
+      "cause": "The unchanged engine-backed private-key loader uses ENGINE APIs deprecated in OpenSSL 3. The compatibility APIs remain available; replacing this optional loader with providers changes its configuration/API contract.",
+      "sites": [
+        "src/core/tsi/ssl_transport_security.cc:616:26: warning: \u2018ENGINE* ENGINE_by_id(const char*)\u2019 is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+        "src/core/tsi/ssl_transport_security.cc:620:28: warning: \u2018ENGINE* ENGINE_by_id(const char*)\u2019 is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+        "src/core/tsi/ssl_transport_security.cc:626:34: warning: \u2018int ENGINE_ctrl_cmd_string(ENGINE*, const char*, const char*, int)\u2019 is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+        "src/core/tsi/ssl_transport_security.cc:627:34: warning: \u2018int ENGINE_ctrl_cmd_string(ENGINE*, const char*, const char*, int)\u2019 is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+        "src/core/tsi/ssl_transport_security.cc:628:34: warning: \u2018int ENGINE_ctrl_cmd_string(ENGINE*, const char*, const char*, int)\u2019 is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+        "src/core/tsi/ssl_transport_security.cc:629:34: warning: \u2018int ENGINE_ctrl_cmd_string(ENGINE*, const char*, const char*, int)\u2019 is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+        "src/core/tsi/ssl_transport_security.cc:630:34: warning: \u2018int ENGINE_ctrl_cmd_string(ENGINE*, const char*, const char*, int)\u2019 is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+        "src/core/tsi/ssl_transport_security.cc:636:28: warning: \u2018int ENGINE_set_default(ENGINE*, unsigned int)\u2019 is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+        "src/core/tsi/ssl_transport_security.cc:641:21: warning: \u2018int ENGINE_init(ENGINE*)\u2019 is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+        "src/core/tsi/ssl_transport_security.cc:646:42: warning: \u2018EVP_PKEY* ENGINE_load_private_key(ENGINE*, const char*, UI_METHOD*, void*)\u2019 is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+        "src/core/tsi/ssl_transport_security.cc:658:37: warning: \u2018int ENGINE_free(ENGINE*)\u2019 is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]"
+      ],
+      "primary_source": "https://docs.openssl.org/3.5/man7/ossl-guide-migration/"
+    }
+  },
+  "qualification": {
+    "rpm_build_exit": 0,
+    "packaging_tests": 12,
+    "upstream_tests_passed": 101,
+    "upstream_skip": 1,
+    "async_fault_rpc_checks": 300,
+    "installed_native_controls": 9,
+    "native_evidence": "evidence/grpcio-aio-wakeup-20261003.json"
+  },
+  "proposal": "Retain these exact deprecation diagnostics and upstream compatibility code with normal compiler flags. No suppression, dependency downgrade or disabled API. All other warnings remain separately unqualified.",
+  "sha256": {
+    "results/leap-python-grpcio-candidate-11/build.json": "d6f34a89eb171071213b36190873f0ec0e3d0f9a8e7dbe3293cf274832e84f37",
+    "results/leap-python-grpcio-candidate-11/build.log": "3249f88e3fdafb72eb6a53b63be482dd3eed5775e8ee3eacdf97ced1330ef9cd"
+  }
+}

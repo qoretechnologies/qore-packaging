@@ -1,0 +1,204 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Candidate 9 RPM build, 12 packaging regressions, 101 upstream tests (one skip), installed checks and six native lifecycle Valgrind controls complete. The logging exception is approved in grpcio-logging-diagnostics-20261003.json. Candidate 11 supersedes these controls and adds wakeup fault qualification; unrelated compiler diagnostics remain unqualified.",
+  "root_cause": [
+    "execute_batch released native operation buffers only after await future. Cancellation skips that continuation, leaking every affected batch.",
+    "A synchronous grpc_call_start_batch rejection never schedules Core completion, leaving both prepared buffers and the extra callback reference owned.",
+    "The global async state retained its completion queue after the final user; its C++ deque allocations survived shutdown."
+  ],
+  "changes": [
+    "Transfer batch cleanup to the Core completion callback; retain buffers until Core finishes even if the awaiting Future is cancelled.",
+    "Release rejected batches and the extra callback reference on synchronous failure.",
+    "Make operation-result decoding exception safe and free every operation even if one conversion fails.",
+    "Candidate 9 clears the global queue after shutdown; a new 20-lifetime regression verifies collection."
+  ],
+  "tests": {
+    "baseline-1": {
+      "record": "results/grpcio-aio-baseline-controls-1/async-1",
+      "native_allocation_summaries": [
+        "34 bytes in 1 blocks are indirectly lost in loss record 427 of 6,131",
+        "64 bytes in 1 blocks are possibly lost in loss record 3,291 of 6,131",
+        "80 bytes in 1 blocks are definitely lost in loss record 3,764 of 6,131",
+        "82 (48 direct, 34 indirect) bytes in 1 blocks are definitely lost in loss record 3,768 of 6,131",
+        "96 bytes in 1 blocks are possibly lost in loss record 3,852 of 6,131",
+        "96 bytes in 1 blocks are definitely lost in loss record 3,867 of 6,131",
+        "152 bytes in 1 blocks are definitely lost in loss record 4,303 of 6,131",
+        "256 bytes in 1 blocks are possibly lost in loss record 5,153 of 6,131",
+        "256 bytes in 1 blocks are indirectly lost in loss record 5,165 of 6,131",
+        "400 bytes in 1 blocks are possibly lost in loss record 5,443 of 6,131",
+        "512 bytes in 1 blocks are possibly lost in loss record 5,543 of 6,131",
+        "736 (480 direct, 256 indirect) bytes in 1 blocks are definitely lost in loss record 5,630 of 6,131",
+        "1,408 bytes in 4 blocks are possibly lost in loss record 5,883 of 6,131"
+      ]
+    },
+    "baseline-10": {
+      "record": "results/grpcio-aio-baseline-controls-1/async-10",
+      "native_allocation_summaries": [
+        "34 bytes in 1 blocks are indirectly lost in loss record 428 of 6,138",
+        "64 bytes in 1 blocks are possibly lost in loss record 3,295 of 6,138",
+        "82 (48 direct, 34 indirect) bytes in 1 blocks are definitely lost in loss record 3,772 of 6,138",
+        "96 bytes in 1 blocks are definitely lost in loss record 3,871 of 6,138",
+        "152 bytes in 1 blocks are definitely lost in loss record 4,299 of 6,138",
+        "256 bytes in 1 blocks are possibly lost in loss record 5,150 of 6,138",
+        "306 bytes in 9 blocks are indirectly lost in loss record 5,270 of 6,138",
+        "400 bytes in 1 blocks are possibly lost in loss record 5,443 of 6,138",
+        "512 bytes in 1 blocks are possibly lost in loss record 5,540 of 6,138",
+        "738 (432 direct, 306 indirect) bytes in 9 blocks are definitely lost in loss record 5,630 of 6,138",
+        "800 bytes in 10 blocks are definitely lost in loss record 5,684 of 6,138",
+        "864 bytes in 9 blocks are definitely lost in loss record 5,698 of 6,138",
+        "960 bytes in 10 blocks are possibly lost in loss record 5,724 of 6,138",
+        "1,367 bytes in 9 blocks are definitely lost in loss record 5,877 of 6,138",
+        "2,560 bytes in 10 blocks are indirectly lost in loss record 5,982 of 6,138",
+        "2,816 bytes in 8 blocks are possibly lost in loss record 5,996 of 6,138",
+        "7,360 (4,800 direct, 2,560 indirect) bytes in 10 blocks are definitely lost in loss record 6,076 of 6,138"
+      ]
+    },
+    "fixed-1": {
+      "record": "results/grpcio-aio-shutdown-controls-2/fixed-1",
+      "native_allocation_summaries": [
+        "64 bytes in 1 blocks are possibly lost in loss record 3,345 of 6,336",
+        "512 bytes in 1 blocks are possibly lost in loss record 5,694 of 6,336",
+        "2,112 bytes in 6 blocks are possibly lost in loss record 6,143 of 6,336"
+      ],
+      "interpretation": "Zero definite/indirect native loss and invalid accesses; 576 bytes in the global queue, addressed by candidate 9, plus the approved Abseil pool."
+    },
+    "fixed-10": {
+      "record": "results/grpcio-aio-shutdown-controls-2/fixed-10",
+      "native_allocation_summaries": [
+        "64 bytes in 1 blocks are possibly lost in loss record 3,345 of 6,335",
+        "512 bytes in 1 blocks are possibly lost in loss record 5,694 of 6,335",
+        "2,112 bytes in 6 blocks are possibly lost in loss record 6,142 of 6,335"
+      ],
+      "interpretation": "Zero definite/indirect native loss and invalid accesses; 576 bytes in the global queue, addressed by candidate 9, plus the approved Abseil pool."
+    }
+  },
+  "shutdown_control": {
+    "source": "work/grpcio-native-shutdown-control-1.py",
+    "qualified_control": "results/grpcio-aio-shutdown-controls-2",
+    "method": "Use exact installed debuginfo to locate Core grpc_wait_for_shutdown_with_timeout; a helper compiled with matching bundled Abseil headers calls the existing condition-variable wait. Verify initialization count is zero. No extra shutdown reference consumed, no sleeping or suppression.",
+    "corrections": [
+      "The earlier grpc_maybe_wait_for_async_shutdown barrier can return before the last outstanding reference initiates shutdown; controls-1 fails its zero-count assertion and is not qualified.",
+      "A first standalone pytest queue baseline lacked a writable cache directory. Baseline-2 uses /tmp and fails only the intended lifetime assertion."
+    ]
+  },
+  "limits": [
+    "Full module integration and final dependency compiler/logging diagnostic review remain pending.",
+    "Existing compiler/dependency deprecation diagnostics still require fixes or individually justified approvals; no blanket exception.",
+    "Cancellation produces a Core GOAWAY informational message and Abseil initialization preamble under Valgrind; this diagnostic remains unapproved.",
+    "CPython/Cython startup caches and the bounded Abseil random pool retain their previously approved narrowly scoped diagnostics."
+  ],
+  "sha256": {
+    "dependencies/grpcio-aio-batch-ownership.patch": "22ca5da0977974801e246d4d9044a85c9c90843057ab1e782b2e9f4fff0e7da8",
+    "dependencies/grpcio-aio-queue-release.patch": "fb400b6089a368993169cae9e36cc7f1139bdc4b37fc409c492bccabba3782ac",
+    "dependencies/grpcio-coexistence-test.py": "75bed5df2d86961fb5c9ac7f097344d0f9fa52f98922c51420cc7395dcdcaaf0",
+    "results/leap-python-grpcio-candidate-8/build.json": "7f0b556effe1aabc110df4917dc1e4eecd5300efa5ee74a12547427410114868",
+    "results/leap-grpcio-native-8/status.json": "c06d722c5ef8facf85f1c294f6bf7d406d89c1fc344e2f729e964729efdac7d7",
+    "results/grpcio-aio-shutdown-controls-2/status.json": "ec801fc4ef7a593231ab81d63ff36ee122448466f1c1f90321aed836b8a62280",
+    "results/grpcio-aio-queue-baseline-2.log": "a0e394638d2459a4a0a862435d9553e062eb2d0df803f8f80906bca46a1f0bb5",
+    "results/grpcio-aio-shutdown-controls-2/fixed-10-valgrind.log": "c786bf6fc6cf977a00460b54408d3e0d57164ee3a8ddf2efe21291c94cb01706",
+    "results/grpcio-aio-shutdown-controls-2/fixed-1-valgrind.log": "47e81c8ab4c4e5bb42aea17abeb02604941bb6f2fb6bad57e5e956763bc32d8b",
+    "results/grpcio-aio-shutdown-controls-2/fixed-10.log": "0b4c6e707b83e0ad4528dbd19f233495f91772dd3b46cbbf0ecf3d5ef2afa3b0",
+    "results/grpcio-aio-shutdown-controls-2/fixed-1.log": "a523ab1deef410e1ee354f6dc2214441041e96d92fd111f4a134b30faeb5ba6b",
+    "results/leap-grpcio-native-9/load-valgrind.log": "3b2e23df08b02525fd092e2703300ccf0a5ec439170edbeb272e6af0d9a9c538",
+    "results/leap-grpcio-native-9/load.log": "200a3d8f4bbefc1db87c34fd031653895b2879b8cd449e94eb3dd34d8075780b",
+    "results/leap-grpcio-native-9/async-single-valgrind.log": "9131cb448e8f27c31a245e07c95f6043ce510a57aae2f5c223a94b57a612cc63",
+    "results/leap-grpcio-native-9/async-single.log": "3fe7616851215810efd18bbbc50e1f6d0954ecdc49020ebdb508733a37b3625c",
+    "results/leap-grpcio-native-9/async-repeated-valgrind.log": "2408c4d72e503549c3ef22ec9e5b4356e78362b99535da016634f52be37e4fc5",
+    "results/leap-grpcio-native-9/async-repeated.log": "1309d1288bc8d753e2cd5855a8b0d3b034ebc9a8902536595f09276c61861d8c",
+    "results/leap-grpcio-native-9/queue-lifetimes-valgrind.log": "bf74fcd2458695e8fb720cb96b64da27fccc86e44b6cdad607d334bf0c30a413",
+    "results/leap-grpcio-native-9/queue-lifetimes.log": "8a89beaedcbc9451cc133009de5fcc4d2eb29807fa225fadb514242062465830",
+    "results/leap-grpcio-native-9/fork-disabled-valgrind.log": "0219903200424a21b99c9d6d9b4a500bb9f95e0c4a923819da28bd646b8069b3",
+    "results/leap-grpcio-native-9/fork-disabled.log": "544df69038c99cd948bed7effbd71f31bbd4de204cedc41ad254561bf330439e",
+    "results/leap-grpcio-native-9/fork-enabled-valgrind.log": "16d96d92c7558de3e5f3bf5ea4be6be96611bd17e4d724aa5ffa19d2766b36a4",
+    "results/leap-grpcio-native-9/fork-enabled.log": "544df69038c99cd948bed7effbd71f31bbd4de204cedc41ad254561bf330439e",
+    "results/leap-python-grpcio-candidate-9/build.json": "53412c839f317c0b38bdf5c4fa0c426f2abfe0aea48e69ccd452eba957acd4f8",
+    "results/leap-grpcio-native-9/status.json": "7507910554e5d60dbf064053a11758ef712a2fd61adb618c88fbe1324d49b496"
+  },
+  "candidate_9": {
+    "build": "results/leap-python-grpcio-candidate-9/build.json",
+    "installed_image": "sha256:996399eb0d2cddc2f4aec426ee51416968dd14ab70622c160c4dbb072b007e90",
+    "controls": {
+      "load": {
+        "functional_and_native_shutdown": true,
+        "invalid_access_contexts": 0,
+        "native_allocations_outside_python_allocator_origins": [],
+        "raw_summary": [
+          "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+          "   definitely lost: 757,206 bytes in 13,580 blocks",
+          "   indirectly lost: 0 bytes in 0 blocks",
+          "     possibly lost: 71,604 bytes in 869 blocks",
+          "ERROR SUMMARY: 2313 errors from 2313 contexts (suppressed: 0 from 0)"
+        ]
+      },
+      "async-single": {
+        "functional_and_native_shutdown": true,
+        "invalid_access_contexts": 0,
+        "native_allocations_outside_python_allocator_origins": [
+          "2,464 bytes in 7 blocks are possibly lost in loss record 4,566 of 4,654"
+        ],
+        "raw_summary": [
+          "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+          "   definitely lost: 714,633 bytes in 12,801 blocks",
+          "   indirectly lost: 0 bytes in 0 blocks",
+          "     possibly lost: 284,158 bytes in 2,736 blocks",
+          "ERROR SUMMARY: 2766 errors from 2766 contexts (suppressed: 0 from 0)"
+        ]
+      },
+      "async-repeated": {
+        "functional_and_native_shutdown": true,
+        "invalid_access_contexts": 0,
+        "native_allocations_outside_python_allocator_origins": [
+          "2,464 bytes in 7 blocks are possibly lost in loss record 4,566 of 4,654"
+        ],
+        "raw_summary": [
+          "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+          "   definitely lost: 714,624 bytes in 12,801 blocks",
+          "   indirectly lost: 0 bytes in 0 blocks",
+          "     possibly lost: 284,119 bytes in 2,736 blocks",
+          "ERROR SUMMARY: 2766 errors from 2766 contexts (suppressed: 0 from 0)"
+        ]
+      },
+      "queue-lifetimes": {
+        "functional_and_native_shutdown": true,
+        "invalid_access_contexts": 0,
+        "native_allocations_outside_python_allocator_origins": [
+          "2,464 bytes in 7 blocks are possibly lost in loss record 4,480 of 4,566"
+        ],
+        "raw_summary": [
+          "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+          "   definitely lost: 712,416 bytes in 12,765 blocks",
+          "   indirectly lost: 0 bytes in 0 blocks",
+          "     possibly lost: 267,074 bytes in 2,596 blocks",
+          "ERROR SUMMARY: 2720 errors from 2720 contexts (suppressed: 0 from 0)"
+        ]
+      },
+      "fork-disabled": {
+        "functional_and_native_shutdown": true,
+        "invalid_access_contexts": 0,
+        "native_allocations_outside_python_allocator_origins": [],
+        "raw_summary": [
+          "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+          "   definitely lost: 757,409 bytes in 13,584 blocks",
+          "   indirectly lost: 0 bytes in 0 blocks",
+          "     possibly lost: 71,692 bytes in 871 blocks",
+          "ERROR SUMMARY: 2315 errors from 2315 contexts (suppressed: 0 from 0)"
+        ]
+      },
+      "fork-enabled": {
+        "functional_and_native_shutdown": true,
+        "invalid_access_contexts": 0,
+        "native_allocations_outside_python_allocator_origins": [],
+        "raw_summary": [
+          "FILE DESCRIPTORS: 3 open (3 inherited) at exit.",
+          "   definitely lost: 757,409 bytes in 13,584 blocks",
+          "   indirectly lost: 0 bytes in 0 blocks",
+          "     possibly lost: 71,692 bytes in 871 blocks",
+          "ERROR SUMMARY: 2315 errors from 2315 contexts (suppressed: 0 from 0)"
+        ]
+      }
+    },
+    "interpretation": "Operation buffers and global queue allocations are gone. The remaining native allocation site is the previously approved bounded Abseil pool (2464 bytes / 7 aligned interior blocks in these runs). Python allocator origins are retained in raw logs and covered only by the separately recorded CPython/Cython startup-cache exceptions; raw Valgrind exit 97 is not treated as a clean run."
+  }
+}

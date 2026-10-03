@@ -1,0 +1,173 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Final canonical process RPMs and installed runtime/SDK suites pass on all three distributions. Native CI passed. OBS revision 2 has verified source checksums, with publication disabled; native build results remain a separate gate.",
+  "pid_race": {
+    "root_cause": "Linux wait_task_zombie claims EXIT_DEAD before release_task unhashes the PID. A competing waiter can see ECHILD while kill(pid,0) still succeeds. Missing /proc data was then interpreted as running.",
+    "kernel_source": "https://raw.githubusercontent.com/torvalds/linux/v6.4/kernel/exit.c",
+    "standalone": {
+      "lifetimes": 30000,
+      "concurrent_reaps": 20344,
+      "live_pid_windows": 36
+    },
+    "change": "Recognize X as exited and revalidate vanished stat files with kill(pid,0). Keep unknown/permission-denied/unavailable-proc cases conservative; do not mistake a missing proc mount for an exited PID.",
+    "functional": {
+      "original_cases": 57,
+      "original_assertions": 429,
+      "deterministic_cases": 13,
+      "deterministic_assertions": 39,
+      "baseline": "Public checkPid API fails when the PID disappears after its initial existence check."
+    },
+    "valgrind": {
+      "deterministic_cases": 13,
+      "memory_errors": 0,
+      "lost_bytes": 0,
+      "existing_affected_cases": 3,
+      "existing_affected_assertions": 14,
+      "parent_memory_errors": 0,
+      "parent_lost_bytes": 0,
+      "child_diagnostics": "Only close_range already-closed descriptor reports; see exact standalone reproduction."
+    }
+  },
+  "diagnostics": {
+    "close_range": {
+      "approval": "User approved on 2026-10-03: Allow this narrow diagnostic. No suppression; only the recorded close_range/Boost.Process sites.",
+      "origin": "Valgrind 3.27.1 reports a double-close for close_range over a descriptor that is already closed. The Linux API explicitly permits ranges containing closed descriptors.",
+      "standalone": "fcntl duplicates stdout at fd>=20; close succeeds; close_range of exactly that descriptor with CLOSE_RANGE_UNSHARE also succeeds. Valgrind emits the same diagnostic, exits 97, and reports all allocations freed and only three inherited descriptors remaining.",
+      "scope": "Only already-closed descriptor reports whose stack originates in close_range from Boost.Process close_all; actual close() double-closes, leaked descriptors and all memory diagnostics remain excluded.",
+      "primary_source": "https://sourceware.org/glibc/manual/2.43/html_node/Opening-and-Closing-Files.html",
+      "linux_manual": "https://man7.org/linux/man-pages/man2/close_range.2.html"
+    },
+    "pcre2": "The broad workstation run reproduced the already documented PCRE2 SIMD JIT diagnostic. See evidence/pilot-status-20261001.json and upstream issue 654. The affected rerun uses Qore documented QORE_PCRE2_NO_JIT=1 instrumentation setting; LLVM JIT and normal shipped settings are unchanged.",
+    "allocator_rss": "The broad Valgrind run used Valgrind replacement allocation, so the unchanged releaseFreeMemory native allocator/RSS benchmark cannot measure libc trimming. The same benchmark passes in the complete native suite. It is not included in the targeted PID-state Valgrind qualification."
+  },
+  "sha256": {
+    "results/process-close-range-control-1.log": "b820ffd198c3a5b6b06e46a2840eed3c61c4a1214b3011c8a9f17aa5e88397d6",
+    "work/process-close-range-control-1.c": "4ccde07554b1dcd18abed5fcb1f6f8719718dd7187730d2682305b0545f1bee6",
+    "results/process-reap-window-1.log": "59a633cf99036e74182ddd196d3114b29816498642635c99b561c0fa037c0a05",
+    "work/process-reap-window-1.cpp": "8f2261a7a0dd4ed841311c0231e291aa6526db31d00351b0ef2306d9a40d32a7",
+    "results/process-state-baseline-2.log": "89377799698628929dd5ccbe428bfef1338f19ee6f481274c460751af6de6c3a",
+    "results/process-state-fixed-1.log": "b4dc90d2b56aaddf96c4f2b59a90c375d5f8d533b68555c17dfa7a6006a290d0",
+    "results/process-state-full-1.log": "a61d6f1909e7ebf7fa2a60660b42724a9399eb64d6af8f4ae1ab592298342da0",
+    "results/process-state-valgrind-1.log": "4f4a1342807650dc1321b767411bfbc1640a2d54d43c7af928b133f672d1fca6",
+    "results/process-state-affected-valgrind-2.log": "fd3bc005bad9d2980ba8bd9a4358bd66aed14eb2b2807481879ef07298a7370b",
+    "results/process-state-affected-valgrind-2.4102315.log": "e1fe3a193e18cb359d24a35ed62aaaa63baff0f3f0be7f7636e4d71aea6db42b",
+    "results/process-state-affected-valgrind-2.4114736.log": "f4981ac2987a0527b0b82f8607b276c62b12736e2a2e968d0355c97bbc1aaec0",
+    "results/process-state-affected-valgrind-2.4114488.log": "06d19fee9f8eecd29cf65808035a3064ac6c950b95dd3ea82485501144f8ffb2",
+    "results/fedora-process-state-final-1/build.json": "ace20adcff6d87ae9a276f082d95c7278eedc33a67da343ef29cb29d3f210e48",
+    "results/fedora-process-state-final-1/build.log": "dca5fcedf94f22fe54cb5d1c2de72523fdc79199c4927d68791bfa7b35305594",
+    "results/fedora-process-state-installed-final-1/status.json": "d13014899d1b1bbbc0a5c5c9ff6b74e70765cdc6517e04ade270f359d69fefde",
+    "results/fedora-process-state-installed-final-1/compile-fixture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/fedora-process-state-installed-final-1/sdk-install.log": "346257e26ab1ca339dbffb335c67ae5b1331a4e80a48a6649c2ae20202f9003a",
+    "results/fedora-process-state-installed-final-1/sdk-tests.log": "90b1d095dd6826db6abe2dbc2e8edd08d86af8d1a82d5ab9cb7e100d33503fbc",
+    "results/fedora-process-state-installed-final-1/runtime-install.log": "215dacd507150a15fe394855d9d781c6068a62ce38bf2795a154bb784b3087e7",
+    "results/fedora-process-state-installed-final-1/runtime-tests.log": "c83243aad7af236ee7e7f77c4c2e062578dfd492e6716acb87a17054d24199c9",
+    "results/leap-process-state-final-1/build.json": "60b7837f371cd6214e82b8f7be3f915821e88912fcf9bd3f42ea0fbb99e15ca5",
+    "results/leap-process-state-final-1/build.log": "cb05caf9303e4647873ed2ad071dbf04a2170cfaadf9b6dab817626c9be0d9f7",
+    "results/leap-process-state-installed-final-1/status.json": "b3b96426e38e98329bb41e713f2aaeaac67264890da84edec0217c381aa43a49",
+    "results/leap-process-state-installed-final-1/compile-fixture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/leap-process-state-installed-final-1/sdk-install.log": "fa5e73edf5a33eb9f2c8c3fe45ce37c11c6c71bd6e54c4aee24803b9dff0e2d0",
+    "results/leap-process-state-installed-final-1/sdk-tests.log": "2fe223627e4f3e6d2af868cf9f9b3087548d8b3439fbf601eb69515f91077a3b",
+    "results/leap-process-state-installed-final-1/runtime-install.log": "8ebcd2891189b02cd50fa4aa597faf5e63b1cb767d76977547b06a1b12e2b93a",
+    "results/leap-process-state-installed-final-1/runtime-tests.log": "e6a0d07862c54a14ce7d5ddf7f88eb9a03901179e3b0eb4c4f4465d8494aa792",
+    "results/el10-process-state-final-1/build.json": "d65559bb2809b01e597d729ecd2197da2dbb4588e727bf5afad4bf50e0fd7f1b",
+    "results/el10-process-state-final-1/build.log": "9d5cba6afcc4879f18d98c433054823ae4675d8544055154bc89225188441de9",
+    "results/el10-process-state-installed-final-1/status.json": "176bb10bdc14cf904b9a6087a2083e33cb4fbdc523e8ff2faa560dff78bbfdad",
+    "results/el10-process-state-installed-final-1/compile-fixture.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/el10-process-state-installed-final-1/sdk-install.log": "711bfdbc1bd47c116f0364bdd440b4144d2aadbec6129f8b4810f00f9099ca3e",
+    "results/el10-process-state-installed-final-1/sdk-tests.log": "ae5741374a0b4467b2d92479667e3cb65bab5434a0bc13897851366215a76301",
+    "results/el10-process-state-installed-final-1/runtime-install.log": "5d9ae3a9ec3a08bc65b2c9df8d9b8f2811ceaa7bd8884c894a173465363187d1",
+    "results/el10-process-state-installed-final-1/runtime-tests.log": "e6a0d07862c54a14ce7d5ddf7f88eb9a03901179e3b0eb4c4f4465d8494aa792",
+    "results/process-docs-configure-2.log": "61331a568481090709dbdbb624431f7933d6e27444b4f254ba935227c7b5c173",
+    "results/process-docs-build-2.log": "1f1204b0e90a51af50d8be7a50f0ae649af46e5ec690896b4767f24a21be709c",
+    "results/obs-process-state-source-20261003.xml": "53abc74472c633eb3a705420d478dab6ce7abc4225c4da7b0035130a70000b2f"
+  },
+  "commits": {
+    "runtime": "d3380738277c418fc76ee54ddcb25ae2195f992d",
+    "rpm_tests": "f4bbf3b3a3bea1d0b37a3d72a0f2d6bdbec4d8ef",
+    "final_rpm": "e329baa26f7fcd30cb3f0290ab0edd862672a817"
+  },
+  "pipeline": {
+    "url": "https://git.qoretechnologies.com/mirror/module-process/-/pipelines/59106",
+    "status": "success"
+  },
+  "source_manifest": {
+    "schema": 1,
+    "commit": "e329baa26f7fcd30cb3f0290ab0edd862672a817",
+    "source_date_epoch": 1791046467,
+    "name": "qore-process-module",
+    "version": "2.1.0",
+    "exclusions": [],
+    "sources": {
+      "qore-process-module-2.1.0.tar.xz": "07110f6636348520f2116c19fad5266ff1a21d9764082613c9d9221f2aac381e",
+      "qore-process-module.spec": "cea54cdd3fd2e1b67637adfc720b43233c1dc7aea0cf4c3cca6a898c2962afc0"
+    },
+    "spec": "qore-process-module.spec"
+  },
+  "rpm_qualification": {
+    "fedora": {
+      "build_exit_code": 0,
+      "runtime_exit_code": 0,
+      "sdk_exit_code": 0,
+      "cases_per_phase": 70,
+      "assertions_per_phase": 468,
+      "source_commit": "e329baa26f7fcd30cb3f0290ab0edd862672a817",
+      "runtime_image": "sha256:e8e944fcc0017c43c37d93605a61b7f99b0535ee6bf1b6accc0f0e17f0b09944",
+      "sdk_image": "sha256:40c4fbb48e7dcfe51cf1ef928f9b223af1bbe77824ffe5d2eea3a023fde34248",
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-process-module-doc-2.1.0-1.fc44.noarch.rpm": "2697ebdd803e9393d539d57a6fd781fb4ba4a9df3f445c24965224379d4ce58d",
+        "rpmbuild/RPMS/x86_64/qore-process-module-2.1.0-1.fc44.x86_64.rpm": "5ba6a947debb83740815bdfbaf2977f0b26ff8f6e060b171016f78c6940fc484",
+        "rpmbuild/RPMS/x86_64/qore-process-module-debuginfo-2.1.0-1.fc44.x86_64.rpm": "24528c5f328593b3a5ef4e58c45a37e53f84dd692cd7859c4fd4709d8c4450a4",
+        "rpmbuild/RPMS/x86_64/qore-process-module-debugsource-2.1.0-1.fc44.x86_64.rpm": "bd45fc423adfd8bf8afb991b0b0b9bdea76c58701e50d6c4fb472a1a3cd195d4",
+        "rpmbuild/SRPMS/qore-process-module-2.1.0-1.fc44.src.rpm": "7f3364cf12b13ea10ab5bd140d134c6c818c3ebfc550d415618cbbac3f609dc9"
+      },
+      "diagnostics": "No warnings or errors in final build and installed suites."
+    },
+    "leap": {
+      "build_exit_code": 0,
+      "runtime_exit_code": 0,
+      "sdk_exit_code": 0,
+      "cases_per_phase": 70,
+      "assertions_per_phase": 468,
+      "source_commit": "e329baa26f7fcd30cb3f0290ab0edd862672a817",
+      "runtime_image": "sha256:5dd4e740c7ec2be4f55ef00e890ae607ff21e79cdaa963467fab374f4c1955d6",
+      "sdk_image": "sha256:08992c571b41534bb445ad94387ae4e677e8b919a575d93825f148b2ded4ce86",
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-process-module-doc-2.1.0-1.noarch.rpm": "8a9e2ffde9e5528eca3585a0b3f340f8ccf7600d8c88b5900949b5f4caa5d34f",
+        "rpmbuild/RPMS/x86_64/qore-process-module-2.1.0-1.x86_64.rpm": "757dbf9f958062c07f17933c2849f5c008f12aabd5e061bed782f7c8a113408c",
+        "rpmbuild/RPMS/x86_64/qore-process-module-debuginfo-2.1.0-1.x86_64.rpm": "45c75562b1ad350b7703f353050642e529eafea2602e63663055301e3c04852d",
+        "rpmbuild/RPMS/x86_64/qore-process-module-debugsource-2.1.0-1.x86_64.rpm": "e7b16889a44bc6cc85b1dbbeb2ff7a81bb54603d34fe09810afaff909feefc80",
+        "rpmbuild/SRPMS/qore-process-module-2.1.0-1.src.rpm": "576fed1f1b762f55e43a9219548c71b6b05c5c31acad5c952fe65595eba81030"
+      },
+      "diagnostics": "No warnings or errors in final build and installed suites."
+    },
+    "el10": {
+      "build_exit_code": 0,
+      "runtime_exit_code": 0,
+      "sdk_exit_code": 0,
+      "cases_per_phase": 70,
+      "assertions_per_phase": 468,
+      "source_commit": "e329baa26f7fcd30cb3f0290ab0edd862672a817",
+      "runtime_image": "sha256:09273c824994534e44a74288f99a42ce5efe1281983d231827514129e5fce09b",
+      "sdk_image": "sha256:deb1b3d9f0c528cce7442cb914610e1ed1c8c587bf63df8cd74443606b8be804",
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-process-module-doc-2.1.0-1.el10.noarch.rpm": "513d1c95a683933e36d433b2884380f0bc67f2c98c8f53b14ca80e009a9f5ed2",
+        "rpmbuild/RPMS/x86_64/qore-process-module-2.1.0-1.el10.x86_64.rpm": "47252230a29cee496777594a8a85d150ef6e9d2831c63a54d1ff8a4c4df7a68d",
+        "rpmbuild/RPMS/x86_64/qore-process-module-debuginfo-2.1.0-1.el10.x86_64.rpm": "82292ae7fb54b5f32bf99a2cf5b7cf0e79dba3eebb7a557d7c098fc6fcd7348f",
+        "rpmbuild/RPMS/x86_64/qore-process-module-debugsource-2.1.0-1.el10.x86_64.rpm": "ca83a4260347a95f64a11604c3cb507e94e56b9e4b7e090ca57598ac869b823b",
+        "rpmbuild/SRPMS/qore-process-module-2.1.0-1.el10.src.rpm": "f16e5b75a652c1b633fa8f2d5df764a76fc08d8056ca2e3cb3e82c067bd9a42e"
+      },
+      "diagnostics": "No warnings or errors in final build and installed suites."
+    }
+  },
+  "obs": {
+    "project": "home:davidnichols:qore:testing",
+    "package": "qore-process-module",
+    "revision": "2",
+    "srcmd5": "3d18f54085dd5ff18db026be4f737283",
+    "source_checksums_verified": true,
+    "publication": "disabled",
+    "native_builds": "queued; not claimed as passed"
+  }
+}

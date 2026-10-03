@@ -83,6 +83,17 @@ paths. See ``evidence/llvm-sdk-dependency-20261003.json``,
 ``evidence/core21-native-builds-20261003.json`` and
 ``evidence/core21-native-arm-installed-20261003.json``.
 
+The process module fixes a Linux PID-inspection race exposed by Fedora ARM:
+a concurrent waiter can reap a child between its existence check and reading
+``/proc/PID/stat``. The fix recognizes dead tasks and revalidates disappeared
+PIDs while retaining conservative handling of permissions and unavailable proc
+filesystems. Canonical RPMs and installed runtime/SDK checks pass all 70 cases
+and 468 assertions on each distribution. Thirteen deterministic Valgrind cases
+are clean; three affected existing cases retain only approved external
+diagnostics. Normal native CI passes. OBS revision 2 has verified sources and
+publication disabled; native builds remain pending. See
+``evidence/process-state-qualification-20261003.json`` and its complete audit.
+
 JNI native fixes and the latest Excel/ODS changes are committed. Release/Debug
 reference, exception and cleanup suites pass; strict documentation and the new
 checked-JNI headless regression pass. The latter corrects a static Java method
@@ -200,9 +211,13 @@ checks on Fedora 44 and EL10. Each installation runs 13 suites and 1,768 asserti
 including required Python gRPC and PyArrow Flight interoperation. Compiled consumers
 run without the SDK; AOT trailers, separate symbols and Qore debug sources are
 verified. The distribution grpc_tools deprecation retains its approved exception.
-OBS sources are verified with publication disabled. Leap needs PyArrow Flight and grpcio-tools fixtures;
-gRPC is not yet in the three-distribution qualified count. See
-``evidence/grpc-rpm-final-20261002.json``.
+OBS sources are verified with publication disabled. Leap now also passes the
+canonical Qore module build and installed runtime/SDK/artifact checks against
+candidate 11 of its repaired grpcio dependency. Each phase runs the same 13
+suites and 1,768 assertions. The dependency's remaining compiler diagnostics
+still prevent including gRPC in the three-distribution qualified count. See
+``evidence/grpc-rpm-final-20261002.json`` and
+``evidence/grpc-leap-installed-20261003.json``.
 
 Leap's Python gRPC compiler fixture now passes a canonical RPM build and all
 nine upstream/generated-stub tests without warnings. Installed checks pass;
@@ -211,7 +226,8 @@ OBS revision 1 has verified sources with publication disabled. PyArrow Flight
 and its Compute/Acero/Dataset dependencies pass candidate qualification:
 95 Arrow test groups, 17,527 Cython tests, and 6,616 PyArrow tests plus three API
 regressions. The upstream/compiler diagnostic exceptions were explicitly accepted
-on 2026-10-03. Canonical rebuilds and installed Qore interoperation remain pending.
+on 2026-10-03. Canonical Arrow/PyArrow rebuilds and installed Qore interoperation now pass.
+The grpcio dependency remains a candidate until its compiler review is complete.
 See ``dependencies/arrow-flight.rst`` and
 ``evidence/grpcio-tools-rpm-final-20261003.json``.
 

@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "approval": "User approved the three documented diagnostic families on 2026-10-03: Allow these documented diagnostics.",
+  "scope": [
+    {
+      "diagnostic": "All log messages before absl::InitializeLog() is called are written to STDERR",
+      "cause": "The Python extension does not initialize Abseil logging. Its first native log emits the one-time stderr preamble. This is separate from Python warnings and is unchanged upstream behavior in the chosen dependency version.",
+      "upstream": [
+        "https://github.com/grpc/grpc/issues/38703",
+        "https://github.com/grpc/grpc/pull/39779",
+        "https://github.com/grpc/grpc/commit/1aefa48cc2a1cd77676552935ee2ca0b4af784d0"
+      ],
+      "fix_status": "The proposed automatic initialization change was rolled back upstream; it also has documented double-initialization compatibility constraints. No local initialization policy change or warning suppression is proposed."
+    },
+    {
+      "diagnostic": "chttp2_server.cc occupied-port bind errors",
+      "cause": "The upstream negative test and standalone control deliberately hold the listening port. The native error accompanies the correctly raised Python RuntimeError.",
+      "control": "20 iterations; each correctly rejects the occupied port and completes shutdown."
+    },
+    {
+      "diagnostic": "chttp2_transport.cc GOAWAY INFO for Cancelling all calls or Server shutdown",
+      "cause": "The transport logs nonzero HTTP/2 GOAWAY codes at INFO. The lifecycle tests intentionally cancel live calls or stop servers. The clients receive the expected outcome and subsequent successful requests remain verified.",
+      "exclusions": [
+        "ping_timeout",
+        "unexpected connection failures",
+        "all other GOAWAY texts/codes and warning sites"
+      ]
+    }
+  ],
+  "qualification": {
+    "rpm_packaging_tests": 12,
+    "upstream_passed": 101,
+    "upstream_skipped": 1,
+    "native_valgrind": "Six controls finish functionality and zero native initialization count; raw memory reports remain classified separately under existing approved startup-cache/Abseil-pool exceptions."
+  },
+  "sha256": {
+    "results/grpcio-logging-controls-1/bind.py": "d916971f91bea988af4554894ebc5bd1e5b2005c0ae5d9623ce3c79da981906d",
+    "results/grpcio-logging-controls-1/bind.log": "73a37e99c9b811298ab0d027a98783ebd0ec4b26a941e1414ba639ef853aaafe",
+    "results/grpcio-logging-revert-1.json": "35d9d40548322a7170d83b37f7205c8de032a7478eba83a5e94c15da39e75566",
+    "results/grpcio-upstream-logging-39779.json": "49387be8727f01675a3fd379e1074e162a0bccc96891dd837a450cb772ad5067",
+    "results/leap-python-grpcio-candidate-9/build.log": "c970801d08c955c83fb0fd77d4e7b6af7407720476bd6037c17f84eb7b99338c",
+    "results/leap-grpcio-native-9/async-single.log": "3fe7616851215810efd18bbbc50e1f6d0954ecdc49020ebdb508733a37b3625c"
+  }
+}

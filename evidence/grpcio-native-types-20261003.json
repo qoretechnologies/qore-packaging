@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Focused native checks and integrated Leap RPM candidate 10 pass; unrelated compiler diagnostics remain unqualified.",
+  "changes": [
+    "Use the ResolvedAddress value initializer instead of zeroing the non-trivial class.",
+    "Use uint64_t masks matching the Huffman bit buffer in both generated decoder and generator."
+  ],
+  "validation": {
+    "compiler": "GCC 15, -O2 -g -Wall -Wextra; both affected warning classes promoted to errors.",
+    "exhaustive_short_inputs": 65793,
+    "random_and_encoded_reference_comparisons": 4000,
+    "encoded_roundtrips": 2256,
+    "ipv4_roundtrip_and_negative_cases": 30,
+    "valgrind_errors": 0,
+    "allocations": 439572,
+    "freed": 439572,
+    "bytes_at_exit": 0
+  },
+  "sha256": {
+    "dependencies/grpcio-native-types.patch": "4fded14edc0d45e890566c3d4deb8c4e43182b8646c1fbf9aa808f1cec37e3aa",
+    "dependencies/grpcio-native-types-test.cc": "487053bc68831e37efeafd597d4f8b2634a745a0472b880304b23cb4887cb249",
+    "results/grpcio-native-types-1/status.json": "c283048d79d20849bc182392462d56c96686c1441e0dac9926716c011a8a13c8",
+    "results/grpcio-native-types-1/tests.log": "d46db466dd48400ba50f638e0cbe564f79c480593098f145dcfaefe333d4e88c",
+    "results/grpcio-native-types-1/valgrind.log": "3c429cf478579c179bce85e1a6d4f7f2eceeb69e0e95b29788a9061204162a41",
+    "results/leap-python-grpcio-candidate-10/build.json": "2af23d5d4204a6b36eda502c1d1e64b6d4bcf299bff7b8d0a015797dcbd02266",
+    "results/leap-python-grpcio-candidate-10/build.log": "dbca5d7c21daca8c7db96d0c516af9e7e498b2179d7663118959c1462db80823"
+  },
+  "rpm_build": {
+    "build": "results/leap-python-grpcio-candidate-10/build.json",
+    "exit_code": 0,
+    "packaging_tests": 12,
+    "upstream_passed": 101,
+    "upstream_skipped": 1
+  }
+}
