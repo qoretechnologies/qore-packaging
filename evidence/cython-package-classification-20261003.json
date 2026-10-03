@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-03",
-  "status": "Qualified local RPM and installed checks; canonical committed sources uploaded and verified in OBS revision 2 with publication disabled.",
+  "status": "Canonical OBS revision 2 succeeded on openSUSE Leap 16.0 x86_64 and aarch64; each ran 17,527 tests with 49 skips and zero unfiltered lint errors/warnings. Publication remains disabled.",
   "root_cause": "rpmlint classifies C/C++/header files and a dependency on Python development headers by the package name suffix. Cython is itself a compiler and ships these files as runtime code-generation templates and debugger fixtures; its source translation/build features require Python development headers. openSUSE Factory already carries corresponding Cython filters.",
   "proposal": "Limit filters to python313-Cython on x86_64/aarch64, 31 exact Cython file paths, and its exact python313-devel dependency. Do not filter the missing Python ABI dependency, script-without-shebang, new template paths, other package names or other dependency names.",
   "upstream_packaging": "https://build.opensuse.org/projects/openSUSE:Factory/packages/python-Cython/files/python-Cython-rpmlintrc?expand=1",
@@ -37,7 +37,14 @@
     "results/leap-cython-installed-candidate-5/status.json": "ab345ceafeb044f5733f717895ef5c4a1b14821393e805f44a2b93fe559e8b3f",
     "results/leap-cython-installed-candidate-5/requires.txt": "33fa16f2516f56f633d2ef93cb2094d6ad8b0a23d40b02f1c48171c32d53feb1",
     "results/cython-lint-scope-tests-20261003-final.log": "b360fcad7b340cf35c78f4848dd61a024b980a736b59c53cc59243dbce369d0a",
-    "results/python-abi-generator-4/status.json": "1d0454525ba518d75df38db2ffaefd554601aed6fbbdd4ec32f1415df2421f01"
+    "results/python-abi-generator-4/status.json": "1d0454525ba518d75df38db2ffaefd554601aed6fbbdd4ec32f1415df2421f01",
+    "results/cython-obs-revision2-status-1/aarch64.log": "e77c70f743bbe24be70303958318792ed63cc732b84c510ea69c100e6dc615dc",
+    "results/cython-obs-revision2-status-1/aarch64.xml": "ee0d7881d214760f9d83ed424974e9ebd7b1f6a20d89bd813e42b07ac1a9346f",
+    "results/cython-obs-revision2-status-1/results.xml": "9c93ec0b578796404f0f6314306a5d4fd49c167cc00c61bdc672a8295c746548",
+    "results/cython-obs-revision2-status-1/x86_64-binaries.xml": "cf6f712c53c234d371d7e2cd61613b360dd078b5140aeb107cb5371097868295",
+    "results/cython-obs-revision2-status-1/x86_64.xml": "b19fafda9001a35a59260cc7368551ffcc635d026d3cd107cf9e99081f2e6694",
+    "results/cython-obs-revision2-status-1/aarch64-binaries.xml": "905ad17872eb5a5f4b4090fdd58b13a9804cba44ca8fd9c057d4ab8b3ea02e8a",
+    "results/cython-obs-revision2-status-1/x86_64.log": "b90803f66bdf6dddc33bf7a9cf8534817d583acc158c7589656ee02524e68208"
   },
   "qualification": {
     "build": {
@@ -151,5 +158,107 @@
       "source-manifest.json": "4a35c5dbec25e9ccbd2d49c6d41b22ac"
     },
     "canonical_payload": "Every input byte equals the tested candidate-5 payload; only source-manifest provenance/timestamp differs. OBS performs the canonical rebuild."
+  },
+  "obs_revision2_results": {
+    "x86_64": {
+      "status": "succeeded",
+      "history": {
+        "rev": "2",
+        "srcmd5": "c47a963229c88bd52cbbcf4f2d77beb5",
+        "versrel": "3.2.9-2",
+        "bcnt": "1",
+        "time": "1791016009",
+        "duration": "1931"
+      },
+      "tests": [
+        3972,
+        4687,
+        4469,
+        4399
+      ],
+      "total_tests": 17527,
+      "skips": 49,
+      "rpm_python_abi": "python(abi) = 3.13",
+      "rpmlint": {
+        "errors": 0,
+        "warnings": 0,
+        "filtered": 84,
+        "badness": 0
+      },
+      "new_warning_messages_vs_revision1": 0,
+      "diagnostic_scope": "Previously reviewed upstream fixture/compiler and OBS build-environment diagnostics remain visible; no new warning message.",
+      "binaries": [
+        {
+          "filename": "python-Cython-3.2.9-lp160.2.1.src.rpm",
+          "size": "3311401",
+          "mtime": "1791016009"
+        },
+        {
+          "filename": "python-Cython-debugsource-3.2.9-lp160.2.1.x86_64.rpm",
+          "size": "1196009",
+          "mtime": "1791016009"
+        },
+        {
+          "filename": "python313-Cython-3.2.9-lp160.2.1.x86_64.rpm",
+          "size": "3897239",
+          "mtime": "1791016009"
+        },
+        {
+          "filename": "python313-Cython-debuginfo-3.2.9-lp160.2.1.x86_64.rpm",
+          "size": "7246425",
+          "mtime": "1791016009"
+        }
+      ]
+    },
+    "aarch64": {
+      "status": "succeeded",
+      "history": {
+        "rev": "2",
+        "srcmd5": "c47a963229c88bd52cbbcf4f2d77beb5",
+        "versrel": "3.2.9-2",
+        "bcnt": "1",
+        "time": "1791019342",
+        "duration": "5426"
+      },
+      "tests": [
+        3972,
+        4687,
+        4469,
+        4399
+      ],
+      "total_tests": 17527,
+      "skips": 49,
+      "rpm_python_abi": "python(abi) = 3.13",
+      "rpmlint": {
+        "errors": 0,
+        "warnings": 0,
+        "filtered": 84,
+        "badness": 0
+      },
+      "new_warning_messages_vs_revision1": 0,
+      "diagnostic_scope": "Previously reviewed upstream fixture/compiler and OBS build-environment diagnostics remain visible; no new warning message.",
+      "binaries": [
+        {
+          "filename": "python-Cython-3.2.9-lp160.2.1.src.rpm",
+          "size": "3311434",
+          "mtime": "1791019341"
+        },
+        {
+          "filename": "python-Cython-debugsource-3.2.9-lp160.2.1.aarch64.rpm",
+          "size": "1196041",
+          "mtime": "1791019341"
+        },
+        {
+          "filename": "python313-Cython-3.2.9-lp160.2.1.aarch64.rpm",
+          "size": "3780603",
+          "mtime": "1791019342"
+        },
+        {
+          "filename": "python313-Cython-debuginfo-3.2.9-lp160.2.1.aarch64.rpm",
+          "size": "7030753",
+          "mtime": "1791019342"
+        }
+      ]
+    }
   }
 }
