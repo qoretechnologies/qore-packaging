@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-03",
-  "status": "Approved exact lint rules and Python ABI/module-mode corrections passed the full upstream suite and installed RPM checks; canonical OBS update is next.",
+  "status": "Qualified local RPM and installed checks; canonical committed sources uploaded and verified in OBS revision 2 with publication disabled.",
   "root_cause": "rpmlint classifies C/C++/header files and a dependency on Python development headers by the package name suffix. Cython is itself a compiler and ships these files as runtime code-generation templates and debugger fixtures; its source translation/build features require Python development headers. openSUSE Factory already carries corresponding Cython filters.",
   "proposal": "Limit filters to python313-Cython on x86_64/aarch64, 31 exact Cython file paths, and its exact python313-devel dependency. Do not filter the missing Python ABI dependency, script-without-shebang, new template paths, other package names or other dependency names.",
   "upstream_packaging": "https://build.opensuse.org/projects/openSUSE:Factory/packages/python-Cython/files/python-Cython-rpmlintrc?expand=1",
@@ -138,5 +138,18 @@
     },
     "root_cause_control": "results/python-abi-generator-4 proves the identical Python payload acquires python(abi) = 3.13 only when python-rpm-packaging supplies the generator; no explicit ABI requirement is used.",
     "diagnostics": "The same unchanged upstream fixture diagnostic families and alts links covered by evidence/cython-external-diagnostics-20261003.json; no new compiler flag or warning suppression."
+  },
+  "obs_upload": {
+    "project": "home:davidnichols:qore:testing",
+    "revision": "2",
+    "srcmd5": "c47a963229c88bd52cbbcf4f2d77beb5",
+    "source_commit": "e8813bd54a60db6ae510f3e0739b4b1b1e5a18f6",
+    "verified_files_md5": {
+      "python-Cython-rpmlintrc": "bea4de80597fc88cc06dc4a450b584b3",
+      "python-Cython.spec": "22b4436df24db5e68713ff3d15dd109a",
+      "cython-3.2.9.tar.gz": "775ad752cdb021193f3ef323228388d5",
+      "source-manifest.json": "4a35c5dbec25e9ccbd2d49c6d41b22ac"
+    },
+    "canonical_payload": "Every input byte equals the tested candidate-5 payload; only source-manifest provenance/timestamp differs. OBS performs the canonical rebuild."
   }
 }
