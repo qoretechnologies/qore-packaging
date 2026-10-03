@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Accepted narrow compiler diagnostic",
+  "diagnostic": "GCC 14 -Warray-bounds reports memcpy forming offset 1 outside [0,1] when copying a one-byte std::vector in PdfLZWFilter::InitTable",
+  "root_cause": "GCC 14 optimization/range analysis misdiagnoses a standard vector copy. The initializer clears the byte vector and appends exactly one byte before copying it; each table entry therefore has exactly one byte. A standalone copy of this standard-library-only sequence reproduces the same diagnostic without Qore or PoDoFo. GCC 16 compiles it with the same optimization and warning options without diagnostics.",
+  "controls": {
+    "source": "evidence/controls/podofo-lzw-gcc14.cpp",
+    "iterations": 10000,
+    "validated": "257 entries per iteration: 256 one-byte entries matching the byte value, plus one empty sentinel",
+    "valgrind": {
+      "errors": 0,
+      "allocations": 2570002,
+      "frees": 2570002,
+      "bytes_at_exit": 0
+    },
+    "gcc16_warnings": 0
+  },
+  "qualification": {
+    "functional_suites_per_distribution": 7,
+    "functional_cases_per_distribution": 77,
+    "assertions_per_distribution": 480,
+    "targets": [
+      "Fedora 44",
+      "AlmaLinux 10",
+      "openSUSE Leap 16.0"
+    ],
+    "native_ownership_valgrind_errors_each": 0
+  },
+  "scope": "Only this warning from the unmodified bundled PoDoFo LZW initializer on GCC 14; all compiler checks remain enabled. No source rewrite or warning suppression.",
+  "evidence": {
+    "results/podofo-lzw-compiler-control-1/control.cpp": "6b9fb10e307bf6c2704d6c8d8ef0c9be72f624a028b7dc9bec35977c122b1116",
+    "results/podofo-lzw-compiler-control-1/control.log": "11ac71edcc34ae41ed112a1deb5dc0ad4cc5d981d3a3bb7f972ea8f0481ffdc0",
+    "results/podofo-lzw-compiler-control-1/valgrind.log": "7c9a796944e459e2156a31f0ee4ea7cf36e0f8b5c69a54d24d61c6344d7e43e8",
+    "results/podofo-lzw-compiler-control-1/gcc16.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/podofo-lzw-compiler-control-1/status.json": "1cdb95b8a85860b864b006d7b59c7eb39e1d74896dc29e6a5d60d0e51a4d4811"
+  },
+  "approval": {
+    "date": "2026-10-03",
+    "decision": "accepted",
+    "user_statement": "Allow this narrow compiler diagnostic",
+    "scope": "Only this warning from the unmodified bundled PoDoFo LZW initializer on GCC 14; all compiler checks remain enabled. No source rewrite or warning suppression."
+  }
+}

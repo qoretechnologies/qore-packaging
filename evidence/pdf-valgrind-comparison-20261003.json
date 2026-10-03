@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Accepted narrow Valgrind diagnostic",
+  "root_cause": "GCC 16 optimizes PdfReference::IsIndirect into an unsigned 64-bit comparison against 65535. The low 16 bits contain a tag and one padding byte. The constructor initializes the relevant high 48 bits, and these alone decide the comparison. Valgrind treats the irrelevant undefined padding as affecting the branch. Disassembly at insertPagesAt+0x5ab proves this exact instruction; the corresponding source checks only the initialized object and generation fields.",
+  "control": {
+    "source": "evidence/controls/podofo-reference-comparison.cpp",
+    "instruction": "cmpq $65535, reference; seta result",
+    "proof": "For every low-16-bit value p, ((object << 32) | (generation << 16) | p) > 65535 iff object != 0 or generation != 0.",
+    "padding_test": "Marks only byte 1 undefined through Memcheck client instrumentation; all 100 iterations return the correct result, but both default and maximally precise definedness modes report the same branch diagnostic.",
+    "memory": "All 301 allocations freed; no invalid accesses or leaks."
+  },
+  "scope": "Only the six recorded PdfReference::IsIndirect branches in PdfPageCollection::insertPagesAt (two) and QorePdfEditor::createFormField / PdfChoiceField::InsertItem (four) on Fedora GCC 16; no suppression, compiler flag change or source workaround.",
+  "remaining_issues": "PDFium allocator unload cleanup and the module split-error ownership leak are separate native defects being fixed; neither is accepted by this diagnostic exception.",
+  "evidence": {
+    "evidence/controls/podofo-reference-comparison.cpp": "96122f05c3722f7654feb3990156e3c4481929fd7d119320bd441152e2c3c596",
+    "results/podofo-insertPagesAt-disassembly.txt": "5f542eaa547e5ad65595a5912f842b8b7544fe737a4ef992dc8c9d61a1349953",
+    "results/podofo-reference-control-1/comparison-padding.log": "928891d83f4c4a54945268594545715fa576b4dc5f58502cdc72df587f29913d",
+    "results/podofo-reference-control-1/comparison-padding-precise.log": "928891d83f4c4a54945268594545715fa576b4dc5f58502cdc72df587f29913d",
+    "results/fedora-pdf-module-native-3/PdfDataProvider-valgrind.txt": "7d7f2cde7667ab5edfacef7f1ca454f21c496d380828911d0bcfc42c20df4732",
+    "results/podofo-padding-comparisons-2/binary.json": "b1acf24800193654d24866db4f28e197e08b09ef53d419648cbb0026c6c66ac3",
+    "results/podofo-padding-comparisons-2/disassembly.txt": "8d4a2c24e3ef0f4f5de8a7a2e58db34e4e2c6e45ad027a553010aee80ae54996",
+    "results/fedora-pdf-module-all-valgrind-1/pdf-forms-valgrind.txt": "1c81dff4aa454e54bb32f6853b1f28fc503b098b6c2cc645158492212e9c5396",
+    "results/fedora-pdf-module-all-valgrind-1/pdf-renderer-valgrind.txt": "492e511bf0fe7b168549defb5b3960bcd84278c765537ff80e6cd30ed6c54bf3",
+    "results/fedora-pdf-module-all-valgrind-1/pdf-valgrind.txt": "8724d3159989eef0563ec7ccdee2f9b4694840a5bb3301f55dd30f5237601979",
+    "results/fedora-pdf-module-all-valgrind-1/pdf-editor-valgrind.txt": "ec3e0d71b5f59243165c3a13de3c94882d4b490f78b70adb7bb60b64751fae28",
+    "results/fedora-pdf-module-all-valgrind-1/pdf-encryption-valgrind.txt": "fa7b350d21baca8118b1cdfcb25a2c3045f11bec9d471645a5e2860b17e993e9",
+    "results/fedora-pdf-module-all-valgrind-1/pdf-signatures-valgrind.txt": "396c89a0db0bd5f5c404f1e69c96af1e05fbea6f4027a5b7ac2eddf9e81e0673"
+  },
+  "additional_site_verification": "All four form-field branches use the same cmpq $65535 against the tag/padding/generation/object layout. results/podofo-padding-comparisons-2/disassembly.txt records the two affected functions from the binary rebuilt with split ownership cleanup.",
+  "approval": {
+    "date": "2026-10-03",
+    "decision": "accepted",
+    "user_statement": "Allow this narrow diagnostic",
+    "scope": "Only the six recorded PdfReference::IsIndirect branches in PdfPageCollection::insertPagesAt (two) and QorePdfEditor::createFormField / PdfChoiceField::InsertItem (four) on Fedora GCC 16; no suppression, compiler flag change or source workaround."
+  }
+}
