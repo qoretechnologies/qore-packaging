@@ -1,0 +1,986 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Fedora/EL10 candidate build, installed SDK/runtime, source fault-injection and artifact checks passed. Four narrowly scoped external runtime diagnostics were accepted on 2026-10-03. No Valgrind suppression is used. Leap remains a separate qualification gate.",
+  "approval": {
+    "date": "2026-10-03",
+    "decision": "accepted",
+    "user_statement": "Allow these documented diagnostics",
+    "scope": "Only the four recorded V8/Node diagnostic families at the reviewed sites in distribution libraries; no blanket suppression or acceptance of new native errors."
+  },
+  "source": {
+    "schema": 1,
+    "commit": "2dfea86b397e697e963df45cf97184720a727e68",
+    "source_date_epoch": 1790826172,
+    "name": "qore-v8-module",
+    "version": "2.1.0",
+    "exclusions": [
+      "ts",
+      "container-build"
+    ],
+    "sources": {
+      "qore-v8-module-2.1.0.tar.xz": "1e580bfcce27f01d8a3f8b53a0a261982a1e8dbb08a0517f146fee16ac6e18da",
+      "qore-v8-module.spec": "744d01fc17574aa06634f53e3270a858370d5f7a72de65f3b5ea99d1565c8cf5"
+    },
+    "candidate": true,
+    "packaging_overlay": {
+      "qore-v8-module.spec": "744d01fc17574aa06634f53e3270a858370d5f7a72de65f3b5ea99d1565c8cf5",
+      "rpm/README.rst": "beac7b657cdd4c2ae6f77ddbf7d605daef1d4213b26f0aefa85e97c2072279f0",
+      "rpm/licenses/Apache-2.0.txt": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    "spec": "qore-v8-module.spec",
+    "native_overlay": {
+      "CMakeLists.txt": "9e1c0efbe54573ee40c28fb56fa3bea5087166373351ee4a3e8c8d911ef1cb9a",
+      "docs/mainpage.dox.tmpl": "a8102837a5d10e091e2367b7e0f32f2c6d8230d4ceef3a910ffe23c6869cb496",
+      "qlib/TypeScriptActionInterface/TypeScriptActionDataProviderBase.qc": "28909b6c3cefd58ecfa7fea59518cb69e509564c306a88b7dde3c8503975621e",
+      "qlib/TypeScriptActionInterface/TypeScriptActionDataProviderFactory.qc": "be100ed06901601bd68991ae76baa12e67a494708bbb23355b08d6311d6096e3",
+      "qlib/TypeScriptActionInterface/TypeScriptActionEventDataProvider.qc": "047002c779d49b61226fdae9d333620af443aabcb57056e7eca7b93663a5d4c6",
+      "qlib/TypeScriptActionInterface/TypeScriptActionFactory.qc": "8e5109e346928c9fb44e22803b76b283957c225e46f79b0fcaf74cf7d78a031d",
+      "qlib/TypeScriptActionInterface/TypeScriptActionInterface.qc": "91020fe9f82b0a3c9740e70adb2888f0ea7d481299afe5f2ce547acc1cc54b62",
+      "qlib/TypeScriptActionInterface/TypeScriptAppRestConnection.qc": "1e3c01ad4277869bbba2cde144a5c7dd238810059c732b91e1dda4d692a233ff",
+      "src/QC_JavaScriptProgram.qpp": "5bfb5f826cf604a85e5d07d17a318e7a4dcbfcb5908d8aed73f67c98f388565f"
+    }
+  },
+  "targets": {
+    "fedora": {
+      "installed": {
+        "suites": 13,
+        "cases": 145,
+        "assertions": 1129
+      },
+      "source_proxy": {
+        "suites": 1,
+        "cases": 10,
+        "assertions": 35
+      },
+      "valgrind": {
+        "load": {
+          "lost_bytes": {
+            "definitely": 0,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [],
+          "conditional_contexts": 0,
+          "summary": [
+            "ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+          ],
+          "raw_log": "results/fedora-v8-native-candidate-4/valgrind-load.txt"
+        },
+        "v8-qore-import": {
+          "lost_bytes": {
+            "definitely": 1536,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 256,
+              "blocks": 8,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 1248,
+              "blocks": 39,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "conditional_contexts": 6,
+          "summary": [
+            "ERROR SUMMARY: 32885 errors from 9 contexts (suppressed: 0 from 0)"
+          ],
+          "raw_log": "results/fedora-v8-native-candidate-4/valgrind-v8-qore-import.txt",
+          "tests": {
+            "suites": 1,
+            "cases": 23,
+            "assertions": 158
+          }
+        },
+        "v8": {
+          "lost_bytes": {
+            "definitely": 1496,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 24,
+              "blocks": 1,
+              "classification": "node_compression_methods"
+            },
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 448,
+              "blocks": 14,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 960,
+              "blocks": 30,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "conditional_contexts": 6,
+          "summary": [
+            "ERROR SUMMARY: 36820 errors from 11 contexts (suppressed: 0 from 0)"
+          ],
+          "raw_log": "results/fedora-v8-native-candidate-4/valgrind-v8.txt",
+          "tests": {
+            "suites": 1,
+            "cases": 10,
+            "assertions": 126
+          }
+        },
+        "js-program-destroy-in-use": {
+          "lost_bytes": {
+            "definitely": 32,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "conditional_contexts": 0,
+          "summary": [
+            "ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)"
+          ],
+          "raw_log": "results/fedora-v8-native-candidate-4/valgrind-js-program-destroy-in-use.txt",
+          "tests": {
+            "suites": 1,
+            "cases": 1,
+            "assertions": 1
+          }
+        },
+        "js-teardown": {
+          "lost_bytes": {
+            "definitely": 2080,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 288,
+              "blocks": 9,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 320,
+              "blocks": 10,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 448,
+              "blocks": 14,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 1024,
+              "blocks": 32,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "conditional_contexts": 6,
+          "summary": [
+            "ERROR SUMMARY: 422988 errors from 10 contexts (suppressed: 0 from 0)"
+          ],
+          "raw_log": "results/fedora-v8-native-candidate-4/valgrind-js-teardown.txt",
+          "tests": {
+            "suites": 1,
+            "cases": 9,
+            "assertions": 35
+          }
+        }
+      },
+      "artifacts": {
+        "sdk": {
+          "steps": [
+            {
+              "name": "runtime-install",
+              "command": [
+                "docker",
+                "run",
+                "--init",
+                "--name",
+                "qore-fedora-v8-runtime-candidate-1",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/fedora-v8-candidate-3:/dep0:ro",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/fedora-final-9-process:/dep1:ro",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/fedora-final-9-uuid:/dep2:ro",
+                "sha256:aaaaf5f3762f55166492464a0d4d5655fd242e4b34393fdd857973aebec6a892",
+                "sh",
+                "-c",
+                "set -eu\ndnf -y --setopt=install_weak_deps=False install openssl \"$@\"\nrpm -U --replacepkgs --includedocs /dep0/rpmbuild/RPMS/noarch/qore-v8-module-doc-*.rpm\nrpm -qa | sort\n",
+                "install",
+                "/dep0/rpmbuild/RPMS/noarch/qore-v8-module-doc-2.1.0-1.fc44.noarch.rpm",
+                "/dep0/rpmbuild/RPMS/x86_64/qore-v8-module-2.1.0-1.fc44.x86_64.rpm",
+                "/dep1/rpmbuild/RPMS/noarch/qore-process-module-doc-2.1.0-1.fc44.noarch.rpm",
+                "/dep1/rpmbuild/RPMS/x86_64/qore-process-module-2.1.0-1.fc44.x86_64.rpm",
+                "/dep2/rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-2.fc44.noarch.rpm",
+                "/dep2/rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-2.fc44.x86_64.rpm"
+              ],
+              "exit_code": 0
+            },
+            {
+              "name": "sdk-consumer",
+              "command": [
+                "docker",
+                "run",
+                "--rm",
+                "--init",
+                "--network",
+                "76a4651a27b407ffb738e664d291fc37ed0abfa43293562fb15029109e0d8f70",
+                "--user",
+                "1019:100",
+                "-e",
+                "AUTOPKGTEST_TMP=/fixture",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/work/fedora-v8-artifacts-candidate-1/qore-v8-module-2.1.0:/fixture",
+                "-v",
+                "/home/david/src/qore/git/qore/rpm/preserve-aot-metadata.py:/aot.py:ro",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/fedora-v8-candidate-3:/rpms:ro",
+                "-w",
+                "/fixture",
+                "sha256:9a63d813168ef1bd8fdee0fc5481c7aae81b5e31c25a2e30cfb2947da8d0520f",
+                "sh",
+                "-c",
+                "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD NODE_OPTIONS NODE_PATH\nunset QORE_TYPESCRIPT_MASTER_ACTION_SCRIPT QORE_TYPESCRIPT_ACTION_SCRIPTS QORE_TYPESCRIPT_ACTION_TEST_SCRIPTS\nunset QORE_DATA_PROVIDERS QORE_CONNECTION_PROVIDERS QORE_DATASOURCE_PROVIDERS QORE_PROVIDER_INDEX_DIR\nexport QORE_V8_TEST_MODULE_DIR=/usr/lib64/qore-modules QORE_V8_TEST_QMOD_DIR=/usr/lib64/qore-modules\nsh debian/tests/compiler\n"
+              ],
+              "exit_code": 0
+            },
+            {
+              "name": "sdk-artifacts",
+              "command": [
+                "docker",
+                "run",
+                "--rm",
+                "--init",
+                "--network",
+                "76a4651a27b407ffb738e664d291fc37ed0abfa43293562fb15029109e0d8f70",
+                "--user",
+                "1019:100",
+                "-e",
+                "AUTOPKGTEST_TMP=/fixture",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/work/fedora-v8-artifacts-candidate-1/qore-v8-module-2.1.0:/fixture",
+                "-v",
+                "/home/david/src/qore/git/qore/rpm/preserve-aot-metadata.py:/aot.py:ro",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/fedora-v8-candidate-3:/rpms:ro",
+                "-w",
+                "/fixture",
+                "sha256:9a63d813168ef1bd8fdee0fc5481c7aae81b5e31c25a2e30cfb2947da8d0520f",
+                "sh",
+                "-c",
+                "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD NODE_OPTIONS NODE_PATH\nunset QORE_TYPESCRIPT_MASTER_ACTION_SCRIPT QORE_TYPESCRIPT_ACTION_SCRIPTS QORE_TYPESCRIPT_ACTION_TEST_SCRIPTS\nunset QORE_DATA_PROVIDERS QORE_CONNECTION_PROVIDERS QORE_DATASOURCE_PROVIDERS QORE_PROVIDER_INDEX_DIR\nexport QORE_V8_TEST_MODULE_DIR=/usr/lib64/qore-modules QORE_V8_TEST_QMOD_DIR=/usr/lib64/qore-modules\npython3 -B -W error - <<'CHECK'\nimport importlib.util,pathlib,subprocess\nspec=importlib.util.spec_from_file_location('aot','/aot.py');aot=importlib.util.module_from_spec(spec);spec.loader.exec_module(aot)\nnames=['TypeScriptProxy','TypeScriptActionInterface']\nfor name in names:\n p=pathlib.Path('/usr/lib64/qore-modules')/name/(name+'.qmod')\n trailers=aot.read_trailers(p);assert b'QAMD' in trailers,name\n sections=subprocess.check_output(['readelf','-S',str(p)],text=True)\n assert '.gnu_debuglink' in sections and '.debug_info' not in sections,name\n print(name,'AOT metadata and separate debug link verified')\npayload=pathlib.Path('payload');payload.mkdir()\nfor p in pathlib.Path('/rpms/rpmbuild/RPMS').rglob('*-debug*.rpm'):\n data=subprocess.check_output(['rpm2cpio',str(p)])\n subprocess.run(['cpio','-idm','--quiet'],input=data,cwd=payload,capture_output=True,check=True)\nfor name in names:\n assert list(payload.glob('usr/src/debug/**/'+name+'.qm')),name\n debug=list(payload.glob('usr/lib/debug/**/'+name+'.qmod*.debug'));assert len(debug)==1,(name,debug)\n assert '.debug_info' in subprocess.check_output(['readelf','-S',str(debug[0])],text=True),name\n print(name,'debug symbols and source verified')\nCHECK\n"
+              ],
+              "exit_code": 0
+            }
+          ],
+          "sdk_image": "sha256:9a63d813168ef1bd8fdee0fc5481c7aae81b5e31c25a2e30cfb2947da8d0520f"
+        },
+        "runtime": {
+          "steps": [
+            {
+              "name": "runtime-tests",
+              "command": [
+                "docker",
+                "run",
+                "--rm",
+                "--init",
+                "--network",
+                "11c829ef6d4a5fa4d6d8fcf17771a67b0c3696dbfb80f44136ebaf3a0b606e97",
+                "--user",
+                "1019:100",
+                "-e",
+                "AUTOPKGTEST_TMP=/fixture",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/work/fedora-v8-artifacts-candidate-2/qore-v8-module-2.1.0:/fixture",
+                "-v",
+                "/home/david/src/qore/git/qore/rpm/preserve-aot-metadata.py:/aot.py:ro",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/fedora-v8-candidate-3:/rpms:ro",
+                "-w",
+                "/fixture",
+                "sha256:7041d0a47b60ae44c47e6741d0665bfb353a090a3bee3b0986a8949f23a35bcc",
+                "sh",
+                "-c",
+                "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD NODE_OPTIONS NODE_PATH\nunset QORE_TYPESCRIPT_MASTER_ACTION_SCRIPT QORE_TYPESCRIPT_ACTION_SCRIPTS QORE_TYPESCRIPT_ACTION_TEST_SCRIPTS\nunset QORE_DATA_PROVIDERS QORE_CONNECTION_PROVIDERS QORE_DATASOURCE_PROVIDERS QORE_PROVIDER_INDEX_DIR\nexport QORE_V8_TEST_MODULE_DIR=/usr/lib64/qore-modules QORE_V8_TEST_QMOD_DIR=/usr/lib64/qore-modules\nfor p in qore-devel gcc gcc-c++ nodejs24-devel; do if rpm -q \"$p\"; then exit 1; fi; done\nrpm -V qore-v8-module qore-v8-module-doc\n./v8-smoke\nsh debian/tests/cli\nfor suite in test/*.qtest; do\n timeout 600 qore -b --enable-debug -l v8 \\\n -l /usr/lib64/qore-modules/TypeScriptProxy/TypeScriptProxy.qmod \\\n -l /usr/lib64/qore-modules/TypeScriptActionInterface/TypeScriptActionInterface.qmod \"$suite\" -v\ndone\n"
+              ],
+              "exit_code": 0
+            }
+          ],
+          "sdk_image": "sha256:9a63d813168ef1bd8fdee0fc5481c7aae81b5e31c25a2e30cfb2947da8d0520f",
+          "runtime_image": "sha256:7041d0a47b60ae44c47e6741d0665bfb353a090a3bee3b0986a8949f23a35bcc",
+          "reused_checks": "results/fedora-v8-artifacts-candidate-1/status.json",
+          "network": {
+            "Name": "qore-rpm-isolated-e5d5bc8628454adf9902700d88a7164b",
+            "Id": "11c829ef6d4a5fa4d6d8fcf17771a67b0c3696dbfb80f44136ebaf3a0b606e97",
+            "Created": "2026-10-03T06:44:02.54674358+02:00",
+            "Scope": "local",
+            "Driver": "bridge",
+            "EnableIPv4": true,
+            "EnableIPv6": false,
+            "IPAM": {
+              "Driver": "default",
+              "Options": {},
+              "Config": [
+                {
+                  "Subnet": "172.31.0.0/16"
+                }
+              ]
+            },
+            "Internal": true,
+            "Attachable": false,
+            "Ingress": false,
+            "ConfigFrom": {
+              "Network": ""
+            },
+            "ConfigOnly": false,
+            "Options": {
+              "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+              "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+            },
+            "Labels": {},
+            "Containers": {},
+            "Status": {
+              "IPAM": {
+                "Subnets": {
+                  "172.31.0.0/16": {
+                    "IPsInUse": 2,
+                    "DynamicIPsAvailable": 65534
+                  }
+                }
+              }
+            }
+          },
+          "exit_code": 0
+        }
+      },
+      "runtime_counts": [
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          13,
+          13,
+          52
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          9,
+          9,
+          35
+        ],
+        [
+          26,
+          26,
+          280
+        ],
+        [
+          4,
+          4,
+          135
+        ],
+        [
+          10,
+          10,
+          0
+        ],
+        [
+          7,
+          7,
+          174
+        ],
+        [
+          1,
+          1,
+          14
+        ],
+        [
+          39,
+          39,
+          139
+        ],
+        [
+          23,
+          23,
+          158
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          10,
+          10,
+          126
+        ]
+      ]
+    },
+    "el10": {
+      "installed": {
+        "suites": 13,
+        "cases": 145,
+        "assertions": 1129
+      },
+      "source_proxy": {
+        "suites": 1,
+        "cases": 10,
+        "assertions": 35
+      },
+      "valgrind": {
+        "load": {
+          "lost_bytes": {
+            "definitely": 0,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [],
+          "conditional_contexts": 0,
+          "summary": [
+            "ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+          ],
+          "raw_log": "results/el10-v8-native-candidate-4/valgrind-load.txt"
+        },
+        "v8-qore-import": {
+          "lost_bytes": {
+            "definitely": 1536,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 256,
+              "blocks": 8,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 1248,
+              "blocks": 39,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "conditional_contexts": 6,
+          "summary": [
+            "ERROR SUMMARY: 51695 errors from 9 contexts (suppressed: 0 from 0)"
+          ],
+          "raw_log": "results/el10-v8-native-candidate-4/valgrind-v8-qore-import.txt",
+          "tests": {
+            "suites": 1,
+            "cases": 23,
+            "assertions": 158
+          }
+        },
+        "v8": {
+          "lost_bytes": {
+            "definitely": 1496,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 24,
+              "blocks": 1,
+              "classification": "node_compression_methods"
+            },
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 448,
+              "blocks": 14,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 960,
+              "blocks": 30,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "conditional_contexts": 6,
+          "summary": [
+            "ERROR SUMMARY: 100884 errors from 11 contexts (suppressed: 0 from 0)"
+          ],
+          "raw_log": "results/el10-v8-native-candidate-4/valgrind-v8.txt",
+          "tests": {
+            "suites": 1,
+            "cases": 10,
+            "assertions": 126
+          }
+        },
+        "js-program-destroy-in-use": {
+          "lost_bytes": {
+            "definitely": 32,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "conditional_contexts": 0,
+          "summary": [
+            "ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)"
+          ],
+          "raw_log": "results/el10-v8-native-candidate-4/valgrind-js-program-destroy-in-use.txt",
+          "tests": {
+            "suites": 1,
+            "cases": 1,
+            "assertions": 1
+          }
+        },
+        "js-teardown": {
+          "lost_bytes": {
+            "definitely": 2080,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 256,
+              "blocks": 8,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 320,
+              "blocks": 10,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 416,
+              "blocks": 13,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 1088,
+              "blocks": 34,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "conditional_contexts": 8,
+          "summary": [
+            "ERROR SUMMARY: 588562 errors from 12 contexts (suppressed: 0 from 0)"
+          ],
+          "raw_log": "results/el10-v8-native-candidate-4/valgrind-js-teardown.txt",
+          "tests": {
+            "suites": 1,
+            "cases": 9,
+            "assertions": 35
+          }
+        }
+      },
+      "artifacts": {
+        "sdk": {
+          "steps": [
+            {
+              "name": "runtime-install",
+              "command": [
+                "docker",
+                "run",
+                "--init",
+                "--name",
+                "qore-el10-v8-runtime-candidate-1",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/el10-v8-candidate-3:/dep0:ro",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/el10-wave-1-process:/dep1:ro",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/el10-wave-1-uuid:/dep2:ro",
+                "sha256:ee0486d8ace5b4222068723f96123f43f39cd5351aaf782ff5026a95612b094b",
+                "sh",
+                "-c",
+                "set -eu\ndnf -y --setopt=install_weak_deps=False install openssl \"$@\"\nrpm -U --replacepkgs --includedocs /dep0/rpmbuild/RPMS/noarch/qore-v8-module-doc-*.rpm\nrpm -qa | sort\n",
+                "install",
+                "/dep0/rpmbuild/RPMS/noarch/qore-v8-module-doc-2.1.0-1.el10.noarch.rpm",
+                "/dep0/rpmbuild/RPMS/x86_64/qore-v8-module-2.1.0-1.el10.x86_64.rpm",
+                "/dep1/rpmbuild/RPMS/noarch/qore-process-module-doc-2.1.0-1.el10.noarch.rpm",
+                "/dep1/rpmbuild/RPMS/x86_64/qore-process-module-2.1.0-1.el10.x86_64.rpm",
+                "/dep2/rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-2.el10.noarch.rpm",
+                "/dep2/rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-2.el10.x86_64.rpm"
+              ],
+              "exit_code": 0
+            },
+            {
+              "name": "sdk-consumer",
+              "command": [
+                "docker",
+                "run",
+                "--rm",
+                "--init",
+                "--network",
+                "2ad3b688a2ca7f926c3e4aad0ace01c51a477034ed2dd41be1902aff45a90dd8",
+                "--user",
+                "1019:100",
+                "-e",
+                "AUTOPKGTEST_TMP=/fixture",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/work/el10-v8-artifacts-candidate-1/qore-v8-module-2.1.0:/fixture",
+                "-v",
+                "/home/david/src/qore/git/qore/rpm/preserve-aot-metadata.py:/aot.py:ro",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/el10-v8-candidate-3:/rpms:ro",
+                "-w",
+                "/fixture",
+                "sha256:5fdfe2c031d5a56c3084458ea16a3e31a204675ee88466ee3ab795261325730b",
+                "sh",
+                "-c",
+                "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD NODE_OPTIONS NODE_PATH\nunset QORE_TYPESCRIPT_MASTER_ACTION_SCRIPT QORE_TYPESCRIPT_ACTION_SCRIPTS QORE_TYPESCRIPT_ACTION_TEST_SCRIPTS\nunset QORE_DATA_PROVIDERS QORE_CONNECTION_PROVIDERS QORE_DATASOURCE_PROVIDERS QORE_PROVIDER_INDEX_DIR\nexport QORE_V8_TEST_MODULE_DIR=/usr/lib64/qore-modules QORE_V8_TEST_QMOD_DIR=/usr/lib64/qore-modules\nsh debian/tests/compiler\n"
+              ],
+              "exit_code": 0
+            },
+            {
+              "name": "sdk-artifacts",
+              "command": [
+                "docker",
+                "run",
+                "--rm",
+                "--init",
+                "--network",
+                "2ad3b688a2ca7f926c3e4aad0ace01c51a477034ed2dd41be1902aff45a90dd8",
+                "--user",
+                "1019:100",
+                "-e",
+                "AUTOPKGTEST_TMP=/fixture",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/work/el10-v8-artifacts-candidate-1/qore-v8-module-2.1.0:/fixture",
+                "-v",
+                "/home/david/src/qore/git/qore/rpm/preserve-aot-metadata.py:/aot.py:ro",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/el10-v8-candidate-3:/rpms:ro",
+                "-w",
+                "/fixture",
+                "sha256:5fdfe2c031d5a56c3084458ea16a3e31a204675ee88466ee3ab795261325730b",
+                "sh",
+                "-c",
+                "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD NODE_OPTIONS NODE_PATH\nunset QORE_TYPESCRIPT_MASTER_ACTION_SCRIPT QORE_TYPESCRIPT_ACTION_SCRIPTS QORE_TYPESCRIPT_ACTION_TEST_SCRIPTS\nunset QORE_DATA_PROVIDERS QORE_CONNECTION_PROVIDERS QORE_DATASOURCE_PROVIDERS QORE_PROVIDER_INDEX_DIR\nexport QORE_V8_TEST_MODULE_DIR=/usr/lib64/qore-modules QORE_V8_TEST_QMOD_DIR=/usr/lib64/qore-modules\npython3 -B -W error - <<'CHECK'\nimport importlib.util,pathlib,subprocess\nspec=importlib.util.spec_from_file_location('aot','/aot.py');aot=importlib.util.module_from_spec(spec);spec.loader.exec_module(aot)\nnames=['TypeScriptProxy','TypeScriptActionInterface']\nfor name in names:\n p=pathlib.Path('/usr/lib64/qore-modules')/name/(name+'.qmod')\n trailers=aot.read_trailers(p);assert b'QAMD' in trailers,name\n sections=subprocess.check_output(['readelf','-S',str(p)],text=True)\n assert '.gnu_debuglink' in sections and '.debug_info' not in sections,name\n print(name,'AOT metadata and separate debug link verified')\npayload=pathlib.Path('payload');payload.mkdir()\nfor p in pathlib.Path('/rpms/rpmbuild/RPMS').rglob('*-debug*.rpm'):\n data=subprocess.check_output(['rpm2cpio',str(p)])\n subprocess.run(['cpio','-idm','--quiet'],input=data,cwd=payload,capture_output=True,check=True)\nfor name in names:\n assert list(payload.glob('usr/src/debug/**/'+name+'.qm')),name\n debug=list(payload.glob('usr/lib/debug/**/'+name+'.qmod*.debug'));assert len(debug)==1,(name,debug)\n assert '.debug_info' in subprocess.check_output(['readelf','-S',str(debug[0])],text=True),name\n print(name,'debug symbols and source verified')\nCHECK\n"
+              ],
+              "exit_code": 0
+            }
+          ],
+          "sdk_image": "sha256:5fdfe2c031d5a56c3084458ea16a3e31a204675ee88466ee3ab795261325730b"
+        },
+        "runtime": {
+          "steps": [
+            {
+              "name": "runtime-tests",
+              "command": [
+                "docker",
+                "run",
+                "--rm",
+                "--init",
+                "--network",
+                "8557cf0d87594afd8ff6454f06c713ad52dd54bfaae22af528af495ef5e03365",
+                "--user",
+                "1019:100",
+                "-e",
+                "AUTOPKGTEST_TMP=/fixture",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/work/el10-v8-artifacts-candidate-2/qore-v8-module-2.1.0:/fixture",
+                "-v",
+                "/home/david/src/qore/git/qore/rpm/preserve-aot-metadata.py:/aot.py:ro",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/el10-v8-candidate-3:/rpms:ro",
+                "-w",
+                "/fixture",
+                "sha256:480abfccc455d8cac79eec60091c1bdc9d838e1d3841600ba8b29e7aa7a9a2cf",
+                "sh",
+                "-c",
+                "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD NODE_OPTIONS NODE_PATH\nunset QORE_TYPESCRIPT_MASTER_ACTION_SCRIPT QORE_TYPESCRIPT_ACTION_SCRIPTS QORE_TYPESCRIPT_ACTION_TEST_SCRIPTS\nunset QORE_DATA_PROVIDERS QORE_CONNECTION_PROVIDERS QORE_DATASOURCE_PROVIDERS QORE_PROVIDER_INDEX_DIR\nexport QORE_V8_TEST_MODULE_DIR=/usr/lib64/qore-modules QORE_V8_TEST_QMOD_DIR=/usr/lib64/qore-modules\nfor p in qore-devel gcc gcc-c++ nodejs24-devel; do if rpm -q \"$p\"; then exit 1; fi; done\nrpm -V qore-v8-module qore-v8-module-doc\n./v8-smoke\nsh debian/tests/cli\nfor suite in test/*.qtest; do\n timeout 600 qore -b --enable-debug -l v8 \\\n -l /usr/lib64/qore-modules/TypeScriptProxy/TypeScriptProxy.qmod \\\n -l /usr/lib64/qore-modules/TypeScriptActionInterface/TypeScriptActionInterface.qmod \"$suite\" -v\ndone\n"
+              ],
+              "exit_code": 0
+            }
+          ],
+          "sdk_image": "sha256:5fdfe2c031d5a56c3084458ea16a3e31a204675ee88466ee3ab795261325730b",
+          "runtime_image": "sha256:480abfccc455d8cac79eec60091c1bdc9d838e1d3841600ba8b29e7aa7a9a2cf",
+          "reused_checks": "results/el10-v8-artifacts-candidate-1/status.json",
+          "network": {
+            "Name": "qore-rpm-isolated-d6b4809b76b24a70a348b94d02c77549",
+            "Id": "8557cf0d87594afd8ff6454f06c713ad52dd54bfaae22af528af495ef5e03365",
+            "Created": "2026-10-03T06:44:02.535393642+02:00",
+            "Scope": "local",
+            "Driver": "bridge",
+            "EnableIPv4": true,
+            "EnableIPv6": false,
+            "IPAM": {
+              "Driver": "default",
+              "Options": {},
+              "Config": [
+                {
+                  "Subnet": "172.30.0.0/16"
+                }
+              ]
+            },
+            "Internal": true,
+            "Attachable": false,
+            "Ingress": false,
+            "ConfigFrom": {
+              "Network": ""
+            },
+            "ConfigOnly": false,
+            "Options": {
+              "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+              "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+            },
+            "Labels": {},
+            "Containers": {},
+            "Status": {
+              "IPAM": {
+                "Subnets": {
+                  "172.30.0.0/16": {
+                    "IPsInUse": 2,
+                    "DynamicIPsAvailable": 65534
+                  }
+                }
+              }
+            }
+          },
+          "exit_code": 0
+        }
+      },
+      "runtime_counts": [
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          13,
+          13,
+          52
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          9,
+          9,
+          35
+        ],
+        [
+          26,
+          26,
+          280
+        ],
+        [
+          4,
+          4,
+          135
+        ],
+        [
+          10,
+          10,
+          0
+        ],
+        [
+          7,
+          7,
+          174
+        ],
+        [
+          1,
+          1,
+          14
+        ],
+        [
+          39,
+          39,
+          139
+        ],
+        [
+          23,
+          23,
+          158
+        ],
+        [
+          1,
+          1,
+          3
+        ],
+        [
+          10,
+          10,
+          126
+        ]
+      ]
+    }
+  },
+  "diagnostics": {
+    "node_cppgc_wrapper_list": {
+      "kind": "real upstream shutdown leak",
+      "scope": "32 bytes per surviving Node ContextifyScript list node; full teardown suite 65 nodes = 2080 bytes on each distribution. No indirect or possible loss.",
+      "root_cause": "Realm::TrackCppgcWrapper allocates a CppgcWrapperListNode. CppgcWrapperList::Cleanup finalizes wrappers but leaves list-node allocations, and ListHead destruction only unlinks them.",
+      "upstream_fix": "https://github.com/nodejs/node/commit/c909c63be392b4c9ffdc2108e64371b9fa83e472",
+      "upstream_review": "https://github.com/nodejs/node/pull/65778",
+      "controls": [
+        "results/fedora-v8-node-controls-1/node-empty.txt",
+        "results/el10-v8-node-controls-1/node-empty.txt",
+        "results/fedora-v8-program-control-1/valgrind.txt"
+      ],
+      "qualification_limit": "Exception requested for distribution-provided Node 24 libraries. The Leap shared-library recipe will be evaluated with the upstream fix."
+    },
+    "node_compression_methods": {
+      "kind": "real upstream shutdown leak",
+      "scope": "one 24-byte SSL_COMP object when Node crypto initializes against compression-enabled system OpenSSL",
+      "root_cause": "Node crypto_util.cc calls sk_SSL_COMP_zero(SSL_COMP_get_compression_methods()). OpenSSL allocates each SSL_COMP with OPENSSL_malloc; zeroing the pointer stack prevents context cleanup from freeing the object.",
+      "controls": [
+        "results/fedora-v8-symbol-control-4/valgrind.txt",
+        "results/el10-v8-node-tls-control-1/valgrind.txt",
+        "results/v8-compression-control-1/valgrind.txt",
+        "results/v8-compression-control-1/valgrind-fixed.txt"
+      ],
+      "control_result": "OpenSSL-only C control reproduces 24 bytes. Popping and freeing each entry preserves an empty compression list and frees all 3303 allocations with zero Valgrind errors.",
+      "qualification_limit": "Exception requested only for the exact allocation in system Node libraries, not arbitrary OpenSSL allocations."
+    },
+    "v8_conservative_stack_scan": {
+      "kind": "Valgrind reports from intentional conservative GC scanning",
+      "root_cause": "heap::base::IteratePointersInStack reads all stack slots, including unused slots; it uses MSAN_MEMORY_IS_INITIALIZED for MemorySanitizer but has no equivalent Valgrind annotation. The same six addresses in stack tracing / conservative marking recur in bridge suites and independent Node --expose-gc controls.",
+      "source": "https://github.com/nodejs/node/blob/v24.18.1/deps/v8/src/heap/base/stack.cc#L140-L150",
+      "controls": [
+        "results/fedora-v8-node-gc-control-1/valgrind.txt",
+        "results/fedora-v8-import-symbolized-3/valgrind.txt",
+        "results/el10-v8-symbol-control-2/valgrind.txt"
+      ],
+      "related_diagnostic": "EL10 Valgrind emits large noaccess address-range notifications for V8 reservations, including load-only; pure Node controls reproduce them."
+    },
+    "v8_optional_lowering": {
+      "kind": "EL10 optimized-code Valgrind diagnostic in two scheduler sites",
+      "root_cause": "Scheduler::VisitInputs and Scheduler::UpdatePlacement compare an edge index with std::optional<int>. The source operator short-circuits on a disengaged optional. GCC 14 machine code tests the possibly uninitialized inactive integer payload first, then the engagement-derived flag; both payload outcomes produce the same defined result for a disengaged optional.",
+      "instruction_offsets": [
+        "libnode.so.137+0x238b1ef",
+        "libnode.so.137+0x238727c"
+      ],
+      "controls": [
+        "results/el10-v8-wasm-control-1/valgrind.txt",
+        "results/el10-v8-wasm-control-1/output.log",
+        "results/el10-v8-optional-instruction-1.txt",
+        "results/el10-v8-optional-functions-1.txt"
+      ],
+      "control_result": "Standalone Node compilation of the same valid/malformed WebAssembly fixture reproduces both sites and verifies correct success/failure results without Qore. A smaller optional-only C++ control does not reproduce the optimized layout; it is not used as positive evidence."
+    }
+  },
+  "sha256": {
+    "results/fedora-v8-native-candidate-4/valgrind-load.txt": "db7f2b64120a3acef3939082202979da3ef46d97038e0512bd2c900efa82e5ff",
+    "results/fedora-v8-native-candidate-4/valgrind-v8-qore-import.txt": "d62aa44fd2216928a3807d44f7d7279f71b77af851c7d690c5516e3f71a7072b",
+    "results/fedora-v8-native-candidate-4/valgrind-v8-qore-import.log": "c7973d5008cd6606bd4e7d4a6b57b532c833eeb379b8133f2a05645edb301c47",
+    "results/fedora-v8-native-candidate-4/valgrind-v8.txt": "5d1e22ac18288965f79c547a83f86ebaebf7e80b381b9b15806930eb835048dd",
+    "results/fedora-v8-native-candidate-4/valgrind-v8.log": "ff329959f6aa0951019a1983d470b816b0410a53e452f8d54fdedcb5484fa5f0",
+    "results/fedora-v8-native-candidate-4/valgrind-js-program-destroy-in-use.txt": "9da861db69eac175e3dfe8837a057b16de03aa484671ad85bac12b3c9407dc47",
+    "results/fedora-v8-native-candidate-4/valgrind-js-program-destroy-in-use.log": "26894124930d1f85c088d27b4006639a747a88f36a777ca7976da7d5a5eaeef4",
+    "results/fedora-v8-native-candidate-4/valgrind-js-teardown.txt": "ac90baaea52208f870007e26d18e1f9a43546d3cf397c26563099d058dc99c19",
+    "results/fedora-v8-native-candidate-4/valgrind-js-teardown.log": "7aa1c311c56956c2d0a7319b27ec8872e05f797f8950162314ca05b36a804474",
+    "results/fedora-v8-native-candidate-3/installed-suites.log": "43dbeac8a833be0720f20026160b07b210c8cfef00e8e1de7a36273c2a5382b0",
+    "results/fedora-v8-native-candidate-4/source-proxy.log": "0647a4eae9e5ff387e7363909a77ef18dc218ddb830f7e38c15e1eecddfff8b0",
+    "results/fedora-v8-candidate-3/build.log": "08a606fe618ae3ea503ed63b313aebfba80bfaab1b6f2e1482ac5938ad19baef",
+    "results/el10-v8-native-candidate-4/valgrind-load.txt": "77b75b6640b5b882baa4ca15ff119345b77748be18060708f009dd8930b94012",
+    "results/el10-v8-native-candidate-4/valgrind-v8-qore-import.txt": "9d2e9e5bbdbd52a54970b0624732592389939b8ba053d4845c9148b609d076d3",
+    "results/el10-v8-native-candidate-4/valgrind-v8-qore-import.log": "c7973d5008cd6606bd4e7d4a6b57b532c833eeb379b8133f2a05645edb301c47",
+    "results/el10-v8-native-candidate-4/valgrind-v8.txt": "1a69c05fc1cb5ec8f913820cb3b2b1aa5135c99fcace1ca90fec4681f05273cd",
+    "results/el10-v8-native-candidate-4/valgrind-v8.log": "ff329959f6aa0951019a1983d470b816b0410a53e452f8d54fdedcb5484fa5f0",
+    "results/el10-v8-native-candidate-4/valgrind-js-program-destroy-in-use.txt": "776479e31fb378f9545b9dff9a2c6a7a4db747d2701b1bd402f9b4b74eba59e2",
+    "results/el10-v8-native-candidate-4/valgrind-js-program-destroy-in-use.log": "26894124930d1f85c088d27b4006639a747a88f36a777ca7976da7d5a5eaeef4",
+    "results/el10-v8-native-candidate-4/valgrind-js-teardown.txt": "da7f00b05a79517345b647d23f9b9e6e6afae84066193d86dcc4c09a0710cc39",
+    "results/el10-v8-native-candidate-4/valgrind-js-teardown.log": "7aa1c311c56956c2d0a7319b27ec8872e05f797f8950162314ca05b36a804474",
+    "results/el10-v8-native-candidate-3/installed-suites.log": "528591194a4781a95717357b3a3811abcc29614b91ce8828bc469eb8961cc0d0",
+    "results/el10-v8-native-candidate-4/source-proxy.log": "19bd4cb023226979d0cd3ff750a71b4d731d449ecebd12c1612694b8cd8f00f1",
+    "results/el10-v8-candidate-3/build.log": "bbc851829b7e609cb1bc860c763b9bdf8634098c5a100e83354d63147e6bbae9",
+    "results/fedora-v8-node-controls-1/node-empty.txt": "8724c16fd877cc20d56650823d3e68e86c38cd335c018fbcfbc72fd45ce91fd4",
+    "results/el10-v8-node-controls-1/node-empty.txt": "4d0318e0f103e58a5235cbf7c4915e3a99ba19e791d5d131244116a82b8137b3",
+    "results/fedora-v8-program-control-1/valgrind.txt": "813c5d4c23357d8db459eb139d7ee9518cc681644620c8e77f2733708606d620",
+    "results/fedora-v8-symbol-control-4/valgrind.txt": "68d390a31637f55a4ccc809cf15314ba65e736bfc6ca934d93de76212c9c23a7",
+    "results/el10-v8-node-tls-control-1/valgrind.txt": "05f88928106ab5e9bef98002e213f42fd6da3c1339222b5b07bdd85cc8e09828",
+    "results/v8-compression-control-1/valgrind.txt": "7a788dde6925415323e1c508f295e2b2d8cfc30d10e22e2c3841b9a662f0e805",
+    "results/v8-compression-control-1/valgrind-fixed.txt": "7e5aa134ced77241cbd177da9a431b5eb098db13803cb6ee8006b12ead9630ed",
+    "results/fedora-v8-node-gc-control-1/valgrind.txt": "8438fff819b4711fa1d2730817ed6853e251423fa99cecd59e5251cf1c5183b6",
+    "results/fedora-v8-import-symbolized-3/valgrind.txt": "3d15215cac35b442c97654c5ffc911f7cd3469ef5c4ed5c93a464d95be396ec7",
+    "results/el10-v8-symbol-control-2/valgrind.txt": "8253f08cb20247b7f3f5544eed51f9eff7ad21d0d7a03a550699ccd32ce84f82",
+    "results/el10-v8-wasm-control-1/valgrind.txt": "989b830f880228f712b2bedcf17c8212a9b5d4923d7eacf7df60cbb98de8e0b4",
+    "results/el10-v8-wasm-control-1/output.log": "85d7f4d004c47b3a568b638405ec4a9b8cb677ac124e197fe133ac5e9206e0d1",
+    "results/el10-v8-optional-instruction-1.txt": "e7b4acebeb8b5692194dc8c7158b91f1912d345fabd0e56f050fd972a05d0886",
+    "results/el10-v8-optional-functions-1.txt": "9ccd5316a4ee6a2ea33f9e61f5a9fbc6c46bf342ee3ba3e2b7e96216eb82ebf2",
+    "results/node-cppgc-upstream-fix.json": "f8dca89ed187ca125828681c0e7441a77d0cff51fdc341b67d860db1c623f780",
+    "results/fedora-v8-symbol-control-4/status.json": "d93f95fe2f3ed3458a907431d32bfa5c38969f1346519a7eea7f26844914f472",
+    "results/el10-v8-wasm-control-1/status.json": "ffb83411660ca2cd70748979820b3f4ef42679879383736565bb017a0d52c26d",
+    "evidence/v8-controls-20261003/compression.c": "b68e7937541ffcf12691fddf1a5ddd875887bddd8c28537f398a1a62c0a55e26",
+    "evidence/v8-controls-20261003/wasm.js": "c9c0f40b634b62c5ff087c108aa202dfe4edbde6b8d8000cb2fbc11065debe08",
+    "evidence/v8-controls-20261003/gc.js": "3aaef3eab68c2b7749194e37b9c3300e1371b7610bb9d35452fbbbd1c9a61e53",
+    "results/fedora-v8-artifacts-candidate-1/sdk-consumer.log": "f6136cb63fae3fe19771eb42428eb8d09a905182437d06e11a8121b20353b90d",
+    "results/fedora-v8-artifacts-candidate-1/sdk-artifacts.log": "44881df441518e8ae97cf5dcd5e58acbaa9f535675400a2267dda59ac0a252e8",
+    "results/fedora-v8-artifacts-candidate-2/runtime-tests.log": "5ed776681f4fe60cbb7d522facd928e9f9cfdd60e8ecc5efe669a93acb22c7ba",
+    "results/el10-v8-artifacts-candidate-1/sdk-consumer.log": "ecd3b7ac630e72161d52f515000137e0025ad6d61d98cb429e224384dc790a52",
+    "results/el10-v8-artifacts-candidate-1/sdk-artifacts.log": "44881df441518e8ae97cf5dcd5e58acbaa9f535675400a2267dda59ac0a252e8",
+    "results/el10-v8-artifacts-candidate-2/runtime-tests.log": "c0b208d5255579002d1272b2d1666c4bc2a7722bac6ee243ad67ea7cadc373ee",
+    "results/v8-source-fixture-correction-1.log": "6fe0eb3afe61e2589f419f7d4630102d9c374ba7a65b87662213694e2ed34566",
+    "results/v8-delete-control-1/compile.log": "7e43aa4cfca134aed867e86673d617e8b7c4cb2056a967f11debab4ac18761d8",
+    "results/v8-delete-control-1/compile-no-speculation.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/v8-delete-control-1/valgrind.log": "0211eb2997f4174ec6fd356aeb93f2d1adb490347696022addaac3cea76f0245",
+    "results/v8-delete-control-1/control.wpa.090i.devirt": "b12e18d2c2689464eb143457cd18434e9aca7bfe66de69736be4de9a4c8bfb4d",
+    "results/v8-delete-control-1/control.ltrans0.ltrans.273t.optimized": "56565c15861b53b7a7b3631423b424db621cb654e5c0698ff7ba626613015d41"
+  },
+  "exclusions": [
+    "Node CLI inspector-thread TLS allocations (320 possible bytes) are not present in bridge runs and are not exempted.",
+    "Node CLI closed-descriptor probes are not present in bridge runs and are not exempted.",
+    "No other invalid access, undefined-value site, lost allocation or descriptor error is allowed.",
+    "All diagnostic output is retained; no blanket suppression or compiler-warning disable is proposed."
+  ],
+  "compiler_diagnostic": {
+    "root_cause": "GCC 16 speculative devirtualization constructs an impossible Program deleting-destructor path for the secondary base at offset 16. The real dynamic object uses the adjusted ProgramData destructor. Disabling speculative devirtualization in the diagnostic control removes the warning. Package compiler options are unchanged.",
+    "control": "evidence/v8-controls-20261003/delete.cpp",
+    "assertions": "1001 derived objects destroyed; secondary base offset asserted as 16; Valgrind reports zero errors and zero definite, indirect or possible loss. 102927 bytes remain reachable in loaded Qore/LLVM globals.",
+    "approval": "Existing user-approved GCC bug 125913 compiler diagnostic; same multiple-inheritance speculative-deletion pattern.",
+    "source": "https://gcc.gnu.org/bugzilla/show_bug.cgi?id=125913"
+  },
+  "fixture_correction": {
+    "files": {
+      "test/ts-schema-cache.qtest": "0e7de1e1ee3a814297e2820bdaacc3a18bb3713470351f108e3f9124ef284124",
+      "test/ts-app-initialization.qtest": "afbf692f036d2b803149a4581cfb1d88fdacac00b303080d396fa51ad0064872"
+    },
+    "behavior": "Subprocess tests honor QORE_V8_TEST_QMOD_DIR for installed AOT testing, with relative checkout sources as the default. Both paths pass.",
+    "source_log": "results/v8-source-fixture-correction-1.log"
+  }
+}

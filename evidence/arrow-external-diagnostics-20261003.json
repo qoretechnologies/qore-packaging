@@ -105,5 +105,137 @@
     "decision": "accepted",
     "user_statement": "I accept all 4",
     "scope": "Only the diagnostics and limitations documented in this file; retain normal compiler flags, tests and diagnostics."
+  },
+  "canonical": {
+    "build": {
+      "schema": 1,
+      "image": "sha256:4cfa585473573d765c711d5d85aa29b462a17051c2b94cba7ceda20da65ac295",
+      "source": {
+        "schema": 1,
+        "name": "apache-arrow",
+        "version": "25.0.1",
+        "commit": "a2d68df4bca986e6ba7c1f1e66fa929e28e98da9",
+        "source_date_epoch": 1790995769,
+        "spec": "apache-arrow.spec",
+        "upstream": {
+          "url": "https://archive.apache.org/dist/arrow/arrow-25.0.1/apache-arrow-25.0.1.tar.gz",
+          "sha256": "43d5de0a581f43cf63a2c06b4dcf13b9ff6fcd800f023324596e5781093bc500"
+        },
+        "sources": {
+          "apache-arrow-25.0.1.tar.gz": "43d5de0a581f43cf63a2c06b4dcf13b9ff6fcd800f023324596e5781093bc500",
+          "apache-arrow-runtime-sse42.patch": "a8f80bd1dc32e1cffad4cae594ebd43cdcdf4c783b09a764fab2de63d3209a4d",
+          "apache-arrow.spec": "7ce5ac57f768ef5e2cfe603b60a1b093aebeac703d802f78e51ef64f005dd3e1",
+          "arrow-testing-9ff285c88565f0f6abc855918c6a342e70e4909c.tar.gz": "507609ccd0912a111f2ee89d108176baded8c8f22fd845c1686d7ddd462c3510",
+          "parquet-testing-e74785d85a4ecee829e1e405444d6a1b24b8bc9c.tar.gz": "6b3d9c1d9b9f059cf3b84b10af2b8a861db167f7809ecef555e610d26fd16433",
+          "xsimd-14.2.0.tar.gz": "21e841ab684b05331e81e7f782431753a029ef7b7d9d6d3ddab837e7782a40ee"
+        },
+        "components": [
+          {
+            "url": "https://codeload.github.com/apache/arrow-testing/tar.gz/9ff285c88565f0f6abc855918c6a342e70e4909c",
+            "archive": "arrow-testing-9ff285c88565f0f6abc855918c6a342e70e4909c.tar.gz",
+            "sha256": "507609ccd0912a111f2ee89d108176baded8c8f22fd845c1686d7ddd462c3510",
+            "commit": "9ff285c88565f0f6abc855918c6a342e70e4909c"
+          },
+          {
+            "url": "https://codeload.github.com/apache/parquet-testing/tar.gz/e74785d85a4ecee829e1e405444d6a1b24b8bc9c",
+            "archive": "parquet-testing-e74785d85a4ecee829e1e405444d6a1b24b8bc9c.tar.gz",
+            "sha256": "6b3d9c1d9b9f059cf3b84b10af2b8a861db167f7809ecef555e610d26fd16433",
+            "commit": "e74785d85a4ecee829e1e405444d6a1b24b8bc9c"
+          },
+          {
+            "url": "https://github.com/xtensor-stack/xsimd/archive/14.2.0.tar.gz",
+            "archive": "xsimd-14.2.0.tar.gz",
+            "sha256": "21e841ab684b05331e81e7f782431753a029ef7b7d9d6d3ddab837e7782a40ee"
+          }
+        ]
+      },
+      "jobs": 3,
+      "network": "none",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--hostname",
+        "qore-rpm-builder",
+        "--user",
+        "1019:100",
+        "-e",
+        "HOME=/work/home",
+        "-e",
+        "SOURCE_DATE_EPOCH=1790995769",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/apache-arrow-final-1:/sources:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/leap-apache-arrow-final-1:/work",
+        "sha256:4cfa585473573d765c711d5d85aa29b462a17051c2b94cba7ceda20da65ac295",
+        "sh",
+        "-c",
+        "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+        "build-local",
+        "-ba",
+        "--define",
+        "_topdir /work/rpmbuild",
+        "--define",
+        "_sourcedir /sources",
+        "--define",
+        "_smp_build_ncpus 3",
+        "--define",
+        "_buildhost qore-rpm-builder",
+        "/sources/apache-arrow.spec"
+      ],
+      "source_only": false,
+      "exit_code": 0,
+      "artifacts": {
+        "rpmbuild/RPMS/x86_64/apache-arrow-acero-devel-25.0.1-2.qore.x86_64.rpm": "a8a20012e2e9fa1b2e65395c39e7e0a23a439f8ae6ceae5f41d712afece1f7d7",
+        "rpmbuild/RPMS/x86_64/apache-arrow-compute-devel-25.0.1-2.qore.x86_64.rpm": "c6adac9a73b9a08e4991e576bd01be1c3c70fb3447a183894820d64f4a9f759a",
+        "rpmbuild/RPMS/x86_64/apache-arrow-dataset-devel-25.0.1-2.qore.x86_64.rpm": "435a5e551f7e3ada544bd48eed8c588afec5fbfdc59cefe3c334a3fc68656a15",
+        "rpmbuild/RPMS/x86_64/apache-arrow-debuginfo-25.0.1-2.qore.x86_64.rpm": "34fe47925e91bb5c52ecaef353dd7dc61757793f6215cf241bfd0d89c65c11fd",
+        "rpmbuild/RPMS/x86_64/apache-arrow-debugsource-25.0.1-2.qore.x86_64.rpm": "784a07c1ed906002d76408c54befd4b39e2c1da1d1133ad27224453d6d2bcd4c",
+        "rpmbuild/RPMS/x86_64/apache-arrow-devel-25.0.1-2.qore.x86_64.rpm": "ec7fa721852fe097ec382d556290a50d3a9caebfd5219f6a0dd14567033219bb",
+        "rpmbuild/RPMS/x86_64/apache-arrow-flight-devel-25.0.1-2.qore.x86_64.rpm": "c915d106fac515cd6a124774007b458d9f88dcfd803efb3216f0478efce31711",
+        "rpmbuild/RPMS/x86_64/apache-parquet-devel-25.0.1-2.qore.x86_64.rpm": "b2322d16a11ab1ac88f32f453aa0ba1dc7242294a11e7551ea8c3eec492edd27",
+        "rpmbuild/RPMS/x86_64/libarrow-acero2500-25.0.1-2.qore.x86_64.rpm": "547cfb128fb64e709ecd69fa8d8c48b82bbfd0ed157b436fa8f65098e774f0d0",
+        "rpmbuild/RPMS/x86_64/libarrow-acero2500-debuginfo-25.0.1-2.qore.x86_64.rpm": "60afa4cdbd269c9953089a5b5890b9a9a32ee486c155a8fa4718bd9fd47609a1",
+        "rpmbuild/RPMS/x86_64/libarrow-compute2500-25.0.1-2.qore.x86_64.rpm": "4927261e9d4823f5331d4ed4170fd70c4271eb6e52af54695b73f483dce25a14",
+        "rpmbuild/RPMS/x86_64/libarrow-compute2500-debuginfo-25.0.1-2.qore.x86_64.rpm": "03ceebbfa0809def6b628ce91d312fdfab089daff86a43682b1d4122866b24d7",
+        "rpmbuild/RPMS/x86_64/libarrow-dataset2500-25.0.1-2.qore.x86_64.rpm": "e577a4120182bd12b076a43b0ae0891e4b6217302201ea3705fd52ff1cb6e9fa",
+        "rpmbuild/RPMS/x86_64/libarrow-dataset2500-debuginfo-25.0.1-2.qore.x86_64.rpm": "3194393890112c47f4da64a72c497a1912311bb11fcd0078a4afcaa5a3f8e878",
+        "rpmbuild/RPMS/x86_64/libarrow-flight2500-25.0.1-2.qore.x86_64.rpm": "08348f5bf0d27fb3a885a465a0a280678654bd305be30348edc40f52124363ff",
+        "rpmbuild/RPMS/x86_64/libarrow-flight2500-debuginfo-25.0.1-2.qore.x86_64.rpm": "f3b0cc548b74d47ae069c5001ddabadbf9141bea2507b6ffd931f1e4ca9b37f0",
+        "rpmbuild/RPMS/x86_64/libarrow2500-25.0.1-2.qore.x86_64.rpm": "77ec5a7132db293a2665b2898e672e2a03a09acae1a80ee89009ca56e53ee6f9",
+        "rpmbuild/RPMS/x86_64/libarrow2500-debuginfo-25.0.1-2.qore.x86_64.rpm": "81e11eeb556cdd09f0016ea80e07b4f1dc8c2258c1da81f6070dae2e8a236e8a",
+        "rpmbuild/RPMS/x86_64/libparquet2500-25.0.1-2.qore.x86_64.rpm": "5f0ec48c03f936bd7eef5137e78370e502a793b337087bc1b229727697f7fe4d",
+        "rpmbuild/RPMS/x86_64/libparquet2500-debuginfo-25.0.1-2.qore.x86_64.rpm": "cc420c13ccc480c220b77928cb78fc84a95b8ea3bcc5245908fab476cb5657c4",
+        "rpmbuild/SRPMS/apache-arrow-25.0.1-2.qore.src.rpm": "e7e81b5180a1595b42c25822c6998fde0ac605b61067481b60cf2314669dd004"
+      }
+    },
+    "log_sha256": "fed1a49edc9c329a8f75cf4847cf2d0c25aede56919c0cf4bd58e5b0cbdcd1b4",
+    "warning_count": 11,
+    "warning_inventory_matches_approved_candidate": true,
+    "obs_upload": {
+      "apache-arrow": {
+        "source_commit": "a2d68df4bca986e6ba7c1f1e66fa929e28e98da9",
+        "revision": "2",
+        "srcmd5": "a49cc7b1c2157efd3d77996e31d6bd14",
+        "verified_files": {
+          "apache-arrow-25.0.1.tar.gz": "0abf744b5ffdc381f992653e2033d6cd",
+          "apache-arrow-runtime-sse42.patch": "d6cddb232f8c9f387ffbc29f0cc501b6",
+          "apache-arrow.spec": "8269ec0b0d3540054540def30b2c2acb",
+          "arrow-testing-9ff285c88565f0f6abc855918c6a342e70e4909c.tar.gz": "d4e480d9a3e4ee69ee0993ba048ddc40",
+          "parquet-testing-e74785d85a4ecee829e1e405444d6a1b24b8bc9c.tar.gz": "fe58fd0943498f098e0b54a27e2ef6ef",
+          "xsimd-14.2.0.tar.gz": "fdc14391b069eef825272098ea074aaf",
+          "source-manifest.json": "88c712cb207278bf1638c307aaf2de8d"
+        }
+      }
+    },
+    "obs_status": {
+      "openSUSE_Leap_16.0": {
+        "x86_64": "succeeded",
+        "aarch64": "succeeded"
+      }
+    }
   }
 }

@@ -99,5 +99,100 @@
     "decision": "accepted",
     "user_statement": "I accept all 4",
     "scope": "Only the diagnostics and limitations documented in this file; retain normal compiler flags, tests and diagnostics."
+  },
+  "canonical": {
+    "build": {
+      "schema": 1,
+      "image": "sha256:99d06b03264d38aef0a2940480a07c2ddf603194e88d23fddc47fc32941b429e",
+      "source": {
+        "schema": 1,
+        "name": "python-pyarrow",
+        "version": "25.0.1",
+        "commit": "a2d68df4bca986e6ba7c1f1e66fa929e28e98da9",
+        "source_date_epoch": 1790995769,
+        "spec": "python-pyarrow.spec",
+        "upstream": {
+          "url": "https://archive.apache.org/dist/arrow/arrow-25.0.1/apache-arrow-25.0.1.tar.gz",
+          "sha256": "43d5de0a581f43cf63a2c06b4dcf13b9ff6fcd800f023324596e5781093bc500"
+        },
+        "sources": {
+          "apache-arrow-25.0.1.tar.gz": "43d5de0a581f43cf63a2c06b4dcf13b9ff6fcd800f023324596e5781093bc500",
+          "arrow-testing-9ff285c88565f0f6abc855918c6a342e70e4909c.tar.gz": "507609ccd0912a111f2ee89d108176baded8c8f22fd845c1686d7ddd462c3510",
+          "parquet-testing-e74785d85a4ecee829e1e405444d6a1b24b8bc9c.tar.gz": "6b3d9c1d9b9f059cf3b84b10af2b8a861db167f7809ecef555e610d26fd16433",
+          "pyarrow-rank-test-deprecation.patch": "41855ae51995ee5dbd3fe08cac7426da6d13fd92fcc56ee691e3bbb958a5a761",
+          "pyarrow-runtime-test.py": "533964919eaba99fd2887fd62b0dba209468fbed7e26dd933de0a66456c45363",
+          "pyarrow-unused-libcst-build-requirement.patch": "a0e246c03dfe0e3226f82107700dcf1cccc91325b79ef551d495071002273041",
+          "python-pyarrow.spec": "3eb3c2b1d5792138e06b08861c8ae8d6b3b64a605c18d95366e5d8a84578d801"
+        },
+        "components": [
+          {
+            "url": "https://codeload.github.com/apache/arrow-testing/tar.gz/9ff285c88565f0f6abc855918c6a342e70e4909c",
+            "archive": "arrow-testing-9ff285c88565f0f6abc855918c6a342e70e4909c.tar.gz",
+            "sha256": "507609ccd0912a111f2ee89d108176baded8c8f22fd845c1686d7ddd462c3510",
+            "commit": "9ff285c88565f0f6abc855918c6a342e70e4909c"
+          },
+          {
+            "url": "https://codeload.github.com/apache/parquet-testing/tar.gz/e74785d85a4ecee829e1e405444d6a1b24b8bc9c",
+            "archive": "parquet-testing-e74785d85a4ecee829e1e405444d6a1b24b8bc9c.tar.gz",
+            "sha256": "6b3d9c1d9b9f059cf3b84b10af2b8a861db167f7809ecef555e610d26fd16433",
+            "commit": "e74785d85a4ecee829e1e405444d6a1b24b8bc9c"
+          }
+        ]
+      },
+      "jobs": 3,
+      "network": "none",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--hostname",
+        "qore-rpm-builder",
+        "--user",
+        "1019:100",
+        "-e",
+        "HOME=/work/home",
+        "-e",
+        "SOURCE_DATE_EPOCH=1790995769",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/python-pyarrow-final-1:/sources:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/leap-python-pyarrow-final-1:/work",
+        "sha256:99d06b03264d38aef0a2940480a07c2ddf603194e88d23fddc47fc32941b429e",
+        "sh",
+        "-c",
+        "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+        "build-local",
+        "-ba",
+        "--define",
+        "_topdir /work/rpmbuild",
+        "--define",
+        "_sourcedir /sources",
+        "--define",
+        "_smp_build_ncpus 3",
+        "--define",
+        "_buildhost qore-rpm-builder",
+        "/sources/python-pyarrow.spec"
+      ],
+      "source_only": false,
+      "exit_code": 0,
+      "artifacts": {
+        "rpmbuild/RPMS/x86_64/python-pyarrow-debugsource-25.0.1-1.qore.x86_64.rpm": "ee35ed3d0d5bede9295cad0c971a5c99b82b413abbac94b37f4239596bf7fcf8",
+        "rpmbuild/RPMS/x86_64/python313-pyarrow-25.0.1-1.qore.x86_64.rpm": "b0521804fe6982e5d5aa8513e7fa693722bab677156367f124add31422df920d",
+        "rpmbuild/RPMS/x86_64/python313-pyarrow-debuginfo-25.0.1-1.qore.x86_64.rpm": "7fb7280926eacd3ddc2e5a71cdaaf2800b39894600a487214179cca497a4013b",
+        "rpmbuild/SRPMS/python-pyarrow-25.0.1-1.qore.src.rpm": "cd6e7c4bd1d7e367d8d6b48e37554bc0e408b0faa37cb012b1c3a21d1eb1a14e"
+      }
+    },
+    "log_sha256": "792807f4b38756ba6ac4be88c30d84f407a14db1bed889dd9c09cecf2834f8dd",
+    "warning_count": 24,
+    "warning_inventory_matches_approved_candidate": true,
+    "installed_combination": {
+      "status": "blocked",
+      "failure": "Distribution python313-grpcio 1.69.0 and libgrpc 1.60.0 register incompatible grpc_experiments flags in the shared Abseil registry; both import orders fail without Qore. A private embedded-core build is being qualified.",
+      "log": "results/leap-flight-installed-final-1/sdk-tests.log",
+      "log_sha256": "142edbccffe9ea9e1a9863a924f41e1a1d253bb5736196ca4edee910cf29272d"
+    }
   }
 }
