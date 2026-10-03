@@ -307,5 +307,40 @@
       "grpcio-tools-flawed.proto",
       "grpcio-tools-build-declarations.patch"
     ]
+  },
+  "python-Cython": {
+    "version": "3.2.9",
+    "url": "https://files.pythonhosted.org/packages/source/c/cython/cython-3.2.9.tar.gz",
+    "archive": "cython-3.2.9.tar.gz",
+    "sha256": "d249c9022ab13286b17bd66f30609e800c5f95efeecb06168990c7a66cecde6c",
+    "source_date_epoch": 1785518455,
+    "provenance": "Upstream archive and base spec retrieved from openSUSE:Factory/python-Cython revision 93; archive verified against OBS MD5 775ad752cdb021193f3ef323228388d5. Recipe retains SUSE licensing and enables upstream tests."
+  },
+  "python-pyarrow": {
+    "version": "25.0.1",
+    "url": "https://archive.apache.org/dist/arrow/arrow-25.0.1/apache-arrow-25.0.1.tar.gz",
+    "archive": "apache-arrow-25.0.1.tar.gz",
+    "sha256": "43d5de0a581f43cf63a2c06b4dcf13b9ff6fcd800f023324596e5781093bc500",
+    "source_date_epoch": 1790812800,
+    "components": [
+      {
+        "url": "https://codeload.github.com/apache/arrow-testing/tar.gz/9ff285c88565f0f6abc855918c6a342e70e4909c",
+        "archive": "arrow-testing-9ff285c88565f0f6abc855918c6a342e70e4909c.tar.gz",
+        "sha256": "507609ccd0912a111f2ee89d108176baded8c8f22fd845c1686d7ddd462c3510",
+        "commit": "9ff285c88565f0f6abc855918c6a342e70e4909c"
+      },
+      {
+        "url": "https://codeload.github.com/apache/parquet-testing/tar.gz/e74785d85a4ecee829e1e405444d6a1b24b8bc9c",
+        "archive": "parquet-testing-e74785d85a4ecee829e1e405444d6a1b24b8bc9c.tar.gz",
+        "sha256": "6b3d9c1d9b9f059cf3b84b10af2b8a861db167f7809ecef555e610d26fd16433",
+        "commit": "e74785d85a4ecee829e1e405444d6a1b24b8bc9c"
+      }
+    ],
+    "extra_sources": [
+      "pyarrow-runtime-test.py",
+      "pyarrow-unused-libcst-build-requirement.patch",
+      "pyarrow-rank-test-deprecation.patch"
+    ],
+    "provenance": "Same verified Apache Arrow archive and pinned upstream data as the C++ package. The unused libcst build requirement patch and API regression come from the Qore Debian PyArrow backport; shared-library RPM adaptation."
   }
 }

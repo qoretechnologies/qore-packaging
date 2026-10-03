@@ -75,8 +75,13 @@ compilation. Source and AOT spreadsheet suites pass 782 assertions. Valgrind
 has no unclassified contexts or native losses; only the previously approved
 JVM/glibc and CPython origins remain. Evidence is in
 ``evidence/jni-native-final-qualification-20261002.json`` and
-``evidence/jni-headless-merge-20261002.json``. JNI RPM builds on all three targets
-are in progress and are not included in the qualified-module count.
+``evidence/jni-headless-merge-20261002.json``. JNI candidate builds and installed
+runtime/SDK/artifact checks pass on all three targets. The RPM recipe is committed
+as ``7527901``; canonical rebuilds are in progress. The OpenJDK 21 font-layout
+exception was accepted on 2026-10-03, with standalone Java controls retained in
+``evidence/jni-awt-diagnostic-20261003.json``. Candidate results are recorded in
+``evidence/jni-rpm-candidate-20261003.json``; JNI is not yet in the canonical
+qualified-module count.
 
 The testing project's build configuration explicitly chooses CPU onnxruntime
 for qore-stdlib's ELF dependencies. Fedora provides those capabilities from
@@ -184,7 +189,11 @@ Leap's Python gRPC compiler fixture now passes a canonical RPM build and all
 nine upstream/generated-stub tests without warnings. Installed checks pass;
 the canonical compiler ELF is identical to the native Valgrind-qualified build.
 OBS revision 1 has verified sources with publication disabled. PyArrow Flight
-and its Compute/Acero/Dataset dependencies remain in qualification. See
+and its Compute/Acero/Dataset dependencies pass candidate qualification:
+95 Arrow test groups, 17,527 Cython tests, and 6,616 PyArrow tests plus three API
+regressions. The upstream/compiler diagnostic exceptions were explicitly accepted
+on 2026-10-03. Canonical rebuilds and installed Qore interoperation remain pending.
+See ``dependencies/arrow-flight.rst`` and
 ``evidence/grpcio-tools-rpm-final-20261003.json``.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection

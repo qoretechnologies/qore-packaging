@@ -1,0 +1,95 @@
+--- a/python/pyarrow/tests/test_compute.py
++++ b/python/pyarrow/tests/test_compute.py
+@@ -172,10 +172,9 @@
+         pc.PivotWiderOptions(["height"], unexpected_key_behavior="raise"),
+         pc.QuantileOptions(),
+         pc.RandomOptions(),
+-        pc.RankOptions(sort_keys="ascending",
+-                       null_placement="at_end", tiebreaker="max"),
+-        pc.RankQuantileOptions(sort_keys="ascending",
+-                               null_placement="at_end"),
++        pc.RankOptions(sort_keys=[("", "ascending", "at_end")],
++                       tiebreaker="max"),
++        pc.RankQuantileOptions(sort_keys=[("", "ascending", "at_end")]),
+         pc.ReplaceSliceOptions(0, 1, "a"),
+         pc.ReplaceSubstringOptions("a", "b"),
+         pc.RoundOptions(2, "towards_infinity"),
+@@ -3810,8 +3809,7 @@
+ )
+ def test_rank_options_tiebreaker(tiebreaker, expected_values):
+     arr = pa.array([1.2, 0.0, 5.3, None, 5.3, None, 0.0])
+-    rank_options = pc.RankOptions(sort_keys="ascending",
+-                                  null_placement="at_end",
++    rank_options = pc.RankOptions(sort_keys=[("", "ascending", "at_end")],
+                                   tiebreaker=tiebreaker)
+     result = pc.rank(arr, options=rank_options)
+     expected = pa.array(expected_values, type=pa.uint64())
+@@ -3836,7 +3834,7 @@
+     )
+     assert result.equals(expected)
+ 
+-    result = pc.rank(arr, null_placement="at_start")
++    result = pc.rank(arr, sort_keys=[("", "ascending", "at_start")])
+     expected_at_start = pa.array([5, 3, 6, 1, 7, 2, 4], type=pa.uint64())
+     assert result.equals(expected_at_start)
+ 
+@@ -3846,8 +3844,7 @@
+ 
+     with pytest.raises(ValueError,
+                        match=r'"NonExisting" is not a valid tiebreaker'):
+-        pc.RankOptions(sort_keys="descending",
+-                       null_placement="at_end",
++        pc.RankOptions(sort_keys=[("", "descending", "at_end")],
+                        tiebreaker="NonExisting")
+ 
+ 
+@@ -3869,7 +3866,7 @@
+     )
+     assert result.equals(expected)
+ 
+-    result = pc.rank_quantile(arr, null_placement="at_start")
++    result = pc.rank_quantile(arr, sort_keys=[("", "ascending", "at_start")])
+     expected_at_start = pa.array([0.3, 0.7, 0.3, 0.9, 0.3], type=pa.float64())
+     assert result.equals(expected_at_start)
+ 
+@@ -3889,7 +3886,7 @@
+          -0.5244005127080409, 0.5244005127080407])
+     result = pc.rank_normal(arr)
+     assert result.to_pylist() == expected
+-    result = pc.rank_normal(arr, null_placement="at_end", sort_keys="ascending")
++    result = pc.rank_normal(arr, sort_keys=[("", "ascending", "at_end")])
+     assert result.to_pylist() == expected
+     result = pc.rank_normal(arr, options=pc.RankQuantileOptions())
+     assert result.to_pylist() == expected
+@@ -3897,12 +3894,28 @@
+     expected = pytest.approx(
+         [-0.5244005127080409, 1.2815515655446004, -0.5244005127080409,
+          0.5244005127080407, -0.5244005127080409])
+-    result = pc.rank_normal(arr, null_placement="at_start", sort_keys="descending")
++    result = pc.rank_normal(arr, sort_keys=[("", "descending", "at_start")])
+     assert result.to_pylist() == expected
+     result = pc.rank_normal(arr,
+-                            options=pc.RankQuantileOptions(null_placement="at_start",
+-                                                           sort_keys="descending"))
++                            options=pc.RankQuantileOptions(
++                                sort_keys=[("", "descending", "at_start")]))
+     assert result.to_pylist() == expected
++
++
++@pytest.mark.parametrize("function", [pc.rank, pc.rank_quantile, pc.rank_normal])
++@pytest.mark.parametrize("order", ["ascending", "descending"])
++@pytest.mark.parametrize("placement", ["at_start", "at_end"])
++def test_rank_legacy_null_placement_warning(function, order, placement):
++    # Copyright 2026 Qore Technologies, s.r.o.
++    # Retain legacy behavior coverage and require its documented diagnostic.
++    arr = pa.array([None, 2, 1, None, 2])
++    with pytest.warns(FutureWarning, match=(
++            "Specifying null_placement in RankOptions is deprecated "
++            "as of 25.0.0")) as diagnostics:
++        legacy = function(arr, sort_keys=order, null_placement=placement)
++    assert len(diagnostics) == 1
++    current = function(arr, sort_keys=[("", order, placement)])
++    assert legacy.equals(current)
+ 
+ 
+ @pytest.mark.numpy

@@ -1,0 +1,207 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "All upstream tests passed; unchanged upstream diagnostics and the documented fixture-helper defects accepted by the user.",
+  "source": {
+    "schema": 1,
+    "name": "python-Cython",
+    "version": "3.2.9",
+    "commit": null,
+    "source_date_epoch": 1785518455,
+    "spec": "python-Cython.spec",
+    "upstream": {
+      "url": "https://files.pythonhosted.org/packages/source/c/cython/cython-3.2.9.tar.gz",
+      "sha256": "d249c9022ab13286b17bd66f30609e800c5f95efeecb06168990c7a66cecde6c"
+    },
+    "sources": {
+      "cython-3.2.9.tar.gz": "d249c9022ab13286b17bd66f30609e800c5f95efeecb06168990c7a66cecde6c",
+      "python-Cython.spec": "58080dcab2b25c2c4e8be44a6d59e8faeeb397636375d0d980fcba28b79f87d4"
+    },
+    "candidate": true
+  },
+  "test_counts": [
+    6125,
+    5735,
+    5667
+  ],
+  "total_tests": 17527,
+  "skips": 49,
+  "build_metadata_diagnostics": [
+    "Five stale MANIFEST.in patterns, emitted twice while building the wheel.",
+    "Two quoted forward-reference annotations in Cython/Compiler/Code.py are accepted but deprecated by Cython itself.",
+    "Three absolute libalternatives symlinks installed by openSUSE python RPM macros."
+  ],
+  "test_fixture_diagnostics": "Unused declarations, deprecated Py_UNICODE/numpy.math/legacy syntax coverage, type comparisons, packed members and the fixture-only paths detailed below. Raw warnings remain visible; no compiler option or filter changes.",
+  "uninitialized_fixture_review": {
+    "cpp_stl_algo_sample": "sample_single initializes i through a nonempty population loop; its doctest uses 10, but the helper has an uninitialized return for zero population.",
+    "cpp_stl_function": "_get_function_ptr_from_name only assigns f for recognized fixture names; doctests use those names, while an unknown fixture name leaves f uninitialized.",
+    "cpp_classes_def": "test_BaseMethods declares subClass before new inside try/finally; allocation failure can reach finally before assignment. The normal true/false constructor tests pass.",
+    "pure_py": "empty_declare deliberately exercises uninitialized C declarations, then boxes a union/array for None comparisons before assigning their values. These are upstream test fixtures, not installed compiler entry points.",
+    "cdef_class_dataclass": "Warning is in generated Python-to-C struct conversion; the fixture supplies an initialized {a:1} mapping. Error-return structs can be uninitialized and require the generated caller error check.",
+    "struct_conversion": "Same generated Python-to-C conversion warning for renamed struct member; the executed doctest supplies {x:1}.",
+    "khavkine1": "Compile-only fixture tests/compile/khavkine1.pyx declares a one-element C array; GCC warns about a temporary in its generated unpickler. This fixture is compiled, not executed, and is not installed as a compiler implementation module. No claim that this warning is false is made."
+  },
+  "fixture_sources": {
+    "cpp_stl_algo_sample": [
+      {
+        "path": "tests/run/cpp_stl_algo_sample.pyx",
+        "sha256": "fda185a2709e17765ded04e9c7a54e14d950354c99a33fb86a5eb6feec0aa4e0"
+      }
+    ],
+    "cpp_stl_function": [
+      {
+        "path": "tests/run/cpp_stl_function.pyx",
+        "sha256": "c0fa786589395266494dc6c745b102472a16c578b9f7178da45a436d2e63e808"
+      }
+    ],
+    "cpp_classes_def": [
+      {
+        "path": "tests/run/cpp_classes_def.pyx",
+        "sha256": "b4366dbd8039c5c97110f33d5134b7ba16a98fcaa22fef47117d40ec4232deda"
+      }
+    ],
+    "pure_py": [
+      {
+        "path": "tests/run/pure_py.py",
+        "sha256": "7493d86befd0ef78fe77939b128228a5a717b5fdcaf49d92a3f8549b6f9f16c6"
+      }
+    ],
+    "cdef_class_dataclass": [
+      {
+        "path": "tests/run/cdef_class_dataclass.pyx",
+        "sha256": "7bfe23555a71a7515d94a35ed32953b141d553dbe16cac92d8f16f219de045bb"
+      }
+    ],
+    "struct_conversion": [
+      {
+        "path": "tests/run/struct_conversion.pyx",
+        "sha256": "c5d00d2a41927687756a3250b6a06bd55e998c128cd2caacb79b31a8f4d38e1b"
+      }
+    ],
+    "khavkine1": [
+      {
+        "path": "tests/compile/khavkine1.pyx",
+        "sha256": "d7bd8b1ca5be7ef99ec4dc5c0a17e8d71d82a16952f1311691e0cefbed17dbda"
+      }
+    ]
+  },
+  "warning_inventory": {
+    "no files found matching 'setupegg.py'": 2,
+    "no files found matching 'Doc/*'": 2,
+    "no files found matching '*.pyx' under directory 'Cython/Debugger/Tests'": 2,
+    "no files found matching '*.pxd' under directory 'Cython/Debugger/Tests'": 2,
+    "no files found matching 'pyximport/README'": 2,
+    "Cython/Compiler/Code.py:844:40: Strings should no longer be used for type declarations. Use 'cython.int' etc. directly.": 1,
+    "Cython/Compiler/Code.py:874:54: Strings should no longer be used for type declarations. Use 'cython.int' etc. directly.": 1,
+    "/work/home/.cython/inline/_cython_inline_76cc73197ef4954c6ae5eb6600d583d8f99e67792f750359d66cab45b67b98c2.pyx:6:4: Unreachable code": 1,
+    "TEST_TMP/inline/_cython_inline_7fbafd1e0454105bcc1618f366cdece3ab06eb5e446d7a993231ef591ba57f8d.pyx:6:4: Unreachable code": 1,
+    "TEST_TMP/inline/_cython_inline_64a61c8bd66ce7c5a543091d36373b282505c33a7479190cafa97667deeb49d7.pyx:6:4: Unreachable code": 1,
+    "TEST_TMP/inline/_cython_inline_e5fa3cafe87c64cb6f4d8001c8f09130aa33b4045b432ae02f8daebb4034565b.pyx:7:4: Unreachable code": 1,
+    "TEST_TMP/inline/_cython_inline_e5fa3cafe87c64cb6f4d8001c8f09130aa33b4045b432ae02f8daebb4034565b.pyx:4:8: 'numpy.import_array()' has been added automatically since 'numpy' was cimported but 'numpy.import_array' was not called.": 1,
+    "TEST_TMP/inline/_cython_inline_4a6bd8f91d83dfec64c520c7cc0340e8c59e0fe2744977c631eea94c9ed54f21.pyx:11:4: Unreachable code": 1,
+    "TEST_TMP/inline/_cython_inline_1a906d3113e428bc0b3834726ba5deb98554230e2f3a7a17e82616a14d19fb1a.pyx:6:4: Unreachable code": 1,
+    "TEST_TMP/inline/_cython_inline_1f948092979e87c7b1c4acc90657a962d6660d4c43536d916c05e5644e0ad619.pyx:8:4: Unreachable code": 1,
+    "\u2018__pyx_t_2[0]\u2019 may be used uninitialized [-Wmaybe-uninitialized]": 1,
+    "\u2018__pyx_f_18complex_decorators_f\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __pyx_f_18complex_decorators_f(__pyx_t_double_complex)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_f_18inplace_lhs_nested_set_c\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_f_18inplace_lhs_nested_set_b\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_f_18inplace_lhs_nested_set_a\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018void __pyx_f_18inplace_lhs_nested_set_c(__pyx_obj_18inplace_lhs_nested_C*)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018void __pyx_f_18inplace_lhs_nested_set_b(__pyx_obj_18inplace_lhs_nested_C*)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018void __pyx_f_18inplace_lhs_nested_set_a(__pyx_obj_18inplace_lhs_nested_A*)\u2019 defined but not used [-Wunused-function]": 1,
+    "variable \u2018__pyx_t_1\u2019 set but not used [-Wunused-but-set-variable]": 3,
+    "\u2018__pyx_f_17w_subinterpreters_func\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018int __pyx_f_17w_subinterpreters_func()\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_memview_set_object\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_memview_get_object\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018int __pyx_memview_set_object(const char*, PyObject*)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __pyx_memview_get_object(const char*)\u2019 defined but not used [-Wunused-function]": 1,
+    "taking address of packed member of \u2018struct __pyx_t_8memslice_PackedArrayStruct\u2019 may result in an unaligned pointer value [-Waddress-of-packed-member]": 1,
+    "\u2018__pyx_r.a\u2019 may be used uninitialized [-Wmaybe-uninitialized]": 1,
+    "taking address of packed member of \u2018__pyx_t_8memslice_PackedArrayStruct\u2019 may result in an unaligned pointer value [-Waddress-of-packed-member]": 1,
+    "\u2018Py_UNICODE\u2019 is deprecated [-Wdeprecated-declarations]": 70,
+    "\u2018__pyx_mdef_18builtin_exceptions_6cython_1typeof\u2019 defined but not used [-Wunused-variable]": 2,
+    "\u2018PyObject* __pyx_convert_set_to_py_int(const std::set<int>&)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __pyx_convert_map_to_py_int____int(const std::map<int, int>&)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __pyx_convert_list_to_py_int(const std::__cxx11::list<int>&)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_v_i\u2019 may be used uninitialized [-Wmaybe-uninitialized]": 1,
+    "\u2018__pyx_v_subClass\u2019 may be used uninitialized [-Wmaybe-uninitialized]": 1,
+    "self-comparison always evaluates to true [-Wtautological-compare]": 17,
+    "\u2018__pyx_v_f\u2019 may be used uninitialized [-Wmaybe-uninitialized]": 2,
+    "\u2018__pyx_f_11extra_patma_is_null\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018int __pyx_f_11extra_patma_is_null(int*)\u2019 defined but not used [-Wunused-function]": 1,
+    "variable \u2018__pyx_v_p\u2019 set but not used [-Wunused-but-set-variable]": 2,
+    "variable \u2018__pyx_v_b\u2019 set but not used [-Wunused-but-set-variable]": 2,
+    "\u2018__pyx_pw_20special_methods_T561_18VerySpecialSubType_43__long__\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_pw_20special_methods_T561_11VerySpecial_43__long__\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __pyx_pw_20special_methods_T561_18VerySpecialSubType_43__long__(PyObject*)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __pyx_pw_20special_methods_T561_11VerySpecial_43__long__(PyObject*)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_pw_24special_methods_T561_py3_4Bool_3__nonzero__\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018int __pyx_pw_24special_methods_T561_py3_4Bool_3__nonzero__(PyObject*)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_f_8pure_py3_test_cdef_return_object\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __pyx_f_8pure_py3_test_cdef_return_object(PyObject*)\u2019 defined but not used [-Wunused-function]": 1,
+    "comparison of integer expressions of different signedness: \u2018unsigned int\u2019 and \u2018int\u2019 [-Wsign-compare]": 6,
+    "\u2018__pyx_f_24legacy_implicit_noexcept_test_noexcept_warning\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_f_24legacy_implicit_noexcept_test_noexcept_warning_str\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_f_24legacy_implicit_noexcept_test_noexcept_warning_object\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __pyx_f_24legacy_implicit_noexcept_test_noexcept_warning()\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __pyx_f_24legacy_implicit_noexcept_test_noexcept_warning_str()\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __pyx_f_24legacy_implicit_noexcept_test_noexcept_warning_object(PyObject*)\u2019 defined but not used [-Wunused-function]": 1,
+    "#warning The 'numpy.math' import is outdated and deprecated. Use the standard 'libc.math' instead. [-Wcpp]": 1,
+    "/work/home/.cython/inline/_cython_inline_91637d24a8fdbfb015f594f936db8dadc24cff1a7f51ddfcac198f188798d3d8.pyx:6:4: Unreachable code": 1,
+    "/work/home/.cython/inline/_cython_inline_2d163ad9345c444c888ed8717ce5d65a5296ed8256785f7c174320e5b6441cc5.pyx:6:4: Unreachable code": 1,
+    "/work/home/.cython/inline/_cython_inline_0d408e92dce4ab2a1f37b3ad5acad15126a26089d4deab55208706a314c87fa4.pyx:6:4: Unreachable code": 1,
+    "/work/home/.cython/inline/_cython_inline_c244033c7493281c331cd2d6c04489912bf6f31cfda0645d2a32dea336daae9a.pyx:6:4: Unreachable code": 1,
+    "\u2018__pyx_v_r3.x\u2019 may be used uninitialized [-Wmaybe-uninitialized]": 1,
+    "\u2018__pyx_v_r5\u2019 may be used uninitialized [-Wmaybe-uninitialized]": 2,
+    "\u2018__pyx_v_r3.__pyx_t_7pure_py_MyUnion::x\u2019 may be used uninitialized [-Wmaybe-uninitialized]": 1,
+    "/work/home/.cython/inline/_cython_inline_a42d03b4aeac808d3b07157103841c2a5fe010937cf02852a9a77fdc96834565.pyx:6:4: Unreachable code": 2,
+    "variable \u2018__pyx_t_3\u2019 set but not used [-Wunused-but-set-variable]": 2,
+    "variable \u2018__pyx_t_5\u2019 set but not used [-Wunused-but-set-variable]": 2,
+    "variable \u2018__pyx_t_4\u2019 set but not used [-Wunused-but-set-variable]": 2,
+    "\u2018__pyx_f_6unused_c_unused_optional\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_f_6unused_c_unused_simple\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __pyx_f_6unused_c_unused_optional(PyObject*, PyObject*, __pyx_opt_args_6unused_c_unused_optional*)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __pyx_f_6unused_c_unused_simple(PyObject*, PyObject*, PyObject*)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_f_11unused_args_c_unused_optional\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_f_11unused_args_c_unused_simple\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __pyx_f_11unused_args_c_unused_optional(PyObject*, PyObject*, __pyx_opt_args_11unused_args_c_unused_optional*)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __pyx_f_11unused_args_c_unused_simple(PyObject*, PyObject*, PyObject*)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_r.not_x\u2019 may be used uninitialized [-Wmaybe-uninitialized]": 1,
+    "variable \u2018__pyx_cur_scope\u2019 set but not used [-Wunused-but-set-variable]": 4,
+    "self-comparison always evaluates to false [-Wtautological-compare]": 2,
+    "\u2018__pyx_pw_24type_slots_int_long_T287_8IntLongA_3__long__\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __pyx_pw_24type_slots_int_long_T287_8IntLongA_3__long__(PyObject*)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018double __pyx_f_12cdef_keyword_f(double)\u2019 defined but not used [-Wunused-function]": 2,
+    "\u2018__pyx_f_12cdef_keyword_f\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_f_15widen_shrubbery_widen_shrubbery\u2019 defined but not used [-Wunused-function]": 2,
+    "\u2018PyObject* __pyx_f_15widen_shrubbery_widen_shrubbery(__pyx_obj_9my_module_Shrubbery*, PyObject*)\u2019 defined but not used [-Wunused-function]": 2,
+    "\u2018__pyx_f_10cdef_block_f\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018void __pyx_f_10cdef_block_f(__pyx_t_10cdef_block_Spam*)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018PyObject* __Pyx_CFunc_9863fc__23function_pointer_struct_int__lParenint__comm__etc_to_py_1a_1b(int (*)(int, int))\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018__pyx_f_13breaking_loop_func\u2019 defined but not used [-Wunused-function]": 2,
+    "\u2018int __pyx_f_13breaking_loop_func(Py_ssize_t)\u2019 defined but not used [-Wunused-function]": 2,
+    "\u2018void __pyx_f_15type_qualifiers_const_pointer_to_const_int(const int*)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018void __pyx_f_15type_qualifiers_const_pointer_to_int(int*)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018void __pyx_f_15type_qualifiers_pointer_to_const_int(const int*)\u2019 defined but not used [-Wunused-function]": 1,
+    "\u2018const int __pyx_f_15type_qualifiers_sum(int, int)\u2019 defined but not used [-Wunused-function]": 1,
+    "comparison of integer expressions of different signedness: \u2018Py_ssize_t\u2019 {aka \u2018long int\u2019} and \u2018size_t\u2019 {aka \u2018long unsigned int\u2019} [-Wsign-compare]": 4,
+    "absolute symlink: /usr/bin/cygdb -> /usr/bin/alts": 1,
+    "absolute symlink: /usr/bin/cython -> /usr/bin/alts": 1,
+    "absolute symlink: /usr/bin/cythonize -> /usr/bin/alts": 1
+  },
+  "raw_log": "results/leap-python-Cython-candidate-2/build.log",
+  "raw_log_sha256": "3af3dd40475e7f106866695a4641b948cdbf077cf888ef5ed1c7035abff893ad",
+  "limitations": [
+    "This is qualification of a pinned upstream build dependency, not a claim that every upstream compiler-test fixture is free of defects.",
+    "PyArrow integration is separately qualified with warnings as errors."
+  ],
+  "approval": {
+    "date": "2026-10-03",
+    "decision": "accepted",
+    "user_statement": "I accept all 4",
+    "scope": "Only the diagnostics and limitations documented in this file; retain normal compiler flags, tests and diagnostics."
+  }
+}

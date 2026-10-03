@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Candidate build and full staged-wheel tests passed; the 24 documented upstream compiler deprecation diagnostics accepted by the user.",
+  "source": {
+    "schema": 1,
+    "name": "python-pyarrow",
+    "version": "25.0.1",
+    "commit": null,
+    "source_date_epoch": 1790812800,
+    "spec": "python-pyarrow.spec",
+    "upstream": {
+      "url": "https://archive.apache.org/dist/arrow/arrow-25.0.1/apache-arrow-25.0.1.tar.gz",
+      "sha256": "43d5de0a581f43cf63a2c06b4dcf13b9ff6fcd800f023324596e5781093bc500"
+    },
+    "sources": {
+      "apache-arrow-25.0.1.tar.gz": "43d5de0a581f43cf63a2c06b4dcf13b9ff6fcd800f023324596e5781093bc500",
+      "arrow-testing-9ff285c88565f0f6abc855918c6a342e70e4909c.tar.gz": "507609ccd0912a111f2ee89d108176baded8c8f22fd845c1686d7ddd462c3510",
+      "parquet-testing-e74785d85a4ecee829e1e405444d6a1b24b8bc9c.tar.gz": "6b3d9c1d9b9f059cf3b84b10af2b8a861db167f7809ecef555e610d26fd16433",
+      "pyarrow-rank-test-deprecation.patch": "41855ae51995ee5dbd3fe08cac7426da6d13fd92fcc56ee691e3bbb958a5a761",
+      "pyarrow-runtime-test.py": "533964919eaba99fd2887fd62b0dba209468fbed7e26dd933de0a66456c45363",
+      "pyarrow-unused-libcst-build-requirement.patch": "a0e246c03dfe0e3226f82107700dcf1cccc91325b79ef551d495071002273041",
+      "python-pyarrow.spec": "3eb3c2b1d5792138e06b08861c8ae8d6b3b64a605c18d95366e5d8a84578d801"
+    },
+    "candidate": true,
+    "components": [
+      {
+        "url": "https://codeload.github.com/apache/arrow-testing/tar.gz/9ff285c88565f0f6abc855918c6a342e70e4909c",
+        "archive": "arrow-testing-9ff285c88565f0f6abc855918c6a342e70e4909c.tar.gz",
+        "sha256": "507609ccd0912a111f2ee89d108176baded8c8f22fd845c1686d7ddd462c3510",
+        "commit": "9ff285c88565f0f6abc855918c6a342e70e4909c"
+      },
+      {
+        "url": "https://codeload.github.com/apache/parquet-testing/tar.gz/e74785d85a4ecee829e1e405444d6a1b24b8bc9c",
+        "archive": "parquet-testing-e74785d85a4ecee829e1e405444d6a1b24b8bc9c.tar.gz",
+        "sha256": "6b3d9c1d9b9f059cf3b84b10af2b8a861db167f7809ecef555e610d26fd16433",
+        "commit": "e74785d85a4ecee829e1e405444d6a1b24b8bc9c"
+      }
+    ]
+  },
+  "warning_counts": {
+    "implicit_this_captures": 18,
+    "legacy_sort_rank_ordering_overloads": 3,
+    "timezone_field": 3
+  },
+  "warning_inventory": [
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/io.cc:211:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/io.cc:215:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/io.cc:219:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/io.cc:242:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/io.cc:257:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/io.cc:265:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/io.cc:272:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/io.cc:297:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/io.cc:301:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/io.cc:316:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/io.cc:323:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/io.cc:353:31: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/flight.cc:43:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/flight.cc:52:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/flight.cc:68:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/flight.cc:76:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/flight.cc:211:7: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/work/rpmbuild/BUILD/python-pyarrow-25.0.1-build/apache-arrow-25.0.1/python/pyarrow/src/arrow/python/flight.cc:252:29: warning: implicit capture of \u2018this\u2019 via \u2018[=]\u2019 is deprecated in C++20 [-Wdeprecated]",
+    "/tmp/tmp82qjpyna/build/_compute.cpp:54308:96: warning: \u2018arrow::compute::SortOptions::SortOptions(std::vector<arrow::compute::SortKey>, std::optional<arrow::compute::NullPlacement>)\u2019 is deprecated: Deprecated in arrow 25.0.0, use null_placement in sort_keys instead [-Wdeprecated-declarations]",
+    "/tmp/tmp82qjpyna/build/_compute.cpp:58240:111: warning: \u2018arrow::compute::RankOptions::RankOptions(std::vector<arrow::compute::SortKey>, std::optional<arrow::compute::NullPlacement>, Tiebreaker)\u2019 is deprecated: Deprecated in arrow 25.0.0, use null_placement in sort_keys instead [-Wdeprecated-declarations]",
+    "/tmp/tmp82qjpyna/build/_acero.cpp:13153:127: warning: \u2018arrow::compute::Ordering::Ordering(std::vector<arrow::compute::SortKey>, std::optional<arrow::compute::NullPlacement>)\u2019 is deprecated: Deprecated in arrow 25.0.0, use null_placement in sort_keys instead [-Wdeprecated-declarations]",
+    "/tmp/tmp82qjpyna/build/lib.cpp:27933:21: warning: \u2018arrow::GlobalOptions::timezone_db_path\u2019 is deprecated: Deprecated in 24.0.0. Only needed for Clang/libc++ on Windows. [-Wdeprecated-declarations]",
+    "/tmp/tmp82qjpyna/build/lib.cpp:27933:21: warning: \u2018arrow::GlobalOptions::timezone_db_path\u2019 is deprecated: Deprecated in 24.0.0. Only needed for Clang/libc++ on Windows. [-Wdeprecated-declarations]",
+    "/tmp/tmp82qjpyna/build/lib.cpp:27933:21: warning: \u2018arrow::GlobalOptions::timezone_db_path\u2019 is deprecated: Deprecated in 24.0.0. Only needed for Clang/libc++ on Windows. [-Wdeprecated-declarations]"
+  ],
+  "root_cause_review": {
+    "lambda_captures": "Upstream IO and Flight callbacks use [=] while accessing members, implicitly capturing this. C++20 supports but deprecates this spelling. No capture or callback lifetime changes are proposed.",
+    "compatibility_options": "Generated bindings retain Arrow 25 deprecated SortOptions, RankOptions and Ordering overloads for the Python legacy null_placement argument. Current sort-key APIs and exact legacy FutureWarning behavior are tested without filters.",
+    "timezone_option": "Python set_timezone_db_path writes Arrow GlobalOptions.timezone_db_path, deprecated since Arrow 24 and retained for Windows compatibility. GCC emits the same field diagnostic three times."
+  },
+  "tests": {
+    "rpm_runtime_tests": 3,
+    "upstream_passed": 6616,
+    "skipped": 1646,
+    "expected_failures": 13,
+    "unexpected_passes": 1,
+    "unexpected_pass": "test_sequence_timestamp_nanoseconds (retained upstream xfail marker)",
+    "runtime_warnings_policy": "-W error",
+    "new_legacy_warning_cases": 12
+  },
+  "limits": [
+    "Pandas is unavailable for Leap Python 3.13; optional Pandas tests and disabled cloud/CUDA/ORC/Substrait features are skipped.",
+    "No assertion that unchanged upstream native code has been newly qualified under Valgrind. No C++ changes in the package overlay.",
+    "Canonical rebuild, installed RPM checks and Qore interoperation remain separate gates."
+  ],
+  "sha256": {
+    "results/leap-python-pyarrow-candidate-5/build.log": "44650d6d671cd2ff0d0ca4ba4d97a17271994f99a206d953e44a2e0d210793d5",
+    "dependencies/pyarrow-rank-test-deprecation.patch": "41855ae51995ee5dbd3fe08cac7426da6d13fd92fcc56ee691e3bbb958a5a761"
+  },
+  "approval": {
+    "date": "2026-10-03",
+    "decision": "accepted",
+    "user_statement": "I accept all 4",
+    "scope": "Only the diagnostics and limitations documented in this file; retain normal compiler flags, tests and diagnostics."
+  }
+}

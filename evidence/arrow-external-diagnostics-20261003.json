@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Tests passed; the documented scalar-lifetime and temporary-vector compiler diagnostics accepted by the user.",
+  "source": {
+    "schema": 1,
+    "name": "apache-arrow",
+    "version": "25.0.1",
+    "commit": null,
+    "source_date_epoch": 1790812800,
+    "spec": "apache-arrow.spec",
+    "upstream": {
+      "url": "https://archive.apache.org/dist/arrow/arrow-25.0.1/apache-arrow-25.0.1.tar.gz",
+      "sha256": "43d5de0a581f43cf63a2c06b4dcf13b9ff6fcd800f023324596e5781093bc500"
+    },
+    "sources": {
+      "apache-arrow-25.0.1.tar.gz": "43d5de0a581f43cf63a2c06b4dcf13b9ff6fcd800f023324596e5781093bc500",
+      "apache-arrow-runtime-sse42.patch": "a8f80bd1dc32e1cffad4cae594ebd43cdcdf4c783b09a764fab2de63d3209a4d",
+      "apache-arrow.spec": "7ce5ac57f768ef5e2cfe603b60a1b093aebeac703d802f78e51ef64f005dd3e1",
+      "arrow-testing-9ff285c88565f0f6abc855918c6a342e70e4909c.tar.gz": "507609ccd0912a111f2ee89d108176baded8c8f22fd845c1686d7ddd462c3510",
+      "parquet-testing-e74785d85a4ecee829e1e405444d6a1b24b8bc9c.tar.gz": "6b3d9c1d9b9f059cf3b84b10af2b8a861db167f7809ecef555e610d26fd16433",
+      "xsimd-14.2.0.tar.gz": "21e841ab684b05331e81e7f782431753a029ef7b7d9d6d3ddab837e7782a40ee"
+    },
+    "candidate": true,
+    "components": [
+      {
+        "url": "https://codeload.github.com/apache/arrow-testing/tar.gz/9ff285c88565f0f6abc855918c6a342e70e4909c",
+        "archive": "arrow-testing-9ff285c88565f0f6abc855918c6a342e70e4909c.tar.gz",
+        "sha256": "507609ccd0912a111f2ee89d108176baded8c8f22fd845c1686d7ddd462c3510",
+        "commit": "9ff285c88565f0f6abc855918c6a342e70e4909c"
+      },
+      {
+        "url": "https://codeload.github.com/apache/parquet-testing/tar.gz/e74785d85a4ecee829e1e405444d6a1b24b8bc9c",
+        "archive": "parquet-testing-e74785d85a4ecee829e1e405444d6a1b24b8bc9c.tar.gz",
+        "sha256": "6b3d9c1d9b9f059cf3b84b10af2b8a861db167f7809ecef555e610d26fd16433",
+        "commit": "e74785d85a4ecee829e1e405444d6a1b24b8bc9c"
+      },
+      {
+        "url": "https://github.com/xtensor-stack/xsimd/archive/14.2.0.tar.gz",
+        "archive": "xsimd-14.2.0.tar.gz",
+        "sha256": "21e841ab684b05331e81e7f782431753a029ef7b7d9d6d3ddab837e7782a40ee"
+      }
+    ]
+  },
+  "compiler": "SUSE GCC 15.3.0, normal RPM optimization and warning flags",
+  "warning_inventory": [
+    "/work/rpmbuild/BUILD/apache-arrow-25.0.1-build/apache-arrow-25.0.1/cpp/src/parquet/statistics.cc:890:11: warning: dangling pointer to \u2018max\u2019 may be used [-Wdangling-pointer=]",
+    "/work/rpmbuild/BUILD/apache-arrow-25.0.1-build/apache-arrow-25.0.1/cpp/src/parquet/statistics.cc:890:11: warning: dangling pointer to \u2018max\u2019 may be used [-Wdangling-pointer=]",
+    "/work/rpmbuild/BUILD/apache-arrow-25.0.1-build/apache-arrow-25.0.1/cpp/src/parquet/statistics.cc:890:11: warning: dangling pointer to \u2018max\u2019 may be used [-Wdangling-pointer=]",
+    "/work/rpmbuild/BUILD/apache-arrow-25.0.1-build/apache-arrow-25.0.1/cpp/src/parquet/statistics.cc:890:11: warning: dangling pointer to \u2018max\u2019 may be used [-Wdangling-pointer=]",
+    "/work/rpmbuild/BUILD/apache-arrow-25.0.1-build/apache-arrow-25.0.1/cpp/src/parquet/statistics.cc:890:11: warning: dangling pointer to \u2018max\u2019 may be used [-Wdangling-pointer=]",
+    "/work/rpmbuild/BUILD/apache-arrow-25.0.1-build/apache-arrow-25.0.1/cpp/src/parquet/statistics.cc:890:11: warning: dangling pointer to \u2018max\u2019 may be used [-Wdangling-pointer=]",
+    "/work/rpmbuild/BUILD/apache-arrow-25.0.1-build/apache-arrow-25.0.1/cpp/src/parquet/statistics.cc:890:11: warning: dangling pointer to \u2018max\u2019 may be used [-Wdangling-pointer=]",
+    "/work/rpmbuild/BUILD/apache-arrow-25.0.1-build/apache-arrow-25.0.1/cpp/src/parquet/statistics.cc:890:11: warning: dangling pointer to \u2018max\u2019 may be used [-Wdangling-pointer=]",
+    "/work/rpmbuild/BUILD/apache-arrow-25.0.1-build/apache-arrow-25.0.1/cpp/src/parquet/statistics.cc:890:11: warning: dangling pointer to \u2018max\u2019 may be used [-Wdangling-pointer=]",
+    "/work/rpmbuild/BUILD/apache-arrow-25.0.1-build/apache-arrow-25.0.1/cpp/src/parquet/statistics.cc:890:11: warning: dangling pointer to \u2018max\u2019 may be used [-Wdangling-pointer=]",
+    "/usr/include/c++/15/bits/new_allocator.h:172:66: warning: \u2018void operator delete(void*, std::size_t)\u2019 called on pointer \u2018__result\u2019 with nonzero offset 32 [-Wfree-nonheap-object]"
+  ],
+  "root_cause_review": {
+    "statistics": "SetMinMaxPair copies a floating-point local while its scope is still active. Copy stores the scalar, not its address. The compiler access-pass dump has end-of-scope clobbers only on exit blocks with no path back to the use. The same preprocessed translation unit compiles without warnings under host GCC 16.2.1.",
+    "subtree": "The warning is in the unchanged Forest.HourlyETL upstream test, on destruction of a temporary std::vector<std::string> created from two live strings for a join call. There is no application pointer adjustment or manual delete. Both GCC 15 and 16 report the diagnostic for this preprocessed source. The actual warning-producing object links and passes all six Forest/Subtree tests under Valgrind."
+  },
+  "tests": {
+    "ctest_groups": 95,
+    "failed": 0,
+    "native_statistics": "float/double: 1000 successive min/max updates, inverted/NaN ranges, signed zero, infinities and array updates",
+    "native_subtree_tests": 6,
+    "statistics_valgrind": {
+      "allocations": 175,
+      "frees": 175,
+      "errors": 0,
+      "lost_bytes": 0,
+      "suppressions": 0
+    },
+    "subtree_valgrind": {
+      "allocations": 2106370,
+      "frees": 2106370,
+      "errors": 0,
+      "lost_bytes": 0,
+      "suppressions": 0
+    }
+  },
+  "limits": [
+    "No claim that a simplified control reproduces the compiler diagnostics: the actual upstream translation units are retained.",
+    "No compiler warning filters or optimization changes proposed.",
+    "Native ARM and canonical dependency rebuild remain separate gates."
+  ],
+  "sha256": {
+    "results/leap-apache-arrow-flight-candidate-2/build.log": "cce3161383e7ad10abf835dba3f7fcc4994b1cb2b58973015bf0624c18e52386",
+    "results/arrow-statistics-diagnostic-2/compile.log": "19ceccec6b06162fe0053bca041d0682daf3c408973f26d5178cfb593a97b354",
+    "results/arrow-statistics-diagnostic-2/double-waccess2.txt": "8f64969b11fed975ce3065204cd23822435b203f3f6e48c2c33a251c0709c7e0",
+    "results/arrow-statistics-diagnostic-2/statistics.ii": "890eb96a3319de9306b6f818198371a21c1270df009254d09ebef0fa80eb271d",
+    "results/arrow-statistics-diagnostic-2/host-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/arrow-subtree-diagnostic-1/compile.log": "6c7a5a85fead2620b80b4378ab62850bce215776d8cada79f1bd5a793f154f89",
+    "results/arrow-subtree-diagnostic-1/subtree.ii": "c805e2b1945fa8a60fa6a5e9480b53e4f4a65723f82df8e9634418a46c98efb1",
+    "results/arrow-subtree-diagnostic-1/host-compile.log": "9216c8106fcd7c0e86f06b75ba2167930067c17bd7d5324de292b4af70ac09e8",
+    "results/arrow-subtree-diagnostic-1/native-tests.log": "19f9afd0a875b7e55d0a925eb5ff6d824d6a90370ac0eac9869af2a7052b5f0b",
+    "results/arrow-statistics-native-control-1/control.cpp": "0682a9a1bcea10b5737893933293fef58e96d55fce31a2d2db700331ce7e581c",
+    "results/arrow-statistics-native-control-1/valgrind.log": "7d332585a63aba71274b7c9d8f91a240e53fab0f710cace5c910c66288ae226f",
+    "results/arrow-subtree-diagnostic-1/valgrind.log": "929c78d78c7141eb9549ba9d618019dc3111c2f0076ef14a6736e3a24d0e2c8b"
+  },
+  "approval": {
+    "date": "2026-10-03",
+    "decision": "accepted",
+    "user_statement": "I accept all 4",
+    "scope": "Only the diagnostics and limitations documented in this file; retain normal compiler flags, tests and diagnostics."
+  }
+}

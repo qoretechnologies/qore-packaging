@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "scope": "OpenJDK 21 font shaping diagnostics during checked-JNI spreadsheet tests",
+  "status": "Accepted external OpenJDK 21 diagnostic after root-cause and standalone Java control qualification.",
+  "root_cause": "OpenJDK 21 libfontmanager calls CallObjectMethod in glyph metrics/table callbacks and then GetFloatField/GetArrayLength without ExceptionCheck. Xcheck:jni reports this even when the call succeeds. A pure Java TextLayout control reproduces the same SunLayoutEngine.shape origin without loading Qore or JNI module.",
+  "source": {
+    "commit": "bb6b279495ceff8442dbd0225756b92d466d5309",
+    "url": "https://raw.githubusercontent.com/openjdk/jdk21u/bb6b279495ceff8442dbd0225756b92d466d5309/src/java.desktop/share/native/libfontmanager/hb-jdk-font.cc",
+    "sha256": "8027d83a94f5bbb00ffc26cf8a46e4ee6b6181d53456db5ceb8637a2083a9544",
+    "functions": [
+      "hb_jdk_get_glyph_h_advance",
+      "hb_jdk_get_glyph_v_advance",
+      "reference_table"
+    ]
+  },
+  "control_source": "// Copyright 2026 Qore Technologies, s.r.o.\nimport java.awt.Font;\nimport java.awt.font.FontRenderContext;\nimport java.awt.font.TextLayout;\nimport java.awt.geom.AffineTransform;\npublic class TextLayoutControl {\n    public static void main(String[] args) {\n        FontRenderContext context = new FontRenderContext(new AffineTransform(), true, true);\n        for (String family : new String[] {\"Calibri\", \"Dialog\", \"SansSerif\"}) {\n            Font font = new Font(family, Font.PLAIN, 11);\n            TextLayout layout = new TextLayout(\"0\", font, context);\n            if (!Float.isFinite(layout.getAdvance()) || layout.getAdvance() <= 0) {\n                throw new AssertionError(\"Invalid glyph advance: \" + family);\n            }\n            System.out.println(family + \": \" + layout.getAdvance());\n        }\n    }\n}\n",
+  "controls": {
+    "fedora": {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/jni-awt-diagnostic-1:/src:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/jni-awt-diagnostic-1/fedora:/out",
+        "-e",
+        "HOME=/out",
+        "-e",
+        "XDG_CACHE_HOME=/out/.cache",
+        "-w",
+        "/out",
+        "sha256:3e1ece1094a8c66c10d76964c1c2ec0f991015322f905d9842515ad22d29f561",
+        "sh",
+        "-c",
+        "set -eu\njava -version\njavac -Xlint:all -Werror -d /out /src/TextLayoutControl.java\njava -Xcheck:jni -Djava.awt.headless=true -cp /out TextLayoutControl\n"
+      ],
+      "exit_code": 0,
+      "warnings": 0,
+      "log": "/home/david/src/qore/git/qore-packaging/results/jni-awt-diagnostic-1/fedora/writable-home.log"
+    },
+    "leap": {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/jni-awt-diagnostic-1:/src:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/jni-awt-diagnostic-1/leap:/out",
+        "-e",
+        "HOME=/out",
+        "-e",
+        "XDG_CACHE_HOME=/out/.cache",
+        "-w",
+        "/out",
+        "sha256:7ed5d90f940d87b9ee17e70512f45681330043159cae5685904b1194152f4da6",
+        "sh",
+        "-c",
+        "set -eu\njava -version\njavac -Xlint:all -Werror -d /out /src/TextLayoutControl.java\njava -Xcheck:jni -Djava.awt.headless=true -cp /out TextLayoutControl\n"
+      ],
+      "exit_code": 0,
+      "warnings": 15,
+      "log": "/home/david/src/qore/git/qore-packaging/results/jni-awt-diagnostic-1/leap/writable-home.log"
+    },
+    "el10": {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/jni-awt-diagnostic-1:/src:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/jni-awt-diagnostic-1/el10:/out",
+        "-e",
+        "HOME=/out",
+        "-e",
+        "XDG_CACHE_HOME=/out/.cache",
+        "-w",
+        "/out",
+        "sha256:5e8465fde823b73867e226bd550a89127ec8a8ff829cb45adc5435da415e5cb1",
+        "sh",
+        "-c",
+        "set -eu\njava -version\njavac -Xlint:all -Werror -d /out /src/TextLayoutControl.java\njava -Xcheck:jni -Djava.awt.headless=true -cp /out TextLayoutControl\n"
+      ],
+      "exit_code": 0,
+      "warnings": 15,
+      "log": "/home/david/src/qore/git/qore-packaging/results/jni-awt-diagnostic-1/el10/writable-home.log"
+    }
+  },
+  "rpm_build_diagnostics": {
+    "fedora": {
+      "count": 0,
+      "origins": [],
+      "build_log_sha256": "5c445996dd5aa23d7fa09a04bea6627a070540dabc18326d2354dade579628b4"
+    },
+    "leap": {
+      "count": 133,
+      "origins": [
+        "at sun.font.SunLayoutEngine.shape(java.desktop@21.0.12.1/Native Method)"
+      ],
+      "build_log_sha256": "52640295f290ef46ff461251039372aae70e0118a1eb920e2a19dd3208449574"
+    },
+    "el10": {
+      "count": 121,
+      "origins": [
+        "at sun.font.SunLayoutEngine.shape(java.desktop@21.0.12.1/Native Method)"
+      ],
+      "build_log_sha256": "13ec0c5b3f7039f4a68ad73e5f31b36de384ef2b1f90e83e9972a2a030873df2"
+    }
+  },
+  "limits": [
+    "No warning suppression or font-layout substitution. Checked JNI remains enabled.",
+    "Only the exact message and SunLayoutEngine.shape origin are eligible; any other checked-JNI warning remains a failure."
+  ],
+  "sha256": {
+    "results/jni-awt-diagnostic-1/status.json": "0b25c03ed2626b0e331ff05fa2212bf3f64a4b589ed7ddaa73e00dc2d3425e6f",
+    "results/jni-awt-diagnostic-1/TextLayoutControl.java": "7b67df052a03231e8218434dd26c79a578de2f2865cd8affab5d0b144ad23e25",
+    "results/jni-awt-diagnostic-1/hb-jdk-font.cc": "8027d83a94f5bbb00ffc26cf8a46e4ee6b6181d53456db5ceb8637a2083a9544",
+    "results/jni-awt-diagnostic-1/fedora/run.log": "55130bcde5de094e590483176ed1ad03c5077549d8331d57cb314e88e4757e67",
+    "results/jni-awt-diagnostic-1/fedora/TextLayoutControl.class": "aa61307d33c6af542a9ec0a243ba5e392172686f67daa620ea33b6f5bd651ad5",
+    "results/jni-awt-diagnostic-1/leap/run.log": "9707e0cdea26aa4b87b75f6119247fca54c347affb4e3cd5d91926ff77f2ea1b",
+    "results/jni-awt-diagnostic-1/leap/TextLayoutControl.class": "1c39a0796a835bb11fa2b4592ef2da532e85515816fc424a601bab9738ba8bca",
+    "results/jni-awt-diagnostic-1/el10/run.log": "4c176736bef7f84d53338ae0b6ce563557c9de921d2dec4121b9943fde37c382",
+    "results/jni-awt-diagnostic-1/el10/TextLayoutControl.class": "1c39a0796a835bb11fa2b4592ef2da532e85515816fc424a601bab9738ba8bca",
+    "/home/david/src/qore/git/qore-packaging/results/jni-awt-diagnostic-1/fedora/writable-home.log": "55130bcde5de094e590483176ed1ad03c5077549d8331d57cb314e88e4757e67",
+    "/home/david/src/qore/git/qore-packaging/results/jni-awt-diagnostic-1/leap/writable-home.log": "d916bcb56656a267e4b0b86a02f6a51c287bc47dd438c032b31fc058d098d617",
+    "/home/david/src/qore/git/qore-packaging/results/jni-awt-diagnostic-1/el10/writable-home.log": "2ea60826b5aaef6d0f43a23c92993b268944350bc54374e09727fec29fdd340d"
+  },
+  "control_fixture_correction": "Initial control used an unwritable inherited HOME; rerun with HOME=/out and XDG_CACHE_HOME=/out/.cache removes Fontconfig diagnostics and retains the same checked-JNI warnings.",
+  "approval": {
+    "date": "2026-10-03",
+    "decision": "accepted",
+    "user_statement": "I accept all 4",
+    "scope": "Only the diagnostics and limitations documented in this file; retain normal compiler flags, tests and diagnostics."
+  }
+}
