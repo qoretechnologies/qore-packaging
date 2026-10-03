@@ -199,6 +199,18 @@ on 2026-10-03. Canonical rebuilds and installed Qore interoperation remain pendi
 See ``dependencies/arrow-flight.rst`` and
 ``evidence/grpcio-tools-rpm-final-20261003.json``.
 
+V8 canonical RPMs from ``664eaf58`` pass Fedora and AlmaLinux builds and
+installed runtime/SDK qualification. Each target completes 14 suites (138
+executed cases, 10 explicit skips, 1,153 assertions), compiler and CLI consumers,
+AOT metadata, separate debug symbols/sources, and directory ownership. Eight
+source-only fault-injection cases are covered by the separate source-proxy run;
+two cases require the separately built HubSpot app catalogue. Seven native
+Valgrind regressions retain only the approved distribution Node/V8 diagnostics.
+The TypeScript experimental-API notice is explicitly accepted. See
+``evidence/v8-rpm-final-20261003.json`` and
+``evidence/v8-integration-20261003.json``. Leap needs the libnode dependency;
+native ARM qualification and publication remain pending.
+
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is
 explicitly approved and documented. The remaining modules, target matrix and

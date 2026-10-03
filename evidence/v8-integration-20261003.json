@@ -1,0 +1,558 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "scope": "Integration of qualified RPM work with develop 9f5f68c9; native input unchanged from integration-1, final rejection-output assertions overlaid for integration-4.",
+  "accepted_diagnostics": [
+    "evidence/v8-external-diagnostics-20261003.json",
+    "evidence/v8-typescript-diagnostic-20261003.json"
+  ],
+  "targets": {
+    "fedora": {
+      "installed": {
+        "suites": 14,
+        "cases": 148,
+        "assertions": 1153
+      },
+      "source_proxy": {
+        "suites": 1,
+        "cases": 10,
+        "assertions": 35
+      },
+      "valgrind": {
+        "load": {
+          "lost_bytes": {
+            "definitely": 0,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [],
+          "reviewed_site_offsets_relative_to_ContextifyScript": [],
+          "raw_log": "results/fedora-v8-native-integration-4/valgrind-load.txt",
+          "error_summary": [
+            "ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+          ],
+          "classification_exit_code": 0
+        },
+        "v8-qore-import": {
+          "lost_bytes": {
+            "definitely": 1536,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 256,
+              "blocks": 8,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 1248,
+              "blocks": 39,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "reviewed_site_offsets_relative_to_ContextifyScript": [
+            "0x1779283",
+            "0x177929e",
+            "0x2338f06",
+            "0x236d611",
+            "0x236d648",
+            "0x236d798"
+          ],
+          "raw_log": "results/fedora-v8-native-integration-4/valgrind-v8-qore-import.txt",
+          "error_summary": [
+            "ERROR SUMMARY: 15956 errors from 9 contexts (suppressed: 0 from 0)"
+          ],
+          "classification_exit_code": 0,
+          "tests": {
+            "suites": 1,
+            "cases": 23,
+            "assertions": 158
+          }
+        },
+        "v8": {
+          "lost_bytes": {
+            "definitely": 1528,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 24,
+              "blocks": 1,
+              "classification": "node_compression_methods"
+            },
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 480,
+              "blocks": 15,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 960,
+              "blocks": 30,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "reviewed_site_offsets_relative_to_ContextifyScript": [
+            "0x1779283",
+            "0x177929e",
+            "0x2338f06",
+            "0x236d611",
+            "0x236d648",
+            "0x236d798"
+          ],
+          "raw_log": "results/fedora-v8-native-integration-4/valgrind-v8.txt",
+          "error_summary": [
+            "ERROR SUMMARY: 69516 errors from 11 contexts (suppressed: 0 from 0)"
+          ],
+          "classification_exit_code": 0,
+          "tests": {
+            "suites": 1,
+            "cases": 12,
+            "assertions": 144
+          }
+        },
+        "js-program-destroy-in-use": {
+          "lost_bytes": {
+            "definitely": 32,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "reviewed_site_offsets_relative_to_ContextifyScript": [],
+          "raw_log": "results/fedora-v8-native-integration-4/valgrind-js-program-destroy-in-use.txt",
+          "error_summary": [
+            "ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)"
+          ],
+          "classification_exit_code": 0,
+          "tests": {
+            "suites": 1,
+            "cases": 1,
+            "assertions": 1
+          }
+        },
+        "js-teardown": {
+          "lost_bytes": {
+            "definitely": 2080,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 320,
+              "blocks": 10,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 320,
+              "blocks": 10,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 416,
+              "blocks": 13,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 1024,
+              "blocks": 32,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "reviewed_site_offsets_relative_to_ContextifyScript": [
+            "0x1779283",
+            "0x177929e",
+            "0x2338f06",
+            "0x236d611",
+            "0x236d648",
+            "0x236d798"
+          ],
+          "raw_log": "results/fedora-v8-native-integration-4/valgrind-js-teardown.txt",
+          "error_summary": [
+            "ERROR SUMMARY: 440511 errors from 10 contexts (suppressed: 0 from 0)"
+          ],
+          "classification_exit_code": 0,
+          "tests": {
+            "suites": 1,
+            "cases": 9,
+            "assertions": 35
+          }
+        },
+        "v8-signal-handling": {
+          "lost_bytes": {
+            "definitely": 0,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [],
+          "reviewed_site_offsets_relative_to_ContextifyScript": [],
+          "raw_log": "results/fedora-v8-native-integration-4/valgrind-v8-signal-handling.txt",
+          "error_summary": [
+            "ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+          ],
+          "classification_exit_code": 0,
+          "tests": {
+            "suites": 1,
+            "cases": 1,
+            "assertions": 5
+          }
+        },
+        "rejection": {
+          "lost_bytes": {
+            "definitely": 96,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 64,
+              "blocks": 2,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "reviewed_site_offsets_relative_to_ContextifyScript": [
+            "0x1779283",
+            "0x177929e",
+            "0x2338f06",
+            "0x236d611",
+            "0x236d648",
+            "0x236d798"
+          ],
+          "raw_log": "results/fedora-v8-native-integration-4/valgrind-rejection.txt",
+          "error_summary": [
+            "ERROR SUMMARY: 10248 errors from 8 contexts (suppressed: 0 from 0)"
+          ],
+          "classification_exit_code": 0,
+          "tests": {
+            "suites": 1,
+            "cases": 12,
+            "assertions": 11
+          },
+          "executed_cases": 1,
+          "filtered_cases": 11
+        }
+      }
+    },
+    "el10": {
+      "installed": {
+        "suites": 14,
+        "cases": 148,
+        "assertions": 1153
+      },
+      "source_proxy": {
+        "suites": 1,
+        "cases": 10,
+        "assertions": 35
+      },
+      "valgrind": {
+        "load": {
+          "lost_bytes": {
+            "definitely": 0,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [],
+          "reviewed_site_offsets_relative_to_ContextifyScript": [],
+          "raw_log": "results/el10-v8-native-integration-4/valgrind-load.txt",
+          "error_summary": [
+            "ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+          ],
+          "classification_exit_code": 0
+        },
+        "v8-qore-import": {
+          "lost_bytes": {
+            "definitely": 1536,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 256,
+              "blocks": 8,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 1248,
+              "blocks": 39,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "reviewed_site_offsets_relative_to_ContextifyScript": [
+            "0x1a87112",
+            "0x1aba880",
+            "0x1aba8c2",
+            "0x1aba9c4",
+            "0xf2eac4",
+            "0xf2eadf"
+          ],
+          "raw_log": "results/el10-v8-native-integration-4/valgrind-v8-qore-import.txt",
+          "error_summary": [
+            "ERROR SUMMARY: 51858 errors from 9 contexts (suppressed: 0 from 0)"
+          ],
+          "classification_exit_code": 0,
+          "tests": {
+            "suites": 1,
+            "cases": 23,
+            "assertions": 158
+          }
+        },
+        "v8": {
+          "lost_bytes": {
+            "definitely": 1528,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 24,
+              "blocks": 1,
+              "classification": "node_compression_methods"
+            },
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 480,
+              "blocks": 15,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 960,
+              "blocks": 30,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "reviewed_site_offsets_relative_to_ContextifyScript": [
+            "0x1a87112",
+            "0x1aba880",
+            "0x1aba8c2",
+            "0x1aba9c4",
+            "0xf2eac4",
+            "0xf2eadf"
+          ],
+          "raw_log": "results/el10-v8-native-integration-4/valgrind-v8.txt",
+          "error_summary": [
+            "ERROR SUMMARY: 100984 errors from 11 contexts (suppressed: 0 from 0)"
+          ],
+          "classification_exit_code": 0,
+          "tests": {
+            "suites": 1,
+            "cases": 12,
+            "assertions": 144
+          }
+        },
+        "js-program-destroy-in-use": {
+          "lost_bytes": {
+            "definitely": 32,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "reviewed_site_offsets_relative_to_ContextifyScript": [],
+          "raw_log": "results/el10-v8-native-integration-4/valgrind-js-program-destroy-in-use.txt",
+          "error_summary": [
+            "ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)"
+          ],
+          "classification_exit_code": 0,
+          "tests": {
+            "suites": 1,
+            "cases": 1,
+            "assertions": 1
+          }
+        },
+        "js-teardown": {
+          "lost_bytes": {
+            "definitely": 2080,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 288,
+              "blocks": 9,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 320,
+              "blocks": 10,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 416,
+              "blocks": 13,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 1056,
+              "blocks": 33,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "reviewed_site_offsets_relative_to_ContextifyScript": [
+            "0x1a87112",
+            "0x1aba880",
+            "0x1aba8c2",
+            "0x1aba9c4",
+            "0x1df21b8",
+            "0x1df612b",
+            "0xf2eac4",
+            "0xf2eadf"
+          ],
+          "raw_log": "results/el10-v8-native-integration-4/valgrind-js-teardown.txt",
+          "error_summary": [
+            "ERROR SUMMARY: 600275 errors from 12 contexts (suppressed: 0 from 0)"
+          ],
+          "classification_exit_code": 0,
+          "tests": {
+            "suites": 1,
+            "cases": 9,
+            "assertions": 35
+          }
+        },
+        "v8-signal-handling": {
+          "lost_bytes": {
+            "definitely": 0,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [],
+          "reviewed_site_offsets_relative_to_ContextifyScript": [],
+          "raw_log": "results/el10-v8-native-integration-4/valgrind-v8-signal-handling.txt",
+          "error_summary": [
+            "ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)"
+          ],
+          "classification_exit_code": 0,
+          "tests": {
+            "suites": 1,
+            "cases": 1,
+            "assertions": 5
+          }
+        },
+        "rejection": {
+          "lost_bytes": {
+            "definitely": 96,
+            "indirectly": 0,
+            "possibly": 0
+          },
+          "loss_records": [
+            {
+              "bytes": 32,
+              "blocks": 1,
+              "classification": "node_cppgc_wrapper_list"
+            },
+            {
+              "bytes": 64,
+              "blocks": 2,
+              "classification": "node_cppgc_wrapper_list"
+            }
+          ],
+          "reviewed_site_offsets_relative_to_ContextifyScript": [
+            "0x1a87112",
+            "0x1aba880",
+            "0x1aba8c2",
+            "0x1aba9c4",
+            "0xf2eac4",
+            "0xf2eadf"
+          ],
+          "raw_log": "results/el10-v8-native-integration-4/valgrind-rejection.txt",
+          "error_summary": [
+            "ERROR SUMMARY: 10677 errors from 8 contexts (suppressed: 0 from 0)"
+          ],
+          "classification_exit_code": 0,
+          "tests": {
+            "suites": 1,
+            "cases": 12,
+            "assertions": 11
+          },
+          "executed_cases": 1,
+          "filtered_cases": 11
+        }
+      }
+    }
+  },
+  "sha256": {
+    "results/fedora-v8-native-candidate-4/valgrind-v8.txt": "5d1e22ac18288965f79c547a83f86ebaebf7e80b381b9b15806930eb835048dd",
+    "results/fedora-v8-native-candidate-4/valgrind-js-teardown.txt": "ac90baaea52208f870007e26d18e1f9a43546d3cf397c26563099d058dc99c19",
+    "results/fedora-v8-native-integration-4/valgrind-load.txt": "230f96e9808032e35298b57718d7a702d2f109fa14dfc377c5f456e17baed8f2",
+    "results/fedora-v8-native-integration-4/valgrind-v8-qore-import.txt": "bac8e252710373d12df577fe92e0442e892a3b1e984b6909bf33b53f8a5ecbbf",
+    "results/fedora-v8-native-integration-4/valgrind-v8-qore-import.log": "c7973d5008cd6606bd4e7d4a6b57b532c833eeb379b8133f2a05645edb301c47",
+    "results/fedora-v8-native-integration-4/valgrind-v8.txt": "82779018ae7731a45ea0d11ef347975960c553e68982007c35fc1d155ee1eb41",
+    "results/fedora-v8-native-integration-4/valgrind-v8.log": "c7b19f2f5089b28db92176badcd31a3d16fcfa3a48824b0a0589a82844aa6fde",
+    "results/fedora-v8-native-integration-4/valgrind-js-program-destroy-in-use.txt": "81f6bffdb7a3373298680b152b16132c5883091de81ab5de8ccdc7d7e3300d70",
+    "results/fedora-v8-native-integration-4/valgrind-js-program-destroy-in-use.log": "26894124930d1f85c088d27b4006639a747a88f36a777ca7976da7d5a5eaeef4",
+    "results/fedora-v8-native-integration-4/valgrind-js-teardown.txt": "dce13b1a8d44a1e6618b35e994bcf88d5094a4795d8c4c5d691b3c19bef4e2b3",
+    "results/fedora-v8-native-integration-4/valgrind-js-teardown.log": "7aa1c311c56956c2d0a7319b27ec8872e05f797f8950162314ca05b36a804474",
+    "results/fedora-v8-native-integration-4/valgrind-v8-signal-handling.txt": "03ef67235a6bd0d123e00519d60ea014a02606b0da13c1d1d4bb1f279d0d5bcc",
+    "results/fedora-v8-native-integration-4/valgrind-v8-signal-handling.log": "236f6448530885be5f3488ab8e0a7b427ef355a12a511577ba226320419e5e5a",
+    "results/fedora-v8-native-integration-4/valgrind-rejection.txt": "a97b072e6796c92dae98cdf48c6c6b99b0a53d2ee017797a8883cf373acc27b4",
+    "results/fedora-v8-native-integration-4/valgrind-rejection.log": "d5846922ec8892a9543f753a38ca3ffed13861542a7a518fac80957fcd2e9d79",
+    "results/fedora-v8-native-integration-4/status.json": "3218faf79dc332344b1f1a1a533f471b46c40e63e5390f1b24a911cb6a6dfa11",
+    "results/fedora-v8-native-integration-4/installed-suites.log": "2a7af14fdfde640fe67bad0c4cfcfb400991563d73404c1837b67cffb7fabb67",
+    "results/fedora-v8-native-integration-4/source-proxy.log": "0647a4eae9e5ff387e7363909a77ef18dc218ddb830f7e38c15e1eecddfff8b0",
+    "results/el10-v8-native-candidate-4/valgrind-v8.txt": "1a69c05fc1cb5ec8f913820cb3b2b1aa5135c99fcace1ca90fec4681f05273cd",
+    "results/el10-v8-native-candidate-4/valgrind-js-teardown.txt": "da7f00b05a79517345b647d23f9b9e6e6afae84066193d86dcc4c09a0710cc39",
+    "results/el10-v8-native-integration-4/valgrind-load.txt": "dd11ab9a6e1f858aa92726bb4d855f7373681c859dd6e13ee7973f4a4d3e8262",
+    "results/el10-v8-native-integration-4/valgrind-v8-qore-import.txt": "5ef31ca5fa8b573b102dea1170078e8d62a0625a24d08afb539b876e3a1ff51e",
+    "results/el10-v8-native-integration-4/valgrind-v8-qore-import.log": "c7973d5008cd6606bd4e7d4a6b57b532c833eeb379b8133f2a05645edb301c47",
+    "results/el10-v8-native-integration-4/valgrind-v8.txt": "1439e268872b528fa8dc3c4fd03637ff7fea79aca0b9d2333d8e9576a5562fb2",
+    "results/el10-v8-native-integration-4/valgrind-v8.log": "c7b19f2f5089b28db92176badcd31a3d16fcfa3a48824b0a0589a82844aa6fde",
+    "results/el10-v8-native-integration-4/valgrind-js-program-destroy-in-use.txt": "a6c253c4d053d49d85a15e7eb6981104a7915d3a18c8780069fdfeb75fc2a0dd",
+    "results/el10-v8-native-integration-4/valgrind-js-program-destroy-in-use.log": "26894124930d1f85c088d27b4006639a747a88f36a777ca7976da7d5a5eaeef4",
+    "results/el10-v8-native-integration-4/valgrind-js-teardown.txt": "ad1ff599c15742b35f90defc7d8066424a18f2b3f3627840df20f9a99d9c92ba",
+    "results/el10-v8-native-integration-4/valgrind-js-teardown.log": "7aa1c311c56956c2d0a7319b27ec8872e05f797f8950162314ca05b36a804474",
+    "results/el10-v8-native-integration-4/valgrind-v8-signal-handling.txt": "ed39994f30f6dbfbe6f6481925c6c512981fce5da7a5b79998c98c51f5251450",
+    "results/el10-v8-native-integration-4/valgrind-v8-signal-handling.log": "236f6448530885be5f3488ab8e0a7b427ef355a12a511577ba226320419e5e5a",
+    "results/el10-v8-native-integration-4/valgrind-rejection.txt": "253e2daeca6a2db02085ac2d810882f6a83f800cce8f1809516c2e8489a3662c",
+    "results/el10-v8-native-integration-4/valgrind-rejection.log": "1b5e7c7c94be82b12ee24a44142ee8728451231a21053ff362c355e06db5d0bb",
+    "results/el10-v8-native-integration-4/status.json": "cc4a70d308a5d984c664113ea8dd2bb8f4e7619fe7f60d4b7b193fbe631fcf10",
+    "results/el10-v8-native-integration-4/installed-suites.log": "b0d58ffd72905f0e37b31c71cc32fd017594ceebd181a7dbe370392bf0c00bdc",
+    "results/el10-v8-native-integration-4/source-proxy.log": "0647a4eae9e5ff387e7363909a77ef18dc218ddb830f7e38c15e1eecddfff8b0"
+  },
+  "status": "Functional suites, source fault injection and seven Valgrind runs per target passed qualification with only previously approved exact external sites. Raw Valgrind exits retain diagnostic failures; classified results are separate. Canonical rebuild and runtime artifact qualification remain separate gates.",
+  "case_count_note": "QUnit includes skipped cases in its reported success count: the installed run reports 148 cases with 138 executed and 10 skipped (eight source-only fault-injection cases, two separate HubSpot catalogue cases). The separate source-proxy run executes all ten proxy cases and 35 assertions."
+}
