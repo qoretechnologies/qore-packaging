@@ -205,8 +205,8 @@ Scope: README.rst updates to completed core native qualification, PDFium OBS out
      - Documentation-only update; this code/module/DataProvider check does not apply.
 
    * - 49. Factory registration in Qore repo: every factory name registered in qlib/DataProvider/DataProvider.qc → FactoryMap (without this, module loads but doesn't appear in Qorus apps)
-     - Pass
-     - Documented only completed evidence and the current explicit CI selector; no implementation workaround.
+     - N/A
+     - Documentation-only update; this code/module/DataProvider check does not apply.
 
    * - 50. getRecordTypeImpl() signature: must be private *hash<string, AbstractDataField> getRecordTypeImpl(*hash<auto> search_options) — NOT returning *AbstractDataProviderType
      - N/A
@@ -222,15 +222,15 @@ Scope: README.rst updates to completed core native qualification, PDFium OBS out
 
    * - 53. No workarounds: No TODOs, FIXMEs, stubs, or partially-implemented features
      - Pass
-     - No runtime code changed.
+     - Documented completed evidence and the current explicit CI selector; no workaround introduced.
 
    * - 54. Exception safety: C++ uses ReferenceHolder for Qore allocations, std::unique_ptr for C++ allocations, *xsink checked after every fallible operation
-     - Pass
-     - No error is hidden: Fedora PDFium dependency retrieval failure remains explicit.
+     - N/A
+     - Documentation-only update; this code/module/DataProvider check does not apply.
 
    * - 55. Thread safety: All mutable shared state protected by std::lock_guard<std::mutex> or documented as immutable-after-construction
-     - Pass
-     - README now gives the core21 selector, all three target names, current evidence and remaining publication gates.
+     - N/A
+     - Documentation-only update; this code/module/DataProvider check does not apply.
 
    * - 56. Type safety: Strongly-typed code<return(args)> instead of untyped code; static_cast instead of C casts; typed hashdecls for results; enums where appropriate
      - N/A
@@ -242,20 +242,20 @@ Scope: README.rst updates to completed core native qualification, PDFium OBS out
 
    * - 58. Error handling: All inputs validated (dimensions, empty data, unfitted models); C++ I/O handles EAGAIN/EINTR if applicable
      - Pass
-     - Commands match .gitlab-ci.yml; six installed-qualification tooling tests pass.
+     - Fedora PDFium dependency retrieval failure and remaining publication gates remain explicit.
 
    * - 59. Documentation: Doxygen @param, @return, @throw on all public methods; @par Example with realistic business scenarios; @note for important caveats
-     - N/A
-     - Documentation-only update; this code/module/DataProvider check does not apply.
+     - Pass
+     - README gives the core21 selector, all three target names and current evidence.
 
    * - 60. QPP flags: [flags=CONSTANT] on methods that never throw; [flags=RET_VALUE_ONLY] on methods that throw but have no side effects
      - N/A
      - Documentation-only update; this code/module/DataProvider check does not apply.
 
    * - 61. Security: No user-controlled format strings; no buffer overflows; bounds checking on array indices; no credentials in code
-     - N/A
-     - Documentation-only update; this code/module/DataProvider check does not apply.
+     - Pass
+     - No credentials or signing material added; publication remains disabled.
 
    * - 62. Correctness: Algorithms verified against reference implementations; edge cases tested (empty data, single sample, all-zero features)
-     - N/A
-     - Documentation-only update; this code/module/DataProvider check does not apply.
+     - Pass
+     - Commands match .gitlab-ci.yml; six installed-qualification tooling tests pass.
