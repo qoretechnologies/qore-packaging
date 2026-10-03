@@ -1,0 +1,251 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "scope": [
+    "CMakeLists.txt",
+    "src/PdfDocument.cpp",
+    "cmake/cmake_uninstall.cmake.in",
+    "test/test_uninstall.py",
+    "test/native/content-xobject.cpp",
+    "test/pdf.qtest",
+    "third_party/podofo/CMakeLists.txt",
+    "third_party/podofo/src/podofo/main/PdfContentStreamReader.cpp",
+    "third_party/podofo/src/podofo/main/PdfContentStreamReader.h",
+    "third_party/podofo/src/podofo/private/PdfParser.cpp",
+    "docs/THIRD_PARTY.md",
+    "docs/release-notes.doxygen.tmpl"
+  ],
+  "source_sha256": {
+    "CMakeLists.txt": "887fce4c02432d3b7a5dac8a643c75f81dacd902e68ce1a2d56d27588c5f24fb",
+    "src/PdfDocument.cpp": "5e1ee50daeab7b6ae39f9f7fe0d0d0684758a599bc6c541adef4ef6d5d61a09d",
+    "cmake/cmake_uninstall.cmake.in": "9c732a0c357b9f0ee44b60452c759900d7420bfef824fb03bae9b1fc1ed68dcd",
+    "test/test_uninstall.py": "7ac84d2ad3397dbeb1c33643f75167a224c141ac96a99ca5007a6812ca8e579c",
+    "test/native/content-xobject.cpp": "2466c738d2c8e03eb170d8a1c7fc95b7f80dc6e7611508d1efca27a83ea90d15",
+    "test/pdf.qtest": "77cbdb1b4aeb6e7ff9dc91b1f7695ab5ac8fb704a989cddd2e7f6a1c5f52116e",
+    "third_party/podofo/CMakeLists.txt": "6e5fff65edbfee1ab65852c39d27962abdc11f5c5168e9397426f350b5c142d7",
+    "third_party/podofo/src/podofo/main/PdfContentStreamReader.cpp": "22684620b26e6cdeb9e77c13e4e6da393d5b04bb95086c607e829b00123dd7dd",
+    "third_party/podofo/src/podofo/main/PdfContentStreamReader.h": "7759d77f1a5ced91f1f45f8d329780eacb293e64586c8612d89eb076890f91f3",
+    "third_party/podofo/src/podofo/private/PdfParser.cpp": "ba3e7a787056428afe287a8cfd80fbf11675e1c0d5603e6eb0077459a87c2de6",
+    "docs/THIRD_PARTY.md": "6d2c874ed41dd6475518b8f018447914b8405ff89a89ba613db6dc3506f6696b",
+    "docs/release-notes.doxygen.tmpl": "076fa6f08e74260b09849ae6a2f9658dbcdb0f19edd94548f926d95abe8b0b4a"
+  },
+  "fixes": {
+    "serialization": "QPDFWriter::getBuffer transfers ownership; getBufferSharedPointer releases each output buffer after copying, including exceptions. Thirty-two changing-metadata round trips and lifetime-after-document-release assertions pass.",
+    "split": "ReferenceHolder owns the typed string result list until success. Sandbox, cancellation, QPDF exceptions and fallible push return nullptr with cleanup. Repeated missing-input/output failures, failure after the first page and successful retry exercise cleanup and recovery.",
+    "podofo_content": "Return shared_ptr<const PdfXObject> by value through the standard conversion. The old reinterpret_cast reference aliased a different shared_ptr type and lost ownership when the reader advanced. Both traversal modes and invalid access are tested.",
+    "cmake": "PoDoFo owns uninstall only when standalone. Parent uninstall validates all manifest entries before removal and supports DESTDIR. CMP0177 NEW normalizes install paths on supporting CMake. Existing modern QPDF pointers permit rejecting obsolete PointerHolder interfaces."
+  },
+  "qualification": {
+    "fedora": {
+      "functional_cases": 79,
+      "functional_assertions": 616,
+      "suites": 7,
+      "qore_valgrind": {
+        "PdfDataProvider-valgrind": {
+          "errors": 85,
+          "contexts": 2,
+          "lost_bytes": 0,
+          "classification": "approved padding-comparison sites only"
+        },
+        "pdf-editor-valgrind": {
+          "errors": 2,
+          "contexts": 1,
+          "lost_bytes": 0,
+          "classification": "approved padding-comparison sites only"
+        },
+        "pdf-encryption-valgrind": {
+          "errors": 1,
+          "contexts": 1,
+          "lost_bytes": 0,
+          "classification": "approved padding-comparison sites only"
+        },
+        "pdf-forms-valgrind": {
+          "errors": 16,
+          "contexts": 5,
+          "lost_bytes": 0,
+          "classification": "approved padding-comparison sites only"
+        },
+        "pdf-renderer-valgrind": {
+          "errors": 2,
+          "contexts": 2,
+          "lost_bytes": 0,
+          "classification": "approved padding-comparison sites only"
+        },
+        "pdf-signatures-valgrind": {
+          "errors": 2,
+          "contexts": 1,
+          "lost_bytes": 0,
+          "classification": "approved padding-comparison sites only"
+        },
+        "pdf-valgrind": {
+          "errors": 122,
+          "contexts": 2,
+          "lost_bytes": 0,
+          "classification": "approved padding-comparison sites only"
+        }
+      },
+      "native_content_view": "zero errors or lost allocations",
+      "rpm_build_exit_code": 0
+    },
+    "leap": {
+      "functional_cases": 79,
+      "functional_assertions": 616,
+      "suites": 7,
+      "qore_valgrind": {
+        "PdfDataProvider-valgrind": {
+          "errors": 0,
+          "contexts": 0,
+          "lost_bytes": 0,
+          "classification": "clean"
+        },
+        "pdf-editor-valgrind": {
+          "errors": 0,
+          "contexts": 0,
+          "lost_bytes": 0,
+          "classification": "clean"
+        },
+        "pdf-encryption-valgrind": {
+          "errors": 0,
+          "contexts": 0,
+          "lost_bytes": 0,
+          "classification": "clean"
+        },
+        "pdf-forms-valgrind": {
+          "errors": 0,
+          "contexts": 0,
+          "lost_bytes": 0,
+          "classification": "clean"
+        },
+        "pdf-renderer-valgrind": {
+          "errors": 0,
+          "contexts": 0,
+          "lost_bytes": 0,
+          "classification": "clean"
+        },
+        "pdf-signatures-valgrind": {
+          "errors": 0,
+          "contexts": 0,
+          "lost_bytes": 0,
+          "classification": "clean"
+        },
+        "pdf-valgrind": {
+          "errors": 0,
+          "contexts": 0,
+          "lost_bytes": 0,
+          "classification": "clean"
+        }
+      },
+      "native_content_view": "zero errors or lost allocations",
+      "rpm_build_exit_code": 0
+    },
+    "el10": {
+      "functional_cases": 79,
+      "functional_assertions": 616,
+      "suites": 7,
+      "qore_valgrind": {
+        "PdfDataProvider-valgrind": {
+          "errors": 0,
+          "contexts": 0,
+          "lost_bytes": 0,
+          "classification": "clean"
+        },
+        "pdf-editor-valgrind": {
+          "errors": 0,
+          "contexts": 0,
+          "lost_bytes": 0,
+          "classification": "clean"
+        },
+        "pdf-encryption-valgrind": {
+          "errors": 0,
+          "contexts": 0,
+          "lost_bytes": 0,
+          "classification": "clean"
+        },
+        "pdf-forms-valgrind": {
+          "errors": 0,
+          "contexts": 0,
+          "lost_bytes": 0,
+          "classification": "clean"
+        },
+        "pdf-renderer-valgrind": {
+          "errors": 0,
+          "contexts": 0,
+          "lost_bytes": 0,
+          "classification": "clean"
+        },
+        "pdf-signatures-valgrind": {
+          "errors": 0,
+          "contexts": 0,
+          "lost_bytes": 0,
+          "classification": "clean"
+        },
+        "pdf-valgrind": {
+          "errors": 0,
+          "contexts": 0,
+          "lost_bytes": 0,
+          "classification": "clean"
+        }
+      },
+      "native_content_view": "zero errors or lost allocations",
+      "rpm_build_exit_code": 0
+    }
+  },
+  "sha256": {
+    "results/fedora-pdf-module-installed-dependency-1/PdfDataProvider-valgrind.txt": "6d18473dc903710ac9e69340c9e548cc661f0602ea637476f062abbc9c01d9ec",
+    "results/fedora-pdf-module-installed-dependency-1/pdf-editor-valgrind.txt": "b335472f30e9a3d900c6e9fff4e87d4e09f2a3bb3f1a715ad0ce9de55f6182f4",
+    "results/fedora-pdf-module-installed-dependency-1/pdf-encryption-valgrind.txt": "445b1bf9d8a39e7a92e31410519fb0419904901c353b4202a8ff3559773a0964",
+    "results/fedora-pdf-module-installed-dependency-1/pdf-forms-valgrind.txt": "f89ec0293728e0d1e88258bef11f5ff5c960db940d02a14172902758afea6217",
+    "results/fedora-pdf-module-installed-dependency-1/pdf-renderer-valgrind.txt": "5c799db2b1b8107261fe0b530dd0eae4f51adb643f47cb562d19143cae479558",
+    "results/fedora-pdf-module-installed-dependency-1/pdf-signatures-valgrind.txt": "8a152f2e3c8d3e6971eeecbb05b534a41ed7c9d0096193ab8e883cfd4c2212ea",
+    "results/fedora-pdf-module-installed-dependency-1/pdf-valgrind.txt": "079b0533b72aea0007e203861ae77fd19accecfbfc318c1efcd9281a04f07cf5",
+    "results/fedora-pdf-module-installed-dependency-1/status.json": "76fe323c30f3784893d37500d4415d6f298caf561ddfcc9ba26072e75c0f1e09",
+    "results/fedora-pdf-module-installed-dependency-1/functional.log": "9d6941d3f0aaa0836003c6e25d1c72890dbd8af8acf09acf0e81447cd6b7ac9b",
+    "results/fedora-pdf-module-native-6/native-valgrind.txt": "f0d4fdf8a71d4cf1df67846d1c4edb58c032a3f83001a040fcb3fd79631103bf",
+    "results/fedora-pdf-module-candidate-5/build.json": "cb91fbf8ea7245417796f77e170b7631d8492a871ba56476922a9f0ffafba102",
+    "results/fedora-pdf-module-candidate-5/build.log": "a0bf325d2b7c935ca580c87826bd73e15aa8c67806adb39f9b108ab6aa4db03f",
+    "results/leap-pdf-module-installed-dependency-1/PdfDataProvider-valgrind.txt": "cf895b8fbd19bd91b3f2130159236371bcdd08f73fa9169d42eec34ac4198f57",
+    "results/leap-pdf-module-installed-dependency-1/pdf-editor-valgrind.txt": "b574245e382e730fca39b4a67cafa51767c1dcb1074b1a224da368340ea061fd",
+    "results/leap-pdf-module-installed-dependency-1/pdf-encryption-valgrind.txt": "91ee3676d59ebb0fedba7f69825c4c23cc36308414032fd1dbef2fc3cc46e686",
+    "results/leap-pdf-module-installed-dependency-1/pdf-forms-valgrind.txt": "0308064154ae26dd55c104f14f0dc86c1369269322ee6159fcf85cc6ad093e28",
+    "results/leap-pdf-module-installed-dependency-1/pdf-renderer-valgrind.txt": "1ce675554ab1cda3788d99c21374b72e81e70a290a09a98b69bc46930bbc3e4a",
+    "results/leap-pdf-module-installed-dependency-1/pdf-signatures-valgrind.txt": "33f851f71c686b3d629a276f2baee2724f0a50ad24ebe214d8d83715c1a1d632",
+    "results/leap-pdf-module-installed-dependency-1/pdf-valgrind.txt": "233dd6a13f6e64f0679a2032b1223e87189d771357a7cff3179522d5caecd9f8",
+    "results/leap-pdf-module-installed-dependency-1/status.json": "13aee80c7b4bd1f09a53892275f26519e5a4b0771cd63c1ade276b3e37c1135c",
+    "results/leap-pdf-module-installed-dependency-1/functional.log": "9d6941d3f0aaa0836003c6e25d1c72890dbd8af8acf09acf0e81447cd6b7ac9b",
+    "results/leap-pdf-module-native-6/native-valgrind.txt": "4951e98fa670fbd82137e8cd7ad851ef38ed72ed2cb371342ce3a2425f8a4a9a",
+    "results/leap-pdf-module-candidate-5/build.json": "ea63c101185ff763a0b652ea4362d6f8209518c3ca9c4809b5751e6a58418a23",
+    "results/leap-pdf-module-candidate-5/build.log": "b214a1768b086feac451bf27f2638e66a65e961b07858e6898f182434d44f6c1",
+    "results/el10-pdf-module-installed-dependency-1/PdfDataProvider-valgrind.txt": "9e36edb8acfcdedea5f621d609c79cb2a2fc55818bbe82c1ce9c7c42cb32a1ee",
+    "results/el10-pdf-module-installed-dependency-1/pdf-editor-valgrind.txt": "378c5765d03987867e00ed1b492a638fedd236cc9621cc091aab32fdc1700090",
+    "results/el10-pdf-module-installed-dependency-1/pdf-encryption-valgrind.txt": "cb52a69d543e1c29c5eb9ca7d3f3ecac5fc7cc2796bd1fb335e7d24285419f1e",
+    "results/el10-pdf-module-installed-dependency-1/pdf-forms-valgrind.txt": "81b58e5b65cad897dd40a512935ac8a05fb3f6669a1188fdf4e2cabe66954eb7",
+    "results/el10-pdf-module-installed-dependency-1/pdf-renderer-valgrind.txt": "70edf70974b8bde144549bd3ea8625469a2cd35d90d39c77df2763ab89ae20d0",
+    "results/el10-pdf-module-installed-dependency-1/pdf-signatures-valgrind.txt": "db4d29ee0b825433416e0a25ee34ddfc3e6ba4d5fdeb21d4096686ef92735817",
+    "results/el10-pdf-module-installed-dependency-1/pdf-valgrind.txt": "b029376b7e45c4950802e9beeac5e58bc2078debe43b57edce9f44ff116592b8",
+    "results/el10-pdf-module-installed-dependency-1/status.json": "ffd6257a4093af0e50b8c654a9d6578de222981b168ae39a3468703cb446b354",
+    "results/el10-pdf-module-installed-dependency-1/functional.log": "e0d57bd79e7c30f010212037f118fb1499085ff9bc9b2d7372e11abb4ebbb539",
+    "results/el10-pdf-module-native-6/native-valgrind.txt": "32a959305be2cf9fd4be219c261fab7baa84ae0e0d603a21c234eca59d3de6df",
+    "results/el10-pdf-module-candidate-5/build.json": "daf480351dd318ea737c6b6e16b3c61cf93d5f1b80aef44dfe3889e523af292e",
+    "results/el10-pdf-module-candidate-5/build.log": "bdc7899657cc377c473434ed38f57131f0ba66e0e4b2f6ac76ab6a35d70e438e",
+    "results/el10-pdf-module-no-renderer-1/status.json": "f5726dbfceeeba059241b423f4031739a18d5f6b057a35dff1c475f252271b09",
+    "results/el10-pdf-module-no-renderer-1/build-no-renderer.log": "867f868128e8613b157d381dbbc1a9199bb75faec9b61e46fd4f4595550ab768",
+    "results/el10-pdf-module-no-renderer-1/functional-no-renderer.log": "417e944149d8a3ee024717ab17f84b5ba73afa16e239fd1b76182f2b84f2b4c0",
+    "results/el10-pdf-module-no-renderer-1/valgrind-no-renderer.log": "3dc9497f6f876abfad20b02472e4373b2d1ca75e8d32c35b2d9748860b0b2746",
+    "results/el10-pdf-module-no-renderer-1/valgrind.log": "c69bd9bc37db21ea6c948370f5a3d3b11de1070bb622d18d51d210627bdc6771",
+    "results/el10-pdf-module-no-renderer-1/restore-renderer.log": "cc22a61a6f33c43f90f61109755efdd69c620f3393ec3475efd4a79c02549724"
+  },
+  "accepted_diagnostics": [
+    "pdf-external-diagnostics-20261003.json",
+    "pdf-valgrind-comparison-20261003.json"
+  ],
+  "limits": "Installed module RPM qualification and OBS are separate gates. Candidate builds use these exact native files except subsequently added release-note text. This audit does not claim publication.",
+  "no_renderer": "AlmaLinux ENABLE_PDFIUM=OFF: 15 functional cases pass, zero Valgrind errors/lost allocations; renderer-on configuration restored.",
+  "build_helpers": {
+    "staged_uninstall_tests": 4,
+    "AOT_metadata_tests": 5,
+    "warnings": 0
+  },
+  "baseline": "results/podofo-xobject-baseline-control-3 fails the owning-view assertion against the old implementation; controls 1/2 were setup failures and are not counted.",
+  "source_commit": "b05b3369292c41e37539fc6dff4dcae16b709a72"
+}

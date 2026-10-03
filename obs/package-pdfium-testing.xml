@@ -1,0 +1,16 @@
+<!-- Copyright (C) 2026 Qore Technologies, s.r.o. -->
+<package name="qore-pdfium" project="home:davidnichols:qore:testing">
+  <title>PDFium renderer for Qore</title>
+  <description>Pinned PDFium 148 shared C API with offline upstream tests, complete notices and source-level debug packages. Candidate x86_64 RPMs and installed API/unload controls pass on Fedora, AlmaLinux and openSUSE; OBS qualifies the committed source natively on both architectures.</description>
+  <url>https://pdfium.googlesource.com/pdfium/</url>
+  <build>
+    <disable />
+    <enable repository="Fedora_44" arch="x86_64" />
+    <enable repository="Fedora_44" arch="aarch64" />
+    <enable repository="AlmaLinux_10" arch="x86_64" />
+    <enable repository="AlmaLinux_10" arch="aarch64" />
+    <enable repository="openSUSE_Leap_16.0" arch="x86_64" />
+    <enable repository="openSUSE_Leap_16.0" arch="aarch64" />
+  </build>
+  <publish><disable /></publish>
+</package>

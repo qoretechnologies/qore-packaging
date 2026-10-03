@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-03",
-  "status": "Candidate RPM and installed qualification passed on Fedora 44, openSUSE Leap 16.0 and AlmaLinux 10 x86_64; committed rebuild and native OBS architecture qualification pending.",
+  "status": "Local x86_64 qualification passed on all three distributions. Committed-source Fedora rebuild passed; canonical sources uploaded and verified as OBS revision 1. Native OBS architecture qualification pending; publication disabled.",
   "source": {
     "schema": 1,
     "name": "qore-pdfium",
@@ -583,7 +583,8 @@
     "results/pdfium-system-hinting-1/valgrind.txt": "6f79619fb1880c25769d3f47a87f9d7d9e5e1b8776e2c07bcd2593511148311d",
     "results/pdfium-system-hinting-1/embedder.log": "3686ee6c1a8872d2f99a0e098359afa95a71b1aabf38286ade2c2622a60fa59e",
     "results/pdfium-system-hinting-1/build.log": "6bc8eae3b90753b8a631b84a9e7295c50e94a72089e4238480411a2ff35786f3",
-    "results/pdfium-system-hinting-1/valgrind.log": "0557c82dacc0b6b3963981e52cb634c1dd167e6e8c9afe085e928280afaac766"
+    "results/pdfium-system-hinting-1/valgrind.log": "0557c82dacc0b6b3963981e52cb634c1dd167e6e8c9afe085e928280afaac766",
+    "results/leap-pdfium-installed-5/lint-rpms.log": "eff8b7e257398a600eef58f62764aaaf2e1a9c76efb43c6a775302a04b4e6500"
   },
   "limitations": [
     "Candidate manifests cannot be uploaded to OBS.",
@@ -598,5 +599,144 @@
   "helper_tests": {
     "toolchain_configuration": 12,
     "lint_scope": 2
-  }
+  },
+  "obs_upload": {
+    "project": "home:davidnichols:qore:testing",
+    "name": "qore-pdfium",
+    "source_commit": "3debf63e3452afcfc7e9b966379e82d525a371f3",
+    "revision": "1",
+    "srcmd5": "5152d5f455babf8eae235c3428119ff4",
+    "verified_files_md5": {
+      "MuktiNarrow-0.94.tar.bz2": "314394b29c1d15a73c3f00316003810a",
+      "fonts-tlwg-0.6.3.tar.xz": "1e05677103586a10b610f079d220f900",
+      "pdfium-COPYRIGHT": "027cc7733f7e90610ac69ff8b44f74a5",
+      "pdfium-api-test.c": "4a205f8d146d1805f02e97223555cee8",
+      "pdfium-freetype-99b479dc.tar.xz": "5b15f677e7f3147d69fcfd1306f52c0b",
+      "pdfium-rpm-build.py": "bff610744523f5c083367c296bb61c32",
+      "pdfium-rpm-shared-library.patch": "0daee5ac62958e2b3c06951547b98dfa",
+      "pdfium-rpm-tests.patch": "e9e164955c1e07faa79d67efb83af61e",
+      "pdfium-rpmlintrc": "68e8a053142dc8668a0defce59c86a29",
+      "pdfium-system-freetype-hinting.patch": "a08ed12f2ec5c41a069e55949e6b850f",
+      "pdfium-test-font-sources.json": "02449d958ac264986d0866367b64ee43",
+      "pdfium-test-fonts-cd96fc55.tar.gz": "04531e4add54eedda6a6753f2036ad84",
+      "pdfium-test-resources-72ea487e.tar.xz": "a41079acf56afc7d32d4afc54b89e161",
+      "qore-pdfium.spec": "c9d04cab3c1974caa0aea65dd4777cef",
+      "qore-pdfium_148.0.7778+ds.orig.tar.xz": "920770cbd8b09e0f024e97a89a95948d",
+      "source-manifest.json": "2809e24dd2c428f2a3146e7a8fd58df2"
+    },
+    "qualification": "All three candidate RPM payloads byte-identical to these canonical input files; complete build and installed checks passed. Native OBS builds perform committed-source/architecture qualification.",
+    "publish": "disabled"
+  },
+  "committed_rebuild": {
+    "fedora": {
+      "schema": 1,
+      "image": "sha256:b5b631ae11fd308b8fbe57a3998c15a0436e0c86b3d6874a75cfa5af15254859",
+      "source": {
+        "schema": 1,
+        "name": "qore-pdfium",
+        "version": "148.0.7778",
+        "commit": "3debf63e3452afcfc7e9b966379e82d525a371f3",
+        "source_date_epoch": 1791022034,
+        "spec": "qore-pdfium.spec",
+        "upstream": {
+          "url": "https://pdfium.googlesource.com/pdfium/+/72ea487e4399c44c3a53a48b104f9612ca772008",
+          "sha256": "7e3465f432a31696486c8505cbe59a06c85247101651621630fd9adaf033689d"
+        },
+        "sources": {
+          "MuktiNarrow-0.94.tar.bz2": "bb8af9b9437f1d13ff8cdc8784188ebf0c2ee8b97e328281cd814a3afd4f82f3",
+          "fonts-tlwg-0.6.3.tar.xz": "bcb0136b4ea26ddbb341f5673327e02826c65d2f0b68465010e8ce7412ec87c8",
+          "pdfium-COPYRIGHT": "3fde9d9600473e8d9ad2a9dd616f3e38fd8ce79b1e1215a057ff6450726b470c",
+          "pdfium-api-test.c": "e5589fd3aa551d774e5eafe02930ef83e6041beb7d69800a1faa93f40ae80623",
+          "pdfium-freetype-99b479dc.tar.xz": "be46e6d08e32d99179a6e0a6059b22713ba359caaeb3798e52b74efac2d49096",
+          "pdfium-rpm-build.py": "e0d739de9f3484012255b786e944170e321208259cfa270383af28f7498f9df8",
+          "pdfium-rpm-shared-library.patch": "c9371d280099a1ca538c646acea8c0786709bf5ff51eefcec11b27e871f87f51",
+          "pdfium-rpm-tests.patch": "37addf62acc16c69f2c78fadaa37c728580a497a4a647d820e3f4e909e4600ea",
+          "pdfium-rpmlintrc": "42ca574484d6fe01aeaf5c04dabca46a0b762cc73c257bda8e36c8d2ab6fc4ba",
+          "pdfium-system-freetype-hinting.patch": "03d6aa1a74b7ca79e1895ba134a7add1e8916f1ec6147ea2441fdce396469363",
+          "pdfium-test-font-sources.json": "f9f059c703645b612d5e0474603ecf203d2165df3a95990e8b7e6bcdf3e0b678",
+          "pdfium-test-fonts-cd96fc55.tar.gz": "ec973eccd669d417fbf2d0a4dac730744a3174268ff062db5451b55c82bc3492",
+          "pdfium-test-resources-72ea487e.tar.xz": "a62d083b088f86083f9ed4c8bfa954411a4544ebd643e53da43e599cd7fa3d89",
+          "qore-pdfium.spec": "ab4b70e311ed2988bb97749a17c7cc07badef0e795d8235d93977253029ca8b9",
+          "qore-pdfium_148.0.7778+ds.orig.tar.xz": "7e3465f432a31696486c8505cbe59a06c85247101651621630fd9adaf033689d"
+        },
+        "components": [
+          {
+            "archive": "pdfium-test-fonts-cd96fc55.tar.gz",
+            "url": "https://storage.googleapis.com/chromium-fonts/cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb",
+            "sha256": "ec973eccd669d417fbf2d0a4dac730744a3174268ff062db5451b55c82bc3492",
+            "upstream_sha1": "cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb"
+          },
+          {
+            "archive": "pdfium-test-resources-72ea487e.tar.xz",
+            "url": "https://pdfium.googlesource.com/pdfium/+/72ea487e4399c44c3a53a48b104f9612ca772008/testing/",
+            "sha256": "a62d083b088f86083f9ed4c8bfa954411a4544ebd643e53da43e599cd7fa3d89",
+            "generated": "git archive --format=tar 72ea487e4399c44c3a53a48b104f9612ca772008 LICENSE AUTHORS testing/resources, compressed with Python lzma preset 6."
+          },
+          {
+            "archive": "fonts-tlwg-0.6.3.tar.xz",
+            "url": "https://github.com/tlwg/fonts-tlwg/releases/download/v0.6.3/fonts-tlwg-0.6.3.tar.xz",
+            "sha256": "bcb0136b4ea26ddbb341f5673327e02826c65d2f0b68465010e8ce7412ec87c8"
+          },
+          {
+            "archive": "MuktiNarrow-0.94.tar.bz2",
+            "url": "https://download.savannah.nongnu.org/releases/freebangfont/MuktiNarrow-0.94.tar.bz2",
+            "sha256": "bb8af9b9437f1d13ff8cdc8784188ebf0c2ee8b97e328281cd814a3afd4f82f3"
+          },
+          {
+            "archive": "pdfium-freetype-99b479dc.tar.xz",
+            "url": "https://chromium.googlesource.com/chromium/src/third_party/freetype2/+/99b479dc34728936b006679a31e12b8cf432fc55",
+            "sha256": "be46e6d08e32d99179a6e0a6059b22713ba359caaeb3798e52b74efac2d49096",
+            "generated": "git archive --format=tar 99b479dc34728936b006679a31e12b8cf432fc55, compressed with Python lzma preset 6; exact PDFium DEPS revision, built privately on Enterprise Linux."
+          }
+        ]
+      },
+      "jobs": 3,
+      "network": "none",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--hostname",
+        "qore-rpm-builder",
+        "--user",
+        "1019:100",
+        "-e",
+        "HOME=/work/home",
+        "-e",
+        "SOURCE_DATE_EPOCH=1791022034",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/qore-pdfium-final-1:/sources:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/fedora-pdfium-final-1:/work",
+        "sha256:b5b631ae11fd308b8fbe57a3998c15a0436e0c86b3d6874a75cfa5af15254859",
+        "sh",
+        "-c",
+        "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+        "build-local",
+        "-ba",
+        "--define",
+        "_topdir /work/rpmbuild",
+        "--define",
+        "_sourcedir /sources",
+        "--define",
+        "_smp_build_ncpus 3",
+        "--define",
+        "_buildhost qore-rpm-builder",
+        "/sources/qore-pdfium.spec"
+      ],
+      "source_only": false,
+      "exit_code": 0,
+      "artifacts": {
+        "rpmbuild/RPMS/x86_64/libpdfium-qore-devel-148.0.7778-1.qore.fc44.x86_64.rpm": "d358c88c183ce73ce48a72929487c76795be8a6971587b6a997f7d86fecbb782",
+        "rpmbuild/RPMS/x86_64/libpdfium-qore148-0-148.0.7778-1.qore.fc44.x86_64.rpm": "cd133de1899c54f5634b657643d627f01a474c01fff42f9352bcee234d0a929d",
+        "rpmbuild/RPMS/x86_64/libpdfium-qore148-0-debuginfo-148.0.7778-1.qore.fc44.x86_64.rpm": "fba2176e42865cf7c897bad0f34bb1bad026b3236f5049d86fef1f44d32c5616",
+        "rpmbuild/RPMS/x86_64/qore-pdfium-debugsource-148.0.7778-1.qore.fc44.x86_64.rpm": "83137cfb224deb47347e17e30ea4ece33599645a74ceb7cadacc15596fd74d45",
+        "rpmbuild/SRPMS/qore-pdfium-148.0.7778-1.qore.fc44.src.rpm": "6e5ec1d692d0fa44b77c16435f3d945270c3c2d9fbc1f923e5dced96b2ffa404"
+      }
+    }
+  },
+  "lint": "Actual candidate-12 runtime/development RPM files: 0 errors, 0 warnings with approved exact LicenseRef filter. Installed-package-name inspection produced a no-library-dependency-for artifact from rpmlint installed mode; file-mode validation is the package qualification gate."
 }

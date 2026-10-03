@@ -12,7 +12,7 @@
     "memory": "All 301 allocations freed; no invalid accesses or leaks."
   },
   "scope": "Only the six recorded PdfReference::IsIndirect branches in PdfPageCollection::insertPagesAt (two) and QorePdfEditor::createFormField / PdfChoiceField::InsertItem (four) on Fedora GCC 16; no suppression, compiler flag change or source workaround.",
-  "remaining_issues": "PDFium allocator unload cleanup and the module split-error ownership leak are separate native defects being fixed; neither is accepted by this diagnostic exception.",
+  "remaining_issues": "The separate PDFium unload cleanup and module split-error ownership defects are fixed and qualified; see pdfium-rpm-candidate-20261003.json and pdf-native-fixes-20261003.json. Neither defect is part of the diagnostic exception.",
   "evidence": {
     "evidence/controls/podofo-reference-comparison.cpp": "96122f05c3722f7654feb3990156e3c4481929fd7d119320bd441152e2c3c596",
     "results/podofo-insertPagesAt-disassembly.txt": "5f542eaa547e5ad65595a5912f842b8b7544fe737a4ef992dc8c9d61a1349953",
