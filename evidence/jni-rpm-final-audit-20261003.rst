@@ -259,3 +259,12 @@ Scope: canonical JNI evidence, corrected candidate status, catalog pin, README a
    * - 62. Correctness: Algorithms verified against reference implementations; edge cases tested (empty data, single sample, all-zero features)
      - Pass
      - All three canonical builds: 37 suites/619 cases/8574 assertions, 13 CTests; installed SDK counts match; runtime 23/465/4248. All 22 AOT/debug modules, 195 JAR copies and 176 notice records pass. Warning inventory matches only approved origins.
+
+OBS source follow-up
+--------------------
+
+Revision 1 (srcmd5 ``412388249f2818247b532948240542ac``) contains the
+verified canonical sources. Publication remains disabled. The catalog now
+orders Python and XML before JNI because its RPM checks require both. All
+86 orchestration tests and dependency ordering pass after these changes.
+Remote build and native ARM qualification are still pending.

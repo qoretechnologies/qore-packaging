@@ -795,5 +795,20 @@
     "evidence/jni-compiler-diagnostics-20261002.json",
     "evidence/jni-awt-diagnostic-20261003.json"
   ],
-  "fixture_correction": "Canonical installed suites use the isolated, non-routed bridge also used by RPM builds. Netty needs a non-loopback hardware address; loopback-only candidate and first canonical installed runs passed functionally but emitted a random-address fallback warning. Final installed runs retain all tests and have no such warning."
+  "fixture_correction": "Canonical installed suites use the isolated, non-routed bridge also used by RPM builds. Netty needs a non-loopback hardware address; loopback-only candidate and first canonical installed runs passed functionally but emitted a random-address fallback warning. Final installed runs retain all tests and have no such warning.",
+  "obs": {
+    "project": "home:davidnichols:qore:testing",
+    "package": "qore-jni-module",
+    "published": false,
+    "source_commit": "7527901a65d8886b507a1cf935d0223f5b170724",
+    "revision": "1",
+    "srcmd5": "412388249f2818247b532948240542ac",
+    "verified_files": {
+      "qore-jni-module-2.7.0.tar.xz": "d206fd0efbf145f240ec5db822cee1dc",
+      "qore-jni-module.spec": "1c923dd00213add82604583182586e9a",
+      "qore-jni-vendor-2.7.0.tar.xz": "c2b36451d33f2213b7b2c02a8ff24c46",
+      "source-manifest.json": "38a98b5a22d9e7482af541d882634014"
+    },
+    "qualification": "Uploaded source verified; remote build and native ARM qualification remain separate gates."
+  }
 }
