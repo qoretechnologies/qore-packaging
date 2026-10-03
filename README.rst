@@ -210,6 +210,7 @@ The TypeScript experimental-API notice is explicitly accepted. See
 ``evidence/v8-rpm-final-20261003.json`` and
 ``evidence/v8-integration-20261003.json``. Leap needs the libnode dependency;
 OBS revision 1 has verified source checksums and publication disabled.
+Fedora and AlmaLinux x86_64 OBS builds succeeded.
 Leap and native ARM qualification remain pending.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection
@@ -335,7 +336,8 @@ Leap's PDFium toolchain needs debugedit 5.1 for indexed DWARF in Clang runtime
 objects. The openSUSE backport preserves the distribution helper layout and
 passes 35 upstream tests, installed lint, hardlink/debug-index controls and
 Valgrind with no errors or lost allocations. Both executables use PIE. See
-``evidence/debugedit-leap-20261003.json``; canonical OBS qualification follows.
+``evidence/debugedit-leap-20261003.json``. The canonical local build passes;
+OBS revision 1 source files are verified with publication disabled.
 
 ``dependencies/sources.json`` pins upstream dependency downloads. The nghttp2
 backport preserves the client/server applications and their matching library;

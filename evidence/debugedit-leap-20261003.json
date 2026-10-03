@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-03",
-  "status": "Leap x86_64 candidate qualified; committed canonical build and OBS native architectures follow.",
+  "status": "Canonical Leap x86_64 build passed and OBS revision 1 source files verified; native OBS qualification status is recorded separately.",
   "source": {
     "schema": 1,
     "name": "debugedit",
@@ -95,6 +95,101 @@
     "work/debugedit-upstream-1/directory.xml": "6bb475892e911efc2ba8725aaf7560ed6b54c02cddf722ae08fda0b515f02258",
     "work/qualify-debugedit-control-3.py": "cee7e24f489747f624a0188cdef4e1963e55bae7d5ecf8a28e4bd680b5147d3c",
     "work/qualify-debugedit-final-controls-1.py": "18d10d38789227c42c103676286fd4b89b539d1395668f4b742226775df19335",
-    "work/qualify-debugedit-package-4.py": "3442f4331dd3fa0e9aa03e6aa68732966ab0c20d29023ea68f93116834b77653"
+    "work/qualify-debugedit-package-4.py": "3442f4331dd3fa0e9aa03e6aa68732966ab0c20d29023ea68f93116834b77653",
+    "results/leap-debugedit-final-1/build.json": "ecff189da8729c97426839c77ba8ecdc682368001e44082275b6c7c41d1f24cf",
+    "results/leap-debugedit-final-1/build.log": "3d2a1c9dc6100b54e8c6cea5c62715ab6983dbac119b0c8d731889f82e6a50d6",
+    "results/obs-debugedit-final-20261003-upload.json": "810282c9035497a30029cbd31432befcac20b477d0af9f87869bb97b74fa654d",
+    "results/obs-packaging-status-20261003-071019.xml": "7a0a38bfacc32cd12aec1e1e0c7f9f68c9fc4af44f8d65b7ccafcc9445af0bf0"
+  },
+  "canonical": {
+    "source": {
+      "schema": 1,
+      "name": "debugedit",
+      "version": "5.1",
+      "commit": "b2425123179a4dcfb57fc961ee7757de1e1f4ed2",
+      "source_date_epoch": 1791010563,
+      "spec": "debugedit.spec",
+      "upstream": {
+        "url": "https://sourceware.org/ftp/debugedit/5.1/debugedit-5.1.tar.xz",
+        "sha256": "ee9b688b2ed8fa62551c54cb5dc31aaa05853e7dedbd9e1237c77894ea5e3626"
+      },
+      "sources": {
+        "debugedit-5.1.tar.xz": "ee9b688b2ed8fa62551c54cb5dc31aaa05853e7dedbd9e1237c77894ea5e3626",
+        "debugedit-5.1.tar.xz.sig": "ad822a70540aa4c432eeda6b69215182c210d7a874c084f498482dd0c035cb9a",
+        "debugedit-debuginfo-mono.patch": "f17a839dc8e97cc224e88a6073b01eadafcf6194ab56d07aea73e7d94cc5a1b3",
+        "debugedit-debuglink.patch": "ad9f7b903d224c333a313e641411b0ee736bff377bb65fd037b9b68d45e97328",
+        "debugedit-debugsubpkg.patch": "ff3fcabd49deaf4288c443268a928e3ff580539b50846ab5211e30c35d227562",
+        "debugedit-finddebuginfo-absolute-links.patch": "cc596f92b97048d751ef92ff8d697d94762f66f1c4039a47e946d60d4363670b",
+        "debugedit-finddebuginfo.patch": "f7e004fc5b7d361fcb07fd207230104eb333ec841f846baba33a3eae28a0cb2c",
+        "debugedit-workaround-missing-linked-file.patch": "74741bcccb30d40b507bf3459a71c43e63c00158d11fd4652b9b6d0e3cae327b",
+        "debugedit.keyring": "3a189df1faa883973d80f1fc6d7450affddbf35989427692a6bf90e48b7466ad",
+        "debugedit.spec": "be3e9d83bca30305747d4bda16c3646af1ac740034bfc3c7f391a7ac55ca35d3"
+      }
+    },
+    "artifacts": {
+      "rpmbuild/RPMS/x86_64/debugedit-5.1-1.qore.x86_64.rpm": "519b4e707be7b7534c3665d6758d334ced86dc3d3a0ed844b8850bcef8188d95",
+      "rpmbuild/RPMS/x86_64/debugedit-debuginfo-5.1-1.qore.x86_64.rpm": "eccf9f4cfcc0c4f8fffcc44384fb39acaf5f500a5135b4fd0572f42c25c16e19",
+      "rpmbuild/RPMS/x86_64/debugedit-debugsource-5.1-1.qore.x86_64.rpm": "a33d14a1697da29975c6d56e4e617c0188e5ec560889bff4e1045fc90df0d115",
+      "rpmbuild/SRPMS/debugedit-5.1-1.qore.src.rpm": "ac74079c586422cfaf63b5c4711d2f8e0dc1c883336293fc0e3d2aab6df59582"
+    },
+    "upstream_tests": 35,
+    "exit_code": 0
+  },
+  "obs": {
+    "source_commit": "b2425123179a4dcfb57fc961ee7757de1e1f4ed2",
+    "revision": "1",
+    "srcmd5": "4a8d9ea5343c43b12df4df176bcac2bd",
+    "verified_files": {
+      "debugedit-5.1.tar.xz": "25b796b3998d3c33aedcac2216f34dd9",
+      "debugedit-5.1.tar.xz.sig": "923496d6b57c6ff83f53944409d1037d",
+      "debugedit-debuginfo-mono.patch": "a7785b75b959fa440258c15c5f51a390",
+      "debugedit-debuglink.patch": "e650a0e3394aeea39e8440f81e32ae79",
+      "debugedit-debugsubpkg.patch": "8a09a2932bb741d1a177f6d4b58ae0ca",
+      "debugedit-finddebuginfo-absolute-links.patch": "f86ea55e170a633a2ebf07d627ba3d8f",
+      "debugedit-finddebuginfo.patch": "b4fb32321b7e8fda921329196b62b35f",
+      "debugedit-workaround-missing-linked-file.patch": "87436fb3cad9efe6f67cccc0b6ee7e49",
+      "debugedit.keyring": "bc2b09bf0ae220273d72e2d96039c347",
+      "debugedit.spec": "2e379728d1fa640c83baf462afcb9568",
+      "source-manifest.json": "eb655aff3da3470d7f0f6bb9ca70b1d5"
+    },
+    "publication_enabled": false,
+    "status": [
+      {
+        "package": "debugedit",
+        "repository": "openSUSE_Leap_16.0",
+        "arch": "x86_64",
+        "code": "succeeded"
+      },
+      {
+        "package": "debugedit",
+        "repository": "openSUSE_Leap_16.0",
+        "arch": "aarch64",
+        "code": "succeeded"
+      },
+      {
+        "package": "debugedit",
+        "repository": "Fedora_44",
+        "arch": "x86_64",
+        "code": "disabled"
+      },
+      {
+        "package": "debugedit",
+        "repository": "Fedora_44",
+        "arch": "aarch64",
+        "code": "disabled"
+      },
+      {
+        "package": "debugedit",
+        "repository": "AlmaLinux_10",
+        "arch": "x86_64",
+        "code": "disabled"
+      },
+      {
+        "package": "debugedit",
+        "repository": "AlmaLinux_10",
+        "arch": "aarch64",
+        "code": "disabled"
+      }
+    ]
   }
 }
