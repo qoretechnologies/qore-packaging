@@ -209,7 +209,8 @@ Valgrind regressions retain only the approved distribution Node/V8 diagnostics.
 The TypeScript experimental-API notice is explicitly accepted. See
 ``evidence/v8-rpm-final-20261003.json`` and
 ``evidence/v8-integration-20261003.json``. Leap needs the libnode dependency;
-native ARM qualification and publication remain pending.
+OBS revision 1 has verified source checksums and publication disabled.
+Leap and native ARM qualification remain pending.
 
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is

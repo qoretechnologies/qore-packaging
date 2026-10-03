@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "User approved the exact bounded Abseil random-pool diagnostic on 2026-10-03.",
+  "scope": "Only Abseil 20240722 Randen PoolAlignedAlloc, used by grpcio 1.69.0; no other loss or error site.",
+  "root_cause": "Upstream allocates eight process-lifetime random generators using 352-byte arrays and retains 64-byte-aligned interior pointers. Valgrind classifies some interior pointers as possibly lost. call_once makes the allocation bounded; upstream explicitly documents that these objects are never freed.",
+  "control": {
+    "source": "The exact 140 unmodified Abseil C++ sources from the pinned grpcio-1.69.0 sdist, linked without Python, grpcio or Qore.",
+    "iterations": [
+      1,
+      10000
+    ],
+    "each_run": {
+      "definitely_lost": 0,
+      "indirectly_lost": 0,
+      "possibly_lost": 1408,
+      "still_reachable": 1408,
+      "total_pool_allocations": 8,
+      "unclassified_errors": 0,
+      "suppressions": 0
+    },
+    "negative_inputs": [
+      "0",
+      "invalid"
+    ],
+    "functional_exit_code": 0,
+    "raw_valgrind_exit_code": 97
+  },
+  "grpcio_qualification": {
+    "scope": "20 server lifetimes, TLS credential and invalid channel cleanup, and 11 upstream server tests finish; pool classification varies with alignment, within the same fixed 2816-byte eight-entry pool.",
+    "remaining": "CPython shutdown allocation classification and compiler diagnostics are separate; no blanket acceptance is requested."
+  },
+  "approval": {
+    "date": "2026-10-03",
+    "decision": "Allow this narrow diagnostic",
+    "scope": "Only the eight process-lifetime allocations at Abseil PoolAlignedAlloc; no other native allocation/error site and no suppression."
+  },
+  "sha256": {
+    "work/absl-random-control-1/control.cpp": "b532d64e3dffc56270c33a87ab2d5f1694b3f7643cc6dec681156ab358b306f8",
+    "results/absl-random-control-2/1-valgrind.log": "c8bda02acc0faecd096df94fe902b243fca51f43fb9d26166916324ab48721ac",
+    "results/absl-random-control-2/10000-valgrind.log": "f12e4f785b3821b482d0bef0a3838a22de5e45129fc6184e92f477b7548a1529",
+    "results/absl-random-control-2/1.log": "e8545a0f70894dbf37e88038ec999600e86e59100dcbf83cae78d1e24fdb55fe",
+    "results/absl-random-control-2/10000.log": "bc5ca67b5b75c28d4e9cc52e77e1d8a47b34b100aed4e772e38676d4e0c7ef0f",
+    "results/absl-random-control-2/status.json": "f1d59060c18f83f912a01d0f67bd668ef08217e65330f06e30d0f6e3271be1a3",
+    "work/grpcio-1.69.0-source/grpcio-1.69.0/third_party/abseil-cpp/absl/random/internal/pool_urbg.cc": "08b50ab8c33b5110f37b8b4aa377561ab9f8a5fc39831255b216bd625b731b21",
+    "work/qualify-absl-random-control-2.py": "c189526054806186f484f24db4c54e9aca383f7b0d01c1795869a31b4061ca54",
+    "work/qualify-absl-random-control-3.py": "1952542fd57ebebfcb059543317182f6037b945423db413902db416eeabf0df9"
+  },
+  "upstream_source": "https://github.com/abseil/abseil-cpp/blob/4447c7562e3bc702ade25105912dce503f0c4010/absl/random/internal/pool_urbg.cc"
+}
