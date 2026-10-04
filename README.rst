@@ -222,8 +222,11 @@ builds pass 13 packaging tests and 102 upstream results (one upstream skip).
 Artifact review found that OBS's inherited release prefix prevents a normal
 upgrade from Leap's package. The corrected Leap policy preserves the spec
 release and appends the OBS build counter; Fedora and AlmaLinux retain their
-existing policies. GCC 13 diagnostics from OBS need separate review from the
-local GCC 15 qualification. Publication remains disabled. See
+existing policies. The tested project configuration is now applied remotely.
+The four OBS GCC 13 reports were reproduced with exact sources and accepted
+after 60,000 ownership checks and 100,000 deep clones passed Valgrind.
+Certificate-store and resolver-lint packaging checks remain before the next
+build and installed qualification. Publication remains disabled. See
 ``evidence/grpc-rpm-final-20261002.json`` and
 ``evidence/grpc-leap-installed-20261003.json``.
 

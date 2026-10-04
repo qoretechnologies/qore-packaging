@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-04",
+  "status": "Four additional GCC 13 diagnostics accepted on 2026-10-04. Focused native controls and both OBS architecture package tests pass; corrected-release artifacts and installed qualification remain.",
+  "approval": {
+    "date": "2026-10-04",
+    "decision": "Allow these narrow compiler diagnostics",
+    "scope": "Only the four exact sites/message forms and compiler conditions documented in this record; no suppression or broader acceptance."
+  },
+  "compiler": {
+    "obs": "gcc13 13.4.0+git9739-160000.2.2 on Leap x86_64 and aarch64",
+    "previous_local_qualification": "GCC 15.3.0",
+    "cause_of_new_reports": "OBS substitutes the distribution build compiler for gcc-c++; the local dependency image used the default GCC 15 compiler."
+  },
+  "sequence": {
+    "messages": 3,
+    "sites": [
+      "abseil status.h:814 Status::rep_",
+      "promise/activity.h:141 Waker::WakeableAndArg::wakeable",
+      "promise/activity.h:141 Waker::WakeableAndArg::wakeup_mask"
+    ],
+    "obs_architectures": [
+      "x86_64",
+      "aarch64"
+    ],
+    "root_cause": "GCC follows the inactive final-promise union alternative when destroying the fresh Seq temporary moved into LogPollBatch in ServerCall::CommitBatch. SeqState initializes its state to kState0 and constructs only that state; its destructor dispatches on the same state. The reported Status and Waker belong to WaitForCqEndOp in the final alternative, constructed only after preceding polls complete. Its own variant distinguishes NotStarted (Status), Started (Waker) and Invalid. Each successful transition constructs the new member before storing the new discriminator. The reported construction/move path has never been polled.",
+    "reproduction": "Recompiling the exact server_call.cc with OBS GCC 13 flags emits all three exact sites. The reduced sequence control does not emit them.",
+    "control": "60000 checks cover early destruction in all three sequence states, ready completion, pre-poll moves through LogPollBatch, real WaitForCqEndOp inactive storage, allocated Status moves and exact Wakeable ownership/drop/wake counts. No move after polling is attempted, as upstream prohibits it.",
+    "valgrind": "Zero errors, zero definite/indirect/possible losses, zero suppressions; 53456 reachable bytes are the linked core global statistics storage."
+  },
+  "upb": {
+    "messages": 1,
+    "site": "bits/string_fortified.h:29, inlined from _upb_MiniTableField_DataCopy through _upb_Message_SetTaggedMessagePtr and upb_Message_DeepClone",
+    "obs_architectures": [
+      "x86_64"
+    ],
+    "root_cause": "The pointer setter constrains field representation to pointer width (8 bytes here) using UPB_ASSUME, with a scalar message field. GCC 13 LTO nevertheless diagnoses the unreachable StringView arm of the generic field-copy switch, which would copy 16 bytes from the 8-byte tagged message pointer. The 16-byte arm remains valid for actual StringView fields.",
+    "reproduction": "The standalone control plus the unmodified copy.c, compiled with the exact OBS C flags and GCC 13 LTO, reproduces the exact 16-from-8 warning at link time.",
+    "control": "100000 deep clones cover empty, null enum, double, string, bool, nested message, map, repeated and recursive oneof values. Each source arena is freed before the clone is serialized and compared byte-for-byte. Two malformed nested wire inputs are rejected.",
+    "valgrind": "Zero errors, zero definite/indirect/possible losses, zero suppressions."
+  },
+  "package_checks": {
+    "gcc13_local": "Full RPM build exits zero: 13 packaging tests and 102 upstream results (101 passes, one skip).",
+    "limits": "Local native build selects GCC 13 for the extension but uses local RPM C defaults, unlike OBS C LTO defaults. Exact OBS-flag reproduction is supplied separately for server_call.cc and copy.c. The recipe native helper compilation still uses its unversioned g++ (15) in this control image. This run is supporting diagnostic evidence, not a substitute for native OBS artifact/installed qualification.",
+    "obs": "Both native OBS architectures pass the same package and upstream test counts, recorded in grpcio-obs-builds-20261004.json."
+  },
+  "harness_corrections": "First upb driver placed copy.o after core.a, so the linker selected both definitions. The second places the explicit copy.o before the archive; source/control code is unchanged and the exact warning remains visible.",
+  "exclusions": "Only the four listed compiler diagnostics are proposed. No warning filters, compiler downgrade, reduced flags, growing allocations or invalid memory accesses are accepted.",
+  "sha256": {
+    "evidence/controls/grpcio-gcc13-seq.cc": "c69f9b56f479c9fe48eaa9fbc6858ef70bb2b97ccbb999d567fed29a89fe710f",
+    "evidence/controls/grpcio-gcc13-upb-copy.c": "809a7d83e8ce7c3cdeebcdc82d061a9efb534015ca005a806e056a4cc1b0f0cb",
+    "work/run-grpcio-gcc13-controls-1.py": "cab00f93b73ea4838a0a99bda140e5cda036ea2980e394f12b143057222ec1f9",
+    "work/run-grpcio-gcc13-controls-2.py": "3367bff25e37031cb17ad619b155cd0bb4da79665e5b8a9530b1b35423c7e7b0",
+    "results/grpcio-gcc13-build-1/build.json": "f2f73ffb9dda077c96f20e9537e5f3af09b8a00e1537163c227c63e0188acf34",
+    "results/grpcio-gcc13-build-1/build.log": "9fd7bd388857a2b2ff7794a8ccd3d7e46d91fd23f1399ae246b7a1fffa67de69",
+    "results/grpcio-gcc13-seq-1/link.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-gcc13-seq-1/run.log": "da66a214a7d9beb6136315dddba303e7b33fd3e624fb919ecbc8bef9edd1c5c7",
+    "results/grpcio-gcc13-seq-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-gcc13-seq-1/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-gcc13-seq-1/valgrind.log": "14ceb6ecfaff68d958a56366e426a6a6703c8ef17fc40af79478039d68bb7b44",
+    "results/grpcio-gcc13-seq-1/status.json": "7889033d075279aec9f4bccf279a998fed710d84c11ff5c29166d4d57bdc40a7",
+    "results/grpcio-gcc13-server-call-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-gcc13-server-call-1/compile.log": "b2df059ae09bee75d874b7321cd33ec77b7e110afeb0bd0262f8db2f044941a8",
+    "results/grpcio-gcc13-server-call-1/status.json": "9c84b228b86a63b560bdad4bb65ff866ec1e28b1a5fc3f5e6350867ed095c185",
+    "results/grpcio-gcc13-upb-copy-1/link.log": "712f54f1cff2986439e007bb92cdee6d3e3526c849037d55f8695c092a039bae",
+    "results/grpcio-gcc13-upb-copy-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-gcc13-upb-copy-1/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-gcc13-upb-copy-1/copy-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-gcc13-upb-copy-1/status.json": "780537e64f19568baf20a39fa693e6b22996520568283130fd7d2d899a09ed7d",
+    "results/grpcio-gcc13-upb-copy-2/link.log": "6edf63defc38f752d51c7572f9847d7583cfeb46214969a74f8245564f3c774f",
+    "results/grpcio-gcc13-upb-copy-2/run.log": "f0d7f3eda630486169c78cb94a4cb061dc79b55fdb9fad24dc76b1822bea96e6",
+    "results/grpcio-gcc13-upb-copy-2/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-gcc13-upb-copy-2/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-gcc13-upb-copy-2/copy-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-gcc13-upb-copy-2/valgrind.log": "bc6235876f6829f7e58da49ac3faf1cd55abbee5f63e387c2f2abc0c95dbd2cb",
+    "results/grpcio-gcc13-upb-copy-2/status.json": "e3187a60f05e3e24ecb1e9f6f0771434164eef37ed185f8d6539414a84135cce"
+  }
+}

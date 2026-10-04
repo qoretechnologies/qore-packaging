@@ -54,7 +54,10 @@ artifact identities are in evidence/grpcio-rpm-candidate14b-20261004.json.
 Retained diagnostics have explicit, narrow approvals. The records
 grpcio-api-deprecations-20261003.json, grpcio-context-diagnostics-20261003.json
 and grpcio-remaining-diagnostics-20261004.json in evidence describe the exact
-API/compiler/message sites and reproduction limits. Earlier Python, Cython
+API/compiler/message sites and reproduction limits. The additional OBS GCC 13
+reports were accepted after 60,000 sequence-ownership checks and 100,000 deep
+clones, all with zero Valgrind errors or lost allocations; see
+grpcio-gcc13-diagnostics-20261004.json. Earlier Python, Cython
 and Abseil records identify bounded external allocations; the gRPC lifecycle
 controls exclude additional native leaks and invalid accesses. No blanket
 suppression or reduced compiler flags are used. The final compiler, Cython
