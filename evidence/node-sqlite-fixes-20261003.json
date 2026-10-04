@@ -1,0 +1,55 @@
+{
+  "status": "Focused checks and full Node candidate 6 RPM functional checks pass; four separately documented optimizer diagnostics remain pending approval.",
+  "fixes": {
+    "change_value_overflow": "The original text and blob APIs evaluate 1 + varint_length + value_length as int before assigning to sqlite3_int64. At INT_MAX both overflow by six bytes. UBSan reproduces both failures using a valid 2 GiB virtual buffer. Promote the sum before addition, retain strlen in size_t until checked, and use the existing SQLITE_NOMEM allocation-failure behavior.",
+    "fallthrough": "Mark all 16 intentional dimension-unrolling transitions using SQLite's existing deliberate_fall_through macro.",
+    "varint_size": "Make the existing implicit conversion to size_t explicit in the comparison to sizeof(aCopy); behavior is unchanged.",
+    "crypto_expectations": "Use size_t expectations for nine size_t memory constants; preserve every expected value and assertion."
+  },
+  "tests": {
+    "baseline": "results/node-sqlite-length-1/cases.json: text=1, blob=1; both signed integer overflow diagnostics match the root cause.",
+    "fixed": "104 truncated/bounded varints, 36 value cases including explicit and negative UTF-8 lengths, empty/large blobs, ten oversized text/blob failures; ten RTree dimensions/types; GeoPoly valid/NULL/malformed rows; deferred FK changeset; 250 allocation-failure points. -Werror, UBSan, and Valgrind pass; 71,739 allocations freed.",
+    "crypto": "Two existing NodeCrypto cases pass, no sign-compare warnings, Valgrind zero errors and zero definite/indirect/possible losses. Four ncrypto header API deprecations are already approved.",
+    "translation_units": "Patched exact release SQLite command at -O2 is clean. The unchanged three optimizer warnings remain in the upstream test-build -O3 command and require separate approval."
+  },
+  "source_links": [
+    "https://sqlite.org/session/sqlite3changegroup_change_text.html",
+    "https://sqlite.org/session/sqlite3changegroup_change_begin.html"
+  ],
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "sha256": {
+    "dependencies/nodejs24-crypto-test-types.patch": "6f2258defea0d4e709d896d01a359b777db7be0c8ec8d2fafcaf7fa7e2ed3442",
+    "dependencies/nodejs24-sqlite-lengths.patch": "489ba8e751a69a0fdea9899161137c21eb5f7a88f91b35b571794d77891edb25",
+    "dependencies/nodejs24-sqlite-test.c": "6c089bd9472d439b0fd48507dee9104ba49ce8e610fdf2735d06aeb74e2153fe",
+    "dependencies/nodejs24-sqlite-types.patch": "e7d9ca1b24f52aeeabf2bc10ee8e0e0b713b5362b4b04085e79b7b7215e18bc9",
+    "results/node-crypto-types-1/compile.log": "8f9dd4404e644d8cef44aa85f97bfffeaf8f5f558446c7dd280be531b2ea9668",
+    "results/node-crypto-types-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-crypto-types-1/link.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-crypto-types-1/run.log": "ce02233aabfee0adcb05fc76b1b722db6b4fabf2181d42f0a20b7698ac53487a",
+    "results/node-crypto-types-1/status.json": "c97033904c6c8586d3589bed7866522a795858c6babff039bf47e7e087c49fc7",
+    "results/node-crypto-types-1/valgrind-run.log": "56804839302ae9897f27e6fb9849bee5de20662d8bc4cb23a27e442a36c5c706",
+    "results/node-crypto-types-1/valgrind.log": "c088b13981aa1265365a674897adf092726ececc5af36253bd14c68091719bc1",
+    "results/node-sqlite-fixes-2/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-sqlite-fixes-2/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-sqlite-fixes-2/run.log": "04fb01e26d89a7694768b2bb851ec8433f5f51485c5f38cf01be22eba12488a7",
+    "results/node-sqlite-fixes-2/status.json": "74208dc18bfabc4c6ba8e2edb2741e867d65c2de4ce6beda0f99f5f1446ee0ae",
+    "results/node-sqlite-fixes-2/ubsan-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-sqlite-fixes-2/ubsan.log": "04fb01e26d89a7694768b2bb851ec8433f5f51485c5f38cf01be22eba12488a7",
+    "results/node-sqlite-fixes-2/valgrind-run.log": "04fb01e26d89a7694768b2bb851ec8433f5f51485c5f38cf01be22eba12488a7",
+    "results/node-sqlite-fixes-2/valgrind.log": "10d08c1a40734a3df0066adf845788156545f27cabcae735b916f56417840684",
+    "results/node-sqlite-length-1/blob.log": "bd400711298f5bcb7c10a9412514a4071ae4d566de54bc4b9f63fde621c4489a",
+    "results/node-sqlite-length-1/cases.json": "ae1cc88a691d6ab00831b0b23a13e2c974b945d63901a4858c65fef5d3805007",
+    "results/node-sqlite-length-1/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-sqlite-length-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-sqlite-length-1/status.json": "528e9c1b381222f6f696cf0a384c7cdea7a94574f630a41fadea816369ee9071",
+    "results/node-sqlite-length-1/text.log": "af287bce353adbfb1c91d0fc5702300bab98d2eb811b616cf5b3097978700cdf",
+    "results/node-sqlite-translation-unit-1/command.json": "7e2a39463a2121cc1c039c351527dcc7f09bdd5b3fa2ba8621dcb990f324df9e",
+    "results/node-sqlite-translation-unit-1/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-sqlite-translation-unit-2/compile.log": "c7efd2f84e720514a596f9e25919c2a428420452b10d0c0379c552c919431856",
+    "results/node-sqlite-translation-unit-2/status.json": "e72148bc267ef98774bb2a2c2ffc570b26a4c6709c36ae07b15a60ee9216389a",
+    "work/node-sqlite-length-1/control.c": "dda88061b715f3a16199225b17b9fca220f930d926567a074cc9a4384cf0dd35"
+  },
+  "rpm_qualification": "evidence/node-rpm-candidate6-20261004.json"
+}

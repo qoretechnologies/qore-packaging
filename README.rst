@@ -266,14 +266,25 @@ The inspector frame-vector and uvwasi timestamp compiler diagnostics are
 explicitly accepted after standalone functional and Valgrind checks; the scope
 is recorded in ``evidence/node-compiler-controls-20261003.json``. Other compiler
 diagnostic families remain separate release gates.
+The final local Node candidate also includes the tested Ada Unicode-conversion
+and SQLite length-overflow fixes. Its complete RPM check again passes all 192
+native cases and 5,249 reported JavaScript results; four exact optimizer
+diagnostics remain pending approval. See
+``evidence/node-rpm-candidate6-20261004.json``.
 
 The NATS broker candidate now fixes lost shutdown events caused by closing
 cluster sockets with unread TCP input. All three distributions pass twenty
 race-detector repetitions of the affected cluster test and eleven socket
 regressions, plus three runs of nineteen existing shutdown/TLS/buffer tests.
 The consumer-election fixture also passes both storage modes on all targets.
-Full candidate 17 RPM qualification is running with the prepared build SDKs
-(the first launcher selected older images missing declared dependencies); see
+Candidate 17 exposed further asynchronous fixture assumptions. The next
+candidate observes consumer-signal, acknowledgement and account-route
+completion, and checks intentional slow-leaf closure using actual TCP sockets.
+Four affected/new top-level tests and six subtests pass 100 repetitions on each
+distribution with Go's race detector; three batch/NAK tests and eighteen subtests
+also pass twenty repetitions on each. All original state assertions remain.
+Complete candidate 18 RPM qualification is running; see
+``evidence/nats-consumer-completion-20261004.json``,
 ``evidence/nats-shutdown-drain-20261003.json`` and
 ``evidence/nats-no-interest-fixture-20261003.json``.
 
@@ -327,6 +338,10 @@ architectures pass all 1,819 upstream tests. Fedora's two builds still fail
 before compilation because OBS cannot retrieve dependency RPMs, despite their
 verified availability upstream. The single explicit rebuild reproduced that
 infrastructure failure. See ``evidence/pdfium-lto-qualification-20261003.json``.
+A further retrieval review verifies exact binary header IDs through OBS itself,
+including batch/public CPIO and binary-version APIs. Workers still fail on the
+same four inputs before compilation; no dependency bypass is applied. See
+``evidence/pdfium-obs-recovery-20261003.json``.
 
 Oracle now has canonical local RPM builds and offline runtime/SDK checks on all
 three distributions, including source/AOT extensions, compiler metadata,

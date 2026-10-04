@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Both Fedora rebuilds again failed before compilation while fetching the same four dependencies. Exact API, batch CPIO, public CPIO and worker binary-version queries succeed on 2026-10-04. No source changes, bypass or additional rebuild requested.",
+  "source_md5": "0a64f20f306d5b99447c24ab21a79f83",
+  "root_cause": "OBS worker dependency retrieval fails before compilation for four Fedora:44/update inputs on both architectures. Exact binary contents and header IDs match current buildinfo through API retrieval. Public/batch CPIO and binary-version APIs also return all four packages. The backend inconsistency is external to the spec; its precise server-side cause is not established.",
+  "verification": {
+    "source_md5": "0a64f20f306d5b99447c24ab21a79f83",
+    "reason": "All eight exact build inputs were downloaded through the OBS API and their RPM header MD5s match current buildinfo; previous checks tested only upstream mirror URLs.",
+    "inputs": {
+      "x86_64": {
+        "gnome-srpm-macros": {
+          "requested": {
+            "name": "gnome-srpm-macros",
+            "version": "1.0",
+            "release": "1.fc44",
+            "arch": "noarch",
+            "hdrmd5": "2bbaa6afcb861d76b0036e4b5bf9b3be",
+            "project": "Fedora:44",
+            "repository": "update"
+          },
+          "rpm_sha256": "1f8f4e9cbf0cb531780c8443ff9ab7739be7da234f360e107df9fab470d66de5",
+          "matching_header_md5": "2bbaa6afcb861d76b0036e4b5bf9b3be"
+        },
+        "harfbuzz-raster": {
+          "requested": {
+            "name": "harfbuzz-raster",
+            "version": "14.1.0",
+            "release": "2.fc44",
+            "arch": "x86_64",
+            "hdrmd5": "bfe87a718429efb2d8b53fd042f3b6cf",
+            "project": "Fedora:44",
+            "repository": "update"
+          },
+          "rpm_sha256": "72480bb20c332fc803678b3e251cab00f96395ce10b5f3f81415fc3f5c7ba53f",
+          "matching_header_md5": "bfe87a718429efb2d8b53fd042f3b6cf"
+        },
+        "harfbuzz-vector": {
+          "requested": {
+            "name": "harfbuzz-vector",
+            "version": "14.1.0",
+            "release": "2.fc44",
+            "arch": "x86_64",
+            "hdrmd5": "b698ce8acb1fea020f8993d866a7e5d2",
+            "project": "Fedora:44",
+            "repository": "update"
+          },
+          "rpm_sha256": "b6a369d15072f467e2493bf8ae3f3daf18fcc1979bb1d291e27cffc34182400b",
+          "matching_header_md5": "b698ce8acb1fea020f8993d866a7e5d2"
+        },
+        "harfbuzz-gpu": {
+          "requested": {
+            "name": "harfbuzz-gpu",
+            "version": "14.1.0",
+            "release": "2.fc44",
+            "arch": "x86_64",
+            "hdrmd5": "129e3d8ed9215d70b3a2a7a0cc4bf63b",
+            "project": "Fedora:44",
+            "repository": "update"
+          },
+          "rpm_sha256": "bea98075d0a89a6f39819c25b1be15936d834c2738ae4f6fff2bd5af5274dafd",
+          "matching_header_md5": "129e3d8ed9215d70b3a2a7a0cc4bf63b"
+        }
+      },
+      "aarch64": {
+        "gnome-srpm-macros": {
+          "requested": {
+            "name": "gnome-srpm-macros",
+            "version": "1.0",
+            "release": "1.fc44",
+            "arch": "noarch",
+            "hdrmd5": "2bbaa6afcb861d76b0036e4b5bf9b3be",
+            "project": "Fedora:44",
+            "repository": "update"
+          },
+          "rpm_sha256": "1f8f4e9cbf0cb531780c8443ff9ab7739be7da234f360e107df9fab470d66de5",
+          "matching_header_md5": "2bbaa6afcb861d76b0036e4b5bf9b3be"
+        },
+        "harfbuzz-raster": {
+          "requested": {
+            "name": "harfbuzz-raster",
+            "version": "14.1.0",
+            "release": "2.fc44",
+            "arch": "aarch64",
+            "hdrmd5": "c9b27a4e65a21aa6c0a63bc2232bcbbd",
+            "project": "Fedora:44",
+            "repository": "update"
+          },
+          "rpm_sha256": "22ca7af846e79f5830948738b18c723cd5a2e684dda2dc1fbd97295dfae18699",
+          "matching_header_md5": "c9b27a4e65a21aa6c0a63bc2232bcbbd"
+        },
+        "harfbuzz-vector": {
+          "requested": {
+            "name": "harfbuzz-vector",
+            "version": "14.1.0",
+            "release": "2.fc44",
+            "arch": "aarch64",
+            "hdrmd5": "1bbd0c70e3ad5bd1b8d32e9b90943ce7",
+            "project": "Fedora:44",
+            "repository": "update"
+          },
+          "rpm_sha256": "c39c0fd3a8e909a5cf06d9ca236e28f9887ed39b0948104b2485721cc07578c2",
+          "matching_header_md5": "1bbd0c70e3ad5bd1b8d32e9b90943ce7"
+        },
+        "harfbuzz-gpu": {
+          "requested": {
+            "name": "harfbuzz-gpu",
+            "version": "14.1.0",
+            "release": "2.fc44",
+            "arch": "aarch64",
+            "hdrmd5": "d17da8966beef513f6bb20f57c321bc7",
+            "project": "Fedora:44",
+            "repository": "update"
+          },
+          "rpm_sha256": "4f955dba34be9ab0e487eb734e49e228ebb2f0d3f628815fc95c54d17f4c2967",
+          "matching_header_md5": "d17da8966beef513f6bb20f57c321bc7"
+        }
+      }
+    },
+    "publication_enabled": false,
+    "follow_up": "results/pdfium-obs-review-20261004-1"
+  },
+  "publication_enabled": false,
+  "sha256": {
+    "results/pdfium-obs-review-20261003-1/aarch64.log": "3bd86a4f21cc50d0b869a2be295fc568740f2f3507c5814c30b02edd0fd766b1",
+    "results/pdfium-obs-review-20261003-1/availability.json": "325051a280208010d8c2fd0ac72c08a9161840ccb93e00aa3d80762cb5421e6a",
+    "results/pdfium-obs-review-20261003-1/source.xml": "fa7123525fc71266c24b7f8698f8285c23d2f114b929ab3788701e585f37219b",
+    "results/pdfium-obs-review-20261003-1/harfbuzz-vector.rpm": "b6a369d15072f467e2493bf8ae3f3daf18fcc1979bb1d291e27cffc34182400b",
+    "results/pdfium-obs-review-20261003-1/gnome-srpm-macros.rpm": "1f8f4e9cbf0cb531780c8443ff9ab7739be7da234f360e107df9fab470d66de5",
+    "results/pdfium-obs-review-20261003-1/aarch64-rebuild.log": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+    "results/pdfium-obs-review-20261003-1/x86_64-buildinfo.xml": "2cecad5048b9b42fe87fb1629c034d816e2c2ee401a62832cffe0faa7a17a4b7",
+    "results/pdfium-obs-review-20261003-1/availability-arm.json": "1c1ad407c0309911645d6f85bf31eed5606b0d8fa01f50ad0f4f22f163e8e6a4",
+    "results/pdfium-obs-review-20261003-1/harfbuzz-gpu-aarch64.rpm": "4f955dba34be9ab0e487eb734e49e228ebb2f0d3f628815fc95c54d17f4c2967",
+    "results/pdfium-obs-review-20261003-1/x86_64-rebuild.log": "dc51b8c96c2d745df3bd5590d990230a482fd247123599548e0632fdbf97fc22",
+    "results/pdfium-obs-review-20261003-1/gnome-srpm-macros-aarch64.rpm": "1f8f4e9cbf0cb531780c8443ff9ab7739be7da234f360e107df9fab470d66de5",
+    "results/pdfium-obs-review-20261003-1/harfbuzz-gpu.rpm": "bea98075d0a89a6f39819c25b1be15936d834c2738ae4f6fff2bd5af5274dafd",
+    "results/pdfium-obs-review-20261003-1/rebuild.json": "f2a7930fb2fdd1f403b1112605c81342a38ead058db8ba5463a5491ddf4cc007",
+    "results/pdfium-obs-review-20261003-1/harfbuzz-vector-aarch64.rpm": "c39c0fd3a8e909a5cf06d9ca236e28f9887ed39b0948104b2485721cc07578c2",
+    "results/pdfium-obs-review-20261003-1/harfbuzz-raster.rpm": "72480bb20c332fc803678b3e251cab00f96395ce10b5f3f81415fc3f5c7ba53f",
+    "results/pdfium-obs-review-20261003-1/x86_64.log": "0d664650f34a1f3f32ff9ca7e39399cbfe72e23ed57144f9b4808e7feccd85ad",
+    "results/pdfium-obs-review-20261003-1/aarch64-buildinfo.xml": "5cf67b32029a67c6c74159c36c929d07eeff9f0877bcaa65dfc80284c9cdb10e",
+    "results/pdfium-obs-review-20261003-1/harfbuzz-raster-aarch64.rpm": "22ca7af846e79f5830948738b18c723cd5a2e684dda2dc1fbd97295dfae18699",
+    "results/pdfium-obs-review-20261004-1/aarch64.log": "6890d6f8749018a8783447b158a051a67212a63a201247513c24da3ceb74e76b",
+    "results/pdfium-obs-review-20261004-1/x86_64-jobhistory.xml": "9df0b08e0482d733fd220fa8cac0a4ffea754a2fb0bf3d1f86fb9fb558733a19",
+    "results/pdfium-obs-review-20261004-1/aarch64-history.xml": "85e53a9d81bce2ea1a67861251d529251b02d17fb429bb0443dd2d5cf6cea44d",
+    "results/pdfium-obs-review-20261004-1/aarch64-inputs.cpio": "46374968b3d33c8a5c869e17df73a3a01f50a050b7e22e3d46f99ea3a96944d5",
+    "results/pdfium-obs-review-20261004-1/aarch64-public-inputs.cpio": "46374968b3d33c8a5c869e17df73a3a01f50a050b7e22e3d46f99ea3a96944d5",
+    "results/pdfium-obs-review-20261004-1/x86_64-binaryversions.xml": "a1ea91bf970fb54e16993198579aeed2d339a76e2cd4e57d6f87e1ab4a2f6f3f",
+    "results/pdfium-obs-review-20261004-1/aarch64-jobhistory.xml": "1fd76dabbecb6b15d1d3529468bd277c9e3a6cb4e7690fe589a538f2ab903035",
+    "results/pdfium-obs-review-20261004-1/x86_64-inputs.cpio": "60316d350c672a78e147f1b2201bea7a6348513916c5eaf445659bdaaca610cb",
+    "results/pdfium-obs-review-20261004-1/x86_64-history.xml": "85e53a9d81bce2ea1a67861251d529251b02d17fb429bb0443dd2d5cf6cea44d",
+    "results/pdfium-obs-review-20261004-1/x86_64.log": "77ef6a3827560f919d23193016668da9926468d186ac6e98e9ddc39526e9b4a8",
+    "results/pdfium-obs-review-20261004-1/aarch64-binaryversions.xml": "c2bf4cb4618498a7b6e1f908c90f0a9ba7a794515a7fdde4acded4c9bd098517",
+    "results/pdfium-obs-review-20261004-1/x86_64-public-inputs.cpio": "60316d350c672a78e147f1b2201bea7a6348513916c5eaf445659bdaaca610cb"
+  },
+  "backend_reference": "https://github.com/openSUSE/open-build-service/blob/master/src/backend/bs_worker",
+  "backend_observation": "getbinaries iterates repository paths and reports 404 when names remain unresolved. getbinaries_cache omits entries carrying a binary-version error. Public getbinaryversions reports no such errors here; worker-side state is not accessible."
+}

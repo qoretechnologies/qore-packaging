@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-04",
+  "status": "Focused qualification passes on all three distributions; complete candidate 18 RPM builds are running. No publication or diagnostic-policy change.",
+  "root_causes": {
+    "pending_counts": "stream.processJetStreamMsgWithBatch enqueues PubAck before sigq. signalConsumersLoop updates consumer.npc asynchronously; PubAck and ConsumerInfo do not order this worker. A FIFO marker under the stream publication lock observes completion without changing stored messages or real consumer state.",
+    "ack_floor": "Msg.Ack and connection Flush only order protocol parsing; the consumer ack worker runs independently. PartialPurge and WorkQueue tests now require the consumer acknowledgment reply before asserting the ack floor or NAK redelivery.",
+    "batch_routes": "Batch APIs were sent through random cluster ingress before account route interest reached it. Both affected fixtures now use the existing ordered account-route interest marker.",
+    "slow_leaf": "The fixture repeatedly wrote PING after its intentionally expired write deadline had closed the leaf. INFO also precedes temporary registration. The fixture now accepts a real TCP pair and waits for createLeafNode to return; CONNECT/PONG establishes connected state, and an expired deadline plus socket EOF/reset establishes slow-consumer closure."
+  },
+  "coverage": {
+    "targets": {
+      "fedora": {
+        "completion": {
+          "top_level_passes": 400,
+          "subtest_passes": 600,
+          "race_detector": true,
+          "exit_code": 0
+        },
+        "ack_and_batch": {
+          "top_level_passes": 60,
+          "subtest_passes": 360,
+          "race_detector": true,
+          "exit_code": 0
+        }
+      },
+      "leap": {
+        "completion": {
+          "top_level_passes": 400,
+          "subtest_passes": 600,
+          "race_detector": true,
+          "exit_code": 0
+        },
+        "ack_and_batch": {
+          "top_level_passes": 60,
+          "subtest_passes": 360,
+          "race_detector": true,
+          "exit_code": 0
+        }
+      },
+      "el10": {
+        "completion": {
+          "top_level_passes": 400,
+          "subtest_passes": 600,
+          "race_detector": true,
+          "exit_code": 0
+        },
+        "ack_and_batch": {
+          "top_level_passes": 60,
+          "subtest_passes": 360,
+          "race_detector": true,
+          "exit_code": 0
+        }
+      }
+    },
+    "signal_control": "0, 1, 5 and 100 messages: holding the actual consumer mutex demonstrates that PubAck arrives while its count is still zero. Completion produces the exact count; a second marker leaves counts and store sequences unchanged.",
+    "partial_purge": "Retains all 30 state assertions, uses completed acknowledgments, and invokes the real expiry callback with aged pending timestamps instead of sleeping.",
+    "leaf_negative": "Verify zero counted slow consumers before CONNECT and exactly one after CONNECT, with actual TCP I/O and closure in both cases."
+  },
+  "sha256": {
+    "dependencies/nats-server-ack-batch-tests.patch": "2dae45f461b9cf742ceebfda3c84dfa98610fef142454534614f200854571f8a",
+    "dependencies/nats-server-consumer-completion-tests.patch": "f53cab685cacb952462487cce6d0872a7cd81bbf801ef8422f59227cf08c394f",
+    "dependencies/nats-server-leaf-slow-consumer-tests.patch": "500c3986e772b8617fc40a8ef2f2b0fe692556ef460323a7962ca64104f48c0c",
+    "work/nats-candidate-18-preparation.log": "dd67986206d8607ffc9eab23fd87bc1c03606ac40ed0c75e7bd20c62481cd18d",
+    "work/nats-server-candidate-18/source-manifest.json": "6f7454e95c2fefa282ebbfb40a2a20040eefba5a660ed78bcd23eb6f06a27b31",
+    "results/nats-completion-fedora-matrix-4/status.json": "835b282fefb120bc8ef5501df994e70f27282959c72105acccbb3d38efcb2a9e",
+    "results/nats-completion-fedora-matrix-4/tests.log": "ae0fb12a7ae2f3eeace6d2e41652a8bf895f1ac1f6abda9323ce4af161f8308c",
+    "results/nats-ack-batch-fedora-matrix-2/status.json": "2795b1316657f7946e809687f6dd2dce0b2d03c118641e212bc03835b410d2ed",
+    "results/nats-ack-batch-fedora-matrix-2/tests.log": "a8ed75f17a15a9e683f5eab4a359d16b14eaa16674bcbb23fd034e27f21f6b07",
+    "results/nats-completion-leap-matrix-4/status.json": "7cc8038fe684c6e1c4da911cb6f84c00cd714179b7646440babfd354f6f17ec9",
+    "results/nats-completion-leap-matrix-4/tests.log": "d41485185578a011323be8fdebdbf2dd02d70ef90e0d5edd7f0c700040fa9447",
+    "results/nats-ack-batch-leap-matrix-2/status.json": "56cd866698294a40ef4c4056c5b6bd0ac2a7270c06547cd8edd3d5cdd4b62b6c",
+    "results/nats-ack-batch-leap-matrix-2/tests.log": "3387af321cd42b343cab25d6d877072347ac7c5485a87f009b1e7a4e3de5034d",
+    "results/nats-completion-el10-matrix-4/status.json": "93f86a52e45a1c564e5e1b1cd27a2e851da7967ab220db8d5d8768018adc3efb",
+    "results/nats-completion-el10-matrix-4/tests.log": "fa503e5f0f56b732465896d44c0fc9c0056104f9288fda93b9b225f919b1043f",
+    "results/nats-ack-batch-el10-matrix-2/status.json": "006d325b96fe0f33669095f1b064f921b17610d3a6621d2b4d961ad7d9387709",
+    "results/nats-ack-batch-el10-matrix-2/tests.log": "2bfba32fbb1b43032d69476ea75a2663cea8fbaa44d6d80da102e9b7bd92b34a",
+    "results/nats-partial-purge-el10-diagnostic-1/tests.log": "378b5b617794f024d29b366a2b53a9f06ceea921e6a5626424ce05d60ad50c5b",
+    "results/fedora-nats-server-candidate-17b/build.log": "0545bc96928a35c763ce044d7e4555fb7d26b61eb68cf303b679f1ec3726f646",
+    "results/fedora-nats-server-candidate-17b/build.json": "cee214b5c8affa13ac57fcb7c2febe55fc10c1076ff6054a1ae108f4232af2f4",
+    "results/leap-nats-server-candidate-17b/build.log": "ace7e42d4eeea542a5e3cf55157b60d7b868d4c1e8ed69b54f1952ad6b5af889",
+    "results/leap-nats-server-candidate-17b/build.json": "3154801f4d2170868529a6fabcd1965951274611fd5f6b60b9dbbed840872c85",
+    "results/el10-nats-server-candidate-17b/build.log": "c9839092544a35ec51cf5fc73a0702b57bc16979aefe09a098e2229c5b39213d",
+    "results/el10-nats-server-candidate-17b/build.json": "70eacb325d27dedc32ad80a707e1579bb03ab5f2a0ece4356c239b18a7729921"
+  },
+  "excluded_trials": "Matrix 1 could not mount a new file into the read-only source tree. Matrix 2 exposed INFO-before-registration in the added pre-CONNECT negative case. Matrix 3 showed PING before authentication is rejected. Matrix 4 fixes this with explicit TCP acceptance and the real createLeafNode completion; all three distributions pass. None of the failed trials is accepted as qualification."
+}

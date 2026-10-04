@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Focused checks and full Node candidate 6 RPM functional checks pass; four separately documented optimizer diagnostics remain pending approval.",
+  "root_cause": "Ada 3.4.4 to_unicode ignores conversion failure after Punycode decoding. Invalid Unicode surrogate labels decode into UTF-32, fail conversion and leave zero-filled output bytes. The scalar path has the same missing return-value check.",
+  "reproducer": {
+    "input": "xn--ib9b",
+    "decoded_code_point": "U+D800 (invalid Unicode surrogate)",
+    "baseline_hex": "00 00 00",
+    "correct_behavior": "Retain the original invalid label, as for other decoding failures."
+  },
+  "upstream": {
+    "issue": "https://github.com/ada-url/ada/issues/1127",
+    "fix": "https://github.com/ada-url/idna/pull/78",
+    "commit": "d7b76fcf9b8a6721c64b65ff4da9dc357e01e7e7",
+    "adaptation": "Apply the conversion-result check to the older final_utf8 temporary used by Node 24; also check the matching scalar converter. No API change."
+  },
+  "tests": {
+    "cases_per_mode": 2129,
+    "modes": [
+      "SIMD",
+      "scalar"
+    ],
+    "coverage": "Empty/ASCII input, malformed Punycode, all 2048 surrogate code points, valid UTF-8 encoding boundaries, mixed surrounding labels, and trailing dot.",
+    "compiler": "Both modes compile with -O2 -Wall -Wextra -Werror.",
+    "valgrind": "Both modes have zero errors, all heap blocks freed and no suppressions."
+  },
+  "sha256": {
+    "dependencies/nodejs24-ada-conversion-result.patch": "fa6b29abf3ac1a96e8c31c606497592f58d4c9ee72079ce4853e7804e7f6012c",
+    "dependencies/nodejs24-ada-conversion-test.cc": "518f479bc417825fe2ebb2db6c33c4412e8e6457e35ec2702a8d8d1787be2165",
+    "results/node-ada-fixed-1/status.json": "3208a90ba127e7418adebf0b17d4e334620c7322db6653123afebddaf7d2accf",
+    "results/node-ada-diagnostic-1/status.json": "12bbcdf5f34a15fc2c5ae9d93b901dd952e5c66212a0e89278b6767b112c0418",
+    "work/node-ada-diagnostic-1/upstream-pr78.json": "e96c16ddf2bd4ec7aec4884ef2c1b0cc9535c6f82170f0d417e4637f0a9e67e3",
+    "work/node-ada-diagnostic-1/upstream-pr78-files.json": "7d368756a3891f13d3be9ad82950f88bc3836ab28b41fdb6c19bf22d8d77019e",
+    "results/node-ada-fixed-1/simd.valgrind.log": "cc56ecf55ccdfae5fbe5d061959c8605850bdcd063726c6228adc4369f816a2b",
+    "results/node-ada-fixed-1/simd.run.log": "4ff17c11a0beda5b5bffd71d00561a93f7b2e9d9366ae2dedba85069221e78b9",
+    "results/node-ada-fixed-1/scalar.run.log": "4ff17c11a0beda5b5bffd71d00561a93f7b2e9d9366ae2dedba85069221e78b9",
+    "results/node-ada-fixed-1/scalar.valgrind-run.log": "4ff17c11a0beda5b5bffd71d00561a93f7b2e9d9366ae2dedba85069221e78b9",
+    "results/node-ada-fixed-1/simd.valgrind-run.log": "4ff17c11a0beda5b5bffd71d00561a93f7b2e9d9366ae2dedba85069221e78b9",
+    "results/node-ada-fixed-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-ada-fixed-1/simd.compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-ada-fixed-1/scalar.compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-ada-fixed-1/scalar.valgrind.log": "14f51c02a6c6af36bc1eac08b4a30bc82c2e8d78d07fdf43646cc07247dd3511",
+    "results/node-ada-diagnostic-1/valgrind-run.log": "054af84798428e60eeadf21ea0fc835896fbce617abd6bb2b782f20fdb57d49e",
+    "results/node-ada-diagnostic-1/run.log": "054af84798428e60eeadf21ea0fc835896fbce617abd6bb2b782f20fdb57d49e",
+    "results/node-ada-diagnostic-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-ada-diagnostic-1/compile.log": "1599f6c971c557eb23dde8e640b2b4dae989094a9bc7e1ed54c64943c6da1ee0",
+    "results/node-ada-diagnostic-1/valgrind.log": "f5e20b91c0f377a3517ecc7e170e942a5370ad39ac3b7911816cdad19befcf61"
+  },
+  "rpm_qualification": "evidence/node-rpm-candidate6-20261004.json"
+}

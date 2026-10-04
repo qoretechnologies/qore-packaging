@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-04",
+  "status": "Final local Node dependency candidate 6 builds and passes functional checks. Four already documented GCC optimizer diagnostics still await user approval; OBS/ARM dependency qualification is not complete.",
+  "build_exit_code": 0,
+  "upstream_native_cases": 192,
+  "native_suites": 31,
+  "javascript_reported_results": 5249,
+  "javascript_result_note": "Includes upstream skip/TODO outcomes; zero not-ok results.",
+  "added_checks": [
+    "2129 Ada SIMD and 2129 scalar Unicode conversion cases",
+    "104 bounded/truncated varints, 36 change-value cases, 10 RTree dimension/type paths, GeoPoly, deferred FK and 250 allocation-failure cases",
+    "100 serial and 10 concurrent inspector environment lifetimes"
+  ],
+  "compiler_diagnostics": {
+    "total_occurrences": 536,
+    "accepted_api_deprecations": 528,
+    "accepted_inspector_and_uvwasi_occurrences": 4,
+    "pending_fft_and_sqlite_occurrences": 4,
+    "unclassified_occurrences": 0,
+    "pending_evidence": "evidence/node-remaining-compiler-diagnostics-20261003.json"
+  },
+  "fix_evidence": [
+    "evidence/node-ada-conversion-20261003.json",
+    "evidence/node-sqlite-fixes-20261003.json",
+    "evidence/node-inspector-watchdog-20261003.json"
+  ],
+  "rpm_artifacts": {
+    "rpmbuild/RPMS/x86_64/nodejs24-libnode-debugsource-24.18.1-1.qore.x86_64.rpm": "81fd697d98ae732c01889cfaa9c8dca75d7e85aea28c61428ebf98518cd9bcd3",
+    "rpmbuild/RPMS/x86_64/libnode-devel-24.18.1-1.qore.x86_64.rpm": "2b1e713ec9ef9c3990422baa779ca5e6c0b06b19b47cc7c0f54c935543658bbd",
+    "rpmbuild/RPMS/x86_64/libnode137-24.18.1-1.qore.x86_64.rpm": "ce88c2611234d58fae2bae60dd734eb939671b76e085b2506d8c7a2696b3586b",
+    "rpmbuild/RPMS/x86_64/libnode137-debuginfo-24.18.1-1.qore.x86_64.rpm": "5e78f6a76df5e3c28cba7ec5ea113e1f2cde507cd15177621b10de00bce5c102",
+    "rpmbuild/SRPMS/nodejs24-libnode-24.18.1-1.qore.src.rpm": "ba66534e01aa71285ef7795f86eabf9ab9273cf07d3ca172fff9472c5d03d395"
+  },
+  "sha256": {
+    "results/leap-nodejs24-libnode-candidate-6/build.json": "81169f6a01c82b9a0ad18672591eee86f53f4fa99195c99cd6d4362990e10909",
+    "results/leap-nodejs24-libnode-candidate-6/build.log": "e29d5a5f85f9a4ae1a360602ddcf88b05a03d4862b7b84fd04dea2e95722e827",
+    "work/nodejs24-libnode-candidate-6/source-manifest.json": "94c742015e2afd17f46c748f9b36d3f1d7fcb705142cbe02cc4b2d08000b05ff"
+  }
+}
