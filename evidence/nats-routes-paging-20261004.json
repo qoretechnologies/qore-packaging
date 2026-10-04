@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-04",
+  "status": "Stream/consumer route fixtures pass. Explicit paging budgets pass on all targets; adoption and acceptance of the upstream default-budget edge case await user approval. Full candidate 18 remains running with its recorded failures.",
+  "route_fixtures": {
+    "root_cause": "Stream creation and consumer creation acknowledgements can precede routing of their publish/fetch subscription interest. Requests on other cluster nodes then receive no responders.",
+    "fix": "Wait for actual route-interest completion for both publishing clients, atomic-batch streams and the pull consumer before requests. Remove the unrelated startup sleep. Preserve data/sequence checks and additionally require exactly three successful publications and three expected optimistic concurrency rejections.",
+    "error_identifiers": [
+      10071,
+      10164
+    ],
+    "error_identifier_reason": "Server apply-time and pre-proposal paths use distinct wrong-last-sequence API errors; neither permits no-responder/timeout errors.",
+    "controls": {
+      "fedora": {
+        "exit_code": 0,
+        "repetitions": 10,
+        "race_detector": true,
+        "passed_top_level": 20,
+        "passed_subtests": 140
+      },
+      "leap": {
+        "exit_code": 0,
+        "repetitions": 10,
+        "race_detector": true,
+        "passed_top_level": 20,
+        "passed_subtests": 140
+      },
+      "el10": {
+        "exit_code": 0,
+        "repetitions": 10,
+        "race_detector": true,
+        "passed_top_level": 20,
+        "passed_subtests": 140
+      }
+    }
+  },
+  "paging": {
+    "approval": null,
+    "root_cause": "The direct-get MaxBytes budget counts stored subject/header/payload sizes and stops after crossing the limit. Its default equals the hard 64 MiB transport pending limit. A 128-message page of 512 KiB payloads already fills that limit before generated JetStream headers and wire framing. On one scheduler thread, the response burst exceeds MaxPending before the socket writer drains it, disconnecting the client. Automatic reconnect hides the closed connection status; only a prefix of the page remains queued.",
+    "evidence": "All 20 non-race one-thread baseline repetitions fail; two-thread and race-detector controls mask the timing. The isolated server log explicitly reports MaxPending 67108864 exceeded, with zero client drops. Streaming consumption alone still fails all five one-thread repetitions.",
+    "proposal": "Keep the page budget explicitly at 64 MiB and give this test a separate 128 MiB transport limit. Production defaults remain unchanged. Preserve the 500 x 512 KiB payload, three pages of 128 plus final 116, and five Batch=100 pages. Verify every publish ACK, data byte, sequence, pending count and EOB field; consume under a fixed deadline and reject client drops or server slow-consumer events. Remove the one-second replica sleep (single-server fixture).",
+    "qualification": {
+      "nats-paging-budget-fedora-1": {
+        "exit_code": 0,
+        "passed": 10,
+        "race_detector": false,
+        "gomaxprocs": 1
+      },
+      "nats-paging-budget-fedora-race-1": {
+        "exit_code": 0,
+        "passed": 3,
+        "race_detector": true,
+        "gomaxprocs": 2
+      },
+      "nats-paging-budget-leap-1": {
+        "exit_code": 0,
+        "passed": 10,
+        "race_detector": false,
+        "gomaxprocs": 1
+      },
+      "nats-paging-budget-leap-race-1": {
+        "exit_code": 0,
+        "passed": 3,
+        "race_detector": true,
+        "gomaxprocs": 2
+      },
+      "nats-paging-budget-el10-1": {
+        "exit_code": 0,
+        "passed": 10,
+        "race_detector": false,
+        "gomaxprocs": 1
+      },
+      "nats-paging-budget-el10-race-1": {
+        "exit_code": 0,
+        "passed": 3,
+        "race_detector": true,
+        "gomaxprocs": 2
+      }
+    },
+    "remaining_upstream_edge_case": "Default MaxBytes inherits a hard transport cap despite using soft stored-message accounting. Accepting the fixture change does not fix this production behavior; it remains explicitly documented and needs user exception under the all-bugs-fixed rule. No increased production buffer, suppression or skip is proposed."
+  },
+  "sha256": {
+    "dependencies/nats-server-batch-sequence-routes.patch": "02334a3868b9814d287d82a3e5b6895edda63c3ec76587e41ef42780ffba5b1c",
+    "dependencies/nats-server-paging-budget-tests.patch": "1059d97ee057aa6965701d01f3bad14395849129c92cf0d6d76ff05ac9ee81ca",
+    "results/nats-sequence-routes-fedora-3/tests.log": "b96b77b4b50d3a31110259a6c2c332ab4d1dd0365440196d8531aa73310ebbaf",
+    "results/nats-sequence-routes-fedora-3/status.json": "85c61216f4f32b6f49dbddc1232ba62606e4fadc4a117bc0fade7efd98f2afb4",
+    "results/nats-paging-budget-fedora-1/tests.log": "971bb142fd46d66fa924239139eb605accfdc5c6f99d16f7d1cd5f88a503a7c3",
+    "results/nats-paging-budget-fedora-1/status.json": "08fda98e15f0968b257add2c9abd81f0d9562f3ef8b9988cdb6bf9c1eb57f85a",
+    "results/nats-paging-budget-fedora-race-1/tests.log": "ca6d537a3c9fc093aa453178fe71df1652e8808fd48316151775beeca4cf3835",
+    "results/nats-paging-budget-fedora-race-1/status.json": "29d3d8eee65e3ab73ee9c7a41ef25bc074402f9cae0a693aeb8c3fe50f7bfa55",
+    "results/nats-sequence-routes-leap-3/tests.log": "35e09a3ca374b2d8b6f5c214a6ebe8071bc31ae99e7d232e1c4f005e91402885",
+    "results/nats-sequence-routes-leap-3/status.json": "bfdc877ac10a9394b2aa6021687d647ff6c7791b97acb3ce99be22cdd67d647e",
+    "results/nats-paging-budget-leap-1/tests.log": "5a6168d1124006d30ecb35ce9eaee59ecae98cb1a0262ec99d31f13875544021",
+    "results/nats-paging-budget-leap-1/status.json": "6c4bdf423c3c8b84ff4627db4d22be5a9294949b24c4e167cc46a3980e2f9f75",
+    "results/nats-paging-budget-leap-race-1/tests.log": "470b4c5398d4ba6f6210cbeeb74b0490ebbf5d62d35cb66208f396309949258b",
+    "results/nats-paging-budget-leap-race-1/status.json": "e93a42433eeaeba1e0f56f46b760e179d91214008c85db570a515344b0091556",
+    "results/nats-sequence-routes-el10-3/tests.log": "6d430e798951438fdb087c60003f0e5ca6adb0d345572750004fe095792ccff5",
+    "results/nats-sequence-routes-el10-3/status.json": "c682c28a63af1f78756a64d30bc411b9b267f18fae2eb704f76984132f4c111c",
+    "results/nats-paging-budget-el10-1/tests.log": "e9b399f68e4f70ca0d3ea7050fdad10cb293f6a169f288096c7e94c5ec643826",
+    "results/nats-paging-budget-el10-1/status.json": "ebff591e7bc8cd31f4e4f26069a380d15c545283d1c90552e04027aa0988d234",
+    "results/nats-paging-budget-el10-race-1/tests.log": "6171d4c6ad99f99eafcedbbf78ef82b84bc3af6079c408b5fd6d812435dfb4a8",
+    "results/nats-paging-budget-el10-race-1/status.json": "703fffa9b3fb50f125dac31ca5347754009643efb438a35bde65ece5439b4816",
+    "results/nats-paging-pending-reason-1/tests.log": "fee189e2e2efdaf023c81b3a6feceedbad9658f6eeec38c076d857520d9b0273",
+    "results/nats-paging-pending-reason-1/status.json": "4920098587998038a0bc5e35ca98153904024d7f108e786a2f706c78078d3f98",
+    "results/nats-paging-fedora-norace-3-cpu1/tests.log": "899c5b3849b8a9dec7e505c31fb8ebb8a8d4e86d07465c24d8bb546e97684619",
+    "results/nats-paging-fedora-norace-3-cpu1/status.json": "d13858a3d6ad04e1aefa0ac1cff46b6b6b7486e66c4ec7721f9a9a686c33ce32",
+    "results/nats-paging-fedora-norace-3-cpu2/tests.log": "452ee74537e88f0e45608a251b4e596c5f7e9c816d8090ca8427f356e201c510",
+    "results/nats-paging-fedora-norace-3-cpu2/status.json": "88d4e6c346e667059f6e1a7791f8ab5acbddfa725e8063e162feccf3d14f2473",
+    "results/nats-paging-streaming-1-cpu1/tests.log": "90307304a7bc3cbe45ff61cc87942dbb2aef44c2ab1b5988aec76954f2933409",
+    "results/nats-paging-streaming-1-cpu1/status.json": "cb7007a8a3337c254f847e81f1323c2c0a26c199dc9a23e969d5274a4359cba0",
+    "results/nats-paging-streaming-1-cpu2/tests.log": "c13c32be44baa1dc9fc71f17017c8b195a01332529e5a6e2b6fb7f55ecb6b7e0",
+    "results/nats-paging-streaming-1-cpu2/status.json": "1702b9d64d2fadae90faf543308d5bb7981b4ad4d4c1f3ce00642e50871d256a"
+  }
+}

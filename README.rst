@@ -234,6 +234,15 @@ fault-injection binary passes 100 failures and recovery cycles without memory
 or descriptor errors, and all nine installed native controls retain only
 approved external allocation sites. Both installed Qore runtime/SDK suites
 pass with this RPM. See ``evidence/grpcio-poll-init-20261003.json``.
+Candidate 14b also passes all 13 packaging tests, 101 upstream tests (one skip)
+and both installed Qore bridge suites. Its stripped native extension is
+byte-identical to Valgrind-qualified candidate 13. SPDX metadata now includes
+all bundled-component notices and removes the license-classifier deprecation;
+source-manifest negative tests still reject stale binary files. Ten native
+compiler diagnostics, two Cython diagnostics and two manifest-message forms
+remain explicitly pending approval. See
+``evidence/grpcio-rpm-candidate14b-20261004.json`` and
+``evidence/grpcio-remaining-diagnostics-20261004.json``.
 See ``dependencies/arrow-flight.rst`` and
 ``evidence/grpcio-tools-rpm-final-20261003.json``.
 
@@ -283,7 +292,15 @@ completion, and checks intentional slow-leaf closure using actual TCP sockets.
 Four affected/new top-level tests and six subtests pass 100 repetitions on each
 distribution with Go's race detector; three batch/NAK tests and eighteen subtests
 also pass twenty repetitions on each. All original state assertions remain.
-Complete candidate 18 RPM qualification is running; see
+Candidate 18 exposed two further route-interest assumptions and the large-page
+transport limit. Route fixes pass all 480 top-level/subtest executions across
+the three targets, including exact success/conflict checks for concurrent
+publications. The paging failure is reproduced without the race detector:
+its soft default page budget can exceed the hard transport limit once headers
+are added. A proposed fixture with explicit, separate limits passes 39 runs;
+acceptance of the unchanged upstream default-budget behavior remains pending.
+See ``evidence/nats-routes-paging-20261004.json``.
+Complete candidate 18 RPM qualification is still running; see
 ``evidence/nats-consumer-completion-20261004.json``,
 ``evidence/nats-shutdown-drain-20261003.json`` and
 ``evidence/nats-no-interest-fixture-20261003.json``.

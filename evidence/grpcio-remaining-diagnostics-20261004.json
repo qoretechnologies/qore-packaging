@@ -1,0 +1,317 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-04",
+  "status": "Three narrow diagnostic scopes proposed; approval pending. Candidate 14b now passes complete RPM and installed Qore tests; its native extension is byte-identical to Valgrind-qualified candidate 13. SPDX metadata removes the separate license-classifier deprecation.",
+  "approval": {
+    "native_compiler": null,
+    "cython_compiler": null,
+    "manifest_exclusions": null
+  },
+  "native_compiler": {
+    "scope": "Ten exact GCC 15 warnings across six sites. Normal flags retained; no suppression or code changes to silence optimizer diagnostics.",
+    "resolver_statusor": {
+      "occurrences": 2,
+      "site": "ref_counted_ptr.h:51 in ClientChannel ResolverDataForCalls StatusOr swap",
+      "analysis": "StatusOr constructs and destroys its value only while its status discriminator is OK. GCC follows the inactive union alternatives after swap/move and reports ConfigSelector and UnstartedCallDestination pointers. Exact reduced source with package flags reproduces both reports.",
+      "control": "120000 success/error/null/live ownership transitions; all reference counts and destruction counts checked; zero Valgrind errors or losses."
+    },
+    "tcp_statusor": {
+      "occurrences": 1,
+      "site": "event_engine_shims/tcp_client.cc:65, SR.547",
+      "analysis": "The endpoint unique_ptr is accessed only on ep.ok(); failed connection results contain status rather than endpoint storage. GCC uninit dump merges the inactive pointer alternative into later move/destruction paths.",
+      "control": "20000 success/failure cases use actual EventEngine endpoint shim create/destroy, callback StatusOr and post-move status; live endpoint count returns to zero. Zero Valgrind errors/losses. Full translation unit reproduces the diagnostic; reduced control does not."
+    },
+    "operation_handler": {
+      "occurrences": 1,
+      "site": "std::optional::_M_engaged in client_call.cc OpHandlerImpl metadata factory",
+      "analysis": "OpHandlerImpl explicitly tags dismissed/factory/promise state. Each constructor, move, invocation and destructor constructs or accesses only that union member. GCC reports the optional field inside the factory alternative during optimized temporary destruction.",
+      "control": "190000 empty/factory/promise, success/failure, move-before/after-poll and null/live metadata cases; zero Valgrind errors/losses. Full RPM reproduces the warning; reduced control does not."
+    },
+    "http2_content_type": {
+      "occurrences": 4,
+      "site": "chttp2_transport.cc:2547,2555,2559,2561",
+      "analysis": "A fixed 31-byte grpc_slice_malloc allocation cannot select the 23-byte inline representation. GCC retains the impossible inline branch when it vectorizes header writes.",
+      "control": "10000 exact 31-byte HPACK headers compare byte-for-byte; 70000 allocations cover 0,1,23,24,31,32,4096 bytes and check storage selection/read-write bounds. Zero Valgrind errors/losses. Exact full translation unit reproduces four reports; reduced control does not."
+    },
+    "server_requested_call": {
+      "occurrences": 1,
+      "site": "server.cc:1306 local rm",
+      "analysis": "Private RequestedCall::Type is const and has two constructors, setting BATCH_CALL or REGISTERED_CALL; the switch assigns rm for both. GCC retains an out-of-domain enum path.",
+      "control": "100 real server lifetimes exercise both request constructors, queued requests canceled by shutdown and both APIs after shutdown: 500 completion checks. No invalid accesses or definite/indirect loss; only the already accepted bounded Abseil pool records."
+    },
+    "server_poll_metadata": {
+      "occurrences": 1,
+      "site": "tuple:586 SR.8582 in Server::MatchAndPublishCall TrySeq/PrioritizedRace",
+      "analysis": "Poll and StatusOr independently tag pending/ready and success/error storage; metadata is constructed/accessed only in ready-success branches. GCC dump merges an inactive metadata pointer into the optimized result move.",
+      "control": "15000 actual TrySeq/PrioritizedRace combinations cover pending, cancellation before/after readiness, error, null and owned metadata; only the ready result is moved/accessed. Zero Valgrind errors/losses. Full server translation unit reproduces the report; reduced control does not."
+    }
+  },
+  "cython_compiler": {
+    "scope": "Two exact diagnostics from Cython 3.2.9 generated C++; normal flags and generated cleanup policy unchanged.",
+    "unused_fini": {
+      "site": "cygrpc.cpp:172857 __Pyx_PyAsyncGen_Fini",
+      "analysis": "Cython emits its optional global cleanup routine, while module cleanup is intentionally disabled. Existing Cython process-lifetime cache approval applies to retained objects; this request concerns only the unused-function compiler message.",
+      "control": "Standalone extension with coroutines/async generators reproduces the exact warning, including actual RPM compiler flags."
+    },
+    "completion_queue": {
+      "site": "cygrpc.cpp:24483 __pyx_v_c_completion_queue in _segregated_call",
+      "analysis": "Cython must generate the generic with-statement branch that can suppress an exception. The only unassigned-pointer path is a closed channel whose ValueError is suppressed by __exit__. This state has a private cdef condition assigned only threading.Condition(), whose lock __exit__ releases without suppressing exceptions. The open branch assigns the queue; the closed branch exits with ValueError.",
+      "control": "10000 open/closed-condition checks and coroutine/generator lifetimes plus 20 barrier-coordinated close races pass with warnings-as-errors at Python level. The reduced control does not emit the original queue-pointer warning; the full generated module does."
+    },
+    "valgrind_controls": {
+      "1": {
+        "invalid_memory_contexts": 0,
+        "allocation_origins": "All loss records begin in CPython allocators; combined definite/possible bytes unchanged at 679787. The 58-byte difference changes classification, not total retention. Existing Python/Cython cache approvals apply, not a new native-leak exception.",
+        "summary": [
+          "   definitely lost: 676,883 bytes in 12,243 blocks",
+          "   indirectly lost: 0 bytes in 0 blocks",
+          "     possibly lost: 2,904 bytes in 42 blocks",
+          "        suppressed: 32 bytes in 1 blocks",
+          "ERROR SUMMARY: 1363 errors from 1363 contexts (suppressed: 0 from 0)"
+        ]
+      },
+      "10000": {
+        "invalid_memory_contexts": 0,
+        "allocation_origins": "All loss records begin in CPython allocators; combined definite/possible bytes unchanged at 679787. The 58-byte difference changes classification, not total retention. Existing Python/Cython cache approvals apply, not a new native-leak exception.",
+        "summary": [
+          "   definitely lost: 676,941 bytes in 12,244 blocks",
+          "   indirectly lost: 0 bytes in 0 blocks",
+          "     possibly lost: 2,846 bytes in 41 blocks",
+          "        suppressed: 32 bytes in 1 blocks",
+          "ERROR SUMMARY: 1362 errors from 1362 contexts (suppressed: 0 from 0)"
+        ]
+      }
+    },
+    "limits": "Control uses the same compiler/Cython/CPython as the RPM. CPython/Cython startup allocations remain visible. Raw Valgrind exit 97 and the standard 32-byte loader suppression in this standalone control are recorded; installed native controls use --default-suppressions=no."
+  },
+  "manifest_exclusions": {
+    "scope": "Only no previously-included files matching *.so / *.pyd under src/python/grpcio/grpc/_cython (two messages, twice in wheel build).",
+    "analysis": "These are exclusions of binaries from source manifests, so a clean tree normally has no match. Removing exclusions lets stale SOURCES.txt entries retain binary artifacts; the negative control proves this. Obsolete include patterns and missing precompiled.py have already been removed.",
+    "control": {
+      "license_expression": "Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND MIT",
+      "license_files": {
+        "LICENSE": "590198e3f305f2c347fde64d637c65492bbef554db6c8364e149cd375e3797ee",
+        "rpm-licenses/grpcio-ABSEIL-LICENSE": "c79a7fea0e3cac04cd43f20e7b648e5a0ff8fa5344e644b0ee09ca1162b62747",
+        "rpm-licenses/grpcio-ADDRESS-LICENSE": "be1227afc73a4d58af895a0f95eb21f67697e0a6a0c5b1a3e17436280e9158a6",
+        "rpm-licenses/grpcio-UPB-LICENSE": "6e5e117324afd944dcf67f36cf329843bc1a92229a8cd9bb573d7a83130fea7d",
+        "rpm-licenses/grpcio-UTF8-LICENSE": "02de69b64fc36d9e938f418e52723e42f0b2b226d58a9cb3c8dcbdf7059f5074",
+        "rpm-licenses/grpcio-XXHASH-LICENSE": "553d0035773ddd1590045f8fdc3a4c6ead31e36336721aeca8421e88ed1c9f80",
+        "rpm-licenses/grpcio-license-sources.json": "25ba723261b77f3a876509d22f129753292cb1bd25b9057adc6bbeb3cee2983c"
+      },
+      "source_inventory_preserved": 4993,
+      "files_after_adding_license_notices": 4999,
+      "unlisted_binary_exclusion": "pass",
+      "stale_binary_exclusion": true
+    },
+    "excluded": "License-classifier deprecation is fixed with PEP 639 metadata, not accepted here. No generic setuptools warning filter is proposed."
+  },
+  "rpm_candidate13": {
+    "exit_code": 0,
+    "tests": "12 packaging tests; 102 upstream results (101 pass, one existing upstream skip); 300 injected RPC checks; 200 native poll failure/recovery checks; five wakeup helper cases.",
+    "warnings": {
+      "gcc_and_manifest": 51,
+      "already_accepted": 35,
+      "proposed_native": 10,
+      "proposed_cython": 2,
+      "proposed_manifest": 4,
+      "separate_license_deprecations_fixed_for_candidate14": 2
+    },
+    "artifacts": {
+      "rpmbuild/RPMS/x86_64/python-grpcio-debugsource-1.69.0-160000.2.3.qore.x86_64.rpm": "28651cb40ee600a93dac8c28e640cc29bea54af08be26146935921d9f7cba55f",
+      "rpmbuild/RPMS/x86_64/python313-grpcio-debuginfo-1.69.0-160000.2.3.qore.x86_64.rpm": "302e626d8c22f5bc014cb157df1b8af97f6102d2578cb29d0af51239ce62fee5",
+      "rpmbuild/RPMS/x86_64/python313-grpcio-1.69.0-160000.2.3.qore.x86_64.rpm": "1b255cb9b20176fd1df13e3981cd29cffa14cd99ecc43b32f94d40335b6af596",
+      "rpmbuild/SRPMS/python-grpcio-1.69.0-160000.2.3.qore.src.rpm": "f09b01e362589401082f5669b87df29d10e09e300214b7897f72b6860878f56d"
+    },
+    "nine_installed_native_controls": {
+      "load": {
+        "raw_exit_code": 97,
+        "functional_and_shutdown": true,
+        "invalid_memory_contexts": 0,
+        "native_allocation_sites_outside_python": "Previously approved Abseil PoolAlignedAlloc only, when present."
+      },
+      "async-single": {
+        "raw_exit_code": 97,
+        "functional_and_shutdown": true,
+        "invalid_memory_contexts": 0,
+        "native_allocation_sites_outside_python": "Previously approved Abseil PoolAlignedAlloc only, when present."
+      },
+      "async-repeated": {
+        "raw_exit_code": 97,
+        "functional_and_shutdown": true,
+        "invalid_memory_contexts": 0,
+        "native_allocation_sites_outside_python": "Previously approved Abseil PoolAlignedAlloc only, when present."
+      },
+      "queue-lifetimes": {
+        "raw_exit_code": 97,
+        "functional_and_shutdown": true,
+        "invalid_memory_contexts": 0,
+        "native_allocation_sites_outside_python": "Previously approved Abseil PoolAlignedAlloc only, when present."
+      },
+      "fork-disabled": {
+        "raw_exit_code": 97,
+        "functional_and_shutdown": true,
+        "invalid_memory_contexts": 0,
+        "native_allocation_sites_outside_python": "Previously approved Abseil PoolAlignedAlloc only, when present."
+      },
+      "fork-enabled": {
+        "raw_exit_code": 97,
+        "functional_and_shutdown": true,
+        "invalid_memory_contexts": 0,
+        "native_allocation_sites_outside_python": "Previously approved Abseil PoolAlignedAlloc only, when present."
+      },
+      "wakeup-1": {
+        "raw_exit_code": 97,
+        "functional_and_shutdown": true,
+        "invalid_memory_contexts": 0,
+        "native_allocation_sites_outside_python": "Previously approved Abseil PoolAlignedAlloc only, when present."
+      },
+      "wakeup-2": {
+        "raw_exit_code": 97,
+        "functional_and_shutdown": true,
+        "invalid_memory_contexts": 0,
+        "native_allocation_sites_outside_python": "Previously approved Abseil PoolAlignedAlloc only, when present."
+      },
+      "wakeup-3": {
+        "raw_exit_code": 97,
+        "functional_and_shutdown": true,
+        "invalid_memory_contexts": 0,
+        "native_allocation_sites_outside_python": "Previously approved Abseil PoolAlignedAlloc only, when present."
+      }
+    },
+    "poll_valgrind_exit_code": 0
+  },
+  "exclusions": "New/growing leaks, invalid accesses, other allocation sites, compiler versions/sites and build/runtime diagnostics are outside these scopes. This is not a blanket approval or warning suppression.",
+  "sha256": {
+    "results/grpcio-compiler-controls-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-compiler-controls-1/exec-context-exec-context.cc.270t.optimized": "dcea79ff8f5a93330b3e2884197ee219a5ee8b3043164f47259955a872bb5c69",
+    "results/grpcio-compiler-controls-1/exec-context.compile.log": "6159a89fcfdca09d8ad838f241443d9476c38da408b8dabf8b3e6c8dea6d72b6",
+    "results/grpcio-compiler-controls-1/exec-context.run.log": "229a1613cc38274dfe9f2e94bae0514c57827692bc15e32301785c52e24c656d",
+    "results/grpcio-compiler-controls-1/exec-context.valgrind-run.log": "229a1613cc38274dfe9f2e94bae0514c57827692bc15e32301785c52e24c656d",
+    "results/grpcio-compiler-controls-1/exec-context.valgrind.log": "973755bb5da46b19e89b389b978fb4a930c037a7f4228576311d2845755b50dc",
+    "results/grpcio-compiler-controls-1/slice-slice.cc.270t.optimized": "7188190a6d02888daefe757a53d543d6099c63146cf519721c6a51c9da3435b6",
+    "results/grpcio-compiler-controls-1/slice.compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-compiler-controls-1/slice.run.log": "6df56f05ff2a0ccedd2884f6b44d8b4cfc12fe7f67c803cdc8e0b9bfe7f47f34",
+    "results/grpcio-compiler-controls-1/slice.valgrind-run.log": "6df56f05ff2a0ccedd2884f6b44d8b4cfc12fe7f67c803cdc8e0b9bfe7f47f34",
+    "results/grpcio-compiler-controls-1/slice.valgrind.log": "9bf67fdc8fbced4aedeb82baab33f2e13105b76299ba2a1b52a87e380c719eca",
+    "results/grpcio-compiler-controls-1/status.json": "9250f976a168598963e364beed1abe76c137a91bbeaebffb6dd8fc26b567ca4b",
+    "results/grpcio-compiler-unit-channel-1/compile.log": "405aba02bc4a7e077a953ad4a5d3d160cd979f36a7da11778340a207c5268495",
+    "results/grpcio-compiler-unit-channel-1/status.json": "c603a804c3c921d53002e32b83363348b23152e4f686487482e997a4884d0ae3",
+    "results/grpcio-compiler-unit-channel-1/unit.cc.225t.uninit1": "bb1c3e6b6c2381cf73e8298505649bc5361a60c121a7e324dd8166fbac59c559",
+    "results/grpcio-compiler-unit-channel-1/unit.cc.270t.optimized": "7cd7e97d1a23a6b98cfeb6515637c0ed743d7a51bcf2ab4869af624990f52ec0",
+    "results/grpcio-compiler-unit-server-1/compile.log": "6588ff4ed51b37af89dfae7a22c6a5c177f56cb6618c3f77e2c43b9d5a2edda8",
+    "results/grpcio-compiler-unit-server-1/status.json": "954640fd1d7d86e1b8abd1666587961ca91f4555f63d30c2628ea851a2cfb87e",
+    "results/grpcio-compiler-unit-server-1/unit.cc.225t.uninit1": "63585ed307c70dede8341a47c21b0c821b8462f9a07be9e2d6ec1b3a9c164787",
+    "results/grpcio-compiler-unit-server-1/unit.cc.270t.optimized": "d90c7c241e19f475747d76b70353cd24dd467db0009d5dde1a3d1a649e1cfaf8",
+    "results/grpcio-compiler-unit-tcp-1/compile.log": "7660a675189195eb8487dd61b0d3e921fa87ab7a4a7f0706e1882575df4bd0df",
+    "results/grpcio-compiler-unit-tcp-1/status.json": "58a646f63315b46191cbe49a1d016f8521950959ac14330cb17438e67b661450",
+    "results/grpcio-compiler-unit-tcp-1/unit.cc.225t.uninit1": "9cc7735414c10118b0702f4021065c12f2872907dcbe046df21f0f4e664ff13f",
+    "results/grpcio-compiler-unit-tcp-1/unit.cc.270t.optimized": "150c8f26caf07a0665214fe20cb02f14e8915e2b5d30925d671c24c1f5c599a4",
+    "results/grpcio-compiler-unit-transport-1/compile.log": "7a6b160ae766c3cef1494296a57d0a94d7e99ce29a9878f64c92cce2a792996f",
+    "results/grpcio-compiler-unit-transport-1/status.json": "ae455422538981970f54c76e5a0fa91d9fc30cdd0a40ac64e1ebe270acf2ca18",
+    "results/grpcio-compiler-unit-transport-1/unit.cc.225t.uninit1": "986fb0fae6125defd04750c3837b2eea6b11c174ff4d2945f649dbedecccf3b7",
+    "results/grpcio-compiler-unit-transport-1/unit.cc.270t.optimized": "5dee41412e421494b1e92c15e51d9a1d345cb4b13e2d595e5038316428aa5a74",
+    "results/grpcio-cython-diagnostic-control-2/1.valgrind.log": "e5555876668b9e53590910a94d474d1794ae63800ac7cda44a3f8f2ab546c5fd",
+    "results/grpcio-cython-diagnostic-control-2/10000.valgrind.log": "db8d1d79db46cc111d4fdb1edbb3a3aebe82746d10f1fea5c136a4de44ec8120",
+    "results/grpcio-cython-diagnostic-control-2/build.log": "8648e2f2ecc04cb8df94cae02200402c0fb8eef6503a279ee3533a432b86cb4f",
+    "results/grpcio-cython-diagnostic-control-2/diagnostic.pyx": "66a4324d11aec7287860f8a827fcd8dce9c807891be91915f1cf785a2c6c0f25",
+    "results/grpcio-cython-diagnostic-control-2/functional.log": "f8b2d4860b35ecb40ee6f1e19d971c98b0bfe6e666650d8af9cbdacc5cf0dfd3",
+    "results/grpcio-cython-diagnostic-control-2/run.py": "2b67cde3b2aa371adbcc91a73cd757df0967275adac74b64f4ae117c717c2c6b",
+    "results/grpcio-cython-diagnostic-control-2/setup.py": "f4f75105f97846d980efadc95feb807992f07a8c3f2a0c180f089212a8843df8",
+    "results/grpcio-cython-diagnostic-control-2/status.json": "168b3ac3a90bf7f38e036049dc5f07866bfa45f5b64d22d3a9b1202508f71a9e",
+    "results/grpcio-cython-diagnostic-control-2/valgrind-1.log": "295e96e245e486c8277a77d43ee417cc5db3124fbe2917773e8a07cc8838e35c",
+    "results/grpcio-cython-diagnostic-control-2/valgrind-10000.log": "f8b2d4860b35ecb40ee6f1e19d971c98b0bfe6e666650d8af9cbdacc5cf0dfd3",
+    "results/grpcio-cython-exact-flags-1/compile.log": "551b8208cdfbdd1c9a788df706b7c2586ddebbe59dfcae54934c929dde029870",
+    "results/grpcio-cython-exact-flags-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-cython-exact-flags-1/functional.log": "f8b2d4860b35ecb40ee6f1e19d971c98b0bfe6e666650d8af9cbdacc5cf0dfd3",
+    "results/grpcio-cython-exact-flags-1/run.py": "2b67cde3b2aa371adbcc91a73cd757df0967275adac74b64f4ae117c717c2c6b",
+    "results/grpcio-cython-exact-flags-1/status.json": "3ca6e6c4642d8d35df3a46cd9fabbd08ab057d3ee5f34f79c851c75a087cee87",
+    "results/grpcio-manifest-review-4/baseline.log": "70bd48cf9a0dfce8768971e456d531ab4df0f8545801335dd2017c60eefe03e7",
+    "results/grpcio-manifest-review-4/checks.json": "bf48a87c54b68be9c11155037a161da76f42aa36ccaac44f56ffbc62a12fb0dd",
+    "results/grpcio-manifest-review-4/driver.log": "56993cbaa315689591ddf9e448da5ef245e90f3d1c29947ff3f6e62acdf5d13a",
+    "results/grpcio-manifest-review-4/fixed.log": "ed10757575fcca164342a0b8b9011ed90c46314f1b2091891d81af5317036bf5",
+    "results/grpcio-manifest-review-4/status.json": "68573ad2acc67982c436eec4238e0780b53b08332ab92289dd36dd68721f4ecb",
+    "results/grpcio-manifest-review-4/with-binary-fixtures.log": "ed10757575fcca164342a0b8b9011ed90c46314f1b2091891d81af5317036bf5",
+    "results/grpcio-manifest-review-4/with-stale-egg-info.log": "e24edb5bb77fa2cae8edcefaff1e5f195b3369aac9547cf9569ba23742c18ac8",
+    "results/grpcio-op-handler-control-2/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-op-handler-control-2/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-op-handler-control-2/link.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-op-handler-control-2/run.log": "262f471b6f0df79c29da47447177e43a94336a5f2ea3c4873ae1949c8c2ad25e",
+    "results/grpcio-op-handler-control-2/status.json": "4986d5098c46c6f6337a3c28c45162dfd4d31cebbf2c39408d6f3fbb5dd727cc",
+    "results/grpcio-op-handler-control-2/valgrind-run.log": "262f471b6f0df79c29da47447177e43a94336a5f2ea3c4873ae1949c8c2ad25e",
+    "results/grpcio-op-handler-control-2/valgrind.log": "e487bb7522c7f53d1ce68a62f4657fd595ce0431f23787d8e01e04b6b638c57e",
+    "results/grpcio-poll-init-13/status.json": "d2a85560e906268335dca2e6db3b3f7b8179fa9df1fd9abcc7f9aa4451d0cca5",
+    "results/grpcio-poll-init-13/test.log": "668475768a14be537e77728b65e2141d7b7d9ca15fac5c1445e8fcc33ceefbdf",
+    "results/grpcio-poll-init-13/valgrind.log": "a268b841aa5eb568520155ca7508cc04a4afae1f62f0650fb2f4523d04dd38ae",
+    "results/grpcio-promise-metadata-control-3/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-promise-metadata-control-3/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-promise-metadata-control-3/link.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-promise-metadata-control-3/run.log": "7b06b933e1bf55b21c101d3527cc4a2ae7a06e0e3eef6f85e6cfc5147d063fb0",
+    "results/grpcio-promise-metadata-control-3/status.json": "15fb0a726fa89615a750a04c046145d67ec8b08b97f7456410f26a549977ebc1",
+    "results/grpcio-promise-metadata-control-3/valgrind-run.log": "7b06b933e1bf55b21c101d3527cc4a2ae7a06e0e3eef6f85e6cfc5147d063fb0",
+    "results/grpcio-promise-metadata-control-3/valgrind.log": "710f2068252174a6f6dd31917001d39b9cca4f230c716a37ba8f842d16250d0b",
+    "results/grpcio-server-requests-control-1/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-server-requests-control-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-server-requests-control-1/link.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-server-requests-control-1/run.log": "4bb056fee96ee4c7b5495ce6e5d55273ce2a13a71457a153649580c52caeb1ab",
+    "results/grpcio-server-requests-control-1/status.json": "2253c50554db75ddefada9e4240012859041daf3f7df1d8dae74c5ef0679a045",
+    "results/grpcio-server-requests-control-1/valgrind-run.log": "4bb056fee96ee4c7b5495ce6e5d55273ce2a13a71457a153649580c52caeb1ab",
+    "results/grpcio-server-requests-control-1/valgrind.log": "cc41e42a3dc19fa73570a1f1e7d7ab11d0d5d6f0bfdc03b2014fc1618b9fd838",
+    "results/grpcio-statusor-exact-flags-1/command.json": "61600da68bd13fcf8d6df0761cf9ff57fb20a94cfebc8e41baa17e47644a15ae",
+    "results/grpcio-statusor-exact-flags-1/compile.log": "98020aaf8a4dd1d8945e47a1072ddc1f0237165d18ef2e54730b97bfc2e7f69d",
+    "results/grpcio-statusor-exact-flags-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-statusor-exact-flags-1/link.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-statusor-exact-flags-1/run.log": "62523cd0c48f3668b5fc38d3b8dcdf1fc40f05824640cdce7b867d536bdf2cb4",
+    "results/grpcio-statusor-exact-flags-1/valgrind-run.log": "62523cd0c48f3668b5fc38d3b8dcdf1fc40f05824640cdce7b867d536bdf2cb4",
+    "results/grpcio-statusor-exact-flags-1/valgrind.log": "d5c47c649720828f23261b6a3d011d1e4872e87ea030aff0ab00d65d5789832f",
+    "results/grpcio-tcp-statusor-control-1/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-tcp-statusor-control-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-tcp-statusor-control-1/link.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/grpcio-tcp-statusor-control-1/run.log": "62c941247011b6a24cec896dd25f51662bf68c21f246867a5cb541186b0aa022",
+    "results/grpcio-tcp-statusor-control-1/status.json": "c00d7d019768f30b430adc7fb928d380bd05abe9b813b5138f88066a9dd3b060",
+    "results/grpcio-tcp-statusor-control-1/valgrind-run.log": "62c941247011b6a24cec896dd25f51662bf68c21f246867a5cb541186b0aa022",
+    "results/grpcio-tcp-statusor-control-1/valgrind.log": "ccb5bb8e24f516fbd9f57bffaede9bcabdf403c3d7b853242f996fa580369cc2",
+    "results/leap-grpcio-native-13/async-repeated-valgrind.log": "8a1849bb9c9486f4a9593f5e6ce8fb39064ab17d10b6015e24dd6b2dd99e19ff",
+    "results/leap-grpcio-native-13/async-repeated.log": "59db17a72fc11028fe79ea445bd6c91e4448234d997aabea0c890982c3aa0059",
+    "results/leap-grpcio-native-13/async-repeated.py": "bfb3ce8f1e539e1f5fd5241819708ffbfc07d7d88e2faaa1b9dcec3bf3503f2f",
+    "results/leap-grpcio-native-13/async-single-valgrind.log": "1d93e4a2cb296450f3299e8cf6d2a981020c0a117ca10b8f4e9148407abce8f7",
+    "results/leap-grpcio-native-13/async-single.log": "6ce8b60c5deed24d099ce4c43ab57599bcc263baa38bc5d9c01fbdde56cab42b",
+    "results/leap-grpcio-native-13/async-single.py": "bef062bf50664067092f0cf97f83ced555b96cc7a07d6239c858ed1ed566430c",
+    "results/leap-grpcio-native-13/fork-disabled-valgrind.log": "dfd395e5a8e0c17e1b0f0914161cdb7ef8d5dc09f1fd517f661b4fe66a5c3aad",
+    "results/leap-grpcio-native-13/fork-disabled.log": "544df69038c99cd948bed7effbd71f31bbd4de204cedc41ad254561bf330439e",
+    "results/leap-grpcio-native-13/fork-disabled.py": "544e82eb6f121fbc11e30bc587cc02a77b64f6dceb1a6b5ef01b4c10b2510645",
+    "results/leap-grpcio-native-13/fork-enabled-valgrind.log": "1f4c6b94fdb1fddce9f3e20f854bea2309d2e6e7e0eda6f75b5468843b9c5068",
+    "results/leap-grpcio-native-13/fork-enabled.log": "544df69038c99cd948bed7effbd71f31bbd4de204cedc41ad254561bf330439e",
+    "results/leap-grpcio-native-13/fork-enabled.py": "544e82eb6f121fbc11e30bc587cc02a77b64f6dceb1a6b5ef01b4c10b2510645",
+    "results/leap-grpcio-native-13/inject-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/leap-grpcio-native-13/install.log": "16a16e3ffa1ca33108aa716b9dd6f0705e6a7149ccc7db8eea44ce45d3296b27",
+    "results/leap-grpcio-native-13/load-valgrind.log": "c129ae22c274e68c6588556a49461de5a0b714aca4288e933d9f1edc05e3ed1f",
+    "results/leap-grpcio-native-13/load.log": "200a3d8f4bbefc1db87c34fd031653895b2879b8cd449e94eb3dd34d8075780b",
+    "results/leap-grpcio-native-13/load.py": "5f2605aca9cd789affc4fb55affcba8f637b9c2361207817982a5aafe681b0aa",
+    "results/leap-grpcio-native-13/queue-lifetimes-valgrind.log": "cb90cf45e4b1715a639efbd0fa9f52577827c27f0b542575173ed8a0da1463fa",
+    "results/leap-grpcio-native-13/queue-lifetimes.log": "8a89beaedcbc9451cc133009de5fcc4d2eb29807fa225fadb514242062465830",
+    "results/leap-grpcio-native-13/queue-lifetimes.py": "2e9017f5628f0e27e78f38b20328bdb89c3a8992fd09908d0d60a544661a8fca",
+    "results/leap-grpcio-native-13/status.json": "9a1f71f412e66c328511e0ba64248d949dbc3243796c45b5d35ae4dcdeacfa87",
+    "results/leap-grpcio-native-13/wait.cc": "a2a01c8a77cd113682b5b2248d40908887857635b5d574d0515b3ac3340f0657",
+    "results/leap-grpcio-native-13/wakeup-1-valgrind.log": "4a13df24254161265bc5de9cf4e528a1d4130a49e2de85ff9d905cb854069400",
+    "results/leap-grpcio-native-13/wakeup-1.log": "0d1f595e05b8710744123277ebe4700b89eafa3729b91aca09a03acb9df2b95a",
+    "results/leap-grpcio-native-13/wakeup-1.py": "1cfadb7c5290538b08cebbaa62113eff457477fa6815c61ea3618a5ab046c44d",
+    "results/leap-grpcio-native-13/wakeup-2-valgrind.log": "c2ca32759e6800835bfb7d6c08089d5ee405842e0427fd1bd62730ea39cd1496",
+    "results/leap-grpcio-native-13/wakeup-2.log": "da081328b2a330c9722da34f4d486902c93bf3d67f65011898c652790102fb09",
+    "results/leap-grpcio-native-13/wakeup-2.py": "4bc37b787657b8a95ab66410d17bcb997ef59a0c887142fe745dbdac5f17bba7",
+    "results/leap-grpcio-native-13/wakeup-3-valgrind.log": "4e243f8a6853181ce76a546098de89af9dade82649e9a960f73a91da42c9acf3",
+    "results/leap-grpcio-native-13/wakeup-3.log": "4c5015a9c2aff5e65f49f8ff0c329ee32a00d1addcc8fcb49ec62bb39c7f2684",
+    "results/leap-grpcio-native-13/wakeup-3.py": "57795187449592395eb293921ff2802d2e8c87d560369ddf4f505fd6b89f54d1",
+    "results/leap-python-grpcio-candidate-13/build.json": "4b767d2f6aa111f6962df0af5649f97f5c24f1cb8074d56981d3291dc6ccc570",
+    "results/leap-python-grpcio-candidate-13/build.log": "e38e0cbebed9834b429c84dda85ceeb408c68b28d1fb6cd0387b6e31cc00edc2",
+    "work/grpcio-cython-diagnostic-control-2/diagnostic.pyx": "66a4324d11aec7287860f8a827fcd8dce9c807891be91915f1cf785a2c6c0f25",
+    "work/grpcio-cython-diagnostic-control-2/run.py": "2b67cde3b2aa371adbcc91a73cd757df0967275adac74b64f4ae117c717c2c6b",
+    "work/grpcio-cython-diagnostic-control-2/setup.py": "f4f75105f97846d980efadc95feb807992f07a8c3f2a0c180f089212a8843df8",
+    "work/grpcio-final-native-controls-1/promise-metadata.cc": "02df00c32c6d00df02ce4ddce4538b52359c8765ad2e56e8ffeab4632eb1582f",
+    "work/grpcio-final-native-controls-1/server-requests.cc": "b9b5c607e97735751b22b5b1ce55e0b343ce1fe165fff3557eaaf7b0f7a7f3a9",
+    "work/grpcio-final-native-controls-1/tcp-statusor.cc": "e09a3610aaebcf2f53835d1e6b3aacf0a54bf423188669f98c72da835c2497a1",
+    "work/grpcio-op-handler-control-1/control.cc": "4ec9e6fdb8c819f0e7c3adfa8c12ffc5120d2def0b763cc84bc9e417acba33db",
+    "work/grpcio-promise-metadata-control-2/promise-metadata.cc": "dc6d1e68cd914434890fc403e57d4f276cc694bf673acee0a2322cb83ae338e4"
+  },
+  "final_local_candidate": "evidence/grpcio-rpm-candidate14b-20261004.json"
+}

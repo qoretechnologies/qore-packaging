@@ -1,0 +1,182 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-04",
+  "status": "Local RPM build, installed runtime/SDK tests and exact native-library comparison pass. Three explicitly scoped compiler/Cython/manifest decisions remain pending; ARM OBS qualification and publication have not advanced.",
+  "source": {
+    "schema": 1,
+    "name": "python-grpcio",
+    "version": "1.69.0",
+    "commit": null,
+    "source_date_epoch": 1790985600,
+    "spec": "python-grpcio.spec",
+    "upstream": {
+      "url": "https://files.pythonhosted.org/packages/source/g/grpcio/grpcio-1.69.0.tar.gz",
+      "sha256": "936fa44241b5379c5afc344e1260d467bee495747eaf478de825bab2791da6f5"
+    },
+    "sources": {
+      "grpc-v1.69.0.tar.gz": "cd256d91781911d46a57506978b3979bfee45d5086a1b6668a3ae19c5e77f8dc",
+      "grpcio-1.69.0.tar.gz": "936fa44241b5379c5afc344e1260d467bee495747eaf478de825bab2791da6f5",
+      "grpcio-ABSEIL-LICENSE": "c79a7fea0e3cac04cd43f20e7b648e5a0ff8fa5344e644b0ee09ca1162b62747",
+      "grpcio-ADDRESS-LICENSE": "be1227afc73a4d58af895a0f95eb21f67697e0a6a0c5b1a3e17436280e9158a6",
+      "grpcio-UPB-LICENSE": "6e5e117324afd944dcf67f36cf329843bc1a92229a8cd9bb573d7a83130fea7d",
+      "grpcio-UTF8-LICENSE": "02de69b64fc36d9e938f418e52723e42f0b2b226d58a9cb3c8dcbdf7059f5074",
+      "grpcio-XXHASH-LICENSE": "553d0035773ddd1590045f8fdc3a4c6ead31e36336721aeca8421e88ed1c9f80",
+      "grpcio-aio-batch-ownership.patch": "22ca5da0977974801e246d4d9044a85c9c90843057ab1e782b2e9f4fff0e7da8",
+      "grpcio-aio-queue-release.patch": "fb400b6089a368993169cae9e36cc7f1139bdc4b37fc409c492bccabba3782ac",
+      "grpcio-aio-wakeup.patch": "a0caa4e7512cf7161c8254f17350433ac773a496bc25aeff57cd04e607901382",
+      "grpcio-coexistence-test.py": "4c78b67a796caac31d7e4f7bdda0fc7551446889c764bf0cac641e0f97bd0b3c",
+      "grpcio-cython-if.patch": "cba2f185954974f332d27c611a9a88e54dc1f0f5305864b00e0f900de18e4fa9",
+      "grpcio-fix-return-values.patch": "f95233608cc733f8b357865e710166158c66e85fc9a6c6a713d54de6cbed4022",
+      "grpcio-license-metadata.patch": "c2828c9a5f0053bd8f0e91aee3531cf28ac31fb967001fe3146122f241d6b66b",
+      "grpcio-license-sources.json": "25ba723261b77f3a876509d22f129753292cb1bd25b9057adc6bbeb3cee2983c",
+      "grpcio-lifecycle-build.patch": "06ca26bb431107c22dd923a05db3848f743c4f7ac223d534406da98c88fc6ebc",
+      "grpcio-manifest-sources.patch": "47d9b932e088ccbd212d984936cabba2eda7ff28f6b3acffdf256587cb856640",
+      "grpcio-native-types-test.cc": "487053bc68831e37efeafd597d4f8b2634a745a0472b880304b23cb4887cb249",
+      "grpcio-native-types.patch": "4fded14edc0d45e890566c3d4deb8c4e43182b8646c1fbf9aa808f1cec37e3aa",
+      "grpcio-poll-init-cleanup.patch": "e37e086e9f8e8491774ba844a8fbc19efd7e6561494288b4fac52ed5f96f5cc0",
+      "grpcio-poll-init-test.cc": "668cc20f756a9bbe7313640029e0d5465856b8f088796a747b14263982eae7a3",
+      "grpcio-thread-pool-shutdown.patch": "03e8c667695cb146703915efd3b25c6a856cf64033c385b9ac7f656c5236e248",
+      "grpcio-unused-priority.patch": "c29eca1c4b7c848ca8888fcffd781af329a6d19493c8ac52f6ae043443678308",
+      "grpcio-wakeup-inject.c": "4ad7a8b67912e705be4c0517d16af8686cadb8b3901735dc8545a28f3f42c6b8",
+      "grpcio-wakeup-test.cc": "43a7451fa51529bbca241234d358830f6cf9403e91a7532bb3eb6c94c7f14a89",
+      "grpcio-wakeup-test.py": "26d5370fe225542ea7cc63c806625f6685e425e8ace6bacb11e97bf9d88f372b",
+      "grpcio-xxhash-avoid-armv6-unaligned-access.patch": "f8a30d315ff8e6c489660926d2cfde05f6cce267d5ac3912fa9d23c2c3db2960",
+      "grpcio-xxhash-ppc64le-gcc7.patch": "3cf29ccc778e0800e63e501b3471b67ec826971f249484208cc2265a547b12b8",
+      "python-grpcio.spec": "b6279c27ec71af0d93151743864d0686237dec5ff81cb8ef69edd0a051fb81d8"
+    },
+    "candidate": true,
+    "components": [
+      {
+        "url": "https://codeload.github.com/grpc/grpc/tar.gz/refs/tags/v1.69.0",
+        "archive": "grpc-v1.69.0.tar.gz",
+        "sha256": "cd256d91781911d46a57506978b3979bfee45d5086a1b6668a3ae19c5e77f8dc"
+      }
+    ]
+  },
+  "artifacts": {
+    "rpmbuild/RPMS/x86_64/python-grpcio-debugsource-1.69.0-160000.2.3.qore.x86_64.rpm": "c8af4f23a51afa79df4aaa62bef7b7c657c89280439c85a66cad1c1bda4dc050",
+    "rpmbuild/RPMS/x86_64/python313-grpcio-debuginfo-1.69.0-160000.2.3.qore.x86_64.rpm": "b751b5f1c84c302eb6b5b65c4631dd5849c601526995729a0f3965266722b0ef",
+    "rpmbuild/RPMS/x86_64/python313-grpcio-1.69.0-160000.2.3.qore.x86_64.rpm": "b82550f9b78a7ae4bd04072c9358c70b67189102e1c9eb188cf064a67fc47e64",
+    "rpmbuild/SRPMS/python-grpcio-1.69.0-160000.2.3.qore.src.rpm": "829fae57853fc86d3f9e56bfa8a863ef0a280cc7d04b264520d0070f91bd63e9"
+  },
+  "changes": [
+    "Remove unused private priority helper and obsolete manifest include patterns, preserving binary exclusions.",
+    "Replace deprecated license classifier with SPDX expression matching linked components; package and verify all bundled-component notices in dist-info/licenses.",
+    "Use metadata.get() for an absent legacy License field, avoiding Python 3.13 deprecated missing-key lookup."
+  ],
+  "build": {
+    "exit_code": 0,
+    "packaging_tests": 13,
+    "upstream_results": 102,
+    "upstream_passed": 101,
+    "upstream_skipped": 1,
+    "wakeup_injected_rpc_checks": 300,
+    "poll_failure_recovery_initializations": 200,
+    "note": "Candidate 14 completed fresh compilation and install; its new metadata test failed only because a missing-key __getitem__ emits a DeprecationWarning. The corrected assertion passed directly against its buildroot. Candidate 14b uses RPM --noprep with unchanged prepared/compiled source, runs normal %build/%install/%check and produces both SRPM and binary/debug RPMs. It does not use --short-circuit or --nocheck. The source manifest differs only in the test source.",
+    "fresh_compile_log": "results/leap-python-grpcio-candidate-14/build.log",
+    "complete_check_log": "results/leap-python-grpcio-candidate-14b/build.log"
+  },
+  "metadata_controls": {
+    "license_expression": "Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND MIT",
+    "license_files": {
+      "LICENSE": "590198e3f305f2c347fde64d637c65492bbef554db6c8364e149cd375e3797ee",
+      "rpm-licenses/grpcio-ABSEIL-LICENSE": "c79a7fea0e3cac04cd43f20e7b648e5a0ff8fa5344e644b0ee09ca1162b62747",
+      "rpm-licenses/grpcio-ADDRESS-LICENSE": "be1227afc73a4d58af895a0f95eb21f67697e0a6a0c5b1a3e17436280e9158a6",
+      "rpm-licenses/grpcio-UPB-LICENSE": "6e5e117324afd944dcf67f36cf329843bc1a92229a8cd9bb573d7a83130fea7d",
+      "rpm-licenses/grpcio-UTF8-LICENSE": "02de69b64fc36d9e938f418e52723e42f0b2b226d58a9cb3c8dcbdf7059f5074",
+      "rpm-licenses/grpcio-XXHASH-LICENSE": "553d0035773ddd1590045f8fdc3a4c6ead31e36336721aeca8421e88ed1c9f80",
+      "rpm-licenses/grpcio-license-sources.json": "25ba723261b77f3a876509d22f129753292cb1bd25b9057adc6bbeb3cee2983c"
+    },
+    "source_inventory_preserved": 4993,
+    "files_after_adding_license_notices": 4999,
+    "unlisted_binary_exclusion": "pass",
+    "stale_binary_exclusion": true
+  },
+  "installed_bridge": {
+    "runtime": {
+      "exit_code": 0,
+      "suite_summaries": [
+        "Ran 25 test cases, 25 succeeded (129 assertions)",
+        "Ran 43 test cases, 43 succeeded (184 assertions)",
+        "Ran 9 test cases, 9 succeeded (31 assertions)",
+        "Ran 22 test cases, 22 succeeded (86 assertions)",
+        "Ran 54 test cases, 54 succeeded (223 assertions)",
+        "Ran 29 test cases, 29 succeeded (164 assertions)",
+        "Ran 7 test cases, 7 succeeded (21 assertions)",
+        "Ran 19 test cases, 19 succeeded (94 assertions)",
+        "Ran 19 test cases, 19 succeeded (51 assertions)",
+        "Ran 12 test cases, 12 succeeded (94 assertions)",
+        "Ran 11 test cases, 11 succeeded (38 assertions)",
+        "Ran 89 test cases, 89 succeeded (297 assertions)",
+        "Ran 39 test cases, 39 succeeded (356 assertions)"
+      ]
+    },
+    "sdk": {
+      "exit_code": 0,
+      "suite_summaries": [
+        "Ran 25 test cases, 25 succeeded (129 assertions)",
+        "Ran 43 test cases, 43 succeeded (184 assertions)",
+        "Ran 9 test cases, 9 succeeded (31 assertions)",
+        "Ran 22 test cases, 22 succeeded (86 assertions)",
+        "Ran 54 test cases, 54 succeeded (223 assertions)",
+        "Ran 29 test cases, 29 succeeded (164 assertions)",
+        "Ran 7 test cases, 7 succeeded (21 assertions)",
+        "Ran 19 test cases, 19 succeeded (94 assertions)",
+        "Ran 19 test cases, 19 succeeded (51 assertions)",
+        "Ran 12 test cases, 12 succeeded (94 assertions)",
+        "Ran 11 test cases, 11 succeeded (38 assertions)",
+        "Ran 89 test cases, 89 succeeded (297 assertions)",
+        "Ran 39 test cases, 39 succeeded (356 assertions)"
+      ]
+    }
+  },
+  "native_qualification": {
+    "extension_sha256": "b4e04fc9c6909c9a25154b09299c2740369c7b8cabf3318b91d93737c1e2a3f7",
+    "comparison": {
+      "13": {
+        "path": "results/leap-python-grpcio-candidate-13/rpmbuild/BUILD/python-grpcio-1.69.0-build/BUILDROOT/usr/lib64/python3.13/site-packages/grpc/_cython/cygrpc.cpython-313-x86_64-linux-gnu.so",
+        "sha256": "b4e04fc9c6909c9a25154b09299c2740369c7b8cabf3318b91d93737c1e2a3f7"
+      },
+      "14": {
+        "path": "results/leap-python-grpcio-candidate-14/rpmbuild/BUILD/python-grpcio-1.69.0-build/BUILDROOT/usr/lib64/python3.13/site-packages/grpc/_cython/cygrpc.cpython-313-x86_64-linux-gnu.so",
+        "sha256": "b4e04fc9c6909c9a25154b09299c2740369c7b8cabf3318b91d93737c1e2a3f7"
+      }
+    },
+    "result": "Installed stripped extension is byte-identical to candidate 13, whose nine installed Valgrind controls have zero invalid accesses and only already approved Python/Cython and Abseil allocation sites. The exact native poll test is clean. No redundant native rerun is needed for this metadata/test-only change.",
+    "evidence": "evidence/grpcio-remaining-diagnostics-20261004.json"
+  },
+  "remaining_diagnostics": "Ten GCC 15 optimizer diagnostics, two Cython compiler diagnostics and two source binary-exclusion messages (four occurrences) are awaiting explicit user decisions. Existing API/context/fault/logging exceptions retain their prior scope. No suppression is introduced.",
+  "metadata_reference": "https://setuptools.pypa.io/en/stable/userguide/license_migration.html",
+  "sha256": {
+    "results/leap-python-grpcio-candidate-14b/build.json": "e8d0fd8a0d65288b973a6f8738cf443a9c6db6c90ec9db414572805ca91acdc7",
+    "results/leap-python-grpcio-candidate-14b/build.log": "de5504c3af74dc395c7a5bcb27f3ba3df250f796c6d216ae71791f4bfbd14c1b",
+    "results/leap-grpcio14b-bridge-1/status.json": "24d5e9008a8ad3b36a3d8cb243c1c3a7e11a4e129ec97746fc6c69b23352b4c6",
+    "results/leap-grpcio14b-bridge-1/sdk-install.log": "c7d2a86090984a6c0ccf6d2e6ca49327188ab891362818036ae9aa1c5499740c",
+    "results/leap-grpcio14b-bridge-1/sdk-tests.log": "64f4e5dcfc3c425c6b4f950991104f7ff876cea59946322e73d1a8f8b58208d2",
+    "results/leap-grpcio14b-bridge-1/runtime-install.log": "c7d2a86090984a6c0ccf6d2e6ca49327188ab891362818036ae9aa1c5499740c",
+    "results/leap-grpcio14b-bridge-1/runtime-tests.log": "b3ea9a965c9464799b56a4f5acfa97cc5f82f9f9fde77b5366f7db634294f36f",
+    "results/leap-python-grpcio-candidate-14/build.log": "c04db0e4c8fba16353209bb0aa9a446390f3866d3e5a93ed6530d6eed8a6e958",
+    "results/leap-python-grpcio-candidate-14/build.json": "e077e631c8a12639de665621cd908a6f6c10beabd39c44c5c51cc40abb2cf28c",
+    "results/grpcio-manifest-review-4/baseline-files.txt": "dd5800611b8be0339c3c29747f96ef3191d140e33cbf0bda6a84b21d86a914bf",
+    "results/grpcio-manifest-review-4/checks.json": "bf48a87c54b68be9c11155037a161da76f42aa36ccaac44f56ffbc62a12fb0dd",
+    "results/grpcio-manifest-review-4/fixed-files.txt": "9198a8b1feb3b93388893ef410c80242172b32f5ba2a6b89f66e35f7fb4b2a9b",
+    "results/grpcio-manifest-review-4/baseline.log": "70bd48cf9a0dfce8768971e456d531ab4df0f8545801335dd2017c60eefe03e7",
+    "results/grpcio-manifest-review-4/with-stale-egg-info-files.txt": "9198a8b1feb3b93388893ef410c80242172b32f5ba2a6b89f66e35f7fb4b2a9b",
+    "results/grpcio-manifest-review-4/fixed.log": "ed10757575fcca164342a0b8b9011ed90c46314f1b2091891d81af5317036bf5",
+    "results/grpcio-manifest-review-4/status.json": "68573ad2acc67982c436eec4238e0780b53b08332ab92289dd36dd68721f4ecb",
+    "results/grpcio-manifest-review-4/with-stale-egg-info.log": "e24edb5bb77fa2cae8edcefaff1e5f195b3369aac9547cf9569ba23742c18ac8",
+    "results/grpcio-manifest-review-4/with-binary-fixtures-files.txt": "9198a8b1feb3b93388893ef410c80242172b32f5ba2a6b89f66e35f7fb4b2a9b",
+    "results/grpcio-manifest-review-4/driver.log": "56993cbaa315689591ddf9e448da5ef245e90f3d1c29947ff3f6e62acdf5d13a",
+    "results/grpcio-manifest-review-4/with-binary-fixtures.log": "ed10757575fcca164342a0b8b9011ed90c46314f1b2091891d81af5317036bf5",
+    "results/grpcio-license-installed-14/status.json": "319e472614a9674fde1c3b0cad4600e67d61959de9da364b4e192fd556280916",
+    "results/grpcio-license-installed-14/test.log": "d1f4ab53a72ba7aee3fb682905a6beb656be7251325a71f7b412902214128f76",
+    "results/grpcio-license-installed-14/extension-comparison.json": "19d36ecc57a0bf9aeb25755fa5db1d57db163e9909ba5647fe62a64663dc6767",
+    "dependencies/grpcio-license-metadata.patch": "c2828c9a5f0053bd8f0e91aee3531cf28ac31fb967001fe3146122f241d6b66b",
+    "dependencies/grpcio-manifest-sources.patch": "47d9b932e088ccbd212d984936cabba2eda7ff28f6b3acffdf256587cb856640",
+    "dependencies/grpcio-unused-priority.patch": "c29eca1c4b7c848ca8888fcffd781af329a6d19493c8ac52f6ae043443678308",
+    "dependencies/grpcio-coexistence-test.py": "4c78b67a796caac31d7e4f7bdda0fc7551446889c764bf0cac641e0f97bd0b3c",
+    "dependencies/python-grpcio.spec": "b6279c27ec71af0d93151743864d0686237dec5ff81cb8ef69edd0a051fb81d8",
+    "results/leap-python-grpcio-candidate-14/rpmbuild/BUILD/python-grpcio-1.69.0-build/BUILDROOT/usr/lib64/python3.13/site-packages/grpcio-1.69.0.dist-info/METADATA": "586a24559c3f3451a3015e5d2b60f00e5825c35970487f3912b98e9a00579ad2"
+  }
+}
