@@ -216,7 +216,9 @@ OBS sources are verified with publication disabled. Leap now also passes the
 canonical Qore module build and installed runtime/SDK/artifact checks against
 candidate 14b of its repaired grpcio dependency. Each phase runs the same 13
 suites and 1,768 assertions. The remaining local diagnostic scopes were accepted
-on 2026-10-04; committed dependency sources and native OBS builds are next. See
+on 2026-10-04. Dependency commit ``0e466c5`` is uploaded as OBS revision 1;
+all 29 source payloads match the qualified candidate. Both Leap architecture
+builds have started with publication disabled. See
 ``evidence/grpc-rpm-final-20261002.json`` and
 ``evidence/grpc-leap-installed-20261003.json``.
 
@@ -244,6 +246,7 @@ were explicitly accepted on 2026-10-04. The scope excludes new sites, growing
 allocations and native errors. See ``dependencies/grpcio.rst``,
 ``evidence/grpcio-rpm-candidate14b-20261004.json`` and
 ``evidence/grpcio-remaining-diagnostics-20261004.json``.
+Submission identity is in ``evidence/grpcio-obs-submission-20261004.json``.
 See ``dependencies/arrow-flight.rst`` and
 ``evidence/grpcio-tools-rpm-final-20261003.json``.
 
@@ -281,6 +284,11 @@ and SQLite length-overflow fixes. Its complete RPM check again passes all 192
 native cases and 5,249 reported JavaScript results; four exact optimizer
 diagnostics remain pending approval. See
 ``evidence/node-rpm-candidate6-20261004.json``.
+Installing this final Node RPM also passes the Leap SDK consumer, all 14 V8
+suites (148 reported cases, 1,153 assertions), and five Valgrind controls.
+All 25 reported GC contexts match previously qualified sites; no unsuppressed
+lost allocations or additional file descriptors occur. See
+``evidence/v8-node6-installed-20261004.json``.
 
 The NATS broker candidate now fixes lost shutdown events caused by closing
 cluster sockets with unread TCP input. All three distributions pass twenty
@@ -302,7 +310,14 @@ are added. The fixture with explicit, separate limits passes 39 runs.
 The unchanged upstream default-budget behavior and this test exception were
 explicitly accepted on 2026-10-04; production defaults remain unchanged.
 See ``evidence/nats-routes-paging-20261004.json``.
-Complete candidate 18 RPM qualification is still running; see
+Candidate 18 completed all test groups on all three targets, with roughly 9,500
+top-level/subtest results per target, but each RPM check failed. The complete
+failure inventory is in ``evidence/nats-candidate18-review-20261004.json``.
+The responder, legacy gateway and route-disconnect fixture corrections now
+pass 900 repeated cases across all targets under the race detector. Memory
+stream setup retains the original concurrency/timeouts and passes nine runs.
+Duplicate-route count review and another complete RPM qualification remain.
+See ``evidence/nats-account-gateway-20261004.json`` and
 ``evidence/nats-consumer-completion-20261004.json``,
 ``evidence/nats-shutdown-drain-20261003.json`` and
 ``evidence/nats-no-interest-fixture-20261003.json``.

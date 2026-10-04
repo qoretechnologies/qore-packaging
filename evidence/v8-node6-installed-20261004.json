@@ -1,0 +1,336 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-04",
+  "status": "Installed runtime/SDK and five native Valgrind cases pass qualification with only the previously approved conservative GC sites. Four separately recorded Node compiler diagnostics and native ARM qualification remain pending.",
+  "node_source": {
+    "schema": 1,
+    "name": "nodejs24-libnode",
+    "version": "24.18.1",
+    "commit": null,
+    "source_date_epoch": 1790985600,
+    "spec": "nodejs24-libnode.spec",
+    "upstream": {
+      "url": "https://nodejs.org/dist/v24.18.1/node-v24.18.1.tar.xz",
+      "sha256": "86d40d594bbdfcf69009a62fdf43cb19ae72b6cb5822d2bdd8349c5a1b2fa628"
+    },
+    "sources": {
+      "node-v24.18.1-doc-deps.tar.xz": "38afe7e7b4be25a43b3c56d1df9ade2c49d05f09d02529d236c84cf403da5e9f",
+      "node-v24.18.1.tar.xz": "86d40d594bbdfcf69009a62fdf43cb19ae72b6cb5822d2bdd8349c5a1b2fa628",
+      "nodejs24-ada-conversion-result.patch": "fa6b29abf3ac1a96e8c31c606497592f58d4c9ee72079ce4853e7804e7f6012c",
+      "nodejs24-ada-conversion-test.cc": "518f479bc417825fe2ebb2db6c33c4412e8e6457e35ec2702a8d8d1787be2165",
+      "nodejs24-compression-cleanup.patch": "311cc6bf7aa673e664f2cf620a33dcd22badc88db265386edacc05f799e55aee",
+      "nodejs24-cppgc-realm-lifetime.patch": "5e648a3098280aca79d642b4a430a2c08e5383767ad926a1f944bdfcde9abb1f",
+      "nodejs24-crypto-test-types.patch": "6f2258defea0d4e709d896d01a359b777db7be0c8ec8d2fafcaf7fa7e2ed3442",
+      "nodejs24-cxx-visibility.patch": "50bab1320ef4593767e9e5cca93356e5ce3bbef700a39b7686112ded3d66ba40",
+      "nodejs24-detached-thread-counter.c": "050af87f5bbfaa81ef1dc47c23abdf08aae8b4edea0875c513eaf02fd8f047cf",
+      "nodejs24-doc-deps.json": "306f956d391cb38201ac39387f83c1f0ba50e3fba1ab1327471e9cd82b755de0",
+      "nodejs24-inspector-environments.patch": "0f0fdcf9f07e67b569abb4fd75db1de56c7509db58332f020b2fcdcc20a47617",
+      "nodejs24-inspector-lifetimes.cc": "b6b354d3f59703f18f2c015ef6a4f013f70810ae824b31f3416326d6d69f63ca",
+      "nodejs24-libnode.spec": "6266671d9178893390e9397d9fa29870c0efab6b80f8560abe9e94d8546f428b",
+      "nodejs24-localizationData-v77.1.json": "1d3db7f705c103d54b69cb61d3d2bc38ffc385b1015e18baa0c6c4423d16172b",
+      "nodejs24-sqlite-lengths.patch": "489ba8e751a69a0fdea9899161137c21eb5f7a88f91b35b571794d77891edb25",
+      "nodejs24-sqlite-test.c": "6c089bd9472d439b0fd48507dee9104ba49ce8e610fdf2735d06aeb74e2153fe",
+      "nodejs24-sqlite-types.patch": "e7d9ca1b24f52aeeabf2bc10ee8e0e0b713b5362b4b04085e79b7b7215e18bc9"
+    },
+    "candidate": true,
+    "components": [
+      {
+        "archive": "node-v24.18.1-doc-deps.tar.xz",
+        "sha256": "38afe7e7b4be25a43b3c56d1df9ade2c49d05f09d02529d236c84cf403da5e9f",
+        "generated": "npm ci with upstream package-lock integrity verification and two pinned missing notices; preparation and licenses recorded in nodejs24-doc-deps.json; tar sorted with mtime 1790985600 and uid/gid zero, xz compressed.",
+        "url": "https://github.com/nodejs/node/blob/v24.18.1/tools/doc/package-lock.json"
+      }
+    ]
+  },
+  "module_source": {
+    "schema": 1,
+    "commit": "664eaf58a09f5279532f397c7a48de8b467c1907",
+    "source_date_epoch": 1791006687,
+    "name": "qore-v8-module",
+    "version": "2.1.0",
+    "exclusions": [
+      "ts",
+      "container-build"
+    ],
+    "sources": {
+      "qore-v8-module-2.1.0.tar.xz": "f66dbca012089eb0c15f2549f4ac0506d821a97f5ed5b63f71c61256f8632e60",
+      "qore-v8-module.spec": "744d01fc17574aa06634f53e3270a858370d5f7a72de65f3b5ea99d1565c8cf5"
+    },
+    "spec": "qore-v8-module.spec"
+  },
+  "installed_steps": [
+    {
+      "name": "sdk-install",
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-install",
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-consumer",
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-tests",
+      "exit_code": 0
+    }
+  ],
+  "valgrind": {
+    "load": {
+      "raw_exit_code": 0,
+      "classification_exit_code": 0,
+      "lost_bytes": {
+        "definitely": 0,
+        "indirectly": 0,
+        "possibly": 0
+      },
+      "contexts": 0,
+      "sites": [],
+      "inherited_descriptors_only": true,
+      "error_summary": "ERROR SUMMARY: 0 errors from 0 contexts",
+      "distribution_default_suppression": {
+        "bytes": 0,
+        "blocks": 0,
+        "custom_suppression": false
+      }
+    },
+    "v8-qore-import": {
+      "raw_exit_code": 97,
+      "classification_exit_code": 0,
+      "lost_bytes": {
+        "definitely": 0,
+        "indirectly": 0,
+        "possibly": 0
+      },
+      "contexts": 6,
+      "sites": [
+        [
+          "heap::base::(anonymous namespace)::IteratePointersInStack(heap::base::StackVisitor*, heap::base::Stack::Segment const&) (stack.cc:147)"
+        ],
+        [
+          "cppgc::internal::ConservativeTracingVisitor::TraceConservativelyIfNeeded(void const*) (visitor.cc:99)"
+        ],
+        [
+          "_M_upper_bound (stl_tree.h:2620)",
+          "upper_bound (stl_tree.h:1910)",
+          "upper_bound (stl_map.h:1414)",
+          "Lookup (page-memory.h:196)",
+          "Lookup (page-memory.h:211)",
+          "cppgc::internal::ConservativeTracingVisitor::TryTracePointerConservatively(unsigned char const*) (visitor.cc:83)"
+        ],
+        [
+          "__upper_bound<__gnu_cxx::__normal_iterator<const std::pair<void const*, void const*>*, std::vector<std::pair<void const*, void const*> > >, void const*, __gnu_cxx::__ops::_Val_comp_iter<v8::internal::ConservativeTracedHandlesMarkingVisitor::VisitPointer(void const*)::<lambda(void const*, const auto:126&)> > > (stl_algo.h:1993)",
+          "upper_bound<__gnu_cxx::__normal_iterator<const std::pair<void const*, void const*>*, std::vector<std::pair<void const*, void const*> > >, void const*, v8::internal::ConservativeTracedHandlesMarkingVisitor::VisitPointer(void const*)::<lambda(void const*, const auto:126&)> > (stl_algo.h:2060)",
+          "v8::internal::ConservativeTracedHandlesMarkingVisitor::VisitPointer(void const*) (traced-handles-marking-visitor.cc:31)"
+        ],
+        [
+          "Lookup (page-memory.h:203)",
+          "Lookup (page-memory.h:211)",
+          "cppgc::internal::ConservativeTracingVisitor::TryTracePointerConservatively(unsigned char const*) (visitor.cc:83)"
+        ],
+        [
+          "v8::internal::ConservativeTracedHandlesMarkingVisitor::VisitPointer(void const*) (traced-handles-marking-visitor.cc:38)"
+        ]
+      ],
+      "inherited_descriptors_only": true,
+      "error_summary": "ERROR SUMMARY: 3866 errors from 6 contexts",
+      "test_summaries": [
+        "Ran 23 test cases, 23 succeeded (158 assertions)"
+      ],
+      "distribution_default_suppression": {
+        "bytes": 464,
+        "blocks": 1,
+        "custom_suppression": false
+      }
+    },
+    "v8": {
+      "raw_exit_code": 97,
+      "classification_exit_code": 0,
+      "lost_bytes": {
+        "definitely": 0,
+        "indirectly": 0,
+        "possibly": 0
+      },
+      "contexts": 6,
+      "sites": [
+        [
+          "heap::base::(anonymous namespace)::IteratePointersInStack(heap::base::StackVisitor*, heap::base::Stack::Segment const&) (stack.cc:147)"
+        ],
+        [
+          "cppgc::internal::ConservativeTracingVisitor::TraceConservativelyIfNeeded(void const*) (visitor.cc:99)"
+        ],
+        [
+          "_M_upper_bound (stl_tree.h:2620)",
+          "upper_bound (stl_tree.h:1910)",
+          "upper_bound (stl_map.h:1414)",
+          "Lookup (page-memory.h:196)",
+          "Lookup (page-memory.h:211)",
+          "cppgc::internal::ConservativeTracingVisitor::TryTracePointerConservatively(unsigned char const*) (visitor.cc:83)"
+        ],
+        [
+          "__upper_bound<__gnu_cxx::__normal_iterator<const std::pair<void const*, void const*>*, std::vector<std::pair<void const*, void const*> > >, void const*, __gnu_cxx::__ops::_Val_comp_iter<v8::internal::ConservativeTracedHandlesMarkingVisitor::VisitPointer(void const*)::<lambda(void const*, const auto:126&)> > > (stl_algo.h:1993)",
+          "upper_bound<__gnu_cxx::__normal_iterator<const std::pair<void const*, void const*>*, std::vector<std::pair<void const*, void const*> > >, void const*, v8::internal::ConservativeTracedHandlesMarkingVisitor::VisitPointer(void const*)::<lambda(void const*, const auto:126&)> > (stl_algo.h:2060)",
+          "v8::internal::ConservativeTracedHandlesMarkingVisitor::VisitPointer(void const*) (traced-handles-marking-visitor.cc:31)"
+        ],
+        [
+          "Lookup (page-memory.h:203)",
+          "Lookup (page-memory.h:211)",
+          "cppgc::internal::ConservativeTracingVisitor::TryTracePointerConservatively(unsigned char const*) (visitor.cc:83)"
+        ],
+        [
+          "v8::internal::ConservativeTracedHandlesMarkingVisitor::VisitPointer(void const*) (traced-handles-marking-visitor.cc:38)"
+        ]
+      ],
+      "inherited_descriptors_only": true,
+      "error_summary": "ERROR SUMMARY: 15903 errors from 6 contexts",
+      "test_summaries": [
+        "Ran 12 test cases, 12 succeeded (144 assertions)"
+      ],
+      "distribution_default_suppression": {
+        "bytes": 472,
+        "blocks": 2,
+        "custom_suppression": false
+      }
+    },
+    "js-program-destroy-in-use": {
+      "raw_exit_code": 0,
+      "classification_exit_code": 0,
+      "lost_bytes": {
+        "definitely": 0,
+        "indirectly": 0,
+        "possibly": 0
+      },
+      "contexts": 0,
+      "sites": [],
+      "inherited_descriptors_only": true,
+      "error_summary": "ERROR SUMMARY: 0 errors from 0 contexts",
+      "test_summaries": [
+        "Ran 1 test case, 1 succeeded (1 assertion)"
+      ],
+      "distribution_default_suppression": {
+        "bytes": 464,
+        "blocks": 1,
+        "custom_suppression": false
+      }
+    },
+    "js-teardown": {
+      "raw_exit_code": 97,
+      "classification_exit_code": 0,
+      "lost_bytes": {
+        "definitely": 0,
+        "indirectly": 0,
+        "possibly": 0
+      },
+      "contexts": 13,
+      "sites": [
+        [
+          "heap::base::(anonymous namespace)::IteratePointersInStack(heap::base::StackVisitor*, heap::base::Stack::Segment const&) (stack.cc:147)"
+        ],
+        [
+          "cppgc::internal::ConservativeTracingVisitor::TraceConservativelyIfNeeded(void const*) (visitor.cc:99)"
+        ],
+        [
+          "_M_upper_bound (stl_tree.h:2620)",
+          "upper_bound (stl_tree.h:1910)",
+          "upper_bound (stl_map.h:1414)",
+          "Lookup (page-memory.h:196)",
+          "Lookup (page-memory.h:211)",
+          "cppgc::internal::ConservativeTracingVisitor::TryTracePointerConservatively(unsigned char const*) (visitor.cc:83)"
+        ],
+        [
+          "Lookup (page-memory.h:203)",
+          "Lookup (page-memory.h:211)",
+          "cppgc::internal::ConservativeTracingVisitor::TryTracePointerConservatively(unsigned char const*) (visitor.cc:83)"
+        ],
+        [
+          "__upper_bound<__gnu_cxx::__normal_iterator<const std::pair<void const*, void const*>*, std::vector<std::pair<void const*, void const*> > >, void const*, __gnu_cxx::__ops::_Val_comp_iter<v8::internal::ConservativeTracedHandlesMarkingVisitor::VisitPointer(void const*)::<lambda(void const*, const auto:126&)> > > (stl_algo.h:1993)",
+          "upper_bound<__gnu_cxx::__normal_iterator<const std::pair<void const*, void const*>*, std::vector<std::pair<void const*, void const*> > >, void const*, v8::internal::ConservativeTracedHandlesMarkingVisitor::VisitPointer(void const*)::<lambda(void const*, const auto:126&)> > (stl_algo.h:2060)",
+          "v8::internal::ConservativeTracedHandlesMarkingVisitor::VisitPointer(void const*) (traced-handles-marking-visitor.cc:31)"
+        ],
+        [
+          "v8::internal::ConservativeTracedHandlesMarkingVisitor::VisitPointer(void const*) (traced-handles-marking-visitor.cc:38)"
+        ],
+        [
+          "Lookup (page-memory.h:59)",
+          "Lookup (page-memory.h:212)",
+          "cppgc::internal::ConservativeTracingVisitor::TryTracePointerConservatively(unsigned char const*) (visitor.cc:83)"
+        ],
+        [
+          "PayloadContains (heap-page.h:232)",
+          "cppgc::internal::BasePage::TryObjectHeaderFromInnerAddress(void const*) const (heap-page.cc:112)"
+        ],
+        [
+          "PayloadContains (heap-page.h:232)",
+          "cppgc::internal::BasePage::TryObjectHeaderFromInnerAddress(void const*) const (heap-page.cc:112)"
+        ],
+        [
+          "FindHeader<(cppgc::internal::AccessMode)0> (object-start-bitmap.h:128)",
+          "ObjectHeaderFromInnerAddressImpl<> (heap-page.h:332)",
+          "TryObjectHeaderFromInnerAddress (heap-page.cc:122)",
+          "cppgc::internal::BasePage::TryObjectHeaderFromInnerAddress(void const*) const (heap-page.cc:104)"
+        ],
+        [
+          "FindHeader<(cppgc::internal::AccessMode)0> (object-start-bitmap.h:128)",
+          "ObjectHeaderFromInnerAddressImpl<> (heap-page.h:332)",
+          "TryObjectHeaderFromInnerAddress (heap-page.cc:122)",
+          "cppgc::internal::BasePage::TryObjectHeaderFromInnerAddress(void const*) const (heap-page.cc:104)"
+        ],
+        [
+          "load<> (object-start-bitmap.h:176)",
+          "FindHeader<(cppgc::internal::AccessMode)0> (object-start-bitmap.h:130)",
+          "ObjectHeaderFromInnerAddressImpl<> (heap-page.h:332)",
+          "TryObjectHeaderFromInnerAddress (heap-page.cc:122)",
+          "cppgc::internal::BasePage::TryObjectHeaderFromInnerAddress(void const*) const (heap-page.cc:104)"
+        ],
+        [
+          "ObjectHeaderFromInnerAddressImpl<> (heap-page.h:335)",
+          "TryObjectHeaderFromInnerAddress (heap-page.cc:122)",
+          "cppgc::internal::BasePage::TryObjectHeaderFromInnerAddress(void const*) const (heap-page.cc:104)"
+        ]
+      ],
+      "inherited_descriptors_only": true,
+      "error_summary": "ERROR SUMMARY: 357455 errors from 13 contexts",
+      "test_summaries": [
+        "Ran 9 test cases, 9 succeeded (35 assertions)"
+      ],
+      "distribution_default_suppression": {
+        "bytes": 464,
+        "blocks": 1,
+        "custom_suppression": false
+      }
+    }
+  },
+  "sha256": {
+    "results/leap-v8-node6-valgrind-1/load.valgrind.log": "ea7440c495df5d346f284fd840df5be4624756aec39a5a4d76d3eb6aba97607c",
+    "results/leap-v8-node6-valgrind-1/load.test.log": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "results/leap-v8-node6-valgrind-1/v8-qore-import.valgrind.log": "684863bac447f564ac7962e61abb3fee7467600c9aeb7a055c1664fcdcd9717e",
+    "results/leap-v8-node6-valgrind-1/v8-qore-import.test.log": "c7973d5008cd6606bd4e7d4a6b57b532c833eeb379b8133f2a05645edb301c47",
+    "results/leap-v8-node6-valgrind-1/v8.valgrind.log": "6b1e76f675dfccf4cd5638c186a6e4f0bf9bdd6a73ed931e8416f1d047b94178",
+    "results/leap-v8-node6-valgrind-1/v8.test.log": "c7b19f2f5089b28db92176badcd31a3d16fcfa3a48824b0a0589a82844aa6fde",
+    "results/leap-v8-node6-valgrind-1/js-program-destroy-in-use.valgrind.log": "7d8c91b735d2bd6d06802e6ebd97f1b34f223be9ffcbe69e40caaaf7d1cf5e11",
+    "results/leap-v8-node6-valgrind-1/js-program-destroy-in-use.test.log": "26894124930d1f85c088d27b4006639a747a88f36a777ca7976da7d5a5eaeef4",
+    "results/leap-v8-node6-valgrind-1/js-teardown.valgrind.log": "f8f72864a3d486d047d0fa6f2625c838a201509e0d0bc9b4b889b647d0a26884",
+    "results/leap-v8-node6-valgrind-1/js-teardown.test.log": "7aa1c311c56956c2d0a7319b27ec8872e05f797f8950162314ca05b36a804474",
+    "results/leap-v8-node6-installed-1/sdk-install.log": "3f9096d9601c85461dee063b60844ab49778933ca68302d01ccc605fe77463cb",
+    "results/leap-v8-node6-installed-1/sdk-consumer.log": "227e5ed8984036067a04f9286c8a76c8a483d3f309503b94c11770aaef9d3bf0",
+    "results/leap-v8-node6-installed-1/runtime-install.log": "490316e750948ed19e8df550cf8033226ec40cb12331d4413ca956e4c882babd",
+    "results/leap-v8-node6-installed-1/runtime-tests.log": "f87f564cdcd60f5e9a74782abae3e5b77f428d3ae9919f5152d5f7876e560043",
+    "results/leap-v8-node6-installed-1/status.json": "f704381ad1d11bce8c09e367ca8e1266fb949c20df64067a937ac1e105b1c566",
+    "results/leap-v8-node6-valgrind-1/status.json": "6868ad1c1b019e29cefc9c072b602ea482d4654c5de859dce73293fdea503bd9"
+  },
+  "prior_diagnostics": "evidence/v8-leap-installed-20261003.json",
+  "pending_diagnostics": "evidence/node-remaining-compiler-diagnostics-20261003.json",
+  "runtime_tests": {
+    "suites": 14,
+    "reported_cases": 148,
+    "assertions": 1153
+  },
+  "diagnostic_scope": {
+    "approval": "Conservative stack-scan family accepted on 2026-10-03; evidence/v8-external-diagnostics-20261003.json.",
+    "classification": "All 25 reported contexts enter IteratePointersInStack; unused stack values propagate through conservative pointer/page lookup. Origins in Qore or V8 identify scanned stack storage, not a new non-GC use. No invalid accesses or unsuppressed lost allocations occur.",
+    "suppression": "No custom suppression supplied. Distribution default leak suppressions remain enabled and their exact byte/block totals are recorded separately.",
+    "exclusions": "Node compiler diagnostics, other runtime error families and native ARM results are not accepted by this record."
+  }
+}
