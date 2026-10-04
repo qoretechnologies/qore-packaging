@@ -1,0 +1,313 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-04",
+  "status": "Configuration and release transformation tests pass; remote configuration update and rebuilt artifact verification follow this commit. Publication remains disabled.",
+  "problem": {
+    "package": "python313-grpcio",
+    "version": "1.69.0",
+    "distribution_release": "160000.2.2",
+    "first_obs_release": "lp160.160000.1",
+    "rpm_comparison": -1,
+    "cause": "The inherited Leap release template replaces the spec release with an lp160 prefix; alphabetic release components sort below numeric SLE releases.",
+    "scope": "SASL already carries Epoch 1 from its previous qualification; this change preserves that epoch and prevents the same release mismatch for future backports without introducing another epoch."
+  },
+  "solution": {
+    "file": "obs/project-testing.conf",
+    "repository": "openSUSE_Leap_16.0",
+    "release_template": "<SPEC_REL>.<B_CNT>",
+    "effect": "Keep the complete recipe release, then append the OBS rebuild counter; other repositories retain their inherited release policies.",
+    "stable": "Carry the same configuration to the stable project before promotion."
+  },
+  "primary_sources": {
+    "obs_build_commit": "4a642862ecb48d869004079d2c302c92f202beee",
+    "obs_backend_commit": "1ae46f229b366724ca5a1c09ac114140ada0a3a5",
+    "substitution": "https://github.com/openSUSE/obs-build/blob/4a642862ecb48d869004079d2c302c92f202beee/substitutedeps#L193",
+    "counter": "src/backend/BSSched/BuildJob.pm nextbcnt() and create_jobdata(); the counter advances for a successfully built version/release and synchronizes architectures."
+  },
+  "tests": {
+    "parser": {
+      "Fedora_44": {
+        "x86_64": {
+          "before": {
+            "release": "<CI_CNT>.<B_CNT>",
+            "variants": null
+          },
+          "after": {
+            "release": "<CI_CNT>.<B_CNT>",
+            "variants": null
+          }
+        },
+        "aarch64": {
+          "before": {
+            "release": "<CI_CNT>.<B_CNT>",
+            "variants": null
+          },
+          "after": {
+            "release": "<CI_CNT>.<B_CNT>",
+            "variants": null
+          }
+        }
+      },
+      "AlmaLinux_10": {
+        "x86_64": {
+          "before": {
+            "release": "<CI_CNT>.<B_CNT>",
+            "variants": null
+          },
+          "after": {
+            "release": "<CI_CNT>.<B_CNT>",
+            "variants": null
+          }
+        },
+        "aarch64": {
+          "before": {
+            "release": "<CI_CNT>.<B_CNT>",
+            "variants": null
+          },
+          "after": {
+            "release": "<CI_CNT>.<B_CNT>",
+            "variants": null
+          }
+        }
+      },
+      "openSUSE_Leap_16.0": {
+        "x86_64": {
+          "before": {
+            "release": "<CI_CNT>.<B_CNT>",
+            "variants": [
+              "<CI_CNT>.<B_CNT>",
+              "spec:lp160.<CI_CNT>.<B_CNT>"
+            ]
+          },
+          "after": {
+            "release": "<SPEC_REL>.<B_CNT>",
+            "variants": [
+              "<SPEC_REL>.<B_CNT>"
+            ]
+          }
+        },
+        "aarch64": {
+          "before": {
+            "release": "<CI_CNT>.<B_CNT>",
+            "variants": [
+              "<CI_CNT>.<B_CNT>",
+              "spec:lp160.<CI_CNT>.<B_CNT>"
+            ]
+          },
+          "after": {
+            "release": "<SPEC_REL>.<B_CNT>",
+            "variants": [
+              "<SPEC_REL>.<B_CNT>"
+            ]
+          }
+        }
+      }
+    },
+    "rpm_order": {
+      "releases": {
+        "grpcio": {
+          "x86_64": {
+            "1": "160000.2.3.qore.1",
+            "2": "160000.2.3.qore.2",
+            "10": "160000.2.3.qore.10"
+          },
+          "aarch64": {
+            "1": "160000.2.3.qore.1",
+            "2": "160000.2.3.qore.2",
+            "10": "160000.2.3.qore.10"
+          }
+        },
+        "sasl": {
+          "x86_64": {
+            "1": "160000.3.3.qore.1",
+            "2": "160000.3.3.qore.2",
+            "10": "160000.3.3.qore.10"
+          },
+          "aarch64": {
+            "1": "160000.3.3.qore.1",
+            "2": "160000.3.3.qore.2",
+            "10": "160000.3.3.qore.10"
+          }
+        },
+        "qore": {
+          "x86_64": {
+            "1": "21.1",
+            "2": "21.2",
+            "10": "21.10"
+          },
+          "aarch64": {
+            "1": "21.1",
+            "2": "21.2",
+            "10": "21.10"
+          }
+        }
+      },
+      "checks": [
+        {
+          "package": "grpcio",
+          "arch": "x86_64",
+          "new": "160000.2.3.qore.1",
+          "old": "160000.2.2",
+          "comparison": 1
+        },
+        {
+          "package": "grpcio",
+          "arch": "x86_64",
+          "new": "160000.2.3.qore.2",
+          "old": "160000.2.3.qore.1",
+          "comparison": 1
+        },
+        {
+          "package": "grpcio",
+          "arch": "x86_64",
+          "new": "160000.2.3.qore.10",
+          "old": "160000.2.3.qore.2",
+          "comparison": 1
+        },
+        {
+          "package": "grpcio",
+          "arch": "aarch64",
+          "new": "160000.2.3.qore.1",
+          "old": "160000.2.2",
+          "comparison": 1
+        },
+        {
+          "package": "grpcio",
+          "arch": "aarch64",
+          "new": "160000.2.3.qore.2",
+          "old": "160000.2.3.qore.1",
+          "comparison": 1
+        },
+        {
+          "package": "grpcio",
+          "arch": "aarch64",
+          "new": "160000.2.3.qore.10",
+          "old": "160000.2.3.qore.2",
+          "comparison": 1
+        },
+        {
+          "package": "sasl",
+          "arch": "x86_64",
+          "new": "160000.3.3.qore.1",
+          "old": "160000.3.1",
+          "comparison": 1
+        },
+        {
+          "package": "sasl",
+          "arch": "x86_64",
+          "new": "160000.3.3.qore.2",
+          "old": "160000.3.3.qore.1",
+          "comparison": 1
+        },
+        {
+          "package": "sasl",
+          "arch": "x86_64",
+          "new": "160000.3.3.qore.10",
+          "old": "160000.3.3.qore.2",
+          "comparison": 1
+        },
+        {
+          "package": "sasl",
+          "arch": "aarch64",
+          "new": "160000.3.3.qore.1",
+          "old": "160000.3.1",
+          "comparison": 1
+        },
+        {
+          "package": "sasl",
+          "arch": "aarch64",
+          "new": "160000.3.3.qore.2",
+          "old": "160000.3.3.qore.1",
+          "comparison": 1
+        },
+        {
+          "package": "sasl",
+          "arch": "aarch64",
+          "new": "160000.3.3.qore.10",
+          "old": "160000.3.3.qore.2",
+          "comparison": 1
+        },
+        {
+          "package": "qore",
+          "arch": "x86_64",
+          "new": "21.1",
+          "old": "lp160.21.1",
+          "comparison": 1
+        },
+        {
+          "package": "qore",
+          "arch": "x86_64",
+          "new": "21.2",
+          "old": "21.1",
+          "comparison": 1
+        },
+        {
+          "package": "qore",
+          "arch": "x86_64",
+          "new": "21.10",
+          "old": "21.2",
+          "comparison": 1
+        },
+        {
+          "package": "qore",
+          "arch": "aarch64",
+          "new": "21.1",
+          "old": "lp160.21.1",
+          "comparison": 1
+        },
+        {
+          "package": "qore",
+          "arch": "aarch64",
+          "new": "21.2",
+          "old": "21.1",
+          "comparison": 1
+        },
+        {
+          "package": "qore",
+          "arch": "aarch64",
+          "new": "21.10",
+          "old": "21.2",
+          "comparison": 1
+        }
+      ]
+    },
+    "method": "Parse actual inherited configurations with upstream Build.pm on both architectures. Transform actual gRPC, SASL and Qore specs using upstream substitutedeps with counters 1,2,10; evaluate RPM releases with host dist undefined and compare using rpm.vercmp. Fedora/Alma configurations must remain unchanged. The first Qore probe used a .spec-multi filename, which Build::parse does not recognize; the final probes use the .spec filename actually uploaded to OBS."
+  },
+  "sha256": {
+    "results/obs-release-policy-20261004/AlmaLinux_10-after.conf": "2f8590b7837c9289ba0b3b62e9255aed7656a86e223ea02c8b897b81f6ae5e61",
+    "results/obs-release-policy-20261004/AlmaLinux_10-before.conf": "7cddbc3b1cece854f9b3cb961ac09232b6a42c1e371990b5ea4e70a14ca13b97",
+    "results/obs-release-policy-20261004/Fedora_44-after.conf": "16493340c06e75283f028a9e59bcc134a78ebae8156a703a0816743613cf2bea",
+    "results/obs-release-policy-20261004/Fedora_44-before.conf": "620db847ead959f620886d0d93307d53b8a0a0ec43d15b51dcc9ef3c43086323",
+    "results/obs-release-policy-20261004/config-parse.json": "b3a5755c8de9a5713d6f8b71337f8f856571d49fb53d507724dac4ea61e3bfd7",
+    "results/obs-release-policy-20261004/grpcio-1.spec": "f46d8d4e85509fc73dfcecf680ea637d7e80388af741fb01f875be2d476ca7ab",
+    "results/obs-release-policy-20261004/grpcio-10.spec": "8027bde29d17a04798b18646e99078d7d039b946f39c98ffd759929c75a62197",
+    "results/obs-release-policy-20261004/grpcio-2.spec": "5353391a2c98398a3ff26258dc2b8ccc0d166f79cc4a8bdf64e91b547cbc73a7",
+    "results/obs-release-policy-20261004/grpcio-aarch64-1.spec": "f46d8d4e85509fc73dfcecf680ea637d7e80388af741fb01f875be2d476ca7ab",
+    "results/obs-release-policy-20261004/grpcio-aarch64-10.spec": "8027bde29d17a04798b18646e99078d7d039b946f39c98ffd759929c75a62197",
+    "results/obs-release-policy-20261004/grpcio-aarch64-2.spec": "5353391a2c98398a3ff26258dc2b8ccc0d166f79cc4a8bdf64e91b547cbc73a7",
+    "results/obs-release-policy-20261004/grpcio-x86_64-1.spec": "f46d8d4e85509fc73dfcecf680ea637d7e80388af741fb01f875be2d476ca7ab",
+    "results/obs-release-policy-20261004/grpcio-x86_64-10.spec": "8027bde29d17a04798b18646e99078d7d039b946f39c98ffd759929c75a62197",
+    "results/obs-release-policy-20261004/grpcio-x86_64-2.spec": "5353391a2c98398a3ff26258dc2b8ccc0d166f79cc4a8bdf64e91b547cbc73a7",
+    "results/obs-release-policy-20261004/openSUSE_Leap_16.0-after.conf": "5605c93dca81fa18bb344aff78042a2dea7c18ef11f4fcff035581fa96580328",
+    "results/obs-release-policy-20261004/openSUSE_Leap_16.0-before.conf": "ea10e622dd7cc1c12bda4dc420a3f4c5820102d60fc0e523d9615ca0d4541475",
+    "results/obs-release-policy-20261004/qore-1.spec": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/obs-release-policy-20261004/qore-aarch64-1.spec": "e6b7540c378cc37321224415a267fe4830d35ca0308d1b48b667bfd95e573cdb",
+    "results/obs-release-policy-20261004/qore-aarch64-10.spec": "0628464eca4262c8ceadad3a6a1cd40d2310b58ca6e77435312b3f36110717f3",
+    "results/obs-release-policy-20261004/qore-aarch64-2.spec": "6878acfabcc90383d17c5758417659804fc750064b26067f7cbb9117e6626521",
+    "results/obs-release-policy-20261004/qore-input.spec": "5ff636ab4528fe10f9a9131107580878c47edc3d3f1d78e1f79f6cc6e3c958da",
+    "results/obs-release-policy-20261004/qore-x86_64-1.spec": "e6b7540c378cc37321224415a267fe4830d35ca0308d1b48b667bfd95e573cdb",
+    "results/obs-release-policy-20261004/qore-x86_64-10.spec": "0628464eca4262c8ceadad3a6a1cd40d2310b58ca6e77435312b3f36110717f3",
+    "results/obs-release-policy-20261004/qore-x86_64-2.spec": "6878acfabcc90383d17c5758417659804fc750064b26067f7cbb9117e6626521",
+    "results/obs-release-policy-20261004/rpm-order.json": "24d9cc23d6e5e761ea370b2ffd6429d882a2d202261e6c455ba9d15b3b475650",
+    "results/obs-release-policy-20261004/sasl-1.spec": "81227150667d4e99522eda3a40304850532a1c7cbbbfe41fe5a3547b442edfb7",
+    "results/obs-release-policy-20261004/sasl-10.spec": "ca469dbafbe56e519571691e09026f57e22a9afff66728d08a56f2c4d25b7020",
+    "results/obs-release-policy-20261004/sasl-2.spec": "d3eba5491290ad707b4e88c1f93460920781e535ac623e74343ca53670920508",
+    "results/obs-release-policy-20261004/sasl-aarch64-1.spec": "81227150667d4e99522eda3a40304850532a1c7cbbbfe41fe5a3547b442edfb7",
+    "results/obs-release-policy-20261004/sasl-aarch64-10.spec": "ca469dbafbe56e519571691e09026f57e22a9afff66728d08a56f2c4d25b7020",
+    "results/obs-release-policy-20261004/sasl-aarch64-2.spec": "d3eba5491290ad707b4e88c1f93460920781e535ac623e74343ca53670920508",
+    "results/obs-release-policy-20261004/sasl-x86_64-1.spec": "81227150667d4e99522eda3a40304850532a1c7cbbbfe41fe5a3547b442edfb7",
+    "results/obs-release-policy-20261004/sasl-x86_64-10.spec": "ca469dbafbe56e519571691e09026f57e22a9afff66728d08a56f2c4d25b7020",
+    "results/obs-release-policy-20261004/sasl-x86_64-2.spec": "d3eba5491290ad707b4e88c1f93460920781e535ac623e74343ca53670920508"
+  }
+}

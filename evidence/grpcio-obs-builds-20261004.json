@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-04",
+  "status": "Both architecture builds succeed; source identity and functional checks verified. Installed qualification awaits corrected release artifacts and GCC 13 diagnostic review.",
+  "source_revision": "1",
+  "srcmd5": "e7740c48bbca35c56020d6892cca34f5",
+  "publication": "disabled",
+  "architectures": {
+    "x86_64": {
+      "history": {
+        "rev": "1",
+        "srcmd5": "e7740c48bbca35c56020d6892cca34f5",
+        "versrel": "1.69.0-160000",
+        "bcnt": "1",
+        "time": "1791102008",
+        "duration": "643"
+      },
+      "packaging_tests": 13,
+      "upstream_results": 102,
+      "upstream_passes": 101,
+      "upstream_skips": 1,
+      "compiler": "GCC 13.4.0+git9739-160000.2.2",
+      "release": "lp160.160000.1",
+      "new_compiler_sites": [
+        "Seq/Status destructor in ServerCall::CommitBatch",
+        "Seq/Waker wakeable and wakeup_mask in ServerCall::CommitBatch",
+        "upb_Message_DeepClone scalar message pointer versus StringView representation"
+      ],
+      "setup_and_postbuild_messages": "polkit-default-privs scriptlet directory failure and missing OBS timestamp variables occur outside source compilation/tests, also recorded in process-state-qualification-20261003.json. Recipe sets SOURCE_DATE_EPOCH successfully. Missing certificate store and gethostbyname lint message remain for review."
+    },
+    "aarch64": {
+      "history": {
+        "rev": "1",
+        "srcmd5": "e7740c48bbca35c56020d6892cca34f5",
+        "versrel": "1.69.0-160000",
+        "bcnt": "1",
+        "time": "1791102008",
+        "duration": "639"
+      },
+      "packaging_tests": 13,
+      "upstream_results": 102,
+      "upstream_passes": 101,
+      "upstream_skips": 1,
+      "compiler": "GCC 13.4.0+git9739-160000.2.2",
+      "release": "lp160.160000.1",
+      "new_compiler_sites": [
+        "Seq/Status destructor in ServerCall::CommitBatch",
+        "Seq/Waker wakeable and wakeup_mask in ServerCall::CommitBatch"
+      ],
+      "setup_and_postbuild_messages": "polkit-default-privs scriptlet directory failure and missing OBS timestamp variables occur outside source compilation/tests, also recorded in process-state-qualification-20261003.json. Recipe sets SOURCE_DATE_EPOCH successfully. Missing certificate store and gethostbyname lint message remain for review."
+    }
+  },
+  "sha256": {
+    "results/obs-grpcio-final-1/x86_64/buildinfo.xml": "d89580b3d27db4141af744d6f73833a1390f7f9db24b7be68983e552ccf4b61b",
+    "results/obs-grpcio-final-1/x86_64/history.xml": "e504a7ebb9e8f44f98d78d2662e07af7fe2f3ccf0664d23f96e7d8f839cec749",
+    "results/obs-grpcio-final-1/x86_64/build.log": "062fa4de28a2d3e37bd43d587073680527a2df2ad839c892101e26200d4d2196",
+    "results/obs-grpcio-final-1/x86_64/diagnostics.txt": "27f81b04b5c409cda59415ca1e656d3f3d0fea68b26d37b8769cd3bca792a000",
+    "results/obs-grpcio-final-1/x86_64/binaries.xml": "f628e064575e6b8f478f1183112dfb02974c22a41ded9d478ea87e035d59a95e",
+    "results/obs-grpcio-final-1/aarch64/buildinfo.xml": "58c8e62098d4b1da52af5a0b3efaf462f2c9e7da449c68d7152aae873c6060eb",
+    "results/obs-grpcio-final-1/aarch64/history.xml": "1b49899aaadfdfc1561d4494ee8e49def038dcd1ff14ee635a7672844535c407",
+    "results/obs-grpcio-final-1/aarch64/build.log": "4dcfdaa60dbd9fce49de645ce22ad3f36fc5845b2ca2c5fa71b702b2ee4eb6c7",
+    "results/obs-grpcio-final-1/aarch64/diagnostics.txt": "90572e8db1c03a6ae928b514fcd0a90e573fd070fdef18254f5ffee293b19b3a",
+    "results/obs-grpcio-final-1/aarch64/binaries.xml": "55ea4dac572f0a6eb87b62d4007f432aabbe4544bf74e081fdcf40a3d3e5eee0"
+  },
+  "compiler_difference": "Local qualification used GCC 15.3.0; OBS inherits the distribution build compiler GCC 13.4.0. Additional sites are not covered by the precise GCC 15 approval."
+}

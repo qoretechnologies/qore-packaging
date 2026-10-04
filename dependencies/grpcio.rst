@@ -11,6 +11,13 @@ OpenSSL, c-ares, RE2 and zlib remain distribution shared libraries. The recipe
 retains the SUSE package layout and replaces python313-grpcio at the same
 upstream version with a higher release.
 
+The Leap OBS release policy preserves the complete spec release and appends
+the build counter (``<SPEC_REL>.<B_CNT>``). For example,
+``160000.2.3.qore.2`` upgrades the distribution's ``160000.2.2`` and the previous
+``160000.2.3.qore.1`` build. Leap's inherited ``lp160`` prefix would sort below
+the distribution package. Apply ``obs/project-testing.conf`` when configuring
+the testing project and carry the policy into a future stable project.
+
 The source archives, component notices and recipe inputs are SHA-256 pinned
 in sources.json. SPDX wheel metadata records all linked component licenses;
 the RPM and wheel both carry the notices. Prepare committed sources with::

@@ -218,7 +218,12 @@ candidate 14b of its repaired grpcio dependency. Each phase runs the same 13
 suites and 1,768 assertions. The remaining local diagnostic scopes were accepted
 on 2026-10-04. Dependency commit ``0e466c5`` is uploaded as OBS revision 1;
 all 29 source payloads match the qualified candidate. Both Leap architecture
-builds have started with publication disabled. See
+builds pass 13 packaging tests and 102 upstream results (one upstream skip).
+Artifact review found that OBS's inherited release prefix prevents a normal
+upgrade from Leap's package. The corrected Leap policy preserves the spec
+release and appends the OBS build counter; Fedora and AlmaLinux retain their
+existing policies. GCC 13 diagnostics from OBS need separate review from the
+local GCC 15 qualification. Publication remains disabled. See
 ``evidence/grpc-rpm-final-20261002.json`` and
 ``evidence/grpc-leap-installed-20261003.json``.
 
