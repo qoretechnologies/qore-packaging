@@ -214,9 +214,9 @@ run without the SDK; AOT trailers, separate symbols and Qore debug sources are
 verified. The distribution grpc_tools deprecation retains its approved exception.
 OBS sources are verified with publication disabled. Leap now also passes the
 canonical Qore module build and installed runtime/SDK/artifact checks against
-candidate 11 of its repaired grpcio dependency. Each phase runs the same 13
-suites and 1,768 assertions. The dependency's remaining compiler diagnostics
-still prevent including gRPC in the three-distribution qualified count. See
+candidate 14b of its repaired grpcio dependency. Each phase runs the same 13
+suites and 1,768 assertions. The remaining local diagnostic scopes were accepted
+on 2026-10-04; committed dependency sources and native OBS builds are next. See
 ``evidence/grpc-rpm-final-20261002.json`` and
 ``evidence/grpc-leap-installed-20261003.json``.
 
@@ -228,7 +228,7 @@ and its Compute/Acero/Dataset dependencies pass candidate qualification:
 95 Arrow test groups, 17,527 Cython tests, and 6,616 PyArrow tests plus three API
 regressions. The upstream/compiler diagnostic exceptions were explicitly accepted
 on 2026-10-03. Canonical Arrow/PyArrow rebuilds and installed Qore interoperation now pass.
-The grpcio dependency remains a candidate until its compiler review is complete.
+The grpcio dependency has completed local compiler and installed-package review.
 Candidate 12 also fixes failed poll-worker initialization: the exact native
 fault-injection binary passes 100 failures and recovery cycles without memory
 or descriptor errors, and all nine installed native controls retain only
@@ -240,7 +240,8 @@ byte-identical to Valgrind-qualified candidate 13. SPDX metadata now includes
 all bundled-component notices and removes the license-classifier deprecation;
 source-manifest negative tests still reject stale binary files. Ten native
 compiler diagnostics, two Cython diagnostics and two manifest-message forms
-remain explicitly pending approval. See
+were explicitly accepted on 2026-10-04. The scope excludes new sites, growing
+allocations and native errors. See ``dependencies/grpcio.rst``,
 ``evidence/grpcio-rpm-candidate14b-20261004.json`` and
 ``evidence/grpcio-remaining-diagnostics-20261004.json``.
 See ``dependencies/arrow-flight.rst`` and
@@ -297,8 +298,9 @@ transport limit. Route fixes pass all 480 top-level/subtest executions across
 the three targets, including exact success/conflict checks for concurrent
 publications. The paging failure is reproduced without the race detector:
 its soft default page budget can exceed the hard transport limit once headers
-are added. A proposed fixture with explicit, separate limits passes 39 runs;
-acceptance of the unchanged upstream default-budget behavior remains pending.
+are added. The fixture with explicit, separate limits passes 39 runs.
+The unchanged upstream default-budget behavior and this test exception were
+explicitly accepted on 2026-10-04; production defaults remain unchanged.
 See ``evidence/nats-routes-paging-20261004.json``.
 Complete candidate 18 RPM qualification is still running; see
 ``evidence/nats-consumer-completion-20261004.json``,

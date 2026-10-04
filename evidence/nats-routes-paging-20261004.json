@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-04",
-  "status": "Stream/consumer route fixtures pass. Explicit paging budgets pass on all targets; adoption and acceptance of the upstream default-budget edge case await user approval. Full candidate 18 remains running with its recorded failures.",
+  "status": "Route fixtures and the approved explicit paging budgets pass on all targets. The next candidate can include these test changes. Candidate 18 also exposed an AlmaLinux concurrent stream-creation timeout now under focused review.",
   "route_fixtures": {
     "root_cause": "Stream creation and consumer creation acknowledgements can precede routing of their publish/fetch subscription interest. Requests on other cluster nodes then receive no responders.",
     "fix": "Wait for actual route-interest completion for both publishing clients, atomic-batch streams and the pull consumer before requests. Remove the unrelated startup sleep. Preserve data/sequence checks and additionally require exactly three successful publications and three expected optimistic concurrency rejections.",
@@ -36,7 +36,11 @@
     }
   },
   "paging": {
-    "approval": null,
+    "approval": {
+      "date": "2026-10-04",
+      "decision": "Allow this documented test exception",
+      "scope": "Explicit 64 MiB request / 128 MiB test transport budget; documented upstream default-budget edge case remains unchanged in production."
+    },
     "root_cause": "The direct-get MaxBytes budget counts stored subject/header/payload sizes and stops after crossing the limit. Its default equals the hard 64 MiB transport pending limit. A 128-message page of 512 KiB payloads already fills that limit before generated JetStream headers and wire framing. On one scheduler thread, the response burst exceeds MaxPending before the socket writer drains it, disconnecting the client. Automatic reconnect hides the closed connection status; only a prefix of the page remains queued.",
     "evidence": "All 20 non-race one-thread baseline repetitions fail; two-thread and race-detector controls mask the timing. The isolated server log explicitly reports MaxPending 67108864 exceeded, with zero client drops. Streaming consumption alone still fails all five one-thread repetitions.",
     "proposal": "Keep the page budget explicitly at 64 MiB and give this test a separate 128 MiB transport limit. Production defaults remain unchanged. Preserve the 500 x 512 KiB payload, three pages of 128 plus final 116, and five Batch=100 pages. Verify every publish ACK, data byte, sequence, pending count and EOB field; consume under a fixed deadline and reject client drops or server slow-consumer events. Remove the one-second replica sleep (single-server fixture).",
@@ -82,7 +86,7 @@
   },
   "sha256": {
     "dependencies/nats-server-batch-sequence-routes.patch": "02334a3868b9814d287d82a3e5b6895edda63c3ec76587e41ef42780ffba5b1c",
-    "dependencies/nats-server-paging-budget-tests.patch": "1059d97ee057aa6965701d01f3bad14395849129c92cf0d6d76ff05ac9ee81ca",
+    "dependencies/nats-server-paging-budget-tests.patch": "aeca7279e7e24d70acb8d21dd7467de7e6a930303e0d069fbfb1084fc7314850",
     "results/nats-sequence-routes-fedora-3/tests.log": "b96b77b4b50d3a31110259a6c2c332ab4d1dd0365440196d8531aa73310ebbaf",
     "results/nats-sequence-routes-fedora-3/status.json": "85c61216f4f32b6f49dbddc1232ba62606e4fadc4a117bc0fade7efd98f2afb4",
     "results/nats-paging-budget-fedora-1/tests.log": "971bb142fd46d66fa924239139eb605accfdc5c6f99d16f7d1cd5f88a503a7c3",

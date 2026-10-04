@@ -1,0 +1,98 @@
+From 5c18ce423ae0e0b8a789a5ba143c333ef22679e3 Mon Sep 17 00:00:00 2001
+From: Adam Heller <aj@drfloob.com>
+Date: Tue, 15 Apr 2025 14:53:09 -0700
+Subject: [PATCH] [EventEngine] Fix busy loop in thread pool when shutting down
+ (#39258)
+
+Potential alternative fix for https://github.com/grpc/grpc/pull/39240.
+
+When the WorkStealingThreadPool is shutting down, the lifeguard thread could end up in a busy loop while waiting for the pool to quiesce. In some environments, this may prevent other threads from running in a timely manner, which can cause the process to hang. This PR adds a short delay on lifeguard thread's quiesce check, which grows exponentially to a maximum of 1 second if the thread pool is idle.
+
+Closes #39258
+
+COPYBARA_INTEGRATE_REVIEW=https://github.com/grpc/grpc/pull/39258 from drfloob:rm-busy-loop-in-wstp edec0bdc51193189d1f972c9fd56015ed289624b
+PiperOrigin-RevId: 748033010
+---
+ .../thread_pool/work_stealing_thread_pool.cc  | 22 +++++++++++++------
+ .../thread_pool/work_stealing_thread_pool.h   |  3 ++-
+ 2 files changed, 17 insertions(+), 8 deletions(-)
+
+diff --git a/src/core/lib/event_engine/thread_pool/work_stealing_thread_pool.cc b/src/core/lib/event_engine/thread_pool/work_stealing_thread_pool.cc
+index 955881a52cc50..c855dd180f337 100644
+--- a/src/core/lib/event_engine/thread_pool/work_stealing_thread_pool.cc
++++ b/src/core/lib/event_engine/thread_pool/work_stealing_thread_pool.cc
+@@ -395,10 +395,17 @@ void WorkStealingThreadPool::WorkStealingThreadPoolImpl::Lifeguard::
+     // reduce the check rate if the pool is idle.
+     if (pool_->IsShutdown()) {
+       if (pool_->IsQuiesced()) break;
+-    } else {
+-      lifeguard_should_shut_down_->WaitForNotificationWithTimeout(
+-          absl::Milliseconds(backoff_.NextAttemptDelay().millis()));
++      if (MaybeStartNewThread()) {
++        // A new thread needed to be spawned to handle the workload.
++        // Wait just a small while before checking again to prevent a busy loop.
++        backoff_.Reset();
++      }
++      // Sleep for a bit.
++      pool_->work_signal()->WaitWithTimeout(backoff_.NextAttemptDelay());
++      continue;
+     }
++    lifeguard_should_shut_down_->WaitForNotificationWithTimeout(
++        absl::Milliseconds(backoff_.NextAttemptDelay().millis()));
+     MaybeStartNewThread();
+   }
+   lifeguard_running_.store(false, std::memory_order_relaxed);
+@@ -422,11 +429,11 @@ WorkStealingThreadPool::WorkStealingThreadPoolImpl::Lifeguard::~Lifeguard() {
+   lifeguard_is_shut_down_ = std::make_unique<grpc_core::Notification>();
+ }
+ 
+-void WorkStealingThreadPool::WorkStealingThreadPoolImpl::Lifeguard::
++bool WorkStealingThreadPool::WorkStealingThreadPoolImpl::Lifeguard::
+     MaybeStartNewThread() {
+   // No new threads are started when forking.
+   // No new work is done when forking needs to begin.
+-  if (pool_->forking_.load()) return;
++  if (pool_->forking_.load()) return false;
+   const auto living_thread_count = pool_->living_thread_count()->count();
+   // Wake an idle worker thread if there's global work to be had.
+   if (pool_->busy_thread_count()->count() < living_thread_count) {
+@@ -435,7 +442,7 @@ void WorkStealingThreadPool::WorkStealingThreadPoolImpl::Lifeguard::
+       backoff_.Reset();
+     }
+     // Idle threads will eventually wake up for an attempt at work stealing.
+-    return;
++    return false;
+   }
+   // No new threads if in the throttled state.
+   // However, all workers are busy, so the Lifeguard should be more
+@@ -445,7 +452,7 @@ void WorkStealingThreadPool::WorkStealingThreadPoolImpl::Lifeguard::
+               pool_->last_started_thread_) <
+       kTimeBetweenThrottledThreadStarts) {
+     backoff_.Reset();
+-    return;
++    return false;
+   }
+   // All workers are busy and the pool is not throttled. Start a new thread.
+   // TODO(hork): new threads may spawn when there is no work in the global
+@@ -457,6 +464,7 @@ void WorkStealingThreadPool::WorkStealingThreadPoolImpl::Lifeguard::
+   pool_->StartThread();
+   // Tell the lifeguard to monitor the pool more closely.
+   backoff_.Reset();
++  return true;
+ }
+ 
+ // -------- WorkStealingThreadPool::ThreadState --------
+diff --git a/src/core/lib/event_engine/thread_pool/work_stealing_thread_pool.h b/src/core/lib/event_engine/thread_pool/work_stealing_thread_pool.h
+index 8baa8af86d3f5..b38b36993134f 100644
+--- a/src/core/lib/event_engine/thread_pool/work_stealing_thread_pool.h
++++ b/src/core/lib/event_engine/thread_pool/work_stealing_thread_pool.h
+@@ -158,7 +158,8 @@ class WorkStealingThreadPool final : public ThreadPool {
+       // The main body of the lifeguard thread.
+       void LifeguardMain();
+       // Starts a new thread if the pool is backlogged
+-      void MaybeStartNewThread();
++      // Return true if a new thread was started.
++      bool MaybeStartNewThread();
+ 
+       WorkStealingThreadPoolImpl* pool_;
+       grpc_core::BackOff backoff_;

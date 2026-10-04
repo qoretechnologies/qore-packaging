@@ -1,0 +1,31 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Remove the private priority lookup left without any callers in upstream.
+--- a/src/core/load_balancing/priority/priority.cc
++++ b/src/core/load_balancing/priority/priority.cc
+@@ -234,10 +234,6 @@
+ 
+   void ShutdownLocked() override;
+ 
+-  // Returns the priority of the specified child name, or UINT32_MAX if
+-  // the child is not in the current priority list.
+-  uint32_t GetChildPriorityLocked(const std::string& child_name) const;
+-
+   // Deletes a child.  Called when the child's deactivation timer fires.
+   void DeleteChild(ChildPriority* child);
+ 
+@@ -361,15 +357,6 @@
+         "errors from children: [", absl::StrJoin(errors, "; "), "]"));
+   }
+   return absl::OkStatus();
+-}
+-
+-uint32_t PriorityLb::GetChildPriorityLocked(
+-    const std::string& child_name) const {
+-  for (uint32_t priority = 0; priority < config_->priorities().size();
+-       ++priority) {
+-    if (config_->priorities()[priority] == child_name) return priority;
+-  }
+-  return UINT32_MAX;
+ }
+ 
+ void PriorityLb::DeleteChild(ChildPriority* child) {

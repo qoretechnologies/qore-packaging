@@ -1,0 +1,83 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Retry interrupted async wakeups and dispatch completions when notification fails.
+--- a/src/python/grpcio/grpc/_cython/_cygrpc/aio/completion_queue.pxd.pxi
++++ b/src/python/grpcio/grpc/_cython/_cygrpc/aio/completion_queue.pxd.pxi
+@@ -21,21 +21,29 @@
+     #ifdef _WIN32
+     #include <winsock2.h>
+     #else
++    #include <errno.h>
+     #include <unistd.h>
+     #endif
+ 
+-    static void _unified_socket_write_impl(int fd) {
++    static int _unified_socket_write_impl(int fd) {
+     #ifdef _WIN32
+-        send((SOCKET)fd, "1", 1, 0);
++        int result;
++        do {
++            result = send((SOCKET)fd, "1", 1, 0);
++        } while (result == SOCKET_ERROR && WSAGetLastError() == WSAEINTR);
+     #else
+-        write(fd, "1", 1);
++        ssize_t result;
++        do {
++            result = write(fd, "1", 1);
++        } while (result < 0 && errno == EINTR);
+     #endif
++        return result == 1;
+     }
+     """
+-    void _unified_socket_write_impl(int fd) nogil
++    int _unified_socket_write_impl(int fd) noexcept nogil
+ 
+ 
+-cdef void _unified_socket_write(int fd) noexcept nogil
++cdef bint _unified_socket_write(int fd) noexcept nogil
+ 
+ 
+ cdef class BaseCompletionQueue:
+--- a/src/python/grpcio/grpc/_cython/_cygrpc/aio/completion_queue.pyx.pxi
++++ b/src/python/grpcio/grpc/_cython/_cygrpc/aio/completion_queue.pyx.pxi
+@@ -21,8 +21,8 @@
+ # loop.add_reader method.
+ cdef bint _has_fd_monitoring = True
+ 
+-cdef void _unified_socket_write(int fd) noexcept nogil:
+-    _unified_socket_write_impl(fd)
++cdef bint _unified_socket_write(int fd) noexcept nogil:
++    return _unified_socket_write_impl(fd)
+ 
+ 
+ def _handle_callback_wrapper(CallbackWrapper callback_wrapper, int success):
+@@ -106,14 +106,14 @@
+                 self._queue_mutex.lock()
+                 self._queue.push(event)
+                 self._queue_mutex.unlock()
+-                if _has_fd_monitoring:
+-                    _unified_socket_write(self._write_fd)
+-                else:
++                if not _has_fd_monitoring or not _unified_socket_write(self._write_fd):
+                     with gil:
+                         # Event loops can be paused or killed at any time. So,
+                         # instead of delegate to any thread, the polling thread
+                         # should handle the distribution of the event.
+-                        self._handle_events(None)
++                        # A failed notification must not strand queued completions.
++                        # Schedule on each bound loop using its thread-safe API.
++                        self._handle_events(None, False)
+ 
+     def _poll_wrapper(self):
+         with nogil:
+@@ -134,9 +134,9 @@
+         self._read_socket.close()
+         self._write_socket.close()
+ 
+-    def _handle_events(self, object context_loop):
++    def _handle_events(self, object context_loop, bint read_socket=True):
+         cdef bytes data
+-        if _has_fd_monitoring:
++        if _has_fd_monitoring and read_socket:
+             # If fd monitoring is working, clean the socket without blocking.
+             data = self._read_socket.recv(1)
+         cdef grpc_event event

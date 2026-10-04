@@ -1,0 +1,18 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Remove obsolete source patterns; retain binary exclusions for stale egg-info.
+--- a/PYTHON-MANIFEST.in
++++ b/PYTHON-MANIFEST.in
+@@ -1,4 +1,4 @@
+-recursive-include src/python/grpcio/grpc *.c *.h *.inc *.py *.pyx *.pxd *.pxi *.python *.pem
++recursive-include src/python/grpcio/grpc *.py *.pyx *.pxd *.pxi *.pem
+ recursive-exclude src/python/grpcio/grpc/_cython *.so *.pyd
+ graft src/python/grpcio/grpcio.egg-info
+ graft src/core
+@@ -19,7 +19,6 @@
+ include src/python/grpcio/grpc_version.py
+ include src/python/grpcio/python_version.py
+ include src/python/grpcio/grpc_core_dependencies.py
+-include src/python/grpcio/precompiled.py
+ include src/python/grpcio/support.py
+ include src/python/grpcio/README.rst
+ include requirements.txt

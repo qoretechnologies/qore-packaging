@@ -411,5 +411,48 @@
         "generated": "git archive --format=tar 99b479dc34728936b006679a31e12b8cf432fc55, compressed with Python lzma preset 6; exact PDFium DEPS revision, built privately on Enterprise Linux."
       }
     ]
+  },
+  "python-grpcio": {
+    "version": "1.69.0",
+    "url": "https://files.pythonhosted.org/packages/source/g/grpcio/grpcio-1.69.0.tar.gz",
+    "archive": "grpcio-1.69.0.tar.gz",
+    "sha256": "936fa44241b5379c5afc344e1260d467bee495747eaf478de825bab2791da6f5",
+    "source_date_epoch": 1790985600,
+    "components": [
+      {
+        "url": "https://codeload.github.com/grpc/grpc/tar.gz/refs/tags/v1.69.0",
+        "archive": "grpc-v1.69.0.tar.gz",
+        "sha256": "cd256d91781911d46a57506978b3979bfee45d5086a1b6668a3ae19c5e77f8dc"
+      }
+    ],
+    "extra_sources": [
+      "grpcio-coexistence-test.py",
+      "grpcio-ABSEIL-LICENSE",
+      "grpcio-UPB-LICENSE",
+      "grpcio-UTF8-LICENSE",
+      "grpcio-XXHASH-LICENSE",
+      "grpcio-ADDRESS-LICENSE",
+      "grpcio-license-sources.json",
+      "grpcio-xxhash-avoid-armv6-unaligned-access.patch",
+      "grpcio-xxhash-ppc64le-gcc7.patch",
+      "grpcio-fix-return-values.patch",
+      "grpcio-lifecycle-build.patch",
+      "grpcio-thread-pool-shutdown.patch",
+      "grpcio-cython-if.patch",
+      "grpcio-aio-batch-ownership.patch",
+      "grpcio-aio-queue-release.patch",
+      "grpcio-native-types.patch",
+      "grpcio-native-types-test.cc",
+      "grpcio-aio-wakeup.patch",
+      "grpcio-wakeup-test.cc",
+      "grpcio-wakeup-inject.c",
+      "grpcio-wakeup-test.py",
+      "grpcio-poll-init-cleanup.patch",
+      "grpcio-poll-init-test.cc",
+      "grpcio-unused-priority.patch",
+      "grpcio-manifest-sources.patch",
+      "grpcio-license-metadata.patch"
+    ],
+    "provenance": "openSUSE Factory revision 45 recipe; same 1.69.0 as Leap 16 runtime. Restore upstream private Abseil and compiler visibility defaults for coexistence with system libgrpc 1.60.0."
   }
 }

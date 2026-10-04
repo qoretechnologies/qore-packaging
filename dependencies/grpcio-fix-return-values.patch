@@ -1,0 +1,64 @@
+Index: grpcio-1.68.1/src/core/lib/promise/party.h
+===================================================================
+--- grpcio-1.68.1.orig/src/core/lib/promise/party.h
++++ grpcio-1.68.1/src/core/lib/promise/party.h
+@@ -269,6 +269,7 @@ class Party : public Activity, private W
+           Crash(
+               "unreachable: promises should not be repolled after completion");
+       }
++      return false;
+     }
+ 
+     // Outside party poll: check whether the spawning party has completed this
+@@ -281,6 +282,7 @@ class Party : public Activity, private W
+         case State::kResult:
+           return std::move(result_);
+       }
++      return Pending{};
+     }
+ 
+     void Destroy() override { this->Unref(); }
+Index: grpcio-1.68.1/src/core/lib/transport/call_state.h
+===================================================================
+--- grpcio-1.68.1.orig/src/core/lib/transport/call_state.h
++++ grpcio-1.68.1/src/core/lib/transport/call_state.h
+@@ -151,6 +151,7 @@ class CallState {
+       case ClientToServerPullState::kTerminated:
+         return "Terminated";
+     }
++    return "";
+   }
+   template <typename Sink>
+   friend void AbslStringify(Sink& out, ClientToServerPullState state) {
+@@ -181,6 +182,7 @@ class CallState {
+       case ClientToServerPushState::kFinished:
+         return "Finished";
+     }
++    return "";
+   }
+   template <typename Sink>
+   friend void AbslStringify(Sink& out, ClientToServerPushState state) {
+@@ -231,6 +233,7 @@ class CallState {
+       case ServerToClientPullState::kTerminated:
+         return "Terminated";
+     }
++    return "";
+   }
+   template <typename Sink>
+   friend void AbslStringify(Sink& out, ServerToClientPullState state) {
+@@ -268,6 +271,7 @@ class CallState {
+       case ServerToClientPushState::kFinished:
+         return "Finished";
+     }
++    return "";
+   }
+   template <typename Sink>
+   friend void AbslStringify(Sink& out, ServerToClientPushState state) {
+@@ -298,6 +302,7 @@ class CallState {
+       case ServerTrailingMetadataState::kPulledCancel:
+         return "PulledCancel";
+     }
++    return "";
+   }
+   template <typename Sink>
+   friend void AbslStringify(Sink& out, ServerTrailingMetadataState state) {

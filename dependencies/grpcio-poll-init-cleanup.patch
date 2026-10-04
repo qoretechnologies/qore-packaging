@@ -1,0 +1,32 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Do not publish a stack worker or register/leak an uninitialized wakeup fd.
+--- a/src/core/lib/iomgr/ev_poll_posix.cc
++++ b/src/core/lib/iomgr/ev_poll_posix.cc
+@@ -915,7 +915,9 @@
+                                       grpc_pollset_worker** worker_hdl,
+                                       grpc_core::Timestamp deadline) {
+   grpc_pollset_worker worker;
+-  if (worker_hdl) *worker_hdl = &worker;
++  if (worker_hdl) {
++    *worker_hdl = nullptr;
++  }
+   grpc_error_handle error;
+ 
+   // Avoid malloc for small number of elements.
+@@ -938,11 +940,15 @@
+     worker.wakeup_fd = static_cast<grpc_cached_wakeup_fd*>(
+         gpr_malloc(sizeof(*worker.wakeup_fd)));
+     error = grpc_wakeup_fd_init(&worker.wakeup_fd->fd);
+-    fork_fd_list_add_wakeup_fd(worker.wakeup_fd);
+     if (!error.ok()) {
++      gpr_free(worker.wakeup_fd);
+       GRPC_LOG_IF_ERROR("pollset_work", error);
+       return error;
+     }
++    fork_fd_list_add_wakeup_fd(worker.wakeup_fd);
++  }
++  if (worker_hdl) {
++    *worker_hdl = &worker;
+   }
+   worker.kicked_specifically = 0;
+   // If we're shutting down then we don't execute any extended work

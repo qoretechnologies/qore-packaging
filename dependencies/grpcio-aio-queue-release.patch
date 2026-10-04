@@ -1,0 +1,12 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Release the global completion queue after its final user and native shutdown.
+--- a/src/python/grpcio/grpc/_cython/_cygrpc/aio/grpc_aio.pyx.pxi
++++ b/src/python/grpcio/grpc/_cython/_cygrpc/aio/grpc_aio.pyx.pxi
+@@ -77,6 +77,7 @@
+ cdef _actual_aio_shutdown():
+     if _global_aio_state.engine is AsyncIOEngine.POLLER:
+         (<PollerCompletionQueue>_global_aio_state.cq).shutdown()
++        _global_aio_state.cq = None
+         grpc_shutdown()
+     else:
+         raise ValueError('Unsupported engine type [%s]' % _global_aio_state.engine)

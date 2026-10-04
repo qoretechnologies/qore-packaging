@@ -1,0 +1,43 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Use PEP 639 metadata matching the linked components and ship their notices.
+--- a/setup.py
++++ b/setup.py
+@@ -97,7 +97,7 @@
+ _spawn_patch.monkeypatch_spawn()
+ 
+ 
+-LICENSE = "Apache License 2.0"
++LICENSE = "Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND MIT"
+ 
+ CLASSIFIERS = (
+     [
+@@ -109,7 +109,6 @@
+         f"Programming Language :: Python :: {x}"
+         for x in python_version.SUPPORTED_PYTHON_VERSIONS
+     ]
+-    + ["License :: OSI Approved :: Apache Software License"]
+ )
+ 
+ 
+@@ -606,7 +605,7 @@
+         "Bug Tracker": "https://github.com/grpc/grpc/issues",
+         "Documentation": "https://grpc.github.io/grpc/python",
+     },
+-    license=LICENSE,
++    license_expression=LICENSE,
+     classifiers=CLASSIFIERS,
+     long_description_content_type="text/x-rst",
+     long_description=open(README).read(),
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -11,7 +11,9 @@
+ exclude = .*protoc_plugin/protoc_plugin_test\.proto$
+ 
+ [metadata]
+-license_files = LICENSE
++license_files =
++    LICENSE
++    rpm-licenses/*
+ 
+ [pytype]
+ inputs = 

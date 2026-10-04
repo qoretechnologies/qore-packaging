@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-04",
-  "status": "Local RPM build, installed runtime/SDK tests and exact native-library comparison pass. Three explicitly scoped compiler/Cython/manifest decisions remain pending; ARM OBS qualification and publication have not advanced.",
+  "status": "Local RPM build, installed runtime/SDK tests and exact native-library comparison pass. All three documented compiler/Cython/manifest scopes accepted on 2026-10-04. Native ARM OBS qualification and publication remain.",
   "source": {
     "schema": 1,
     "name": "python-grpcio",
@@ -146,7 +146,7 @@
     "result": "Installed stripped extension is byte-identical to candidate 13, whose nine installed Valgrind controls have zero invalid accesses and only already approved Python/Cython and Abseil allocation sites. The exact native poll test is clean. No redundant native rerun is needed for this metadata/test-only change.",
     "evidence": "evidence/grpcio-remaining-diagnostics-20261004.json"
   },
-  "remaining_diagnostics": "Ten GCC 15 optimizer diagnostics, two Cython compiler diagnostics and two source binary-exclusion messages (four occurrences) are awaiting explicit user decisions. Existing API/context/fault/logging exceptions retain their prior scope. No suppression is introduced.",
+  "remaining_diagnostics": "The ten GCC 15 optimizer diagnostics, two Cython compiler diagnostics and two binary-exclusion message forms were accepted on 2026-10-04. Existing API/context/fault/logging exceptions retain their prior scope. No suppression is introduced.",
   "metadata_reference": "https://setuptools.pypa.io/en/stable/userguide/license_migration.html",
   "sha256": {
     "results/leap-python-grpcio-candidate-14b/build.json": "e8d0fd8a0d65288b973a6f8738cf443a9c6db6c90ec9db414572805ca91acdc7",

@@ -2,11 +2,23 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-04",
-  "status": "Three narrow diagnostic scopes proposed; approval pending. Candidate 14b now passes complete RPM and installed Qore tests; its native extension is byte-identical to Valgrind-qualified candidate 13. SPDX metadata removes the separate license-classifier deprecation.",
+  "status": "All three documented diagnostic scopes accepted on 2026-10-04. Candidate 14b passes complete RPM and installed Qore tests; its native extension is byte-identical to Valgrind-qualified candidate 13. SPDX metadata removes the separate license-classifier deprecation.",
   "approval": {
-    "native_compiler": null,
-    "cython_compiler": null,
-    "manifest_exclusions": null
+    "native_compiler": {
+      "date": "2026-10-04",
+      "decision": "Allow these narrow compiler diagnostics",
+      "scope": "Only the exact sites/message forms documented in this record; no suppression or broader acceptance."
+    },
+    "cython_compiler": {
+      "date": "2026-10-04",
+      "decision": "Allow these two Cython diagnostics",
+      "scope": "Only the exact sites/message forms documented in this record; no suppression or broader acceptance."
+    },
+    "manifest_exclusions": {
+      "date": "2026-10-04",
+      "decision": "Allow these two manifest diagnostics",
+      "scope": "Only the exact sites/message forms documented in this record; no suppression or broader acceptance."
+    }
   },
   "native_compiler": {
     "scope": "Ten exact GCC 15 warnings across six sites. Normal flags retained; no suppression or code changes to silence optimizer diagnostics.",

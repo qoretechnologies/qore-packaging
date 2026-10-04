@@ -1,0 +1,161 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Correct per-language flags, inline attributes, inactive executor state and unstarted-server ownership.
+--- a/src/python/grpcio/commands.py
++++ b/src/python/grpcio/commands.py
+@@ -278,7 +278,7 @@
+         #   If we are not using a permissive compiler that's OK with being
+         #   passed wrong std flags, swap out compile function by adding a filter
+         #   for it.
+-        if not compiler_ok_with_extra_std():
++        if self.compiler.compiler_type == "unix" or not compiler_ok_with_extra_std():
+             old_compile = self.compiler._compile
+ 
+             def new_compile(obj, src, ext, cc_args, extra_postargs, pp_opts):
+--- a/src/core/lib/promise/detail/promise_factory.h
++++ b/src/core/lib/promise/detail/promise_factory.h
+@@ -114,7 +114,7 @@
+ // Promote a callable(A) -> T | Poll<T> to a PromiseFactory(A) -> Promise<T> by
+ // capturing A.
+ template <typename A, typename F>
+-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION
++GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline
+     absl::enable_if_t<!IsVoidCallable<ResultOf<F(A)>>::value,
+                       PromiseLike<Curried<RemoveCVRef<F>, A>>>
+     PromiseFactoryImpl(F&& f, A&& arg) {
+@@ -159,7 +159,7 @@
+ // Given a callable() -> Promise<T>, promote it to a
+ // PromiseFactory(A) -> Promise<T> by dropping the first argument.
+ template <typename A, typename F>
+-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION
++GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline
+     absl::enable_if_t<IsVoidCallable<ResultOf<F()>>::value,
+                       PromiseLike<decltype(std::declval<F>()())>>
+     PromiseFactoryImpl(F&& f, A&&) {
+@@ -168,7 +168,7 @@
+ 
+ // Given a callable() -> Promise<T>, name it a PromiseFactory and use it.
+ template <typename F>
+-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION
++GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline
+     absl::enable_if_t<IsVoidCallable<ResultOf<F()>>::value,
+                       PromiseLike<decltype(std::declval<F>()())>>
+     PromiseFactoryImpl(F&& f) {
+--- a/src/core/lib/promise/try_seq.h
++++ b/src/core/lib/promise/try_seq.h
+@@ -345,7 +345,7 @@
+ //   }
+ //   return argument;
+ template <typename Iter, typename Factory, typename Argument>
+-GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION auto TrySeqIter(Iter begin, Iter end,
++GPR_ATTRIBUTE_ALWAYS_INLINE_FUNCTION inline auto TrySeqIter(Iter begin, Iter end,
+                                                      Argument argument,
+                                                      Factory factory) {
+   return promise_detail::TrySeqIter<Iter, Factory, Argument>(
+--- a/src/core/lib/promise/loop.h
++++ b/src/core/lib/promise/loop.h
+@@ -137,7 +137,7 @@
+ 
+  private:
+   GPR_NO_UNIQUE_ADDRESS Factory factory_;
+-  GPR_NO_UNIQUE_ADDRESS union {
++  union {
+     GPR_NO_UNIQUE_ADDRESS PromiseType promise_;
+   };
+   bool started_ = false;
+--- a/src/core/lib/transport/call_filters.h
++++ b/src/core/lib/transport/call_filters.h
+@@ -1244,8 +1244,8 @@
+   Poll<ResultOr<T>> ContinueStep(void* call_data);
+ 
+   void* promise_data_ = nullptr;
+-  const Operator<T>* ops_;
+-  const Operator<T>* end_ops_;
++  const Operator<T>* ops_ = nullptr;
++  const Operator<T>* end_ops_ = nullptr;
+ };
+ 
+ template <typename T>
+--- a/src/python/grpcio/grpc/_cython/_cygrpc/server.pyx.pxi
++++ b/src/python/grpcio/grpc/_cython/_cygrpc/server.pyx.pxi
+@@ -240,5 +240,21 @@
+         self.c_server = NULL
+ 
+   def __dealloc__(self):
++    cdef grpc_completion_queue *shutdown_cq
++    cdef grpc_event event
++    cdef gpr_timespec deadline
++    if self.c_server != NULL and not self.is_started:
++      with nogil:
++        shutdown_cq = grpc_completion_queue_create_for_next(NULL)
++        grpc_server_register_completion_queue(self.c_server, shutdown_cq, NULL)
++        grpc_server_shutdown_and_notify(self.c_server, shutdown_cq, NULL)
++        deadline = gpr_inf_future(GPR_CLOCK_REALTIME)
++        event = grpc_completion_queue_next(shutdown_cq, deadline, NULL)
++        grpc_server_destroy(self.c_server)
++        self.c_server = NULL
++        grpc_completion_queue_shutdown(shutdown_cq)
++        while event.type != GRPC_QUEUE_SHUTDOWN:
++          event = grpc_completion_queue_next(shutdown_cq, deadline, NULL)
++        grpc_completion_queue_destroy(shutdown_cq)
+     if self.c_server == NULL:
+       grpc_shutdown()
+--- a/src/python/grpcio/grpc/_cython/_cygrpc/credentials.pyx.pxi
++++ b/src/python/grpcio/grpc/_cython/_cygrpc/credentials.pyx.pxi
+@@ -279,6 +279,7 @@
+   def __dealloc__(self):
+     if self.c_credentials != NULL:
+       grpc_server_credentials_release(self.c_credentials)
++    gpr_free(self.c_ssl_pem_key_cert_pairs)
+     grpc_shutdown()
+ 
+ cdef const char* _get_c_pem_root_certs(pem_root_certs):
+--- a/src/python/grpcio/grpc/_cython/_cygrpc/channel.pyx.pxi
++++ b/src/python/grpcio/grpc/_cython/_cygrpc/channel.pyx.pxi
+@@ -494,21 +494,33 @@
+       self, bytes target, object arguments,
+       ChannelCredentials channel_credentials):
+     arguments = () if arguments is None else tuple(arguments)
++    self._state = _ChannelState(target)
++    self._arguments = arguments
++    # Validate arguments and allocate Python state before acquiring C resources.
++    cdef _ChannelArgs channel_args = _ChannelArgs(arguments)
++    self._registered_call_handles = {}
++    cdef grpc_channel_credentials *c_channel_credentials = NULL
+     fork_handlers_and_grpc_init()
+-    self._state = _ChannelState(target)
+-    self._state.c_call_completion_queue = (
+-        grpc_completion_queue_create_for_next(NULL))
+-    self._state.c_connectivity_completion_queue = (
+-        grpc_completion_queue_create_for_next(NULL))
+-    self._arguments = arguments
+-    cdef _ChannelArgs channel_args = _ChannelArgs(arguments)
+-    c_channel_credentials = (
+-        channel_credentials.c() if channel_credentials is not None
+-        else grpc_insecure_credentials_create())
+-    self._state.c_channel = grpc_channel_create(
+-        <char *>target, c_channel_credentials, channel_args.c_args())
+-    self._registered_call_handles = {}
+-    grpc_channel_credentials_release(c_channel_credentials)
++    try:
++      c_channel_credentials = (
++          channel_credentials.c() if channel_credentials is not None
++          else grpc_insecure_credentials_create())
++      self._state.c_call_completion_queue = (
++          grpc_completion_queue_create_for_next(NULL))
++      self._state.c_connectivity_completion_queue = (
++          grpc_completion_queue_create_for_next(NULL))
++      self._state.c_channel = grpc_channel_create(
++          <char *>target, c_channel_credentials, channel_args.c_args())
++    except:
++      if self._state.c_call_completion_queue != NULL:
++        _destroy_c_completion_queue(self._state.c_call_completion_queue)
++      if self._state.c_connectivity_completion_queue != NULL:
++        _destroy_c_completion_queue(self._state.c_connectivity_completion_queue)
++      grpc_shutdown()
++      raise
++    finally:
++      if c_channel_credentials != NULL:
++        grpc_channel_credentials_release(c_channel_credentials)
+ 
+   def target(self):
+     cdef char *c_target

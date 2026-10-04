@@ -1,0 +1,53 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Preserve class invariants with value initialization and use unsigned Huffman masks.
+--- a/src/core/lib/event_engine/tcp_socket_utils.cc
++++ b/src/core/lib/event_engine/tcp_socket_utils.cc
+@@ -222,7 +222,7 @@
+       reinterpret_cast<const sockaddr_in6*>(resolved_addr6_out->address()));
+   if (addr->sa_family == AF_INET) {
+     const sockaddr_in* addr4 = reinterpret_cast<const sockaddr_in*>(addr);
+-    memset(resolved_addr6_out, 0, sizeof(*resolved_addr6_out));
++    *resolved_addr6_out = EventEngine::ResolvedAddress();
+     addr6_out->sin6_family = AF_INET6;
+     memcpy(&addr6_out->sin6_addr.s6_addr[0], kV4MappedPrefix, 12);
+     memcpy(&addr6_out->sin6_addr.s6_addr[12], &addr4->sin_addr, 4);
+--- a/src/core/ext/transport/chttp2/transport/decode_huff.h
++++ b/src/core/ext/transport/chttp2/transport/decode_huff.h
+@@ -1877,7 +1877,7 @@
+       case 2:
+       case 3:
+       case 4: {
+-        ok_ = (buffer_ & ((1 << buffer_len_) - 1)) == (1 << buffer_len_) - 1;
++        ok_ = (buffer_ & ((uint64_t{1} << buffer_len_) - 1)) == (uint64_t{1} << buffer_len_) - 1;
+         return;
+       }
+       case 5: {
+@@ -2218,7 +2218,7 @@
+       case 1:
+       case 2:
+       case 3: {
+-        ok_ = (buffer_ & ((1 << buffer_len_) - 1)) == (1 << buffer_len_) - 1;
++        ok_ = (buffer_ & ((uint64_t{1} << buffer_len_) - 1)) == (uint64_t{1} << buffer_len_) - 1;
+         return;
+       }
+       case 4: {
+@@ -2743,7 +2743,7 @@
+       case 2:
+       case 3:
+       case 4: {
+-        ok_ = (buffer_ & ((1 << buffer_len_) - 1)) == (1 << buffer_len_) - 1;
++        ok_ = (buffer_ & ((uint64_t{1} << buffer_len_) - 1)) == (uint64_t{1} << buffer_len_) - 1;
+         return;
+       }
+       case 5: {
+--- a/grpc-1.69.0/tools/codegen/core/gen_huffman_decompressor.cc
++++ b/grpc-1.69.0/tools/codegen/core/gen_huffman_decompressor.cc
+@@ -1303,7 +1303,7 @@
+     }
+     if (maybe.empty()) {
+       if (all_ones_so_far) {
+-        c->Add("ok_ = (buffer_ & ((1<<buffer_len_)-1)) == (1<<buffer_len_)-1;");
++        c->Add("ok_ = (buffer_ & ((uint64_t{1}<<buffer_len_)-1)) == (uint64_t{1}<<buffer_len_)-1;");
+       } else {
+         c->Add("ok_ = false;");
+       }
