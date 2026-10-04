@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-04",
+  "status": "Offline missing-provider/recovery fixture and candidate 15 full RPM build, install and checks pass. OBS source submission awaits the independent lint decision.",
+  "root_cause": "ca-certificates contains the distribution certificate-store management scripts and recommends ca-certificates-mozilla. OBS omits weak dependencies, leaving the generated bundle without roots. pip cannot load that file into its truststore context and emits the exact missing-certificates warning.",
+  "fix": "Explicit BuildRequires: ca-certificates-mozilla, preserving the normal verified TLS context and keeping runtime policy unchanged. Normal runtime installs already honor the ca-certificates recommendation; administrators may supply custom roots.",
+  "phases": [
+    {
+      "phase": "provider-present",
+      "context_created": true,
+      "messages": "",
+      "bundle": "/etc/ssl/ca-bundle.pem",
+      "bundle_bytes": 218113
+    },
+    {
+      "phase": "provider-absent",
+      "context_created": false,
+      "messages": "Disabling truststore because of missing certificates\n",
+      "bundle": "/etc/ssl/ca-bundle.pem",
+      "bundle_bytes": 489
+    },
+    {
+      "phase": "provider-restored",
+      "context_created": true,
+      "messages": "",
+      "bundle": "/etc/ssl/ca-bundle.pem",
+      "bundle_bytes": 182092
+    }
+  ],
+  "fixture": "Disposable Leap container, network none; erase only ca-certificates-mozilla, regenerate store, test pip context, install verified distribution provider RPM offline, regenerate and retest. Certificate verification and hostname checking remain required.",
+  "harness": "First attempt failed before container creation because a zypper cache path contains a colon. The final fixture uses Docker --mount rather than colon-delimited -v for that path.",
+  "sha256": {
+    "evidence/controls/grpcio-cert-context.py": "f0cd373b7ae5806ada567c06b41d131be1da45b3df0fc3c6d6f4ef57e406943c",
+    "results/grpcio-cert-fixture-2/tests.log": "8dfcf0283c14e9f168f533cdf08056140912a3fd7dfbd2108f58b0c8f442101b",
+    "results/grpcio-cert-fixture-2/status.json": "dff71084650acaacd2da8ce70232a6dd664f9551eb8ad0b5503b1678afd0b783",
+    "results/leap-python-grpcio-candidate-15/build.json": "71bc965ca5208df3ef6385128bffb042dd54e664ffca02fcfad415dae4d3ab27",
+    "results/leap-python-grpcio-candidate-15/build.log": "d605214890523dbf8ba71f4670d917368c3c97f2bc0dd5cd43ffa71bdcc5bd54",
+    "work/python-grpcio-candidate-15/source-manifest.json": "ea28fd59f56dbac7360ec924e0e169996219dc75abaf6906d63c4210433a86de",
+    "results/grpcio-ca-packaging-tests-20261004b.log": "c9ab6dcc7e346aa12a8396aef1b71d87ab424a1ce7b3cc46e604723c3ca32a2c"
+  },
+  "rpm_validation": {
+    "source_manifest": "work/python-grpcio-candidate-15/source-manifest.json",
+    "build": "results/leap-python-grpcio-candidate-15/build.json",
+    "packaging_tests": 13,
+    "upstream_results": 102,
+    "upstream_passes": 101,
+    "upstream_skips": 1,
+    "native_fault_injection": "300 failed/recovered async RPCs, 200 failed/recovered poll-worker initializations and normal native controls pass.",
+    "limits": "Metadata-only recipe update reuses prepared GCC13 build objects with --noprep; all normal build, install and check phases still execute. This is not the final native OBS artifact qualification.",
+    "diagnostics": "Only previously approved binary-manifest exclusions and intentional gRPC test logging. No missing-certificates warning."
+  },
+  "packaging_tool_tests": {
+    "count": 14,
+    "result": "pass",
+    "log": "results/grpcio-ca-packaging-tests-20261004b.log",
+    "harness": "Initial singular filename pattern selected zero tests; corrected to test_dependencies.py, which executes 14 tests."
+  }
+}

@@ -18,6 +18,12 @@ the build counter (``<SPEC_REL>.<B_CNT>``). For example,
 the distribution package. Apply ``obs/project-testing.conf`` when configuring
 the testing project and carry the policy into a future stable project.
 
+The build explicitly requires ``ca-certificates-mozilla`` because OBS omits
+recommendations from the minimal build environment. The certificate-management
+package alone creates no usable trust roots. This preserves pip's verified TLS
+context; runtime installations retain the distribution certificate-store policy.
+The offline removal/recovery control is in evidence/grpcio-ca-store-20261004.json.
+
 The source archives, component notices and recipe inputs are SHA-256 pinned
 in sources.json. SPDX wheel metadata records all linked component licenses;
 the RPM and wheel both carry the notices. Prepare committed sources with::

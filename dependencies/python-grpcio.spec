@@ -70,6 +70,8 @@ BuildRequires:  %{python_module coverage}
 BuildRequires:  %{python_module pytest}
 BuildRequires:  pkgconfig(grpc)
 BuildRequires:  ca-certificates
+# OBS omits recommendations; pip needs an actual CA store for its TLS context.
+BuildRequires:  ca-certificates-mozilla
 BuildRequires:  fdupes
 BuildRequires:  gcc-c++
 BuildRequires:  binutils
@@ -223,6 +225,9 @@ done
 %{python_sitearch}/%{modname}-%{version}.dist-info
 
 %changelog
+* Sun Oct 04 2026 David Nichols <david@qore.org> - 1.69.0-160000.2.3.qore
+- Install CA roots explicitly in the minimal build environment.
+
 * Sat Oct 03 2026 David Nichols <david@qore.org> - 1.69.0-160000.2.3.qore
 - Isolate the embedded gRPC core and its Abseil flag registry with upstream visibility.
 - Retain system TLS, DNS, regular expressions and compression dependencies.
