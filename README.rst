@@ -103,14 +103,17 @@ archive SHA-256 are verified; all six native builds pass 14 cases and 227
 assertions plus seven uninstall regressions. Native ARM installed runtime/SDK
 and compiler checks also pass on all three distributions in pipeline 59373. See
 ``evidence/uuid-rpm-maintenance-20261005.json`` and
-``evidence/modules1-native-arm-installed-final-20261005.json``. Signed repository
-installation remains a separate gate; the current pinned-artifact installer
-records signing-key and LLVM manual-page setup notices separately from tests.
+``evidence/modules1-native-arm-installed-final-20261005.json``. Pipeline 59378
+also verifies all RPM signatures before installation and installs complete LLVM
+documentation; all native ARM qualification logs are warning-free. See
+``evidence/modules1-native-arm-signed-final-20261005.json``. Published repository
+metadata remains a separate gate.
 
 Fedora ARM XML passes 3,758 cases and 171,685 assertions. Fedora ARM Python
 passes 30 cases and 270 assertions, and JNI passes 632 cases and 8,662 assertions;
 these bridge installed-package checks remain pending. Leap and AlmaLinux ARM
-XML builds are enabled with verified dependency/source inputs. Leap gRPC
+XML each pass 3,784 cases and 177,812 assertions; their Python builds are enabled.
+Leap XML retains three catalog/metadata lint diagnostics for review. Leap gRPC
 revision 3 passes both native architectures, including source/runtime RPM lint
 with zero errors or warnings. It combines the two approved resolver paths in
 one architecture-correlated expression.

@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-05",
-  "status": "Unit/integration controls pass; native ARM end-to-end signed installation is next. Publication disabled.",
+  "status": "All three native ARM signed runtime/SDK installations pass with no warnings or errors in their qualification logs. Publication remains disabled.",
   "root_causes": {
     "signature_notices": "The old prepublication runner verified hashes but explicitly bypassed package signatures and did not import the OBS key.",
     "llvm_manual_notices": "Leap container zypp.conf excludes documentation by default; LLVM post-install alternatives refer to those files."
@@ -25,5 +25,12 @@
     "results/signed-rpm-controls-fedora-final-20261005.log": "03805844337d242457d260b498f57cddad20856af79284e70e30fae168730583",
     "results/signed-rpm-controls-leap-final-20261005.log": "00bfb12365750058a36ddd07e9817ce95e3500466a82808ce4cb57caf8a34f13",
     "results/signed-rpm-controls-el10-final-20261005.log": "5de42aa589bf5137117e2ca94c49a5e744026e475b222434f2582f013529fd7a"
-  }
+  },
+  "pipeline": {
+    "id": 59378,
+    "sha": "83486a0b6919a3422bbfd82efd5bb94043756c85",
+    "status": "success",
+    "web_url": "https://git.qoretechnologies.com/mirror/qore-packaging/-/pipelines/59378"
+  },
+  "native_results": "evidence/modules1-native-arm-signed-final-20261005.json"
 }

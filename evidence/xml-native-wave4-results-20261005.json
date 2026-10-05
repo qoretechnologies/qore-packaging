@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-05",
+  "status": "XML native functional tests pass on Leap and AlmaLinux ARM. Leap package lint has three metadata/catalog diagnostics for review; publication remains disabled.",
+  "targets": {
+    "leap": {
+      "tests": {
+        "cases": 3784,
+        "assertions": 177812
+      },
+      "obs": {
+        "rev": "1",
+        "srcmd5": "d672a36fd359885da3559de45cb2482d",
+        "versrel": "2.3.0-1",
+        "bcnt": "5",
+        "time": "1791184050",
+        "duration": "1949"
+      },
+      "lint_diagnostics": [
+        "[ 1942s] qore-xml-module.aarch64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests",
+        "[ 1942s] qore-xml-module.aarch64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests",
+        "[ 1942s] qore-xml-module.aarch64: W: files-duplicate /usr/share/qore/metadata/xml/WebDavClientIo.qm.meta.json /usr/share/qore/metadata/xml/SoapClientIo.qm.meta.json:/usr/share/qore/metadata/xml/WebContentUtil.qm.meta.json"
+      ],
+      "sha256": {
+        "results/xml-leap-native-final-20261005/aarch64.log": "4d60e453c07c1c08548807ab054d60d71bda18c37b0e88c9e1faa8df2fd10150",
+        "results/xml-leap-native-final-20261005/aarch64.status": "86065255d4b87bd6b60aed1e905067de06a9ed8dab6a26d719bb42f5ff41f1ef",
+        "results/xml-leap-native-final-20261005/aarch64.history": "9f869e4d5cf4be5805dbb905cd3b1afec98e6e2758694a41185264cd3917215b"
+      }
+    },
+    "el10": {
+      "tests": {
+        "cases": 3784,
+        "assertions": 177812
+      },
+      "obs": {
+        "rev": "1",
+        "srcmd5": "d672a36fd359885da3559de45cb2482d",
+        "versrel": "2.3.0-1",
+        "bcnt": "7",
+        "time": "1791185389",
+        "duration": "1935"
+      },
+      "lint_diagnostics": [],
+      "sha256": {
+        "results/xml-el10-arm-final-log-20261005.txt": "828f2f313f16bcd14edcae9c42b1447f7ddd332ae2e47f0a20490fcd06e52160",
+        "results/xml-el10-arm-final-status-20261005.xml": "86065255d4b87bd6b60aed1e905067de06a9ed8dab6a26d719bb42f5ff41f1ef",
+        "results/xml-el10-arm-final-history-20261005.xml": "8bcd4d7cb8a32e4abe45bf114c76f72b7a79b916d6ecbc9517617a459ece8b54"
+      }
+    }
+  }
+}
