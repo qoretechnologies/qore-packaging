@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-05",
-  "status": "All six native OBS builds pass source revision 2. Local installed runtime/SDK tests pass on all three x86_64 targets; the runner integration adds compiled arrays and corrects the local PostgreSQL NUMA fixture diagnostics. Signed ARM installed checks remain required.",
+  "status": "All six OBS builds, local x86_64 installed runtime/SDK and signed native ARM installed runtime/SDK checks pass on all three distributions. The package retains only the approved Valgrind diagnostic scopes; publication disabled.",
   "base_commit": "db13764",
   "fixes": [
     "Bind all-NULL arrays and preserve per-element float/boolean NULL indicators.",
@@ -713,5 +713,6 @@
   },
   "obs_source": "evidence/obs-odbc-source-20261005.json",
   "native_builds": "evidence/odbc-native-rev2-20261005.json",
-  "installed_followup": "evidence/odbc-native-runner-20261005.json"
+  "installed_followup": "evidence/odbc-native-runner-20261005.json",
+  "signed_arm_installed": "evidence/odbc-native-arm-signed-final-20261005.json"
 }

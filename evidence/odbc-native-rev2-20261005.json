@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-05",
-  "status": "All six OBS native builds pass canonical ODBC source revision 2, including nullable-array regressions and native binding/size controls. Signed ARM installed checks remain required; publication disabled.",
+  "status": "All six OBS builds pass canonical ODBC revision 2. Signed ARM installed runtime/SDK checks now also pass on all three targets; publication disabled.",
   "commit": "e8adf65af26fcc4cf8bccc46f8df051163bced15",
   "obs_revision": "2",
   "srcmd5": "9a8114a68e76d8a5d0c3bcb67d405183",
@@ -114,5 +114,6 @@
       "sha256": "5cf819b8421f0ef790f9bb0d5764eb8b668ac22a351b65aa1b032c3ba0d78309"
     }
   },
-  "worker_setup_scope": "Leap retains the previously recorded OBS bootstrap polkit-default-privs scriptlet diagnostic before package compilation; source compilation, tests and package lint are clean. See evidence/native-process-uuid-builds-20261005.json."
+  "worker_setup_scope": "Leap retains the previously recorded OBS bootstrap polkit-default-privs scriptlet diagnostic before package compilation; source compilation, tests and package lint are clean. See evidence/native-process-uuid-builds-20261005.json.",
+  "signed_arm_installed": "evidence/odbc-native-arm-signed-final-20261005.json"
 }
