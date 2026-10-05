@@ -92,21 +92,28 @@ and 468 assertions on each distribution. Thirteen deterministic Valgrind cases
 are clean; three affected existing cases retain only approved external
 diagnostics. Normal native CI passes. OBS revision 2 has verified sources and
 publication disabled. All six native OBS targets pass the same 70
-cases and 468 assertions. ARM installed-package qualification remains pending. See
+cases and 468 assertions. Native ARM installed runtime/SDK checks now pass on
+all three distributions, including compiler smoke tests and PID regressions. See
 ``evidence/process-state-qualification-20261003.json`` and its complete audit.
 
 UUID release 3 uses committed source ``c910cec``. Canonical builds, seven staged
 uninstall regressions, all 14 UUID cases, installed runtime/SDK tests and package
 lint pass on Fedora, Leap and AlmaLinux. OBS revision 3 sources and the public
 archive SHA-256 are verified; all six native builds pass 14 cases and 227
-assertions plus seven uninstall regressions. ARM installed checks remain pending.
-See ``evidence/uuid-rpm-maintenance-20261005.json``.
+assertions plus seven uninstall regressions. Native ARM installed runtime/SDK
+and compiler checks also pass on all three distributions in pipeline 59373. See
+``evidence/uuid-rpm-maintenance-20261005.json`` and
+``evidence/modules1-native-arm-installed-final-20261005.json``. Signed repository
+installation remains a separate gate; the current pinned-artifact installer
+records signing-key and LLVM manual-page setup notices separately from tests.
 
-Fedora ARM XML passes 3,758 cases and 171,685 assertions. The source-verified
-Fedora ARM Python build is enabled; Leap and AlmaLinux ARM XML builds are now
-enabled with verified dependency/source inputs. Leap gRPC revision 3 combines
-the two approved resolver paths in one architecture-correlated expression.
-Both native source/runtime RPM pairs pass target lint; revision 3 is rebuilding.
+Fedora ARM XML passes 3,758 cases and 171,685 assertions. Fedora ARM Python
+passes 30 cases and 270 assertions, and JNI passes 632 cases and 8,662 assertions;
+these bridge installed-package checks remain pending. Leap and AlmaLinux ARM
+XML builds are enabled with verified dependency/source inputs. Leap gRPC
+revision 3 passes both native architectures, including source/runtime RPM lint
+with zero errors or warnings. It combines the two approved resolver paths in
+one architecture-correlated expression.
 Publication remains disabled for every package.
 
 JNI native fixes and the latest Excel/ODS changes are committed. Release/Debug

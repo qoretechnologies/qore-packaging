@@ -1,0 +1,2102 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-05",
+  "status": "UUID and process pass native ARM installed runtime/SDK qualification on all three distributions, including both compiler tests and 13 process PID regressions. Publication remains disabled.",
+  "core_commit": "d58eec0b2ab721ef5da0e2136c4cddb3579874e2",
+  "pipeline": "https://git.qoretechnologies.com/mirror/qore-packaging/-/pipelines/59373",
+  "pipeline_commit": "55a04c93a8e6dea5712fbe7974406aa7adf96051",
+  "targets": {
+    "fedora": {
+      "native_job": "https://git.qoretechnologies.com/mirror/qore-packaging/-/jobs/208213",
+      "result": {
+        "manifest": {
+          "schema": 1,
+          "family": "fedora",
+          "arch": "aarch64",
+          "core_commit": "d58eec0b2ab721ef5da0e2136c4cddb3579874e2",
+          "obs_srcmd5": "ba3b6bc9ac8055ee991e334102e7ad16",
+          "packages": [
+            {
+              "name": "libqore",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore/libqore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "filename": "libqore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "sha256": "a362fa2d79eb85e6886c7e87703f758a5db9e4d742a0789ca4b56a0e7be14f3a",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore/qore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "filename": "qore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "sha256": "d957761b8990c179dfc60d859d542af80d5a1fd38b7d93115f7d695d4bdf44d2",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-debug-tools",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore/qore-debug-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "filename": "qore-debug-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "sha256": "101b5f02f3d762f108cfdcfc88f6f16a70a21a411b70f8443a1b8dfd974dccfc",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-devel",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore/qore-devel-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "filename": "qore-devel-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "sha256": "835bca60b04f3857daea5f9816694121e4c8c6aca3f7c9de2d62a6754d2a14c9",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-misc-tools",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore/qore-misc-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "filename": "qore-misc-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "sha256": "9404fb2ae53b75093d73e128ad1d58c23a0a9d68ec1b29bb022e80f1064f52ad",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-rpm-macros",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore/qore-rpm-macros-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "filename": "qore-rpm-macros-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "sha256": "a6d2b84d8d3c0088fabb5eed8b846915860f12d3651e3f128b3732f9560235fe",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-stdlib",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore/qore-stdlib-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "filename": "qore-stdlib-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "sha256": "fececc79f3b7b93a0571572320906b4809c7a91a04daad313e77ffe6f3932f11",
+              "phase": "runtime"
+            },
+            {
+              "name": "libnghttp2",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/nghttp2/libnghttp2-1.70.0-3.2.aarch64.rpm",
+              "filename": "libnghttp2-1.70.0-3.2.aarch64.rpm",
+              "sha256": "c9a51fdead6bc0dcc70c9e0f203e9de190dcec24cf550d63b6f636379b4ca836",
+              "phase": "runtime"
+            },
+            {
+              "name": "ngtcp2",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/ngtcp2/ngtcp2-1.25.0-1.2.aarch64.rpm",
+              "filename": "ngtcp2-1.25.0-1.2.aarch64.rpm",
+              "sha256": "eebbaa557aeb9aaeb427dd70aee3f5e6e42882cdb6f93731e33eaff642de6af1",
+              "phase": "runtime"
+            },
+            {
+              "name": "ngtcp2-crypto-ossl",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/ngtcp2/ngtcp2-crypto-ossl-1.25.0-1.2.aarch64.rpm",
+              "filename": "ngtcp2-crypto-ossl-1.25.0-1.2.aarch64.rpm",
+              "sha256": "6846730a56f186a660fe29f77549631767b8421b3e9f066efd76976777e951af",
+              "phase": "runtime"
+            },
+            {
+              "name": "c-ares",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/c-ares/c-ares-1.34.8-3.2.aarch64.rpm",
+              "filename": "c-ares-1.34.8-3.2.aarch64.rpm",
+              "sha256": "6d5aa87b19623e76f2c9ad8e06b052352b0db0d1f01a3b92a841ee0f4660bdc9",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-uuid-module",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore-uuid-module/qore-uuid-module-1.4.2-4.1.aarch64.rpm",
+              "filename": "qore-uuid-module-1.4.2-4.1.aarch64.rpm",
+              "sha256": "0c95de049994918e57864265c1738dd0201f15dfa11eb35d88df91dc4943bcf9",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-process-module",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore-process-module/qore-process-module-2.1.0-2.1.aarch64.rpm",
+              "filename": "qore-process-module-2.1.0-2.1.aarch64.rpm",
+              "sha256": "1c9aea4f9620194d7eeac3627a7a9d02d4cfd7fc52b57f3ce67b1d68ec9d1bb7",
+              "phase": "runtime"
+            }
+          ],
+          "fixtures": [
+            {
+              "path": "rpm/tests-installed/runtime",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/runtime",
+              "sha256": "b1006e4391f2ba6f2a8bc050a7ac413901be1c454893a6579e65b2d41d8c015a"
+            },
+            {
+              "path": "rpm/tests-installed/development",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/development",
+              "sha256": "6fe87c237458790f18c2e549a4bff03b627a3a214f8d320ef1d4814bc835162e"
+            },
+            {
+              "path": "rpm/tests-installed/tools",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/tools",
+              "sha256": "45a7faec3a57d42fc6b136ee9fc471ecf4d516403adea14067bdb4e0b287debe"
+            },
+            {
+              "path": "rpm/tests-installed/remote-debuggers",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/remote-debuggers",
+              "sha256": "5d37b1cce6e6776c87467c64220d8df0b43fc3d843d1181d6b3f2b349d4afe91"
+            },
+            {
+              "path": "modules/ml/test/data/test_linear.onnx",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/modules/ml/test/data/test_linear.onnx",
+              "sha256": "e01940baadc56a46bb58f173e9066a7a821a5887aedab250ddb90f6754cee024"
+            }
+          ],
+          "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+          "modules": [
+            {
+              "name": "uuid",
+              "commit": "c910cec947d7e90b8b847ce42639fdcc840d306a",
+              "fixtures": [
+                {
+                  "path": "debian/tests/compiler",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-uuid/c910cec947d7e90b8b847ce42639fdcc840d306a/debian/tests/compiler",
+                  "sha256": "5c7d5a11a2b4bfed6845d53ac69d55a6d7c3cdb9c225e8264aea39e983dfd57c"
+                },
+                {
+                  "path": "test/uuid-test.qtest",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-uuid/c910cec947d7e90b8b847ce42639fdcc840d306a/test/uuid-test.qtest",
+                  "sha256": "f43c096ae548c9b7e08bb34a24fb1d564bb8e32268c4aa2859c3d07de1b50657"
+                }
+              ]
+            },
+            {
+              "name": "process",
+              "commit": "e329baa26f7fcd30cb3f0290ab0edd862672a817",
+              "fixtures": [
+                {
+                  "path": "debian/tests/compiler",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/debian/tests/compiler",
+                  "sha256": "1a21b02f66288810c0916000042a8341a1eb8b251f37e4355a06e09007b344c9"
+                },
+                {
+                  "path": "test/process-state-fixture.c",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/process-state-fixture.c",
+                  "sha256": "8b964e3b6a5f637736f23e71c3fe1759ba57302f33b9cacdc4e49b8df33fef84"
+                },
+                {
+                  "path": "test/process-state.qtest",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/process-state.qtest",
+                  "sha256": "a2e18a43d4d201abf964a1c8f0692fdd897808c0a7a8c1d1934ed9b108b3ed0c"
+                },
+                {
+                  "path": "test/process.qtest",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/process.qtest",
+                  "sha256": "5f30dca086fc9040aaa0cc50c00d47a49dbe8cfb78ea781c3d7fbdc8d09e333b"
+                },
+                {
+                  "path": "test/run-process-state.py",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/run-process-state.py",
+                  "sha256": "a2891f29572d3144ce0bcbad4e97ecfe8ebefcd47d20ce09c93f59c925ba4da8"
+                },
+                {
+                  "path": "test/test_cwd.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_cwd.q",
+                  "sha256": "6e61360c90271e1b2f8f0dee52a3b9b69ab0f2d0e45b559ef6719b25557cbd85"
+                },
+                {
+                  "path": "test/test_env.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_env.q",
+                  "sha256": "12fa70747c1f8d4f35955c5a9f070dcd09b5ecba403c5f910c3a651543585f49"
+                },
+                {
+                  "path": "test/test_false.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_false.q",
+                  "sha256": "1e9d01ba08ba33198a84865f5526fafedbe7f83baffca5dd221d75eb422930e5"
+                },
+                {
+                  "path": "test/test_io.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_io.q",
+                  "sha256": "c78435194d9a24e6f5fca58f26ca0377589c9ca8df98aa626a542052ee217137"
+                },
+                {
+                  "path": "test/test_output.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_output.q",
+                  "sha256": "013ec847f30717fecdbec4ad9011b2c3932584a5ca9df1ef084918d40fb5e533"
+                },
+                {
+                  "path": "test/test_signal.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_signal.q",
+                  "sha256": "7f55515cc3588f3fdca4f48337a367c942a47f94d0422b07a590d9a9d62d46ad"
+                },
+                {
+                  "path": "test/test_sleep.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_sleep.q",
+                  "sha256": "5162ce3c1b42ea16f925dd0702082a672054fc86140e51a9e87610f119bd32c2"
+                },
+                {
+                  "path": "test/test_stdin_eof.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_stdin_eof.q",
+                  "sha256": "867fba9c0cec7f8a71138695b9ffd365b83cca98adde5a1ccd288221d811af1e"
+                },
+                {
+                  "path": "test/test_true.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_true.q",
+                  "sha256": "4770bd2185d730f8f5d8ebc9d2eebdb66884564949711dd08b95428f7d3de392"
+                },
+                {
+                  "path": "test/test_utf8.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_utf8.q",
+                  "sha256": "5caff6bf25b24b43d5f9db832f53f85e0b6f9c60caa962bd575429bfaccaa1ea"
+                }
+              ]
+            }
+          ]
+        },
+        "machine": "aarch64",
+        "runner_arch": "linux/arm64",
+        "steps": [
+          {
+            "name": "create-user",
+            "command": [
+              "useradd",
+              "-M",
+              "-U",
+              "qoretester"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-install",
+            "command": [
+              "dnf",
+              "-y",
+              "--nogpgcheck",
+              "--setopt=install_weak_deps=False",
+              "install",
+              "/tmp/qore-rpm-native-kixejitl/rpms/libqore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-kixejitl/rpms/qore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-kixejitl/rpms/qore-stdlib-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-kixejitl/rpms/libnghttp2-1.70.0-3.2.aarch64.rpm",
+              "/tmp/qore-rpm-native-kixejitl/rpms/ngtcp2-1.25.0-1.2.aarch64.rpm",
+              "/tmp/qore-rpm-native-kixejitl/rpms/ngtcp2-crypto-ossl-1.25.0-1.2.aarch64.rpm",
+              "/tmp/qore-rpm-native-kixejitl/rpms/c-ares-1.34.8-3.2.aarch64.rpm",
+              "/tmp/qore-rpm-native-kixejitl/rpms/qore-uuid-module-1.4.2-4.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-kixejitl/rpms/qore-process-module-2.1.0-2.1.aarch64.rpm",
+              "procps-ng"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-rpm-verify",
+            "command": [
+              "rpm",
+              "-V",
+              "libqore",
+              "qore",
+              "qore-stdlib",
+              "libnghttp2",
+              "ngtcp2",
+              "ngtcp2-crypto-ossl",
+              "c-ares",
+              "qore-uuid-module",
+              "qore-process-module"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-inventory",
+            "command": [
+              "rpm",
+              "-qa",
+              "--qf",
+              "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-runtime",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-kixejitl/runtime-runtime",
+              "/tmp/qore-rpm-native-kixejitl/source/rpm/tests-installed/runtime"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-uuid-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-kixejitl/runtime-uuid",
+              "qore",
+              "-b",
+              "--enable-debug",
+              "/tmp/qore-rpm-native-kixejitl/runtime-uuid/test/uuid-test.qtest",
+              "-v"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-process-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-kixejitl/runtime-process",
+              "qore",
+              "-b",
+              "--enable-debug",
+              "/tmp/qore-rpm-native-kixejitl/runtime-process/test/process.qtest",
+              "-v"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-install",
+            "command": [
+              "dnf",
+              "-y",
+              "--nogpgcheck",
+              "--setopt=install_weak_deps=False",
+              "install",
+              "/tmp/qore-rpm-native-kixejitl/rpms/qore-debug-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "/tmp/qore-rpm-native-kixejitl/rpms/qore-devel-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-kixejitl/rpms/qore-misc-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "/tmp/qore-rpm-native-kixejitl/rpms/qore-rpm-macros-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "cmake",
+              "procps-ng"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-rpm-verify",
+            "command": [
+              "rpm",
+              "-V",
+              "qore-debug-tools",
+              "qore-devel",
+              "qore-misc-tools",
+              "qore-rpm-macros"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-inventory",
+            "command": [
+              "rpm",
+              "-qa",
+              "--qf",
+              "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-runtime",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-kixejitl/sdk-runtime",
+              "/tmp/qore-rpm-native-kixejitl/source/rpm/tests-installed/runtime"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-development",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-kixejitl/sdk-development",
+              "/tmp/qore-rpm-native-kixejitl/source/rpm/tests-installed/development"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-tools",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-kixejitl/sdk-tools",
+              "/tmp/qore-rpm-native-kixejitl/source/rpm/tests-installed/tools"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-remote-debuggers",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-kixejitl/sdk-remote-debuggers",
+              "/tmp/qore-rpm-native-kixejitl/source/rpm/tests-installed/remote-debuggers"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-uuid-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-kixejitl/sdk-uuid",
+              "qore",
+              "-b",
+              "--enable-debug",
+              "/tmp/qore-rpm-native-kixejitl/sdk-uuid/test/uuid-test.qtest",
+              "-v"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-uuid-compiler",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-kixejitl/sdk-uuid",
+              "/tmp/qore-rpm-native-kixejitl/sdk-uuid/debian/tests/compiler"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-process-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-kixejitl/sdk-process",
+              "qore",
+              "-b",
+              "--enable-debug",
+              "/tmp/qore-rpm-native-kixejitl/sdk-process/test/process.qtest",
+              "-v"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-process-compiler",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-kixejitl/sdk-process",
+              "/tmp/qore-rpm-native-kixejitl/sdk-process/debian/tests/compiler"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-process-state",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-kixejitl/sdk-process",
+              "python3",
+              "-B",
+              "-W",
+              "error",
+              "/tmp/qore-rpm-native-kixejitl/sdk-process/test/run-process-state.py",
+              "--module",
+              "/usr/lib64/qore-modules/process-api-2.0.qmod"
+            ],
+            "exit_code": 0
+          }
+        ],
+        "exit_code": 0
+      },
+      "evidence_files": {
+        "results/native-modules1-fedora-ci-1/results/native-installed/sdk-process-state.log": {
+          "sha256": "b4dc90d2b56aaddf96c4f2b59a90c375d5f8d533b68555c17dfa7a6006a290d0",
+          "size": 2786
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/sdk-runtime.log": {
+          "sha256": "34b64411be56884578ed530faef03984f9409c5076fed763408b44ff002157e3",
+          "size": 1188
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/create-user.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/runtime-process-tests.log": {
+          "sha256": "33c65f54356afb7f6780740597c1dd6e770401f2405800a0a3c924d1a2a48ef1",
+          "size": 4138
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/sdk-inventory.log": {
+          "sha256": "0452427e090143ca928af3c80621a4ba02cf7be0166e614676b43393faa90374",
+          "size": 7981
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/runtime-uuid-tests.log": {
+          "sha256": "d29080002704dd657f0891702d09594c76b235af3295274b8c6b30406b70ab1b",
+          "size": 983
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/sdk-install.log": {
+          "sha256": "07d75c35c21a16dc13b52440ecbda5d24a7e238b14f008caf184e459d99e79a5",
+          "size": 12156
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/sdk-process-tests.log": {
+          "sha256": "6e51d7a5b030b2aec4d1dedcb2022fc29ef42ff1add9fc3984d4d07753787d7e",
+          "size": 4138
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/runtime-runtime.log": {
+          "sha256": "34b64411be56884578ed530faef03984f9409c5076fed763408b44ff002157e3",
+          "size": 1188
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/sdk-uuid-compiler.log": {
+          "sha256": "dfce13d21dd4b187e06eebb0ab21a037db361708123860915bab520c2ea590c6",
+          "size": 108
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/runtime-inventory.log": {
+          "sha256": "ad0524efc74dc2c120b6b30a5efb1f0b6d781da65ffc12584f897814635ed402",
+          "size": 6570
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/sdk-remote-debuggers.log": {
+          "sha256": "be36d4749f67fe0e1c73f24532c132b762e3370b4f7f41b62eba1ba7478bd42b",
+          "size": 3686
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/sdk-process-compiler.log": {
+          "sha256": "cc35504cbbf61877b48bcba6a8526333357cb6d28890ba09c3ed4f1cb4e79b13",
+          "size": 111
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/sdk-development.log": {
+          "sha256": "570d9088bdef6bf0431aa55cf0f89e81f10991a6003be857df8e9e6cbbf47c49",
+          "size": 1499
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/sdk-tools.log": {
+          "sha256": "2ec31de3d009b9caf4d599d341bc7b044baa8a60a2c27969eb6ddf0991f25760",
+          "size": 8090
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/qualification.json": {
+          "sha256": "df8aac7c919cac145460b8e4dc8a93db1dbbf237b482fb59662684431009de09",
+          "size": 20891
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/sdk-uuid-tests.log": {
+          "sha256": "d29080002704dd657f0891702d09594c76b235af3295274b8c6b30406b70ab1b",
+          "size": 983
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/runtime-install.log": {
+          "sha256": "97ad32752e1de262ee461e1af025fbb8a81965fdf66f7b8f15d42d077e9ee992",
+          "size": 15963
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/sdk-rpm-verify.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "results/native-modules1-fedora-ci-1/results/native-installed/runtime-rpm-verify.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        }
+      },
+      "artifact_sha256": "7e471569ffc5dad4f95618fbaea996e0260975039e8e27fee1a2354a2c034aa3"
+    },
+    "leap": {
+      "native_job": "https://git.qoretechnologies.com/mirror/qore-packaging/-/jobs/208214",
+      "result": {
+        "manifest": {
+          "schema": 1,
+          "family": "suse",
+          "arch": "aarch64",
+          "core_commit": "d58eec0b2ab721ef5da0e2136c4cddb3579874e2",
+          "obs_srcmd5": "ba3b6bc9ac8055ee991e334102e7ad16",
+          "packages": [
+            {
+              "name": "libqore20",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore/libqore20-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "filename": "libqore20-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "sha256": "38550915ec0682af5a64c2dff059c5915412010597857e38215e47eaf0cf3fcb",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore/qore-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "filename": "qore-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "sha256": "c29ef35c9b4073288a5368e567972a48b4df54eb26a49a4ff3e8f0c05abb1fbc",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-debug-tools",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore/qore-debug-tools-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "filename": "qore-debug-tools-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "sha256": "20700af79ed9871def1d70d4fd254449a1721edcb6c027dbcc6402f1f80f5d7c",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-devel",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore/qore-devel-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "filename": "qore-devel-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "sha256": "9bf60bc354d186d25aef0430123c732397c201dedff5aacf82228869eee71fe8",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-misc-tools",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore/qore-misc-tools-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "filename": "qore-misc-tools-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "sha256": "1d6190e2e06771d8bdf91e1953e0aba42dd18bb2cffd7cd0e26c8465f798c229",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-rpm-macros",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore/qore-rpm-macros-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "filename": "qore-rpm-macros-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "sha256": "95870247c2a75c0c42608e95e8eed9722e86d5476d31529b46c947aed8c4dbb6",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-stdlib",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore/qore-stdlib-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "filename": "qore-stdlib-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "sha256": "5cd99bd1eff94ffda9b4b0162bce703ef18d4bc2c9a9b43100b93f411adc8f42",
+              "phase": "runtime"
+            },
+            {
+              "name": "libcares2",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/c-ares/libcares2-1.34.8-lp160.3.1.aarch64.rpm",
+              "filename": "libcares2-1.34.8-lp160.3.1.aarch64.rpm",
+              "sha256": "33cceb88e2ef80d47d9b410ad6b4d346746d6caa3f2e47c4bcba47d99f9e2130",
+              "phase": "runtime"
+            },
+            {
+              "name": "libnghttp2-14",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/nghttp2/libnghttp2-14-1.70.0-lp160.3.1.aarch64.rpm",
+              "filename": "libnghttp2-14-1.70.0-lp160.3.1.aarch64.rpm",
+              "sha256": "0ea9e63d042a374894ba68b26b8e0f5553bba0e81909f9b25665e64ef1c2f792",
+              "phase": "runtime"
+            },
+            {
+              "name": "libnghttp3-9",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/nghttp3/libnghttp3-9-1.18.0-lp160.1.1.aarch64.rpm",
+              "filename": "libnghttp3-9-1.18.0-lp160.1.1.aarch64.rpm",
+              "sha256": "8a410450fb8e98282886a88a947154624ef0d48a9865ae228f1028786979209e",
+              "phase": "runtime"
+            },
+            {
+              "name": "libngtcp2-16",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/ngtcp2/libngtcp2-16-1.25.0-lp160.1.1.aarch64.rpm",
+              "filename": "libngtcp2-16-1.25.0-lp160.1.1.aarch64.rpm",
+              "sha256": "b266d76b334e407204a2e57c73a1982024beb21e4b6cd157d8c79955ef9e9532",
+              "phase": "runtime"
+            },
+            {
+              "name": "libngtcp2_crypto_ossl0",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/ngtcp2/libngtcp2_crypto_ossl0-1.25.0-lp160.1.1.aarch64.rpm",
+              "filename": "libngtcp2_crypto_ossl0-1.25.0-lp160.1.1.aarch64.rpm",
+              "sha256": "e2cb4ed8157eac3836129bc782a5014731126df6226e41a6e4ee048de1eac9a7",
+              "phase": "runtime"
+            },
+            {
+              "name": "libonnxruntime1",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/onnxruntime/libonnxruntime1-1.22.2-lp160.2.1.aarch64.rpm",
+              "filename": "libonnxruntime1-1.22.2-lp160.2.1.aarch64.rpm",
+              "sha256": "787d4ced8fd28af25c07fc7667d1405c1b8436c686f8ae7761a12f885ed30229",
+              "phase": "runtime"
+            },
+            {
+              "name": "libtree-sitter0_26",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/tree-sitter/libtree-sitter0_26-0.26.13-lp160.1.1.aarch64.rpm",
+              "filename": "libtree-sitter0_26-0.26.13-lp160.1.1.aarch64.rpm",
+              "sha256": "5fff990daf0af4b87786723fc2ad184dbe1e693abf334a31ebc7a7c19646c77f",
+              "phase": "runtime"
+            },
+            {
+              "name": "libarrow2500",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/apache-arrow/libarrow2500-25.0.1-lp160.2.1.aarch64.rpm",
+              "filename": "libarrow2500-25.0.1-lp160.2.1.aarch64.rpm",
+              "sha256": "658c053a6008173b67423af7881a26c32402fcf9d8afd9442547f2a1cff8a0f9",
+              "phase": "runtime"
+            },
+            {
+              "name": "libparquet2500",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/apache-arrow/libparquet2500-25.0.1-lp160.2.1.aarch64.rpm",
+              "filename": "libparquet2500-25.0.1-lp160.2.1.aarch64.rpm",
+              "sha256": "11405081abb19d6c00373cda1ec61acc22ee24674da99dbfde8c853c866ea7d6",
+              "phase": "runtime"
+            },
+            {
+              "name": "libbson2",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/mongo-c-driver/libbson2-2.5.5-lp160.2.1.aarch64.rpm",
+              "filename": "libbson2-2.5.5-lp160.2.1.aarch64.rpm",
+              "sha256": "50aa54b18fa08c6f0a7049a8bae14b13461aa6e7e3ac9ffb24f5baf8fb788859",
+              "phase": "runtime"
+            },
+            {
+              "name": "libmongoc2",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/mongo-c-driver/libmongoc2-2.5.5-lp160.2.1.aarch64.rpm",
+              "filename": "libmongoc2-2.5.5-lp160.2.1.aarch64.rpm",
+              "sha256": "9df0b810dfa1d44844a8b757eab456ddf737a6af891f5f7237c6d710a033b2e3",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-uuid-module",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore-uuid-module/qore-uuid-module-1.4.2-3.1.aarch64.rpm",
+              "filename": "qore-uuid-module-1.4.2-3.1.aarch64.rpm",
+              "sha256": "a498a2e9f493375882b229b150d97b9ce7c593512caf37028a3ed5d38ffd2c40",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-process-module",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore-process-module/qore-process-module-2.1.0-1.1.aarch64.rpm",
+              "filename": "qore-process-module-2.1.0-1.1.aarch64.rpm",
+              "sha256": "9606738aa6d87bb0838fda08c06e79a8a7520d12a0e9fc5106b79ca74fb89db1",
+              "phase": "runtime"
+            }
+          ],
+          "fixtures": [
+            {
+              "path": "rpm/tests-installed/runtime",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/runtime",
+              "sha256": "b1006e4391f2ba6f2a8bc050a7ac413901be1c454893a6579e65b2d41d8c015a"
+            },
+            {
+              "path": "rpm/tests-installed/development",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/development",
+              "sha256": "6fe87c237458790f18c2e549a4bff03b627a3a214f8d320ef1d4814bc835162e"
+            },
+            {
+              "path": "rpm/tests-installed/tools",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/tools",
+              "sha256": "45a7faec3a57d42fc6b136ee9fc471ecf4d516403adea14067bdb4e0b287debe"
+            },
+            {
+              "path": "rpm/tests-installed/remote-debuggers",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/remote-debuggers",
+              "sha256": "5d37b1cce6e6776c87467c64220d8df0b43fc3d843d1181d6b3f2b349d4afe91"
+            },
+            {
+              "path": "modules/ml/test/data/test_linear.onnx",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/modules/ml/test/data/test_linear.onnx",
+              "sha256": "e01940baadc56a46bb58f173e9066a7a821a5887aedab250ddb90f6754cee024"
+            }
+          ],
+          "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+          "modules": [
+            {
+              "name": "uuid",
+              "commit": "c910cec947d7e90b8b847ce42639fdcc840d306a",
+              "fixtures": [
+                {
+                  "path": "debian/tests/compiler",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-uuid/c910cec947d7e90b8b847ce42639fdcc840d306a/debian/tests/compiler",
+                  "sha256": "5c7d5a11a2b4bfed6845d53ac69d55a6d7c3cdb9c225e8264aea39e983dfd57c"
+                },
+                {
+                  "path": "test/uuid-test.qtest",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-uuid/c910cec947d7e90b8b847ce42639fdcc840d306a/test/uuid-test.qtest",
+                  "sha256": "f43c096ae548c9b7e08bb34a24fb1d564bb8e32268c4aa2859c3d07de1b50657"
+                }
+              ]
+            },
+            {
+              "name": "process",
+              "commit": "e329baa26f7fcd30cb3f0290ab0edd862672a817",
+              "fixtures": [
+                {
+                  "path": "debian/tests/compiler",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/debian/tests/compiler",
+                  "sha256": "1a21b02f66288810c0916000042a8341a1eb8b251f37e4355a06e09007b344c9"
+                },
+                {
+                  "path": "test/process-state-fixture.c",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/process-state-fixture.c",
+                  "sha256": "8b964e3b6a5f637736f23e71c3fe1759ba57302f33b9cacdc4e49b8df33fef84"
+                },
+                {
+                  "path": "test/process-state.qtest",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/process-state.qtest",
+                  "sha256": "a2e18a43d4d201abf964a1c8f0692fdd897808c0a7a8c1d1934ed9b108b3ed0c"
+                },
+                {
+                  "path": "test/process.qtest",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/process.qtest",
+                  "sha256": "5f30dca086fc9040aaa0cc50c00d47a49dbe8cfb78ea781c3d7fbdc8d09e333b"
+                },
+                {
+                  "path": "test/run-process-state.py",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/run-process-state.py",
+                  "sha256": "a2891f29572d3144ce0bcbad4e97ecfe8ebefcd47d20ce09c93f59c925ba4da8"
+                },
+                {
+                  "path": "test/test_cwd.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_cwd.q",
+                  "sha256": "6e61360c90271e1b2f8f0dee52a3b9b69ab0f2d0e45b559ef6719b25557cbd85"
+                },
+                {
+                  "path": "test/test_env.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_env.q",
+                  "sha256": "12fa70747c1f8d4f35955c5a9f070dcd09b5ecba403c5f910c3a651543585f49"
+                },
+                {
+                  "path": "test/test_false.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_false.q",
+                  "sha256": "1e9d01ba08ba33198a84865f5526fafedbe7f83baffca5dd221d75eb422930e5"
+                },
+                {
+                  "path": "test/test_io.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_io.q",
+                  "sha256": "c78435194d9a24e6f5fca58f26ca0377589c9ca8df98aa626a542052ee217137"
+                },
+                {
+                  "path": "test/test_output.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_output.q",
+                  "sha256": "013ec847f30717fecdbec4ad9011b2c3932584a5ca9df1ef084918d40fb5e533"
+                },
+                {
+                  "path": "test/test_signal.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_signal.q",
+                  "sha256": "7f55515cc3588f3fdca4f48337a367c942a47f94d0422b07a590d9a9d62d46ad"
+                },
+                {
+                  "path": "test/test_sleep.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_sleep.q",
+                  "sha256": "5162ce3c1b42ea16f925dd0702082a672054fc86140e51a9e87610f119bd32c2"
+                },
+                {
+                  "path": "test/test_stdin_eof.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_stdin_eof.q",
+                  "sha256": "867fba9c0cec7f8a71138695b9ffd365b83cca98adde5a1ccd288221d811af1e"
+                },
+                {
+                  "path": "test/test_true.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_true.q",
+                  "sha256": "4770bd2185d730f8f5d8ebc9d2eebdb66884564949711dd08b95428f7d3de392"
+                },
+                {
+                  "path": "test/test_utf8.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_utf8.q",
+                  "sha256": "5caff6bf25b24b43d5f9db832f53f85e0b6f9c60caa962bd575429bfaccaa1ea"
+                }
+              ]
+            }
+          ]
+        },
+        "machine": "aarch64",
+        "runner_arch": "linux/arm64",
+        "steps": [
+          {
+            "name": "create-user",
+            "command": [
+              "useradd",
+              "-M",
+              "-U",
+              "qoretester"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-install",
+            "command": [
+              "zypper",
+              "--non-interactive",
+              "--no-gpg-checks",
+              "install",
+              "--no-recommends",
+              "--allow-unsigned-rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/libqore20-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/qore-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/qore-stdlib-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/libcares2-1.34.8-lp160.3.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/libnghttp2-14-1.70.0-lp160.3.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/libnghttp3-9-1.18.0-lp160.1.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/libngtcp2-16-1.25.0-lp160.1.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/libngtcp2_crypto_ossl0-1.25.0-lp160.1.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/libonnxruntime1-1.22.2-lp160.2.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/libtree-sitter0_26-0.26.13-lp160.1.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/libarrow2500-25.0.1-lp160.2.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/libparquet2500-25.0.1-lp160.2.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/libbson2-2.5.5-lp160.2.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/libmongoc2-2.5.5-lp160.2.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/qore-uuid-module-1.4.2-3.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/qore-process-module-2.1.0-1.1.aarch64.rpm",
+              "procps"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-rpm-verify",
+            "command": [
+              "rpm",
+              "-V",
+              "libqore20",
+              "qore",
+              "qore-stdlib",
+              "libcares2",
+              "libnghttp2-14",
+              "libnghttp3-9",
+              "libngtcp2-16",
+              "libngtcp2_crypto_ossl0",
+              "libonnxruntime1",
+              "libtree-sitter0_26",
+              "libarrow2500",
+              "libparquet2500",
+              "libbson2",
+              "libmongoc2",
+              "qore-uuid-module",
+              "qore-process-module"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-inventory",
+            "command": [
+              "rpm",
+              "-qa",
+              "--qf",
+              "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-runtime",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-m588rbmc/runtime-runtime",
+              "/tmp/qore-rpm-native-m588rbmc/source/rpm/tests-installed/runtime"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-uuid-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-m588rbmc/runtime-uuid",
+              "qore",
+              "-b",
+              "--enable-debug",
+              "/tmp/qore-rpm-native-m588rbmc/runtime-uuid/test/uuid-test.qtest",
+              "-v"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-process-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-m588rbmc/runtime-process",
+              "qore",
+              "-b",
+              "--enable-debug",
+              "/tmp/qore-rpm-native-m588rbmc/runtime-process/test/process.qtest",
+              "-v"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-install",
+            "command": [
+              "zypper",
+              "--non-interactive",
+              "--no-gpg-checks",
+              "install",
+              "--no-recommends",
+              "--allow-unsigned-rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/qore-debug-tools-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/qore-devel-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/qore-misc-tools-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "/tmp/qore-rpm-native-m588rbmc/rpms/qore-rpm-macros-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "cmake",
+              "procps"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-rpm-verify",
+            "command": [
+              "rpm",
+              "-V",
+              "qore-debug-tools",
+              "qore-devel",
+              "qore-misc-tools",
+              "qore-rpm-macros"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-inventory",
+            "command": [
+              "rpm",
+              "-qa",
+              "--qf",
+              "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-runtime",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-m588rbmc/sdk-runtime",
+              "/tmp/qore-rpm-native-m588rbmc/source/rpm/tests-installed/runtime"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-development",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-m588rbmc/sdk-development",
+              "/tmp/qore-rpm-native-m588rbmc/source/rpm/tests-installed/development"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-tools",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-m588rbmc/sdk-tools",
+              "/tmp/qore-rpm-native-m588rbmc/source/rpm/tests-installed/tools"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-remote-debuggers",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-m588rbmc/sdk-remote-debuggers",
+              "/tmp/qore-rpm-native-m588rbmc/source/rpm/tests-installed/remote-debuggers"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-uuid-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-m588rbmc/sdk-uuid",
+              "qore",
+              "-b",
+              "--enable-debug",
+              "/tmp/qore-rpm-native-m588rbmc/sdk-uuid/test/uuid-test.qtest",
+              "-v"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-uuid-compiler",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-m588rbmc/sdk-uuid",
+              "/tmp/qore-rpm-native-m588rbmc/sdk-uuid/debian/tests/compiler"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-process-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-m588rbmc/sdk-process",
+              "qore",
+              "-b",
+              "--enable-debug",
+              "/tmp/qore-rpm-native-m588rbmc/sdk-process/test/process.qtest",
+              "-v"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-process-compiler",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-m588rbmc/sdk-process",
+              "/tmp/qore-rpm-native-m588rbmc/sdk-process/debian/tests/compiler"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-process-state",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-m588rbmc/sdk-process",
+              "python3",
+              "-B",
+              "-W",
+              "error",
+              "/tmp/qore-rpm-native-m588rbmc/sdk-process/test/run-process-state.py",
+              "--module",
+              "/usr/lib64/qore-modules/process-api-2.0.qmod"
+            ],
+            "exit_code": 0
+          }
+        ],
+        "exit_code": 0
+      },
+      "evidence_files": {
+        "results/native-modules1-leap-ci-1/results/native-installed/sdk-process-state.log": {
+          "sha256": "b4dc90d2b56aaddf96c4f2b59a90c375d5f8d533b68555c17dfa7a6006a290d0",
+          "size": 2786
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/sdk-runtime.log": {
+          "sha256": "49eb49e980b41942d6150a4989381ebb41b929fda4f49e6d6bcceb85c905aabc",
+          "size": 965
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/create-user.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/runtime-process-tests.log": {
+          "sha256": "33c65f54356afb7f6780740597c1dd6e770401f2405800a0a3c924d1a2a48ef1",
+          "size": 4138
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/sdk-inventory.log": {
+          "sha256": "cce3c4f380cf1440acb9c969821892018d85df5f2eec84cac6d55152ed5c3446",
+          "size": 9328
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/runtime-uuid-tests.log": {
+          "sha256": "d29080002704dd657f0891702d09594c76b235af3295274b8c6b30406b70ab1b",
+          "size": 983
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/sdk-install.log": {
+          "sha256": "94128e6f2da11426350524d62113cf09a503044dba03f72b9d23b29ec5c5f8a0",
+          "size": 26542
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/sdk-process-tests.log": {
+          "sha256": "33c65f54356afb7f6780740597c1dd6e770401f2405800a0a3c924d1a2a48ef1",
+          "size": 4138
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/runtime-runtime.log": {
+          "sha256": "49eb49e980b41942d6150a4989381ebb41b929fda4f49e6d6bcceb85c905aabc",
+          "size": 965
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/sdk-uuid-compiler.log": {
+          "sha256": "9a6708b23b724bc986ff4320e34a5b7dffc7dc1ca75c9a3e2a3f98b8e31e9cc8",
+          "size": 102
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/runtime-inventory.log": {
+          "sha256": "8e196ab0686a337e2b166152507efb2cf81e1c04aeecb5fa8aa10e0c8220cb2f",
+          "size": 7003
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/sdk-remote-debuggers.log": {
+          "sha256": "be36d4749f67fe0e1c73f24532c132b762e3370b4f7f41b62eba1ba7478bd42b",
+          "size": 3686
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/sdk-process-compiler.log": {
+          "sha256": "d8e65378b0b4020e02971d43a87268a3a1cd61e7ff97374ca03b8a9fe1503407",
+          "size": 105
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/sdk-development.log": {
+          "sha256": "c04602062f5d3f8245028fb29db64c00423c105dbd14ed65743ca681006ad179",
+          "size": 1483
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/sdk-tools.log": {
+          "sha256": "2ec31de3d009b9caf4d599d341bc7b044baa8a60a2c27969eb6ddf0991f25760",
+          "size": 8090
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/qualification.json": {
+          "sha256": "56907eaf885013e24c01f3462e7f4b6e94a2a4d3a372bdfac253084e04fbe199",
+          "size": 24935
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/sdk-uuid-tests.log": {
+          "sha256": "d29080002704dd657f0891702d09594c76b235af3295274b8c6b30406b70ab1b",
+          "size": 983
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/runtime-install.log": {
+          "sha256": "73fd484073ff20cbfa6f137f4ff60f273bfe5fc648e07e51fe4e25a910811804",
+          "size": 24254
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/sdk-rpm-verify.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "results/native-modules1-leap-ci-1/results/native-installed/runtime-rpm-verify.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        }
+      },
+      "artifact_sha256": "cbb00d1eab103be8d9300f56f03721feade84d5b0cd49dd32e96af6a3e20b233"
+    },
+    "el10": {
+      "native_job": "https://git.qoretechnologies.com/mirror/qore-packaging/-/jobs/208215",
+      "result": {
+        "manifest": {
+          "schema": 1,
+          "family": "el",
+          "arch": "aarch64",
+          "core_commit": "d58eec0b2ab721ef5da0e2136c4cddb3579874e2",
+          "obs_srcmd5": "ba3b6bc9ac8055ee991e334102e7ad16",
+          "packages": [
+            {
+              "name": "libqore",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/libqore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "filename": "libqore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "sha256": "05a2148ae20db4ca0f28f0b23d4fd752ee2d81ebff8d66ad2396e792f2808ad4",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "filename": "qore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "sha256": "b48b84120a691b75599e12eee147febc82c325ca969901429374fd48d6a0651d",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-debug-tools",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-debug-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "filename": "qore-debug-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "sha256": "fa9a82b213e88b985ce3fbfc35e708d282e302b31250089e1fee76cfea9957aa",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-devel",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-devel-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "filename": "qore-devel-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "sha256": "fde514bd341c74c197686ac3be6cbcf38da7354fb2ab85a914c18be77c2b9276",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-misc-tools",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-misc-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "filename": "qore-misc-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "sha256": "e19df3dee1a5b4ef786474c13c96c7d85b6f72810f2ecec99f2908337ac362e1",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-rpm-macros",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-rpm-macros-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "filename": "qore-rpm-macros-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "sha256": "f29346369912ae08bbb45a98aded7bad505ad5aadf2dffa3bf2289712d310274",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-stdlib",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-stdlib-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "filename": "qore-stdlib-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "sha256": "e4cd8dc73c6ba2cbedbf0e3a32d4e5a931949f906ed5c54cc614e246f9437162",
+              "phase": "runtime"
+            },
+            {
+              "name": "c-ares",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/c-ares/c-ares-1.34.8-3.2.aarch64.rpm",
+              "filename": "c-ares-1.34.8-3.2.aarch64.rpm",
+              "sha256": "c1fb51dfae34938bc3d1f5c2cf8313765a17b6125e8327651565b533d2c6d11a",
+              "phase": "runtime"
+            },
+            {
+              "name": "libnghttp2",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/nghttp2/libnghttp2-1.70.0-3.1.aarch64.rpm",
+              "filename": "libnghttp2-1.70.0-3.1.aarch64.rpm",
+              "sha256": "07fb1d2c88d17ef670b3c9b891aa9e40bd32d8edc40d45c3e7857c727a1f59da",
+              "phase": "runtime"
+            },
+            {
+              "name": "libnghttp3",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/nghttp3/libnghttp3-1.18.0-1.2.aarch64.rpm",
+              "filename": "libnghttp3-1.18.0-1.2.aarch64.rpm",
+              "sha256": "37827363b59aaa8466262cb1631ff54af09a30121bc641c77967754f1c88f6ce",
+              "phase": "runtime"
+            },
+            {
+              "name": "ngtcp2",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/ngtcp2/ngtcp2-1.25.0-1.2.aarch64.rpm",
+              "filename": "ngtcp2-1.25.0-1.2.aarch64.rpm",
+              "sha256": "d6b5bf35da65bfc80817f4e7adcd95bd7a1edaefd0104e2e871f380dce386f8b",
+              "phase": "runtime"
+            },
+            {
+              "name": "ngtcp2-crypto-ossl",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/ngtcp2/ngtcp2-crypto-ossl-1.25.0-1.2.aarch64.rpm",
+              "filename": "ngtcp2-crypto-ossl-1.25.0-1.2.aarch64.rpm",
+              "sha256": "43326e492bb60847e4cdfc18d9a78ddb7f049d003d2b03de03da6bf72cfb7728",
+              "phase": "runtime"
+            },
+            {
+              "name": "tree-sitter",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/tree-sitter/tree-sitter-0.26.13-1.2.aarch64.rpm",
+              "filename": "tree-sitter-0.26.13-1.2.aarch64.rpm",
+              "sha256": "f0fafcbb43bc7b907276d3a14c6d68669da48a217658d77b92cd8fdb79a0bf99",
+              "phase": "runtime"
+            },
+            {
+              "name": "onnxruntime",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/onnxruntime/onnxruntime-1.22.2-2.2.aarch64.rpm",
+              "filename": "onnxruntime-1.22.2-2.2.aarch64.rpm",
+              "sha256": "7fb6ec79639de198e85e7a89bd8abce2156e25398bf59bf460fac4e7dd4363f4",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-uuid-module",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-uuid-module/qore-uuid-module-1.4.2-4.1.aarch64.rpm",
+              "filename": "qore-uuid-module-1.4.2-4.1.aarch64.rpm",
+              "sha256": "f27fc969a3c66c561303f93d5bbbacc3faa99ee530b44b4dcff764c40919085c",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-process-module",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-process-module/qore-process-module-2.1.0-2.1.aarch64.rpm",
+              "filename": "qore-process-module-2.1.0-2.1.aarch64.rpm",
+              "sha256": "df8e648900cd8eb0db74a9b7eaecbb62e28f38dc53d17d56baf7b8c86b4d09e4",
+              "phase": "runtime"
+            }
+          ],
+          "fixtures": [
+            {
+              "path": "rpm/tests-installed/runtime",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/runtime",
+              "sha256": "b1006e4391f2ba6f2a8bc050a7ac413901be1c454893a6579e65b2d41d8c015a"
+            },
+            {
+              "path": "rpm/tests-installed/development",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/development",
+              "sha256": "6fe87c237458790f18c2e549a4bff03b627a3a214f8d320ef1d4814bc835162e"
+            },
+            {
+              "path": "rpm/tests-installed/tools",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/tools",
+              "sha256": "45a7faec3a57d42fc6b136ee9fc471ecf4d516403adea14067bdb4e0b287debe"
+            },
+            {
+              "path": "rpm/tests-installed/remote-debuggers",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/remote-debuggers",
+              "sha256": "5d37b1cce6e6776c87467c64220d8df0b43fc3d843d1181d6b3f2b349d4afe91"
+            },
+            {
+              "path": "modules/ml/test/data/test_linear.onnx",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/modules/ml/test/data/test_linear.onnx",
+              "sha256": "e01940baadc56a46bb58f173e9066a7a821a5887aedab250ddb90f6754cee024"
+            }
+          ],
+          "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+          "modules": [
+            {
+              "name": "uuid",
+              "commit": "c910cec947d7e90b8b847ce42639fdcc840d306a",
+              "fixtures": [
+                {
+                  "path": "debian/tests/compiler",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-uuid/c910cec947d7e90b8b847ce42639fdcc840d306a/debian/tests/compiler",
+                  "sha256": "5c7d5a11a2b4bfed6845d53ac69d55a6d7c3cdb9c225e8264aea39e983dfd57c"
+                },
+                {
+                  "path": "test/uuid-test.qtest",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-uuid/c910cec947d7e90b8b847ce42639fdcc840d306a/test/uuid-test.qtest",
+                  "sha256": "f43c096ae548c9b7e08bb34a24fb1d564bb8e32268c4aa2859c3d07de1b50657"
+                }
+              ]
+            },
+            {
+              "name": "process",
+              "commit": "e329baa26f7fcd30cb3f0290ab0edd862672a817",
+              "fixtures": [
+                {
+                  "path": "debian/tests/compiler",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/debian/tests/compiler",
+                  "sha256": "1a21b02f66288810c0916000042a8341a1eb8b251f37e4355a06e09007b344c9"
+                },
+                {
+                  "path": "test/process-state-fixture.c",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/process-state-fixture.c",
+                  "sha256": "8b964e3b6a5f637736f23e71c3fe1759ba57302f33b9cacdc4e49b8df33fef84"
+                },
+                {
+                  "path": "test/process-state.qtest",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/process-state.qtest",
+                  "sha256": "a2e18a43d4d201abf964a1c8f0692fdd897808c0a7a8c1d1934ed9b108b3ed0c"
+                },
+                {
+                  "path": "test/process.qtest",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/process.qtest",
+                  "sha256": "5f30dca086fc9040aaa0cc50c00d47a49dbe8cfb78ea781c3d7fbdc8d09e333b"
+                },
+                {
+                  "path": "test/run-process-state.py",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/run-process-state.py",
+                  "sha256": "a2891f29572d3144ce0bcbad4e97ecfe8ebefcd47d20ce09c93f59c925ba4da8"
+                },
+                {
+                  "path": "test/test_cwd.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_cwd.q",
+                  "sha256": "6e61360c90271e1b2f8f0dee52a3b9b69ab0f2d0e45b559ef6719b25557cbd85"
+                },
+                {
+                  "path": "test/test_env.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_env.q",
+                  "sha256": "12fa70747c1f8d4f35955c5a9f070dcd09b5ecba403c5f910c3a651543585f49"
+                },
+                {
+                  "path": "test/test_false.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_false.q",
+                  "sha256": "1e9d01ba08ba33198a84865f5526fafedbe7f83baffca5dd221d75eb422930e5"
+                },
+                {
+                  "path": "test/test_io.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_io.q",
+                  "sha256": "c78435194d9a24e6f5fca58f26ca0377589c9ca8df98aa626a542052ee217137"
+                },
+                {
+                  "path": "test/test_output.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_output.q",
+                  "sha256": "013ec847f30717fecdbec4ad9011b2c3932584a5ca9df1ef084918d40fb5e533"
+                },
+                {
+                  "path": "test/test_signal.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_signal.q",
+                  "sha256": "7f55515cc3588f3fdca4f48337a367c942a47f94d0422b07a590d9a9d62d46ad"
+                },
+                {
+                  "path": "test/test_sleep.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_sleep.q",
+                  "sha256": "5162ce3c1b42ea16f925dd0702082a672054fc86140e51a9e87610f119bd32c2"
+                },
+                {
+                  "path": "test/test_stdin_eof.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_stdin_eof.q",
+                  "sha256": "867fba9c0cec7f8a71138695b9ffd365b83cca98adde5a1ccd288221d811af1e"
+                },
+                {
+                  "path": "test/test_true.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_true.q",
+                  "sha256": "4770bd2185d730f8f5d8ebc9d2eebdb66884564949711dd08b95428f7d3de392"
+                },
+                {
+                  "path": "test/test_utf8.q",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-process/e329baa26f7fcd30cb3f0290ab0edd862672a817/test/test_utf8.q",
+                  "sha256": "5caff6bf25b24b43d5f9db832f53f85e0b6f9c60caa962bd575429bfaccaa1ea"
+                }
+              ]
+            }
+          ]
+        },
+        "machine": "aarch64",
+        "runner_arch": "linux/arm64",
+        "steps": [
+          {
+            "name": "create-user",
+            "command": [
+              "useradd",
+              "-M",
+              "-U",
+              "qoretester"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-install",
+            "command": [
+              "dnf",
+              "-y",
+              "--nogpgcheck",
+              "--setopt=install_weak_deps=False",
+              "install",
+              "/tmp/qore-rpm-native-whpuavua/rpms/libqore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-whpuavua/rpms/qore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-whpuavua/rpms/qore-stdlib-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-whpuavua/rpms/c-ares-1.34.8-3.2.aarch64.rpm",
+              "/tmp/qore-rpm-native-whpuavua/rpms/libnghttp2-1.70.0-3.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-whpuavua/rpms/libnghttp3-1.18.0-1.2.aarch64.rpm",
+              "/tmp/qore-rpm-native-whpuavua/rpms/ngtcp2-1.25.0-1.2.aarch64.rpm",
+              "/tmp/qore-rpm-native-whpuavua/rpms/ngtcp2-crypto-ossl-1.25.0-1.2.aarch64.rpm",
+              "/tmp/qore-rpm-native-whpuavua/rpms/tree-sitter-0.26.13-1.2.aarch64.rpm",
+              "/tmp/qore-rpm-native-whpuavua/rpms/onnxruntime-1.22.2-2.2.aarch64.rpm",
+              "/tmp/qore-rpm-native-whpuavua/rpms/qore-uuid-module-1.4.2-4.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-whpuavua/rpms/qore-process-module-2.1.0-2.1.aarch64.rpm",
+              "procps-ng"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-rpm-verify",
+            "command": [
+              "rpm",
+              "-V",
+              "libqore",
+              "qore",
+              "qore-stdlib",
+              "c-ares",
+              "libnghttp2",
+              "libnghttp3",
+              "ngtcp2",
+              "ngtcp2-crypto-ossl",
+              "tree-sitter",
+              "onnxruntime",
+              "qore-uuid-module",
+              "qore-process-module"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-inventory",
+            "command": [
+              "rpm",
+              "-qa",
+              "--qf",
+              "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-runtime",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-whpuavua/runtime-runtime",
+              "/tmp/qore-rpm-native-whpuavua/source/rpm/tests-installed/runtime"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-uuid-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-whpuavua/runtime-uuid",
+              "qore",
+              "-b",
+              "--enable-debug",
+              "/tmp/qore-rpm-native-whpuavua/runtime-uuid/test/uuid-test.qtest",
+              "-v"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-process-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-whpuavua/runtime-process",
+              "qore",
+              "-b",
+              "--enable-debug",
+              "/tmp/qore-rpm-native-whpuavua/runtime-process/test/process.qtest",
+              "-v"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-install",
+            "command": [
+              "dnf",
+              "-y",
+              "--nogpgcheck",
+              "--setopt=install_weak_deps=False",
+              "install",
+              "/tmp/qore-rpm-native-whpuavua/rpms/qore-debug-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "/tmp/qore-rpm-native-whpuavua/rpms/qore-devel-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-whpuavua/rpms/qore-misc-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "/tmp/qore-rpm-native-whpuavua/rpms/qore-rpm-macros-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "cmake",
+              "procps-ng"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-rpm-verify",
+            "command": [
+              "rpm",
+              "-V",
+              "qore-debug-tools",
+              "qore-devel",
+              "qore-misc-tools",
+              "qore-rpm-macros"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-inventory",
+            "command": [
+              "rpm",
+              "-qa",
+              "--qf",
+              "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-runtime",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-whpuavua/sdk-runtime",
+              "/tmp/qore-rpm-native-whpuavua/source/rpm/tests-installed/runtime"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-development",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-whpuavua/sdk-development",
+              "/tmp/qore-rpm-native-whpuavua/source/rpm/tests-installed/development"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-tools",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-whpuavua/sdk-tools",
+              "/tmp/qore-rpm-native-whpuavua/source/rpm/tests-installed/tools"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-remote-debuggers",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-whpuavua/sdk-remote-debuggers",
+              "/tmp/qore-rpm-native-whpuavua/source/rpm/tests-installed/remote-debuggers"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-uuid-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-whpuavua/sdk-uuid",
+              "qore",
+              "-b",
+              "--enable-debug",
+              "/tmp/qore-rpm-native-whpuavua/sdk-uuid/test/uuid-test.qtest",
+              "-v"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-uuid-compiler",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-whpuavua/sdk-uuid",
+              "/tmp/qore-rpm-native-whpuavua/sdk-uuid/debian/tests/compiler"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-process-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-whpuavua/sdk-process",
+              "qore",
+              "-b",
+              "--enable-debug",
+              "/tmp/qore-rpm-native-whpuavua/sdk-process/test/process.qtest",
+              "-v"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-process-compiler",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-whpuavua/sdk-process",
+              "/tmp/qore-rpm-native-whpuavua/sdk-process/debian/tests/compiler"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-process-state",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-whpuavua/sdk-process",
+              "python3",
+              "-B",
+              "-W",
+              "error",
+              "/tmp/qore-rpm-native-whpuavua/sdk-process/test/run-process-state.py",
+              "--module",
+              "/usr/lib64/qore-modules/process-api-2.0.qmod"
+            ],
+            "exit_code": 0
+          }
+        ],
+        "exit_code": 0
+      },
+      "evidence_files": {
+        "results/native-modules1-el10-ci-1/results/native-installed/sdk-process-state.log": {
+          "sha256": "b4dc90d2b56aaddf96c4f2b59a90c375d5f8d533b68555c17dfa7a6006a290d0",
+          "size": 2786
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/sdk-runtime.log": {
+          "sha256": "5fd181d0c3a0caa50255ec30b01b21aa0370bf95ab3cf1f9cde6acff72eef868",
+          "size": 1188
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/create-user.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/runtime-process-tests.log": {
+          "sha256": "6e51d7a5b030b2aec4d1dedcb2022fc29ef42ff1add9fc3984d4d07753787d7e",
+          "size": 4138
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/sdk-inventory.log": {
+          "sha256": "4076808f5149a9595c0e1d12a93e0aabcb170fdc72ef3cb2e6ad4ccbb2d086a9",
+          "size": 8167
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/runtime-uuid-tests.log": {
+          "sha256": "d29080002704dd657f0891702d09594c76b235af3295274b8c6b30406b70ab1b",
+          "size": 983
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/sdk-install.log": {
+          "sha256": "38576fa88ba148742efb49b51f79d52ba06bac3d3ecdd31bce5efbbdc54538ee",
+          "size": 12478
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/sdk-process-tests.log": {
+          "sha256": "6e51d7a5b030b2aec4d1dedcb2022fc29ef42ff1add9fc3984d4d07753787d7e",
+          "size": 4138
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/runtime-runtime.log": {
+          "sha256": "5fd181d0c3a0caa50255ec30b01b21aa0370bf95ab3cf1f9cde6acff72eef868",
+          "size": 1188
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/sdk-uuid-compiler.log": {
+          "sha256": "2c44b21a6159ebba4dd4aa8201acabae234070ed35f2879e8f4ff2328c152f4a",
+          "size": 108
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/runtime-inventory.log": {
+          "sha256": "a0161e594cc7e39374b6f4f6d43a7e781008e190bcd9e40e9cf20f9560295e9e",
+          "size": 6757
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/sdk-remote-debuggers.log": {
+          "sha256": "be36d4749f67fe0e1c73f24532c132b762e3370b4f7f41b62eba1ba7478bd42b",
+          "size": 3686
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/sdk-process-compiler.log": {
+          "sha256": "4d996a0df47d43a26e1c8654bd0fa658942f6788f51ca792a60fe1ff2df533c6",
+          "size": 111
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/sdk-development.log": {
+          "sha256": "3887da6b0f3138c5e17bcff6b9a545c23ed48d7a15fc2d8260d08ff42d0cdeaf",
+          "size": 1499
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/sdk-tools.log": {
+          "sha256": "2ec31de3d009b9caf4d599d341bc7b044baa8a60a2c27969eb6ddf0991f25760",
+          "size": 8090
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/qualification.json": {
+          "sha256": "effda32fe291f95bbe284b96e8226488e932431c3a46e27cd136221f9df3918b",
+          "size": 22354
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/sdk-uuid-tests.log": {
+          "sha256": "d29080002704dd657f0891702d09594c76b235af3295274b8c6b30406b70ab1b",
+          "size": 983
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/runtime-install.log": {
+          "sha256": "9b8bae40c1c268ccecf4c63e6689a06069bd6a6b2020c0114a0abc1bdbe1ebea",
+          "size": 15182
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/sdk-rpm-verify.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "results/native-modules1-el10-ci-1/results/native-installed/runtime-rpm-verify.log": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        }
+      },
+      "artifact_sha256": "6e4c4602a92bc40a970ef1c8bc880c599a33487f3696439c45d0464b5433caeb"
+    }
+  },
+  "setup_diagnostics": {
+    "fedora": "Package-manager OpenPGP checks skipped by existing SHA-256-pinned prepublication runner; signing/repository qualification is a separate gate.",
+    "leap": "OBS key is not imported in the existing prepublication runner (NOKEY); LLVM alternatives report excluded manual pages. Functional/compiler tests are warning-free. These setup diagnostics remain for signed-install qualification."
+  }
+}

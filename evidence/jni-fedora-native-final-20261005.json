@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-05",
+  "status": "Fedora native ARM JNI build passes; ARM installed qualification remains pending; publication disabled.",
+  "source": {
+    "schema": 1,
+    "commit": "33367ce003ecf29b0a2a84964ab913146837d6d0",
+    "source_date_epoch": 1790998978,
+    "name": "qore-jni-module",
+    "version": "2.7.0",
+    "exclusions": [
+      "test/kotlin-test.jar",
+      "test/opcua-test-server.jar",
+      "src/java/org/qore/lang/JdbcDatasource.class"
+    ],
+    "sources": {
+      "qore-jni-module-2.7.0.tar.xz": "c08770dc1da05bc72cc393b5e06950900f8bc99350ada62c42b1ae0964625013",
+      "qore-jni-module.spec": "a83d1d34cf37f30b93d086dcb5041283eba6c9351fb60e044808545fcf16894c",
+      "qore-jni-vendor-2.7.0.tar.xz": "b240e7afc6fcbb36cf8ddc1e0bf9a96daac98814f354d0bca10e4e5a089daed4"
+    },
+    "spec": "qore-jni-module.spec",
+    "vendor_manifest": "rpm/vendor-sources.json",
+    "components": [
+      {
+        "archive": "qore-jni-vendor-2.7.0.tar.xz",
+        "top": "qore-jni-vendor-2.7.0",
+        "sha256": "d8ebc84f3fe03204079f9a98b2b0d2d786120b12c1dc2bf4e739b6a2d2c7e194",
+        "generated_from": {
+          "debian/java-dependencies.json": "038c18f91a001b8172a63718b75812f361107f208503bd8777dbb1c876d80391",
+          "debian/prepare-vendor.py": "648994c45007f220f53eb98669dc95161b486785799819774030ea1cc5d1ee13",
+          "debian/copyright": "3be65eb215b7924e170aee5bd9792809e38e4d2a68d20618de1a797c8428707a",
+          "rpm/prepare-vendor.py": "bc476652436ff7dbf20abc2ddd451bd7c2beb471397841fbdf97163bc8c5c7b4"
+        },
+        "licenses": [
+          "COPYRIGHT"
+        ]
+      }
+    ]
+  },
+  "obs": {
+    "rev": "2",
+    "srcmd5": "4eb359c58f58e30a551e1211c055aa17",
+    "versrel": "2.7.0-2",
+    "bcnt": "4",
+    "time": "1791184399",
+    "duration": "557"
+  },
+  "tests": {
+    "qore_cases": 632,
+    "assertions": 8662,
+    "python_unit_tests": 31
+  },
+  "compiler_diagnostics": {
+    "occurrences": 4,
+    "sites": 2,
+    "scope": "Existing approved GCC 16 speculative destructor array-bounds diagnostics at GlobalReference.h:68 and Array.h:69.",
+    "evidence": "evidence/jni-external-diagnostics-20261002.json"
+  },
+  "sha256": {
+    "results/jni-fedora-native-final-20261005/aarch64.log": "b0706f900950b953834a0ef2cf4aa25a5a8c8a9db0f703488ad4747c1b739124",
+    "results/jni-fedora-native-final-20261005/aarch64.status": "c3dee435b7a231df05fd995abbade3f29a62898489d2b2beeb49171f22044fd7",
+    "results/jni-fedora-native-final-20261005/aarch64.history": "c5a86bffd928f85828d91fb1d582f81f6a4e68b79c29a7c18b47343145ec11f0"
+  }
+}
