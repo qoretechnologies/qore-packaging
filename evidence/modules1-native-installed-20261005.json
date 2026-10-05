@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-05",
+  "status": "Pinned UUID/process ARM installed qualification prepared; runner and CI configuration tests pass. Native jobs have not yet run. Publication disabled.",
+  "tests": {
+    "packaging": 133,
+    "runner": 10,
+    "ci_lint": "valid; no errors or warnings"
+  },
+  "inputs": {
+    "public_rpms": 49,
+    "modules": [
+      "uuid",
+      "process"
+    ],
+    "runtime": "UUID and process functional suites plus existing core/ONNX tests; no compiler or qore-devel",
+    "sdk": "Same suites, both qcc smoke tests, 13 process PID fault-injection cases, existing core SDK/debugger checks"
+  },
+  "sha256": {
+    "tools/qualify-installed.py": "8c7f1908707d3f9221eb605f3487750016437316839982035b6faa82d294f406",
+    "tests/test_installed_qualification.py": "6bfd19c2e2d5634e4147c8096f665b1b32dcc6d9b6344f7991bbc1cbbf4a7ce3",
+    ".gitlab-ci.yml": "6808fe57851fd2fcb59f00897355768f6964197a2e83cb0a6f29b1ab39ac6856",
+    "qualification/modules1-el10-aarch64.json": "80508beaec595a34aae3fb6b094d68d9af31803c5de1deeae40898d4dfcf5ed9",
+    "qualification/modules1-leap-aarch64.json": "85e6e40fe2ccf786293ce72c2b7f594892540459fbd446f7f197f1d4b0c5eec6",
+    "qualification/modules1-fedora-aarch64.json": "b5fcb1938cbfc83c6d752dface55213eff6631fd807bf6db6d571a62a66ccd23",
+    "results/modules1-packaging-tests-20261005.log": "56c51e9f7245e75829d7daf9061e7f75ef31fb5fe8599c3f24c6634babf4b4d3",
+    "results/modules1-ci-lint-20261005.json": "5a85e9ff2f3f6f5190f34fe6210b7174ff0b42aa03e6f85d2409d07cbd403f17"
+  }
+}

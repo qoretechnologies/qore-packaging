@@ -16,6 +16,40 @@ from packaging import fetch_source
 
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
+MODULE_FIXTURES = {
+    'uuid': {'test/uuid-test.qtest', 'debian/tests/compiler'},
+    'process': {'test/process.qtest', 'test/process-state.qtest',
+                'test/process-state-fixture.c', 'test/run-process-state.py',
+                'debian/tests/compiler'} | {
+                    'test/test_' + name + '.q' for name in
+                    ('cwd', 'env', 'false', 'io', 'output', 'signal', 'sleep',
+                     'stdin_eof', 'true', 'utf8')},
+}
+
+
+def validate_modules(manifest):
+    names = set()
+    fixtures = []
+    packages = {entry['name']: entry for entry in manifest.get('packages', [])}
+    for entry in manifest.get('modules', []):
+        name = entry.get('name', '')
+        if name not in MODULE_FIXTURES or name in names:
+            raise ValueError('Unknown or duplicate installed module suite')
+        names.add(name)
+        commit = entry.get('commit', '')
+        if not re.fullmatch('[0-9a-f]{40}', commit):
+            raise ValueError('Module fixtures require an immutable source revision')
+        files = entry.get('fixtures', [])
+        if ({f.get('path') for f in files} != MODULE_FIXTURES[name]
+                or len(files) != len(MODULE_FIXTURES[name])):
+            raise ValueError('Expected complete module fixture inventory')
+        prefix = f'https://raw.githubusercontent.com/qoretechnologies/module-{name}/{commit}/'
+        if any(f.get('url') != prefix + f['path'] for f in files):
+            raise ValueError('Module fixture URLs must match their pinned repository revision')
+        if packages.get('qore-' + name + '-module', {}).get('phase') != 'runtime':
+            raise ValueError('Missing module runtime RPM')
+        fixtures.extend(files)
+    return fixtures
 
 
 def validate(manifest):
@@ -29,7 +63,7 @@ def validate(manifest):
     if {entry.get('path') for entry in fixtures} != FIXTURES or len(fixtures) != len(FIXTURES):
         raise ValueError('Expected the complete installed fixture inventory')
     names = set()
-    for entry in fixtures + manifest.get('packages', []):
+    for entry in fixtures + manifest.get('packages', []) + validate_modules(manifest):
         if not re.fullmatch('[0-9a-f]{64}', entry.get('sha256', '')):
             raise ValueError('Every artifact needs a SHA-256 pin')
         if not entry.get('url', '').startswith('https://'):
@@ -55,6 +89,21 @@ def validate(manifest):
         if entry['phase'] != expected:
             raise ValueError('Runtime and SDK phases must remain separate')
     return manifest
+
+
+def module_commands(name, phase, directory, binary=None):
+    """Fixed commands only; manifests select reviewed suites, never shell text."""
+    test_name = 'uuid-test.qtest' if name == 'uuid' else 'process.qtest'
+    commands = [('tests', ['qore', '-b', '--enable-debug',
+                           str(directory / 'test' / test_name), '-v'])]
+    if phase == 'sdk':
+        commands.append(('compiler', [str(directory / 'debian/tests/compiler')]))
+        if name == 'process':
+            if binary is None or not binary.is_absolute() or binary.suffix != '.qmod':
+                raise ValueError('Process SDK checks require the installed module path')
+            commands.append(('state', ['python3', '-B', '-W', 'error',
+                str(directory / 'test/run-process-state.py'), '--module', str(binary)]))
+    return commands
 
 
 def install_command(family, paths):
@@ -83,9 +132,9 @@ def qualify(manifest, output):
     result = {'manifest': manifest, 'machine': platform.machine(),
               'runner_arch': os.environ.get('CI_RUNNER_EXECUTABLE_ARCH'), 'steps': []}
 
-    def run(name, command):
+    def run(name, command, cwd=None):
         with (output / (name + '.log')).open('w') as log:
-            process = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT)
+            process = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, cwd=cwd)
         result['steps'].append({'name': name, 'command': command, 'exit_code': process.returncode})
         print(name, process.returncode, flush=True)
         process.check_returncode()
@@ -104,6 +153,12 @@ def qualify(manifest, output):
                 path = source / entry['path']
                 fetch_source(entry['url'], entry['sha256'], path)
                 path.chmod(0o755 if entry['path'].startswith('rpm/') else 0o644)
+            for entry in manifest.get('modules', []):
+                for fixture in entry['fixtures']:
+                    path = source / ('module-' + entry['name']) / fixture['path']
+                    fetch_source(fixture['url'], fixture['sha256'], path)
+                    path.chmod(0o755 if path.suffix in ('.q', '.qtest', '.py')
+                               or fixture['path'] == 'debian/tests/compiler' else 0o644)
             run('create-user', ['useradd', '-M', '-U', 'qoretester'])
             for name in ('qore', 'qore-devel', 'gcc', 'gcc-c++'):
                 probe = subprocess.run(['rpm', '-q', name], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -115,6 +170,8 @@ def qualify(manifest, output):
                 if phase == 'sdk':
                     # cmake is a fixture tool, not a runtime requirement.
                     paths.append('cmake')
+                if any(entry['name'] == 'process' for entry in manifest.get('modules', [])):
+                    paths.append('procps' if manifest['family'] == 'suse' else 'procps-ng')
                 run(phase + '-install', install_command(manifest['family'], paths))
                 names = [entry['name'] for entry in entries]
                 run(phase + '-rpm-verify', ['rpm', '-V', *names])
@@ -130,6 +187,25 @@ def qualify(manifest, output):
                     subprocess.run(['chown', 'qoretester:qoretester', str(directory)], check=True)
                     run(phase + '-' + suite, ['runuser', '-u', 'qoretester', '--', 'env',
                         'QORE_RPM_TEST_TMP=' + str(directory), str(source / 'rpm/tests-installed' / suite)])
+                for entry in manifest.get('modules', []):
+                    name = entry['name']
+                    directory = root / (phase + '-' + name)
+                    shutil.copytree(source / ('module-' + name), directory)
+                    subprocess.run(['chown', '-R', 'qoretester:qoretester', str(directory)], check=True)
+                    binary = None
+                    if phase == 'sdk' and name == 'process':
+                        files = subprocess.check_output(['rpm', '-ql', 'qore-process-module'], text=True)
+                        binaries = [Path(p) for p in files.splitlines() if p.endswith('.qmod')]
+                        if len(binaries) != 1:
+                            raise ValueError('Expected one installed process binary module')
+                        binary = binaries[0]
+                    environment = ['runuser', '-u', 'qoretester', '--', 'env']
+                    for variable in ('QORE_MODULE_DIR', 'QORE_MODULE_DIR_ONLY', 'QORE_INCLUDE_DIR',
+                                     'LD_LIBRARY_PATH', 'LD_PRELOAD'):
+                        environment.extend(['-u', variable])
+                    environment.append('AUTOPKGTEST_TMP=' + str(directory))
+                    for suite, command in module_commands(name, phase, directory, binary):
+                        run(phase + '-' + name + '-' + suite, environment + command, cwd=directory)
         result['exit_code'] = 0
     except BaseException as error:
         result.update(exit_code=1, error=repr(error))

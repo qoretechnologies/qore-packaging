@@ -671,6 +671,19 @@ qcc, metadata extraction, utilities and debugger startup. Logs and package
 inventories are retained as CI artifacts. Never run this installation tool
 on a workstation; use a fresh disposable distribution container.
 
+For the first external-module wave, start a pipeline with
+``RPM_NATIVE_QUALIFICATION=modules1`` (and optionally ``RPM_NATIVE_TARGET``).
+The ``rpm-modules-*-arm64`` jobs use the same qualified core and add SHA-256
+pinned UUID and process RPMs. Fixture inventories are complete and bound to
+each module's immutable Git revision. Both runtime and SDK phases run the UUID
+and process functional suites with debugging enabled; the SDK also runs each
+module's qcc smoke test and all 13 process PID-state fault-injection cases.
+Those injected cases compile a C fixture and therefore run only after the SDK
+is installed. Download verification completes before any package installation.
+The runner rejects unknown suites, duplicate or missing fixtures, crossed
+repository revisions, unsafe paths and missing runtime packages. The existing
+core ONNX inference and SDK tests still run in these combined installations.
+
 Release 21 native ARM evidence is recorded in
 ``evidence/core21-native-arm-installed-20261003.json``. Fedora 44, Leap 16 and
 AlmaLinux 10 all passed the 400 OBS suites and installed runtime/SDK qualification,
