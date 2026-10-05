@@ -1,0 +1,74 @@
+relaying data between gdb and process 32
+warning: remote target does not support file transfer, attempting to access files from local filesystem.
+Loaded /usr/share/gdb/auto-load/valgrind-monitor.py
+Type "help valgrind" for more info.
+0x000000000fba7633 in ?? ()
+#0  0x000000000fba7633 in ?? ()
+#1  0x0000000000000000 in ?? ()
+0x1026f1a0:	"/fixture/module-odbc/test/array-binding.qtest"
+0x1ffeffd060:	0x0000000000000000	0x0000000000000000
+0x1ffeffd070:	0x0000000000000000	0x0000000a0000000a
+0x1ffeffd080:	0x0000000000989681	0x000000001026f19f
+0x1ffeffd090:	0x0000000000000000	0x000000001026f19f
+0x1ffeffd0a0:	0x0000000010274228	0x0000000000000000
+0x1ffeffd0b0:	0x0000001ffeffd1b0	0x000000001026f1a0
+0x1ffeffd0c0:	0x00000000102741a0	0x000000000000002d
+0x1ffeffd0d0:	0x0000000010276540	0x0000000006780225
+0x1ffeffd0e0:	0x0000000000000000	0x0000000000000000
+0x1ffeffd0f0:	0x0000000000000000	0x0000000000000000
+0x1ffeffd100:	0x00000000102738e0	0x000000001026f1a0
+0x1ffeffd110:	0x000000001026f1a0	0x000000001026f1cd
+0x1ffeffd120:	0x0000000010276540	0x000000001026f1a0
+0x1ffeffd130:	0x0000000000000000	0x0000000000000000
+0x1ffeffd140:	0x0000000000000000	0xffffffffffffffff
+0x1ffeffd150:	0x0000000200989680	0x0000000000000000
+0x1ffeffd160:	0x0000000000000000	0x0000000000000000
+0x1ffeffd170:	0x0000000000000000	0x2a2210cba1807e00
+0x1ffeffd180:	0x0000000000000000	0x000000001026f1a0
+0x1ffeffd190:	0x0000000000000000	0x000000001026f1a0
+0x1ffeffd100:	0x00000000102738e0	0x000000001026f1a0
+0x1ffeffd110:	0x000000001026f1a0	0x000000001026f1cd
+0x1ffeffd120:	0x0000000010276540	0x000000001026f1a0
+0x1ffeffd130:	0x0000000000000000	0x0000000000000000
+   0xfba761b:	loope  0xfba762c
+   0xfba761d:	movdqa (%rsi),%xmm0
+   0xfba7621:	pcmpeqb %xmm1,%xmm0
+   0xfba7625:	pmovmskb %xmm0,%eax
+   0xfba7629:	add    %rcx,%rsi
+   0xfba762c:	shr    %cl,%rax
+   0xfba762f:	cmp    $0x0,%rax
+=> 0xfba7633:	jne    0xfba7657
+   0xfba7635:	sub    %rcx,%rsi
+   0xfba7638:	add    $0x10,%rsi
+   0xfba763c:	cmp    %rbx,%rsi
+   0xfba763f:	jae    0xfba7733
+   0xfba7645:	movdqa (%rsi),%xmm0
+   0xfba7649:	pcmpeqb %xmm1,%xmm0
+   0xfba764d:	pmovmskb %xmm0,%eax
+   0xfba7651:	cmp    $0x0,%rax
+rax            0x0                 0
+rbx            0x1026f1cd          270987725
+rcx            0x8                 8
+rdx            0x6d6d6d6d          1835887981
+rsi            0x1026f1c8          270987720
+rdi            0x1026f1c7          270987719
+rbp            0x1ffeffd100        0x1ffeffd100
+rsp            0x1ffeffd060        0x1ffeffd060
+r8             0x0                 0
+r9             0xfba7480           263877760
+r10            0x10276540          271017280
+r11            0x102737e0          271005664
+r12            0x1                 1
+r13            0x1026f1a0          270987680
+r14            0x10545000          273960960
+r15            0x1054d000          273993728
+rip            0xfba7633           0xfba7633
+eflags         0x44                [ PF ZF ]
+cs             0x0                 0
+ss             0x0                 0
+ds             0x0                 0
+es             0x0                 0
+fs             0x0                 0
+gs             0x0                 0
+vgdb-error value changed from 1 to 999999
+[Inferior 1 (Remote target) detached]

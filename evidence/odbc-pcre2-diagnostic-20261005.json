@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-05",
+  "approval": "Approved by the user on 2026-10-05: Allow this narrow diagnostic. No suppression or JIT disabling.",
+  "scope": "AlmaLinux 10 PCRE2 10.44 x86_64 JIT vector suffix scan for QUnit script-name pattern \\.qm$.",
+  "root_cause": "QUnit tests the script path against \\.qm$. GDB stops in generated SSE pcmpeqb/pmovmskb code: its first branch inspects bytes past the logical subject end, before subsequent bounds validation discards those candidate positions. The script-name allocation has undefined spare capacity. A standalone PCRE2 program reproduces the reports without Qore or ODBC.",
+  "proof": {
+    "pattern": "\\.qm$",
+    "subject": "/fixture/module-odbc/test/array-binding.qtest",
+    "cases": 8192,
+    "dimensions": "16 alignments x 256 padding values x positive/negative suffix",
+    "undefined_padding": "All results correct, all 25 allocations freed; Valgrind reports the same generated-code branch family.",
+    "defined_padding": "Every possible byte value in spare capacity gives the same expected results; Valgrind zero errors and all allocations freed.",
+    "qore_control": "10,000 regex iterations reproduce the site independently of ODBC.",
+    "odbc_functional": "Final tests: 28 array cases/55 assertions, eight existing cases/99 assertions, and one native fault-injection case/two assertions pass on Fedora, Leap and AlmaLinux; 12 native buffer-size boundary cases also pass."
+  },
+  "exclusions": [
+    "Any invalid access, lost allocation, growing diagnostic site, or incorrect match result.",
+    "Any other PCRE2 pattern or distribution until independently classified.",
+    "unixODBC/libltdl shutdown allocations are covered separately by the approved odbc-loader-diagnostics-20261005.json scope."
+  ],
+  "upstream_context": [
+    "https://groups.google.com/g/pcre2-dev/c/5ezMLhcEu14"
+  ],
+  "sha256": {
+    "evidence/controls/odbc-pcre2-20261005/pcre-control-undefined.log": "5ebd87430ed646e5f84e4981e69441a4bf4102f9b297f94665123b64ad3d4979",
+    "evidence/controls/odbc-pcre2-20261005/debug-valgrind-gdb2.log": "71572b93aa2fce0c9da81488d06f737430a6957dba54ae11b32a8c14a2b2b86b",
+    "evidence/controls/odbc-pcre2-20261005/pcre-control.c": "ae7438274bc2be04bc7107746dc304c90f94c2c81ef0c55be9aa1a67bccf41a7",
+    "evidence/controls/odbc-pcre2-20261005/pcre-control-defined.log": "c0347447acb5e0f2dde56c61a2989d34368d9db7a79ac9d1fe657c9854b00417",
+    "evidence/controls/odbc-pcre2-20261005/pcre-probe.qr": "0213b2fcbb82955b75122d0148fdef577508738dbc0935e3f673394ba738cb79"
+  }
+}

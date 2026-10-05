@@ -354,6 +354,15 @@ See ``evidence/nats-account-gateway-20261004.json`` and
 ``evidence/nats-shutdown-drain-20261003.json`` and
 ``evidence/nats-no-interest-fixture-20261003.json``.
 
+ODBC 2.0.0 now passes canonical RPM builds and installed runtime/SDK checks on
+all three x86_64 targets, including nullable arrays, empty buffers, binding-failure
+recovery and a compiled database consumer. All 37 Qore cases (156 assertions),
+12 native size-boundary cases and six fixture tests pass. Leap package lint has
+zero errors or warnings. Valgrind retains only the separately approved PCRE2
+and unixODBC/libltdl diagnostics; distribution libraries are retained. Native
+OBS qualification remains required. See
+``evidence/odbc-array-qualification-20261005.json``.
+
 Combined installation exposes the designed ProviderIndexUtil source-selection
 diagnostic when msgpack is added. Its qualification diagnostic exception is
 explicitly approved and documented. The remaining modules, target matrix and

@@ -1,0 +1,178 @@
+==179== Memcheck, a memory error detector
+==179== Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.
+==179== Using Valgrind-3.26.0 and LibVEX; rerun with -h for copyright info
+==179== Command: qore -b --enable-debug -l /fixture/module-odbc/build-debug/odbc-api-2.0.qmod /fixture/odbc-numeric-lifetimes.qr 1
+==179== Parent PID: 158
+==179== 
+==179== 
+==179== FILE DESCRIPTORS: 3 open (3 inherited) at exit.
+==179== 
+==179== HEAP SUMMARY:
+==179==     in use at exit: 528,334 bytes in 8,095 blocks
+==179==   total heap usage: 106,191 allocs, 98,096 frees, 9,574,076 bytes allocated
+==179== 
+==179== 7 bytes in 1 blocks are indirectly lost in loss record 10 of 3,013
+==179==    at 0x488087E: malloc (vg_replace_malloc.c:447)
+==179==    by 0xF481B10: lt__malloc (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF48442A: ??? (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF4851F6: lt_dlopenadvise (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF48545D: lt_dlpreload_open (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF3FBFBA: __connect_part_one (SQLConnect.c:1167)
+==179==    by 0xF407ABD: SQLDriverConnect (SQLDriverConnect.c:1403)
+==179==    by 0xF406526: SQLDriverConnectA (SQLDriverConnect.c:669)
+==179==    by 0xF37DFC9: odbc::ODBCConnection::connect(ExceptionSink*) (ODBCConnection.cpp:188)
+==179==    by 0xF37DA19: odbc::ODBCConnection::ODBCConnection(Datasource*, ExceptionSink*) (ODBCConnection.cpp:71)
+==179==    by 0xF37B9CC: odbc_open(Datasource*, ExceptionSink*) (odbc-module.cpp:94)
+==179==    by 0x4DA8C2F: Datasource::open(ExceptionSink*) (in /usr/lib64/libqore.so.20.0.0)
+==179== 
+==179== 9 bytes in 1 blocks are indirectly lost in loss record 19 of 3,013
+==179==    at 0x488087E: malloc (vg_replace_malloc.c:447)
+==179==    by 0xF481B10: lt__malloc (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF481EC8: lt__memdup (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF482607: ??? (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF484C52: ??? (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF4851F6: lt_dlopenadvise (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF48545D: lt_dlpreload_open (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF3FBFBA: __connect_part_one (SQLConnect.c:1167)
+==179==    by 0xF407ABD: SQLDriverConnect (SQLDriverConnect.c:1403)
+==179==    by 0xF406526: SQLDriverConnectA (SQLDriverConnect.c:669)
+==179==    by 0xF37DFC9: odbc::ODBCConnection::connect(ExceptionSink*) (ODBCConnection.cpp:188)
+==179==    by 0xF37DA19: odbc::ODBCConnection::ODBCConnection(Datasource*, ExceptionSink*) (ODBCConnection.cpp:71)
+==179== 
+==179== 10 bytes in 1 blocks are indirectly lost in loss record 21 of 3,013
+==179==    at 0x488087E: malloc (vg_replace_malloc.c:447)
+==179==    by 0xF481B10: lt__malloc (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF48442A: ??? (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF4851F6: lt_dlopenadvise (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF3FB742: odbc_dlopen (SQLConnect.c:842)
+==179==    by 0xF3FC020: __connect_part_one (SQLConnect.c:1182)
+==179==    by 0xF407ABD: SQLDriverConnect (SQLDriverConnect.c:1403)
+==179==    by 0xF406526: SQLDriverConnectA (SQLDriverConnect.c:669)
+==179==    by 0xF37DFC9: odbc::ODBCConnection::connect(ExceptionSink*) (ODBCConnection.cpp:188)
+==179==    by 0xF37DA19: odbc::ODBCConnection::ODBCConnection(Datasource*, ExceptionSink*) (ODBCConnection.cpp:71)
+==179==    by 0xF37B9CC: odbc_open(Datasource*, ExceptionSink*) (odbc-module.cpp:94)
+==179==    by 0x4DA8C2F: Datasource::open(ExceptionSink*) (in /usr/lib64/libqore.so.20.0.0)
+==179== 
+==179== 16 bytes in 1 blocks are indirectly lost in loss record 39 of 3,013
+==179==    at 0x488087E: malloc (vg_replace_malloc.c:447)
+==179==    by 0xF485889: lt__slist_box (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF4858F4: lt_dlloader_add (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF48599A: ??? (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF485AA6: lt_dlinit (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF3FBFBA: __connect_part_one (SQLConnect.c:1167)
+==179==    by 0xF407ABD: SQLDriverConnect (SQLDriverConnect.c:1403)
+==179==    by 0xF406526: SQLDriverConnectA (SQLDriverConnect.c:669)
+==179==    by 0xF37DFC9: odbc::ODBCConnection::connect(ExceptionSink*) (ODBCConnection.cpp:188)
+==179==    by 0xF37DA19: odbc::ODBCConnection::ODBCConnection(Datasource*, ExceptionSink*) (ODBCConnection.cpp:71)
+==179==    by 0xF37B9CC: odbc_open(Datasource*, ExceptionSink*) (odbc-module.cpp:94)
+==179==    by 0x4DA8C2F: Datasource::open(ExceptionSink*) (in /usr/lib64/libqore.so.20.0.0)
+==179== 
+==179== 16 bytes in 1 blocks are definitely lost in loss record 40 of 3,013
+==179==    at 0x488087E: malloc (vg_replace_malloc.c:447)
+==179==    by 0xF481B10: lt__malloc (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF481D54: lt__zalloc (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF481DD0: lt_dlpreload (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF485ABB: lt_dlinit (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF3FBFBA: __connect_part_one (SQLConnect.c:1167)
+==179==    by 0xF407ABD: SQLDriverConnect (SQLDriverConnect.c:1403)
+==179==    by 0xF406526: SQLDriverConnectA (SQLDriverConnect.c:669)
+==179==    by 0xF37DFC9: odbc::ODBCConnection::connect(ExceptionSink*) (ODBCConnection.cpp:188)
+==179==    by 0xF37DA19: odbc::ODBCConnection::ODBCConnection(Datasource*, ExceptionSink*) (ODBCConnection.cpp:71)
+==179==    by 0xF37B9CC: odbc_open(Datasource*, ExceptionSink*) (odbc-module.cpp:94)
+==179==    by 0x4DA8C2F: Datasource::open(ExceptionSink*) (in /usr/lib64/libqore.so.20.0.0)
+==179== 
+==179== 24 bytes in 1 blocks are indirectly lost in loss record 533 of 3,013
+==179==    at 0x488087E: malloc (vg_replace_malloc.c:447)
+==179==    by 0xF481B10: lt__malloc (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF481EC8: lt__memdup (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF482607: ??? (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF484A3D: ??? (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF4851F6: lt_dlopenadvise (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF3FB742: odbc_dlopen (SQLConnect.c:842)
+==179==    by 0xF3FC020: __connect_part_one (SQLConnect.c:1182)
+==179==    by 0xF407ABD: SQLDriverConnect (SQLDriverConnect.c:1403)
+==179==    by 0xF406526: SQLDriverConnectA (SQLDriverConnect.c:669)
+==179==    by 0xF37DFC9: odbc::ODBCConnection::connect(ExceptionSink*) (ODBCConnection.cpp:188)
+==179==    by 0xF37DA19: odbc::ODBCConnection::ODBCConnection(Datasource*, ExceptionSink*) (ODBCConnection.cpp:71)
+==179== 
+==179== 72 bytes in 1 blocks are indirectly lost in loss record 2,845 of 3,013
+==179==    at 0x488087E: malloc (vg_replace_malloc.c:447)
+==179==    by 0xF481B10: lt__malloc (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF481D54: lt__zalloc (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF482239: preopen_LTX_get_vtable (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF485988: ??? (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF485AA6: lt_dlinit (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF3FBFBA: __connect_part_one (SQLConnect.c:1167)
+==179==    by 0xF407ABD: SQLDriverConnect (SQLDriverConnect.c:1403)
+==179==    by 0xF406526: SQLDriverConnectA (SQLDriverConnect.c:669)
+==179==    by 0xF37DFC9: odbc::ODBCConnection::connect(ExceptionSink*) (ODBCConnection.cpp:188)
+==179==    by 0xF37DA19: odbc::ODBCConnection::ODBCConnection(Datasource*, ExceptionSink*) (ODBCConnection.cpp:71)
+==179==    by 0xF37B9CC: odbc_open(Datasource*, ExceptionSink*) (odbc-module.cpp:94)
+==179== 
+==179== 72 bytes in 1 blocks are indirectly lost in loss record 2,846 of 3,013
+==179==    at 0x488087E: malloc (vg_replace_malloc.c:447)
+==179==    by 0xF481B10: lt__malloc (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF481D54: lt__zalloc (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF483059: dlopen_LTX_get_vtable (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF485988: ??? (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF48546F: lt_dlpreload_open (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF3FBFBA: __connect_part_one (SQLConnect.c:1167)
+==179==    by 0xF407ABD: SQLDriverConnect (SQLDriverConnect.c:1403)
+==179==    by 0xF406526: SQLDriverConnectA (SQLDriverConnect.c:669)
+==179==    by 0xF37DFC9: odbc::ODBCConnection::connect(ExceptionSink*) (ODBCConnection.cpp:188)
+==179==    by 0xF37DA19: odbc::ODBCConnection::ODBCConnection(Datasource*, ExceptionSink*) (ODBCConnection.cpp:71)
+==179==    by 0xF37B9CC: odbc_open(Datasource*, ExceptionSink*) (odbc-module.cpp:94)
+==179== 
+==179== 88 bytes in 1 blocks are indirectly lost in loss record 2,861 of 3,013
+==179==    at 0x488087E: malloc (vg_replace_malloc.c:447)
+==179==    by 0xF481B10: lt__malloc (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF481D54: lt__zalloc (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF484BB2: ??? (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF4851F6: lt_dlopenadvise (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF48545D: lt_dlpreload_open (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF3FBFBA: __connect_part_one (SQLConnect.c:1167)
+==179==    by 0xF407ABD: SQLDriverConnect (SQLDriverConnect.c:1403)
+==179==    by 0xF406526: SQLDriverConnectA (SQLDriverConnect.c:669)
+==179==    by 0xF37DFC9: odbc::ODBCConnection::connect(ExceptionSink*) (ODBCConnection.cpp:188)
+==179==    by 0xF37DA19: odbc::ODBCConnection::ODBCConnection(Datasource*, ExceptionSink*) (ODBCConnection.cpp:71)
+==179==    by 0xF37B9CC: odbc_open(Datasource*, ExceptionSink*) (odbc-module.cpp:94)
+==179== 
+==179== 176 (16 direct, 160 indirect) bytes in 1 blocks are definitely lost in loss record 2,900 of 3,013
+==179==    at 0x488087E: malloc (vg_replace_malloc.c:447)
+==179==    by 0xF485889: lt__slist_box (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF4858F4: lt_dlloader_add (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF48599A: ??? (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF48546F: lt_dlpreload_open (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF3FBFBA: __connect_part_one (SQLConnect.c:1167)
+==179==    by 0xF407ABD: SQLDriverConnect (SQLDriverConnect.c:1403)
+==179==    by 0xF406526: SQLDriverConnectA (SQLDriverConnect.c:669)
+==179==    by 0xF37DFC9: odbc::ODBCConnection::connect(ExceptionSink*) (ODBCConnection.cpp:188)
+==179==    by 0xF37DA19: odbc::ODBCConnection::ODBCConnection(Datasource*, ExceptionSink*) (ODBCConnection.cpp:71)
+==179==    by 0xF37B9CC: odbc_open(Datasource*, ExceptionSink*) (odbc-module.cpp:94)
+==179==    by 0x4DA8C2F: Datasource::open(ExceptionSink*) (in /usr/lib64/libqore.so.20.0.0)
+==179== 
+==179== 226 (88 direct, 138 indirect) bytes in 1 blocks are definitely lost in loss record 2,906 of 3,013
+==179==    at 0x488087E: malloc (vg_replace_malloc.c:447)
+==179==    by 0xF481B10: lt__malloc (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF481D54: lt__zalloc (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF4849F9: ??? (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF4851F6: lt_dlopenadvise (in /usr/lib64/libltdl.so.7.3.2)
+==179==    by 0xF3FB742: odbc_dlopen (SQLConnect.c:842)
+==179==    by 0xF3FC020: __connect_part_one (SQLConnect.c:1182)
+==179==    by 0xF407ABD: SQLDriverConnect (SQLDriverConnect.c:1403)
+==179==    by 0xF406526: SQLDriverConnectA (SQLDriverConnect.c:669)
+==179==    by 0xF37DFC9: odbc::ODBCConnection::connect(ExceptionSink*) (ODBCConnection.cpp:188)
+==179==    by 0xF37DA19: odbc::ODBCConnection::ODBCConnection(Datasource*, ExceptionSink*) (ODBCConnection.cpp:71)
+==179==    by 0xF37B9CC: odbc_open(Datasource*, ExceptionSink*) (odbc-module.cpp:94)
+==179== 
+==179== LEAK SUMMARY:
+==179==    definitely lost: 120 bytes in 3 blocks
+==179==    indirectly lost: 298 bytes in 8 blocks
+==179==      possibly lost: 0 bytes in 0 blocks
+==179==    still reachable: 527,916 bytes in 8,084 blocks
+==179==         suppressed: 0 bytes in 0 blocks
+==179== Reachable blocks (those to which a pointer was found) are not shown.
+==179== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==179== 
+==179== For lists of detected and suppressed errors, rerun with: -s
+==179== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)

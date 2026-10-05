@@ -1,0 +1,715 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-05",
+  "status": "Committed and pushed; canonical RPM builds, installed runtime/SDK, native fault/boundary tests, compiled consumer and directory checks pass on all three x86_64 targets. Leap package lint has zero warnings/errors. OBS native qualification remains required.",
+  "base_commit": "db13764",
+  "fixes": [
+    "Bind all-NULL arrays and preserve per-element float/boolean NULL indicators.",
+    "Propagate a failed scalar NULL SQLBindParameter immediately.",
+    "Reject heterogeneous and mixed absolute/relative date arrays with recoverable exceptions.",
+    "Use nonzero storage for empty string/binary arrays and broadcasts; check multiplication overflow.",
+    "Check cooperative cancellation in changed classification and buffer-construction loops."
+  ],
+  "tests": {
+    "fedora": {
+      "exit_code": 0,
+      "qore_cases": 37,
+      "qore_assertions": 156,
+      "native_boundary_cases": 12,
+      "image": "sha256:d5954a3bb0dff63e6fa96f3b494bee9b4859b96cd43ca4a601261d7af47a5f7b",
+      "result": "results/fedora-odbc-array-candidate-3/build.json",
+      "log_sha256": "2c444dd88a0ff0758f1ccfdf1250ba94c8352e35e05aca348259483fccf19823"
+    },
+    "leap": {
+      "exit_code": 0,
+      "qore_cases": 37,
+      "qore_assertions": 156,
+      "native_boundary_cases": 12,
+      "image": "sha256:83ca779956aef83648ae237ae2e2d52514c69bd229936d7c3cad757f5b149ad7",
+      "result": "results/leap-odbc-array-candidate-3/build.json",
+      "log_sha256": "925efd11cf662443d35b39acec7bfad86ce6515639b0087f9e9dacae86ce278a"
+    },
+    "el10": {
+      "exit_code": 0,
+      "qore_cases": 37,
+      "qore_assertions": 156,
+      "native_boundary_cases": 12,
+      "image": "sha256:cc7f4177bcda12b85dbd4cc0ebd8ca64794a86677262deda4288372c31cb7dd2",
+      "result": "results/el10-odbc-array-candidate-3/build.json",
+      "log_sha256": "3ddfbe300de0d1070cc2025926e34e7fab1c3c52b2dfbc53da526e1b3f7e6c6f"
+    }
+  },
+  "fixture_tests": "results/odbc-fixture-final-20261005.log includes new invalid-argument tests; code tested after the RPM candidates completed.",
+  "before_controls": [
+    "results/odbc-empty-binary-before-20261005.log",
+    "work/odbc-array-fix-2/isolate-loader-empty-binary-before.log",
+    "work/odbc-array-null-control-1/ArrayNull.qtest"
+  ],
+  "valgrind": {
+    "array_boundary": "0 errors, all allocations freed",
+    "binding_failure": "0 lost bytes; only the approved PCRE2 JIT script-name branch",
+    "all_28_cases": "No native invalid access or descriptor leak; 264 definite + 3801 indirect bytes at the approved five unixODBC/libltdl shutdown contexts, plus the approved PCRE2 branch",
+    "approvals": [
+      "evidence/odbc-pcre2-diagnostic-20261005.json",
+      "evidence/odbc-loader-diagnostics-20261005.json"
+    ]
+  },
+  "source_files_sha256": {
+    "src/ODBCArraySize.h": "ee2b4dabae90d8f88526548d2d582486519b7a19e608f818481932c70c515587",
+    "test/native/array-size.cpp": "20f2a4e5c43b0b22c9bdf793768f05b967a1b93adfeb3f2976cc2a850d0792f5",
+    "src/ODBCStatement.cpp": "ffca3d1394b962c4614b077ad9a3c5a084de90b12d43fab69e959b46ee7c098d",
+    "test/array-binding.qtest": "902beaf31dc00dadbb7998bf70e1c67450db15e7b0615e55f3d7f2db73690ab8",
+    "docs/guide-odbcbind.dox.tmpl": "ba43fdbe59752145a3a1384e2f0d6adddc7f9fc1dec77ec684b0738ecd52c17e",
+    "docs/guide-odbcreleasenotes.dox.tmpl": "7f3389ae6e6e413aa5daaea74ee6c82c450d19148da0b6dbb02c62854f223370",
+    "rpm/run-suites": "2b0511468aa62cc2c3d63af6fe6d27a243ebfd0dfda0c29c922d6b82be242813",
+    "rpm/test-postgres": "df468bc153216a55a54eba416c01815eddce3520e7bab1a14bc25e377de4bdef",
+    "qore-odbc-module.spec": "4f3c47759f8169f64e83d6acb6c2b757a0e80b34c9ba2608eaecffcc03be98fc",
+    "test/native/bind-failure.cpp": "6da740a2d224027cf3d670b04dafc9154ce5baa1c2242d44d2b6b7002ab176fc",
+    "test/native/bind-failure.qtest": "8c46b2b64bb5bafe7467fcfc5de41ae3a6f286e421dd98217cf9bf0dd981c108",
+    "test/native/run-bind-failure.py": "348d3c49e374d5ee75bb8c83c2a2ad9c00f07eb0592a5e2febe1ad9052387488",
+    "test/native/README.rst": "f5e96834c97848b5e3cf7f240d930b8972c48cdc71ca48218a5e8cccd4ed5b8b",
+    "rpm/test_postgres_fixture.py": "6653079af99a267e15ef3d9753dd779c2c55747c55046fb1c4c48c71d4faad7c"
+  },
+  "control_sha256": {
+    "evidence/controls/odbc-array-20261005/valgrind-array-size.log": "fbbf07d47ff85dedd3aea108a196cdf9a8bfc7aa44e6daf074a2b52d836e5b99",
+    "evidence/controls/odbc-array-20261005/valgrind-bind-failure.log": "7a8cbd3dec3bcdcbac3c534327fc30dfef9385630bee95c56f8a1901eb7ea0ac",
+    "evidence/controls/odbc-array-20261005/valgrind-final.log": "c15bfbe7319c71bb7f2f07f543e1d41949b1ef74b2dc4c19776c14ba16bd72d4"
+  },
+  "commit": "e8adf65af26fcc4cf8bccc46f8df051163bced15",
+  "canonical": {
+    "fedora": {
+      "build": "results/fedora-odbc-array-final-20261005/build.json",
+      "source": {
+        "schema": 1,
+        "commit": "e8adf65af26fcc4cf8bccc46f8df051163bced15",
+        "source_date_epoch": 1791200110,
+        "name": "qore-odbc-module",
+        "version": "2.0.0",
+        "exclusions": [],
+        "sources": {
+          "qore-odbc-module-2.0.0.tar.xz": "ff52af847a01fb5856423547c2c305b4aede3b23d04657c7cb713b1700d22975",
+          "qore-odbc-module.spec": "4f3c47759f8169f64e83d6acb6c2b757a0e80b34c9ba2608eaecffcc03be98fc"
+        },
+        "spec": "qore-odbc-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-odbc-module-doc-2.0.0-1.fc44.noarch.rpm": "ef0781fb6ca8fd90dc54245f4577b10caaa178dcb43bb63866b6f9a04eaa6803",
+        "rpmbuild/RPMS/x86_64/qore-odbc-module-2.0.0-1.fc44.x86_64.rpm": "d2ab46be73ca36ad390f3f2b9a7ac11fa0b8d95224f2c0f26d4976c22c2926cb",
+        "rpmbuild/RPMS/x86_64/qore-odbc-module-debuginfo-2.0.0-1.fc44.x86_64.rpm": "b971c418a2151bdbe6da4251f1bdce7309c13f4f5415fadac027c0e54fec0848",
+        "rpmbuild/RPMS/x86_64/qore-odbc-module-debugsource-2.0.0-1.fc44.x86_64.rpm": "3a3d67ba6bb6823c2525cc838e8e30cefde6e524b732ab1b0ee1397b8c46bb3e",
+        "rpmbuild/SRPMS/qore-odbc-module-2.0.0-1.fc44.src.rpm": "4beadf259d4a81f0a5be42f5c9937282ac2d2644b8b294a0d5608997c28e1330"
+      },
+      "installed": {
+        "source": {
+          "schema": 1,
+          "commit": "e8adf65af26fcc4cf8bccc46f8df051163bced15",
+          "source_date_epoch": 1791200110,
+          "name": "qore-odbc-module",
+          "version": "2.0.0",
+          "exclusions": [],
+          "sources": {
+            "qore-odbc-module-2.0.0.tar.xz": "ff52af847a01fb5856423547c2c305b4aede3b23d04657c7cb713b1700d22975",
+            "qore-odbc-module.spec": "4f3c47759f8169f64e83d6acb6c2b757a0e80b34c9ba2608eaecffcc03be98fc"
+          },
+          "spec": "qore-odbc-module.spec"
+        },
+        "steps": [
+          {
+            "name": "runtime-install",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-fedora-odbc-array-installed-runtime-20261005",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-odbc-array-final-20261005:/rpms:ro",
+              "sha256:aaaaf5f3762f55166492464a0d4d5655fd242e4b34393fdd857973aebec6a892",
+              "dnf",
+              "-y",
+              "--setopt=localpkg_gpgcheck=False",
+              "--setopt=install_weak_deps=False",
+              "install",
+              "python3",
+              "postgresql-server",
+              "postgresql-odbc",
+              "/rpms/rpmbuild/RPMS/noarch/qore-odbc-module-doc-2.0.0-1.fc44.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-2.0.0-1.fc44.x86_64.rpm"
+            ]
+          },
+          {
+            "name": "runtime-tests",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/odbc-array-installed-20261005/qore-odbc-module-2.0.0:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-odbc-array-final-20261005:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+              "sha256:76404df72b068a733950cb99bcc22d058298d27191a4d8de6043e9947b5979fe",
+              "sh",
+              "-ec",
+              "rpm -V qore-odbc-module qore-odbc-module-doc\nfor p in qore-devel gcc gcc-c++ unixODBC-devel; do if rpm -q \"$p\"; then exit 1; fi; done\ncd /source\nQORE_RPM_TEST_TMP=/tmp/odbc-installed rpm/tests-installed-runtime\n"
+            ]
+          },
+          {
+            "name": "sdk-install",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-fedora-odbc-array-installed-sdk-20261005",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-odbc-array-final-20261005:/rpms:ro",
+              "sha256:22917630c8cdf6c560df78b09c1f5c3dd28ca6f26e5b00027a895954dc90e64d",
+              "dnf",
+              "-y",
+              "--setopt=localpkg_gpgcheck=False",
+              "--setopt=install_weak_deps=False",
+              "install",
+              "python3",
+              "postgresql-server",
+              "postgresql-odbc",
+              "unixODBC-devel",
+              "/rpms/rpmbuild/RPMS/noarch/qore-odbc-module-doc-2.0.0-1.fc44.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-2.0.0-1.fc44.x86_64.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-debuginfo-2.0.0-1.fc44.x86_64.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-debugsource-2.0.0-1.fc44.x86_64.rpm"
+            ]
+          },
+          {
+            "name": "sdk-tests",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/odbc-array-installed-20261005/qore-odbc-module-2.0.0:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-odbc-array-final-20261005:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+              "sha256:8b7fc1383acceb7fb0f94ffe6ca00d77290dc468901b340c24ea62ad3d8da578",
+              "sh",
+              "-ec",
+              "rpm -V qore-odbc-module qore-odbc-module-doc\ncd /source\nQORE_RPM_TEST_TMP=/tmp/odbc-installed rpm/tests-installed-runtime\n"
+            ]
+          },
+          {
+            "name": "sdk-native-and-compiler",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/odbc-array-installed-20261005/qore-odbc-module-2.0.0:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-odbc-array-final-20261005:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+              "sha256:8b7fc1383acceb7fb0f94ffe6ca00d77290dc468901b340c24ea62ad3d8da578",
+              "sh",
+              "-ec",
+              "module=$(find /usr/lib64/qore-modules -maxdepth 1 -name 'odbc-api-*.qmod')\nexport QORE_ODBC_BINARY_MODULE=\"$module\"\n/source/rpm/test-postgres /source/test --native\ncd /tmp\nqcc -o odbc-smoke /source/odbc-smoke.q\ndriver=$(rpm -ql postgresql-odbc | sed -n '\\|/psqlodbcw\\.so$|p')\npython3 -B /source/rpm/with-postgres.py --driver \"$driver\" -- ./odbc-smoke\n"
+            ]
+          },
+          {
+            "name": "directories",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/odbc-array-installed-20261005/qore-odbc-module-2.0.0:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-odbc-array-final-20261005:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+              "sha256:8b7fc1383acceb7fb0f94ffe6ca00d77290dc468901b340c24ea62ad3d8da578",
+              "sh",
+              "-ec",
+              "python3 -B -W error /tools/check-rpm-directories.py /rpms/rpmbuild/RPMS/noarch/qore-odbc-module-doc-2.0.0-1.fc44.noarch.rpm /rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-2.0.0-1.fc44.x86_64.rpm"
+            ]
+          }
+        ],
+        "runtime_image": "sha256:76404df72b068a733950cb99bcc22d058298d27191a4d8de6043e9947b5979fe",
+        "sdk_image": "sha256:8b7fc1383acceb7fb0f94ffe6ca00d77290dc468901b340c24ea62ad3d8da578",
+        "exit_code": 0
+      },
+      "sha256": {
+        "results/fedora-odbc-array-final-20261005/build.log": "71ee8bdcd75db1475329b74b63ed9b025fe93f21a92ff6fc33d09be3370b51ff",
+        "results/fedora-odbc-array-installed-20261005/status.json": "b4fed9c08c5fc42438a2743a4698c62384b55259638c9a7ab7b17726b565e804",
+        "results/fedora-odbc-array-installed-20261005/sdk-install.log": "5ea5ccdb6742645891a3e3fe8da88794ef228744d07b6b2542751454b61173ee",
+        "results/fedora-odbc-array-installed-20261005/directories.log": "d8c0361b60ab7239479865ebb4a3488bd79451c393bf62641266b0d67fd79439",
+        "results/fedora-odbc-array-installed-20261005/sdk-native-and-compiler.log": "7cd4c108c2239d752923430b57b20a451eea29801d97e4c4fbfefcb0653402ed",
+        "results/fedora-odbc-array-installed-20261005/sdk-tests.log": "f6d33d224d55ffdfe876ac3851f89f921dfbc8b6cb72f6f4b84cb373fcd9ad33",
+        "results/fedora-odbc-array-installed-20261005/runtime-install.log": "6e955560a9221185e969cb1fa082ae3e08d7ebd4712efb333534e952e9c98add",
+        "results/fedora-odbc-array-installed-20261005/runtime-tests.log": "7dcb6bed9ba052d3ad05b6900b14da145025ca9df20448370bca462e482b44c1"
+      }
+    },
+    "leap": {
+      "build": "results/leap-odbc-array-final-20261005/build.json",
+      "source": {
+        "schema": 1,
+        "commit": "e8adf65af26fcc4cf8bccc46f8df051163bced15",
+        "source_date_epoch": 1791200110,
+        "name": "qore-odbc-module",
+        "version": "2.0.0",
+        "exclusions": [],
+        "sources": {
+          "qore-odbc-module-2.0.0.tar.xz": "ff52af847a01fb5856423547c2c305b4aede3b23d04657c7cb713b1700d22975",
+          "qore-odbc-module.spec": "4f3c47759f8169f64e83d6acb6c2b757a0e80b34c9ba2608eaecffcc03be98fc"
+        },
+        "spec": "qore-odbc-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-odbc-module-doc-2.0.0-1.noarch.rpm": "c5d5ec3b12094fa22d310e66739dd38121176756af15addfe34553802b7bd5d4",
+        "rpmbuild/RPMS/x86_64/qore-odbc-module-2.0.0-1.x86_64.rpm": "dcc669211d046d805d575d2b05032921f92398b60dad734b8ee86502d9ab37a8",
+        "rpmbuild/RPMS/x86_64/qore-odbc-module-debuginfo-2.0.0-1.x86_64.rpm": "60cf94855650487d81030e12e83ff3367798b9e828bc41a25ea80c014a8bba72",
+        "rpmbuild/RPMS/x86_64/qore-odbc-module-debugsource-2.0.0-1.x86_64.rpm": "98b1acf763148b263bc833d839dea87e1a0139ab72f18ac4faeaefaadcf94761",
+        "rpmbuild/SRPMS/qore-odbc-module-2.0.0-1.src.rpm": "3ab11383e282c6f08dbc2b026b11d6b85574336fd4c201270b5124b1bf3968b7"
+      },
+      "installed": {
+        "source": {
+          "schema": 1,
+          "commit": "e8adf65af26fcc4cf8bccc46f8df051163bced15",
+          "source_date_epoch": 1791200110,
+          "name": "qore-odbc-module",
+          "version": "2.0.0",
+          "exclusions": [],
+          "sources": {
+            "qore-odbc-module-2.0.0.tar.xz": "ff52af847a01fb5856423547c2c305b4aede3b23d04657c7cb713b1700d22975",
+            "qore-odbc-module.spec": "4f3c47759f8169f64e83d6acb6c2b757a0e80b34c9ba2608eaecffcc03be98fc"
+          },
+          "spec": "qore-odbc-module.spec"
+        },
+        "steps": [
+          {
+            "name": "runtime-install",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-leap-odbc-array-installed-runtime-20261005",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-odbc-array-final-20261005:/rpms:ro",
+              "sha256:c28c539e11ebb734b9e64e65303f16f15376437198b9d40efa21da3727ac2e45",
+              "zypper",
+              "--non-interactive",
+              "install",
+              "--no-recommends",
+              "--allow-unsigned-rpm",
+              "python3",
+              "postgresql-server",
+              "psqlODBC",
+              "/rpms/rpmbuild/RPMS/noarch/qore-odbc-module-doc-2.0.0-1.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-2.0.0-1.x86_64.rpm"
+            ]
+          },
+          {
+            "name": "runtime-tests",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/odbc-array-installed-20261005/qore-odbc-module-2.0.0:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-odbc-array-final-20261005:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+              "sha256:503152f63d066b952c5986473aed5e129bfe6b5977694f19192b33d82859e746",
+              "sh",
+              "-ec",
+              "rpm -V qore-odbc-module qore-odbc-module-doc\nfor p in qore-devel gcc gcc-c++ unixODBC-devel; do if rpm -q \"$p\"; then exit 1; fi; done\ncd /source\nQORE_RPM_TEST_TMP=/tmp/odbc-installed rpm/tests-installed-runtime\n"
+            ]
+          },
+          {
+            "name": "sdk-install",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-leap-odbc-array-installed-sdk-20261005",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-odbc-array-final-20261005:/rpms:ro",
+              "sha256:348ee8cb2e0a6728e7078bb87253116d34cfd8adb41b306c346f0afc99f02e62",
+              "zypper",
+              "--non-interactive",
+              "install",
+              "--no-recommends",
+              "--allow-unsigned-rpm",
+              "python3",
+              "postgresql-server",
+              "psqlODBC",
+              "unixODBC-devel",
+              "rpmlint",
+              "/rpms/rpmbuild/RPMS/noarch/qore-odbc-module-doc-2.0.0-1.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-2.0.0-1.x86_64.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-debuginfo-2.0.0-1.x86_64.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-debugsource-2.0.0-1.x86_64.rpm"
+            ]
+          },
+          {
+            "name": "sdk-tests",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/odbc-array-installed-20261005/qore-odbc-module-2.0.0:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-odbc-array-final-20261005:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+              "sha256:74b1bb20c4b619c3dc806f7cee783d942ad007e30abf11336030243852da9065",
+              "sh",
+              "-ec",
+              "rpm -V qore-odbc-module qore-odbc-module-doc\ncd /source\nQORE_RPM_TEST_TMP=/tmp/odbc-installed rpm/tests-installed-runtime\n"
+            ]
+          },
+          {
+            "name": "sdk-native-and-compiler",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/odbc-array-installed-20261005/qore-odbc-module-2.0.0:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-odbc-array-final-20261005:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+              "sha256:74b1bb20c4b619c3dc806f7cee783d942ad007e30abf11336030243852da9065",
+              "sh",
+              "-ec",
+              "module=$(find /usr/lib64/qore-modules -maxdepth 1 -name 'odbc-api-*.qmod')\nexport QORE_ODBC_BINARY_MODULE=\"$module\"\n/source/rpm/test-postgres /source/test --native\ncd /tmp\nqcc -o odbc-smoke /source/odbc-smoke.q\ndriver=$(rpm -ql psqlODBC | sed -n '\\|/psqlodbcw\\.so$|p')\npython3 -B /source/rpm/with-postgres.py --driver \"$driver\" -- ./odbc-smoke\n"
+            ]
+          },
+          {
+            "name": "directories",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/odbc-array-installed-20261005/qore-odbc-module-2.0.0:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-odbc-array-final-20261005:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+              "sha256:74b1bb20c4b619c3dc806f7cee783d942ad007e30abf11336030243852da9065",
+              "sh",
+              "-ec",
+              "python3 -B -W error /tools/check-rpm-directories.py /rpms/rpmbuild/RPMS/noarch/qore-odbc-module-doc-2.0.0-1.noarch.rpm /rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-2.0.0-1.x86_64.rpm"
+            ]
+          },
+          {
+            "name": "lint",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/odbc-array-installed-20261005/qore-odbc-module-2.0.0:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-odbc-array-final-20261005:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+              "sha256:74b1bb20c4b619c3dc806f7cee783d942ad007e30abf11336030243852da9065",
+              "sh",
+              "-ec",
+              "rpmlint /rpms/rpmbuild/RPMS/noarch/qore-odbc-module-doc-2.0.0-1.noarch.rpm /rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-2.0.0-1.x86_64.rpm"
+            ]
+          }
+        ],
+        "runtime_image": "sha256:503152f63d066b952c5986473aed5e129bfe6b5977694f19192b33d82859e746",
+        "sdk_image": "sha256:74b1bb20c4b619c3dc806f7cee783d942ad007e30abf11336030243852da9065",
+        "exit_code": 0
+      },
+      "sha256": {
+        "results/leap-odbc-array-final-20261005/build.log": "195652d48963c0158cc5f9e9059a3d7e6f6fa0c8fa4ffa62c823b9d9f3c0843f",
+        "results/leap-odbc-array-installed-20261005/status.json": "39ab529cdcf53cdffcd918075a26cbf4c5512d95274cce7b0484fd2dcb112336",
+        "results/leap-odbc-array-installed-20261005/lint.log": "731730d5191b0c885871e695e8a8e478b513611456c9fe2264ab788e25673f14",
+        "results/leap-odbc-array-installed-20261005/sdk-install.log": "53e247e1e19da1d9f7d256abd4c497b7b9496649e3f02f0bf2171c30514f7b93",
+        "results/leap-odbc-array-installed-20261005/directories.log": "f47ab0ecd92b05e191c03e27acb964922dd94dad78541ed3ada4562eb7c448b9",
+        "results/leap-odbc-array-installed-20261005/sdk-native-and-compiler.log": "89c78280fd8237e62109128ab456cdd5a3b9bd30c48dc9af551dcd06ba3825d4",
+        "results/leap-odbc-array-installed-20261005/sdk-tests.log": "dabca1e0dcc461df3c9a1239cf0e421f9fd318977fdef5a6463e47ad2811d392",
+        "results/leap-odbc-array-installed-20261005/runtime-install.log": "d2d607e1196d02debc9538f7f6e6b5f9c1edf90404fc89463cf5d24050c8d80a",
+        "results/leap-odbc-array-installed-20261005/runtime-tests.log": "ea452765f2f23be4511e166a0f8e3e3d95bdad43c0b653d17747e958b935a570"
+      }
+    },
+    "el10": {
+      "build": "results/el10-odbc-array-final-20261005/build.json",
+      "source": {
+        "schema": 1,
+        "commit": "e8adf65af26fcc4cf8bccc46f8df051163bced15",
+        "source_date_epoch": 1791200110,
+        "name": "qore-odbc-module",
+        "version": "2.0.0",
+        "exclusions": [],
+        "sources": {
+          "qore-odbc-module-2.0.0.tar.xz": "ff52af847a01fb5856423547c2c305b4aede3b23d04657c7cb713b1700d22975",
+          "qore-odbc-module.spec": "4f3c47759f8169f64e83d6acb6c2b757a0e80b34c9ba2608eaecffcc03be98fc"
+        },
+        "spec": "qore-odbc-module.spec"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-odbc-module-doc-2.0.0-1.el10.noarch.rpm": "d57deeef3526c567025b6fd1bc13775650a9643ff7c04b0fd20752566a781afd",
+        "rpmbuild/RPMS/x86_64/qore-odbc-module-2.0.0-1.el10.x86_64.rpm": "b4d2958d8402448065082978f0515fde433a78586dc32b8eb94818745b35148f",
+        "rpmbuild/RPMS/x86_64/qore-odbc-module-debuginfo-2.0.0-1.el10.x86_64.rpm": "a56f4e9de656bafa4b80bb9fcb16e6210cf7989dc65a68fa0842e444228484eb",
+        "rpmbuild/RPMS/x86_64/qore-odbc-module-debugsource-2.0.0-1.el10.x86_64.rpm": "2fe651ede4c0e7e418d72e8f4bc7adf8a5dee80d17f87425277cd6aec2fdc807",
+        "rpmbuild/SRPMS/qore-odbc-module-2.0.0-1.el10.src.rpm": "7f456aac12fafaff92f6dc244d12c76e82724dac4ec2262aac127f2ccbc5f117"
+      },
+      "installed": {
+        "source": {
+          "schema": 1,
+          "commit": "e8adf65af26fcc4cf8bccc46f8df051163bced15",
+          "source_date_epoch": 1791200110,
+          "name": "qore-odbc-module",
+          "version": "2.0.0",
+          "exclusions": [],
+          "sources": {
+            "qore-odbc-module-2.0.0.tar.xz": "ff52af847a01fb5856423547c2c305b4aede3b23d04657c7cb713b1700d22975",
+            "qore-odbc-module.spec": "4f3c47759f8169f64e83d6acb6c2b757a0e80b34c9ba2608eaecffcc03be98fc"
+          },
+          "spec": "qore-odbc-module.spec"
+        },
+        "steps": [
+          {
+            "name": "runtime-install",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-el10-odbc-array-installed-runtime-20261005",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-odbc-array-final-20261005:/rpms:ro",
+              "sha256:ee0486d8ace5b4222068723f96123f43f39cd5351aaf782ff5026a95612b094b",
+              "dnf",
+              "-y",
+              "--setopt=localpkg_gpgcheck=False",
+              "--setopt=install_weak_deps=False",
+              "install",
+              "python3",
+              "postgresql-server",
+              "postgresql-odbc",
+              "/rpms/rpmbuild/RPMS/noarch/qore-odbc-module-doc-2.0.0-1.el10.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-2.0.0-1.el10.x86_64.rpm"
+            ]
+          },
+          {
+            "name": "runtime-tests",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/odbc-array-installed-20261005/qore-odbc-module-2.0.0:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-odbc-array-final-20261005:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+              "sha256:350ab1a080c391060ee0b090b242609e0df578e0e6936e0f2074b77c2edf375b",
+              "sh",
+              "-ec",
+              "rpm -V qore-odbc-module qore-odbc-module-doc\nfor p in qore-devel gcc gcc-c++ unixODBC-devel; do if rpm -q \"$p\"; then exit 1; fi; done\ncd /source\nQORE_RPM_TEST_TMP=/tmp/odbc-installed rpm/tests-installed-runtime\n"
+            ]
+          },
+          {
+            "name": "sdk-install",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-el10-odbc-array-installed-sdk-20261005",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-odbc-array-final-20261005:/rpms:ro",
+              "sha256:a9af3844ca968f0fa6f2cec1f8c454513bd2f64647194798a9423762c7006041",
+              "dnf",
+              "-y",
+              "--setopt=localpkg_gpgcheck=False",
+              "--setopt=install_weak_deps=False",
+              "install",
+              "python3",
+              "postgresql-server",
+              "postgresql-odbc",
+              "unixODBC-devel",
+              "/rpms/rpmbuild/RPMS/noarch/qore-odbc-module-doc-2.0.0-1.el10.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-2.0.0-1.el10.x86_64.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-debuginfo-2.0.0-1.el10.x86_64.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-debugsource-2.0.0-1.el10.x86_64.rpm"
+            ]
+          },
+          {
+            "name": "sdk-tests",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/odbc-array-installed-20261005/qore-odbc-module-2.0.0:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-odbc-array-final-20261005:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+              "sha256:c86c9097c0d1446717ea472ddf86202e9bf8bf4d8644089b3747244d521c842d",
+              "sh",
+              "-ec",
+              "rpm -V qore-odbc-module qore-odbc-module-doc\ncd /source\nQORE_RPM_TEST_TMP=/tmp/odbc-installed rpm/tests-installed-runtime\n"
+            ]
+          },
+          {
+            "name": "sdk-native-and-compiler",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/odbc-array-installed-20261005/qore-odbc-module-2.0.0:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-odbc-array-final-20261005:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+              "sha256:c86c9097c0d1446717ea472ddf86202e9bf8bf4d8644089b3747244d521c842d",
+              "sh",
+              "-ec",
+              "module=$(find /usr/lib64/qore-modules -maxdepth 1 -name 'odbc-api-*.qmod')\nexport QORE_ODBC_BINARY_MODULE=\"$module\"\n/source/rpm/test-postgres /source/test --native\ncd /tmp\nqcc -o odbc-smoke /source/odbc-smoke.q\ndriver=$(rpm -ql postgresql-odbc | sed -n '\\|/psqlodbcw\\.so$|p')\npython3 -B /source/rpm/with-postgres.py --driver \"$driver\" -- ./odbc-smoke\n"
+            ]
+          },
+          {
+            "name": "directories",
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/odbc-array-installed-20261005/qore-odbc-module-2.0.0:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-odbc-array-final-20261005:/rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+              "sha256:c86c9097c0d1446717ea472ddf86202e9bf8bf4d8644089b3747244d521c842d",
+              "sh",
+              "-ec",
+              "python3 -B -W error /tools/check-rpm-directories.py /rpms/rpmbuild/RPMS/noarch/qore-odbc-module-doc-2.0.0-1.el10.noarch.rpm /rpms/rpmbuild/RPMS/x86_64/qore-odbc-module-2.0.0-1.el10.x86_64.rpm"
+            ]
+          }
+        ],
+        "runtime_image": "sha256:350ab1a080c391060ee0b090b242609e0df578e0e6936e0f2074b77c2edf375b",
+        "sdk_image": "sha256:c86c9097c0d1446717ea472ddf86202e9bf8bf4d8644089b3747244d521c842d",
+        "exit_code": 0
+      },
+      "sha256": {
+        "results/el10-odbc-array-final-20261005/build.log": "a9e927397c6b4ce8756bdfc9f4ba633d5076c16460114ba2317402a46205c243",
+        "results/el10-odbc-array-installed-20261005/status.json": "02fac48d1055088ad04272def53d8e99e80a8338f40eb26debef3ab9fc76cdde",
+        "results/el10-odbc-array-installed-20261005/sdk-install.log": "2c6ca8210253b837a241846667e7b94b3224d509f77c85340dea92114fa73661",
+        "results/el10-odbc-array-installed-20261005/directories.log": "2e3eb8351ecfcb8dc207207f0cc78bb4f631945f5d96695a4655cfaa6dd285c7",
+        "results/el10-odbc-array-installed-20261005/sdk-native-and-compiler.log": "480135f107e2d5ade5ac544252c49104fa4a9ad00fc619369abd36cca3057806",
+        "results/el10-odbc-array-installed-20261005/sdk-tests.log": "0e291ef018a5e3a24d77a21517049a1b516bcd244069595d0fb3ddd937c95687",
+        "results/el10-odbc-array-installed-20261005/runtime-install.log": "7da13386da00d238dfd552e012796c45ee6488003a91435bbab0a7f55189d730",
+        "results/el10-odbc-array-installed-20261005/runtime-tests.log": "798190586851a1c44914a9dd3569c6d7d4389ddb6266b5449e1ca42ba9ef7e3d"
+      }
+    }
+  },
+  "packaging_tests": {
+    "cases": 137,
+    "exit_code": 0,
+    "log": "results/odbc-packaging-tests-20261005.log",
+    "sha256": "129b71c9e8f742ecd41cd2c689b70c9d0d12f604a907d0b68f49d71dce1f03e1"
+  },
+  "obs_source": "evidence/obs-odbc-source-20261005.json"
+}

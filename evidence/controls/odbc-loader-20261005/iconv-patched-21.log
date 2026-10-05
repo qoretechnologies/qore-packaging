@@ -1,0 +1,55 @@
+==131== Memcheck, a memory error detector
+==131== Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.
+==131== Using Valgrind-3.26.0 and LibVEX; rerun with -h for copyright info
+==131== Command: /fixture/odbc-iconv-control 21
+==131== Parent PID: 110
+==131== 
+==131== 
+==131== HEAP SUMMARY:
+==131==     in use at exit: 7,474 bytes in 28 blocks
+==131==   total heap usage: 17,046 allocs, 17,018 frees, 7,191,404 bytes allocated
+==131== 
+==131== 16 bytes in 1 blocks are indirectly lost in loss record 4 of 20
+==131==    at 0x484387E: malloc (vg_replace_malloc.c:447)
+==131==    by 0x522C889: lt__slist_box (in /usr/lib64/libltdl.so.7.3.2)
+==131==    by 0x522C8F4: lt_dlloader_add (in /usr/lib64/libltdl.so.7.3.2)
+==131==    by 0x522C99A: ??? (in /usr/lib64/libltdl.so.7.3.2)
+==131==    by 0x522CAA6: lt_dlinit (in /usr/lib64/libltdl.so.7.3.2)
+==131==    by 0x51A2FBA: __connect_part_one (SQLConnect.c:1167)
+==131==    by 0x51AEABD: SQLDriverConnect (SQLDriverConnect.c:1403)
+==131==    by 0x51AD526: SQLDriverConnectA (SQLDriverConnect.c:669)
+==131==    by 0x40130C: main (odbc-iconv-control.cpp:24)
+==131== 
+==131== 16 bytes in 1 blocks are definitely lost in loss record 5 of 20
+==131==    at 0x484387E: malloc (vg_replace_malloc.c:447)
+==131==    by 0x5228B10: lt__malloc (in /usr/lib64/libltdl.so.7.3.2)
+==131==    by 0x5228D54: lt__zalloc (in /usr/lib64/libltdl.so.7.3.2)
+==131==    by 0x5228DD0: lt_dlpreload (in /usr/lib64/libltdl.so.7.3.2)
+==131==    by 0x522CABB: lt_dlinit (in /usr/lib64/libltdl.so.7.3.2)
+==131==    by 0x51A2FBA: __connect_part_one (SQLConnect.c:1167)
+==131==    by 0x51AEABD: SQLDriverConnect (SQLDriverConnect.c:1403)
+==131==    by 0x51AD526: SQLDriverConnectA (SQLDriverConnect.c:669)
+==131==    by 0x40130C: main (odbc-iconv-control.cpp:24)
+==131== 
+==131== 32 (16 direct, 16 indirect) bytes in 1 blocks are definitely lost in loss record 8 of 20
+==131==    at 0x484387E: malloc (vg_replace_malloc.c:447)
+==131==    by 0x522C889: lt__slist_box (in /usr/lib64/libltdl.so.7.3.2)
+==131==    by 0x522C8F4: lt_dlloader_add (in /usr/lib64/libltdl.so.7.3.2)
+==131==    by 0x522C99A: ??? (in /usr/lib64/libltdl.so.7.3.2)
+==131==    by 0x522C46F: lt_dlpreload_open (in /usr/lib64/libltdl.so.7.3.2)
+==131==    by 0x51A2FBA: __connect_part_one (SQLConnect.c:1167)
+==131==    by 0x51AEABD: SQLDriverConnect (SQLDriverConnect.c:1403)
+==131==    by 0x51AD526: SQLDriverConnectA (SQLDriverConnect.c:669)
+==131==    by 0x40130C: main (odbc-iconv-control.cpp:24)
+==131== 
+==131== LEAK SUMMARY:
+==131==    definitely lost: 32 bytes in 2 blocks
+==131==    indirectly lost: 16 bytes in 1 blocks
+==131==      possibly lost: 0 bytes in 0 blocks
+==131==    still reachable: 7,426 bytes in 25 blocks
+==131==         suppressed: 0 bytes in 0 blocks
+==131== Reachable blocks (those to which a pointer was found) are not shown.
+==131== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==131== 
+==131== For lists of detected and suppressed errors, rerun with: -s
+==131== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)

@@ -1,0 +1,164 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-05",
+  "approval": "Approved by the user on 2026-10-05: Allow this narrow diagnostic. Retain distribution libraries; no suppression or loader workaround.",
+  "scope": {
+    "distribution": "AlmaLinux 10 x86_64",
+    "unixODBC": "2.3.12-6.el10",
+    "libltdl": "2.4.7-13.el10",
+    "trigger": "Numeric ODBC binding converts ISO-8859-1 to US-ASCII, loading a glibc gconv module. The allocations become unrooted during process shutdown."
+  },
+  "root_causes": [
+    {
+      "component": "unixODBC configuration cache and installer logging",
+      "evidence": "Upstream explicitly frees these process-global objects in its shared-library destructor fix. Applying those two commits to the exact 2.3.12 sources removes all cache/logging losses in the control; the distribution source retains them until its DSO is unloaded. Repeating 1,000 connection lifetimes adds no allocation sites; the cache expires some entries during that longer run.",
+      "upstream": [
+        "https://github.com/lurcher/unixODBC/commit/447ca7624394f8cc9825c6ac3ff60e3715831b87",
+        "https://github.com/lurcher/unixODBC/commit/a2cecd22d0509bf550053e8b7d654936af4c7540"
+      ]
+    },
+    {
+      "component": "libltdl loader/preload bookkeeping",
+      "evidence": "Default DontDLClose retains loaded ODBC drivers. GDB stops during glibc __libc_freeres -> __gconv_dl_freemem -> do_release_all -> _dl_close_worker, after application cleanup. After upstream cache cleanup, exactly 120 definite + 298 indirect bytes remain after both 1 and 1,000 Qore connections. Standalone ODBC/iconv without Qore reproduces the preload/list allocation sites (32 definite + 16 indirect bytes) after both 1 and 21 connections; the standalone control does not reproduce every Qore loader root, so the full 418-byte bound also depends on the Qore lifecycle control.",
+      "upstream": [
+        "https://raw.githubusercontent.com/bminor/glibc/glibc-2.39/iconv/gconv_dl.c"
+      ]
+    }
+  ],
+  "results": {
+    "iconv-patched-1.log": {
+      "definitely lost": {
+        "bytes": 32,
+        "blocks": 2
+      },
+      "indirectly lost": {
+        "bytes": 16,
+        "blocks": 1
+      },
+      "possibly lost": {
+        "bytes": 0,
+        "blocks": 0
+      }
+    },
+    "numeric-lifetimes-1000.log": {
+      "definitely lost": {
+        "bytes": 120,
+        "blocks": 3
+      },
+      "indirectly lost": {
+        "bytes": 298,
+        "blocks": 8
+      },
+      "possibly lost": {
+        "bytes": 0,
+        "blocks": 0
+      }
+    },
+    "iconv-distribution-21.log": {
+      "definitely lost": {
+        "bytes": 104,
+        "blocks": 3
+      },
+      "indirectly lost": {
+        "bytes": 1920,
+        "blocks": 96
+      },
+      "possibly lost": {
+        "bytes": 0,
+        "blocks": 0
+      }
+    },
+    "iconv-patched-21.log": {
+      "definitely lost": {
+        "bytes": 32,
+        "blocks": 2
+      },
+      "indirectly lost": {
+        "bytes": 16,
+        "blocks": 1
+      },
+      "possibly lost": {
+        "bytes": 0,
+        "blocks": 0
+      }
+    },
+    "numeric-distribution-1.log": {
+      "definitely lost": {
+        "bytes": 264,
+        "blocks": 5
+      },
+      "indirectly lost": {
+        "bytes": 3801,
+        "blocks": 186
+      },
+      "possibly lost": {
+        "bytes": 0,
+        "blocks": 0
+      }
+    },
+    "iconv-distribution-1.log": {
+      "definitely lost": {
+        "bytes": 104,
+        "blocks": 3
+      },
+      "indirectly lost": {
+        "bytes": 1920,
+        "blocks": 96
+      },
+      "possibly lost": {
+        "bytes": 0,
+        "blocks": 0
+      }
+    },
+    "numeric-lifetimes-1.log": {
+      "definitely lost": {
+        "bytes": 120,
+        "blocks": 3
+      },
+      "indirectly lost": {
+        "bytes": 298,
+        "blocks": 8
+      },
+      "possibly lost": {
+        "bytes": 0,
+        "blocks": 0
+      }
+    },
+    "numeric-distribution-1000.log": {
+      "definitely lost": {
+        "bytes": 264,
+        "blocks": 5
+      },
+      "indirectly lost": {
+        "bytes": 3462,
+        "blocks": 168
+      },
+      "possibly lost": {
+        "bytes": 0,
+        "blocks": 0
+      }
+    }
+  },
+  "validation": "All recorded controls complete successfully. No invalid reads/writes, descriptor losses or possible losses. The distribution Qore control retains 264 definite + 3801 indirect bytes after one connection and 264 + 3462 after 1,000, at the same five allocation contexts.",
+  "proposal": "Keep the distribution-provided ABI-compatible unixODBC/libltdl packages. Record only these shutdown allocation sites as externally owned qualification diagnostics. The upstream-only patched library is a root-cause control, not a packaged or installed replacement. Experimental loader-cleanup changes are excluded.",
+  "exclusions": [
+    "Any allocation rooted in Qore ODBC code.",
+    "Any new allocation site, growing per-connection leak, invalid access or descriptor loss.",
+    "PCRE2 JIT is covered by its separately approved evidence record.",
+    "No suppression, loader pinning, manual private cache cleanup, or forced unloading of resident drivers."
+  ],
+  "sha256": {
+    "evidence/controls/odbc-loader-20261005/odbc-iconv-control.cpp": "34a5ed333c67083dc8e7e5c6db540418c66cc6be8db1587a5d20e5547c8607b5",
+    "evidence/controls/odbc-loader-20261005/odbc-numeric-lifetimes.qr": "dd496327cdf5666057f73318422dccc681584ffb8240333549a7e345c68997b7",
+    "evidence/controls/odbc-loader-20261005/iconv-distribution-1.log": "127033dfaa15d711fa4cef450b655246db88eea92dad810c38e703e6122e5190",
+    "evidence/controls/odbc-loader-20261005/iconv-distribution-21.log": "f7f2ae685fff5f791adb27d16d876d9b8cc2a0013bf00d03ec2c6eddf6f7fd8e",
+    "evidence/controls/odbc-loader-20261005/iconv-patched-1.log": "6f13cf38ab46e649bb0d04ecf6bbd4196acdac83f327cc92343db218b059a6c4",
+    "evidence/controls/odbc-loader-20261005/iconv-patched-21.log": "1a46285c72874ce1fc0aa143040922c41f62f0caa5248ccb0c847f15879e5da1",
+    "evidence/controls/odbc-loader-20261005/numeric-lifetimes-1.log": "6647d0275a0b466c09a598b20d06a30fb0e099bece293fcd7ad421b2b78be18d",
+    "evidence/controls/odbc-loader-20261005/numeric-lifetimes-1000.log": "b3005cb90a75a186bd72ba435a1c3bcba50171d16e2022c7e22b670beadec4eb",
+    "evidence/controls/odbc-loader-20261005/numeric-distribution-1.log": "9db3e8078ddbc4495be09532b72269c3788e09333e89e0a2a4408ea151fa6db4",
+    "evidence/controls/odbc-loader-20261005/numeric-distribution-1000.log": "2ae843dcf30bb37a7fb09876b2394121a81dff12596e7c6cd55dbed73e672449",
+    "evidence/controls/odbc-loader-20261005/debug-loader-gdb.log": "cb0027ad8262d7fba7466d84c29b1bc6a310c35a182c27ae164c6d088317175e"
+  }
+}
