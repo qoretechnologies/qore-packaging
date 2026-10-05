@@ -125,7 +125,7 @@ class InstalledQualificationTest(unittest.TestCase):
 
     def add_modules(self):
         self.manifest['modules'] = []
-        for name in ('uuid', 'process'):
+        for name in ('uuid', 'process', 'odbc'):
             commit = 'd' * 40
             self.manifest['modules'].append({'name': name, 'commit': commit,
                 'fixtures': [{'path': path, 'sha256': 'e' * 64,
@@ -183,6 +183,63 @@ class InstalledQualificationTest(unittest.TestCase):
             with self.subTest(binary=binary), self.assertRaises(ValueError):
                 module.module_commands('process', 'sdk', directory, binary)
 
+    def test_odbc_runtime_and_sdk_cover_installed_arrays_and_native_failures(self):
+        directory = Path('/tmp/ODBC fixtures')
+        runtime = module.module_commands('odbc', 'runtime', directory)
+        self.assertEqual(runtime, [('tests', ['env',
+            'QORE_RPM_TEST_TMP=/tmp/ODBC fixtures/runtime-fixture',
+            '/tmp/ODBC fixtures/rpm/tests-installed-runtime'])])
+        commands = dict(module.module_commands('odbc', 'sdk', directory,
+            Path('/usr/lib64/odbc-api-2.0.qmod'), Path('/usr/lib64/psqlodbcw.so')))
+        self.assertEqual(commands['tests'], runtime[0][1])
+        self.assertEqual(commands['native'], ['env',
+            'QORE_ODBC_BINARY_MODULE=/usr/lib64/odbc-api-2.0.qmod',
+            '/tmp/ODBC fixtures/rpm/test-postgres', '/tmp/ODBC fixtures/test', '--native'])
+        self.assertEqual(commands['compiler'], ['qcc', '-o',
+            '/tmp/ODBC fixtures/array-binding-compiled', '/tmp/ODBC fixtures/test/array-binding.qtest'])
+        self.assertEqual(commands['compiled-tests'], ['python3', '-B',
+            '/tmp/ODBC fixtures/rpm/with-postgres.py', '--driver', '/usr/lib64/psqlodbcw.so',
+            '--', '/tmp/ODBC fixtures/array-binding-compiled', '-v'])
+
+    def test_odbc_commands_reject_missing_or_relative_installed_files(self):
+        for binary in (None, Path('relative.qmod'), Path('/tmp/module.so')):
+            with self.subTest(binary=binary), self.assertRaisesRegex(ValueError, 'module path'):
+                module.module_commands('odbc', 'sdk', Path('/tmp/tests'), binary,
+                                       Path('/usr/lib64/psqlodbcw.so'))
+        for driver in (None, Path('psqlodbcw.so'), Path('/tmp/other.so')):
+            with self.subTest(driver=driver), self.assertRaisesRegex(ValueError, 'PostgreSQL driver'):
+                module.module_commands('odbc', 'sdk', Path('/tmp/tests'),
+                                       Path('/usr/lib64/odbc.qmod'), driver)
+        for name, phase in (('unknown', 'runtime'), ('odbc', 'invalid')):
+            with self.subTest(name=name, phase=phase), self.assertRaises(ValueError):
+                module.module_commands(name, phase, Path('/tmp/tests'))
+
+    def test_fixture_dependencies_preserve_minimal_runtime(self):
+        for family in ('suse', 'fedora', 'el'):
+            runtime = module.module_dependencies('odbc', 'runtime', family)
+            self.assertEqual(runtime, ['postgresql-server',
+                'psqlODBC' if family == 'suse' else 'postgresql-odbc'])
+            self.assertEqual(module.module_dependencies('odbc', 'sdk', family), ['unixODBC-devel'])
+            self.assertFalse(set(runtime) & {'gcc', 'gcc-c++', 'qore-devel', 'unixODBC-devel'})
+            self.assertEqual(module.module_dependencies('uuid', 'runtime', family), [])
+            self.assertEqual(module.module_dependencies('process', 'runtime', family),
+                             ['procps' if family == 'suse' else 'procps-ng'])
+        for args in (('unknown', 'runtime', 'suse'), ('odbc', 'bad', 'el'), ('odbc', 'sdk', 'unknown')):
+            with self.subTest(args=args), self.assertRaises(ValueError):
+                module.module_dependencies(*args)
+
+    def test_installed_inventory_requires_one_absolute_module_or_driver(self):
+        self.assertEqual(module.installed_module_file('odbc',
+            '/usr/share/licenses/odbc/LICENSE\n/usr/lib64/odbc.qmod\n', '.qmod'),
+            Path('/usr/lib64/odbc.qmod'))
+        self.assertEqual(module.installed_module_file('driver',
+            '/usr/lib64/psqlodbcw.so\n/usr/share/odbc/psqlodbcw.so.example', '/psqlodbcw.so'),
+            Path('/usr/lib64/psqlodbcw.so'))
+        for files in ('', 'odbc.qmod', '/tmp/../odbc.qmod',
+                      '/usr/lib64/a.qmod\n/usr/lib64/b.qmod'):
+            with self.subTest(files=files), self.assertRaises(ValueError):
+                module.installed_module_file('odbc', files, '.qmod')
+
     def test_module_download_failure_precedes_installation(self):
         self.add_modules()
 
@@ -203,6 +260,28 @@ class InstalledQualificationTest(unittest.TestCase):
                     module.qualify(self.manifest, output)
                 run.assert_not_called()
             self.assertIn('fixture checksum mismatch', (output / 'qualification.json').read_text())
+
+    def test_odbc_native_header_checksum_failure_precedes_installation(self):
+        self.add_modules()
+        self.manifest['modules'] = [entry for entry in self.manifest['modules'] if entry['name'] == 'odbc']
+
+        def fetch(url, digest, path):
+            if url.endswith('/src/ODBCArraySize.h'):
+                raise ValueError('ODBC native header checksum mismatch')
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text('verified fixture')
+
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / 'output'
+            with (patch.object(module.platform, 'machine', return_value='aarch64'),
+                  patch.object(module.os, 'geteuid', return_value=0),
+                  patch.object(module, 'check_prerequisites'),
+                  patch.object(module, 'fetch_source', side_effect=fetch),
+                  patch.object(module.subprocess, 'run') as run):
+                with self.assertRaisesRegex(ValueError, 'ODBC native header checksum mismatch'):
+                    module.qualify(self.manifest, output)
+                run.assert_not_called()
+            self.assertIn('ODBC native header checksum mismatch', (output / 'qualification.json').read_text())
 
     def test_bad_key_hash_precedes_all_rpm_operations(self):
         with tempfile.TemporaryDirectory() as temporary:

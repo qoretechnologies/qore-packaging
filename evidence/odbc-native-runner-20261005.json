@@ -1,0 +1,242 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-05",
+  "status": "142 tooling tests and all three local installed runtime/SDK command integrations pass without diagnostics. Native signed ARM installation remains pending.",
+  "tests": {
+    "fedora": {
+      "steps": [
+        {
+          "phase": "runtime",
+          "exit_code": 0,
+          "commands": [
+            [
+              "tests",
+              [
+                "env",
+                "QORE_RPM_TEST_TMP=/tmp/odbc-installed/runtime-fixture",
+                "/tmp/odbc-installed/rpm/tests-installed-runtime"
+              ]
+            ]
+          ],
+          "image": "sha256:76404df72b068a733950cb99bcc22d058298d27191a4d8de6043e9947b5979fe",
+          "log_sha256": "a48013523c7a66262b1f2d55c705a2bbc34b677b81aa85c972065c99c07d2bc6"
+        },
+        {
+          "phase": "sdk",
+          "exit_code": 0,
+          "commands": [
+            [
+              "tests",
+              [
+                "env",
+                "QORE_RPM_TEST_TMP=/tmp/odbc-installed/runtime-fixture",
+                "/tmp/odbc-installed/rpm/tests-installed-runtime"
+              ]
+            ],
+            [
+              "native",
+              [
+                "env",
+                "QORE_ODBC_BINARY_MODULE=/usr/lib64/qore-modules/odbc-api-2.0.qmod",
+                "/tmp/odbc-installed/rpm/test-postgres",
+                "/tmp/odbc-installed/test",
+                "--native"
+              ]
+            ],
+            [
+              "compiler",
+              [
+                "qcc",
+                "-o",
+                "/tmp/odbc-installed/array-binding-compiled",
+                "/tmp/odbc-installed/test/array-binding.qtest"
+              ]
+            ],
+            [
+              "compiled-tests",
+              [
+                "python3",
+                "-B",
+                "/tmp/odbc-installed/rpm/with-postgres.py",
+                "--driver",
+                "/usr/lib64/psqlodbcw.so",
+                "--",
+                "/tmp/odbc-installed/array-binding-compiled",
+                "-v"
+              ]
+            ]
+          ],
+          "image": "sha256:8b7fc1383acceb7fb0f94ffe6ca00d77290dc468901b340c24ea62ad3d8da578",
+          "log_sha256": "85c7c43648af98d81a4f60fafd65c271116da76cdc99e14c80d5f0668df588e4"
+        }
+      ],
+      "exit_code": 0
+    },
+    "leap": {
+      "steps": [
+        {
+          "phase": "runtime",
+          "exit_code": 0,
+          "commands": [
+            [
+              "tests",
+              [
+                "env",
+                "QORE_RPM_TEST_TMP=/tmp/odbc-installed/runtime-fixture",
+                "/tmp/odbc-installed/rpm/tests-installed-runtime"
+              ]
+            ]
+          ],
+          "image": "sha256:503152f63d066b952c5986473aed5e129bfe6b5977694f19192b33d82859e746",
+          "log_sha256": "f34f49251f3c3d68d1810aef3e442c6367a05ca62b61b0d76108c32fbd76c82c"
+        },
+        {
+          "phase": "sdk",
+          "exit_code": 0,
+          "commands": [
+            [
+              "tests",
+              [
+                "env",
+                "QORE_RPM_TEST_TMP=/tmp/odbc-installed/runtime-fixture",
+                "/tmp/odbc-installed/rpm/tests-installed-runtime"
+              ]
+            ],
+            [
+              "native",
+              [
+                "env",
+                "QORE_ODBC_BINARY_MODULE=/usr/lib64/qore-modules/odbc-api-2.0.qmod",
+                "/tmp/odbc-installed/rpm/test-postgres",
+                "/tmp/odbc-installed/test",
+                "--native"
+              ]
+            ],
+            [
+              "compiler",
+              [
+                "qcc",
+                "-o",
+                "/tmp/odbc-installed/array-binding-compiled",
+                "/tmp/odbc-installed/test/array-binding.qtest"
+              ]
+            ],
+            [
+              "compiled-tests",
+              [
+                "python3",
+                "-B",
+                "/tmp/odbc-installed/rpm/with-postgres.py",
+                "--driver",
+                "/usr/lib64/psqlodbcw.so",
+                "--",
+                "/tmp/odbc-installed/array-binding-compiled",
+                "-v"
+              ]
+            ]
+          ],
+          "image": "sha256:74b1bb20c4b619c3dc806f7cee783d942ad007e30abf11336030243852da9065",
+          "log_sha256": "0e26919ede6c6d32873b4581950da973a5b9670c171007c0b5307096ad365074"
+        }
+      ],
+      "exit_code": 0
+    },
+    "el10": {
+      "steps": [
+        {
+          "phase": "runtime",
+          "exit_code": 0,
+          "commands": [
+            [
+              "tests",
+              [
+                "env",
+                "QORE_RPM_TEST_TMP=/tmp/odbc-installed/runtime-fixture",
+                "/tmp/odbc-installed/rpm/tests-installed-runtime"
+              ]
+            ]
+          ],
+          "image": "sha256:350ab1a080c391060ee0b090b242609e0df578e0e6936e0f2074b77c2edf375b",
+          "log_sha256": "9079146164c8e4bb7be182ad9024dc8ff4f1e353d50c66f27141e02c220c45f5"
+        },
+        {
+          "phase": "sdk",
+          "exit_code": 0,
+          "commands": [
+            [
+              "tests",
+              [
+                "env",
+                "QORE_RPM_TEST_TMP=/tmp/odbc-installed/runtime-fixture",
+                "/tmp/odbc-installed/rpm/tests-installed-runtime"
+              ]
+            ],
+            [
+              "native",
+              [
+                "env",
+                "QORE_ODBC_BINARY_MODULE=/usr/lib64/qore-modules/odbc-api-2.0.qmod",
+                "/tmp/odbc-installed/rpm/test-postgres",
+                "/tmp/odbc-installed/test",
+                "--native"
+              ]
+            ],
+            [
+              "compiler",
+              [
+                "qcc",
+                "-o",
+                "/tmp/odbc-installed/array-binding-compiled",
+                "/tmp/odbc-installed/test/array-binding.qtest"
+              ]
+            ],
+            [
+              "compiled-tests",
+              [
+                "python3",
+                "-B",
+                "/tmp/odbc-installed/rpm/with-postgres.py",
+                "--driver",
+                "/usr/lib64/psqlodbcw.so",
+                "--",
+                "/tmp/odbc-installed/array-binding-compiled",
+                "-v"
+              ]
+            ]
+          ],
+          "image": "sha256:c86c9097c0d1446717ea472ddf86202e9bf8bf4d8644089b3747244d521c842d",
+          "log_sha256": "b58a972761bd913a1944f5009beb6573406c69f38eb710560b687feac9e9bd72"
+        }
+      ],
+      "exit_code": 0
+    }
+  },
+  "fixtures": "Eleven fixture files are fetched from ODBC commit e8adf65af26fcc4cf8bccc46f8df051163bced15; manifests reject unlisted files and verify each SHA-256 before RPM operations.",
+  "unit_tests": {
+    "log": "results/odbc-native-runner-tests-final-20261005.log",
+    "sha256": "177a334d1a76e52164689845f7ff2751674029d912ef19ceac549472cb4a6e9d",
+    "count": 142
+  },
+  "local_fixture_corrections": {
+    "stale_module": "The exploratory compiler run mounted the whole workstation module repository, including an old build/odbc-api-2.0.qmod selected by the test prepend path. The committed-source fixture contains only the 11 pinned files; all 28 compiled array cases now pass on each target. No compiler or runtime workaround is used.",
+    "numa": "PostgreSQL 18 on Leap queries NUMA memory policy. The local Docker default denies get_mempolicy, producing startup diagnostics. A pinned Moby default profile plus one read-only syscall allowance removes these diagnostics; set_mempolicy and mbind remain denied. No capabilities were added. Earlier local installed logs remain retained as functionally passing evidence with that setup diagnostic; the new warning-free local integrations supersede that environment qualification.",
+    "profile": {
+      "url": "https://raw.githubusercontent.com/moby/profiles/6fe7deb1b9fb7c0397a4593480d7d22b9ee8caef/seccomp/default.json",
+      "commit": "6fe7deb1b9fb7c0397a4593480d7d22b9ee8caef",
+      "sha256": "6416b47770785a41ac59073cdc77d9fe98517df2799dc83ef207e622de3053f6",
+      "change": "Allow only get_mempolicy for unprivileged PostgreSQL 18 NUMA discovery; all other rules in the pinned Moby profile unchanged."
+    },
+    "limits": "This local Docker profile is not installed into the workstation or applied to OBS/GitLab. Native runner diagnostics must still be checked independently.",
+    "controls": {
+      "results/odbc-numa-default-control-20261005.log": {
+        "sha256": "e9ccd52e079579a2d55fe58f5c56751845af2a448abd4cdbf77007c7ce0fed6d",
+        "output": "query=-1 errno=1; set=-1 errno=1; bind=-1 errno=1; passed=1\n"
+      },
+      "results/odbc-numa-enabled-control-20261005.log": {
+        "sha256": "0411a24b5a926fc580de3196efc957c6dbeac9bec6f85421f7af3f96b9b3d2c0",
+        "output": "query=0 errno=0; set=-1 errno=1; bind=-1 errno=1; passed=1\n"
+      }
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-05",
+  "status": "All six OBS native builds pass canonical ODBC source revision 2, including nullable-array regressions and native binding/size controls. Signed ARM installed checks remain required; publication disabled.",
+  "commit": "e8adf65af26fcc4cf8bccc46f8df051163bced15",
+  "obs_revision": "2",
+  "srcmd5": "9a8114a68e76d8a5d0c3bcb67d405183",
+  "targets": {
+    "fedora-x86_64": {
+      "history": {
+        "rev": "2",
+        "srcmd5": "9a8114a68e76d8a5d0c3bcb67d405183",
+        "versrel": "2.0.0-1",
+        "bcnt": "1",
+        "time": "1791201079",
+        "duration": "74"
+      },
+      "qore_cases": 37,
+      "assertions": 156,
+      "native_boundary_cases": 12,
+      "source_build_test_and_package_lint_diagnostics": [],
+      "worker_setup_diagnostics": [],
+      "log": "results/odbc-native-rev2-20261005/fedora-x86_64.log",
+      "sha256": "09496ecc91f3fa9cb3105fbd11c0375864be63965654d6c78432937d2e41fad1"
+    },
+    "fedora-aarch64": {
+      "history": {
+        "rev": "2",
+        "srcmd5": "9a8114a68e76d8a5d0c3bcb67d405183",
+        "versrel": "2.0.0-1",
+        "bcnt": "1",
+        "time": "1791201031",
+        "duration": "130"
+      },
+      "qore_cases": 37,
+      "assertions": 156,
+      "native_boundary_cases": 12,
+      "source_build_test_and_package_lint_diagnostics": [],
+      "worker_setup_diagnostics": [],
+      "log": "results/odbc-native-rev2-20261005/fedora-aarch64.log",
+      "sha256": "d17b1887676ca6d3e65de41fbd0b0f9b0b553245bc755d96ce700065df210713"
+    },
+    "leap-x86_64": {
+      "history": {
+        "rev": "2",
+        "srcmd5": "9a8114a68e76d8a5d0c3bcb67d405183",
+        "versrel": "2.0.0-1",
+        "bcnt": "1",
+        "time": "1791201062",
+        "duration": "60"
+      },
+      "qore_cases": 37,
+      "assertions": 156,
+      "native_boundary_cases": 12,
+      "source_build_test_and_package_lint_diagnostics": [],
+      "worker_setup_diagnostics": [
+        "[   12s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2"
+      ],
+      "log": "results/odbc-native-rev2-20261005/leap-x86_64.log",
+      "sha256": "6f9cc003f279274eba45a585dd6ca774aad2d94d3673b13da01c16de362dfc30"
+    },
+    "leap-aarch64": {
+      "history": {
+        "rev": "2",
+        "srcmd5": "9a8114a68e76d8a5d0c3bcb67d405183",
+        "versrel": "2.0.0-1",
+        "bcnt": "1",
+        "time": "1791200942",
+        "duration": "61"
+      },
+      "qore_cases": 37,
+      "assertions": 156,
+      "native_boundary_cases": 12,
+      "source_build_test_and_package_lint_diagnostics": [],
+      "worker_setup_diagnostics": [
+        "[   12s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2"
+      ],
+      "log": "results/odbc-native-rev2-20261005/leap-aarch64.log",
+      "sha256": "e35ed72aa178caf9b74af2f2b0c25b4fe20f41f5bbcabbadadc077bdf86fc777"
+    },
+    "el10-x86_64": {
+      "history": {
+        "rev": "2",
+        "srcmd5": "9a8114a68e76d8a5d0c3bcb67d405183",
+        "versrel": "2.0.0-1",
+        "bcnt": "1",
+        "time": "1791201083",
+        "duration": "79"
+      },
+      "qore_cases": 37,
+      "assertions": 156,
+      "native_boundary_cases": 12,
+      "source_build_test_and_package_lint_diagnostics": [],
+      "worker_setup_diagnostics": [],
+      "log": "results/odbc-native-rev2-20261005/el10-x86_64.log",
+      "sha256": "f649fe36a76232382367ff2b51aa182868cbd54a991818207ed33ed8849aca06"
+    },
+    "el10-aarch64": {
+      "history": {
+        "rev": "2",
+        "srcmd5": "9a8114a68e76d8a5d0c3bcb67d405183",
+        "versrel": "2.0.0-1",
+        "bcnt": "1",
+        "time": "1791201041",
+        "duration": "158"
+      },
+      "qore_cases": 37,
+      "assertions": 156,
+      "native_boundary_cases": 12,
+      "source_build_test_and_package_lint_diagnostics": [],
+      "worker_setup_diagnostics": [],
+      "log": "results/odbc-native-rev2-20261005/el10-aarch64.log",
+      "sha256": "5cf819b8421f0ef790f9bb0d5764eb8b668ac22a351b65aa1b032c3ba0d78309"
+    }
+  },
+  "worker_setup_scope": "Leap retains the previously recorded OBS bootstrap polkit-default-privs scriptlet diagnostic before package compilation; source compilation, tests and package lint are clean. See evidence/native-process-uuid-builds-20261005.json."
+}

@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-05",
-  "status": "Committed and pushed; canonical RPM builds, installed runtime/SDK, native fault/boundary tests, compiled consumer and directory checks pass on all three x86_64 targets. Leap package lint has zero warnings/errors. OBS native qualification remains required.",
+  "status": "All six native OBS builds pass source revision 2. Local installed runtime/SDK tests pass on all three x86_64 targets; the runner integration adds compiled arrays and corrects the local PostgreSQL NUMA fixture diagnostics. Signed ARM installed checks remain required.",
   "base_commit": "db13764",
   "fixes": [
     "Bind all-NULL arrays and preserve per-element float/boolean NULL indicators.",
@@ -711,5 +711,7 @@
     "log": "results/odbc-packaging-tests-20261005.log",
     "sha256": "129b71c9e8f742ecd41cd2c689b70c9d0d12f604a907d0b68f49d71dce1f03e1"
   },
-  "obs_source": "evidence/obs-odbc-source-20261005.json"
+  "obs_source": "evidence/obs-odbc-source-20261005.json",
+  "native_builds": "evidence/odbc-native-rev2-20261005.json",
+  "installed_followup": "evidence/odbc-native-runner-20261005.json"
 }

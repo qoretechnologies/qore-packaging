@@ -24,6 +24,11 @@ MODULE_FIXTURES = {
                     'test/test_' + name + '.q' for name in
                     ('cwd', 'env', 'false', 'io', 'output', 'signal', 'sleep',
                      'stdin_eof', 'true', 'utf8')},
+    'odbc': {'rpm/tests-installed-runtime', 'rpm/test-postgres', 'rpm/run-suites',
+             'rpm/with-postgres.py', 'test/array-binding.qtest', 'test/odbc.qtest',
+             'test/native/run-bind-failure.py', 'test/native/bind-failure.cpp',
+             'test/native/bind-failure.qtest', 'test/native/array-size.cpp',
+             'src/ODBCArraySize.h'},
 }
 
 
@@ -94,8 +99,49 @@ def validate(manifest):
     return manifest
 
 
-def module_commands(name, phase, directory, binary=None):
+def module_dependencies(name, phase, family):
+    """Distribution packages needed by reviewed fixtures, separate from RPM requirements."""
+    if name not in MODULE_FIXTURES or phase not in ('runtime', 'sdk'):
+        raise ValueError('Unknown module suite or phase')
+    if family not in ('fedora', 'suse', 'el'):
+        raise ValueError('Unsupported fixture distribution')
+    if name == 'process':
+        return ['procps' if family == 'suse' else 'procps-ng']
+    if name == 'odbc':
+        return (['postgresql-server', 'psqlODBC' if family == 'suse' else 'postgresql-odbc']
+                if phase == 'runtime' else ['unixODBC-devel'])
+    return []
+
+
+def installed_module_file(name, files, suffix):
+    """Resolve a unique absolute file from an installed RPM inventory."""
+    candidates = [Path(path) for path in files.splitlines() if path.endswith(suffix)]
+    if len(candidates) != 1 or not candidates[0].is_absolute() or '..' in candidates[0].parts:
+        raise ValueError('Expected one installed ' + name + ' file')
+    return candidates[0]
+
+
+def module_commands(name, phase, directory, binary=None, driver=None):
     """Fixed commands only; manifests select reviewed suites, never shell text."""
+    if name not in MODULE_FIXTURES or phase not in ('runtime', 'sdk'):
+        raise ValueError('Unknown module suite or phase')
+    if name == 'odbc':
+        commands = [('tests', ['env', 'QORE_RPM_TEST_TMP=' + str(directory / 'runtime-fixture'),
+                               str(directory / 'rpm/tests-installed-runtime')])]
+        if phase == 'sdk':
+            if binary is None or not binary.is_absolute() or binary.suffix != '.qmod':
+                raise ValueError('ODBC SDK checks require the installed module path')
+            if driver is None or not driver.is_absolute() or driver.name != 'psqlodbcw.so':
+                raise ValueError('ODBC SDK checks require the installed PostgreSQL driver')
+            compiled = directory / 'array-binding-compiled'
+            commands.extend([
+                ('native', ['env', 'QORE_ODBC_BINARY_MODULE=' + str(binary),
+                            str(directory / 'rpm/test-postgres'), str(directory / 'test'), '--native']),
+                ('compiler', ['qcc', '-o', str(compiled), str(directory / 'test/array-binding.qtest')]),
+                ('compiled-tests', ['python3', '-B', str(directory / 'rpm/with-postgres.py'),
+                                    '--driver', str(driver), '--', str(compiled), '-v']),
+            ])
+        return commands
     test_name = 'uuid-test.qtest' if name == 'uuid' else 'process.qtest'
     commands = [('tests', ['qore', '-b', '--enable-debug',
                            str(directory / 'test' / test_name), '-v'])]
@@ -186,6 +232,7 @@ def qualify(manifest, output):
                     path = source / ('module-' + entry['name']) / fixture['path']
                     fetch_source(fixture['url'], fixture['sha256'], path)
                     path.chmod(0o755 if path.suffix in ('.q', '.qtest', '.py')
+                               or fixture['path'].startswith('rpm/')
                                or fixture['path'] == 'debian/tests/compiler' else 0o644)
             install_env = installation_environment(manifest['family'], root)
             run('import-signing-key', ['rpm', '--import', str(key)])
@@ -205,14 +252,14 @@ def qualify(manifest, output):
                 if phase == 'sdk':
                     # cmake is a fixture tool, not a runtime requirement.
                     paths.append('cmake')
-                if any(entry['name'] == 'process' for entry in manifest.get('modules', [])):
-                    paths.append('procps' if manifest['family'] == 'suse' else 'procps-ng')
+                for entry in manifest.get('modules', []):
+                    paths.extend(module_dependencies(entry['name'], phase, manifest['family']))
                 run(phase + '-install', install_command(manifest['family'], paths), env=install_env)
                 names = [entry['name'] for entry in entries]
                 run(phase + '-rpm-verify', ['rpm', '-V', *names])
                 run(phase + '-inventory', ['rpm', '-qa', '--qf', '%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n'])
                 if phase == 'runtime':
-                    for name in ('qore-devel', 'gcc', 'gcc-c++'):
+                    for name in ('qore-devel', 'gcc', 'gcc-c++', 'unixODBC-devel'):
                         if subprocess.run(['rpm', '-q', name], stdout=subprocess.DEVNULL).returncode != 1:
                             raise ValueError('Runtime unexpectedly installed the compiler: ' + name)
                 suites = ('runtime',) if phase == 'runtime' else ('runtime', 'development', 'tools', 'remote-debuggers')
@@ -228,18 +275,20 @@ def qualify(manifest, output):
                     shutil.copytree(source / ('module-' + name), directory)
                     subprocess.run(['chown', '-R', 'qoretester:qoretester', str(directory)], check=True)
                     binary = None
-                    if phase == 'sdk' and name == 'process':
-                        files = subprocess.check_output(['rpm', '-ql', 'qore-process-module'], text=True)
-                        binaries = [Path(p) for p in files.splitlines() if p.endswith('.qmod')]
-                        if len(binaries) != 1:
-                            raise ValueError('Expected one installed process binary module')
-                        binary = binaries[0]
+                    driver = None
+                    if phase == 'sdk' and name in ('process', 'odbc'):
+                        files = subprocess.check_output(['rpm', '-ql', 'qore-' + name + '-module'], text=True)
+                        binary = installed_module_file(name, files, '.qmod')
+                    if phase == 'sdk' and name == 'odbc':
+                        driver_package = 'psqlODBC' if manifest['family'] == 'suse' else 'postgresql-odbc'
+                        files = subprocess.check_output(['rpm', '-ql', driver_package], text=True)
+                        driver = installed_module_file('PostgreSQL ODBC driver', files, '/psqlodbcw.so')
                     environment = ['runuser', '-u', 'qoretester', '--', 'env']
                     for variable in ('QORE_MODULE_DIR', 'QORE_MODULE_DIR_ONLY', 'QORE_INCLUDE_DIR',
                                      'LD_LIBRARY_PATH', 'LD_PRELOAD'):
                         environment.extend(['-u', variable])
                     environment.append('AUTOPKGTEST_TMP=' + str(directory))
-                    for suite, command in module_commands(name, phase, directory, binary):
+                    for suite, command in module_commands(name, phase, directory, binary, driver):
                         run(phase + '-' + name + '-' + suite, environment + command, cwd=directory)
         result['exit_code'] = 0
     except BaseException as error:

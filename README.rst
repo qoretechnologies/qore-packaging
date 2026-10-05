@@ -707,6 +707,15 @@ The runner rejects unknown suites, duplicate or missing fixtures, crossed
 repository revisions, unsafe paths and missing runtime packages. The existing
 core ONNX inference and SDK tests still run in these combined installations.
 
+Start ``RPM_NATIVE_QUALIFICATION=odbc`` for the signed ODBC ARM installation
+jobs (optionally selecting ``RPM_NATIVE_TARGET``). The runtime runs all 36 ODBC
+cases against a private Unix-socket PostgreSQL cluster without development
+headers or compilers. After SDK installation, the runner also verifies native
+binding-failure recovery and 12 buffer-size boundaries, then compiles and runs
+all 28 nullable-array cases. Eleven fixture files are pinned to the same module
+commit; no workstation build directory enters the fixture. The core ONNX and
+SDK checks remain enabled. See ``evidence/odbc-native-runner-20261005.json``.
+
 Release 21 native ARM evidence is recorded in
 ``evidence/core21-native-arm-installed-20261003.json``. Fedora 44, Leap 16 and
 AlmaLinux 10 all passed the 400 OBS suites and installed runtime/SDK qualification,

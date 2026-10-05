@@ -84,3 +84,25 @@ rpm-modules-el10-arm64:
     - if: '$RPM_NATIVE_QUALIFICATION == "modules1" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
   variables:
     RPM_MANIFEST: qualification/modules1-el10-aarch64.json
+
+# ODBC uses private Unix-socket PostgreSQL fixtures in both installation phases.
+rpm-odbc-fedora-arm64:
+  extends: rpm-fedora-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "odbc" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "fedora")'
+  variables:
+    RPM_MANIFEST: qualification/odbc-fedora-aarch64.json
+
+rpm-odbc-leap-arm64:
+  extends: rpm-leap-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "odbc" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "leap")'
+  variables:
+    RPM_MANIFEST: qualification/odbc-leap-aarch64.json
+
+rpm-odbc-el10-arm64:
+  extends: rpm-el10-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "odbc" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
+  variables:
+    RPM_MANIFEST: qualification/odbc-el10-aarch64.json
