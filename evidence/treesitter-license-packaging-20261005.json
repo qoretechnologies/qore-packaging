@@ -1,0 +1,3291 @@
+{
+  "schema": 1,
+  "date": "2026-10-05",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Committed release 1.0.0-2 passes all six native OBS builds and both Leap architecture lint checks with zero module/package diagnostics. All three x86_64 canonical installed runtime/compiler tests and all ten public source URL digests pass. Native signed installed tests remain separate; publication disabled.",
+  "change": "Hard-link identical notices without changing any bytes or paths; build-time full directory comparison and file/inode checks cover payload preservation. Public OBS repack URLs replace bare source names; package description uses incremental parsing. No lint filters or diagnostic exceptions.",
+  "source": {
+    "schema": 1,
+    "commit": "ccf0e8ec7d209f46b83301c14dbe8ec07c3d542a",
+    "source_date_epoch": 1791189051,
+    "name": "qore-treesitter-module",
+    "version": "1.0.0",
+    "exclusions": [],
+    "sources": {
+      "qore-treesitter-module-1.0.0.tar.xz": "b673e302b58b4982e0445bc4f1a3f7fcb6d0f3fb1122b9849cd76f05bd578858",
+      "qore-treesitter-module.spec": "4f2d9ef0893405c90398dd3aadd5daa808c8d53f043c7bc3dcdd364d8ec1466d",
+      "tree-sitter-python-0.25.0.tar.xz": "896c15468dfd8de3117da755bcf9b9ff09732691683bcaafd7f6e4717dde9357",
+      "tree-sitter-java-0.23.5.tar.xz": "b2cc7339922f087af42176864c3ff16dd56709a78333aacfffc79aeecaa330ad",
+      "tree-sitter-json-0.24.8.tar.xz": "4dce82b9cae9887266740ad0e190752518681baa80015397c49d9eebcbbed28b",
+      "tree-sitter-yaml-0.7.2.tar.xz": "fb3652c6a332d2899d08dfdeeab2e45d2fc40d8535f3bca0e60b535681ba9985",
+      "tree-sitter-javascript-0.25.0.tar.xz": "12b4d346d531a4cf2537dcf8af861ad81faa86c4f342740cf55edf0df773b6f9",
+      "tree-sitter-kotlin-0.3.8.tar.xz": "456ce49699ca93810a41972154a19105583aa388f8e82ff49d6760e2540069dc",
+      "tree-sitter-typescript-0.23.2.tar.xz": "f7f3aec03e512e31c87823121cf732d44f68f150b4c243e2b111c04fcea204da",
+      "tree-sitter-sql-0.3.11.tar.xz": "3331261d4e5890ad41387dc428fbbb5d0896a769df01d3fccb3c1290b8f46c84",
+      "tree-sitter-markdown-0.5.3.tar.xz": "fefeda4b9774e4a147924e8aceabac7e00d640c916b67c5be79fb6de281b6467"
+    },
+    "candidate": true,
+    "packaging_overlay": {
+      "qore-treesitter-module.spec": "4f2d9ef0893405c90398dd3aadd5daa808c8d53f043c7bc3dcdd364d8ec1466d",
+      "rpm/README.rst": "660f8512367376c558fa70ebb483a1cf81a112072ae9381c1f648c5b9376f72f",
+      "rpm/review.rst": "648dc7ca7e954fa2d4fb823b67e2deca464b187f2c955df0a557743817cf3200",
+      "rpm/vendor-sources.json": "2dc5326e1e1a1ede309b8636feb846966468e61aaf42f6da3d754e76d570685d"
+    },
+    "spec": "qore-treesitter-module.spec",
+    "vendor_manifest": "rpm/vendor-sources.json",
+    "components": [
+      {
+        "name": "tree-sitter-python",
+        "version": "0.25.0",
+        "url": "https://codeload.github.com/tree-sitter/tree-sitter-python/tar.gz/refs/tags/v0.25.0",
+        "sha256": "4609a3665a620e117acf795ff01b9e965880f81745f287a16336f4ca86cf270c",
+        "top": "tree-sitter-python-0.25.0",
+        "archive": "tree-sitter-python-0.25.0.tar.xz",
+        "licenses": [
+          "LICENSE"
+        ],
+        "retained_paths": [
+          "LICENSE",
+          "README.md",
+          "grammar.js",
+          "grammar-reference.js",
+          "package.json",
+          "tree-sitter.json",
+          "src",
+          "queries",
+          "common",
+          "schema",
+          "typescript/grammar.js",
+          "typescript/src",
+          "tsx/grammar.js",
+          "tsx/src",
+          "tree-sitter-markdown/grammar.js",
+          "tree-sitter-markdown/src",
+          "tree-sitter-markdown/queries",
+          "tree-sitter-markdown-inline/grammar.js",
+          "tree-sitter-markdown-inline/src",
+          "tree-sitter-markdown-inline/queries"
+        ]
+      },
+      {
+        "name": "tree-sitter-java",
+        "version": "0.23.5",
+        "url": "https://codeload.github.com/tree-sitter/tree-sitter-java/tar.gz/refs/tags/v0.23.5",
+        "sha256": "cb199e0faae4b2c08425f88cbb51c1a9319612e7b96315a174a624db9bf3d9f0",
+        "top": "tree-sitter-java-0.23.5",
+        "archive": "tree-sitter-java-0.23.5.tar.xz",
+        "licenses": [
+          "LICENSE"
+        ],
+        "retained_paths": [
+          "LICENSE",
+          "README.md",
+          "grammar.js",
+          "grammar-reference.js",
+          "package.json",
+          "tree-sitter.json",
+          "src",
+          "queries",
+          "common",
+          "schema",
+          "typescript/grammar.js",
+          "typescript/src",
+          "tsx/grammar.js",
+          "tsx/src",
+          "tree-sitter-markdown/grammar.js",
+          "tree-sitter-markdown/src",
+          "tree-sitter-markdown/queries",
+          "tree-sitter-markdown-inline/grammar.js",
+          "tree-sitter-markdown-inline/src",
+          "tree-sitter-markdown-inline/queries"
+        ]
+      },
+      {
+        "name": "tree-sitter-json",
+        "version": "0.24.8",
+        "url": "https://codeload.github.com/tree-sitter/tree-sitter-json/tar.gz/refs/tags/v0.24.8",
+        "sha256": "acf6e8362457e819ed8b613f2ad9a0e1b621a77556c296f3abea58f7880a9213",
+        "top": "tree-sitter-json-0.24.8",
+        "archive": "tree-sitter-json-0.24.8.tar.xz",
+        "licenses": [
+          "LICENSE"
+        ],
+        "retained_paths": [
+          "LICENSE",
+          "README.md",
+          "grammar.js",
+          "grammar-reference.js",
+          "package.json",
+          "tree-sitter.json",
+          "src",
+          "queries",
+          "common",
+          "schema",
+          "typescript/grammar.js",
+          "typescript/src",
+          "tsx/grammar.js",
+          "tsx/src",
+          "tree-sitter-markdown/grammar.js",
+          "tree-sitter-markdown/src",
+          "tree-sitter-markdown/queries",
+          "tree-sitter-markdown-inline/grammar.js",
+          "tree-sitter-markdown-inline/src",
+          "tree-sitter-markdown-inline/queries"
+        ]
+      },
+      {
+        "name": "tree-sitter-yaml",
+        "version": "0.7.2",
+        "url": "https://codeload.github.com/tree-sitter-grammars/tree-sitter-yaml/tar.gz/refs/tags/v0.7.2",
+        "sha256": "aeaff5731bb8b66c7054c8aed33cd5edea5f4cd2ac71654f3f6c2ba2073d8fac",
+        "top": "tree-sitter-yaml-0.7.2",
+        "archive": "tree-sitter-yaml-0.7.2.tar.xz",
+        "licenses": [
+          "LICENSE"
+        ],
+        "retained_paths": [
+          "LICENSE",
+          "README.md",
+          "grammar.js",
+          "grammar-reference.js",
+          "package.json",
+          "tree-sitter.json",
+          "src",
+          "queries",
+          "common",
+          "schema",
+          "typescript/grammar.js",
+          "typescript/src",
+          "tsx/grammar.js",
+          "tsx/src",
+          "tree-sitter-markdown/grammar.js",
+          "tree-sitter-markdown/src",
+          "tree-sitter-markdown/queries",
+          "tree-sitter-markdown-inline/grammar.js",
+          "tree-sitter-markdown-inline/src",
+          "tree-sitter-markdown-inline/queries"
+        ]
+      },
+      {
+        "name": "tree-sitter-javascript",
+        "version": "0.25.0",
+        "url": "https://codeload.github.com/tree-sitter/tree-sitter-javascript/tar.gz/refs/tags/v0.25.0",
+        "sha256": "9712fc283d3dc01d996d20b6392143445d05867a7aad76fdd723824468428b86",
+        "top": "tree-sitter-javascript-0.25.0",
+        "archive": "tree-sitter-javascript-0.25.0.tar.xz",
+        "licenses": [
+          "LICENSE"
+        ],
+        "retained_paths": [
+          "LICENSE",
+          "README.md",
+          "grammar.js",
+          "grammar-reference.js",
+          "package.json",
+          "tree-sitter.json",
+          "src",
+          "queries",
+          "common",
+          "schema",
+          "typescript/grammar.js",
+          "typescript/src",
+          "tsx/grammar.js",
+          "tsx/src",
+          "tree-sitter-markdown/grammar.js",
+          "tree-sitter-markdown/src",
+          "tree-sitter-markdown/queries",
+          "tree-sitter-markdown-inline/grammar.js",
+          "tree-sitter-markdown-inline/src",
+          "tree-sitter-markdown-inline/queries"
+        ]
+      },
+      {
+        "name": "tree-sitter-kotlin",
+        "version": "0.3.8",
+        "url": "https://codeload.github.com/fwcd/tree-sitter-kotlin/tar.gz/refs/tags/0.3.8",
+        "sha256": "7dd60975786bf9cb4be6a5176f5ccb5fed505f9929a012da30762505b1015669",
+        "top": "tree-sitter-kotlin-0.3.8",
+        "archive": "tree-sitter-kotlin-0.3.8.tar.xz",
+        "licenses": [
+          "LICENSE"
+        ],
+        "retained_paths": [
+          "LICENSE",
+          "README.md",
+          "grammar.js",
+          "grammar-reference.js",
+          "package.json",
+          "tree-sitter.json",
+          "src",
+          "queries",
+          "common",
+          "schema",
+          "typescript/grammar.js",
+          "typescript/src",
+          "tsx/grammar.js",
+          "tsx/src",
+          "tree-sitter-markdown/grammar.js",
+          "tree-sitter-markdown/src",
+          "tree-sitter-markdown/queries",
+          "tree-sitter-markdown-inline/grammar.js",
+          "tree-sitter-markdown-inline/src",
+          "tree-sitter-markdown-inline/queries"
+        ]
+      },
+      {
+        "name": "tree-sitter-typescript",
+        "version": "0.23.2",
+        "url": "https://codeload.github.com/tree-sitter/tree-sitter-typescript/tar.gz/refs/tags/v0.23.2",
+        "sha256": "2c4ce711ae8d1218a3b2f899189298159d672870b5b34dff5d937bed2f3e8983",
+        "top": "tree-sitter-typescript-0.23.2",
+        "archive": "tree-sitter-typescript-0.23.2.tar.xz",
+        "licenses": [
+          "LICENSE"
+        ],
+        "retained_paths": [
+          "LICENSE",
+          "README.md",
+          "grammar.js",
+          "grammar-reference.js",
+          "package.json",
+          "tree-sitter.json",
+          "src",
+          "queries",
+          "common",
+          "schema",
+          "typescript/grammar.js",
+          "typescript/src",
+          "tsx/grammar.js",
+          "tsx/src",
+          "tree-sitter-markdown/grammar.js",
+          "tree-sitter-markdown/src",
+          "tree-sitter-markdown/queries",
+          "tree-sitter-markdown-inline/grammar.js",
+          "tree-sitter-markdown-inline/src",
+          "tree-sitter-markdown-inline/queries"
+        ]
+      },
+      {
+        "name": "tree-sitter-sql",
+        "version": "0.3.11",
+        "url": "https://codeload.github.com/DerekStride/tree-sitter-sql/tar.gz/refs/tags/v0.3.11",
+        "sha256": "1fe13cb1e50dd9da9f22aed3cb9430fc9dae05a734a6049926fc12f6d8ecd3ae",
+        "top": "tree-sitter-sql-0.3.11",
+        "archive": "tree-sitter-sql-0.3.11.tar.xz",
+        "licenses": [
+          "LICENSE"
+        ],
+        "retained_paths": [
+          "LICENSE",
+          "README.md",
+          "grammar.js",
+          "grammar-reference.js",
+          "package.json",
+          "tree-sitter.json",
+          "src",
+          "queries",
+          "common",
+          "schema",
+          "typescript/grammar.js",
+          "typescript/src",
+          "tsx/grammar.js",
+          "tsx/src",
+          "tree-sitter-markdown/grammar.js",
+          "tree-sitter-markdown/src",
+          "tree-sitter-markdown/queries",
+          "tree-sitter-markdown-inline/grammar.js",
+          "tree-sitter-markdown-inline/src",
+          "tree-sitter-markdown-inline/queries"
+        ]
+      },
+      {
+        "name": "tree-sitter-markdown",
+        "version": "0.5.3",
+        "url": "https://codeload.github.com/tree-sitter-grammars/tree-sitter-markdown/tar.gz/refs/tags/v0.5.3",
+        "sha256": "df845b1ab7c7c163ec57d7fa17170c92b04be199bddab02523636efec5224ab6",
+        "top": "tree-sitter-markdown-0.5.3",
+        "archive": "tree-sitter-markdown-0.5.3.tar.xz",
+        "licenses": [
+          "LICENSE"
+        ],
+        "retained_paths": [
+          "LICENSE",
+          "README.md",
+          "grammar.js",
+          "grammar-reference.js",
+          "package.json",
+          "tree-sitter.json",
+          "src",
+          "queries",
+          "common",
+          "schema",
+          "typescript/grammar.js",
+          "typescript/src",
+          "tsx/grammar.js",
+          "tsx/src",
+          "tree-sitter-markdown/grammar.js",
+          "tree-sitter-markdown/src",
+          "tree-sitter-markdown/queries",
+          "tree-sitter-markdown-inline/grammar.js",
+          "tree-sitter-markdown-inline/src",
+          "tree-sitter-markdown-inline/queries"
+        ]
+      }
+    ]
+  },
+  "targets": {
+    "fedora": {
+      "installed": {
+        "steps": {
+          "build": {
+            "exit_code": 0,
+            "log": "results/fedora-treesitter-installed-license-candidate-5-build.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/fedora-treesitter-installed-license-candidate-5-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-treesitter-installed-license-candidate-5-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/fedora-treesitter-installed-license-candidate-5-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-treesitter-installed-license-candidate-5-sdk-tests.log"
+          }
+        },
+        "core_qualification": {
+          "source_build": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-15",
+          "steps": {
+            "sdk-install": {
+              "exit_code": 0,
+              "log": "results/fedora-core-policy-15-sdk-install.log"
+            },
+            "sdk-tests": {
+              "exit_code": 0,
+              "log": "results/fedora-core-policy-15-sdk-tests.log"
+            },
+            "runtime-install": {
+              "exit_code": 0,
+              "log": "results/fedora-core-policy-15-runtime-install.log"
+            },
+            "runtime-tests": {
+              "exit_code": 0,
+              "log": "results/fedora-core-policy-15-runtime-tests.log"
+            }
+          },
+          "source": {
+            "schema": 1,
+            "commit": "c95c7378da33cc4c68d266c48f409cd4b14108db",
+            "source_date_epoch": 1790911113,
+            "name": "qore",
+            "version": "3.0.0~git20261002.15",
+            "exclusions": [],
+            "sources": {
+              "qore-3.0.0~git20261002.15.tar.xz": "84ead538812b4ebdf12950eaef74f30d4a9a4991a954b6b42eb311b40b83723b",
+              "qore.spec": "6adbddb232bbee8627b957234c26ca7c99bf170935357b2fb3fb3cbdcbfb357e"
+            },
+            "spec": "qore.spec"
+          },
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.15-15.fc44.noarch.rpm": "dfee6f7a947deb607f8a51c6cfa4b992b15cc10db909a9e9e7e7aa0fb19433f6",
+            "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.15-15.fc44.noarch.rpm": "9eec4580c30715e8fd5ebb399efb68b3e8f58c804e7f5041df2a4999e9681172",
+            "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.15-15.fc44.noarch.rpm": "432820854344229725e27a456c566dbfc6ef839e67bf3ca0d641ca6861450699",
+            "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.15-15.fc44.noarch.rpm": "9739419596ba6b78fc983a2b1edba41bc7fb92dbc6395b2e14b262203e4d4bea",
+            "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.15-15.fc44.noarch.rpm": "5f5b290b82fc5aa52287246a5bfe5aafe73a0f90d06bef44bf63323a7d821415",
+            "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "a6a0fa60e11dd3cf45891e03bac156d5f79ae8be4aafde081260368e2a125af5",
+            "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "c2e0340cd1a32b11b4e19555051176eaefcff239ade2440d2c9376d0f462fe1a",
+            "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "6f18a0b824062a9f4a77c011f9c35f9fe72e727be46429628e3e69516f11c887",
+            "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "87c1f3b2e02a8691a113d8ba02e7a8d5ed4aa5d4b1f42656560a552eb27e55f6",
+            "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "5548b1dc449acb37ba15390c6d9b76ef29b14114cadbabbc4598c4f8035d92a6",
+            "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "559b69c6958afca83c19333724f0fc65e81d9a8b782d2e12595ada35fd4471c9",
+            "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "8f11644b4195a1506bed287479b37fbe3fb9ee0c9ec2252316b98b4689e5395c",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "10747480e8358c5a83fa1e57a390f44990f9f0e14114c3f18acb1f407cd56285",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "8632fad9742b588a69257ead7bbca1f3749c71d028855f519897e53ecf3420a1",
+            "rpmbuild/SRPMS/qore-3.0.0~git20261002.15-15.fc44.src.rpm": "82edf4fa0dc25c871ed47055ff8b88da16c24732a6c3f1a1dda8608884c44c58"
+          },
+          "sdk_image": "sha256:005e14a5056d890cd0bd604241091b911bbd5af4cd67bb967b7699ad4459bf0b",
+          "runtime_image": "sha256:c785b589f16457f7fb3ebf0e11e5b9d33a04b4fa97162c418585d96cd2c992c3",
+          "exit_code": 0
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:005e14a5056d890cd0bd604241091b911bbd5af4cd67bb967b7699ad4459bf0b",
+          "source": {
+            "schema": 1,
+            "commit": "ccf0e8ec7d209f46b83301c14dbe8ec07c3d542a",
+            "source_date_epoch": 1791189051,
+            "name": "qore-treesitter-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-treesitter-module-1.0.0.tar.xz": "b673e302b58b4982e0445bc4f1a3f7fcb6d0f3fb1122b9849cd76f05bd578858",
+              "qore-treesitter-module.spec": "4f2d9ef0893405c90398dd3aadd5daa808c8d53f043c7bc3dcdd364d8ec1466d",
+              "tree-sitter-python-0.25.0.tar.xz": "896c15468dfd8de3117da755bcf9b9ff09732691683bcaafd7f6e4717dde9357",
+              "tree-sitter-java-0.23.5.tar.xz": "b2cc7339922f087af42176864c3ff16dd56709a78333aacfffc79aeecaa330ad",
+              "tree-sitter-json-0.24.8.tar.xz": "4dce82b9cae9887266740ad0e190752518681baa80015397c49d9eebcbbed28b",
+              "tree-sitter-yaml-0.7.2.tar.xz": "fb3652c6a332d2899d08dfdeeab2e45d2fc40d8535f3bca0e60b535681ba9985",
+              "tree-sitter-javascript-0.25.0.tar.xz": "12b4d346d531a4cf2537dcf8af861ad81faa86c4f342740cf55edf0df773b6f9",
+              "tree-sitter-kotlin-0.3.8.tar.xz": "456ce49699ca93810a41972154a19105583aa388f8e82ff49d6760e2540069dc",
+              "tree-sitter-typescript-0.23.2.tar.xz": "f7f3aec03e512e31c87823121cf732d44f68f150b4c243e2b111c04fcea204da",
+              "tree-sitter-sql-0.3.11.tar.xz": "3331261d4e5890ad41387dc428fbbb5d0896a769df01d3fccb3c1290b8f46c84",
+              "tree-sitter-markdown-0.5.3.tar.xz": "fefeda4b9774e4a147924e8aceabac7e00d640c916b67c5be79fb6de281b6467"
+            },
+            "candidate": true,
+            "packaging_overlay": {
+              "qore-treesitter-module.spec": "4f2d9ef0893405c90398dd3aadd5daa808c8d53f043c7bc3dcdd364d8ec1466d",
+              "rpm/README.rst": "660f8512367376c558fa70ebb483a1cf81a112072ae9381c1f648c5b9376f72f",
+              "rpm/review.rst": "648dc7ca7e954fa2d4fb823b67e2deca464b187f2c955df0a557743817cf3200",
+              "rpm/vendor-sources.json": "2dc5326e1e1a1ede309b8636feb846966468e61aaf42f6da3d754e76d570685d"
+            },
+            "spec": "qore-treesitter-module.spec",
+            "vendor_manifest": "rpm/vendor-sources.json",
+            "components": [
+              {
+                "name": "tree-sitter-python",
+                "version": "0.25.0",
+                "url": "https://codeload.github.com/tree-sitter/tree-sitter-python/tar.gz/refs/tags/v0.25.0",
+                "sha256": "4609a3665a620e117acf795ff01b9e965880f81745f287a16336f4ca86cf270c",
+                "top": "tree-sitter-python-0.25.0",
+                "archive": "tree-sitter-python-0.25.0.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-java",
+                "version": "0.23.5",
+                "url": "https://codeload.github.com/tree-sitter/tree-sitter-java/tar.gz/refs/tags/v0.23.5",
+                "sha256": "cb199e0faae4b2c08425f88cbb51c1a9319612e7b96315a174a624db9bf3d9f0",
+                "top": "tree-sitter-java-0.23.5",
+                "archive": "tree-sitter-java-0.23.5.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-json",
+                "version": "0.24.8",
+                "url": "https://codeload.github.com/tree-sitter/tree-sitter-json/tar.gz/refs/tags/v0.24.8",
+                "sha256": "acf6e8362457e819ed8b613f2ad9a0e1b621a77556c296f3abea58f7880a9213",
+                "top": "tree-sitter-json-0.24.8",
+                "archive": "tree-sitter-json-0.24.8.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-yaml",
+                "version": "0.7.2",
+                "url": "https://codeload.github.com/tree-sitter-grammars/tree-sitter-yaml/tar.gz/refs/tags/v0.7.2",
+                "sha256": "aeaff5731bb8b66c7054c8aed33cd5edea5f4cd2ac71654f3f6c2ba2073d8fac",
+                "top": "tree-sitter-yaml-0.7.2",
+                "archive": "tree-sitter-yaml-0.7.2.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-javascript",
+                "version": "0.25.0",
+                "url": "https://codeload.github.com/tree-sitter/tree-sitter-javascript/tar.gz/refs/tags/v0.25.0",
+                "sha256": "9712fc283d3dc01d996d20b6392143445d05867a7aad76fdd723824468428b86",
+                "top": "tree-sitter-javascript-0.25.0",
+                "archive": "tree-sitter-javascript-0.25.0.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-kotlin",
+                "version": "0.3.8",
+                "url": "https://codeload.github.com/fwcd/tree-sitter-kotlin/tar.gz/refs/tags/0.3.8",
+                "sha256": "7dd60975786bf9cb4be6a5176f5ccb5fed505f9929a012da30762505b1015669",
+                "top": "tree-sitter-kotlin-0.3.8",
+                "archive": "tree-sitter-kotlin-0.3.8.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-typescript",
+                "version": "0.23.2",
+                "url": "https://codeload.github.com/tree-sitter/tree-sitter-typescript/tar.gz/refs/tags/v0.23.2",
+                "sha256": "2c4ce711ae8d1218a3b2f899189298159d672870b5b34dff5d937bed2f3e8983",
+                "top": "tree-sitter-typescript-0.23.2",
+                "archive": "tree-sitter-typescript-0.23.2.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-sql",
+                "version": "0.3.11",
+                "url": "https://codeload.github.com/DerekStride/tree-sitter-sql/tar.gz/refs/tags/v0.3.11",
+                "sha256": "1fe13cb1e50dd9da9f22aed3cb9430fc9dae05a734a6049926fc12f6d8ecd3ae",
+                "top": "tree-sitter-sql-0.3.11",
+                "archive": "tree-sitter-sql-0.3.11.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-markdown",
+                "version": "0.5.3",
+                "url": "https://codeload.github.com/tree-sitter-grammars/tree-sitter-markdown/tar.gz/refs/tags/v0.5.3",
+                "sha256": "df845b1ab7c7c163ec57d7fa17170c92b04be199bddab02523636efec5224ab6",
+                "top": "tree-sitter-markdown-0.5.3",
+                "archive": "tree-sitter-markdown-0.5.3.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              }
+            ]
+          },
+          "jobs": 4,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1791189051",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/treesitter-license-candidate-5:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/fedora-treesitter-license-candidate-5:/work",
+            "sha256:005e14a5056d890cd0bd604241091b911bbd5af4cd67bb967b7699ad4459bf0b",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 4",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-treesitter-module.spec"
+          ],
+          "source_only": false,
+          "tmpfs_mib": null,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-treesitter-module-doc-1.0.0-2.fc44.noarch.rpm": "b6db3ee91c951a13913260e7d2adb8a0634aa7893854dee94af78b6a33daefc9",
+            "rpmbuild/RPMS/x86_64/qore-treesitter-module-1.0.0-2.fc44.x86_64.rpm": "8299076ae3c51c94ac8ad15967e44cc6669991ff03a354da5da72f4c38942d96",
+            "rpmbuild/RPMS/x86_64/qore-treesitter-module-debuginfo-1.0.0-2.fc44.x86_64.rpm": "3b1c181fe0c4cb537eaa97e01866d6b370da58c917641c3563aa22a593dc51c3",
+            "rpmbuild/RPMS/x86_64/qore-treesitter-module-debugsource-1.0.0-2.fc44.x86_64.rpm": "88710c21d8e58d16413b22f784ad504ae55bf61977f7f7b46ad537e57e9e1360",
+            "rpmbuild/SRPMS/qore-treesitter-module-1.0.0-2.fc44.src.rpm": "d34440673dec0ae481b12a8dabc348652b23ab289d96763f38a7e7c366db2c6e"
+          }
+        },
+        "runtime_image": "sha256:61f8d731fe810c1f07ff60dea737329f2f4fceed7f3056f5b60195cdaf924e07",
+        "sdk_image": "sha256:7743e53a61c444ec496dd1cf313b313eb51e5491faf77ec0981238e41e7ee8b6",
+        "exit_code": 0
+      },
+      "build_log_sha256": "5f16c036a95459a9e85a7f8931cd5978925fa532d89d50200e78f125d4915174"
+    },
+    "leap": {
+      "installed": {
+        "steps": {
+          "build": {
+            "exit_code": 0,
+            "log": "results/leap-treesitter-installed-license-candidate-5-build.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/leap-treesitter-installed-license-candidate-5-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/leap-treesitter-installed-license-candidate-5-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/leap-treesitter-installed-license-candidate-5-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/leap-treesitter-installed-license-candidate-5-sdk-tests.log"
+          }
+        },
+        "core_qualification": {
+          "source_build": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-15",
+          "steps": {
+            "sdk-install": {
+              "exit_code": 0,
+              "log": "results/leap-core-policy-15-sdk-install.log"
+            },
+            "sdk-tests": {
+              "exit_code": 0,
+              "log": "results/leap-core-policy-15-sdk-tests.log"
+            },
+            "runtime-install": {
+              "exit_code": 0,
+              "log": "results/leap-core-policy-15-runtime-install.log"
+            },
+            "runtime-tests": {
+              "exit_code": 0,
+              "log": "results/leap-core-policy-15-runtime-tests.log"
+            }
+          },
+          "source": {
+            "schema": 1,
+            "commit": "c95c7378da33cc4c68d266c48f409cd4b14108db",
+            "source_date_epoch": 1790911113,
+            "name": "qore",
+            "version": "3.0.0~git20261002.15",
+            "exclusions": [],
+            "sources": {
+              "qore-3.0.0~git20261002.15.tar.xz": "84ead538812b4ebdf12950eaef74f30d4a9a4991a954b6b42eb311b40b83723b",
+              "qore.spec": "6adbddb232bbee8627b957234c26ca7c99bf170935357b2fb3fb3cbdcbfb357e"
+            },
+            "spec": "qore.spec"
+          },
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.15-15.noarch.rpm": "55dbb2f35357215160c37680de7836caff9bf8a677055f02acdb4e3f9d5c80e4",
+            "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.15-15.noarch.rpm": "8fa1024eb67004cbec23975989dc1c5eb8b6545537a5a418cf71ea82a6e82093",
+            "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.15-15.noarch.rpm": "f87b163c1179c027a8e0bff6061a0975299103f2f132e7ef5bb5bf7c304b980c",
+            "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.15-15.noarch.rpm": "3b30da8d0a4ff2a429d8ae9ca9b1672e01d622e4d47f14d88a8636e1205e7601",
+            "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.15-15.noarch.rpm": "0b6b441f4003f4176650dba8b36dc28b18a3fba982a6329c5f7c196501e9addb",
+            "rpmbuild/RPMS/x86_64/libqore20-3.0.0~git20261002.15-15.x86_64.rpm": "5fdad7e82c625cbde8bec899fda23a6c48ceaf4843ac985086a219d0f0b23fa8",
+            "rpmbuild/RPMS/x86_64/libqore20-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "818f33d1e840f8318ad38ecb3195fcdfc59d0b2b870c52778a7ed58035a18b09",
+            "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.15-15.x86_64.rpm": "9f806b18716ad6deec71eb5c2678c936829af9fac703d2a95aafd51f38cb457a",
+            "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "9a9e0ec1a6f5f77df20659b3d31c3e15466394ba8c9d6e29c93a3090c664e987",
+            "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.15-15.x86_64.rpm": "7cd49da30ec06f18805a85b1f658660ce9d84c7d5d3d555e947608b8474107e4",
+            "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.15-15.x86_64.rpm": "ff7788dd27373e4317a69121b2512e2dab72d3116f9d307260337f6eaf3c9c89",
+            "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "c6f0218ba4bd9b126e065b1032cb49bf6d993ff2acaf979b0b9ab3b3540b1db0",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.15-15.x86_64.rpm": "041d41b480bc9677bd64702134d3d8d18871acfca9ec006b0d32daa06ce7a786",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "2583bd73d67c6f17ce561dcb5215a0abde82431715c4863cac286b946d890217",
+            "rpmbuild/SRPMS/qore-3.0.0~git20261002.15-15.src.rpm": "6a0fb2294794c810988b6ded0f0e3628b8beb0814a59f571ae5bdebc3f4eff79"
+          },
+          "sdk_image": "sha256:b5a2e03cb123ae277e58ffd792b60b6bb43134b444f0c5f8a9e513b7b8a44b12",
+          "runtime_image": "sha256:f8b671f49dbbf7edf0ff29aa2e146ef465d9a2ac4838e352133920f5c91b4a12",
+          "exit_code": 0
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:b5a2e03cb123ae277e58ffd792b60b6bb43134b444f0c5f8a9e513b7b8a44b12",
+          "source": {
+            "schema": 1,
+            "commit": "ccf0e8ec7d209f46b83301c14dbe8ec07c3d542a",
+            "source_date_epoch": 1791189051,
+            "name": "qore-treesitter-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-treesitter-module-1.0.0.tar.xz": "b673e302b58b4982e0445bc4f1a3f7fcb6d0f3fb1122b9849cd76f05bd578858",
+              "qore-treesitter-module.spec": "4f2d9ef0893405c90398dd3aadd5daa808c8d53f043c7bc3dcdd364d8ec1466d",
+              "tree-sitter-python-0.25.0.tar.xz": "896c15468dfd8de3117da755bcf9b9ff09732691683bcaafd7f6e4717dde9357",
+              "tree-sitter-java-0.23.5.tar.xz": "b2cc7339922f087af42176864c3ff16dd56709a78333aacfffc79aeecaa330ad",
+              "tree-sitter-json-0.24.8.tar.xz": "4dce82b9cae9887266740ad0e190752518681baa80015397c49d9eebcbbed28b",
+              "tree-sitter-yaml-0.7.2.tar.xz": "fb3652c6a332d2899d08dfdeeab2e45d2fc40d8535f3bca0e60b535681ba9985",
+              "tree-sitter-javascript-0.25.0.tar.xz": "12b4d346d531a4cf2537dcf8af861ad81faa86c4f342740cf55edf0df773b6f9",
+              "tree-sitter-kotlin-0.3.8.tar.xz": "456ce49699ca93810a41972154a19105583aa388f8e82ff49d6760e2540069dc",
+              "tree-sitter-typescript-0.23.2.tar.xz": "f7f3aec03e512e31c87823121cf732d44f68f150b4c243e2b111c04fcea204da",
+              "tree-sitter-sql-0.3.11.tar.xz": "3331261d4e5890ad41387dc428fbbb5d0896a769df01d3fccb3c1290b8f46c84",
+              "tree-sitter-markdown-0.5.3.tar.xz": "fefeda4b9774e4a147924e8aceabac7e00d640c916b67c5be79fb6de281b6467"
+            },
+            "candidate": true,
+            "packaging_overlay": {
+              "qore-treesitter-module.spec": "4f2d9ef0893405c90398dd3aadd5daa808c8d53f043c7bc3dcdd364d8ec1466d",
+              "rpm/README.rst": "660f8512367376c558fa70ebb483a1cf81a112072ae9381c1f648c5b9376f72f",
+              "rpm/review.rst": "648dc7ca7e954fa2d4fb823b67e2deca464b187f2c955df0a557743817cf3200",
+              "rpm/vendor-sources.json": "2dc5326e1e1a1ede309b8636feb846966468e61aaf42f6da3d754e76d570685d"
+            },
+            "spec": "qore-treesitter-module.spec",
+            "vendor_manifest": "rpm/vendor-sources.json",
+            "components": [
+              {
+                "name": "tree-sitter-python",
+                "version": "0.25.0",
+                "url": "https://codeload.github.com/tree-sitter/tree-sitter-python/tar.gz/refs/tags/v0.25.0",
+                "sha256": "4609a3665a620e117acf795ff01b9e965880f81745f287a16336f4ca86cf270c",
+                "top": "tree-sitter-python-0.25.0",
+                "archive": "tree-sitter-python-0.25.0.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-java",
+                "version": "0.23.5",
+                "url": "https://codeload.github.com/tree-sitter/tree-sitter-java/tar.gz/refs/tags/v0.23.5",
+                "sha256": "cb199e0faae4b2c08425f88cbb51c1a9319612e7b96315a174a624db9bf3d9f0",
+                "top": "tree-sitter-java-0.23.5",
+                "archive": "tree-sitter-java-0.23.5.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-json",
+                "version": "0.24.8",
+                "url": "https://codeload.github.com/tree-sitter/tree-sitter-json/tar.gz/refs/tags/v0.24.8",
+                "sha256": "acf6e8362457e819ed8b613f2ad9a0e1b621a77556c296f3abea58f7880a9213",
+                "top": "tree-sitter-json-0.24.8",
+                "archive": "tree-sitter-json-0.24.8.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-yaml",
+                "version": "0.7.2",
+                "url": "https://codeload.github.com/tree-sitter-grammars/tree-sitter-yaml/tar.gz/refs/tags/v0.7.2",
+                "sha256": "aeaff5731bb8b66c7054c8aed33cd5edea5f4cd2ac71654f3f6c2ba2073d8fac",
+                "top": "tree-sitter-yaml-0.7.2",
+                "archive": "tree-sitter-yaml-0.7.2.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-javascript",
+                "version": "0.25.0",
+                "url": "https://codeload.github.com/tree-sitter/tree-sitter-javascript/tar.gz/refs/tags/v0.25.0",
+                "sha256": "9712fc283d3dc01d996d20b6392143445d05867a7aad76fdd723824468428b86",
+                "top": "tree-sitter-javascript-0.25.0",
+                "archive": "tree-sitter-javascript-0.25.0.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-kotlin",
+                "version": "0.3.8",
+                "url": "https://codeload.github.com/fwcd/tree-sitter-kotlin/tar.gz/refs/tags/0.3.8",
+                "sha256": "7dd60975786bf9cb4be6a5176f5ccb5fed505f9929a012da30762505b1015669",
+                "top": "tree-sitter-kotlin-0.3.8",
+                "archive": "tree-sitter-kotlin-0.3.8.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-typescript",
+                "version": "0.23.2",
+                "url": "https://codeload.github.com/tree-sitter/tree-sitter-typescript/tar.gz/refs/tags/v0.23.2",
+                "sha256": "2c4ce711ae8d1218a3b2f899189298159d672870b5b34dff5d937bed2f3e8983",
+                "top": "tree-sitter-typescript-0.23.2",
+                "archive": "tree-sitter-typescript-0.23.2.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-sql",
+                "version": "0.3.11",
+                "url": "https://codeload.github.com/DerekStride/tree-sitter-sql/tar.gz/refs/tags/v0.3.11",
+                "sha256": "1fe13cb1e50dd9da9f22aed3cb9430fc9dae05a734a6049926fc12f6d8ecd3ae",
+                "top": "tree-sitter-sql-0.3.11",
+                "archive": "tree-sitter-sql-0.3.11.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-markdown",
+                "version": "0.5.3",
+                "url": "https://codeload.github.com/tree-sitter-grammars/tree-sitter-markdown/tar.gz/refs/tags/v0.5.3",
+                "sha256": "df845b1ab7c7c163ec57d7fa17170c92b04be199bddab02523636efec5224ab6",
+                "top": "tree-sitter-markdown-0.5.3",
+                "archive": "tree-sitter-markdown-0.5.3.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              }
+            ]
+          },
+          "jobs": 4,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1791189051",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/treesitter-license-candidate-5:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/leap-treesitter-license-candidate-5:/work",
+            "sha256:b5a2e03cb123ae277e58ffd792b60b6bb43134b444f0c5f8a9e513b7b8a44b12",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 4",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-treesitter-module.spec"
+          ],
+          "source_only": false,
+          "tmpfs_mib": null,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-treesitter-module-doc-1.0.0-2.noarch.rpm": "9de8b04d968df617f8ed8b3154f1ac2b28ab45f8bd692809a34950ca69296c87",
+            "rpmbuild/RPMS/x86_64/qore-treesitter-module-1.0.0-2.x86_64.rpm": "f4843a844d72489117d2e516a18188a27260b514f921bc59e84d09c2956fc250",
+            "rpmbuild/RPMS/x86_64/qore-treesitter-module-debuginfo-1.0.0-2.x86_64.rpm": "c9814a9d9beebdb09e3888281947f9121dbc25809f7003251c61e4b49a7bb5f3",
+            "rpmbuild/RPMS/x86_64/qore-treesitter-module-debugsource-1.0.0-2.x86_64.rpm": "68f174711c1fa9e121aad501c0fc2902c82d2078aaa0782180c2f463d3e0ffa8",
+            "rpmbuild/SRPMS/qore-treesitter-module-1.0.0-2.src.rpm": "7859bb8a226f71020372f942f083691fb07940efbe48aa5b206a28dc62861af1"
+          }
+        },
+        "runtime_image": "sha256:6d2fb3098b9516a58bbda0010a0db3259f39a70efdb4fafebd75aee194b4a836",
+        "sdk_image": "sha256:e805ec6e31b8161d7e1b844ad5215dfec68f92a01c8b3992bc0df5697384d9fc",
+        "exit_code": 0
+      },
+      "build_log_sha256": "c3e06f78bc87db272c4ffc118533daf287371af49dea94c867b719102d742c5f"
+    },
+    "el10": {
+      "installed": {
+        "steps": {
+          "build": {
+            "exit_code": 0,
+            "log": "results/el10-treesitter-installed-license-candidate-5-build.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/el10-treesitter-installed-license-candidate-5-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/el10-treesitter-installed-license-candidate-5-runtime-tests.log"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/el10-treesitter-installed-license-candidate-5-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/el10-treesitter-installed-license-candidate-5-sdk-tests.log"
+          }
+        },
+        "core_qualification": {
+          "source_build": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-15",
+          "steps": {
+            "sdk-install": {
+              "exit_code": 0,
+              "log": "results/el10-core-policy-15-sdk-install.log"
+            },
+            "sdk-tests": {
+              "exit_code": 0,
+              "log": "results/el10-core-policy-15-sdk-tests.log"
+            },
+            "runtime-install": {
+              "exit_code": 0,
+              "log": "results/el10-core-policy-15-runtime-install.log"
+            },
+            "runtime-tests": {
+              "exit_code": 0,
+              "log": "results/el10-core-policy-15-runtime-tests.log"
+            }
+          },
+          "source": {
+            "schema": 1,
+            "commit": "c95c7378da33cc4c68d266c48f409cd4b14108db",
+            "source_date_epoch": 1790911113,
+            "name": "qore",
+            "version": "3.0.0~git20261002.15",
+            "exclusions": [],
+            "sources": {
+              "qore-3.0.0~git20261002.15.tar.xz": "84ead538812b4ebdf12950eaef74f30d4a9a4991a954b6b42eb311b40b83723b",
+              "qore.spec": "6adbddb232bbee8627b957234c26ca7c99bf170935357b2fb3fb3cbdcbfb357e"
+            },
+            "spec": "qore.spec"
+          },
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.15-15.el10.noarch.rpm": "8c576e1267ac7dbd26eb2ee1e1fe50cf3a565371e338a41c7e695cc575036ba6",
+            "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.15-15.el10.noarch.rpm": "debc893ddbcef759752c30f9a80b19a27eaca8cdad2f5eb5296b599e0227100a",
+            "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.15-15.el10.noarch.rpm": "8b669398cf82a5eb2027dc822e928fdd34b40ed6f49303d063229eb44b19cd1a",
+            "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.15-15.el10.noarch.rpm": "e015ba63c3fa3a0503142f5e47b262468f090d8dd842e55b99e05e8b15cc4e12",
+            "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.15-15.el10.noarch.rpm": "2f75fc3fe70b42cba1f560cda65e6d4957c4125b167151d400ecb0d98ff62157",
+            "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.15-15.el10.x86_64.rpm": "831a186675735e366fc1be51f81d401f1fc29a6dd0c77f33ae4bdb8457d1406a",
+            "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "9a4681a55acca5438498de4717eeee17a5f17c12f80e3fb710ee227c9cfa4970",
+            "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.15-15.el10.x86_64.rpm": "de815609d6c1826c91c04ef00880d094ba5af2ae1d7156a4caf35efbb9c90074",
+            "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "86765aba7928f55fc56957f79ea3a563e3761828a7dd17b635c5b7d55ff97382",
+            "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.15-15.el10.x86_64.rpm": "e4dff7e464309a0575d5e4ac2c120d42b8bf0ad5aa799bdd0938a85732d00dac",
+            "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.15-15.el10.x86_64.rpm": "122f57a948c13242fa35e3b7efcde51fc8b2bd1da86f031b0477489487673fcb",
+            "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "3541b39da38dba67d594dba615c1d0bb22d75473f7031e9291fa5adf057286f4",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.15-15.el10.x86_64.rpm": "e3937674c45a826fc3a5d5aaa353561b56e27ca96100af78ee557af0d9d93cc8",
+            "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "271b169960a34ad395515d65019d20fc83d0c7debe89bc27a71a88f5f80ffdfc",
+            "rpmbuild/SRPMS/qore-3.0.0~git20261002.15-15.el10.src.rpm": "69de1b8b48b0f918b3eb0f4b2b7099635cfe052e4fd9ea7aa69f032a750c2fd0"
+          },
+          "sdk_image": "sha256:a4babfcc82227fb71574aec479c85a75ddeebedb9f7d51a8157556e47843347d",
+          "runtime_image": "sha256:dd83d34f9e33c45a0bf7479de106759e86a6a4514f32d264a7648e2999b3168f",
+          "exit_code": 0
+        },
+        "build": {
+          "schema": 1,
+          "image": "sha256:a4babfcc82227fb71574aec479c85a75ddeebedb9f7d51a8157556e47843347d",
+          "source": {
+            "schema": 1,
+            "commit": "ccf0e8ec7d209f46b83301c14dbe8ec07c3d542a",
+            "source_date_epoch": 1791189051,
+            "name": "qore-treesitter-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-treesitter-module-1.0.0.tar.xz": "b673e302b58b4982e0445bc4f1a3f7fcb6d0f3fb1122b9849cd76f05bd578858",
+              "qore-treesitter-module.spec": "4f2d9ef0893405c90398dd3aadd5daa808c8d53f043c7bc3dcdd364d8ec1466d",
+              "tree-sitter-python-0.25.0.tar.xz": "896c15468dfd8de3117da755bcf9b9ff09732691683bcaafd7f6e4717dde9357",
+              "tree-sitter-java-0.23.5.tar.xz": "b2cc7339922f087af42176864c3ff16dd56709a78333aacfffc79aeecaa330ad",
+              "tree-sitter-json-0.24.8.tar.xz": "4dce82b9cae9887266740ad0e190752518681baa80015397c49d9eebcbbed28b",
+              "tree-sitter-yaml-0.7.2.tar.xz": "fb3652c6a332d2899d08dfdeeab2e45d2fc40d8535f3bca0e60b535681ba9985",
+              "tree-sitter-javascript-0.25.0.tar.xz": "12b4d346d531a4cf2537dcf8af861ad81faa86c4f342740cf55edf0df773b6f9",
+              "tree-sitter-kotlin-0.3.8.tar.xz": "456ce49699ca93810a41972154a19105583aa388f8e82ff49d6760e2540069dc",
+              "tree-sitter-typescript-0.23.2.tar.xz": "f7f3aec03e512e31c87823121cf732d44f68f150b4c243e2b111c04fcea204da",
+              "tree-sitter-sql-0.3.11.tar.xz": "3331261d4e5890ad41387dc428fbbb5d0896a769df01d3fccb3c1290b8f46c84",
+              "tree-sitter-markdown-0.5.3.tar.xz": "fefeda4b9774e4a147924e8aceabac7e00d640c916b67c5be79fb6de281b6467"
+            },
+            "candidate": true,
+            "packaging_overlay": {
+              "qore-treesitter-module.spec": "4f2d9ef0893405c90398dd3aadd5daa808c8d53f043c7bc3dcdd364d8ec1466d",
+              "rpm/README.rst": "660f8512367376c558fa70ebb483a1cf81a112072ae9381c1f648c5b9376f72f",
+              "rpm/review.rst": "648dc7ca7e954fa2d4fb823b67e2deca464b187f2c955df0a557743817cf3200",
+              "rpm/vendor-sources.json": "2dc5326e1e1a1ede309b8636feb846966468e61aaf42f6da3d754e76d570685d"
+            },
+            "spec": "qore-treesitter-module.spec",
+            "vendor_manifest": "rpm/vendor-sources.json",
+            "components": [
+              {
+                "name": "tree-sitter-python",
+                "version": "0.25.0",
+                "url": "https://codeload.github.com/tree-sitter/tree-sitter-python/tar.gz/refs/tags/v0.25.0",
+                "sha256": "4609a3665a620e117acf795ff01b9e965880f81745f287a16336f4ca86cf270c",
+                "top": "tree-sitter-python-0.25.0",
+                "archive": "tree-sitter-python-0.25.0.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-java",
+                "version": "0.23.5",
+                "url": "https://codeload.github.com/tree-sitter/tree-sitter-java/tar.gz/refs/tags/v0.23.5",
+                "sha256": "cb199e0faae4b2c08425f88cbb51c1a9319612e7b96315a174a624db9bf3d9f0",
+                "top": "tree-sitter-java-0.23.5",
+                "archive": "tree-sitter-java-0.23.5.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-json",
+                "version": "0.24.8",
+                "url": "https://codeload.github.com/tree-sitter/tree-sitter-json/tar.gz/refs/tags/v0.24.8",
+                "sha256": "acf6e8362457e819ed8b613f2ad9a0e1b621a77556c296f3abea58f7880a9213",
+                "top": "tree-sitter-json-0.24.8",
+                "archive": "tree-sitter-json-0.24.8.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-yaml",
+                "version": "0.7.2",
+                "url": "https://codeload.github.com/tree-sitter-grammars/tree-sitter-yaml/tar.gz/refs/tags/v0.7.2",
+                "sha256": "aeaff5731bb8b66c7054c8aed33cd5edea5f4cd2ac71654f3f6c2ba2073d8fac",
+                "top": "tree-sitter-yaml-0.7.2",
+                "archive": "tree-sitter-yaml-0.7.2.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-javascript",
+                "version": "0.25.0",
+                "url": "https://codeload.github.com/tree-sitter/tree-sitter-javascript/tar.gz/refs/tags/v0.25.0",
+                "sha256": "9712fc283d3dc01d996d20b6392143445d05867a7aad76fdd723824468428b86",
+                "top": "tree-sitter-javascript-0.25.0",
+                "archive": "tree-sitter-javascript-0.25.0.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-kotlin",
+                "version": "0.3.8",
+                "url": "https://codeload.github.com/fwcd/tree-sitter-kotlin/tar.gz/refs/tags/0.3.8",
+                "sha256": "7dd60975786bf9cb4be6a5176f5ccb5fed505f9929a012da30762505b1015669",
+                "top": "tree-sitter-kotlin-0.3.8",
+                "archive": "tree-sitter-kotlin-0.3.8.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-typescript",
+                "version": "0.23.2",
+                "url": "https://codeload.github.com/tree-sitter/tree-sitter-typescript/tar.gz/refs/tags/v0.23.2",
+                "sha256": "2c4ce711ae8d1218a3b2f899189298159d672870b5b34dff5d937bed2f3e8983",
+                "top": "tree-sitter-typescript-0.23.2",
+                "archive": "tree-sitter-typescript-0.23.2.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-sql",
+                "version": "0.3.11",
+                "url": "https://codeload.github.com/DerekStride/tree-sitter-sql/tar.gz/refs/tags/v0.3.11",
+                "sha256": "1fe13cb1e50dd9da9f22aed3cb9430fc9dae05a734a6049926fc12f6d8ecd3ae",
+                "top": "tree-sitter-sql-0.3.11",
+                "archive": "tree-sitter-sql-0.3.11.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              },
+              {
+                "name": "tree-sitter-markdown",
+                "version": "0.5.3",
+                "url": "https://codeload.github.com/tree-sitter-grammars/tree-sitter-markdown/tar.gz/refs/tags/v0.5.3",
+                "sha256": "df845b1ab7c7c163ec57d7fa17170c92b04be199bddab02523636efec5224ab6",
+                "top": "tree-sitter-markdown-0.5.3",
+                "archive": "tree-sitter-markdown-0.5.3.tar.xz",
+                "licenses": [
+                  "LICENSE"
+                ],
+                "retained_paths": [
+                  "LICENSE",
+                  "README.md",
+                  "grammar.js",
+                  "grammar-reference.js",
+                  "package.json",
+                  "tree-sitter.json",
+                  "src",
+                  "queries",
+                  "common",
+                  "schema",
+                  "typescript/grammar.js",
+                  "typescript/src",
+                  "tsx/grammar.js",
+                  "tsx/src",
+                  "tree-sitter-markdown/grammar.js",
+                  "tree-sitter-markdown/src",
+                  "tree-sitter-markdown/queries",
+                  "tree-sitter-markdown-inline/grammar.js",
+                  "tree-sitter-markdown-inline/src",
+                  "tree-sitter-markdown-inline/queries"
+                ]
+              }
+            ]
+          },
+          "jobs": 4,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1791189051",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/treesitter-license-candidate-5:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/el10-treesitter-license-candidate-5:/work",
+            "sha256:a4babfcc82227fb71574aec479c85a75ddeebedb9f7d51a8157556e47843347d",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 4",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-treesitter-module.spec"
+          ],
+          "source_only": false,
+          "tmpfs_mib": null,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-treesitter-module-doc-1.0.0-2.el10.noarch.rpm": "af5439ce5b04689e432fa6a08366e4f3b84927121de9c3caeec742095b19b60e",
+            "rpmbuild/RPMS/x86_64/qore-treesitter-module-1.0.0-2.el10.x86_64.rpm": "775200f6999072afde49146c356311e2e04ce6ac4f7630ecdca686a9876eec97",
+            "rpmbuild/RPMS/x86_64/qore-treesitter-module-debuginfo-1.0.0-2.el10.x86_64.rpm": "f2aadfee35ee1f1326de86771b98782aba8d1d176bb939035d7a03668069e3f9",
+            "rpmbuild/RPMS/x86_64/qore-treesitter-module-debugsource-1.0.0-2.el10.x86_64.rpm": "818d9eea6b2fd5467c48fb31cbc6294dbb87140d35363e4d4c08f001ce985105",
+            "rpmbuild/SRPMS/qore-treesitter-module-1.0.0-2.el10.src.rpm": "63b05524351cc0b06e9a59d3c3ed27435bfcc3fdb66f0cfd01a0da265b63a058"
+          }
+        },
+        "runtime_image": "sha256:a2ca498e4be18e97fd7d6c621a5984699f0462e2eaaf398d5d8a980398e28592",
+        "sdk_image": "sha256:684a5531dfb90be1a75c9b9ea5bea1e382371f47b1f4319b2162485d955c582b",
+        "exit_code": 0
+      },
+      "build_log_sha256": "7f50bce3b276aefe02970fc52abc9c72e7e157d9334a44658f0d7988c2f527a7"
+    }
+  },
+  "lint": {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/leap-treesitter-license-candidate-5:/rpms:ro",
+      "sha256:e9f88fde9890db694ae37058e1bc41b34385ea5d04fc4c6cba1d666bd23c0887",
+      "rpmlint",
+      "/rpms/rpmbuild/RPMS/noarch/qore-treesitter-module-doc-1.0.0-2.noarch.rpm",
+      "/rpms/rpmbuild/RPMS/x86_64/qore-treesitter-module-1.0.0-2.x86_64.rpm",
+      "/rpms/rpmbuild/SRPMS/qore-treesitter-module-1.0.0-2.src.rpm"
+    ],
+    "exit_code": 0,
+    "log_sha256": "801fc404db256ace2ab9b19ea14d3c66dff03d120ba982d522a638582b84f98f"
+  },
+  "canonical": {
+    "fedora": {
+      "steps": {
+        "build": {
+          "exit_code": 0,
+          "log": "results/fedora-treesitter-installed-canonical-license-6-build.log"
+        },
+        "runtime-install": {
+          "exit_code": 0,
+          "log": "results/fedora-treesitter-installed-canonical-license-6-runtime-install.log"
+        },
+        "runtime-tests": {
+          "exit_code": 0,
+          "log": "results/fedora-treesitter-installed-canonical-license-6-runtime-tests.log"
+        },
+        "sdk-install": {
+          "exit_code": 0,
+          "log": "results/fedora-treesitter-installed-canonical-license-6-sdk-install.log"
+        },
+        "sdk-tests": {
+          "exit_code": 0,
+          "log": "results/fedora-treesitter-installed-canonical-license-6-sdk-tests.log"
+        }
+      },
+      "core_qualification": {
+        "source_build": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-15",
+        "steps": {
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/fedora-core-policy-15-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-core-policy-15-sdk-tests.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/fedora-core-policy-15-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/fedora-core-policy-15-runtime-tests.log"
+          }
+        },
+        "source": {
+          "schema": 1,
+          "commit": "c95c7378da33cc4c68d266c48f409cd4b14108db",
+          "source_date_epoch": 1790911113,
+          "name": "qore",
+          "version": "3.0.0~git20261002.15",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261002.15.tar.xz": "84ead538812b4ebdf12950eaef74f30d4a9a4991a954b6b42eb311b40b83723b",
+            "qore.spec": "6adbddb232bbee8627b957234c26ca7c99bf170935357b2fb3fb3cbdcbfb357e"
+          },
+          "spec": "qore.spec"
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.15-15.fc44.noarch.rpm": "dfee6f7a947deb607f8a51c6cfa4b992b15cc10db909a9e9e7e7aa0fb19433f6",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.15-15.fc44.noarch.rpm": "9eec4580c30715e8fd5ebb399efb68b3e8f58c804e7f5041df2a4999e9681172",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.15-15.fc44.noarch.rpm": "432820854344229725e27a456c566dbfc6ef839e67bf3ca0d641ca6861450699",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.15-15.fc44.noarch.rpm": "9739419596ba6b78fc983a2b1edba41bc7fb92dbc6395b2e14b262203e4d4bea",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.15-15.fc44.noarch.rpm": "5f5b290b82fc5aa52287246a5bfe5aafe73a0f90d06bef44bf63323a7d821415",
+          "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "a6a0fa60e11dd3cf45891e03bac156d5f79ae8be4aafde081260368e2a125af5",
+          "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "c2e0340cd1a32b11b4e19555051176eaefcff239ade2440d2c9376d0f462fe1a",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "6f18a0b824062a9f4a77c011f9c35f9fe72e727be46429628e3e69516f11c887",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "87c1f3b2e02a8691a113d8ba02e7a8d5ed4aa5d4b1f42656560a552eb27e55f6",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "5548b1dc449acb37ba15390c6d9b76ef29b14114cadbabbc4598c4f8035d92a6",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "559b69c6958afca83c19333724f0fc65e81d9a8b782d2e12595ada35fd4471c9",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "8f11644b4195a1506bed287479b37fbe3fb9ee0c9ec2252316b98b4689e5395c",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "10747480e8358c5a83fa1e57a390f44990f9f0e14114c3f18acb1f407cd56285",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.15-15.fc44.x86_64.rpm": "8632fad9742b588a69257ead7bbca1f3749c71d028855f519897e53ecf3420a1",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261002.15-15.fc44.src.rpm": "82edf4fa0dc25c871ed47055ff8b88da16c24732a6c3f1a1dda8608884c44c58"
+        },
+        "sdk_image": "sha256:005e14a5056d890cd0bd604241091b911bbd5af4cd67bb967b7699ad4459bf0b",
+        "runtime_image": "sha256:c785b589f16457f7fb3ebf0e11e5b9d33a04b4fa97162c418585d96cd2c992c3",
+        "exit_code": 0
+      },
+      "build": {
+        "schema": 1,
+        "image": "sha256:005e14a5056d890cd0bd604241091b911bbd5af4cd67bb967b7699ad4459bf0b",
+        "source": {
+          "schema": 1,
+          "commit": "5092b7d7f9b11147a160eccacf0231a52972f32a",
+          "source_date_epoch": 1791190411,
+          "name": "qore-treesitter-module",
+          "version": "1.0.0",
+          "exclusions": [],
+          "sources": {
+            "qore-treesitter-module-1.0.0.tar.xz": "c64b9335ba349c7f88990198cf146481230b7e0dee6d8cf1ad0118a093dcee52",
+            "qore-treesitter-module.spec": "4f2d9ef0893405c90398dd3aadd5daa808c8d53f043c7bc3dcdd364d8ec1466d",
+            "tree-sitter-python-0.25.0.tar.xz": "b4fbe2faf638bf2741741bda95107547816fd4ac093f99d895b80518ab952fe4",
+            "tree-sitter-java-0.23.5.tar.xz": "d2e61640a2a3b6d1e139000ab48c57e07c3a7d30f31a5944678758b2ed41668d",
+            "tree-sitter-json-0.24.8.tar.xz": "a4a879b1dcd7e28f1c4673206a2b23768153a13146b27f372cff1b903b802575",
+            "tree-sitter-yaml-0.7.2.tar.xz": "662e52d1a4d51d7dd52f68c01ad3d8e1c84849ed0a69dc998316621d02574c44",
+            "tree-sitter-javascript-0.25.0.tar.xz": "4a0c0d4450dd6e1ed186c89b5c166261648d8617b35710242d0888be4f6ded43",
+            "tree-sitter-kotlin-0.3.8.tar.xz": "680ebf95fbdbd76a2043821246827bb3feafd9997b08c4cf5a33d8dac17a330e",
+            "tree-sitter-typescript-0.23.2.tar.xz": "591bd7cbb70abaa3685b54ca85010cd98f792f5f06705db4b9fe4e67db4c91c8",
+            "tree-sitter-sql-0.3.11.tar.xz": "48d5970e54422ca9e3ca25b4f478cbf5c77cfbae695e391667d4c1dfc07899ae",
+            "tree-sitter-markdown-0.5.3.tar.xz": "38f4d1ff8785bc60b230fdadec73bf5873119dd4e91630504aaa0e940c1f4fe4"
+          },
+          "spec": "qore-treesitter-module.spec",
+          "vendor_manifest": "rpm/vendor-sources.json",
+          "components": [
+            {
+              "name": "tree-sitter-python",
+              "version": "0.25.0",
+              "url": "https://codeload.github.com/tree-sitter/tree-sitter-python/tar.gz/refs/tags/v0.25.0",
+              "sha256": "4609a3665a620e117acf795ff01b9e965880f81745f287a16336f4ca86cf270c",
+              "top": "tree-sitter-python-0.25.0",
+              "archive": "tree-sitter-python-0.25.0.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-java",
+              "version": "0.23.5",
+              "url": "https://codeload.github.com/tree-sitter/tree-sitter-java/tar.gz/refs/tags/v0.23.5",
+              "sha256": "cb199e0faae4b2c08425f88cbb51c1a9319612e7b96315a174a624db9bf3d9f0",
+              "top": "tree-sitter-java-0.23.5",
+              "archive": "tree-sitter-java-0.23.5.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-json",
+              "version": "0.24.8",
+              "url": "https://codeload.github.com/tree-sitter/tree-sitter-json/tar.gz/refs/tags/v0.24.8",
+              "sha256": "acf6e8362457e819ed8b613f2ad9a0e1b621a77556c296f3abea58f7880a9213",
+              "top": "tree-sitter-json-0.24.8",
+              "archive": "tree-sitter-json-0.24.8.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-yaml",
+              "version": "0.7.2",
+              "url": "https://codeload.github.com/tree-sitter-grammars/tree-sitter-yaml/tar.gz/refs/tags/v0.7.2",
+              "sha256": "aeaff5731bb8b66c7054c8aed33cd5edea5f4cd2ac71654f3f6c2ba2073d8fac",
+              "top": "tree-sitter-yaml-0.7.2",
+              "archive": "tree-sitter-yaml-0.7.2.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-javascript",
+              "version": "0.25.0",
+              "url": "https://codeload.github.com/tree-sitter/tree-sitter-javascript/tar.gz/refs/tags/v0.25.0",
+              "sha256": "9712fc283d3dc01d996d20b6392143445d05867a7aad76fdd723824468428b86",
+              "top": "tree-sitter-javascript-0.25.0",
+              "archive": "tree-sitter-javascript-0.25.0.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-kotlin",
+              "version": "0.3.8",
+              "url": "https://codeload.github.com/fwcd/tree-sitter-kotlin/tar.gz/refs/tags/0.3.8",
+              "sha256": "7dd60975786bf9cb4be6a5176f5ccb5fed505f9929a012da30762505b1015669",
+              "top": "tree-sitter-kotlin-0.3.8",
+              "archive": "tree-sitter-kotlin-0.3.8.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-typescript",
+              "version": "0.23.2",
+              "url": "https://codeload.github.com/tree-sitter/tree-sitter-typescript/tar.gz/refs/tags/v0.23.2",
+              "sha256": "2c4ce711ae8d1218a3b2f899189298159d672870b5b34dff5d937bed2f3e8983",
+              "top": "tree-sitter-typescript-0.23.2",
+              "archive": "tree-sitter-typescript-0.23.2.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-sql",
+              "version": "0.3.11",
+              "url": "https://codeload.github.com/DerekStride/tree-sitter-sql/tar.gz/refs/tags/v0.3.11",
+              "sha256": "1fe13cb1e50dd9da9f22aed3cb9430fc9dae05a734a6049926fc12f6d8ecd3ae",
+              "top": "tree-sitter-sql-0.3.11",
+              "archive": "tree-sitter-sql-0.3.11.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-markdown",
+              "version": "0.5.3",
+              "url": "https://codeload.github.com/tree-sitter-grammars/tree-sitter-markdown/tar.gz/refs/tags/v0.5.3",
+              "sha256": "df845b1ab7c7c163ec57d7fa17170c92b04be199bddab02523636efec5224ab6",
+              "top": "tree-sitter-markdown-0.5.3",
+              "archive": "tree-sitter-markdown-0.5.3.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            }
+          ]
+        },
+        "jobs": 4,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1791190411",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/treesitter-final-source-4:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-treesitter-final-build-4:/work",
+          "sha256:005e14a5056d890cd0bd604241091b911bbd5af4cd67bb967b7699ad4459bf0b",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 4",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-treesitter-module.spec"
+        ],
+        "source_only": false,
+        "tmpfs_mib": null,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-treesitter-module-doc-1.0.0-2.fc44.noarch.rpm": "7bd0b0ff1b1bd8f7b66a640072b2f1c49d7ce2a18ef39641dfe4884ed8dc4a8a",
+          "rpmbuild/RPMS/x86_64/qore-treesitter-module-1.0.0-2.fc44.x86_64.rpm": "7116e923bb38f049c3da9bd9935e589cc021b265745d7b8e24aea9705b75dddc",
+          "rpmbuild/RPMS/x86_64/qore-treesitter-module-debuginfo-1.0.0-2.fc44.x86_64.rpm": "5f82bbad428ac1edc6be50b6b05beb5fc5fba6aa7b66dc52871de17800b92ad4",
+          "rpmbuild/RPMS/x86_64/qore-treesitter-module-debugsource-1.0.0-2.fc44.x86_64.rpm": "fa9f1eaec7b36de85282b090c1926450b786b39ba937e31e2204787b7f434aa2",
+          "rpmbuild/SRPMS/qore-treesitter-module-1.0.0-2.fc44.src.rpm": "12d46345c7510307a9a6ffa558ef42e7814a982b0aa0796e1bc08b86fc3d41db"
+        }
+      },
+      "runtime_image": "sha256:333b9e6d98e5a9d6677c7b3987818d07cbc022170153ce7a3d1e911b8130b2c5",
+      "sdk_image": "sha256:b4690ab3741ef30ef4a34fdab1980b0d72f49f5880a5dd906e3077d7f3a55ac9",
+      "exit_code": 0
+    },
+    "leap": {
+      "steps": {
+        "build": {
+          "exit_code": 0,
+          "log": "results/leap-treesitter-installed-canonical-license-6-build.log"
+        },
+        "runtime-install": {
+          "exit_code": 0,
+          "log": "results/leap-treesitter-installed-canonical-license-6-runtime-install.log"
+        },
+        "runtime-tests": {
+          "exit_code": 0,
+          "log": "results/leap-treesitter-installed-canonical-license-6-runtime-tests.log"
+        },
+        "sdk-install": {
+          "exit_code": 0,
+          "log": "results/leap-treesitter-installed-canonical-license-6-sdk-install.log"
+        },
+        "sdk-tests": {
+          "exit_code": 0,
+          "log": "results/leap-treesitter-installed-canonical-license-6-sdk-tests.log"
+        }
+      },
+      "core_qualification": {
+        "source_build": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-15",
+        "steps": {
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/leap-core-policy-15-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/leap-core-policy-15-sdk-tests.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/leap-core-policy-15-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/leap-core-policy-15-runtime-tests.log"
+          }
+        },
+        "source": {
+          "schema": 1,
+          "commit": "c95c7378da33cc4c68d266c48f409cd4b14108db",
+          "source_date_epoch": 1790911113,
+          "name": "qore",
+          "version": "3.0.0~git20261002.15",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261002.15.tar.xz": "84ead538812b4ebdf12950eaef74f30d4a9a4991a954b6b42eb311b40b83723b",
+            "qore.spec": "6adbddb232bbee8627b957234c26ca7c99bf170935357b2fb3fb3cbdcbfb357e"
+          },
+          "spec": "qore.spec"
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.15-15.noarch.rpm": "55dbb2f35357215160c37680de7836caff9bf8a677055f02acdb4e3f9d5c80e4",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.15-15.noarch.rpm": "8fa1024eb67004cbec23975989dc1c5eb8b6545537a5a418cf71ea82a6e82093",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.15-15.noarch.rpm": "f87b163c1179c027a8e0bff6061a0975299103f2f132e7ef5bb5bf7c304b980c",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.15-15.noarch.rpm": "3b30da8d0a4ff2a429d8ae9ca9b1672e01d622e4d47f14d88a8636e1205e7601",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.15-15.noarch.rpm": "0b6b441f4003f4176650dba8b36dc28b18a3fba982a6329c5f7c196501e9addb",
+          "rpmbuild/RPMS/x86_64/libqore20-3.0.0~git20261002.15-15.x86_64.rpm": "5fdad7e82c625cbde8bec899fda23a6c48ceaf4843ac985086a219d0f0b23fa8",
+          "rpmbuild/RPMS/x86_64/libqore20-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "818f33d1e840f8318ad38ecb3195fcdfc59d0b2b870c52778a7ed58035a18b09",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.15-15.x86_64.rpm": "9f806b18716ad6deec71eb5c2678c936829af9fac703d2a95aafd51f38cb457a",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "9a9e0ec1a6f5f77df20659b3d31c3e15466394ba8c9d6e29c93a3090c664e987",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.15-15.x86_64.rpm": "7cd49da30ec06f18805a85b1f658660ce9d84c7d5d3d555e947608b8474107e4",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.15-15.x86_64.rpm": "ff7788dd27373e4317a69121b2512e2dab72d3116f9d307260337f6eaf3c9c89",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "c6f0218ba4bd9b126e065b1032cb49bf6d993ff2acaf979b0b9ab3b3540b1db0",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.15-15.x86_64.rpm": "041d41b480bc9677bd64702134d3d8d18871acfca9ec006b0d32daa06ce7a786",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.15-15.x86_64.rpm": "2583bd73d67c6f17ce561dcb5215a0abde82431715c4863cac286b946d890217",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261002.15-15.src.rpm": "6a0fb2294794c810988b6ded0f0e3628b8beb0814a59f571ae5bdebc3f4eff79"
+        },
+        "sdk_image": "sha256:b5a2e03cb123ae277e58ffd792b60b6bb43134b444f0c5f8a9e513b7b8a44b12",
+        "runtime_image": "sha256:f8b671f49dbbf7edf0ff29aa2e146ef465d9a2ac4838e352133920f5c91b4a12",
+        "exit_code": 0
+      },
+      "build": {
+        "schema": 1,
+        "image": "sha256:b5a2e03cb123ae277e58ffd792b60b6bb43134b444f0c5f8a9e513b7b8a44b12",
+        "source": {
+          "schema": 1,
+          "commit": "5092b7d7f9b11147a160eccacf0231a52972f32a",
+          "source_date_epoch": 1791190411,
+          "name": "qore-treesitter-module",
+          "version": "1.0.0",
+          "exclusions": [],
+          "sources": {
+            "qore-treesitter-module-1.0.0.tar.xz": "c64b9335ba349c7f88990198cf146481230b7e0dee6d8cf1ad0118a093dcee52",
+            "qore-treesitter-module.spec": "4f2d9ef0893405c90398dd3aadd5daa808c8d53f043c7bc3dcdd364d8ec1466d",
+            "tree-sitter-python-0.25.0.tar.xz": "b4fbe2faf638bf2741741bda95107547816fd4ac093f99d895b80518ab952fe4",
+            "tree-sitter-java-0.23.5.tar.xz": "d2e61640a2a3b6d1e139000ab48c57e07c3a7d30f31a5944678758b2ed41668d",
+            "tree-sitter-json-0.24.8.tar.xz": "a4a879b1dcd7e28f1c4673206a2b23768153a13146b27f372cff1b903b802575",
+            "tree-sitter-yaml-0.7.2.tar.xz": "662e52d1a4d51d7dd52f68c01ad3d8e1c84849ed0a69dc998316621d02574c44",
+            "tree-sitter-javascript-0.25.0.tar.xz": "4a0c0d4450dd6e1ed186c89b5c166261648d8617b35710242d0888be4f6ded43",
+            "tree-sitter-kotlin-0.3.8.tar.xz": "680ebf95fbdbd76a2043821246827bb3feafd9997b08c4cf5a33d8dac17a330e",
+            "tree-sitter-typescript-0.23.2.tar.xz": "591bd7cbb70abaa3685b54ca85010cd98f792f5f06705db4b9fe4e67db4c91c8",
+            "tree-sitter-sql-0.3.11.tar.xz": "48d5970e54422ca9e3ca25b4f478cbf5c77cfbae695e391667d4c1dfc07899ae",
+            "tree-sitter-markdown-0.5.3.tar.xz": "38f4d1ff8785bc60b230fdadec73bf5873119dd4e91630504aaa0e940c1f4fe4"
+          },
+          "spec": "qore-treesitter-module.spec",
+          "vendor_manifest": "rpm/vendor-sources.json",
+          "components": [
+            {
+              "name": "tree-sitter-python",
+              "version": "0.25.0",
+              "url": "https://codeload.github.com/tree-sitter/tree-sitter-python/tar.gz/refs/tags/v0.25.0",
+              "sha256": "4609a3665a620e117acf795ff01b9e965880f81745f287a16336f4ca86cf270c",
+              "top": "tree-sitter-python-0.25.0",
+              "archive": "tree-sitter-python-0.25.0.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-java",
+              "version": "0.23.5",
+              "url": "https://codeload.github.com/tree-sitter/tree-sitter-java/tar.gz/refs/tags/v0.23.5",
+              "sha256": "cb199e0faae4b2c08425f88cbb51c1a9319612e7b96315a174a624db9bf3d9f0",
+              "top": "tree-sitter-java-0.23.5",
+              "archive": "tree-sitter-java-0.23.5.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-json",
+              "version": "0.24.8",
+              "url": "https://codeload.github.com/tree-sitter/tree-sitter-json/tar.gz/refs/tags/v0.24.8",
+              "sha256": "acf6e8362457e819ed8b613f2ad9a0e1b621a77556c296f3abea58f7880a9213",
+              "top": "tree-sitter-json-0.24.8",
+              "archive": "tree-sitter-json-0.24.8.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-yaml",
+              "version": "0.7.2",
+              "url": "https://codeload.github.com/tree-sitter-grammars/tree-sitter-yaml/tar.gz/refs/tags/v0.7.2",
+              "sha256": "aeaff5731bb8b66c7054c8aed33cd5edea5f4cd2ac71654f3f6c2ba2073d8fac",
+              "top": "tree-sitter-yaml-0.7.2",
+              "archive": "tree-sitter-yaml-0.7.2.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-javascript",
+              "version": "0.25.0",
+              "url": "https://codeload.github.com/tree-sitter/tree-sitter-javascript/tar.gz/refs/tags/v0.25.0",
+              "sha256": "9712fc283d3dc01d996d20b6392143445d05867a7aad76fdd723824468428b86",
+              "top": "tree-sitter-javascript-0.25.0",
+              "archive": "tree-sitter-javascript-0.25.0.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-kotlin",
+              "version": "0.3.8",
+              "url": "https://codeload.github.com/fwcd/tree-sitter-kotlin/tar.gz/refs/tags/0.3.8",
+              "sha256": "7dd60975786bf9cb4be6a5176f5ccb5fed505f9929a012da30762505b1015669",
+              "top": "tree-sitter-kotlin-0.3.8",
+              "archive": "tree-sitter-kotlin-0.3.8.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-typescript",
+              "version": "0.23.2",
+              "url": "https://codeload.github.com/tree-sitter/tree-sitter-typescript/tar.gz/refs/tags/v0.23.2",
+              "sha256": "2c4ce711ae8d1218a3b2f899189298159d672870b5b34dff5d937bed2f3e8983",
+              "top": "tree-sitter-typescript-0.23.2",
+              "archive": "tree-sitter-typescript-0.23.2.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-sql",
+              "version": "0.3.11",
+              "url": "https://codeload.github.com/DerekStride/tree-sitter-sql/tar.gz/refs/tags/v0.3.11",
+              "sha256": "1fe13cb1e50dd9da9f22aed3cb9430fc9dae05a734a6049926fc12f6d8ecd3ae",
+              "top": "tree-sitter-sql-0.3.11",
+              "archive": "tree-sitter-sql-0.3.11.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-markdown",
+              "version": "0.5.3",
+              "url": "https://codeload.github.com/tree-sitter-grammars/tree-sitter-markdown/tar.gz/refs/tags/v0.5.3",
+              "sha256": "df845b1ab7c7c163ec57d7fa17170c92b04be199bddab02523636efec5224ab6",
+              "top": "tree-sitter-markdown-0.5.3",
+              "archive": "tree-sitter-markdown-0.5.3.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            }
+          ]
+        },
+        "jobs": 4,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1791190411",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/treesitter-final-source-4:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-treesitter-final-build-4:/work",
+          "sha256:b5a2e03cb123ae277e58ffd792b60b6bb43134b444f0c5f8a9e513b7b8a44b12",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 4",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-treesitter-module.spec"
+        ],
+        "source_only": false,
+        "tmpfs_mib": null,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-treesitter-module-doc-1.0.0-2.noarch.rpm": "dc3e7f325ed27042836967714d017cc12f8b29a51b39d16086f4a2f89209ed20",
+          "rpmbuild/RPMS/x86_64/qore-treesitter-module-1.0.0-2.x86_64.rpm": "a6d12d1bd6887380e4b585ba16ae1e9215c56f55d552e0691af9c91a71ca9f79",
+          "rpmbuild/RPMS/x86_64/qore-treesitter-module-debuginfo-1.0.0-2.x86_64.rpm": "9d7dbcd77986483f102641fe4b8940d45a59c055572946cce559e9af1f4cafb2",
+          "rpmbuild/RPMS/x86_64/qore-treesitter-module-debugsource-1.0.0-2.x86_64.rpm": "6acace10eb473ca7ca2b6bda7bf6b39b150298c6355360d081400748eb26fd1f",
+          "rpmbuild/SRPMS/qore-treesitter-module-1.0.0-2.src.rpm": "f34ce18d008a6e80db2f52175b5437853c0aa7ee0978995ec90f959ab1b8def1"
+        }
+      },
+      "runtime_image": "sha256:3530467801a7ae61ac90d98fcc4283a0e278d0d3ad7fb5331017058d0b758f28",
+      "sdk_image": "sha256:54e38e3d9782d1b83fcae8b6f8a5308e323596bfa931d098b01592a8163991ee",
+      "exit_code": 0
+    },
+    "el10": {
+      "steps": {
+        "build": {
+          "exit_code": 0,
+          "log": "results/el10-treesitter-installed-canonical-license-6-build.log"
+        },
+        "runtime-install": {
+          "exit_code": 0,
+          "log": "results/el10-treesitter-installed-canonical-license-6-runtime-install.log"
+        },
+        "runtime-tests": {
+          "exit_code": 0,
+          "log": "results/el10-treesitter-installed-canonical-license-6-runtime-tests.log"
+        },
+        "sdk-install": {
+          "exit_code": 0,
+          "log": "results/el10-treesitter-installed-canonical-license-6-sdk-install.log"
+        },
+        "sdk-tests": {
+          "exit_code": 0,
+          "log": "results/el10-treesitter-installed-canonical-license-6-sdk-tests.log"
+        }
+      },
+      "core_qualification": {
+        "source_build": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-15",
+        "steps": {
+          "sdk-install": {
+            "exit_code": 0,
+            "log": "results/el10-core-policy-15-sdk-install.log"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "log": "results/el10-core-policy-15-sdk-tests.log"
+          },
+          "runtime-install": {
+            "exit_code": 0,
+            "log": "results/el10-core-policy-15-runtime-install.log"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "log": "results/el10-core-policy-15-runtime-tests.log"
+          }
+        },
+        "source": {
+          "schema": 1,
+          "commit": "c95c7378da33cc4c68d266c48f409cd4b14108db",
+          "source_date_epoch": 1790911113,
+          "name": "qore",
+          "version": "3.0.0~git20261002.15",
+          "exclusions": [],
+          "sources": {
+            "qore-3.0.0~git20261002.15.tar.xz": "84ead538812b4ebdf12950eaef74f30d4a9a4991a954b6b42eb311b40b83723b",
+            "qore.spec": "6adbddb232bbee8627b957234c26ca7c99bf170935357b2fb3fb3cbdcbfb357e"
+          },
+          "spec": "qore.spec"
+        },
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261002.15-15.el10.noarch.rpm": "8c576e1267ac7dbd26eb2ee1e1fe50cf3a565371e338a41c7e695cc575036ba6",
+          "rpmbuild/RPMS/noarch/qore-devel-doc-3.0.0~git20261002.15-15.el10.noarch.rpm": "debc893ddbcef759752c30f9a80b19a27eaca8cdad2f5eb5296b599e0227100a",
+          "rpmbuild/RPMS/noarch/qore-doc-3.0.0~git20261002.15-15.el10.noarch.rpm": "8b669398cf82a5eb2027dc822e928fdd34b40ed6f49303d063229eb44b19cd1a",
+          "rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261002.15-15.el10.noarch.rpm": "e015ba63c3fa3a0503142f5e47b262468f090d8dd842e55b99e05e8b15cc4e12",
+          "rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261002.15-15.el10.noarch.rpm": "2f75fc3fe70b42cba1f560cda65e6d4957c4125b167151d400ecb0d98ff62157",
+          "rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261002.15-15.el10.x86_64.rpm": "831a186675735e366fc1be51f81d401f1fc29a6dd0c77f33ae4bdb8457d1406a",
+          "rpmbuild/RPMS/x86_64/libqore-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "9a4681a55acca5438498de4717eeee17a5f17c12f80e3fb710ee227c9cfa4970",
+          "rpmbuild/RPMS/x86_64/qore-3.0.0~git20261002.15-15.el10.x86_64.rpm": "de815609d6c1826c91c04ef00880d094ba5af2ae1d7156a4caf35efbb9c90074",
+          "rpmbuild/RPMS/x86_64/qore-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "86765aba7928f55fc56957f79ea3a563e3761828a7dd17b635c5b7d55ff97382",
+          "rpmbuild/RPMS/x86_64/qore-debugsource-3.0.0~git20261002.15-15.el10.x86_64.rpm": "e4dff7e464309a0575d5e4ac2c120d42b8bf0ad5aa799bdd0938a85732d00dac",
+          "rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261002.15-15.el10.x86_64.rpm": "122f57a948c13242fa35e3b7efcde51fc8b2bd1da86f031b0477489487673fcb",
+          "rpmbuild/RPMS/x86_64/qore-devel-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "3541b39da38dba67d594dba615c1d0bb22d75473f7031e9291fa5adf057286f4",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261002.15-15.el10.x86_64.rpm": "e3937674c45a826fc3a5d5aaa353561b56e27ca96100af78ee557af0d9d93cc8",
+          "rpmbuild/RPMS/x86_64/qore-stdlib-debuginfo-3.0.0~git20261002.15-15.el10.x86_64.rpm": "271b169960a34ad395515d65019d20fc83d0c7debe89bc27a71a88f5f80ffdfc",
+          "rpmbuild/SRPMS/qore-3.0.0~git20261002.15-15.el10.src.rpm": "69de1b8b48b0f918b3eb0f4b2b7099635cfe052e4fd9ea7aa69f032a750c2fd0"
+        },
+        "sdk_image": "sha256:a4babfcc82227fb71574aec479c85a75ddeebedb9f7d51a8157556e47843347d",
+        "runtime_image": "sha256:dd83d34f9e33c45a0bf7479de106759e86a6a4514f32d264a7648e2999b3168f",
+        "exit_code": 0
+      },
+      "build": {
+        "schema": 1,
+        "image": "sha256:a4babfcc82227fb71574aec479c85a75ddeebedb9f7d51a8157556e47843347d",
+        "source": {
+          "schema": 1,
+          "commit": "5092b7d7f9b11147a160eccacf0231a52972f32a",
+          "source_date_epoch": 1791190411,
+          "name": "qore-treesitter-module",
+          "version": "1.0.0",
+          "exclusions": [],
+          "sources": {
+            "qore-treesitter-module-1.0.0.tar.xz": "c64b9335ba349c7f88990198cf146481230b7e0dee6d8cf1ad0118a093dcee52",
+            "qore-treesitter-module.spec": "4f2d9ef0893405c90398dd3aadd5daa808c8d53f043c7bc3dcdd364d8ec1466d",
+            "tree-sitter-python-0.25.0.tar.xz": "b4fbe2faf638bf2741741bda95107547816fd4ac093f99d895b80518ab952fe4",
+            "tree-sitter-java-0.23.5.tar.xz": "d2e61640a2a3b6d1e139000ab48c57e07c3a7d30f31a5944678758b2ed41668d",
+            "tree-sitter-json-0.24.8.tar.xz": "a4a879b1dcd7e28f1c4673206a2b23768153a13146b27f372cff1b903b802575",
+            "tree-sitter-yaml-0.7.2.tar.xz": "662e52d1a4d51d7dd52f68c01ad3d8e1c84849ed0a69dc998316621d02574c44",
+            "tree-sitter-javascript-0.25.0.tar.xz": "4a0c0d4450dd6e1ed186c89b5c166261648d8617b35710242d0888be4f6ded43",
+            "tree-sitter-kotlin-0.3.8.tar.xz": "680ebf95fbdbd76a2043821246827bb3feafd9997b08c4cf5a33d8dac17a330e",
+            "tree-sitter-typescript-0.23.2.tar.xz": "591bd7cbb70abaa3685b54ca85010cd98f792f5f06705db4b9fe4e67db4c91c8",
+            "tree-sitter-sql-0.3.11.tar.xz": "48d5970e54422ca9e3ca25b4f478cbf5c77cfbae695e391667d4c1dfc07899ae",
+            "tree-sitter-markdown-0.5.3.tar.xz": "38f4d1ff8785bc60b230fdadec73bf5873119dd4e91630504aaa0e940c1f4fe4"
+          },
+          "spec": "qore-treesitter-module.spec",
+          "vendor_manifest": "rpm/vendor-sources.json",
+          "components": [
+            {
+              "name": "tree-sitter-python",
+              "version": "0.25.0",
+              "url": "https://codeload.github.com/tree-sitter/tree-sitter-python/tar.gz/refs/tags/v0.25.0",
+              "sha256": "4609a3665a620e117acf795ff01b9e965880f81745f287a16336f4ca86cf270c",
+              "top": "tree-sitter-python-0.25.0",
+              "archive": "tree-sitter-python-0.25.0.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-java",
+              "version": "0.23.5",
+              "url": "https://codeload.github.com/tree-sitter/tree-sitter-java/tar.gz/refs/tags/v0.23.5",
+              "sha256": "cb199e0faae4b2c08425f88cbb51c1a9319612e7b96315a174a624db9bf3d9f0",
+              "top": "tree-sitter-java-0.23.5",
+              "archive": "tree-sitter-java-0.23.5.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-json",
+              "version": "0.24.8",
+              "url": "https://codeload.github.com/tree-sitter/tree-sitter-json/tar.gz/refs/tags/v0.24.8",
+              "sha256": "acf6e8362457e819ed8b613f2ad9a0e1b621a77556c296f3abea58f7880a9213",
+              "top": "tree-sitter-json-0.24.8",
+              "archive": "tree-sitter-json-0.24.8.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-yaml",
+              "version": "0.7.2",
+              "url": "https://codeload.github.com/tree-sitter-grammars/tree-sitter-yaml/tar.gz/refs/tags/v0.7.2",
+              "sha256": "aeaff5731bb8b66c7054c8aed33cd5edea5f4cd2ac71654f3f6c2ba2073d8fac",
+              "top": "tree-sitter-yaml-0.7.2",
+              "archive": "tree-sitter-yaml-0.7.2.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-javascript",
+              "version": "0.25.0",
+              "url": "https://codeload.github.com/tree-sitter/tree-sitter-javascript/tar.gz/refs/tags/v0.25.0",
+              "sha256": "9712fc283d3dc01d996d20b6392143445d05867a7aad76fdd723824468428b86",
+              "top": "tree-sitter-javascript-0.25.0",
+              "archive": "tree-sitter-javascript-0.25.0.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-kotlin",
+              "version": "0.3.8",
+              "url": "https://codeload.github.com/fwcd/tree-sitter-kotlin/tar.gz/refs/tags/0.3.8",
+              "sha256": "7dd60975786bf9cb4be6a5176f5ccb5fed505f9929a012da30762505b1015669",
+              "top": "tree-sitter-kotlin-0.3.8",
+              "archive": "tree-sitter-kotlin-0.3.8.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-typescript",
+              "version": "0.23.2",
+              "url": "https://codeload.github.com/tree-sitter/tree-sitter-typescript/tar.gz/refs/tags/v0.23.2",
+              "sha256": "2c4ce711ae8d1218a3b2f899189298159d672870b5b34dff5d937bed2f3e8983",
+              "top": "tree-sitter-typescript-0.23.2",
+              "archive": "tree-sitter-typescript-0.23.2.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-sql",
+              "version": "0.3.11",
+              "url": "https://codeload.github.com/DerekStride/tree-sitter-sql/tar.gz/refs/tags/v0.3.11",
+              "sha256": "1fe13cb1e50dd9da9f22aed3cb9430fc9dae05a734a6049926fc12f6d8ecd3ae",
+              "top": "tree-sitter-sql-0.3.11",
+              "archive": "tree-sitter-sql-0.3.11.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            },
+            {
+              "name": "tree-sitter-markdown",
+              "version": "0.5.3",
+              "url": "https://codeload.github.com/tree-sitter-grammars/tree-sitter-markdown/tar.gz/refs/tags/v0.5.3",
+              "sha256": "df845b1ab7c7c163ec57d7fa17170c92b04be199bddab02523636efec5224ab6",
+              "top": "tree-sitter-markdown-0.5.3",
+              "archive": "tree-sitter-markdown-0.5.3.tar.xz",
+              "licenses": [
+                "LICENSE"
+              ],
+              "retained_paths": [
+                "LICENSE",
+                "README.md",
+                "grammar.js",
+                "grammar-reference.js",
+                "package.json",
+                "tree-sitter.json",
+                "src",
+                "queries",
+                "common",
+                "schema",
+                "typescript/grammar.js",
+                "typescript/src",
+                "tsx/grammar.js",
+                "tsx/src",
+                "tree-sitter-markdown/grammar.js",
+                "tree-sitter-markdown/src",
+                "tree-sitter-markdown/queries",
+                "tree-sitter-markdown-inline/grammar.js",
+                "tree-sitter-markdown-inline/src",
+                "tree-sitter-markdown-inline/queries"
+              ]
+            }
+          ]
+        },
+        "jobs": 4,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1791190411",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/treesitter-final-source-4:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-treesitter-final-build-4:/work",
+          "sha256:a4babfcc82227fb71574aec479c85a75ddeebedb9f7d51a8157556e47843347d",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 4",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-treesitter-module.spec"
+        ],
+        "source_only": false,
+        "tmpfs_mib": null,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-treesitter-module-doc-1.0.0-2.el10.noarch.rpm": "4a1451c74180ebf391fe22519052939010bfeabd7c51d631be176d97d460d6d8",
+          "rpmbuild/RPMS/x86_64/qore-treesitter-module-1.0.0-2.el10.x86_64.rpm": "ac06c5a337d6c3e869e77559802e3f5f29ab28c5db7b4db94899c293291c98ac",
+          "rpmbuild/RPMS/x86_64/qore-treesitter-module-debuginfo-1.0.0-2.el10.x86_64.rpm": "d5a46c2891383c545758d9710cc5b39a7f43d69a186511fcaed6e71d7bd1297a",
+          "rpmbuild/RPMS/x86_64/qore-treesitter-module-debugsource-1.0.0-2.el10.x86_64.rpm": "74f4819de942a314042904e6cb92435976044ef2e1d200cbe2abd1797f4c3824",
+          "rpmbuild/SRPMS/qore-treesitter-module-1.0.0-2.el10.src.rpm": "6cacc77dcfc3e6caa83d35dafa82d1ac96c06f45662d721cdfb3f7b23b85e575"
+        }
+      },
+      "runtime_image": "sha256:0451404c72c0f4b3f9666258b9cc275d1256fbf91423b87418cf051c3ae2c357",
+      "sdk_image": "sha256:5473e3140610fdc7283e46c62ca3dae454cba578b2202d5512c160bf4980d62c",
+      "exit_code": 0
+    }
+  },
+  "public_source_urls": [
+    {
+      "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-treesitter-module/qore-treesitter-module-1.0.0.tar.xz",
+      "sha256": "c64b9335ba349c7f88990198cf146481230b7e0dee6d8cf1ad0118a093dcee52"
+    },
+    {
+      "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-treesitter-module/tree-sitter-python-0.25.0.tar.xz",
+      "sha256": "b4fbe2faf638bf2741741bda95107547816fd4ac093f99d895b80518ab952fe4"
+    },
+    {
+      "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-treesitter-module/tree-sitter-java-0.23.5.tar.xz",
+      "sha256": "d2e61640a2a3b6d1e139000ab48c57e07c3a7d30f31a5944678758b2ed41668d"
+    },
+    {
+      "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-treesitter-module/tree-sitter-json-0.24.8.tar.xz",
+      "sha256": "a4a879b1dcd7e28f1c4673206a2b23768153a13146b27f372cff1b903b802575"
+    },
+    {
+      "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-treesitter-module/tree-sitter-yaml-0.7.2.tar.xz",
+      "sha256": "662e52d1a4d51d7dd52f68c01ad3d8e1c84849ed0a69dc998316621d02574c44"
+    },
+    {
+      "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-treesitter-module/tree-sitter-javascript-0.25.0.tar.xz",
+      "sha256": "4a0c0d4450dd6e1ed186c89b5c166261648d8617b35710242d0888be4f6ded43"
+    },
+    {
+      "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-treesitter-module/tree-sitter-kotlin-0.3.8.tar.xz",
+      "sha256": "680ebf95fbdbd76a2043821246827bb3feafd9997b08c4cf5a33d8dac17a330e"
+    },
+    {
+      "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-treesitter-module/tree-sitter-typescript-0.23.2.tar.xz",
+      "sha256": "591bd7cbb70abaa3685b54ca85010cd98f792f5f06705db4b9fe4e67db4c91c8"
+    },
+    {
+      "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-treesitter-module/tree-sitter-sql-0.3.11.tar.xz",
+      "sha256": "48d5970e54422ca9e3ca25b4f478cbf5c77cfbae695e391667d4c1dfc07899ae"
+    },
+    {
+      "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-treesitter-module/tree-sitter-markdown-0.5.3.tar.xz",
+      "sha256": "38f4d1ff8785bc60b230fdadec73bf5873119dd4e91630504aaa0e940c1f4fe4"
+    }
+  ],
+  "obs_upload": {
+    "qore-treesitter-module": {
+      "source_commit": "5092b7d7f9b11147a160eccacf0231a52972f32a",
+      "revision": "3",
+      "srcmd5": "5f63bf81f43fdccd2de72506d0c02fc5",
+      "verified_files": {
+        "qore-treesitter-module-1.0.0.tar.xz": "2520bb72b56e97043217883f560d5bc3",
+        "qore-treesitter-module.spec": "21c14b3e8bb92e386c72524824861634",
+        "tree-sitter-python-0.25.0.tar.xz": "f4fefec10e809024f9c75505d57c6b20",
+        "tree-sitter-java-0.23.5.tar.xz": "8b7ebb0066cb3e5efb2a38710783e4b4",
+        "tree-sitter-json-0.24.8.tar.xz": "d548d7ef78fd702a54066bddf1ee7c72",
+        "tree-sitter-yaml-0.7.2.tar.xz": "132f3d5ae92318daae5a3c55ee403560",
+        "tree-sitter-javascript-0.25.0.tar.xz": "bc165c1dcea04fd007cf169d15aad8c4",
+        "tree-sitter-kotlin-0.3.8.tar.xz": "6a70f97cfaaa71b981c4d7c0573c1e7d",
+        "tree-sitter-typescript-0.23.2.tar.xz": "466c190cac23083ad20be0ac881f5add",
+        "tree-sitter-sql-0.3.11.tar.xz": "a112d4fcacdfab5abe6a0d127d1621c5",
+        "tree-sitter-markdown-0.5.3.tar.xz": "778747449f01e01e81ec609945d2c3ff",
+        "source-manifest.json": "16aa108c8fba6b61214edca4c7311550"
+      }
+    }
+  },
+  "native": {
+    "fedora-x86_64": {
+      "obs": {
+        "rev": "3",
+        "srcmd5": "5f63bf81f43fdccd2de72506d0c02fc5",
+        "versrel": "1.0.0-3",
+        "bcnt": "1",
+        "time": "1791190802",
+        "duration": "129"
+      },
+      "reported_cases": 99,
+      "assertions": 377,
+      "module_build_diagnostics": [],
+      "package_lint": "not run by target",
+      "sha256": {
+        "results/treesitter-native-license-final-20261005/fedora-x86_64.log": "18afa9370167ba5e522cbe66b1456605e2158dff385ab11b3907dda087c6c2ec",
+        "results/treesitter-native-license-final-20261005/fedora-x86_64.status": "7e5db1b3c742214c1887bf85c40223d16f2c95517cd5b3b62774bdb455e3f140",
+        "results/treesitter-native-license-final-20261005/fedora-x86_64.history": "ad8c9e9e1d4e63c70686f25e2294e523368d3e66c830f38029f0ac23dfee84df"
+      }
+    },
+    "fedora-aarch64": {
+      "obs": {
+        "rev": "3",
+        "srcmd5": "5f63bf81f43fdccd2de72506d0c02fc5",
+        "versrel": "1.0.0-3",
+        "bcnt": "1",
+        "time": "1791190744",
+        "duration": "79"
+      },
+      "reported_cases": 99,
+      "assertions": 377,
+      "module_build_diagnostics": [],
+      "package_lint": "not run by target",
+      "sha256": {
+        "results/treesitter-native-license-final-20261005/fedora-aarch64.log": "3c0b7148e53b6837e236390c64a1d9160965f9d4ff1166dc27fbe26a47fa01cd",
+        "results/treesitter-native-license-final-20261005/fedora-aarch64.status": "7e5db1b3c742214c1887bf85c40223d16f2c95517cd5b3b62774bdb455e3f140",
+        "results/treesitter-native-license-final-20261005/fedora-aarch64.history": "8677d10108d5bc2482a420bb84aa6f7cb88ef256fb2c37eb1da95c81e4979a45"
+      }
+    },
+    "leap-x86_64": {
+      "obs": {
+        "rev": "3",
+        "srcmd5": "5f63bf81f43fdccd2de72506d0c02fc5",
+        "versrel": "1.0.0-3",
+        "bcnt": "1",
+        "time": "1791190738",
+        "duration": "70"
+      },
+      "reported_cases": 99,
+      "assertions": 377,
+      "module_build_diagnostics": [],
+      "package_lint": "zero errors and warnings",
+      "sha256": {
+        "results/treesitter-native-license-final-20261005/leap-x86_64.log": "3d14b7b421120fd385e0e5b235087c574b185642f3dacc153fda8c3ec003f324",
+        "results/treesitter-native-license-final-20261005/leap-x86_64.status": "7e5db1b3c742214c1887bf85c40223d16f2c95517cd5b3b62774bdb455e3f140",
+        "results/treesitter-native-license-final-20261005/leap-x86_64.history": "9a65be61aaf4d1a1d3a9b840d8b15c53ce161fa506ceddc9d3cafd9476d6cb8b"
+      }
+    },
+    "leap-aarch64": {
+      "obs": {
+        "rev": "3",
+        "srcmd5": "5f63bf81f43fdccd2de72506d0c02fc5",
+        "versrel": "1.0.0-3",
+        "bcnt": "1",
+        "time": "1791190741",
+        "duration": "78"
+      },
+      "reported_cases": 99,
+      "assertions": 377,
+      "module_build_diagnostics": [],
+      "package_lint": "zero errors and warnings",
+      "sha256": {
+        "results/treesitter-native-license-final-20261005/leap-aarch64.log": "a1cf47060d1a60083f19d4366d337e57211c00c9168b50c3144a5a28fcae6ec4",
+        "results/treesitter-native-license-final-20261005/leap-aarch64.status": "7e5db1b3c742214c1887bf85c40223d16f2c95517cd5b3b62774bdb455e3f140",
+        "results/treesitter-native-license-final-20261005/leap-aarch64.history": "c2eeb586e71a734981a327b5e35a3c49e8406320f8fb7e6f0b627e848052a55d"
+      }
+    },
+    "el10-x86_64": {
+      "obs": {
+        "rev": "3",
+        "srcmd5": "5f63bf81f43fdccd2de72506d0c02fc5",
+        "versrel": "1.0.0-3",
+        "bcnt": "1",
+        "time": "1791190758",
+        "duration": "88"
+      },
+      "reported_cases": 99,
+      "assertions": 377,
+      "module_build_diagnostics": [],
+      "package_lint": "not run by target",
+      "sha256": {
+        "results/treesitter-native-license-final-20261005/el10-x86_64.log": "c49dfe4017b8909b5cc29378deb074f608671c5330676222b9fe74e558cb48e8",
+        "results/treesitter-native-license-final-20261005/el10-x86_64.status": "7e5db1b3c742214c1887bf85c40223d16f2c95517cd5b3b62774bdb455e3f140",
+        "results/treesitter-native-license-final-20261005/el10-x86_64.history": "463904656fc203bca3c5673ccd27ab52f83836d38fa08a57a57e6e4756b05d53"
+      }
+    },
+    "el10-aarch64": {
+      "obs": {
+        "rev": "3",
+        "srcmd5": "5f63bf81f43fdccd2de72506d0c02fc5",
+        "versrel": "1.0.0-3",
+        "bcnt": "1",
+        "time": "1791190782",
+        "duration": "116"
+      },
+      "reported_cases": 99,
+      "assertions": 377,
+      "module_build_diagnostics": [],
+      "package_lint": "not run by target",
+      "sha256": {
+        "results/treesitter-native-license-final-20261005/el10-aarch64.log": "24ac46b94405ca4df752c7b7a1c1ebc9b592d8544360695ae302e00bb0e533a4",
+        "results/treesitter-native-license-final-20261005/el10-aarch64.status": "7e5db1b3c742214c1887bf85c40223d16f2c95517cd5b3b62774bdb455e3f140",
+        "results/treesitter-native-license-final-20261005/el10-aarch64.history": "31a7ffcbc16c46d0d52c8f76a4f6e5ee147c2c29564cff12867ec1a408b9b21c"
+      }
+    }
+  }
+}
