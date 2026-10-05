@@ -455,5 +455,39 @@
       "python-grpcio-rpmlintrc"
     ],
     "provenance": "openSUSE Factory revision 45 recipe; same 1.69.0 as Leap 16 runtime. Restore upstream private Abseil and compiler visibility defaults for coexistence with system libgrpc 1.60.0."
+  },
+  "nodejs24-libnode": {
+    "url": "https://nodejs.org/dist/v24.18.1/node-v24.18.1.tar.xz",
+    "sha256": "86d40d594bbdfcf69009a62fdf43cb19ae72b6cb5822d2bdd8349c5a1b2fa628",
+    "archive": "node-v24.18.1.tar.xz",
+    "version": "24.18.1",
+    "source_date_epoch": 1790985600,
+    "extra_sources": [
+      "nodejs24-cxx-visibility.patch",
+      "nodejs24-cppgc-realm-lifetime.patch",
+      "nodejs24-compression-cleanup.patch",
+      "nodejs24-doc-deps.json",
+      "nodejs24-localizationData-v77.1.json",
+      "nodejs24-inspector-environments.patch",
+      "nodejs24-detached-thread-counter.c",
+      "nodejs24-inspector-lifetimes.cc",
+      "nodejs24-ada-conversion-result.patch",
+      "nodejs24-ada-conversion-test.cc",
+      "nodejs24-sqlite-types.patch",
+      "nodejs24-sqlite-lengths.patch",
+      "nodejs24-crypto-test-types.patch",
+      "nodejs24-sqlite-test.c",
+      "nodejs24-SQLITE-LICENSE",
+      "nodejs24-rpm-symbols.py",
+      "nodejs24-libnode-rpmlintrc"
+    ],
+    "components": [
+      {
+        "archive": "node-v24.18.1-doc-deps.tar.xz",
+        "sha256": "38afe7e7b4be25a43b3c56d1df9ade2c49d05f09d02529d236c84cf403da5e9f",
+        "generated": "npm ci with upstream package-lock integrity verification and two pinned missing notices; preparation and licenses recorded in nodejs24-doc-deps.json; tar sorted with mtime 1790985600 and uid/gid zero, xz compressed.",
+        "url": "https://github.com/nodejs/node/blob/v24.18.1/tools/doc/package-lock.json"
+      }
+    ]
   }
 }

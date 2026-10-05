@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-05",
+  "status": "Approved guarded filter registered as Source10; canonical complete build and native ARM qualification follow.",
+  "root_causes": {
+    "resolver": "Leap rpmlint 2.7 create_regexp_call lacks a leading symbol boundary; it mistakes the imported ares_gethostbyaddr for libc gethostbyaddr. All six obsolete libc resolver symbols are absent.",
+    "license": "Bundled SQLite uses SPDX blessing; replace generic LicenseRef-Public-Domain and install the exact SQLite notice extracted from sqlite3.c in both binary packages. Upstream Node LICENSE omits this SQLite notice.",
+    "source_url": "Generated documentation-tool archive lacked a download URL. Name the OBS archive location; public download SHA256 verification remains required after submission.",
+    "spelling": "Use the distribution NodeJS spelling and clearer descriptions for development headers/linker files."
+  },
+  "approval": "User approved on 2026-10-05: Allow this guarded exact filter. Covers only the libnode137 x86_64/aarch64 warning for /usr/lib64/libnode.so.137, with the obsolete-import guard required in every build.",
+  "proposed_scope": "Only libnode137 x86_64/aarch64 warning for /usr/lib64/libnode.so.137. Every RPM build runs nodejs24-rpm-symbols.py and fails on any obsolete libc resolver import; aarch64 native qualification is still pending.",
+  "tests": {
+    "metadata_tests": 6,
+    "target_lint": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "native_source_inputs": "All candidate6 source and patch hashes match, except the deliberately updated recipe.",
+    "symbol_gate": "All six obsolete names, unversioned and @/@@-versioned, rejected; c-ares and modern getaddrinfo permitted; mixed lists cannot hide obsolete symbols.",
+    "filter_scope": "Wrong package, SONAME, path, architecture, severity, diagnostic and prefix/suffix remain visible.",
+    "qualified_rpm": {
+      "rpm_sha256": "ce88c2611234d58fae2bae60dd734eb939671b76e085b2506d8c7a2696b3586b",
+      "elf_sha256": "3e1bb8f8451511b4b65dfd22716075ebb08db2d1c9ffaf30008c116bb91647c9",
+      "cares_import": "ares_gethostbyaddr",
+      "obsolete_libc_resolver_imports": false
+    }
+  },
+  "limitations": [
+    "Metadata-only RPMs reuse a private copy of the existing build tree; short-circuit RPMs are disposable lint artifacts and must never be uploaded or distributed.",
+    "That retained build tree has undergone subsequent compiler controls: its linker output does not match the original qualified RPM. These metadata artifacts provide no new runtime qualification; complete canonical RPM/native builds are required after commit.",
+    "Initial metadata-only harness used a mismatched absolute mount path and unintentionally ran %check; corrected to the original path with explicit --nocheck for metadata packaging only."
+  ],
+  "sources": [
+    "https://spdx.org/licenses/blessing.html",
+    "https://github.com/rpm-software-management/rpmlint/blob/2.7.0/rpmlint/checks/BinariesCheck.py"
+  ],
+  "sha256": {
+    "dependencies/nodejs24-libnode-rpmlintrc": "bbc326925f8bf74488e45a4bcc342a57630587539dff87fae559d09e4abb963d",
+    "dependencies/nodejs24-rpm-symbols.py": "2a7006474f4c37ba78541ba60b740ece416c9657a37845b6af2994d2f2c7b90a",
+    "dependencies/nodejs24-SQLITE-LICENSE": "06545a6ec25fbbff6c62f205f94a35be49e38f33bea827a8cfb07d7b82e4b083",
+    "tests/test_node_rpm_metadata.py": "e5639243f05807a2fe24efff6affd679448fa5b790ffc58a8f3c62a0fdaa9b29",
+    "results/node-metadata-tests-20261005.log": "7c36c0c8db361e3407d2f6a7e27cd5245fa178bd68341b886e1e0616517b64ff",
+    "results/node-candidate7-proposed-rpmlint-20261005.log": "3832f1cdb446241b45fef4f06245b2f62341243d958da3ca6c06f952c0bc0036",
+    "results/node-qualified-rpm-symbols-20261005.txt": "e162304b663a072185f0eb10a07f3b96902ef329d2ef283ccbb3762541807d32",
+    "dependencies/nodejs24-libnode.spec": "83856a7c67b94a0045c319babe83df161d7d613d81a83d175ac14c90c41aab44",
+    "dependencies/nodejs24-libnode.rst": "ff612af57fd364c210ed61b4a535df15e48812a3da81fc47e797e1b88feb1459",
+    "results/node-dependency-tests-20261005.log": "06903dcfede7a845dc24bb036aa7baaf1e13e62f97f57c0a17cbafb5852a015f"
+  }
+}

@@ -1,0 +1,80 @@
+From: Qore Technologies <info@qoretechnologies.com>
+Subject: Annotate intentional RTree fallthrough and match buffer-size types
+
+Copyright 2026 Qore Technologies, s.r.o.; MIT.
+Use SQLite's existing fallthrough marker and preserve the unsigned comparison
+that C already performs for the bounded session input length.
+
+--- a/deps/sqlite/sqlite3.c
++++ b/deps/sqlite/sqlite3.c
+@@ -219351,12 +219351,16 @@
+     switch( nCoord ){
+       case 10:  readCoord(pCellData+36, &c); aCoord[9] = c.f;
+                 readCoord(pCellData+32, &c); aCoord[8] = c.f;
++                deliberate_fall_through
+       case 8:   readCoord(pCellData+28, &c); aCoord[7] = c.f;
+                 readCoord(pCellData+24, &c); aCoord[6] = c.f;
++                deliberate_fall_through
+       case 6:   readCoord(pCellData+20, &c); aCoord[5] = c.f;
+                 readCoord(pCellData+16, &c); aCoord[4] = c.f;
++                deliberate_fall_through
+       case 4:   readCoord(pCellData+12, &c); aCoord[3] = c.f;
+                 readCoord(pCellData+8,  &c); aCoord[2] = c.f;
++                deliberate_fall_through
+       default:  readCoord(pCellData+4,  &c); aCoord[1] = c.f;
+                 readCoord(pCellData,    &c); aCoord[0] = c.f;
+     }
+@@ -219366,12 +219370,16 @@
+     switch( nCoord ){
+       case 10:  readCoord(pCellData+36, &c); aCoord[9] = c.i;
+                 readCoord(pCellData+32, &c); aCoord[8] = c.i;
++                deliberate_fall_through
+       case 8:   readCoord(pCellData+28, &c); aCoord[7] = c.i;
+                 readCoord(pCellData+24, &c); aCoord[6] = c.i;
++                deliberate_fall_through
+       case 6:   readCoord(pCellData+20, &c); aCoord[5] = c.i;
+                 readCoord(pCellData+16, &c); aCoord[4] = c.i;
++                deliberate_fall_through
+       case 4:   readCoord(pCellData+12, &c); aCoord[3] = c.i;
+                 readCoord(pCellData+8,  &c); aCoord[2] = c.i;
++                deliberate_fall_through
+       default:  readCoord(pCellData+4,  &c); aCoord[1] = c.i;
+                 readCoord(pCellData,    &c); aCoord[0] = c.i;
+     }
+@@ -220238,9 +220246,13 @@
+   if( pRtree->eCoordType==RTREE_COORD_REAL32 ){
+     switch( pRtree->nDim ){
+       case 5:  area  = p->aCoord[9].f - p->aCoord[8].f;
++               deliberate_fall_through
+       case 4:  area *= p->aCoord[7].f - p->aCoord[6].f;
++               deliberate_fall_through
+       case 3:  area *= p->aCoord[5].f - p->aCoord[4].f;
++               deliberate_fall_through
+       case 2:  area *= p->aCoord[3].f - p->aCoord[2].f;
++               deliberate_fall_through
+       default: area *= p->aCoord[1].f - p->aCoord[0].f;
+     }
+   }else
+@@ -220248,9 +220260,13 @@
+   {
+     switch( pRtree->nDim ){
+       case 5:  area  = (i64)p->aCoord[9].i - (i64)p->aCoord[8].i;
++               deliberate_fall_through
+       case 4:  area *= (i64)p->aCoord[7].i - (i64)p->aCoord[6].i;
++               deliberate_fall_through
+       case 3:  area *= (i64)p->aCoord[5].i - (i64)p->aCoord[4].i;
++               deliberate_fall_through
+       case 2:  area *= (i64)p->aCoord[3].i - (i64)p->aCoord[2].i;
++               deliberate_fall_through
+       default: area *= (i64)p->aCoord[1].i - (i64)p->aCoord[0].i;
+     }
+   }
+@@ -233701,7 +233717,7 @@
+   u8 aCopy[9];
+   const u8 *aRead = aBuf;
+   memset(aCopy, 0, sizeof(aCopy));
+-  if( nBuf<sizeof(aCopy) ){
++  if( (size_t)nBuf<sizeof(aCopy) ){
+     memcpy(aCopy, aBuf, nBuf);
+     aRead = aCopy;
+   }

@@ -1,0 +1,4 @@
+# Copyright 2026 Qore Technologies, s.r.o.; SPDX-License-Identifier: MIT
+# Approved 2026-10-05: rpmlint 2.7 matches ares_gethostbyaddr as a libc call.
+# Every build independently rejects all six obsolete libc resolver imports.
+addFilter(r'^libnode137\.(?:x86_64|aarch64): W: binary-or-shlib-calls-gethostbyname /usr/lib64/libnode\.so\.137$')

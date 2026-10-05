@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-03",
-  "status": "Focused checks and full Node candidate 6 RPM functional checks pass; four separately documented optimizer diagnostics remain pending approval.",
+  "status": "Focused checks and full Node candidate 6 RPM functional checks pass; all four separately documented optimizer diagnostics were approved on 2026-10-05.",
   "root_cause": "Ada 3.4.4 to_unicode ignores conversion failure after Punycode decoding. Invalid Unicode surrogate labels decode into UTF-32, fail conversion and leave zero-filled output bytes. The scalar path has the same missing return-value check.",
   "reproducer": {
     "input": "xn--ib9b",
@@ -48,5 +48,6 @@
     "results/node-ada-diagnostic-1/compile.log": "1599f6c971c557eb23dde8e640b2b4dae989094a9bc7e1ed54c64943c6da1ee0",
     "results/node-ada-diagnostic-1/valgrind.log": "f5e20b91c0f377a3517ecc7e170e942a5370ad39ac3b7911816cdad19befcf61"
   },
-  "rpm_qualification": "evidence/node-rpm-candidate6-20261004.json"
+  "rpm_qualification": "evidence/node-rpm-candidate6-20261004.json",
+  "approval_update_20261005": "The four recorded GCC 15 optimizer sites were approved on 2026-10-05; see node-remaining-compiler-diagnostics-20261003.json. Canonical/native qualification remains separate."
 }

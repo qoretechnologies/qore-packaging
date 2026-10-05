@@ -1,0 +1,21 @@
+From: Qore Technologies <david@qore.org>
+Subject: Apply inline visibility only to C++ compilation
+
+Copyright 2026 Qore Technologies, s.r.o.
+SPDX-License-Identifier: MIT
+
+GYP's cflags apply to C and C++. V8 includes C sources, but GCC accepts
+-fvisibility-inlines-hidden only for C++. Keep the shared-library visibility
+policy and move its C++ component to the language-specific list.
+
+--- a/tools/v8_gypfiles/v8.gyp
++++ b/tools/v8_gypfiles/v8.gyp
+@@ -69,6 +69,8 @@
+       }, '(OS!="aix" and OS!="os400") and (OS!="win" or clang==1)', {
+         'cflags': [
+           '-fvisibility=hidden',
++        ],
++        'cflags_cc': [
+           '-fvisibility-inlines-hidden'
+         ],
+       }],  # MSVC hides the non-public symbols by default so no need to configure it.

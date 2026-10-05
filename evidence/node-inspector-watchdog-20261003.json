@@ -1,0 +1,198 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "status": "Upstream inspector leak/crash fix passes all 192 native cases and the complete JavaScript run (5,249 reported cases, including upstream skips). Serial/concurrent controls and Valgrind pass with only the approved bounded watchdog and previously approved GC diagnostics. Full RPM candidate 4 passed; compiler diagnostics remain a separate qualification gate.",
+  "upstream_fix": "https://github.com/nodejs/node/commit/5859ced2294c7b846b42325b408e0855f71306ec",
+  "root_cause": "Node 24 creates one detached inspector signal watchdog for each Environment, and reinitializes the semaphore while existing watchdogs can still wait on it. Concurrent default Environments abort because they share a single async handle.",
+  "fix": "Backport upstream per-Agent async handles, protected Agent list and once-per-process signal watchdog. Preserve debug signal functionality.",
+  "baseline": {
+    "record": "results/node-inspector-baseline-2/status.json",
+    "serial": "10 environments create 10 detached threads; count regression exits 1.",
+    "concurrent": "Two simultaneous environments abort with exit 134."
+  },
+  "fixed": {
+    "serial": "100 environment lifetimes create exactly one detached thread.",
+    "concurrent": "Ten pairs of concurrent environments pass and create exactly one detached thread.",
+    "native_tests": 192,
+    "javascript": {
+      "record": "results/node-inspector-fixed-1/status.json",
+      "exit_code": 0,
+      "reported_cases": 5249,
+      "limitations": "Reported total includes upstream skips and flaky/TODO classifications; full test runner reports All tests passed."
+    }
+  },
+  "diagnostic_scope": "Exactly one 320-byte glibc DTV allocation owned by the intentionally live Node SignalInspector process watchdog. No definite or indirect loss, no other invalid memory access. No suppression, disabled signal handler, or altered compiler flags.",
+  "memory_controls": {
+    "lifetime-1": {
+      "losses": [
+        {
+          "kind": "Leak_PossiblyLost",
+          "bytes": 320,
+          "frames": [
+            "calloc",
+            "allocate_dtv",
+            "_dl_allocate_tls",
+            "pthread_create@@GLIBC_2.34",
+            "pthread_create",
+            "node::inspector::Agent::Start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, node::DebugOptions const&, std::shared_ptr<node::ExclusiveAccess<node::HostPort, node::MutexBase<node::LibuvMutexTraits> > >, bool)",
+            "node::Environment::InitializeInspector(std::unique_ptr<node::inspector::ParentInspectorHandle, std::default_delete<node::inspector::ParentInspectorHandle> >)",
+            "node::CreateEnvironment(node::IsolateData*, v8::Local<v8::Context>, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, node::EnvironmentFlags::Flags, node::ThreadId, std::unique_ptr<node::InspectorParentHandle, std::default_delete<node::InspectorParentHandle> >, std::basic_string_view<char, std::char_traits<char> >)",
+            "node::CreateEnvironment(node::IsolateData*, v8::Local<v8::Context>, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, node::EnvironmentFlags::Flags, node::ThreadId, std::unique_ptr<node::InspectorParentHandle, std::default_delete<node::InspectorParentHandle> >)",
+            "operator()",
+            "__invoke_impl<node::Environment*, node::CommonEnvironmentSetup::Create<const std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, const std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&>(node::MultiIsolatePlatform*, std::vector<std::__cxx11::basic_string<char> >*, const std::vector<std::__cxx11::basic_string<char> >&, const std::vector<std::__cxx11::basic_string<char> >&)::<lambda(const node::CommonEnvironmentSetup*)>&, const node::CommonEnvironmentSetup*>",
+            "__invoke_r<node::Environment*, node::CommonEnvironmentSetup::Create<const std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, const std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&>(node::MultiIsolatePlatform*, std::vector<std::__cxx11::basic_string<char> >*, const std::vector<std::__cxx11::basic_string<char> >&, const std::vector<std::__cxx11::basic_string<char> >&)::<lambda(const node::CommonEnvironmentSetup*)>&, const node::CommonEnvironmentSetup*>",
+            "std::_Function_handler<node::Environment* (node::CommonEnvironmentSetup const*), node::CommonEnvironmentSetup::Create<std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&>(node::MultiIsolatePlatform*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)::{lambda(node::CommonEnvironmentSetup const*)#1}>::_M_invoke(std::_Any_data const&, node::CommonEnvironmentSetup const*&&)",
+            "node::CommonEnvironmentSetup::CommonEnvironmentSetup(node::MultiIsolatePlatform*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >*, node::EmbedderSnapshotData const*, unsigned int, std::function<node::Environment* (node::CommonEnvironmentSetup const*)>, node::SnapshotConfig const*)",
+            "node::CommonEnvironmentSetup::CommonEnvironmentSetup(node::MultiIsolatePlatform*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >*, std::function<node::Environment* (node::CommonEnvironmentSetup const*)>)"
+          ]
+        }
+      ],
+      "conservative_stack_scan_contexts_already_approved": 0,
+      "raw_xml": "results/node-inspector-fixed-1/lifetime-1-valgrind.xml"
+    },
+    "lifetime-20": {
+      "losses": [
+        {
+          "kind": "Leak_PossiblyLost",
+          "bytes": 320,
+          "frames": [
+            "calloc",
+            "allocate_dtv",
+            "_dl_allocate_tls",
+            "pthread_create@@GLIBC_2.34",
+            "pthread_create",
+            "node::inspector::Agent::Start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, node::DebugOptions const&, std::shared_ptr<node::ExclusiveAccess<node::HostPort, node::MutexBase<node::LibuvMutexTraits> > >, bool)",
+            "node::Environment::InitializeInspector(std::unique_ptr<node::inspector::ParentInspectorHandle, std::default_delete<node::inspector::ParentInspectorHandle> >)",
+            "node::CreateEnvironment(node::IsolateData*, v8::Local<v8::Context>, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, node::EnvironmentFlags::Flags, node::ThreadId, std::unique_ptr<node::InspectorParentHandle, std::default_delete<node::InspectorParentHandle> >, std::basic_string_view<char, std::char_traits<char> >)",
+            "node::CreateEnvironment(node::IsolateData*, v8::Local<v8::Context>, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, node::EnvironmentFlags::Flags, node::ThreadId, std::unique_ptr<node::InspectorParentHandle, std::default_delete<node::InspectorParentHandle> >)",
+            "operator()",
+            "__invoke_impl<node::Environment*, node::CommonEnvironmentSetup::Create<const std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, const std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&>(node::MultiIsolatePlatform*, std::vector<std::__cxx11::basic_string<char> >*, const std::vector<std::__cxx11::basic_string<char> >&, const std::vector<std::__cxx11::basic_string<char> >&)::<lambda(const node::CommonEnvironmentSetup*)>&, const node::CommonEnvironmentSetup*>",
+            "__invoke_r<node::Environment*, node::CommonEnvironmentSetup::Create<const std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, const std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&>(node::MultiIsolatePlatform*, std::vector<std::__cxx11::basic_string<char> >*, const std::vector<std::__cxx11::basic_string<char> >&, const std::vector<std::__cxx11::basic_string<char> >&)::<lambda(const node::CommonEnvironmentSetup*)>&, const node::CommonEnvironmentSetup*>",
+            "std::_Function_handler<node::Environment* (node::CommonEnvironmentSetup const*), node::CommonEnvironmentSetup::Create<std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&>(node::MultiIsolatePlatform*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)::{lambda(node::CommonEnvironmentSetup const*)#1}>::_M_invoke(std::_Any_data const&, node::CommonEnvironmentSetup const*&&)",
+            "node::CommonEnvironmentSetup::CommonEnvironmentSetup(node::MultiIsolatePlatform*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >*, node::EmbedderSnapshotData const*, unsigned int, std::function<node::Environment* (node::CommonEnvironmentSetup const*)>, node::SnapshotConfig const*)",
+            "node::CommonEnvironmentSetup::CommonEnvironmentSetup(node::MultiIsolatePlatform*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >*, std::function<node::Environment* (node::CommonEnvironmentSetup const*)>)"
+          ]
+        }
+      ],
+      "conservative_stack_scan_contexts_already_approved": 0,
+      "raw_xml": "results/node-inspector-fixed-1/lifetime-20-valgrind.xml"
+    },
+    "concurrent": {
+      "losses": [
+        {
+          "kind": "Leak_PossiblyLost",
+          "bytes": 320,
+          "frames": [
+            "calloc",
+            "allocate_dtv",
+            "_dl_allocate_tls",
+            "pthread_create@@GLIBC_2.34",
+            "pthread_create",
+            "node::inspector::Agent::Start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, node::DebugOptions const&, std::shared_ptr<node::ExclusiveAccess<node::HostPort, node::MutexBase<node::LibuvMutexTraits> > >, bool)",
+            "node::Environment::InitializeInspector(std::unique_ptr<node::inspector::ParentInspectorHandle, std::default_delete<node::inspector::ParentInspectorHandle> >)",
+            "node::CreateEnvironment(node::IsolateData*, v8::Local<v8::Context>, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, node::EnvironmentFlags::Flags, node::ThreadId, std::unique_ptr<node::InspectorParentHandle, std::default_delete<node::InspectorParentHandle> >, std::basic_string_view<char, std::char_traits<char> >)",
+            "node::CreateEnvironment(node::IsolateData*, v8::Local<v8::Context>, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, node::EnvironmentFlags::Flags, node::ThreadId, std::unique_ptr<node::InspectorParentHandle, std::default_delete<node::InspectorParentHandle> >)",
+            "operator()",
+            "__invoke_impl<node::Environment*, node::CommonEnvironmentSetup::Create<const std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, const std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&>(node::MultiIsolatePlatform*, std::vector<std::__cxx11::basic_string<char> >*, const std::vector<std::__cxx11::basic_string<char> >&, const std::vector<std::__cxx11::basic_string<char> >&)::<lambda(const node::CommonEnvironmentSetup*)>&, const node::CommonEnvironmentSetup*>",
+            "__invoke_r<node::Environment*, node::CommonEnvironmentSetup::Create<const std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, const std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&>(node::MultiIsolatePlatform*, std::vector<std::__cxx11::basic_string<char> >*, const std::vector<std::__cxx11::basic_string<char> >&, const std::vector<std::__cxx11::basic_string<char> >&)::<lambda(const node::CommonEnvironmentSetup*)>&, const node::CommonEnvironmentSetup*>",
+            "std::_Function_handler<node::Environment* (node::CommonEnvironmentSetup const*), node::CommonEnvironmentSetup::Create<std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&>(node::MultiIsolatePlatform*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&)::{lambda(node::CommonEnvironmentSetup const*)#1}>::_M_invoke(std::_Any_data const&, node::CommonEnvironmentSetup const*&&)",
+            "node::CommonEnvironmentSetup::CommonEnvironmentSetup(node::MultiIsolatePlatform*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >*, node::EmbedderSnapshotData const*, unsigned int, std::function<node::Environment* (node::CommonEnvironmentSetup const*)>, node::SnapshotConfig const*)",
+            "node::CommonEnvironmentSetup::CommonEnvironmentSetup(node::MultiIsolatePlatform*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >*, std::function<node::Environment* (node::CommonEnvironmentSetup const*)>)"
+          ]
+        }
+      ],
+      "conservative_stack_scan_contexts_already_approved": 0,
+      "raw_xml": "results/node-inspector-fixed-1/concurrent-valgrind.xml"
+    },
+    "cppgc": {
+      "losses": [
+        {
+          "kind": "Leak_PossiblyLost",
+          "bytes": 320,
+          "frames": [
+            "calloc",
+            "allocate_dtv",
+            "_dl_allocate_tls",
+            "pthread_create@@GLIBC_2.34",
+            "pthread_create",
+            "node::inspector::Agent::Start(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, node::DebugOptions const&, std::shared_ptr<node::ExclusiveAccess<node::HostPort, node::MutexBase<node::LibuvMutexTraits> > >, bool)",
+            "node::Environment::InitializeInspector(std::unique_ptr<node::inspector::ParentInspectorHandle, std::default_delete<node::inspector::ParentInspectorHandle> >)",
+            "node::CreateEnvironment(node::IsolateData*, v8::Local<v8::Context>, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, node::EnvironmentFlags::Flags, node::ThreadId, std::unique_ptr<node::InspectorParentHandle, std::default_delete<node::InspectorParentHandle> >, std::basic_string_view<char, std::char_traits<char> >)",
+            "node::CreateEnvironment(node::IsolateData*, v8::Local<v8::Context>, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, node::EnvironmentFlags::Flags, node::ThreadId, std::unique_ptr<node::InspectorParentHandle, std::default_delete<node::InspectorParentHandle> >)",
+            "EnvironmentTestFixture::Env::Env(v8::HandleScope const&, Argv const&, node::EnvironmentFlags::Flags)",
+            "CppgcTest_CleanIsNotCalledWithFreedRealm_Test::TestBody()",
+            "testing::Test::Run()"
+          ]
+        }
+      ],
+      "conservative_stack_scan_contexts_already_approved": 6,
+      "raw_xml": "results/node-inspector-fixed-1/cppgc-valgrind.xml"
+    }
+  },
+  "approval": {
+    "status": "approved",
+    "date": "2026-10-03",
+    "user_response": "Allow this narrow diagnostic",
+    "scope": "Only the single bounded 320-byte glibc TLS allocation for Node inspector process-lifetime watchdog. No suppression; growing allocations, other loss sites and invalid memory accesses remain excluded."
+  },
+  "sha256": {
+    "dependencies/nodejs24-inspector-environments.patch": "0f0fdcf9f07e67b569abb4fd75db1de56c7509db58332f020b2fcdcc20a47617",
+    "dependencies/nodejs24-detached-thread-counter.c": "050af87f5bbfaa81ef1dc47c23abdf08aae8b4edea0875c513eaf02fd8f047cf",
+    "dependencies/nodejs24-inspector-lifetimes.cc": "b6b354d3f59703f18f2c015ef6a4f013f70810ae824b31f3416326d6d69f63ca",
+    "results/node-inspector-baseline-2/serial.log": "1b68fe331672013409ca4c31e0b965a4ac59976f0b075728b6d76ba533fd1c0f",
+    "results/node-inspector-baseline-2/concurrent.log": "216e243c7b349773886e91511266c1a894719008e0faac4bb5347371d40d1d50",
+    "results/node-inspector-fixed-1/lifetime-1-valgrind.xml": "e5c9327056c92dbeb286821e70561fa1665b79bc0fbea8711bf7a6badb788415",
+    "results/node-inspector-fixed-1/lifetime-1-valgrind.log": "2448474389905b1cc9da396f6cf99761b8aeefba711c23e9472334ab0fe99350",
+    "results/node-inspector-fixed-1/lifetime-20-valgrind.xml": "39bfe2181a2aa0282e04643b1e23ef55e5d47aab17a47c6b1d44381548fb0304",
+    "results/node-inspector-fixed-1/lifetime-20-valgrind.log": "c7c1626a013092ab47f304b36b2b95d53bf13eca62967070073a45e270e1f4bd",
+    "results/node-inspector-fixed-1/concurrent-valgrind.xml": "33cdc7bfb589b2dcd8989388f25cc8bfbcca34f43dced29d1cc9a686763388a1",
+    "results/node-inspector-fixed-1/concurrent-valgrind.log": "20945f1491c80f8ace7c54f7c3ece23f53325425fbbce3140aeb7e912309afeb",
+    "results/node-inspector-fixed-1/cppgc-valgrind.xml": "061724d5ca34567ba2ff4a2f7e4dfc18df66cc87115e41ae5fde02da83866543",
+    "results/node-inspector-fixed-1/cppgc-valgrind.log": "63f5f8e17d22f97f126856f36b03cedc6e337704ba00faa71a828bca3e0e9456",
+    "results/node-inspector-fixed-1/status.json": "9519f8f9a2cc8415cc65e1795d13ccc28738ae8c0f135bfec41c43de15858299",
+    "results/node-inspector-fixed-1/javascript.log": "4f27c2707b81e050ead13d7604c63b925674b59083c161f68a2662ef5c108c63",
+    "results/node-inspector-control-2/results.json": "8526bd8cd534b82a890cbe1e247dbb7f9785b928e16e68c253821ae568ff0621",
+    "results/node-inspector-control-2/valgrind-results.json": "bd4b5038b3a427ba782d6cd4918e75b2af7fe3bdadc1e96a856a55a98d7983f3",
+    "results/node-inspector-control-2/serial-20.xml": "dd763ac87a01c1b2110c4bc6f234f632d2ebac903d7f3e30e0f40f819e7128ca",
+    "results/node-inspector-control-2/concurrent-2.xml": "1bf28ccb2ca5c1da3e740a5550ead3aa6f4eda4307e10f804592cc7932a532d0",
+    "results/node-inspector-control-2/serial-1.xml": "2d3fab2d00b640d7ad1fc6435e0e2446fa388c4de764987e8ef930b8e5447c45",
+    "results/node-inspector-control-2/serial-20.log": "c7c1626a013092ab47f304b36b2b95d53bf13eca62967070073a45e270e1f4bd",
+    "results/node-inspector-control-2/concurrent-2.log": "20945f1491c80f8ace7c54f7c3ece23f53325425fbbce3140aeb7e912309afeb",
+    "results/node-inspector-control-2/serial-1.log": "2448474389905b1cc9da396f6cf99761b8aeefba711c23e9472334ab0fe99350",
+    "results/node-inspector-control-2/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/leap-nodejs24-libnode-candidate-4/build.json": "0e33a03da0f267d97ab05695fd19e22aa1a7014ce772004d207d6fe55fac0cc7",
+    "results/leap-nodejs24-libnode-candidate-4/build.log": "4bf8cd44590a0b7a1a00e40dbc112655c561f41e0b0f817e9c14f02a595c2b3b"
+  },
+  "control_input_validation": "results/node-inspector-control-2/results.json: 12 positive/negative cases, strict compilation; serial 100 and concurrent 10 require exactly one watchdog. Overflow, trailing characters and out-of-range input rejected.",
+  "updated_control_valgrind": {
+    "serial-20": {
+      "lost_bytes": 320,
+      "kind": "Leak_PossiblyLost",
+      "other_errors": 0,
+      "record": "results/node-inspector-control-2/serial-20.xml"
+    },
+    "concurrent-2": {
+      "lost_bytes": 320,
+      "kind": "Leak_PossiblyLost",
+      "other_errors": 0,
+      "record": "results/node-inspector-control-2/concurrent-2.xml"
+    },
+    "serial-1": {
+      "lost_bytes": 320,
+      "kind": "Leak_PossiblyLost",
+      "other_errors": 0,
+      "record": "results/node-inspector-control-2/serial-1.xml"
+    }
+  },
+  "initial_source_sha256": {
+    "dependencies/nodejs24-inspector-lifetimes.cc": "bd8ca837c5ede698f1b36dc0c1aab0ff1b30e5f6f65afcb3555534b8c964fe71"
+  },
+  "rpm_candidate_4": {
+    "record": "results/leap-nodejs24-libnode-candidate-4/build.json",
+    "exit_code": 0,
+    "native_cases": 192,
+    "javascript_reported_results_including_upstream_skips": 5249,
+    "compiler_diagnostics": "OpenSSL/c-ares API deprecations approved in node-api-deprecations-20261003.json; remaining non-deprecation warnings unresolved."
+  }
+}

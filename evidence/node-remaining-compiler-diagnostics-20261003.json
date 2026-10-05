@@ -1,0 +1,59 @@
+{
+  "status": "User approved all four exact GCC 15 diagnostic sites on 2026-10-05; normal compiler flags and raw diagnostics retained.",
+  "approval": "User approved on 2026-10-05: Allow these four documented diagnostics. Scope is the recorded GCC 15 V8 FFT allocation warning and three SQLite optimizer warnings only; normal compiler flags remain enabled.",
+  "scope": "One V8 FFT array-allocation diagnostic and three SQLite optimizer diagnostics in the bundled Node 24.18.1 sources. Preserve normal compiler flags and code; no suppression.",
+  "diagnostics": {
+    "v8_fft": {
+      "site": "deps/v8/src/bigint/mul-fft.cc:434, FFTContainer part_ allocation, inlined into DoPointwiseMultiplication",
+      "warning": "-Walloc-size-larger-than=, argument 18446744073709551615",
+      "root_cause": "The optimized GCC tree contains its own overflow fallback operator new[](SIZE_MAX). The array count is n=1<<m, where m=min(ctz(K),bit_length(K)-4). The caller permits this path only for K>=199 and K divisible by four, so m>=2 and m<=27 for a positive 32-bit K. Therefore n is positive and at most 2^27; the pointer array fits far below GCC's overflow-guard bound. The compiler warns about its synthesized overflow fallback, not a computed runtime SIZE_MAX value.",
+      "control": "Exact original translation unit and standalone original-source harness both reproduce the warning. 4,309 outer and 4,073 recursive parameter checks cover powers-of-two boundaries through the V8 maximum digit limit. Thirty 1,500\u20138,192-digit FFT products/squares match independent schoolbook multiplication for random, all-one, and sparse operands. Valgrind frees all 9,100 allocations with zero errors."
+    },
+    "sqlite_collation": {
+      "site": "sqlite3Strlen30 inlined into sqlite3ColumnSetColl, sqlite3.c:36452",
+      "warning": "-Wstringop-overread, likely address zero",
+      "root_cause": "The reported branch assumes COLFLAG_HASTYPE is set with a NULL zCnName. sqlite3SubqueryColumnTypes clears HASTYPE/HASCOLL before testing the realloc result and sets HASTYPE only after successful allocation. The failed-allocation branch cannot supply that combination.",
+      "control": "250 allocation-failure positions cover typed/untyped collated columns and a view; only SQLITE_OK/SQLITE_NOMEM, with clean Valgrind and UBSan."
+    },
+    "sqlite_geopoly": {
+      "site": "geopolyBBoxStep -> geopolyBBox, local RtreeCoord a[4]",
+      "warning": "-Wmaybe-uninitialized",
+      "root_cause": "geopolyBBox has a separate NULL-pointer input mode that consumes preexisting bounds. The aggregate callback always passes argv[0], a non-NULL SQLite value object even for SQL NULL. For this mode, successful polygon decoding writes all four bounds before returning; invalid/NULL values return without consuming them.",
+      "control": "Valid polygons, SQL NULL and malformed polygon rows give the expected aggregate area; Valgrind/UBSan clean."
+    },
+    "sqlite_foreign_key": {
+      "site": "sessionChangesetApply local nFk after sqlite3_db_status(SQLITE_DBSTATUS_DEFERRED_FKS)",
+      "warning": "-Wmaybe-uninitialized",
+      "root_cause": "The SQLITE_DBSTATUS_DEFERRED_FKS case unconditionally writes pCurrent and pHighwater for the valid connection. Its return is SQLITE_OK; nFk is assigned on the only supported opcode path.",
+      "control": "An actual changeset with one missing parent invokes the FK conflict callback with exactly one violation; clean Valgrind/UBSan."
+    }
+  },
+  "compiler_reproduction": "The exact patched SQLite translation unit is clean with the RPM release -O2 command and reproduces precisely these three warnings with the upstream Node test-build -O3 command.",
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-03",
+  "sha256": {
+    "results/node-bigint-control-1/compile.log": "ebb95bf8888618b83c781c324cf20257b1ceebc2197f2628b5e45424cabb5f48",
+    "results/node-bigint-control-1/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-bigint-control-1/fft-compile.log": "7bc9d333c8734fedb582e214e2280d69995caee019a0829dafb6b7c2f4ea6190",
+    "results/node-bigint-control-1/run.log": "2b23b2abe867ccbfc0b0077a172578cf7d53b7a442ca3a1063d17a692c8d5db4",
+    "results/node-bigint-control-1/status.json": "c6aaa977daa387e78498eab179a42b31c062bcf9925c8ee94de0bc76c17b4625",
+    "results/node-bigint-control-1/valgrind-run.log": "2b23b2abe867ccbfc0b0077a172578cf7d53b7a442ca3a1063d17a692c8d5db4",
+    "results/node-bigint-control-1/valgrind.log": "3cde05adbbddf7968e6f668d77232ceeb0664c03dbd8343e17016494e5a6a7d0",
+    "results/node-fft-compiler-dump-1/compile.log": "7bc9d333c8734fedb582e214e2280d69995caee019a0829dafb6b7c2f4ea6190",
+    "results/node-fft-compiler-dump-1/fft.cc.270t.optimized": "c8468a06df3fb3573eb9f7b13c7d7379a3463343618c29545fe5572c28da5e05",
+    "results/node-fft-compiler-dump-1/status.json": "12e4fb656ce2657ce0eb1026e77f7b7060f74984ebd6c73bfd7706703bd7c3a1",
+    "results/node-sqlite-fixes-2/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-sqlite-fixes-2/driver.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-sqlite-fixes-2/run.log": "04fb01e26d89a7694768b2bb851ec8433f5f51485c5f38cf01be22eba12488a7",
+    "results/node-sqlite-fixes-2/status.json": "74208dc18bfabc4c6ba8e2edb2741e867d65c2de4ce6beda0f99f5f1446ee0ae",
+    "results/node-sqlite-fixes-2/ubsan-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/node-sqlite-fixes-2/ubsan.log": "04fb01e26d89a7694768b2bb851ec8433f5f51485c5f38cf01be22eba12488a7",
+    "results/node-sqlite-fixes-2/valgrind-run.log": "04fb01e26d89a7694768b2bb851ec8433f5f51485c5f38cf01be22eba12488a7",
+    "results/node-sqlite-fixes-2/valgrind.log": "10d08c1a40734a3df0066adf845788156545f27cabcae735b916f56417840684",
+    "results/node-sqlite-translation-unit-2/compile.log": "c7efd2f84e720514a596f9e25919c2a428420452b10d0c0379c552c919431856",
+    "results/node-sqlite-translation-unit-2/status.json": "e72148bc267ef98774bb2a2c2ffc570b26a4c6709c36ae07b15a60ee9216389a",
+    "work/node-bigint-control-1/control.cc": "f08f9bff670576f89adf130b83439a7eb56bfa3f749db44484098f1736781b74",
+    "work/nodejs24-source-1/node-v24.18.1/deps/v8/src/bigint/mul-fft.cc": "31e36f7bab96d4d1bb69f54263eb0cce6af87cab2acb864ce5380b2fa9447e88"
+  }
+}

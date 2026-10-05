@@ -1,0 +1,426 @@
+# Copyright 2026 Qore Technologies, s.r.o.; MIT.
+# Backport of Node.js c909c63be392b4c9ffdc2108e64371b9fa83e472.
+# https://github.com/nodejs/node/pull/65778
+# Adapted to Node 24: retain its existing V8 wrapper-tag API and header context.
+# Functional changes and all three upstream regression tests are preserved.
+--- a/src/cppgc_helpers-inl.h
++++ b/src/cppgc_helpers-inl.h
+@@ -11,7 +11,6 @@
+ template <typename T>
+ void CppgcMixin::Wrap(T* ptr, Realm* realm, v8::Local<v8::Object> obj) {
+   CHECK_GE(obj->InternalFieldCount(), T::kInternalFieldCount);
+-  ptr->realm_ = realm;
+   v8::Isolate* isolate = realm->isolate();
+   ptr->traced_reference_ = v8::TracedReference<v8::Object>(isolate, obj);
+   // Note that ptr must be of concrete type T in Wrap.
+@@ -20,7 +19,7 @@
+   obj->SetAlignedPointerInInternalField(
+       kEmbedderType, realm->isolate_data()->embedder_id_for_cppgc());
+   obj->SetAlignedPointerInInternalField(kSlot, ptr);
+-  realm->TrackCppgcWrapper(ptr);
++  ptr->list_node_ = realm->TrackCppgcWrapper(ptr);
+ }
+ 
+ template <typename T>
+@@ -45,17 +44,28 @@
+ }
+ 
+ v8::Local<v8::Object> CppgcMixin::object() const {
+-  return traced_reference_.Get(realm_->isolate());
++  return traced_reference_.Get(realm()->isolate());
+ }
+ 
+ Environment* CppgcMixin::env() const {
+-  return realm_->env();
++  return realm()->env();
++}
++
++Realm* CppgcMixin::realm() const {
++  return list_node_ == nullptr ? nullptr : list_node_->realm;
++}
++
++void CppgcMixin::Finalize() {
++  Realm* current_realm = realm();
++  if (current_realm == nullptr) {
++    return;
++  }
++  this->Clean(current_realm);
++  list_node_->realm = nullptr;
+ }
+ 
+ CppgcMixin::~CppgcMixin() {
+-  if (realm_ != nullptr) {
+-    realm_->set_should_purge_empty_cppgc_wrappers(true);
+-  }
++  delete list_node_;
+ }
+ 
+ }  // namespace node
+--- a/src/cppgc_helpers.cc
++++ b/src/cppgc_helpers.cc
+@@ -1,14 +1,16 @@
+-#include "cppgc_helpers.h"
+-#include "env-inl.h"
++#include "cppgc_helpers.h"  // NOLINT(build/include_inline)
++#include "cppgc_helpers-inl.h"
+ 
+ namespace node {
+ 
+ void CppgcWrapperList::Cleanup() {
+-  for (auto node : *this) {
+-    CppgcMixin* ptr = node->persistent.Get();
+-    if (ptr != nullptr) {
+-      ptr->Finalize();
++  while (!IsEmpty()) {
++    CppgcWrapperListNode* node = PopFront();
++    CppgcMixin* wrapper = node->persistent.Get();
++    if (wrapper != nullptr) {
++      wrapper->Finalize();
+     }
++    node->realm = nullptr;
+   }
+ }
+ 
+@@ -20,18 +22,4 @@
+     }
+   }
+ }
+-
+-void CppgcWrapperList::PurgeEmpty() {
+-  for (auto weak_it = begin(); weak_it != end();) {
+-    CppgcWrapperListNode* node = *weak_it;
+-    auto next_it = ++weak_it;
+-    // The underlying cppgc wrapper has already been garbage collected.
+-    // Remove it from the list.
+-    if (!node->persistent) {
+-      node->persistent.Clear();
+-      delete node;
+-    }
+-    weak_it = next_it;
+-  }
+-}
+ }  // namespace node
+--- a/src/cppgc_helpers.h
++++ b/src/cppgc_helpers.h
+@@ -47,9 +47,9 @@
+  * cleanup relies on a living Node.js `Realm`, it should implement a
+  * pattern like this:
+  *
+- *   ~MyWrap() { this->Destroy(); }
++ *   ~MyWrap() { this->Finalize(); }
+  *   void Clean(Realm* env) override {
+- *     // Do cleanup that relies on a living Environemnt.
++ *     // Do cleanup that relies on a living Realm.
+  *   }
+  */
+ class CppgcMixin : public cppgc::GarbageCollectedMixin, public MemoryRetainer {
+@@ -68,7 +68,7 @@
+ 
+   inline v8::Local<v8::Object> object() const;
+   inline Environment* env() const;
+-  inline Realm* realm() const { return realm_; }
++  inline Realm* realm() const;
+   inline v8::Local<v8::Object> object(v8::Isolate* isolate) const {
+     return traced_reference_.Get(isolate);
+   }
+@@ -95,11 +95,7 @@
+   // destructor. Outside of Finalize(), subclasses should avoid calling
+   // into JavaScript or perform any operation that can trigger garbage
+   // collection during the destruction.
+-  void Finalize() {
+-    if (realm_ == nullptr) return;
+-    this->Clean(realm_);
+-    realm_ = nullptr;
+-  }
++  inline void Finalize();
+ 
+   // The default implementation of Clean() is a no-op. If subclasses wish
+   // to perform cleanup that require a living Realm, they should
+@@ -110,10 +106,8 @@
+ 
+   inline ~CppgcMixin();
+ 
+-  friend class CppgcWrapperListNode;
+-
+  private:
+-  Realm* realm_ = nullptr;
++  CppgcWrapperListNode* list_node_ = nullptr;
+   v8::TracedReference<v8::Object> traced_reference_;
+ };
+ 
+--- a/src/node_realm-inl.h
++++ b/src/node_realm-inl.h
+@@ -135,11 +135,13 @@
+   ++base_object_count_;
+ }
+ 
+-CppgcWrapperListNode::CppgcWrapperListNode(CppgcMixin* ptr) : persistent(ptr) {}
++CppgcWrapperListNode::CppgcWrapperListNode(Realm* realm, CppgcMixin* wrapper)
++    : realm(realm), persistent(wrapper) {}
+ 
+-void Realm::TrackCppgcWrapper(CppgcMixin* handle) {
+-  DCHECK_EQ(handle->realm(), this);
+-  cppgc_wrapper_list_.PushFront(new CppgcWrapperListNode(handle));
++CppgcWrapperListNode* Realm::TrackCppgcWrapper(CppgcMixin* handle) {
++  CppgcWrapperListNode* node = new CppgcWrapperListNode(this, handle);
++  cppgc_wrapper_list_.PushFront(node);
++  return node;
+ }
+ 
+ void Realm::UntrackBaseObject(BaseObject* bo) {
+@@ -148,7 +150,7 @@
+ }
+ 
+ bool Realm::PendingCleanup() const {
+-  return !base_object_list_.IsEmpty();
++  return !base_object_list_.IsEmpty() || !cppgc_wrapper_list_.IsEmpty();
+ }
+ 
+ }  // namespace node
+--- a/src/node_realm.cc
++++ b/src/node_realm.cc
+@@ -10,8 +10,6 @@
+ 
+ using v8::Context;
+ using v8::EscapableHandleScope;
+-using v8::GCCallbackFlags;
+-using v8::GCType;
+ using v8::HandleScope;
+ using v8::Isolate;
+ using v8::Local;
+@@ -25,26 +23,11 @@
+     : env_(env), isolate_(context->GetIsolate()), kind_(kind) {
+   context_.Reset(isolate_, context);
+   env->AssignToContext(context, this, ContextInfo(""));
+-  // The environment can also purge empty wrappers in the check callback,
+-  // though that may be a bit excessive depending on usage patterns.
+-  // For now using the GC epilogue is adequate.
+-  isolate_->AddGCEpilogueCallback(PurgeEmptyCppgcWrappers, this);
+ }
+ 
+ Realm::~Realm() {
+-  isolate_->RemoveGCEpilogueCallback(PurgeEmptyCppgcWrappers, this);
+   CHECK_EQ(base_object_count_, 0);
+-}
+-
+-void Realm::PurgeEmptyCppgcWrappers(Isolate* isolate,
+-                                    GCType type,
+-                                    GCCallbackFlags flags,
+-                                    void* data) {
+-  Realm* realm = static_cast<Realm*>(data);
+-  if (realm->should_purge_empty_cppgc_wrappers_) {
+-    realm->cppgc_wrapper_list_.PurgeEmpty();
+-    realm->should_purge_empty_cppgc_wrappers_ = false;
+-  }
++  CHECK(cppgc_wrapper_list_.IsEmpty());
+ }
+ 
+ void Realm::MemoryInfo(MemoryTracker* tracker) const {
+--- a/src/node_realm.h
++++ b/src/node_realm.h
+@@ -27,16 +27,16 @@
+                static_cast<size_t>(BindingDataType::kBindingDataTypeCount)>;
+ 
+ /**
+- * This is a wrapper around a weak persistent of CppgcMixin, used in the
+- * CppgcWrapperList to avoid accessing already garbage collected CppgcMixins.
++ * Owned by a CppgcMixin and linked into its Realm's list until the Realm
++ * cleans up and clears `realm`. The Realm only calls into wrappers the GC
++ * still considers alive (the weak persistent); a collected wrapper whose
++ * destructor runs later sees `realm == nullptr` instead of a freed Realm.
+  */
+ class CppgcWrapperListNode {
+  public:
+-  explicit inline CppgcWrapperListNode(CppgcMixin* ptr);
+-  inline explicit operator bool() const { return !persistent; }
+-  inline CppgcMixin* operator->() const { return persistent.Get(); }
+-  inline CppgcMixin* operator*() const { return persistent.Get(); }
+-
++  inline CppgcWrapperListNode(Realm* realm, CppgcMixin* wrapper);
++
++  Realm* realm;
+   cppgc::WeakPersistent<CppgcMixin> persistent;
+   // Used by ContainerOf in the ListNode implementation for fast manipulation of
+   // CppgcWrapperList.
+@@ -53,7 +53,6 @@
+       public MemoryRetainer {
+  public:
+   void Cleanup();
+-  void PurgeEmpty();
+ 
+   SET_MEMORY_INFO_NAME(CppgcWrapperList)
+   SET_SELF_SIZE(CppgcWrapperList)
+@@ -148,7 +147,7 @@
+   // Base object count created after the bootstrap of the realm.
+   inline int64_t base_object_created_after_bootstrap() const;
+ 
+-  inline void TrackCppgcWrapper(CppgcMixin* handle);
++  inline CppgcWrapperListNode* TrackCppgcWrapper(CppgcMixin* handle);
+   inline CppgcWrapperList* cppgc_wrapper_list() { return &cppgc_wrapper_list_; }
+ 
+ #define V(PropertyName, TypeName)                                              \
+@@ -164,14 +163,6 @@
+   // it's only used for tests.
+   std::vector<std::string> builtins_in_snapshot;
+ 
+-  // This used during the destruction of cppgc wrappers to inform a GC epilogue
+-  // callback to clean up the weak persistents used to track cppgc wrappers if
+-  // the wrappers are already garbage collected to prevent holding on to
+-  // excessive useless persistents.
+-  inline void set_should_purge_empty_cppgc_wrappers(bool value) {
+-    should_purge_empty_cppgc_wrappers_ = value;
+-  }
+-
+  protected:
+   ~Realm();
+ 
+@@ -181,16 +172,10 @@
+   // Shorthand for isolate pointer.
+   v8::Isolate* isolate_;
+   v8::Global<v8::Context> context_;
+-  bool should_purge_empty_cppgc_wrappers_ = false;
+ 
+ #define V(PropertyName, TypeName) v8::Global<TypeName> PropertyName##_;
+   PER_REALM_STRONG_PERSISTENT_VALUES(V)
+ #undef V
+-
+-  static void PurgeEmptyCppgcWrappers(v8::Isolate* isolate,
+-                                      v8::GCType type,
+-                                      v8::GCCallbackFlags flags,
+-                                      void* data);
+ 
+  private:
+   void InitializeContext(v8::Local<v8::Context> context,
+--- a/test/cctest/test_cppgc.cc
++++ b/test/cctest/test_cppgc.cc
+@@ -3,8 +3,11 @@
+ #include <cppgc/heap.h>
+ #include <node.h>
+ #include <v8-cppgc.h>
++#include <v8-external-memory-accounter.h>
+ #include <v8-sandbox.h>
+ #include <v8.h>
++#include "cppgc_helpers-inl.h"
++#include "node_realm-inl.h"
+ #include "node_test_fixture.h"
+ 
+ // This tests that Node.js can work with an existing CppHeap.
+@@ -106,3 +109,118 @@
+   // heap can be reclaimed. So just check at least some of them are traced.
+   EXPECT_GT(CppGCed::kTraceCount, 0);
+ }
++
++class CppgcTest : public EnvironmentTestFixture {
++ protected:
++  // Above the external memory hard limit, so V8 runs a full GC synchronously
++  // and leaves sweeping (and cppgc destructors) for later.
++  static constexpr size_t kExternalMemoryPressure = size_t{8} << 30;
++
++  void CollectGarbageLeavingSweepingPending() {
++    v8::ExternalMemoryAccounter pressure;
++    pressure.Increase(isolate_, kExternalMemoryPressure);
++    pressure.Decrease(isolate_, kExternalMemoryPressure);
++  }
++
++  void FinishSweeping() {
++    isolate_->LowMemoryNotification();
++    platform->DrainTasks(isolate_);
++  }
++};
++
++using node::CppgcMixin;
++
++class RealmBoundWrap final : CPPGC_MIXIN(RealmBoundWrap) {
++ public:
++  SET_CPPGC_NAME(RealmBoundWrap)
++  DEFAULT_CPPGC_TRACE()
++  SET_NO_MEMORY_INFO()
++
++  static node::Realm* live_realm;
++  static int clean_count;
++  static int clean_with_dead_realm_count;
++  static int destructor_count;
++
++  RealmBoundWrap(node::Environment* env, v8::Local<v8::Object> object) {
++    CppgcMixin::Wrap(this, env, object);
++  }
++  ~RealmBoundWrap() {
++    Finalize();
++    destructor_count++;
++  }
++  void Clean(node::Realm* realm) override {
++    clean_count++;
++    if (realm != live_realm) {
++      clean_with_dead_realm_count++;
++    }
++  }
++};
++
++node::Realm* RealmBoundWrap::live_realm = nullptr;
++int RealmBoundWrap::clean_count = 0;
++int RealmBoundWrap::clean_with_dead_realm_count = 0;
++int RealmBoundWrap::destructor_count = 0;
++
++TEST_F(CppgcTest, CleanIsNotCalledWithFreedRealm) {
++  constexpr int kCount = 32;
++  {
++    const v8::HandleScope handle_scope(isolate_);
++    Env env{handle_scope, Argv()};
++    RealmBoundWrap::live_realm = (*env)->principal_realm();
++
++    v8::Local<v8::FunctionTemplate> ctor = v8::FunctionTemplate::New(isolate_);
++    ctor->InstanceTemplate()->SetInternalFieldCount(
++        node::CppgcMixin::kInternalFieldCount);
++    v8::Local<v8::Function> fn =
++        ctor->GetFunction(env.context()).ToLocalChecked();
++    {
++      v8::HandleScope inner_scope(isolate_);
++      for (int i = 0; i <= kCount; i++) {
++        v8::Local<v8::Object> obj =
++            fn->NewInstance(env.context()).ToLocalChecked();
++        cppgc::MakeGarbageCollected<RealmBoundWrap>(
++            (*env)->cppgc_allocation_handle(), *env, obj);
++        if (i < kCount) {
++          continue;
++        }
++        env.context()
++            ->Global()
++            ->Set(env.context(),
++                  v8::String::NewFromUtf8Literal(isolate_, "kept"),
++                  obj)
++            .Check();
++      }
++    }
++
++    CollectGarbageLeavingSweepingPending();
++    EXPECT_LT(RealmBoundWrap::destructor_count, kCount);
++  }
++  RealmBoundWrap::live_realm = nullptr;
++  FinishSweeping();
++
++  EXPECT_GE(RealmBoundWrap::clean_count, 1);
++  EXPECT_EQ(RealmBoundWrap::clean_with_dead_realm_count, 0);
++}
++
++TEST_F(CppgcTest, WrappersAliveAtFreeEnvironmentDoNotLeak) {
++  const v8::HandleScope handle_scope(isolate_);
++  Env env{handle_scope, Argv()};
++  node::LoadEnvironment(*env,
++                        "globalThis.script = new (require('vm').Script)('1');"
++                        "globalThis.context = require('vm').createContext();")
++      .ToLocalChecked();
++}
++
++TEST_F(CppgcTest, VmScriptCollectedBeforeFreeEnvironmentSweptAfter) {
++  {
++    const v8::HandleScope handle_scope(isolate_);
++    Env env{handle_scope, Argv()};
++    node::LoadEnvironment(*env,
++                          "const { Script } = require('vm');"
++                          "for (let i = 0; i < 64; i++) new Script('1');"
++                          "undefined;")
++        .ToLocalChecked();
++    CollectGarbageLeavingSweepingPending();
++  }
++  FinishSweeping();
++}

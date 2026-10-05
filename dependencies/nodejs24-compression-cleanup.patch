@@ -1,0 +1,18 @@
+# Copyright 2026 Qore Technologies, s.r.o.; MIT.
+# Release compression entries before clearing the process-global list.
+# OpenSSL crypto/comp_methods.c allocates each SSL_COMP with OPENSSL_malloc.
+--- a/src/crypto/crypto_util.cc
++++ b/src/crypto/crypto_util.cc
+@@ -167,7 +167,11 @@
+ 
+   // Turn off compression. Saves memory and protects against CRIME attacks.
+   // No-op with OPENSSL_NO_COMP builds of OpenSSL.
+-  sk_SSL_COMP_zero(SSL_COMP_get_compression_methods());
++  STACK_OF(SSL_COMP)* methods = SSL_COMP_get_compression_methods();
++  // The stack owns the SSL_COMP entries. Clearing only its length loses them.
++  while (SSL_COMP* method = sk_SSL_COMP_pop(methods)) {
++    OPENSSL_free(method);
++  }
+ 
+ #ifndef OPENSSL_NO_ENGINE
+   EnginePointer::initEnginesOnce();

@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-04",
-  "status": "Installed runtime/SDK and five native Valgrind cases pass qualification with only the previously approved conservative GC sites. Four separately recorded Node compiler diagnostics and native ARM qualification remain pending.",
+  "status": "Installed runtime/SDK and five native Valgrind cases pass qualification with only the previously approved conservative GC sites. The four separately recorded Node compiler diagnostics were approved on 2026-10-05; native ARM qualification remains pending.",
   "node_source": {
     "schema": 1,
     "name": "nodejs24-libnode",
@@ -332,5 +332,6 @@
     "classification": "All 25 reported contexts enter IteratePointersInStack; unused stack values propagate through conservative pointer/page lookup. Origins in Qore or V8 identify scanned stack storage, not a new non-GC use. No invalid accesses or unsuppressed lost allocations occur.",
     "suppression": "No custom suppression supplied. Distribution default leak suppressions remain enabled and their exact byte/block totals are recorded separately.",
     "exclusions": "Node compiler diagnostics, other runtime error families and native ARM results are not accepted by this record."
-  }
+  },
+  "approval_update_20261005": "The four recorded GCC 15 optimizer sites were approved on 2026-10-05; see node-remaining-compiler-diagnostics-20261003.json. Canonical/native qualification remains separate."
 }

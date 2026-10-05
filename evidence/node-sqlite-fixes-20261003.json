@@ -1,5 +1,5 @@
 {
-  "status": "Focused checks and full Node candidate 6 RPM functional checks pass; four separately documented optimizer diagnostics remain pending approval.",
+  "status": "Focused checks and full Node candidate 6 RPM functional checks pass; all four separately documented optimizer diagnostics were approved on 2026-10-05.",
   "fixes": {
     "change_value_overflow": "The original text and blob APIs evaluate 1 + varint_length + value_length as int before assigning to sqlite3_int64. At INT_MAX both overflow by six bytes. UBSan reproduces both failures using a valid 2 GiB virtual buffer. Promote the sum before addition, retain strlen in size_t until checked, and use the existing SQLITE_NOMEM allocation-failure behavior.",
     "fallthrough": "Mark all 16 intentional dimension-unrolling transitions using SQLite's existing deliberate_fall_through macro.",
@@ -51,5 +51,6 @@
     "results/node-sqlite-translation-unit-2/status.json": "e72148bc267ef98774bb2a2c2ffc570b26a4c6709c36ae07b15a60ee9216389a",
     "work/node-sqlite-length-1/control.c": "dda88061b715f3a16199225b17b9fca220f930d926567a074cc9a4384cf0dd35"
   },
-  "rpm_qualification": "evidence/node-rpm-candidate6-20261004.json"
+  "rpm_qualification": "evidence/node-rpm-candidate6-20261004.json",
+  "approval_update_20261005": "The four recorded GCC 15 optimizer sites were approved on 2026-10-05; see node-remaining-compiler-diagnostics-20261003.json. Canonical/native qualification remains separate."
 }
