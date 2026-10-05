@@ -45,5 +45,8 @@ Prepare a reproducible source bundle from committed packaging::
 
 Only complete canonical RPM builds can be submitted. The metadata-only
 short-circuit artifacts used during lint review are disposable and must not be
-distributed. Native ARM builds, installed-package qualification, and public
-generated-source download verification remain required before publication.
+distributed. The canonical full build also passes the installed Leap SDK consumer and all
+14 Qore V8 suites. OBS revision 1 has verified source hashes, including the
+public generated-source download. Native x86_64 and ARM builds are running
+with publication disabled; signed installed-package qualification remains
+required. See ``evidence/node-canonical-qualification-20261005.json``.

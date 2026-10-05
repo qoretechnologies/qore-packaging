@@ -1,0 +1,249 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-05",
+  "status": "Canonical local full build, installed SDK/runtime and package lint pass; uploaded to unpublished testing project. Native x86_64/aarch64 builds started; signed installed native qualification remains required.",
+  "source": {
+    "schema": 1,
+    "name": "nodejs24-libnode",
+    "version": "24.18.1",
+    "commit": "7965e2fa59cbf2bb457941bfda49e050f4a535cb",
+    "source_date_epoch": 1791182356,
+    "spec": "nodejs24-libnode.spec",
+    "upstream": {
+      "url": "https://nodejs.org/dist/v24.18.1/node-v24.18.1.tar.xz",
+      "sha256": "86d40d594bbdfcf69009a62fdf43cb19ae72b6cb5822d2bdd8349c5a1b2fa628"
+    },
+    "sources": {
+      "node-v24.18.1-doc-deps.tar.xz": "38afe7e7b4be25a43b3c56d1df9ade2c49d05f09d02529d236c84cf403da5e9f",
+      "node-v24.18.1.tar.xz": "86d40d594bbdfcf69009a62fdf43cb19ae72b6cb5822d2bdd8349c5a1b2fa628",
+      "nodejs24-SQLITE-LICENSE": "06545a6ec25fbbff6c62f205f94a35be49e38f33bea827a8cfb07d7b82e4b083",
+      "nodejs24-ada-conversion-result.patch": "fa6b29abf3ac1a96e8c31c606497592f58d4c9ee72079ce4853e7804e7f6012c",
+      "nodejs24-ada-conversion-test.cc": "518f479bc417825fe2ebb2db6c33c4412e8e6457e35ec2702a8d8d1787be2165",
+      "nodejs24-compression-cleanup.patch": "311cc6bf7aa673e664f2cf620a33dcd22badc88db265386edacc05f799e55aee",
+      "nodejs24-cppgc-realm-lifetime.patch": "5e648a3098280aca79d642b4a430a2c08e5383767ad926a1f944bdfcde9abb1f",
+      "nodejs24-crypto-test-types.patch": "6f2258defea0d4e709d896d01a359b777db7be0c8ec8d2fafcaf7fa7e2ed3442",
+      "nodejs24-cxx-visibility.patch": "50bab1320ef4593767e9e5cca93356e5ce3bbef700a39b7686112ded3d66ba40",
+      "nodejs24-detached-thread-counter.c": "050af87f5bbfaa81ef1dc47c23abdf08aae8b4edea0875c513eaf02fd8f047cf",
+      "nodejs24-doc-deps.json": "306f956d391cb38201ac39387f83c1f0ba50e3fba1ab1327471e9cd82b755de0",
+      "nodejs24-inspector-environments.patch": "0f0fdcf9f07e67b569abb4fd75db1de56c7509db58332f020b2fcdcc20a47617",
+      "nodejs24-inspector-lifetimes.cc": "b6b354d3f59703f18f2c015ef6a4f013f70810ae824b31f3416326d6d69f63ca",
+      "nodejs24-libnode-rpmlintrc": "bbc326925f8bf74488e45a4bcc342a57630587539dff87fae559d09e4abb963d",
+      "nodejs24-libnode.spec": "83856a7c67b94a0045c319babe83df161d7d613d81a83d175ac14c90c41aab44",
+      "nodejs24-localizationData-v77.1.json": "1d3db7f705c103d54b69cb61d3d2bc38ffc385b1015e18baa0c6c4423d16172b",
+      "nodejs24-rpm-symbols.py": "2a7006474f4c37ba78541ba60b740ece416c9657a37845b6af2994d2f2c7b90a",
+      "nodejs24-sqlite-lengths.patch": "489ba8e751a69a0fdea9899161137c21eb5f7a88f91b35b571794d77891edb25",
+      "nodejs24-sqlite-test.c": "6c089bd9472d439b0fd48507dee9104ba49ce8e610fdf2735d06aeb74e2153fe",
+      "nodejs24-sqlite-types.patch": "e7d9ca1b24f52aeeabf2bc10ee8e0e0b713b5362b4b04085e79b7b7215e18bc9"
+    },
+    "components": [
+      {
+        "archive": "node-v24.18.1-doc-deps.tar.xz",
+        "sha256": "38afe7e7b4be25a43b3c56d1df9ade2c49d05f09d02529d236c84cf403da5e9f",
+        "generated": "npm ci with upstream package-lock integrity verification and two pinned missing notices; preparation and licenses recorded in nodejs24-doc-deps.json; tar sorted with mtime 1790985600 and uid/gid zero, xz compressed.",
+        "url": "https://github.com/nodejs/node/blob/v24.18.1/tools/doc/package-lock.json"
+      }
+    ]
+  },
+  "build_exit_code": 0,
+  "artifacts": {
+    "rpmbuild/RPMS/x86_64/libnode-devel-24.18.1-1.qore.x86_64.rpm": "9ed885f14016aebcfcc0dd9a09d4d227933b91e743d5e6e21dd3a33d70bb51d4",
+    "rpmbuild/RPMS/x86_64/libnode137-24.18.1-1.qore.x86_64.rpm": "208fd3b41105e503381074ad7c068479c93aae088b20766920d5092542203f68",
+    "rpmbuild/RPMS/x86_64/libnode137-debuginfo-24.18.1-1.qore.x86_64.rpm": "dbf3e20460ca70c3be68bc73bb32e780023daead0a42bb7dfee3109c0668038d",
+    "rpmbuild/RPMS/x86_64/nodejs24-libnode-debugsource-24.18.1-1.qore.x86_64.rpm": "ef6ad4f03c4e87c5739bbf19fcc6c3bdfcca10c97c57218f1561f22e2227f0d5",
+    "rpmbuild/SRPMS/nodejs24-libnode-24.18.1-1.qore.src.rpm": "57ad277767bc583b59b17273ce16aecdcb64dcbe943b744a05d3ada0527358ed"
+  },
+  "tests": {
+    "native_cases": 192,
+    "javascript_reported_results": 5249,
+    "installed_steps": [
+      {
+        "name": "sdk-install",
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-install",
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-consumer",
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-tests",
+        "exit_code": 0
+      }
+    ],
+    "runtime_qtests": [
+      [
+        "1",
+        "1",
+        "0"
+      ],
+      [
+        "13",
+        "13",
+        "52"
+      ],
+      [
+        "1",
+        "1",
+        "1"
+      ],
+      [
+        "9",
+        "9",
+        "35"
+      ],
+      [
+        "26",
+        "26",
+        "280"
+      ],
+      [
+        "4",
+        "4",
+        "135"
+      ],
+      [
+        "10",
+        "10",
+        "12"
+      ],
+      [
+        "7",
+        "7",
+        "175"
+      ],
+      [
+        "1",
+        "1",
+        "14"
+      ],
+      [
+        "39",
+        "39",
+        "139"
+      ],
+      [
+        "23",
+        "23",
+        "158"
+      ],
+      [
+        "1",
+        "1",
+        "5"
+      ],
+      [
+        "1",
+        "1",
+        "3"
+      ],
+      [
+        "12",
+        "12",
+        "144"
+      ]
+    ],
+    "runtime_case_total": 148,
+    "runtime_assertion_total": 1153,
+    "rpmlint": "0 errors, 0 warnings; exact approved filter and per-build obsolete-import guard",
+    "unique_compiler_diagnostics": 114,
+    "additional_compiler_diagnostics": [],
+    "runtime_diagnostics": "Previously approved stripTypeScriptTypes ExperimentalWarning only; raw log retained.",
+    "runtime_explicit_skips": 10,
+    "runtime_executed_cases": 138,
+    "obs_tooling_tests": 11
+  },
+  "obs": {
+    "nodejs24-libnode": {
+      "source_commit": "7965e2fa59cbf2bb457941bfda49e050f4a535cb",
+      "revision": "1",
+      "srcmd5": "a87d6832177c01b7de58b8339c52db14",
+      "verified_files": {
+        "node-v24.18.1-doc-deps.tar.xz": "eafc1ad53e44e2750269186b5948f72d",
+        "node-v24.18.1.tar.xz": "545344d9817cf399cc3372286bf684ee",
+        "nodejs24-SQLITE-LICENSE": "7256769d4613c0af5a72be32ba20ccf7",
+        "nodejs24-ada-conversion-result.patch": "28e15d39b3b6bc46f752c66380ff2ed1",
+        "nodejs24-ada-conversion-test.cc": "70153ab45b515de0e23e080dde680ea1",
+        "nodejs24-compression-cleanup.patch": "7db20978b76a3cadc9b54d030e6cb582",
+        "nodejs24-cppgc-realm-lifetime.patch": "329f02d347a299f55be2f64e0face0b7",
+        "nodejs24-crypto-test-types.patch": "79c860361c31dabb227af9724da6d5fc",
+        "nodejs24-cxx-visibility.patch": "432b2128f9375f353351ccccc80d7b96",
+        "nodejs24-detached-thread-counter.c": "43701fe1fafde22cc23cfa4c9243365f",
+        "nodejs24-doc-deps.json": "1e579b52589a20ddc2dec51369842e21",
+        "nodejs24-inspector-environments.patch": "5acbbee3ff4fdeb5162f4c3c65384014",
+        "nodejs24-inspector-lifetimes.cc": "63a1d13e86a601f5ad2ec4dacad1f3e2",
+        "nodejs24-libnode-rpmlintrc": "8f2d89bffbaf92eba961ffe6d97e0db8",
+        "nodejs24-libnode.spec": "7de25bcaeec70bd7f4902145f1d1df97",
+        "nodejs24-localizationData-v77.1.json": "a354f8c1118531212c63fc65dc90a7a5",
+        "nodejs24-rpm-symbols.py": "5552d12542c2b5ea40bfb16093985bf0",
+        "nodejs24-sqlite-lengths.patch": "d5298f22b3285520f66e56f841a7ee96",
+        "nodejs24-sqlite-test.c": "f48cfad32f4a24afe98b6f8860779c43",
+        "nodejs24-sqlite-types.patch": "b5c16c699e7e1ea828302bc1d7fc3100",
+        "source-manifest.json": "c85e0b796bfd8b1c146aeff31922dc34"
+      }
+    }
+  },
+  "public_source": {
+    "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/nodejs24-libnode/node-v24.18.1-doc-deps.tar.xz",
+    "bytes": 1120284,
+    "sha256": "38afe7e7b4be25a43b3c56d1df9ade2c49d05f09d02529d236c84cf403da5e9f",
+    "obs_results": [
+      {
+        "repository": "openSUSE_Leap_16.0",
+        "arch": "x86_64",
+        "code": "building"
+      },
+      {
+        "repository": "openSUSE_Leap_16.0",
+        "arch": "aarch64",
+        "code": "building"
+      },
+      {
+        "repository": "Fedora_44",
+        "arch": "x86_64",
+        "code": "disabled"
+      },
+      {
+        "repository": "Fedora_44",
+        "arch": "aarch64",
+        "code": "disabled"
+      },
+      {
+        "repository": "AlmaLinux_10",
+        "arch": "x86_64",
+        "code": "disabled"
+      },
+      {
+        "repository": "AlmaLinux_10",
+        "arch": "aarch64",
+        "code": "disabled"
+      }
+    ]
+  },
+  "approved_scope": [
+    "evidence/node-api-deprecations-20261003.json",
+    "evidence/node-compiler-controls-20261003.json",
+    "evidence/node-remaining-compiler-diagnostics-20261003.json",
+    "evidence/node-rpm-metadata-20261005.json",
+    "evidence/v8-typescript-diagnostic-20261003.json"
+  ],
+  "limitations": [
+    "Native builds and signed installed qualification are pending.",
+    "Existing candidate6 Valgrind controls qualify identical runtime sources; canonical runtime changed package metadata and guard only.",
+    "Publication remains disabled."
+  ],
+  "sha256": {
+    "results/leap-nodejs24-libnode-final-20261005/build.json": "8649050a66c177e74911ff603340fcc0f95c530d5deb92d30db0b7c6e9ac5b23",
+    "results/leap-nodejs24-libnode-final-20261005/build.log": "08e445b69299e4856e7d4fce1ab530790a6979f5bdd24d62c1cf184c69f2f187",
+    "results/leap-v8-node-canonical-installed-20261005/status.json": "bf7c474f4d43628ebb39c283d385c83991a7cb350ac076e3ab109b52f6dfd971",
+    "results/leap-v8-node-canonical-installed-20261005/runtime-tests.log": "b8ed82f932aebbb4e629fec02e30771b9bd00497d0fbb38ae693805b3357ef97",
+    "results/node-canonical-rpmlint-20261005.log": "cc26097d811b6890e53df6e33bb28a92a34d14002c779a7a41c492fdd90af435",
+    "results/node-canonical-warning-comparison-20261005.json": "aea5c07f4e00455b187465cffa7cf7f211b226f8d24461e045758b2021f991c3",
+    "results/node-public-source-20261005.json": "ece5c339cb61526d650488d1691d3d1e75962d68c397e24c37293615374a6313",
+    "obs/package-nodejs24-libnode-testing.xml": "4eb2702b47529af3f1edd5992c816ea999c76e92b25746b35f275fa9bab3c10c",
+    "results/node-obs-submission-tests-20261005.log": "50377ef3d0299f99d89baa032d45798a4454c51517d495d4528dcea18b46c8c9"
+  }
+}
