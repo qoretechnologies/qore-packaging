@@ -24,7 +24,7 @@ class GrpcioLintScopeTest(unittest.TestCase):
                 f'cygrpc.cpython-313-{arch}-linux-gnu.so')
 
     def test_exact_reviewed_elf_files(self):
-        self.assertEqual(len(self.patterns), 2)
+        self.assertEqual(len(self.patterns), 1)
         for arch in ('x86_64', 'aarch64'):
             self.assertTrue(self.matches(self.message(arch)))
 
@@ -50,7 +50,9 @@ class GrpcioLintScopeTest(unittest.TestCase):
                     message.replace('W:', 'E:'),
                     message.replace('gethostbyname', 'mktemp'),
                     message + '.unexpected', 'other: ' + message,
-                    message.replace('-' + arch + '-', '-other-')):
+                    message.replace('-' + arch + '-', '-other-'),
+                    message.replace('-' + arch + '-',
+                                    '-aarch64-' if arch == 'x86_64' else '-x86_64-')):
                 self.assertFalse(self.matches(changed), changed)
         self.assertFalse(self.matches(self.message('ppc64le')))
 

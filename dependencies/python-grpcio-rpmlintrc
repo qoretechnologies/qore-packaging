@@ -2,5 +2,6 @@
 # rpmlint 2.7 lacks a leading symbol boundary and matches ares_gethostbyname.
 # Both OBS ELF files import c-ares; neither imports an obsolete libc resolver.
 # Restrict the exception to the reviewed Python ABI, architectures and paths.
-addFilter(r'^python313-grpcio\.x86_64: W: binary-or-shlib-calls-gethostbyname /usr/lib64/python3\.13/site-packages/grpc/_cython/cygrpc\.cpython-313-x86_64-linux-gnu\.so$')
-addFilter(r'^python313-grpcio\.aarch64: W: binary-or-shlib-calls-gethostbyname /usr/lib64/python3\.13/site-packages/grpc/_cython/cygrpc\.cpython-313-aarch64-linux-gnu\.so$')
+# One expression avoids an unused foreign-architecture filter in native lint.
+# The backreference also rejects a package/library architecture mismatch.
+addFilter(r'^python313-grpcio\.(?P<arch>x86_64|aarch64): W: binary-or-shlib-calls-gethostbyname /usr/lib64/python3\.13/site-packages/grpc/_cython/cygrpc\.cpython-313-(?P=arch)-linux-gnu\.so$')

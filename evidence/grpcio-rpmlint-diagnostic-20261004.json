@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-04",
-  "status": "Approved exact filters registered as Source14; four scope/registration tests, 14 dependency tests and 11 OBS tests pass. Canonical native rebuild follows.",
+  "status": "Approved exact scope is represented by one architecture-correlated expression; both native revision-2 source/runtime RPM pairs pass Leap lint with zero errors and warnings. Canonical revision-3 rebuild follows.",
   "approval": "User approved on 2026-10-05: Allow these two exact filters. Scope is the two recorded Python 3.13 cygrpc package paths on Leap x86_64 and aarch64; no obsolete libc resolver import is accepted.",
   "root_cause": "rpmlint BinariesCheck.create_regexp_call omits a leading symbol boundary; its gethostbyname expression also matches ares_gethostbyname. Existing c-ares qualification records the same defect in Leap rpmlint 2.7; the local 2.8 checker still reproduces it.",
   "artifact_checks": {
@@ -23,13 +23,14 @@
     "actual_rpms": "Both OBS native runtime RPMs produce the false warning with the host BinariesCheck. The proposed filters remove exactly those two messages.",
     "limitations": "Host Fedora crypto-policy checks also report SSL_CTX_set_cipher_list on these Leap binaries. These Fedora-specific checks are outside the target distribution and remain unfiltered; OBS Leap lint reports only the resolver warning. Full target lint is verified again in the next OBS build.",
     "leap_2_7": "Both native OBS runtime RPM signatures verified with the project public key and all Leap rpmlint checks pass with the proposed filters: zero errors, zero warnings. Initial disposable lint image lacked the project public key; importing the authentic public key fixed those signature checks without a filter.",
-    "registration": "Recipe Source14 and dependency bundle register exactly one filter file; candidate source validation passes."
+    "registration": "Recipe Source14 and dependency bundle register exactly one filter file; candidate source validation passes.",
+    "source_rpm_regression": "Revision 2 used two separate exact filters. Full source+binary OBS lint reported the foreign-architecture filter unused, despite OBS build success. One expression with a named architecture backreference preserves precisely the approved union and removes the unused-filter error. Both native source/runtime RPM pairs pass all target checks; negative tests reject crossed x86_64/aarch64 package/path combinations."
   },
   "scope": "Only python313-grpcio x86_64/aarch64 cygrpc ABI313 exact paths and this warning. Future libc resolver imports would require fixing the code; the symbol evidence and checks must be refreshed for source upgrades.",
   "related_evidence": "evidence/backport-builds-20261001.json c_ares_rpmlint_false_positive",
   "sha256": {
-    "dependencies/python-grpcio-rpmlintrc": "9bdf5212e34e56b3da8651845bbd8ebafb84199cb6c1cf4a7e4441036b38a119",
-    "tests/test_grpcio_rpmlint.py": "69a236e3541ff9175880f68b727b6400a424c85726f944dd718d9391f8662d0b",
+    "dependencies/python-grpcio-rpmlintrc": "aa8089bec5b3ba91966d6891a7cd0e30beace219a04510060887c72a28e537b7",
+    "tests/test_grpcio_rpmlint.py": "0879e44f8921066bfa9f85fdfe39d7ac9d556f7645d69151c1ca99c3efff968d",
     "results/grpcio-lint-symbols-20261004.json": "21d4b58be9a452832390d1a960b24e7b66702d6b38241ed9d112fdbdda0644ce",
     "results/grpcio-rpmlint-scope-20261004.log": "52bce0c1a3aa232aca99eddc74e0410d7f89da0de45e083f72619e95c95692aa",
     "results/grpcio-rpmlint-before-20261004.log": "bb8f37bfcbd5e8376adfd99ed8a7445729cf82f3fab0639f21f99fea029d60ca",
@@ -38,8 +39,10 @@
     "results/grpcio-leap-rpmlint-proposal-20261004.log": "afffa62df788c16ea93f430cc320b2afff6568e634bc61a182df28957cdf268a",
     "results/grpcio-leap-rpmlint-verified-20261004.log": "dbde1a352e6da62a8f6e8068f2798780242472d45b749b40fdfd392c33c64218",
     "results/obs-testing-signing-key-20261004.asc": "7c37a9e90d46d97bb01578a0ed8629828f291ba3757b84765a0c12a38b345e6a",
-    "dependencies/python-grpcio.spec": "fee8bfb76575d9b50ad1a4d38597ede8dbe81d46e8794e6b12c49a58aa39d2c9",
-    "dependencies/grpcio.rst": "7c99e67c1cec97f27aff795ea34b7867a804e222cdc963bfa7837aa1de2c50f6",
-    "results/grpcio-lint-tests-20261005.log": "8f6cd497df50a163233334f636bdb799a1f5106015c8c56598f17e7f520af761"
+    "dependencies/python-grpcio.spec": "e01da36f5442aab2ef2debd8816c30e9627218c6bb186e394313fffaa15aacc2",
+    "dependencies/grpcio.rst": "6468c865e3f527ed5903950c159c0b8cdfc135e775955cbfe2a7248cc868b14e",
+    "results/grpcio-lint-tests-20261005.log": "8f6cd497df50a163233334f636bdb799a1f5106015c8c56598f17e7f520af761",
+    "results/grpcio-combined-filter-x86_64-20261005.log": "7231a358cbf681e65b6d8af432e90f834eea90e03ac7a35341a7a9eae65473aa",
+    "results/grpcio-combined-filter-aarch64-20261005.log": "7231a358cbf681e65b6d8af432e90f834eea90e03ac7a35341a7a9eae65473aa"
   }
 }

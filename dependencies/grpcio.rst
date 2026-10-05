@@ -73,8 +73,10 @@ On 2026-10-05, the two exact Python 3.13 extension paths on Leap were approved
 for a resolver lint exception. Leap's checker matches ``ares_gethostbyname``
 as though it were the obsolete libc function. Both native RPMs import c-ares
 and have no obsolete libc resolver import. ``python-grpcio-rpmlintrc`` matches
-only the recorded warning, package, ABI and architecture; negative tests leave
-other diagnostics visible. Recheck the ELF imports when upgrading this source.
+only the recorded warning, package, ABI and architecture. A single expression
+uses an architecture backreference, so each native source/binary lint run uses
+the approved path without an unused filter for the other architecture. Negative
+tests leave other diagnostics and mismatched architecture pairs visible. Recheck the ELF imports when upgrading this source.
 See ``evidence/grpcio-rpmlint-diagnostic-20261004.json``.
 
 OBS builds are limited to Leap 16 x86_64 and aarch64. Publication remains

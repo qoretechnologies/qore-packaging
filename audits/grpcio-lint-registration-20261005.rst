@@ -3,7 +3,7 @@ gRPC exact resolver lint registration audit
 
 Copyright 2026 Qore Technologies, s.r.o.
 
-Scope: approved exact-path rpmlint filters, recipe/source registration and four scope tests. No native code changes. Both existing native artifacts pass target lint with these filters; canonical OBS rebuilding remains a separate gate.
+Scope: approved exact-path rpmlint filters, recipe/source registration and four scope tests. No native code changes. Both revision-2 native source/runtime RPM pairs pass target lint with the combined expression; canonical OBS rebuilding remains a separate gate.
 
 .. list-table:: Complete audit-changes checklist
    :header-rows: 1
@@ -238,7 +238,7 @@ Scope: approved exact-path rpmlint filters, recipe/source registration and four 
 
    * - 57. Performance: No O(n²) where O(n) is possible; no unnecessary copies; coordinate descent uses incremental residuals not full matrix multiply
      - Pass
-     - Two bounded anchored patterns; no runtime overhead.
+     - One bounded anchored expression with an architecture backreference; no runtime overhead.
 
    * - 58. Error handling: All inputs validated (dimensions, empty data, unfitted models); C++ I/O handles EAGAIN/EINTR if applicable
      - Pass
@@ -258,4 +258,4 @@ Scope: approved exact-path rpmlint filters, recipe/source registration and four 
 
    * - 62. Correctness: Algorithms verified against reference implementations; edge cases tested (empty data, single sample, all-zero features)
      - Pass
-     - Four scope/registration tests, 14 dependency tests and 11 OBS tests pass; both native RPMs pass target lint.
+     - Four scope/registration tests, 14 dependency tests and 11 OBS tests pass; both native source/runtime RPM pairs pass target lint, including the unused-filter check.

@@ -29,7 +29,7 @@
 %{?sle15_python_module_pythons}
 Name:           python-grpcio
 Version:        1.69.0
-Release:        160000.2.4.qore%{?dist}
+Release:        160000.2.5.qore%{?dist}
 Summary:        HTTP/2-based Remote Procedure Call implementation
 License:        Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND MIT
 Group:          Development/Languages/Python
@@ -227,7 +227,7 @@ done
 %{python_sitearch}/%{modname}-%{version}.dist-info
 
 %changelog
-* Mon Oct 05 2026 David Nichols <david@qore.org> - 1.69.0-160000.2.4.qore
+* Mon Oct 05 2026 David Nichols <david@qore.org> - 1.69.0-160000.2.5.qore
 - Register the two reviewed cygrpc resolver lint exceptions for Leap.
 
 * Sun Oct 04 2026 David Nichols <david@qore.org> - 1.69.0-160000.2.3.qore
