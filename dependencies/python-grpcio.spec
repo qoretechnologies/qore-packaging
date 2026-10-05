@@ -29,7 +29,7 @@
 %{?sle15_python_module_pythons}
 Name:           python-grpcio
 Version:        1.69.0
-Release:        160000.2.3.qore%{?dist}
+Release:        160000.2.4.qore%{?dist}
 Summary:        HTTP/2-based Remote Procedure Call implementation
 License:        Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND MIT
 Group:          Development/Languages/Python
@@ -96,6 +96,8 @@ Source10:       grpcio-wakeup-test.cc
 Source11:       grpcio-wakeup-inject.c
 Source12:       grpcio-wakeup-test.py
 Source13:       grpcio-poll-init-test.cc
+# Exact Python 3.13 paths; c-ares imports are not obsolete libc resolver calls.
+Source14:       python-grpcio-rpmlintrc
 %python_subpackages
 
 %description
@@ -225,6 +227,9 @@ done
 %{python_sitearch}/%{modname}-%{version}.dist-info
 
 %changelog
+* Mon Oct 05 2026 David Nichols <david@qore.org> - 1.69.0-160000.2.4.qore
+- Register the two reviewed cygrpc resolver lint exceptions for Leap.
+
 * Sun Oct 04 2026 David Nichols <david@qore.org> - 1.69.0-160000.2.3.qore
 - Install CA roots explicitly in the minimal build environment.
 

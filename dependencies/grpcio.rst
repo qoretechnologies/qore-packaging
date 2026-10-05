@@ -69,6 +69,14 @@ controls exclude additional native leaks and invalid accesses. No blanket
 suppression or reduced compiler flags are used. The final compiler, Cython
 and manifest scopes were accepted on 2026-10-04.
 
+On 2026-10-05, the two exact Python 3.13 extension paths on Leap were approved
+for a resolver lint exception. Leap's checker matches ``ares_gethostbyname``
+as though it were the obsolete libc function. Both native RPMs import c-ares
+and have no obsolete libc resolver import. ``python-grpcio-rpmlintrc`` matches
+only the recorded warning, package, ABI and architecture; negative tests leave
+other diagnostics visible. Recheck the ELF imports when upgrading this source.
+See ``evidence/grpcio-rpmlint-diagnostic-20261004.json``.
+
 OBS builds are limited to Leap 16 x86_64 and aarch64. Publication remains
 disabled while native OBS qualification and the repository-wide installation
 checks are completed. Fedora and Enterprise Linux use their distribution
