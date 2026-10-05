@@ -98,13 +98,16 @@ cases and 468 assertions. ARM installed-package qualification remains pending. S
 UUID release 3 uses committed source ``c910cec``. Canonical builds, seven staged
 uninstall regressions, all 14 UUID cases, installed runtime/SDK tests and package
 lint pass on Fedora, Leap and AlmaLinux. OBS revision 3 sources and the public
-archive SHA-256 are verified; native rebuilds and ARM installed checks remain
-pending. See ``evidence/uuid-rpm-maintenance-20261005.json``.
+archive SHA-256 are verified; all six native builds pass 14 cases and 227
+assertions plus seven uninstall regressions. ARM installed checks remain pending.
+See ``evidence/uuid-rpm-maintenance-20261005.json``.
 
 Fedora ARM XML passes 3,758 cases and 171,685 assertions. The source-verified
-Fedora ARM Python build is enabled. Leap gRPC revision 2 registers the two exact
-resolver lint filters approved on 2026-10-05 and is rebuilding on both native
-architectures. Publication remains disabled for every package.
+Fedora ARM Python build is enabled; Leap and AlmaLinux ARM XML builds are now
+enabled with verified dependency/source inputs. Leap gRPC revision 3 combines
+the two approved resolver paths in one architecture-correlated expression.
+Both native source/runtime RPM pairs pass target lint; revision 3 is rebuilding.
+Publication remains disabled for every package.
 
 JNI native fixes and the latest Excel/ODS changes are committed. Release/Debug
 reference, exception and cleanup suites pass; strict documentation and the new

@@ -1389,7 +1389,7 @@
     "candidate3": "All suites passed, but qdx requested optional Java bindings without JNI. The native RPM now explicitly selects QORE_GENERATE_JAVA_BINDINGS=OFF, matching the existing module packaging policy."
   },
   "gates_remaining": [
-    "Native OBS builds and installed ARM qualification",
+    "Native ARM installed-package qualification",
     "Publication qualification"
   ],
   "make_targets": {
@@ -1487,7 +1487,7 @@
     "change": "Source0 now points to the OBS-hosted generated archive, following the existing NATS generated-source policy. Exact revision and SHA256 pins remain in source-manifest.json.",
     "gate": "After canonical upload, fetch the public source URL and verify its SHA256 against the canonical manifest before distribution."
   },
-  "status": "Committed c910cec947d7e90b8b847ce42639fdcc840d306a; canonical builds, installed runtime/SDK tests and package lint pass all three distributions.",
+  "status": "Committed canonical source, all three local build/runtime/SDK/lint targets, public archive SHA256 and all six native OBS builds pass. ARM installed qualification remains pending.",
   "canonical_source": {
     "schema": 1,
     "commit": "c910cec947d7e90b8b847ce42639fdcc840d306a",
@@ -1515,5 +1515,6 @@
       "qore-uuid-module.spec": "747182d8a1e73c62942102fa6190772e",
       "source-manifest.json": "450cc8c663012b52885a7692e0568cde"
     }
-  }
+  },
+  "native_builds": "evidence/uuid-native-final-20261005.json"
 }

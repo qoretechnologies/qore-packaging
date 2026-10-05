@@ -6,8 +6,8 @@
     "schema": 1,
     "name": "python-grpcio",
     "version": "1.69.0",
-    "commit": "2b327fb421d4f94e80a4ffb2a681c61cc4e87d01",
-    "source_date_epoch": 1791181053,
+    "commit": "6ebf8b52206ef72c8e56862e6fb1055175b099fa",
+    "source_date_epoch": 1791183250,
     "spec": "python-grpcio.spec",
     "upstream": {
       "url": "https://files.pythonhosted.org/packages/source/g/grpcio/grpcio-1.69.0.tar.gz",
@@ -42,8 +42,8 @@
       "grpcio-wakeup-test.py": "26d5370fe225542ea7cc63c806625f6685e425e8ace6bacb11e97bf9d88f372b",
       "grpcio-xxhash-avoid-armv6-unaligned-access.patch": "f8a30d315ff8e6c489660926d2cfde05f6cce267d5ac3912fa9d23c2c3db2960",
       "grpcio-xxhash-ppc64le-gcc7.patch": "3cf29ccc778e0800e63e501b3471b67ec826971f249484208cc2265a547b12b8",
-      "python-grpcio-rpmlintrc": "9bdf5212e34e56b3da8651845bbd8ebafb84199cb6c1cf4a7e4441036b38a119",
-      "python-grpcio.spec": "fee8bfb76575d9b50ad1a4d38597ede8dbe81d46e8794e6b12c49a58aa39d2c9"
+      "python-grpcio-rpmlintrc": "aa8089bec5b3ba91966d6891a7cd0e30beace219a04510060887c72a28e537b7",
+      "python-grpcio.spec": "e01da36f5442aab2ef2debd8816c30e9627218c6bb186e394313fffaa15aacc2"
     },
     "components": [
       {
@@ -54,6 +54,47 @@
     ]
   },
   "obs": {
+    "source_commit": "6ebf8b52206ef72c8e56862e6fb1055175b099fa",
+    "revision": "3",
+    "srcmd5": "8503d6ee9a333c1e6b21b4164f49eab4",
+    "verified_files": {
+      "grpc-v1.69.0.tar.gz": "c3e440297f2313a379639c7273a545dd",
+      "grpcio-1.69.0.tar.gz": "397e8c15a8b474e664225927a7a5fff6",
+      "grpcio-ABSEIL-LICENSE": "df52c6edb7adc22e533b2bacc3bd3915",
+      "grpcio-ADDRESS-LICENSE": "9affd80fa929f2991751fb8e3b3fa8dd",
+      "grpcio-UPB-LICENSE": "37b5762e07f0af8c74ce80a8bda4266b",
+      "grpcio-UTF8-LICENSE": "d4974d297231477b2ff507c35d61c13c",
+      "grpcio-XXHASH-LICENSE": "cdfe7764d5685d8e08b3df302885d7f3",
+      "grpcio-aio-batch-ownership.patch": "4bd80d631bbc19e04b370ee24759e3fa",
+      "grpcio-aio-queue-release.patch": "524d7bf66def28a79f722ccfd3afae04",
+      "grpcio-aio-wakeup.patch": "29578874eb8acd7cf1a342392ef76932",
+      "grpcio-coexistence-test.py": "f5cbb3ad7732294b68e266ee58d746cc",
+      "grpcio-cython-if.patch": "e91ec6044b91d84c41ec256047f022ed",
+      "grpcio-fix-return-values.patch": "654fc170214f3e1c5171f3a7b36da514",
+      "grpcio-license-metadata.patch": "1a0653c72f6e1f1834b6e4d4a7dcdef7",
+      "grpcio-license-sources.json": "af7ba516db15425f96f802d3f2e459e0",
+      "grpcio-lifecycle-build.patch": "f01685e49306ea39bd31996caf821040",
+      "grpcio-manifest-sources.patch": "6857144ce6c32f5bd0f402c76a202b95",
+      "grpcio-native-types-test.cc": "e3c341b2bc9bcc861a208459bf166b73",
+      "grpcio-native-types.patch": "b6a1e1706efe8b994c4e8dc775126788",
+      "grpcio-poll-init-cleanup.patch": "722450d5b3683f337b161898aa177b81",
+      "grpcio-poll-init-test.cc": "e641c0da911f07fdebd1cebf96213066",
+      "grpcio-thread-pool-shutdown.patch": "0fbac0090640ec19b466169793b04e24",
+      "grpcio-unused-priority.patch": "2f8fcc827fadf4760b537ef4d512c12e",
+      "grpcio-wakeup-inject.c": "9436e0af43ec702b2703c1c3d32f3a92",
+      "grpcio-wakeup-test.cc": "a78e1e861150633033322ae0d242b999",
+      "grpcio-wakeup-test.py": "befc98880c6c64af6a632520db7f8c85",
+      "grpcio-xxhash-avoid-armv6-unaligned-access.patch": "a02bb4c4f0c98401cfc6608cf18b1fca",
+      "grpcio-xxhash-ppc64le-gcc7.patch": "e7dada2b21e87cbb687dc81d13460eb5",
+      "python-grpcio-rpmlintrc": "5e18be024d9a41ad127fa6d368fe4613",
+      "python-grpcio.spec": "c257d781cdba89bbd2d65cc6c0c01ccb",
+      "source-manifest.json": "723585325d59ae1960873a597cf7afc2"
+    }
+  },
+  "status": "Revision 2 passes all runtime tests but reports the unused foreign-architecture rpmlint filter. Exact scope is combined in commit 6ebf8b5; native source/runtime pairs pass target lint. Revision 3 is uploaded and verified; native rebuild pending, publication disabled.",
+  "prior_runtime_qualification": "evidence/grpcio-rpm-candidate14b-20261004.json",
+  "diagnostic_approval": "evidence/grpcio-rpmlint-diagnostic-20261004.json",
+  "previous_submission": {
     "source_commit": "2b327fb421d4f94e80a4ffb2a681c61cc4e87d01",
     "revision": "2",
     "srcmd5": "50c2aab6040280cd508cd56c8274a1b5",
@@ -90,8 +131,5 @@
       "python-grpcio.spec": "26580f854896fb50b33fbdbcbd64da49",
       "source-manifest.json": "7fad19d32d8b1b3298eb2d772a368067"
     }
-  },
-  "status": "Canonical sources uploaded and verified as revision 2; Leap x86_64/aarch64 build qualification pending; publication disabled.",
-  "prior_runtime_qualification": "evidence/grpcio-rpm-candidate14b-20261004.json",
-  "diagnostic_approval": "evidence/grpcio-rpmlint-diagnostic-20261004.json"
+  }
 }
