@@ -1,0 +1,32 @@
+# Copyright 2026 Qore Technologies, s.r.o.; BSD-3-Clause.
+# Reject invalid worker priority indexes without narrowing them to uint8_t.
+--- a/deps/v8/src/libplatform/default-platform.h
++++ b/deps/v8/src/libplatform/default-platform.h
+@@ -13,6 +13,7 @@
+ #include "include/libplatform/v8-tracing.h"
+ #include "include/v8-platform.h"
+ #include "src/base/compiler-specific.h"
++#include "src/base/logging.h"
+ #include "src/base/platform/mutex.h"
+ #include "src/libplatform/default-thread-isolated-allocator.h"
+ 
+@@ -81,14 +82,15 @@
+     if (priority_mode_ == PriorityMode::kDontApply) {
+       return base::Thread::Priority::kDefault;
+     }
+-    switch (static_cast<TaskPriority>(i)) {
+-      case TaskPriority::kUserBlocking:
++    switch (i) {
++      case static_cast<int>(TaskPriority::kUserBlocking):
+         return base::Thread::Priority::kUserBlocking;
+-      case TaskPriority::kUserVisible:
++      case static_cast<int>(TaskPriority::kUserVisible):
+         return base::Thread::Priority::kUserVisible;
+-      case TaskPriority::kBestEffort:
++      case static_cast<int>(TaskPriority::kBestEffort):
+         return base::Thread::Priority::kBestEffort;
+     }
++    UNREACHABLE();
+   }
+ 
+   int priority_to_index(TaskPriority priority) const {

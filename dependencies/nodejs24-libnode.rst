@@ -16,8 +16,7 @@ set and hidden symbols. Both binary packages install the upstream notices
 and SQLite's exact ``blessing`` notice.
 
 The recipe includes tested fixes for CppGC realm teardown, OpenSSL compression
-entry ownership, inspector environment lifetime, Ada Unicode conversion, and
-SQLite length overflow. The CppGC, inspector and Ada patches identify their
+entry ownership, inspector environment lifetime, Ada Unicode conversion, SQLite length overflow, and worker-priority index validation. The CppGC, inspector and Ada patches identify their
 upstream origins. Visibility flags apply to the correct source language, and
 type/fallthrough changes retain existing values and behavior.
 
@@ -47,6 +46,11 @@ Only complete canonical RPM builds can be submitted. The metadata-only
 short-circuit artifacts used during lint review are disposable and must not be
 distributed. The canonical full build also passes the installed Leap SDK consumer and all
 14 Qore V8 suites. OBS revision 1 has verified source hashes, including the
-public generated-source download. Native x86_64 and ARM builds are running
-with publication disabled; signed installed-package qualification remains
-required. See ``evidence/node-canonical-qualification-20261005.json``.
+public generated-source download. Native revision 1 failed on GCC 13 at an incomplete priority return path.
+The corrected mapper passes 90,000 checks, seven invalid-index cases and
+Valgrind. Its canonical complete build and native qualification remain
+required; publication is disabled. See ``evidence/node-canonical-qualification-20261005.json``.
+
+The priority regression and compiler-specific reproduction are recorded in
+``evidence/node-priority-boundary-20261005.json``. Normal compiler flags remain
+enabled; out-of-range indexes are rejected before any narrowing conversion.

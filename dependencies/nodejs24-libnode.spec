@@ -27,6 +27,7 @@ Source7: nodejs24-sqlite-test.c
 Source8: nodejs24-SQLITE-LICENSE
 Source9: nodejs24-rpm-symbols.py
 Source10: nodejs24-libnode-rpmlintrc
+Source11: nodejs24-platform-priority-test.cc
 Patch0: nodejs24-cxx-visibility.patch
 Patch1: nodejs24-cppgc-realm-lifetime.patch
 Patch2: nodejs24-compression-cleanup.patch
@@ -35,6 +36,7 @@ Patch4: nodejs24-ada-conversion-result.patch
 Patch5: nodejs24-sqlite-types.patch
 Patch6: nodejs24-sqlite-lengths.patch
 Patch7: nodejs24-crypto-test-types.patch
+Patch8: nodejs24-platform-priority.patch
 BuildRequires: gcc-c++
 BuildRequires: make
 BuildRequires: python3
@@ -124,6 +126,19 @@ fi
 # The locked documentation tools are supplied in Source1 for offline builds.
 %make_build test-build bench-addons-build
 out/Release/cctest
+# Test the real inline platform priority mapper, including invalid int indexes.
+g++ %{optflags} -std=c++20 -Wall -Werror=return-type -Ideps/v8 -Ideps/v8/include \
+    %{SOURCE11} -Lout/Release -Wl,-rpath,"$PWD/out/Release" -lnode -pthread -o out/platform-priority-control
+out/platform-priority-control
+python3 - <<'PRIORITYCHECK'
+import resource, subprocess
+resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+for index in ('-1', '3', '256', '257', '258', '2147483647', '-2147483648'):
+    result = subprocess.run(['out/platform-priority-control', index], capture_output=True, text=True)
+    if result.returncode >= 0 or 'unreachable code' not in result.stderr:
+        raise AssertionError((index, result.returncode, result.stderr))
+    print('Invalid priority index rejected:', index)
+PRIORITYCHECK
 # Compile the bundled SQLite source with its actual feature definitions.
 # Cover RTree dimensions, session length overflow, truncated varints and OOM.
 python3 - %{SOURCE7} <<'SQLITECHECK'
@@ -181,6 +196,7 @@ python3 tools/test.py -j %{_smp_build_ncpus} -p tap --mode=release \
 
 %changelog
 * Mon Oct 05 2026 David Nichols <david@qore.org> - 24.18.1-1.qore
+- Define the V8 worker priority boundary and reject narrowing-invalid indexes.
 - Install SQLite's exact blessing notice and identify generated source downloads.
 - Check resolver imports before applying the approved exact library lint filter.
 

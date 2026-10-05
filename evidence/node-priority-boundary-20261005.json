@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-05",
+  "status": "Focused GCC13/GCC15 controls and GCC13 Valgrind pass; complete canonical GCC13 RPM and native builds remain required.",
+  "trigger": "OBS revision1 failed on both architectures with GCC13 control-reaches-end-of-non-void-function. Local GCC15 canonical build did not diagnose this.",
+  "root_cause": "DefaultPlatform::priority_from_index returned only inside a switch over a narrowed uint8_t enum. It lacked a terminating fallback, and invalid int indexes such as 256 or INT_MIN wrapped into valid priorities.",
+  "fix": "Switch on the original int, use integer values of the named enum constants and terminate invalid indexes with V8 UNREACHABLE. PriorityMode::kDontApply retains its unconditional default mapping. Include logging.h directly.",
+  "tests": {
+    "original_gcc13": "Exact original header reproduces the missing-return compile failure with -Wall -Werror.",
+    "positive_mapping_checks": 90000,
+    "invalid_indexes": [
+      -1,
+      3,
+      256,
+      257,
+      258,
+      2147483647,
+      -2147483648
+    ],
+    "negative_result": "Every invalid applied-priority index aborts with the expected V8 unreachable diagnostic; core dumps disabled.",
+    "valgrind": {
+      "errors": 0,
+      "definitely_lost": 0,
+      "indirectly_lost": 0,
+      "possibly_lost": 0
+    },
+    "in_rpm": "Compile and execute the actual inline mapper, positive/default behavior and all invalid indexes on every architecture.",
+    "metadata_tests": "See raw six-test metadata and dependency test logs."
+  },
+  "limits": [
+    "No changed runtime sources submitted to OBS until canonical full qualification.",
+    "Compiler flags unchanged; no warning suppression.",
+    "The control uses standard explicit-template-instantiation access to call the actual private inline method on real DefaultPlatform objects."
+  ],
+  "sha256": {
+    "dependencies/nodejs24-platform-priority.patch": "accd471258a746f33f898b3e431e29f2c2a06b0a6e2e3ebef52d5a2ca9c7011a",
+    "dependencies/nodejs24-platform-priority-test.cc": "0208f3a5fdf43a86132fbcaabf86a0deeec24adfa81b8c02d49fc3f2eeb66fb2",
+    "results/node-priority-gcc13-control3-20261005.log": "ff36aa18136f3c28173c0355f89d216a39bab599679d4d33ed5c988a22c24514",
+    "work/node-priority-control-1/gcc13-valgrind-final.log": "7004386fcf0210a1b79f09cb0a9547d4db52173a4ce46ef4a864a32e778fded7",
+    "results/node-priority-dependency-tests-20261005.log": "1aa3b6c128030c83e0b3a6df364534dfa385546d17085c11fc9eff1a5e030ce7",
+    "results/node-priority-metadata-tests-20261005.log": "7c36c0c8db361e3407d2f6a7e27cd5245fa178bd68341b886e1e0616517b64ff"
+  }
+}

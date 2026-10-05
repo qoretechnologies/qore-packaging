@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-05",
-  "status": "Canonical local full build, installed SDK/runtime and package lint pass; uploaded to unpublished testing project. Native x86_64/aarch64 builds started; signed installed native qualification remains required.",
+  "status": "Canonical local full build, SDK/runtime and lint passed. OBS revision1 failed on both architectures with GCC13 return-type error in the V8 priority mapper. No publication. A boundary fix is in focused qualification.",
   "source": {
     "schema": 1,
     "name": "nodejs24-libnode",
@@ -245,5 +245,15 @@
     "results/node-public-source-20261005.json": "ece5c339cb61526d650488d1691d3d1e75962d68c397e24c37293615374a6313",
     "obs/package-nodejs24-libnode-testing.xml": "4eb2702b47529af3f1edd5992c816ea999c76e92b25746b35f275fa9bab3c10c",
     "results/node-obs-submission-tests-20261005.log": "50377ef3d0299f99d89baa032d45798a4454c51517d495d4528dcea18b46c8c9"
+  },
+  "native_result": {
+    "x86_64": "failed",
+    "aarch64": "failed",
+    "compiler": "gcc13-13.4.0",
+    "root_cause": "priority_from_index lacks a return after its TaskPriority switch; local GCC15 did not diagnose this. int inputs also narrow to uint8_t before dispatch, so invalid multiples of 256 can be accepted.",
+    "logs": {
+      "results/node-native-final-aarch64-20261005.log": "2571db6bec6d64e8beeb447ba88591ec73e206a25886982b801e6984da9c59aa",
+      "results/node-native-final-x86_64-20261005.log": "11139bc3ec1b96827a4e0b2574e95b980fe0467400649bc861fe6a42e3ad5655"
+    }
   }
 }
