@@ -91,9 +91,20 @@ filesystems. Canonical RPMs and installed runtime/SDK checks pass all 70 cases
 and 468 assertions on each distribution. Thirteen deterministic Valgrind cases
 are clean; three affected existing cases retain only approved external
 diagnostics. Normal native CI passes. OBS revision 2 has verified sources and
-publication disabled. All four enabled native OBS targets pass the same 70
-cases and 468 assertions, including Fedora aarch64. See
+publication disabled. All six native OBS targets pass the same 70
+cases and 468 assertions. ARM installed-package qualification remains pending. See
 ``evidence/process-state-qualification-20261003.json`` and its complete audit.
+
+UUID release 3 uses committed source ``c910cec``. Canonical builds, seven staged
+uninstall regressions, all 14 UUID cases, installed runtime/SDK tests and package
+lint pass on Fedora, Leap and AlmaLinux. OBS revision 3 sources and the public
+archive SHA-256 are verified; native rebuilds and ARM installed checks remain
+pending. See ``evidence/uuid-rpm-maintenance-20261005.json``.
+
+Fedora ARM XML passes 3,758 cases and 171,685 assertions. The source-verified
+Fedora ARM Python build is enabled. Leap gRPC revision 2 registers the two exact
+resolver lint filters approved on 2026-10-05 and is rebuilding on both native
+architectures. Publication remains disabled for every package.
 
 JNI native fixes and the latest Excel/ODS changes are committed. Release/Debug
 reference, exception and cleanup suites pass; strict documentation and the new

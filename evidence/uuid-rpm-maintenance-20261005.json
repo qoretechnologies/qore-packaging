@@ -1,0 +1,1519 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-05",
+  "scope": "UUID packaging maintenance; documentation and build/test infrastructure only. Native Qore/C++ behavior unchanged. A nameless QPP documentation annotation does not change native logic; Valgrind is not required for this comment-only edit.",
+  "source_base": "cff587deb730662b629235df425e3ce992a0f5ac",
+  "root_causes": {
+    "documentation": "The qpp file annotation names the original input, while Doxygen sees generated output. Keep a nameless file annotation. Current committed docs already use public generated declarations and separate release notes.",
+    "cmake": "Policy compatibility predates supported CMake; the required uninstall template is absent; CMAKE_INSTALL_LIBDIR was passed but unused. Java-binding generation is optional and outside the native RPM payload.",
+    "make_tests": "The Autotools test list retained the pre-rename uuid-test.q path. Use the tracked qtest and debugging flags; stop on the first failure.",
+    "uninstall": "Provide the missing manifest-based target with no shell interpolation, full prevalidation, DESTDIR support, and parent-symlink escape checks."
+  },
+  "targets": {
+    "fedora": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:475f8d53919b1aee51d9e402158b861498a134473e3144632944e6f546ab6748",
+        "source": {
+          "schema": 1,
+          "commit": "cff587deb730662b629235df425e3ce992a0f5ac",
+          "source_date_epoch": 1791105158,
+          "name": "qore-uuid-module",
+          "version": "1.4.2",
+          "exclusions": [],
+          "sources": {
+            "qore-uuid-module-1.4.2.tar.xz": "fb60e2d90600528c500632275f4540c9dbd72864274b792ced46f8f48022ac79",
+            "qore-uuid-module.spec": "6c2181cb2a86d8236d881b2322f4485deb628c4c15bf0082b218589cb45aba73"
+          },
+          "spec": "qore-uuid-module.spec",
+          "candidate": true,
+          "source_overlay": {
+            "src/QC_UUID.qpp": "a784f4d6913817334b8a059e694fc41812bfbdc61553146e59b54fda8acf4ff5",
+            "qore-uuid-module.spec": "6c2181cb2a86d8236d881b2322f4485deb628c4c15bf0082b218589cb45aba73",
+            "CMakeLists.txt": "f3c327437a500a768916578cf529ed00dc16bbc619483d0e32dc2e1314ddd51a",
+            "cmake/cmake_uninstall.cmake.in": "a2e7eae1929dbe123849c8686ea43004d22a17de907d2ba802375c8eced08516",
+            "test/test_uninstall.py": "7ffacd8f49f3871ed9970d3c8a035c2e5e375b9b64f4bec6a23d3f76449c9224",
+            "docs/guide-uuidreleasenotes.dox.tmpl": "318c291639a19915a47eee760b4a74b984ba75fc651057acb24327530e5d4629",
+            "rpm/README.rst": "0e79ea9856d13bc431600623e44f8bd0856a28516f0a66f3cd6e5fad2e3691e6"
+          }
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1791105158",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/uuid-doc-candidate-4:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-doc-candidate-4:/work",
+          "sha256:475f8d53919b1aee51d9e402158b861498a134473e3144632944e6f546ab6748",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-uuid-module.spec"
+        ],
+        "source_only": false,
+        "tmpfs_mib": null,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.fc44.noarch.rpm": "0135fc160aef0f781c91190a1091bf60e1847d042e84165aa962808ee63e67ef",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.fc44.x86_64.rpm": "443ac407e243cc35e90610c46d6a508cb52444911eb65345bdc2755792cd5e46",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-debuginfo-1.4.2-3.fc44.x86_64.rpm": "fb239ad249d40f28e780c27bdfe2dfeed8759373a390082d66dcbee13abb5c32",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-debugsource-1.4.2-3.fc44.x86_64.rpm": "8c4646f95863446fcba51d442413cbb005e926d823ceef09a8ea0c1f589d5bba",
+          "rpmbuild/SRPMS/qore-uuid-module-1.4.2-3.fc44.src.rpm": "1834575c04830e579add468683960d894909ac8ce08ded8c46ea23da02a946c1"
+        }
+      },
+      "installed": {
+        "source_manifest": {
+          "schema": 1,
+          "commit": "cff587deb730662b629235df425e3ce992a0f5ac",
+          "source_date_epoch": 1791105158,
+          "name": "qore-uuid-module",
+          "version": "1.4.2",
+          "exclusions": [],
+          "sources": {
+            "qore-uuid-module-1.4.2.tar.xz": "fb60e2d90600528c500632275f4540c9dbd72864274b792ced46f8f48022ac79",
+            "qore-uuid-module.spec": "6c2181cb2a86d8236d881b2322f4485deb628c4c15bf0082b218589cb45aba73"
+          },
+          "spec": "qore-uuid-module.spec",
+          "candidate": true,
+          "source_overlay": {
+            "src/QC_UUID.qpp": "a784f4d6913817334b8a059e694fc41812bfbdc61553146e59b54fda8acf4ff5",
+            "qore-uuid-module.spec": "6c2181cb2a86d8236d881b2322f4485deb628c4c15bf0082b218589cb45aba73",
+            "CMakeLists.txt": "f3c327437a500a768916578cf529ed00dc16bbc619483d0e32dc2e1314ddd51a",
+            "cmake/cmake_uninstall.cmake.in": "a2e7eae1929dbe123849c8686ea43004d22a17de907d2ba802375c8eced08516",
+            "test/test_uninstall.py": "7ffacd8f49f3871ed9970d3c8a035c2e5e375b9b64f4bec6a23d3f76449c9224",
+            "docs/guide-uuidreleasenotes.dox.tmpl": "318c291639a19915a47eee760b4a74b984ba75fc651057acb24327530e5d4629",
+            "rpm/README.rst": "0e79ea9856d13bc431600623e44f8bd0856a28516f0a66f3cd6e5fad2e3691e6"
+          }
+        },
+        "build": "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-doc-candidate-4",
+        "steps": {
+          "runtime-install": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--network",
+              "none",
+              "--name",
+              "qore-fedora-uuid-doc-installed-4-runtime",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-doc-candidate-4:/rpms:ro",
+              "sha256:293922256d9c52b04ae67c422042996623f84044778f265806cb8540e282a745",
+              "rpm",
+              "-Uvh",
+              "--includedocs",
+              "/rpms/rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.fc44.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.fc44.x86_64.rpm"
+            ],
+            "log": "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-doc-installed-4/runtime-install.log",
+            "sha256": "4e6eee065ef91cd079bb6a1eaf4c8d65a2629959430460d2acc3c9b4ad9efd58"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/fedora-uuid-doc-installed-4/qore-uuid-module-1.4.2:/source:ro",
+              "sha256:b2d306dab87e2e0de2eca8a8c63f24864771c5b3abff606550666c3cd63f3498",
+              "sh",
+              "-c",
+              "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-uuid-module qore-uuid-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/uuid-test.qtest -v\ndoc_index=$(rpm -ql qore-uuid-module-doc | grep '/html/index.html$')\ntest -s \"$doc_index\"\nfor p in qore-devel gcc gcc-c++; do if rpm -q \"$p\"; then exit 1; fi; done\n"
+            ],
+            "log": "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-doc-installed-4/runtime-tests.log",
+            "sha256": "c02ad936a0c9a8ae092ae9890d6d81fc23de08a4a622847e8e03100fd929a6ff"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--network",
+              "none",
+              "--name",
+              "qore-fedora-uuid-doc-installed-4-sdk",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-doc-candidate-4:/rpms:ro",
+              "sha256:475f8d53919b1aee51d9e402158b861498a134473e3144632944e6f546ab6748",
+              "rpm",
+              "-Uvh",
+              "--includedocs",
+              "/rpms/rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.fc44.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.fc44.x86_64.rpm"
+            ],
+            "log": "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-doc-installed-4/sdk-install.log",
+            "sha256": "4254fe2fcdcf996b7f7514b6c00fe5cdf22991983955ccb515bae15c176483d7"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/fedora-uuid-doc-installed-4/qore-uuid-module-1.4.2:/source:ro",
+              "sha256:5515a1bb8878b1d7f0f27b43dd95c7a2f2c8b88194c56aefe5e3438980db1ace",
+              "sh",
+              "-c",
+              "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-uuid-module qore-uuid-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/uuid-test.qtest -v\ndoc_index=$(rpm -ql qore-uuid-module-doc | grep '/html/index.html$')\ntest -s \"$doc_index\"\nmkdir /tmp/uuid-sdk\nAUTOPKGTEST_TMP=/tmp/uuid-sdk sh /source/debian/tests/compiler\n"
+            ],
+            "log": "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-doc-installed-4/sdk-tests.log",
+            "sha256": "5b5c92af1310c59ba549e1646bc7d8b34cff7969fd6ed668fa3de69ca207a2d4"
+          }
+        },
+        "runtime_image": "sha256:b2d306dab87e2e0de2eca8a8c63f24864771c5b3abff606550666c3cd63f3498",
+        "sdk_image": "sha256:5515a1bb8878b1d7f0f27b43dd95c7a2f2c8b88194c56aefe5e3438980db1ace",
+        "exit_code": 0
+      },
+      "build_log_sha256": "e08ae6f894c8082260e79cbc58f050eea3449d72f8b9df430f5e63094366ac57",
+      "final_candidate_build": {
+        "schema": 1,
+        "image": "sha256:475f8d53919b1aee51d9e402158b861498a134473e3144632944e6f546ab6748",
+        "source": {
+          "schema": 1,
+          "commit": "cff587deb730662b629235df425e3ce992a0f5ac",
+          "source_date_epoch": 1791105158,
+          "name": "qore-uuid-module",
+          "version": "1.4.2",
+          "exclusions": [],
+          "sources": {
+            "qore-uuid-module-1.4.2.tar.xz": "1c3b79edbc46911837176260a17ea8424e74d3b92cdddac655aadc96d2f678a7",
+            "qore-uuid-module.spec": "1ee5e039a664e269a27eac652913c18c40f1a3f861626c42bf768c380ff6ad2a"
+          },
+          "spec": "qore-uuid-module.spec",
+          "candidate": true,
+          "source_overlay": {
+            "src/QC_UUID.qpp": "a784f4d6913817334b8a059e694fc41812bfbdc61553146e59b54fda8acf4ff5",
+            "qore-uuid-module.spec": "1ee5e039a664e269a27eac652913c18c40f1a3f861626c42bf768c380ff6ad2a",
+            "CMakeLists.txt": "f3c327437a500a768916578cf529ed00dc16bbc619483d0e32dc2e1314ddd51a",
+            "cmake/cmake_uninstall.cmake.in": "a2e7eae1929dbe123849c8686ea43004d22a17de907d2ba802375c8eced08516",
+            "test/test_uninstall.py": "7ffacd8f49f3871ed9970d3c8a035c2e5e375b9b64f4bec6a23d3f76449c9224",
+            "docs/guide-uuidreleasenotes.dox.tmpl": "318c291639a19915a47eee760b4a74b984ba75fc651057acb24327530e5d4629",
+            "rpm/README.rst": "012df9bfe5fa1624b4f05d4091db9d30b90b2fa3799c3b71c485e9bf59245ec0",
+            "Makefile.am": "b2581d50e6e159c51fe5ed14b9bf678dd9a642622c6a9a5962ab96c059f0341a",
+            "rpm/audit-20261005.rst": "bbb3f988d9569bdfd976bcae8a4990acb7febe3b926fd1c43fe365e917db4df8"
+          }
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1791105158",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/uuid-doc-candidate-5:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-doc-candidate-5:/work",
+          "sha256:475f8d53919b1aee51d9e402158b861498a134473e3144632944e6f546ab6748",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-uuid-module.spec"
+        ],
+        "source_only": false,
+        "tmpfs_mib": null,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.fc44.noarch.rpm": "64e88b4e5c4389f89baec7c695810253a2f524d9b2a1b03c9f6a40c4a338074e",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.fc44.x86_64.rpm": "81878c4d570438b00f431e128e140c3d9778c570d13cabc9eb51f3052a3a7d64",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-debuginfo-1.4.2-3.fc44.x86_64.rpm": "df1a43382a184a650930b1a1da1e97575ee676f7b3c6ae7ca323c18301159384",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-debugsource-1.4.2-3.fc44.x86_64.rpm": "92214e4060ff2fca3e9e903480a41fd465bbae8f5f2ec7276c1209f3dea2904a",
+          "rpmbuild/SRPMS/qore-uuid-module-1.4.2-3.fc44.src.rpm": "35727eb306e9f1dafdbbdafdd5452fc25c58615f065e3ffe923c821ff987ea6c"
+        }
+      },
+      "final_candidate_build_log_sha256": "937751c957abd706fb52a181b6be375dfa5c6dc3fc5fb7e65fe932db5005d0cf",
+      "lint": {
+        "exit_code": 0,
+        "errors": 0,
+        "warnings": 0,
+        "log": "results/fedora-uuid-doc-rpmlint-5.log",
+        "sha256": "610097f45cda4b4ee927df29b67c839b5661aa527ad17f5385b8d186a0bcde9c"
+      },
+      "canonical": {
+        "build": {
+          "schema": 1,
+          "image": "sha256:475f8d53919b1aee51d9e402158b861498a134473e3144632944e6f546ab6748",
+          "source": {
+            "schema": 1,
+            "commit": "c910cec947d7e90b8b847ce42639fdcc840d306a",
+            "source_date_epoch": 1791180935,
+            "name": "qore-uuid-module",
+            "version": "1.4.2",
+            "exclusions": [],
+            "sources": {
+              "qore-uuid-module-1.4.2.tar.xz": "ef8fe696685eef3d063f5fac459b4386903d37680bfdb6d31a9c05ec9dda824a",
+              "qore-uuid-module.spec": "1ee5e039a664e269a27eac652913c18c40f1a3f861626c42bf768c380ff6ad2a"
+            },
+            "spec": "qore-uuid-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1791180935",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/uuid-rpm-final-20261005:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-rpm-final-20261005:/work",
+            "sha256:475f8d53919b1aee51d9e402158b861498a134473e3144632944e6f546ab6748",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-uuid-module.spec"
+          ],
+          "source_only": false,
+          "tmpfs_mib": null,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.fc44.noarch.rpm": "6f00e748b1e2333ebf9f15d5787e0782cd9fbac36502e75f0b67f1b4641966f6",
+            "rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.fc44.x86_64.rpm": "615868a09909def2b0c51056081236f1da8a33f536b92dfeae53d4c2acf4a4df",
+            "rpmbuild/RPMS/x86_64/qore-uuid-module-debuginfo-1.4.2-3.fc44.x86_64.rpm": "a914bedc8523e0433c83326748c7a880611ba2876021001422bbbd51b85780ac",
+            "rpmbuild/RPMS/x86_64/qore-uuid-module-debugsource-1.4.2-3.fc44.x86_64.rpm": "76362c16c6a08189248e88ec73780ce36ad13cfee0eb8b14148993ef1f45bf58",
+            "rpmbuild/SRPMS/qore-uuid-module-1.4.2-3.fc44.src.rpm": "cf8cd3870dec66e567735add5d4121937568a5c6d72daeb7efbd67e858f28bbb"
+          }
+        },
+        "installed": {
+          "source_manifest": {
+            "schema": 1,
+            "commit": "c910cec947d7e90b8b847ce42639fdcc840d306a",
+            "source_date_epoch": 1791180935,
+            "name": "qore-uuid-module",
+            "version": "1.4.2",
+            "exclusions": [],
+            "sources": {
+              "qore-uuid-module-1.4.2.tar.xz": "ef8fe696685eef3d063f5fac459b4386903d37680bfdb6d31a9c05ec9dda824a",
+              "qore-uuid-module.spec": "1ee5e039a664e269a27eac652913c18c40f1a3f861626c42bf768c380ff6ad2a"
+            },
+            "spec": "qore-uuid-module.spec"
+          },
+          "build": "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-rpm-final-20261005",
+          "steps": {
+            "runtime-install": {
+              "exit_code": 0,
+              "command": [
+                "docker",
+                "run",
+                "--init",
+                "--network",
+                "none",
+                "--name",
+                "qore-fedora-uuid-rpm-final-installed-20261005-runtime",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-rpm-final-20261005:/rpms:ro",
+                "sha256:293922256d9c52b04ae67c422042996623f84044778f265806cb8540e282a745",
+                "rpm",
+                "-Uvh",
+                "--includedocs",
+                "/rpms/rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.fc44.noarch.rpm",
+                "/rpms/rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.fc44.x86_64.rpm"
+              ],
+              "log": "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-rpm-final-installed-20261005/runtime-install.log",
+              "sha256": "4e6eee065ef91cd079bb6a1eaf4c8d65a2629959430460d2acc3c9b4ad9efd58"
+            },
+            "runtime-tests": {
+              "exit_code": 0,
+              "command": [
+                "docker",
+                "run",
+                "--rm",
+                "--init",
+                "--network",
+                "none",
+                "--user",
+                "1019:100",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/work/fedora-uuid-rpm-final-installed-20261005/qore-uuid-module-1.4.2:/source:ro",
+                "sha256:0850a19da7a2ee3399fd6213900b654e43a8440d374cca82722bf7b716de4b4a",
+                "sh",
+                "-c",
+                "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-uuid-module qore-uuid-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/uuid-test.qtest -v\ndoc_index=$(rpm -ql qore-uuid-module-doc | grep '/html/index.html$')\ntest -s \"$doc_index\"\nfor p in qore-devel gcc gcc-c++; do if rpm -q \"$p\"; then exit 1; fi; done\n"
+              ],
+              "log": "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-rpm-final-installed-20261005/runtime-tests.log",
+              "sha256": "ac35fd39863fcdc9fff861508832a4fed768f984b46918be8646447993b2c2de"
+            },
+            "sdk-install": {
+              "exit_code": 0,
+              "command": [
+                "docker",
+                "run",
+                "--init",
+                "--network",
+                "none",
+                "--name",
+                "qore-fedora-uuid-rpm-final-installed-20261005-sdk",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-rpm-final-20261005:/rpms:ro",
+                "sha256:475f8d53919b1aee51d9e402158b861498a134473e3144632944e6f546ab6748",
+                "rpm",
+                "-Uvh",
+                "--includedocs",
+                "/rpms/rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.fc44.noarch.rpm",
+                "/rpms/rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.fc44.x86_64.rpm"
+              ],
+              "log": "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-rpm-final-installed-20261005/sdk-install.log",
+              "sha256": "4254fe2fcdcf996b7f7514b6c00fe5cdf22991983955ccb515bae15c176483d7"
+            },
+            "sdk-tests": {
+              "exit_code": 0,
+              "command": [
+                "docker",
+                "run",
+                "--rm",
+                "--init",
+                "--network",
+                "none",
+                "--user",
+                "1019:100",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/work/fedora-uuid-rpm-final-installed-20261005/qore-uuid-module-1.4.2:/source:ro",
+                "sha256:4fbaeb1b032834e8f6abf3171f37c8746278b2a03eced99f857f69bfc87ac562",
+                "sh",
+                "-c",
+                "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-uuid-module qore-uuid-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/uuid-test.qtest -v\ndoc_index=$(rpm -ql qore-uuid-module-doc | grep '/html/index.html$')\ntest -s \"$doc_index\"\nmkdir /tmp/uuid-sdk\nAUTOPKGTEST_TMP=/tmp/uuid-sdk sh /source/debian/tests/compiler\n"
+              ],
+              "log": "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-rpm-final-installed-20261005/sdk-tests.log",
+              "sha256": "40b8f552d9d315935be8feb723657addc982d9c1e2880ce25d000269448da50b"
+            }
+          },
+          "runtime_image": "sha256:0850a19da7a2ee3399fd6213900b654e43a8440d374cca82722bf7b716de4b4a",
+          "sdk_image": "sha256:4fbaeb1b032834e8f6abf3171f37c8746278b2a03eced99f857f69bfc87ac562",
+          "exit_code": 0
+        },
+        "lint": {
+          "log": "results/fedora-uuid-rpm-final-lint-20261005.log",
+          "sha256": "148322895eba0630863e918a8d89d72eb70b38a6e038976ff7721e060044920d",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "leap": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:64d813296ad23936717a146f890e78f3bf471c151c2d3c32cec216c4708b9db0",
+        "source": {
+          "schema": 1,
+          "commit": "cff587deb730662b629235df425e3ce992a0f5ac",
+          "source_date_epoch": 1791105158,
+          "name": "qore-uuid-module",
+          "version": "1.4.2",
+          "exclusions": [],
+          "sources": {
+            "qore-uuid-module-1.4.2.tar.xz": "fb60e2d90600528c500632275f4540c9dbd72864274b792ced46f8f48022ac79",
+            "qore-uuid-module.spec": "6c2181cb2a86d8236d881b2322f4485deb628c4c15bf0082b218589cb45aba73"
+          },
+          "spec": "qore-uuid-module.spec",
+          "candidate": true,
+          "source_overlay": {
+            "src/QC_UUID.qpp": "a784f4d6913817334b8a059e694fc41812bfbdc61553146e59b54fda8acf4ff5",
+            "qore-uuid-module.spec": "6c2181cb2a86d8236d881b2322f4485deb628c4c15bf0082b218589cb45aba73",
+            "CMakeLists.txt": "f3c327437a500a768916578cf529ed00dc16bbc619483d0e32dc2e1314ddd51a",
+            "cmake/cmake_uninstall.cmake.in": "a2e7eae1929dbe123849c8686ea43004d22a17de907d2ba802375c8eced08516",
+            "test/test_uninstall.py": "7ffacd8f49f3871ed9970d3c8a035c2e5e375b9b64f4bec6a23d3f76449c9224",
+            "docs/guide-uuidreleasenotes.dox.tmpl": "318c291639a19915a47eee760b4a74b984ba75fc651057acb24327530e5d4629",
+            "rpm/README.rst": "0e79ea9856d13bc431600623e44f8bd0856a28516f0a66f3cd6e5fad2e3691e6"
+          }
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1791105158",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/uuid-doc-candidate-4:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-uuid-doc-candidate-4:/work",
+          "sha256:64d813296ad23936717a146f890e78f3bf471c151c2d3c32cec216c4708b9db0",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-uuid-module.spec"
+        ],
+        "source_only": false,
+        "tmpfs_mib": null,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.noarch.rpm": "6e8b186e308a1cc8b5310801fedf4f0897ee8c63cc18dcd351df611ae6cfaade",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.x86_64.rpm": "7722874ce97574f8e67eb2aade84273dc86995759dbea7a741ecceb7d268ae1f",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-debuginfo-1.4.2-3.x86_64.rpm": "7f1ad5ba7ce6b236189d05a5a52499c71267d73a8704b295cb2309e640311b6c",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-debugsource-1.4.2-3.x86_64.rpm": "79c7258d46479e8dfb3dde71f23827dd330d6dc3771ef18335552a373775d533",
+          "rpmbuild/SRPMS/qore-uuid-module-1.4.2-3.src.rpm": "d2c6238c41eb6a65e3162cfc87d214a39e77d04da3fb4bccb4ca9d8ede914883"
+        }
+      },
+      "installed": {
+        "source_manifest": {
+          "schema": 1,
+          "commit": "cff587deb730662b629235df425e3ce992a0f5ac",
+          "source_date_epoch": 1791105158,
+          "name": "qore-uuid-module",
+          "version": "1.4.2",
+          "exclusions": [],
+          "sources": {
+            "qore-uuid-module-1.4.2.tar.xz": "fb60e2d90600528c500632275f4540c9dbd72864274b792ced46f8f48022ac79",
+            "qore-uuid-module.spec": "6c2181cb2a86d8236d881b2322f4485deb628c4c15bf0082b218589cb45aba73"
+          },
+          "spec": "qore-uuid-module.spec",
+          "candidate": true,
+          "source_overlay": {
+            "src/QC_UUID.qpp": "a784f4d6913817334b8a059e694fc41812bfbdc61553146e59b54fda8acf4ff5",
+            "qore-uuid-module.spec": "6c2181cb2a86d8236d881b2322f4485deb628c4c15bf0082b218589cb45aba73",
+            "CMakeLists.txt": "f3c327437a500a768916578cf529ed00dc16bbc619483d0e32dc2e1314ddd51a",
+            "cmake/cmake_uninstall.cmake.in": "a2e7eae1929dbe123849c8686ea43004d22a17de907d2ba802375c8eced08516",
+            "test/test_uninstall.py": "7ffacd8f49f3871ed9970d3c8a035c2e5e375b9b64f4bec6a23d3f76449c9224",
+            "docs/guide-uuidreleasenotes.dox.tmpl": "318c291639a19915a47eee760b4a74b984ba75fc651057acb24327530e5d4629",
+            "rpm/README.rst": "0e79ea9856d13bc431600623e44f8bd0856a28516f0a66f3cd6e5fad2e3691e6"
+          }
+        },
+        "build": "/home/david/src/qore/git/qore-packaging/results/leap-uuid-doc-candidate-4",
+        "steps": {
+          "runtime-install": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--network",
+              "none",
+              "--name",
+              "qore-leap-uuid-doc-installed-4-runtime",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-uuid-doc-candidate-4:/rpms:ro",
+              "sha256:debe19ecf1b227bc936b16e0d8b2ecbfa8097aedd66a2e05bbcd63fc81fa4f80",
+              "rpm",
+              "-Uvh",
+              "--includedocs",
+              "/rpms/rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.x86_64.rpm"
+            ],
+            "log": "/home/david/src/qore/git/qore-packaging/results/leap-uuid-doc-installed-4/runtime-install.log",
+            "sha256": "3793174ee564278fac05e6c34d27dac1d17eac3ab4b69517b9e3847290a69d35"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/leap-uuid-doc-installed-4/qore-uuid-module-1.4.2:/source:ro",
+              "sha256:86840d032eb6a6056042f98f2ffda21cfdc280349f6a9db3ae0b15ddbbad3d9a",
+              "sh",
+              "-c",
+              "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-uuid-module qore-uuid-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/uuid-test.qtest -v\ndoc_index=$(rpm -ql qore-uuid-module-doc | grep '/html/index.html$')\ntest -s \"$doc_index\"\nfor p in qore-devel gcc gcc-c++; do if rpm -q \"$p\"; then exit 1; fi; done\n"
+            ],
+            "log": "/home/david/src/qore/git/qore-packaging/results/leap-uuid-doc-installed-4/runtime-tests.log",
+            "sha256": "ac35fd39863fcdc9fff861508832a4fed768f984b46918be8646447993b2c2de"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--network",
+              "none",
+              "--name",
+              "qore-leap-uuid-doc-installed-4-sdk",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-uuid-doc-candidate-4:/rpms:ro",
+              "sha256:3378c3e0bef72e721a03a5beed1ed5640d821ed8cb92fd34dcc52cdd513766a4",
+              "rpm",
+              "-Uvh",
+              "--includedocs",
+              "/rpms/rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.x86_64.rpm"
+            ],
+            "log": "/home/david/src/qore/git/qore-packaging/results/leap-uuid-doc-installed-4/sdk-install.log",
+            "sha256": "3793174ee564278fac05e6c34d27dac1d17eac3ab4b69517b9e3847290a69d35"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/leap-uuid-doc-installed-4/qore-uuid-module-1.4.2:/source:ro",
+              "sha256:5ddfbb9acb002730cc98ef5f0a3be2c7f01fb9f197296bb296470cf0aa321c09",
+              "sh",
+              "-c",
+              "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-uuid-module qore-uuid-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/uuid-test.qtest -v\ndoc_index=$(rpm -ql qore-uuid-module-doc | grep '/html/index.html$')\ntest -s \"$doc_index\"\nmkdir /tmp/uuid-sdk\nAUTOPKGTEST_TMP=/tmp/uuid-sdk sh /source/debian/tests/compiler\n"
+            ],
+            "log": "/home/david/src/qore/git/qore-packaging/results/leap-uuid-doc-installed-4/sdk-tests.log",
+            "sha256": "01f24a3de413653ed4346d29870cc6bd2c1ab228f2b071f2f34b250621e08cdd"
+          }
+        },
+        "runtime_image": "sha256:86840d032eb6a6056042f98f2ffda21cfdc280349f6a9db3ae0b15ddbbad3d9a",
+        "sdk_image": "sha256:5ddfbb9acb002730cc98ef5f0a3be2c7f01fb9f197296bb296470cf0aa321c09",
+        "exit_code": 0
+      },
+      "build_log_sha256": "925e05874c9030f8ce5b79f6ee6054fdb873e4258e8d2876bb8ce754f479bc95",
+      "final_candidate_build": {
+        "schema": 1,
+        "image": "sha256:64d813296ad23936717a146f890e78f3bf471c151c2d3c32cec216c4708b9db0",
+        "source": {
+          "schema": 1,
+          "commit": "cff587deb730662b629235df425e3ce992a0f5ac",
+          "source_date_epoch": 1791105158,
+          "name": "qore-uuid-module",
+          "version": "1.4.2",
+          "exclusions": [],
+          "sources": {
+            "qore-uuid-module-1.4.2.tar.xz": "1c3b79edbc46911837176260a17ea8424e74d3b92cdddac655aadc96d2f678a7",
+            "qore-uuid-module.spec": "1ee5e039a664e269a27eac652913c18c40f1a3f861626c42bf768c380ff6ad2a"
+          },
+          "spec": "qore-uuid-module.spec",
+          "candidate": true,
+          "source_overlay": {
+            "src/QC_UUID.qpp": "a784f4d6913817334b8a059e694fc41812bfbdc61553146e59b54fda8acf4ff5",
+            "qore-uuid-module.spec": "1ee5e039a664e269a27eac652913c18c40f1a3f861626c42bf768c380ff6ad2a",
+            "CMakeLists.txt": "f3c327437a500a768916578cf529ed00dc16bbc619483d0e32dc2e1314ddd51a",
+            "cmake/cmake_uninstall.cmake.in": "a2e7eae1929dbe123849c8686ea43004d22a17de907d2ba802375c8eced08516",
+            "test/test_uninstall.py": "7ffacd8f49f3871ed9970d3c8a035c2e5e375b9b64f4bec6a23d3f76449c9224",
+            "docs/guide-uuidreleasenotes.dox.tmpl": "318c291639a19915a47eee760b4a74b984ba75fc651057acb24327530e5d4629",
+            "rpm/README.rst": "012df9bfe5fa1624b4f05d4091db9d30b90b2fa3799c3b71c485e9bf59245ec0",
+            "Makefile.am": "b2581d50e6e159c51fe5ed14b9bf678dd9a642622c6a9a5962ab96c059f0341a",
+            "rpm/audit-20261005.rst": "bbb3f988d9569bdfd976bcae8a4990acb7febe3b926fd1c43fe365e917db4df8"
+          }
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1791105158",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/uuid-doc-candidate-5:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-uuid-doc-candidate-5:/work",
+          "sha256:64d813296ad23936717a146f890e78f3bf471c151c2d3c32cec216c4708b9db0",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-uuid-module.spec"
+        ],
+        "source_only": false,
+        "tmpfs_mib": null,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.noarch.rpm": "b7616a8d248dd6bbf29ea8e03dbd075c4e62007108840cce1d9cdcfaa2fcee68",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.x86_64.rpm": "3c9df7cee28601c9d254e14e5c5655370a98acfb7d19329f13cc7c73229791fc",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-debuginfo-1.4.2-3.x86_64.rpm": "6fc752f6f579eb106ced9af6a645808fb5cbd883adbbf79f7e38d7eb0117f2ed",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-debugsource-1.4.2-3.x86_64.rpm": "6c982963f7cb9041fb513b0a752095787bb99fcefb78ca63d77387bfdef816d3",
+          "rpmbuild/SRPMS/qore-uuid-module-1.4.2-3.src.rpm": "2972d330c3f0da4fb2410f0adec522cf226e47c2072bcf31e5ef7fad05d13708"
+        }
+      },
+      "final_candidate_build_log_sha256": "4dcc174afbd2f681943fd6b2540f907a7aba59af862118641545ab84ddd3ddbb",
+      "lint": {
+        "exit_code": 0,
+        "errors": 0,
+        "warnings": 0,
+        "log": "results/leap-uuid-doc-rpmlint-5b.log",
+        "sha256": "42000074f197b3c2ba39b6310773d0ebcb7c1fe8457144e660cfe08c786cbb26"
+      },
+      "canonical": {
+        "build": {
+          "schema": 1,
+          "image": "sha256:64d813296ad23936717a146f890e78f3bf471c151c2d3c32cec216c4708b9db0",
+          "source": {
+            "schema": 1,
+            "commit": "c910cec947d7e90b8b847ce42639fdcc840d306a",
+            "source_date_epoch": 1791180935,
+            "name": "qore-uuid-module",
+            "version": "1.4.2",
+            "exclusions": [],
+            "sources": {
+              "qore-uuid-module-1.4.2.tar.xz": "ef8fe696685eef3d063f5fac459b4386903d37680bfdb6d31a9c05ec9dda824a",
+              "qore-uuid-module.spec": "1ee5e039a664e269a27eac652913c18c40f1a3f861626c42bf768c380ff6ad2a"
+            },
+            "spec": "qore-uuid-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1791180935",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/uuid-rpm-final-20261005:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/leap-uuid-rpm-final-20261005:/work",
+            "sha256:64d813296ad23936717a146f890e78f3bf471c151c2d3c32cec216c4708b9db0",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-uuid-module.spec"
+          ],
+          "source_only": false,
+          "tmpfs_mib": null,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.noarch.rpm": "5478ef334de19c7597d59ea0be5d7857a284aa48d0c47f3827f2787edea9ce8d",
+            "rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.x86_64.rpm": "5c003848caa96b48172ca4a33fb1f1a1c4b684f82992a524191c80b053749865",
+            "rpmbuild/RPMS/x86_64/qore-uuid-module-debuginfo-1.4.2-3.x86_64.rpm": "ae6b948a3226f6121e26fd8cf83907ad0787af30067bff37943edbcc2744610e",
+            "rpmbuild/RPMS/x86_64/qore-uuid-module-debugsource-1.4.2-3.x86_64.rpm": "f9b7e8b2c12918b1ac00dedca74d6368141f66c26fb547b8ff89f19ff8188e94",
+            "rpmbuild/SRPMS/qore-uuid-module-1.4.2-3.src.rpm": "c8f4df3246c45465450e0d7b7edcf0104c76c100b86d8f2c614d33f7729d05a7"
+          }
+        },
+        "installed": {
+          "source_manifest": {
+            "schema": 1,
+            "commit": "c910cec947d7e90b8b847ce42639fdcc840d306a",
+            "source_date_epoch": 1791180935,
+            "name": "qore-uuid-module",
+            "version": "1.4.2",
+            "exclusions": [],
+            "sources": {
+              "qore-uuid-module-1.4.2.tar.xz": "ef8fe696685eef3d063f5fac459b4386903d37680bfdb6d31a9c05ec9dda824a",
+              "qore-uuid-module.spec": "1ee5e039a664e269a27eac652913c18c40f1a3f861626c42bf768c380ff6ad2a"
+            },
+            "spec": "qore-uuid-module.spec"
+          },
+          "build": "/home/david/src/qore/git/qore-packaging/results/leap-uuid-rpm-final-20261005",
+          "steps": {
+            "runtime-install": {
+              "exit_code": 0,
+              "command": [
+                "docker",
+                "run",
+                "--init",
+                "--network",
+                "none",
+                "--name",
+                "qore-leap-uuid-rpm-final-installed-20261005-runtime",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/leap-uuid-rpm-final-20261005:/rpms:ro",
+                "sha256:debe19ecf1b227bc936b16e0d8b2ecbfa8097aedd66a2e05bbcd63fc81fa4f80",
+                "rpm",
+                "-Uvh",
+                "--includedocs",
+                "/rpms/rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.noarch.rpm",
+                "/rpms/rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.x86_64.rpm"
+              ],
+              "log": "/home/david/src/qore/git/qore-packaging/results/leap-uuid-rpm-final-installed-20261005/runtime-install.log",
+              "sha256": "3793174ee564278fac05e6c34d27dac1d17eac3ab4b69517b9e3847290a69d35"
+            },
+            "runtime-tests": {
+              "exit_code": 0,
+              "command": [
+                "docker",
+                "run",
+                "--rm",
+                "--init",
+                "--network",
+                "none",
+                "--user",
+                "1019:100",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/work/leap-uuid-rpm-final-installed-20261005/qore-uuid-module-1.4.2:/source:ro",
+                "sha256:2b93853d8c873ae991c2e179867f84a79f9d07081cc1a979e2e046b29c995d7f",
+                "sh",
+                "-c",
+                "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-uuid-module qore-uuid-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/uuid-test.qtest -v\ndoc_index=$(rpm -ql qore-uuid-module-doc | grep '/html/index.html$')\ntest -s \"$doc_index\"\nfor p in qore-devel gcc gcc-c++; do if rpm -q \"$p\"; then exit 1; fi; done\n"
+              ],
+              "log": "/home/david/src/qore/git/qore-packaging/results/leap-uuid-rpm-final-installed-20261005/runtime-tests.log",
+              "sha256": "ac35fd39863fcdc9fff861508832a4fed768f984b46918be8646447993b2c2de"
+            },
+            "sdk-install": {
+              "exit_code": 0,
+              "command": [
+                "docker",
+                "run",
+                "--init",
+                "--network",
+                "none",
+                "--name",
+                "qore-leap-uuid-rpm-final-installed-20261005-sdk",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/leap-uuid-rpm-final-20261005:/rpms:ro",
+                "sha256:3378c3e0bef72e721a03a5beed1ed5640d821ed8cb92fd34dcc52cdd513766a4",
+                "rpm",
+                "-Uvh",
+                "--includedocs",
+                "/rpms/rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.noarch.rpm",
+                "/rpms/rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.x86_64.rpm"
+              ],
+              "log": "/home/david/src/qore/git/qore-packaging/results/leap-uuid-rpm-final-installed-20261005/sdk-install.log",
+              "sha256": "3793174ee564278fac05e6c34d27dac1d17eac3ab4b69517b9e3847290a69d35"
+            },
+            "sdk-tests": {
+              "exit_code": 0,
+              "command": [
+                "docker",
+                "run",
+                "--rm",
+                "--init",
+                "--network",
+                "none",
+                "--user",
+                "1019:100",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/work/leap-uuid-rpm-final-installed-20261005/qore-uuid-module-1.4.2:/source:ro",
+                "sha256:141a5a21eca51a2674e828a9ca13bb92ccfa263190004f580178b78cf4a70aa4",
+                "sh",
+                "-c",
+                "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-uuid-module qore-uuid-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/uuid-test.qtest -v\ndoc_index=$(rpm -ql qore-uuid-module-doc | grep '/html/index.html$')\ntest -s \"$doc_index\"\nmkdir /tmp/uuid-sdk\nAUTOPKGTEST_TMP=/tmp/uuid-sdk sh /source/debian/tests/compiler\n"
+              ],
+              "log": "/home/david/src/qore/git/qore-packaging/results/leap-uuid-rpm-final-installed-20261005/sdk-tests.log",
+              "sha256": "01f24a3de413653ed4346d29870cc6bd2c1ab228f2b071f2f34b250621e08cdd"
+            }
+          },
+          "runtime_image": "sha256:2b93853d8c873ae991c2e179867f84a79f9d07081cc1a979e2e046b29c995d7f",
+          "sdk_image": "sha256:141a5a21eca51a2674e828a9ca13bb92ccfa263190004f580178b78cf4a70aa4",
+          "exit_code": 0
+        },
+        "lint": {
+          "log": "results/leap-uuid-rpm-final-lint-20261005.log",
+          "sha256": "42000074f197b3c2ba39b6310773d0ebcb7c1fe8457144e660cfe08c786cbb26",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    },
+    "el10": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:881e69327e9145c65df248cd55032da21358a57881e52ac4a7a52f947a3ea3bf",
+        "source": {
+          "schema": 1,
+          "commit": "cff587deb730662b629235df425e3ce992a0f5ac",
+          "source_date_epoch": 1791105158,
+          "name": "qore-uuid-module",
+          "version": "1.4.2",
+          "exclusions": [],
+          "sources": {
+            "qore-uuid-module-1.4.2.tar.xz": "fb60e2d90600528c500632275f4540c9dbd72864274b792ced46f8f48022ac79",
+            "qore-uuid-module.spec": "6c2181cb2a86d8236d881b2322f4485deb628c4c15bf0082b218589cb45aba73"
+          },
+          "spec": "qore-uuid-module.spec",
+          "candidate": true,
+          "source_overlay": {
+            "src/QC_UUID.qpp": "a784f4d6913817334b8a059e694fc41812bfbdc61553146e59b54fda8acf4ff5",
+            "qore-uuid-module.spec": "6c2181cb2a86d8236d881b2322f4485deb628c4c15bf0082b218589cb45aba73",
+            "CMakeLists.txt": "f3c327437a500a768916578cf529ed00dc16bbc619483d0e32dc2e1314ddd51a",
+            "cmake/cmake_uninstall.cmake.in": "a2e7eae1929dbe123849c8686ea43004d22a17de907d2ba802375c8eced08516",
+            "test/test_uninstall.py": "7ffacd8f49f3871ed9970d3c8a035c2e5e375b9b64f4bec6a23d3f76449c9224",
+            "docs/guide-uuidreleasenotes.dox.tmpl": "318c291639a19915a47eee760b4a74b984ba75fc651057acb24327530e5d4629",
+            "rpm/README.rst": "0e79ea9856d13bc431600623e44f8bd0856a28516f0a66f3cd6e5fad2e3691e6"
+          }
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1791105158",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/uuid-doc-candidate-4:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-uuid-doc-candidate-4:/work",
+          "sha256:881e69327e9145c65df248cd55032da21358a57881e52ac4a7a52f947a3ea3bf",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-uuid-module.spec"
+        ],
+        "source_only": false,
+        "tmpfs_mib": null,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.el10.noarch.rpm": "f386b2a605dcf45058abb201cc953693de77603c1d37e944bd14401fbe8877e7",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.el10.x86_64.rpm": "8b119266f3e2e03430fe9921f74c70c9eb1ceab0bef4557544a985d24e8d7660",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-debuginfo-1.4.2-3.el10.x86_64.rpm": "ddf238af0df0701a78ebf63d89e7213c5eaf8defbd041b6cc711faba2d5bd448",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-debugsource-1.4.2-3.el10.x86_64.rpm": "36d3fd0fb2fff96413539ee34486fe33b4ccd19d8c31681309b7c4b965b310d4",
+          "rpmbuild/SRPMS/qore-uuid-module-1.4.2-3.el10.src.rpm": "9f9a3345a57bf286b7f53a832d4eb7ca0eca5d440985bde68de4930b1b91b800"
+        }
+      },
+      "installed": {
+        "source_manifest": {
+          "schema": 1,
+          "commit": "cff587deb730662b629235df425e3ce992a0f5ac",
+          "source_date_epoch": 1791105158,
+          "name": "qore-uuid-module",
+          "version": "1.4.2",
+          "exclusions": [],
+          "sources": {
+            "qore-uuid-module-1.4.2.tar.xz": "fb60e2d90600528c500632275f4540c9dbd72864274b792ced46f8f48022ac79",
+            "qore-uuid-module.spec": "6c2181cb2a86d8236d881b2322f4485deb628c4c15bf0082b218589cb45aba73"
+          },
+          "spec": "qore-uuid-module.spec",
+          "candidate": true,
+          "source_overlay": {
+            "src/QC_UUID.qpp": "a784f4d6913817334b8a059e694fc41812bfbdc61553146e59b54fda8acf4ff5",
+            "qore-uuid-module.spec": "6c2181cb2a86d8236d881b2322f4485deb628c4c15bf0082b218589cb45aba73",
+            "CMakeLists.txt": "f3c327437a500a768916578cf529ed00dc16bbc619483d0e32dc2e1314ddd51a",
+            "cmake/cmake_uninstall.cmake.in": "a2e7eae1929dbe123849c8686ea43004d22a17de907d2ba802375c8eced08516",
+            "test/test_uninstall.py": "7ffacd8f49f3871ed9970d3c8a035c2e5e375b9b64f4bec6a23d3f76449c9224",
+            "docs/guide-uuidreleasenotes.dox.tmpl": "318c291639a19915a47eee760b4a74b984ba75fc651057acb24327530e5d4629",
+            "rpm/README.rst": "0e79ea9856d13bc431600623e44f8bd0856a28516f0a66f3cd6e5fad2e3691e6"
+          }
+        },
+        "build": "/home/david/src/qore/git/qore-packaging/results/el10-uuid-doc-candidate-4",
+        "steps": {
+          "runtime-install": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--network",
+              "none",
+              "--name",
+              "qore-el10-uuid-doc-installed-4-runtime",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-uuid-doc-candidate-4:/rpms:ro",
+              "sha256:e7f32d8cfdaf33e361a943ce1a0c77550417371444451adfc9f6b8975fc9efab",
+              "rpm",
+              "-Uvh",
+              "--includedocs",
+              "/rpms/rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.el10.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.el10.x86_64.rpm"
+            ],
+            "log": "/home/david/src/qore/git/qore-packaging/results/el10-uuid-doc-installed-4/runtime-install.log",
+            "sha256": "f9fef048429c81f545b4d878f0e294fb888bd6a9cc470b7ab645706b792c5cc9"
+          },
+          "runtime-tests": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/el10-uuid-doc-installed-4/qore-uuid-module-1.4.2:/source:ro",
+              "sha256:f3e63c7b52303798c9472767d91de8dd1bbe98c198567c2d9de8499e1e7d1f95",
+              "sh",
+              "-c",
+              "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-uuid-module qore-uuid-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/uuid-test.qtest -v\ndoc_index=$(rpm -ql qore-uuid-module-doc | grep '/html/index.html$')\ntest -s \"$doc_index\"\nfor p in qore-devel gcc gcc-c++; do if rpm -q \"$p\"; then exit 1; fi; done\n"
+            ],
+            "log": "/home/david/src/qore/git/qore-packaging/results/el10-uuid-doc-installed-4/runtime-tests.log",
+            "sha256": "ac35fd39863fcdc9fff861508832a4fed768f984b46918be8646447993b2c2de"
+          },
+          "sdk-install": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--network",
+              "none",
+              "--name",
+              "qore-el10-uuid-doc-installed-4-sdk",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-uuid-doc-candidate-4:/rpms:ro",
+              "sha256:b5550f7c3185c04a789d82695aeea0e88259e246221f5a78a8b15028e60c49ad",
+              "rpm",
+              "-Uvh",
+              "--includedocs",
+              "/rpms/rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.el10.noarch.rpm",
+              "/rpms/rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.el10.x86_64.rpm"
+            ],
+            "log": "/home/david/src/qore/git/qore-packaging/results/el10-uuid-doc-installed-4/sdk-install.log",
+            "sha256": "f9fef048429c81f545b4d878f0e294fb888bd6a9cc470b7ab645706b792c5cc9"
+          },
+          "sdk-tests": {
+            "exit_code": 0,
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/el10-uuid-doc-installed-4/qore-uuid-module-1.4.2:/source:ro",
+              "sha256:cf3b3b1c36a79794b8c3bc027e93ec227ff536b04ef194680383f2146cb5128e",
+              "sh",
+              "-c",
+              "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-uuid-module qore-uuid-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/uuid-test.qtest -v\ndoc_index=$(rpm -ql qore-uuid-module-doc | grep '/html/index.html$')\ntest -s \"$doc_index\"\nmkdir /tmp/uuid-sdk\nAUTOPKGTEST_TMP=/tmp/uuid-sdk sh /source/debian/tests/compiler\n"
+            ],
+            "log": "/home/david/src/qore/git/qore-packaging/results/el10-uuid-doc-installed-4/sdk-tests.log",
+            "sha256": "25baa59ca77cd77eb0c42d3a5c350468ece58561df1d5d0538c9465d02645a0b"
+          }
+        },
+        "runtime_image": "sha256:f3e63c7b52303798c9472767d91de8dd1bbe98c198567c2d9de8499e1e7d1f95",
+        "sdk_image": "sha256:cf3b3b1c36a79794b8c3bc027e93ec227ff536b04ef194680383f2146cb5128e",
+        "exit_code": 0
+      },
+      "build_log_sha256": "2d487a9fc5386de78d2d84733c5149dd6cfc76f409332e653840560bab8998ca",
+      "final_candidate_build": {
+        "schema": 1,
+        "image": "sha256:881e69327e9145c65df248cd55032da21358a57881e52ac4a7a52f947a3ea3bf",
+        "source": {
+          "schema": 1,
+          "commit": "cff587deb730662b629235df425e3ce992a0f5ac",
+          "source_date_epoch": 1791105158,
+          "name": "qore-uuid-module",
+          "version": "1.4.2",
+          "exclusions": [],
+          "sources": {
+            "qore-uuid-module-1.4.2.tar.xz": "1c3b79edbc46911837176260a17ea8424e74d3b92cdddac655aadc96d2f678a7",
+            "qore-uuid-module.spec": "1ee5e039a664e269a27eac652913c18c40f1a3f861626c42bf768c380ff6ad2a"
+          },
+          "spec": "qore-uuid-module.spec",
+          "candidate": true,
+          "source_overlay": {
+            "src/QC_UUID.qpp": "a784f4d6913817334b8a059e694fc41812bfbdc61553146e59b54fda8acf4ff5",
+            "qore-uuid-module.spec": "1ee5e039a664e269a27eac652913c18c40f1a3f861626c42bf768c380ff6ad2a",
+            "CMakeLists.txt": "f3c327437a500a768916578cf529ed00dc16bbc619483d0e32dc2e1314ddd51a",
+            "cmake/cmake_uninstall.cmake.in": "a2e7eae1929dbe123849c8686ea43004d22a17de907d2ba802375c8eced08516",
+            "test/test_uninstall.py": "7ffacd8f49f3871ed9970d3c8a035c2e5e375b9b64f4bec6a23d3f76449c9224",
+            "docs/guide-uuidreleasenotes.dox.tmpl": "318c291639a19915a47eee760b4a74b984ba75fc651057acb24327530e5d4629",
+            "rpm/README.rst": "012df9bfe5fa1624b4f05d4091db9d30b90b2fa3799c3b71c485e9bf59245ec0",
+            "Makefile.am": "b2581d50e6e159c51fe5ed14b9bf678dd9a642622c6a9a5962ab96c059f0341a",
+            "rpm/audit-20261005.rst": "bbb3f988d9569bdfd976bcae8a4990acb7febe3b926fd1c43fe365e917db4df8"
+          }
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1791105158",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/uuid-doc-candidate-5:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-uuid-doc-candidate-5:/work",
+          "sha256:881e69327e9145c65df248cd55032da21358a57881e52ac4a7a52f947a3ea3bf",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-uuid-module.spec"
+        ],
+        "source_only": false,
+        "tmpfs_mib": null,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.el10.noarch.rpm": "a9eeb88ffee01ef36a6b4b99674537d139ae10a62b4834b4b72ede5d7be62fbc",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.el10.x86_64.rpm": "8278fac073edbb290f2a710ea47e73e81e1f6efbe7e786b3af970a5f0d9b5e9b",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-debuginfo-1.4.2-3.el10.x86_64.rpm": "f0289a2eb19bc38c5660e423790f7ff54588e9d819a8b913bfef339f8133e5af",
+          "rpmbuild/RPMS/x86_64/qore-uuid-module-debugsource-1.4.2-3.el10.x86_64.rpm": "d46e3723a429dde8fd8683fd82031b98cb12959fc67356a3ed827ee36a5830b8",
+          "rpmbuild/SRPMS/qore-uuid-module-1.4.2-3.el10.src.rpm": "9dd8057e9f1bf7bead147a2c98401b6e53767b3bc00cb76a8239dfcd0cdcc1d4"
+        }
+      },
+      "final_candidate_build_log_sha256": "4a60c8c8630649fc15d9b96b58368d9f21ae058f5986145f35b5966ca700bacf",
+      "lint": {
+        "exit_code": 0,
+        "errors": 0,
+        "warnings": 0,
+        "log": "results/el10-uuid-doc-rpmlint-5.log",
+        "sha256": "610097f45cda4b4ee927df29b67c839b5661aa527ad17f5385b8d186a0bcde9c"
+      },
+      "canonical": {
+        "build": {
+          "schema": 1,
+          "image": "sha256:881e69327e9145c65df248cd55032da21358a57881e52ac4a7a52f947a3ea3bf",
+          "source": {
+            "schema": 1,
+            "commit": "c910cec947d7e90b8b847ce42639fdcc840d306a",
+            "source_date_epoch": 1791180935,
+            "name": "qore-uuid-module",
+            "version": "1.4.2",
+            "exclusions": [],
+            "sources": {
+              "qore-uuid-module-1.4.2.tar.xz": "ef8fe696685eef3d063f5fac459b4386903d37680bfdb6d31a9c05ec9dda824a",
+              "qore-uuid-module.spec": "1ee5e039a664e269a27eac652913c18c40f1a3f861626c42bf768c380ff6ad2a"
+            },
+            "spec": "qore-uuid-module.spec"
+          },
+          "jobs": 2,
+          "network": "none",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--hostname",
+            "qore-rpm-builder",
+            "--user",
+            "1019:100",
+            "-e",
+            "HOME=/work/home",
+            "-e",
+            "SOURCE_DATE_EPOCH=1791180935",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/uuid-rpm-final-20261005:/sources:ro",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/results/el10-uuid-rpm-final-20261005:/work",
+            "sha256:881e69327e9145c65df248cd55032da21358a57881e52ac4a7a52f947a3ea3bf",
+            "sh",
+            "-c",
+            "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+            "build-local",
+            "-ba",
+            "--define",
+            "_topdir /work/rpmbuild",
+            "--define",
+            "_sourcedir /sources",
+            "--define",
+            "_smp_build_ncpus 2",
+            "--define",
+            "_buildhost qore-rpm-builder",
+            "/sources/qore-uuid-module.spec"
+          ],
+          "source_only": false,
+          "tmpfs_mib": null,
+          "exit_code": 0,
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.el10.noarch.rpm": "93f51068b21ae5280bce0e9bb69f37c557fb64d1c7428cb86ccc16b6caac1e85",
+            "rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.el10.x86_64.rpm": "8de2525af1e1e8e11eb4fb0b31de4e7e5bbbaf41bbfe5c6aa682dafde06f25e6",
+            "rpmbuild/RPMS/x86_64/qore-uuid-module-debuginfo-1.4.2-3.el10.x86_64.rpm": "7af10fe34e0604768cdede2df9660c6a2413b723a9474101bafe63b9281a2852",
+            "rpmbuild/RPMS/x86_64/qore-uuid-module-debugsource-1.4.2-3.el10.x86_64.rpm": "69d576b8eb743d58f83079494e265030108914b35a721787be26218985d1b6de",
+            "rpmbuild/SRPMS/qore-uuid-module-1.4.2-3.el10.src.rpm": "d91ad1745e93ecffc3692f33cb8446e5515b75d44a2ec191912f7b172aca676f"
+          }
+        },
+        "installed": {
+          "source_manifest": {
+            "schema": 1,
+            "commit": "c910cec947d7e90b8b847ce42639fdcc840d306a",
+            "source_date_epoch": 1791180935,
+            "name": "qore-uuid-module",
+            "version": "1.4.2",
+            "exclusions": [],
+            "sources": {
+              "qore-uuid-module-1.4.2.tar.xz": "ef8fe696685eef3d063f5fac459b4386903d37680bfdb6d31a9c05ec9dda824a",
+              "qore-uuid-module.spec": "1ee5e039a664e269a27eac652913c18c40f1a3f861626c42bf768c380ff6ad2a"
+            },
+            "spec": "qore-uuid-module.spec"
+          },
+          "build": "/home/david/src/qore/git/qore-packaging/results/el10-uuid-rpm-final-20261005",
+          "steps": {
+            "runtime-install": {
+              "exit_code": 0,
+              "command": [
+                "docker",
+                "run",
+                "--init",
+                "--network",
+                "none",
+                "--name",
+                "qore-el10-uuid-rpm-final-installed-20261005-runtime",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/el10-uuid-rpm-final-20261005:/rpms:ro",
+                "sha256:e7f32d8cfdaf33e361a943ce1a0c77550417371444451adfc9f6b8975fc9efab",
+                "rpm",
+                "-Uvh",
+                "--includedocs",
+                "/rpms/rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.el10.noarch.rpm",
+                "/rpms/rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.el10.x86_64.rpm"
+              ],
+              "log": "/home/david/src/qore/git/qore-packaging/results/el10-uuid-rpm-final-installed-20261005/runtime-install.log",
+              "sha256": "f9fef048429c81f545b4d878f0e294fb888bd6a9cc470b7ab645706b792c5cc9"
+            },
+            "runtime-tests": {
+              "exit_code": 0,
+              "command": [
+                "docker",
+                "run",
+                "--rm",
+                "--init",
+                "--network",
+                "none",
+                "--user",
+                "1019:100",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/work/el10-uuid-rpm-final-installed-20261005/qore-uuid-module-1.4.2:/source:ro",
+                "sha256:2b62ee8a7f51f4306ec3d6b57ac7f9092d99507d0fd4fab51e6281497e592e3e",
+                "sh",
+                "-c",
+                "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-uuid-module qore-uuid-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/uuid-test.qtest -v\ndoc_index=$(rpm -ql qore-uuid-module-doc | grep '/html/index.html$')\ntest -s \"$doc_index\"\nfor p in qore-devel gcc gcc-c++; do if rpm -q \"$p\"; then exit 1; fi; done\n"
+              ],
+              "log": "/home/david/src/qore/git/qore-packaging/results/el10-uuid-rpm-final-installed-20261005/runtime-tests.log",
+              "sha256": "ac35fd39863fcdc9fff861508832a4fed768f984b46918be8646447993b2c2de"
+            },
+            "sdk-install": {
+              "exit_code": 0,
+              "command": [
+                "docker",
+                "run",
+                "--init",
+                "--network",
+                "none",
+                "--name",
+                "qore-el10-uuid-rpm-final-installed-20261005-sdk",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/results/el10-uuid-rpm-final-20261005:/rpms:ro",
+                "sha256:b5550f7c3185c04a789d82695aeea0e88259e246221f5a78a8b15028e60c49ad",
+                "rpm",
+                "-Uvh",
+                "--includedocs",
+                "/rpms/rpmbuild/RPMS/noarch/qore-uuid-module-doc-1.4.2-3.el10.noarch.rpm",
+                "/rpms/rpmbuild/RPMS/x86_64/qore-uuid-module-1.4.2-3.el10.x86_64.rpm"
+              ],
+              "log": "/home/david/src/qore/git/qore-packaging/results/el10-uuid-rpm-final-installed-20261005/sdk-install.log",
+              "sha256": "f9fef048429c81f545b4d878f0e294fb888bd6a9cc470b7ab645706b792c5cc9"
+            },
+            "sdk-tests": {
+              "exit_code": 0,
+              "command": [
+                "docker",
+                "run",
+                "--rm",
+                "--init",
+                "--network",
+                "none",
+                "--user",
+                "1019:100",
+                "-v",
+                "/home/david/src/qore/git/qore-packaging/work/el10-uuid-rpm-final-installed-20261005/qore-uuid-module-1.4.2:/source:ro",
+                "sha256:54f2fb41eac0f1e1bef07b8936a22c0c1681329ba8ac2c8509451e2e11eab756",
+                "sh",
+                "-c",
+                "set -eu\nunset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nrpm -V qore-uuid-module qore-uuid-module-doc\ncd /tmp\nqore -b --enable-debug /source/test/uuid-test.qtest -v\ndoc_index=$(rpm -ql qore-uuid-module-doc | grep '/html/index.html$')\ntest -s \"$doc_index\"\nmkdir /tmp/uuid-sdk\nAUTOPKGTEST_TMP=/tmp/uuid-sdk sh /source/debian/tests/compiler\n"
+              ],
+              "log": "/home/david/src/qore/git/qore-packaging/results/el10-uuid-rpm-final-installed-20261005/sdk-tests.log",
+              "sha256": "25baa59ca77cd77eb0c42d3a5c350468ece58561df1d5d0538c9465d02645a0b"
+            }
+          },
+          "runtime_image": "sha256:2b62ee8a7f51f4306ec3d6b57ac7f9092d99507d0fd4fab51e6281497e592e3e",
+          "sdk_image": "sha256:54f2fb41eac0f1e1bef07b8936a22c0c1681329ba8ac2c8509451e2e11eab756",
+          "exit_code": 0
+        },
+        "lint": {
+          "log": "results/el10-uuid-rpm-final-lint-20261005.log",
+          "sha256": "148322895eba0630863e918a8d89d72eb70b38a6e038976ff7721e060044920d",
+          "errors": 0,
+          "warnings": 0
+        }
+      }
+    }
+  },
+  "preliminary_attempts": {
+    "candidate1": "File annotation and strict docs passed, but current SDK exposed CMake deprecation, missing uninstall template and unused variable diagnostics.",
+    "candidate2": "Fixture composition error: overlaid current CMake docs registration onto the older pinned archive, duplicating release notes. Replaced the base with complete current committed documentation; no product suppression.",
+    "candidate3": "All suites passed, but qdx requested optional Java bindings without JNI. The native RPM now explicitly selects QORE_GENERATE_JAVA_BINDINGS=OFF, matching the existing module packaging policy."
+  },
+  "gates_remaining": [
+    "Native OBS builds and installed ARM qualification",
+    "Publication qualification"
+  ],
+  "make_targets": {
+    "fedora": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/module-uuid:/source:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/uuid-make-tests-1:/fixture:ro",
+        "-w",
+        "/source",
+        "sha256:4bded09b899d0bcf9f895be7569d2a937ae168ca3e42177d83a2896e3ed1b605",
+        "make",
+        "-f",
+        "/fixture/Makefile",
+        "tests",
+        "tests-ci"
+      ],
+      "log": "/home/david/src/qore/git/qore-packaging/results/fedora-uuid-make-tests-2.log",
+      "log_sha256": "2bf4ad1251958ac0e0bbf2c2da2e2b13e253dbe7c32a4d20720e3ef8299fe582"
+    },
+    "leap": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/module-uuid:/source:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/uuid-make-tests-1:/fixture:ro",
+        "-w",
+        "/source",
+        "sha256:cea070635df04a423941dca2bdc60d413bd5267c317df962bd4dae65258038c0",
+        "make",
+        "-f",
+        "/fixture/Makefile",
+        "tests",
+        "tests-ci"
+      ],
+      "log": "/home/david/src/qore/git/qore-packaging/results/leap-uuid-make-tests-2.log",
+      "log_sha256": "2bf4ad1251958ac0e0bbf2c2da2e2b13e253dbe7c32a4d20720e3ef8299fe582"
+    },
+    "el10": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/module-uuid:/source:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/uuid-make-tests-1:/fixture:ro",
+        "-w",
+        "/source",
+        "sha256:a8d5a471f1a56b9696987deeeda93f39fa54cda13b55ea72dc30414566dd6289",
+        "make",
+        "-f",
+        "/fixture/Makefile",
+        "tests",
+        "tests-ci"
+      ],
+      "log": "/home/david/src/qore/git/qore-packaging/results/el10-uuid-make-tests-2.log",
+      "log_sha256": "2bf4ad1251958ac0e0bbf2c2da2e2b13e253dbe7c32a4d20720e3ef8299fe582"
+    }
+  },
+  "files": {
+    "CMakeLists.txt": "f3c327437a500a768916578cf529ed00dc16bbc619483d0e32dc2e1314ddd51a",
+    "Makefile.am": "b2581d50e6e159c51fe5ed14b9bf678dd9a642622c6a9a5962ab96c059f0341a",
+    "qore-uuid-module.spec": "1ee5e039a664e269a27eac652913c18c40f1a3f861626c42bf768c380ff6ad2a",
+    "src/QC_UUID.qpp": "a784f4d6913817334b8a059e694fc41812bfbdc61553146e59b54fda8acf4ff5",
+    "rpm/README.rst": "012df9bfe5fa1624b4f05d4091db9d30b90b2fa3799c3b71c485e9bf59245ec0",
+    "docs/guide-uuidreleasenotes.dox.tmpl": "318c291639a19915a47eee760b4a74b984ba75fc651057acb24327530e5d4629",
+    "cmake/cmake_uninstall.cmake.in": "a2e7eae1929dbe123849c8686ea43004d22a17de907d2ba802375c8eced08516",
+    "test/test_uninstall.py": "7ffacd8f49f3871ed9970d3c8a035c2e5e375b9b64f4bec6a23d3f76449c9224",
+    "rpm/audit-20261005.rst": "98ee03e7edd6049a42ba757f1191691927117f2cf21656a5c825f9002f41558c"
+  },
+  "source_download_policy": {
+    "change": "Source0 now points to the OBS-hosted generated archive, following the existing NATS generated-source policy. Exact revision and SHA256 pins remain in source-manifest.json.",
+    "gate": "After canonical upload, fetch the public source URL and verify its SHA256 against the canonical manifest before distribution."
+  },
+  "status": "Committed c910cec947d7e90b8b847ce42639fdcc840d306a; canonical builds, installed runtime/SDK tests and package lint pass all three distributions.",
+  "canonical_source": {
+    "schema": 1,
+    "commit": "c910cec947d7e90b8b847ce42639fdcc840d306a",
+    "source_date_epoch": 1791180935,
+    "name": "qore-uuid-module",
+    "version": "1.4.2",
+    "exclusions": [],
+    "sources": {
+      "qore-uuid-module-1.4.2.tar.xz": "ef8fe696685eef3d063f5fac459b4386903d37680bfdb6d31a9c05ec9dda824a",
+      "qore-uuid-module.spec": "1ee5e039a664e269a27eac652913c18c40f1a3f861626c42bf768c380ff6ad2a"
+    },
+    "spec": "qore-uuid-module.spec"
+  },
+  "public_source": {
+    "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-uuid-module/qore-uuid-module-1.4.2.tar.xz",
+    "sha256": "ef8fe696685eef3d063f5fac459b4386903d37680bfdb6d31a9c05ec9dda824a",
+    "verified_date": "2026-10-05"
+  },
+  "obs": {
+    "source_commit": "c910cec947d7e90b8b847ce42639fdcc840d306a",
+    "revision": "3",
+    "srcmd5": "e4b8c96934783a448e979334a2d0585a",
+    "verified_files": {
+      "qore-uuid-module-1.4.2.tar.xz": "e5ab4032df4044cad4c5aff3ca50dfa0",
+      "qore-uuid-module.spec": "747182d8a1e73c62942102fa6190772e",
+      "source-manifest.json": "450cc8c663012b52885a7692e0568cde"
+    }
+  }
+}

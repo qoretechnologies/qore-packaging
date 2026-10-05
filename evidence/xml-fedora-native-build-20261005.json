@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "date": "2026-10-05",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "repository": "Fedora_44",
+  "architecture": "aarch64",
+  "source_manifest": {
+    "schema": 1,
+    "commit": "d32601505b85b07823f98cc006fe438baa6dd3bc",
+    "source_date_epoch": 1790887855,
+    "name": "qore-xml-module",
+    "version": "2.3.0",
+    "exclusions": [
+      "test/wsdl-interop/oracle/*.jar",
+      "test/wsdl-interop/axis-peer/jars/*.jar",
+      "test/wsdl-interop/cxf-peer/jars/*.jar",
+      "test/enterprise.wsdl",
+      "test/partner.wsdl",
+      "test/wsdl-interop/normative/rfc2392.txt"
+    ],
+    "sources": {
+      "qore-xml-module-2.3.0.tar.xz": "1be5b414fec3dae283823aa8985f2d4704d538fb059842c20f692e71131aa297",
+      "qore-xml-module.spec": "a08361fb8ccfbd0f1d733dae97b9aadceb8c101e6927fadc5aba7efdbfb3db54",
+      "libxml2-2.15.4.tar.xz": "aebc730eae36cd4677255e9d4cb14f26dbf17192ace5aee9e5cba99cb0f09085"
+    },
+    "spec": "qore-xml-module.spec",
+    "vendor_manifest": "rpm/vendor-sources.json",
+    "components": [
+      {
+        "version": "2.15.4",
+        "url": "https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.4.tar.xz",
+        "sha256": "98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821",
+        "excluded": [
+          "test",
+          "result"
+        ],
+        "name": "libxml2",
+        "archive": "libxml2-2.15.4.tar.xz",
+        "top": "libxml2-2.15.4",
+        "licenses": [
+          "Copyright"
+        ]
+      }
+    ]
+  },
+  "status": "Native build succeeded; ARM installed qualification remains pending.",
+  "functional_cases": 3758,
+  "assertions": 171685,
+  "test_suite_summaries": 277,
+  "module_compiler_warnings": 0,
+  "infrastructure_diagnostics": [
+    "OBS worker reports mkbaselibs absent; package does not request compatibility multilib packages. This is the same post-build infrastructure diagnostic recorded for process native builds.",
+    "VM shutdown cannot update read-only wtmp/utmp; outside the RPM build and test process."
+  ],
+  "logs": {
+    "results/xml-fedora-arm-current-20261005.log": "de0089682c93e4f5ba77409a76b1e832f7df55118ecbe4aa1e88e4859495ccd1",
+    "results/xml-fedora-arm-status-20261005.xml": "86065255d4b87bd6b60aed1e905067de06a9ed8dab6a26d719bb42f5ff41f1ef"
+  }
+}

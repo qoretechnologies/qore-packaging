@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-05",
+  "project": "home:davidnichols:qore:testing",
+  "targets": {
+    "qore-process-module/openSUSE_Leap_16.0": {
+      "status": "succeeded",
+      "arch": "aarch64",
+      "source_revision": "2",
+      "srcmd5": "3d18f54085dd5ff18db026be4f737283",
+      "history": {
+        "rev": "2",
+        "srcmd5": "3d18f54085dd5ff18db026be4f737283",
+        "versrel": "2.1.0-2",
+        "bcnt": "1",
+        "time": "1791179056",
+        "duration": "85"
+      },
+      "tests": {
+        "cases": 70,
+        "assertions": 468
+      },
+      "diagnostics": [
+        "[    8s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2"
+      ],
+      "log": "results/native-module-wave-complete-20261005/qore-process-module-openSUSE_Leap_16.0.log",
+      "log_sha256": "06450c9fbe3464003a8a9938d037a286c5cd009b974dd99db5835fffe2820b26"
+    },
+    "qore-process-module/AlmaLinux_10": {
+      "status": "succeeded",
+      "arch": "aarch64",
+      "source_revision": "2",
+      "srcmd5": "3d18f54085dd5ff18db026be4f737283",
+      "history": {
+        "rev": "2",
+        "srcmd5": "3d18f54085dd5ff18db026be4f737283",
+        "versrel": "2.1.0-2",
+        "bcnt": "1",
+        "time": "1791179112",
+        "duration": "136"
+      },
+      "tests": {
+        "cases": 70,
+        "assertions": 468
+      },
+      "diagnostics": [],
+      "log": "results/native-module-wave-complete-20261005/qore-process-module-AlmaLinux_10.log",
+      "log_sha256": "136fd88db97877450568b61e9635073f5bfaecd9f50c154c90382d43686acc92"
+    },
+    "qore-uuid-module/openSUSE_Leap_16.0": {
+      "status": "succeeded",
+      "arch": "aarch64",
+      "source_revision": "2",
+      "srcmd5": "c268b4663bcb51a76921bc9e91e688f0",
+      "history": {
+        "rev": "2",
+        "srcmd5": "c268b4663bcb51a76921bc9e91e688f0",
+        "versrel": "1.4.2-3",
+        "bcnt": "1",
+        "time": "1791179228",
+        "duration": "38"
+      },
+      "tests": {
+        "cases": 14,
+        "assertions": 227
+      },
+      "diagnostics": [
+        "[   10s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2",
+        "[   21s] CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):",
+        "[   22s] CMake Warning at /usr/lib64/cmake/Qore/QoreMacros.cmake:2155 (message):",
+        "[   22s] CMake Warning:",
+        "[   24s] /home/abuild/rpmbuild/BUILD/qore-uuid-module-1.4.2-build/qore-uuid-module-1.4.2/build/QC_UUID.cpp:2: warning: the name 'QC_UUID.qpp' supplied as the argument in the \\file statement is not an input file"
+      ],
+      "log": "results/native-module-wave-complete-20261005/qore-uuid-module-openSUSE_Leap_16.0.log",
+      "log_sha256": "a082546b7ce7df3489482c464bf44b06790df0cc547faab93a0c065de33d9b13"
+    },
+    "qore-uuid-module/AlmaLinux_10": {
+      "status": "succeeded",
+      "arch": "aarch64",
+      "source_revision": "2",
+      "srcmd5": "c268b4663bcb51a76921bc9e91e688f0",
+      "history": {
+        "rev": "2",
+        "srcmd5": "c268b4663bcb51a76921bc9e91e688f0",
+        "versrel": "1.4.2-3",
+        "bcnt": "1",
+        "time": "1791179233",
+        "duration": "37"
+      },
+      "tests": {
+        "cases": 14,
+        "assertions": 227
+      },
+      "diagnostics": [
+        "[   28s] CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):",
+        "[   29s] CMake Warning at /usr/lib64/cmake/Qore/QoreMacros.cmake:2155 (message):",
+        "[   29s] CMake Warning:",
+        "[   30s] /home/abuild/rpmbuild/BUILD/qore-uuid-module-1.4.2/build/QC_UUID.cpp:2: warning: the name 'QC_UUID.qpp' supplied as the argument in the \\file statement is not an input file"
+      ],
+      "log": "results/native-module-wave-complete-20261005/qore-uuid-module-AlmaLinux_10.log",
+      "log_sha256": "885be77bb2675c5e6fe65c3953409bacec8e2ed04433691f40c624c9a6d02720"
+    }
+  },
+  "status": "All four native builds and functional suites pass. UUID documentation filename warning requires a source fix; installed-package qualification pending.",
+  "publication": "disabled",
+  "service_setup_scope": "Leap polkit directory setup diagnostic is outside module build/tests and already recorded in process-state-qualification-20261003.json; no suppression or new approval is implied."
+}
