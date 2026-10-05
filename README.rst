@@ -667,15 +667,19 @@ run only when a pipeline is explicitly started with
 distribution images. Their manifests
 pin each OBS binary and core test fixture by SHA-256; no OBS credentials or
 published repository are needed. Package installation in these disposable
-containers accepts the pinned, unpublished testing RPMs. Public release
-signature and repository qualification remain separate gates.
+containers verifies the pinned, unpublished testing RPMs with the SHA-256
+pinned OBS public signing key. Every RPM must have a valid signature; intact
+digests alone are insufficient. Package-manager signature checks stay enabled.
+Signed repository metadata and public release qualification remain separate gates.
 
 ``tools/qualify-installed.py`` verifies every artifact before installation,
 checks the runner architecture, installs the minimal runtime without weak
 optional dependencies, verifies RPM payloads, and runs ONNX and module tests
 as an unprivileged user. It then adds the SDK and exercises CMake, pkg-config,
 qcc, metadata extraction, utilities and debugger startup. Logs and package
-inventories are retained as CI artifacts. Never run this installation tool
+inventories are retained as CI artifacts. On Leap, a temporary zypp configuration
+installs complete documentation payloads so LLVM alternatives can register their
+manual pages; the base image's system configuration stays unchanged. Never run this installation tool
 on a workstation; use a fresh disposable distribution container.
 
 For the first external-module wave, start a pipeline with

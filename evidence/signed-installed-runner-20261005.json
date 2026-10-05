@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-05",
+  "status": "Unit/integration controls pass; native ARM end-to-end signed installation is next. Publication disabled.",
+  "root_causes": {
+    "signature_notices": "The old prepublication runner verified hashes but explicitly bypassed package signatures and did not import the OBS key.",
+    "llvm_manual_notices": "Leap container zypp.conf excludes documentation by default; LLVM post-install alternatives refer to those files."
+  },
+  "fixes": [
+    "Pin the public OBS key by SHA-256 before mutation, import it, verify each RPM signature, and retain normal package-manager GPG checks.",
+    "Reject unsigned RPMs even when rpmkeys reports valid digests. Support tested RPM 4 and RPM 6 output formats.",
+    "Copy zypp.conf into the temporary fixture directory and set rpm.install.excludedocs=no; retain all other distribution settings."
+  ],
+  "tests": {
+    "packaging": 137,
+    "signature_controls": "Trusted, unsigned, corrupt and untrusted-key RPM controls pass on all three distributions.",
+    "leap_documentation": "Fresh Leap installation: 92 LLVM manual files present, rpm -V clean, no diagnostics."
+  },
+  "sha256": {
+    "tools/qualify-installed.py": "0f11fb5b23a00359cbef45ed0ca1ad53e0953b2e35bd3f172b193466d6ac0399",
+    "tests/test_installed_qualification.py": "5f63bc0e257cf492f347a6798c37504ec073fbd9e495737d4d35ed829b43da49",
+    "results/signed-installed-runner-tests-final2-20261005.log": "22d74b5bcb9679e7efc58b283b857d6cb5bf198dca99cdeade6d65a0e70c21ab",
+    "results/leap-signed-runner-doc-control-20261005.log": "4aff32d91a44516b932ee603d5ef3c59a6d4098a1193076ebb143d4a97f49a0b",
+    "results/signed-rpm-controls-fedora-final-20261005.log": "03805844337d242457d260b498f57cddad20856af79284e70e30fae168730583",
+    "results/signed-rpm-controls-leap-final-20261005.log": "00bfb12365750058a36ddd07e9817ce95e3500466a82808ce4cb57caf8a34f13",
+    "results/signed-rpm-controls-el10-final-20261005.log": "5de42aa589bf5137117e2ca94c49a5e744026e475b222434f2582f013529fd7a"
+  }
+}

@@ -63,7 +63,10 @@ def validate(manifest):
     if {entry.get('path') for entry in fixtures} != FIXTURES or len(fixtures) != len(FIXTURES):
         raise ValueError('Expected the complete installed fixture inventory')
     names = set()
-    for entry in fixtures + manifest.get('packages', []) + validate_modules(manifest):
+    key = manifest.get('signing_key', {})
+    if not isinstance(key, dict) or set(key) != {'url', 'sha256'}:
+        raise ValueError('A pinned RPM signing key is required')
+    for entry in fixtures + manifest.get('packages', []) + validate_modules(manifest) + [key]:
         if not re.fullmatch('[0-9a-f]{64}', entry.get('sha256', '')):
             raise ValueError('Every artifact needs a SHA-256 pin')
         if not entry.get('url', '').startswith('https://'):
@@ -108,13 +111,35 @@ def module_commands(name, phase, directory, binary=None):
 
 def install_command(family, paths):
     if family == 'suse':
-        return ['zypper', '--non-interactive', '--no-gpg-checks', 'install', '--no-recommends',
-                '--allow-unsigned-rpm', *map(str, paths)]
-    return ['dnf', '-y', '--nogpgcheck', '--setopt=install_weak_deps=False', 'install', *map(str, paths)]
+        return ['zypper', '--non-interactive', 'install', '--no-recommends', *map(str, paths)]
+    return ['dnf', '-y', '--setopt=gpgcheck=True', '--setopt=localpkg_gpgcheck=True',
+            '--setopt=install_weak_deps=False', 'install', *map(str, paths)]
+
+
+def installation_environment(family, directory, config=Path('/etc/zypp/zypp.conf')):
+    """Install complete package payloads in Leap's otherwise doc-stripped image."""
+    environment = os.environ.copy()
+    if family == 'suse':
+        text = config.read_text()
+        setting = r'(?m)^\s*rpm\.install\.excludedocs\s*=.*$'
+        text = re.sub(setting, 'rpm.install.excludedocs = no', text)
+        if not re.search(setting, text):
+            text += '\nrpm.install.excludedocs = no\n'
+        target = directory / 'zypp.conf'
+        target.write_text(text)
+        environment['ZYPP_CONF'] = str(target)
+    return environment
+
+
+def require_rpm_signature(output):
+    # rpmkeys also succeeds on unsigned RPMs whose digests are intact.
+    if not re.search(r'(?m)^\s*(?:Header |Legacy )?(?:OpenPGP )?V\d+ [A-Za-z0-9/-]+ '
+                     r'[Ss]ignature, key (?:ID [0-9a-f]{8,16}|fingerprint: [0-9a-f]{40,64}): OK$', output):
+        raise ValueError('RPM has no verified signature')
 
 
 def check_prerequisites(family):
-    commands = ['rpm', 'useradd', 'runuser', 'chown', 'zypper' if family == 'suse' else 'dnf']
+    commands = ['rpm', 'rpmkeys', 'useradd', 'runuser', 'chown', 'zypper' if family == 'suse' else 'dnf']
     missing = [name for name in commands if shutil.which(name) is None]
     if missing:
         raise ValueError('Missing qualification fixture commands: ' + ', '.join(missing))
@@ -132,18 +157,21 @@ def qualify(manifest, output):
     result = {'manifest': manifest, 'machine': platform.machine(),
               'runner_arch': os.environ.get('CI_RUNNER_EXECUTABLE_ARCH'), 'steps': []}
 
-    def run(name, command, cwd=None):
+    def run(name, command, cwd=None, env=None):
         with (output / (name + '.log')).open('w') as log:
-            process = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, cwd=cwd)
+            process = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, cwd=cwd, env=env)
         result['steps'].append({'name': name, 'command': command, 'exit_code': process.returncode})
         print(name, process.returncode, flush=True)
         process.check_returncode()
+        return (output / (name + '.log')).read_text()
 
     try:
         # Verify all downloads before changing the container's package set.
         with tempfile.TemporaryDirectory(prefix='qore-rpm-native-') as temporary:
             root = Path(temporary)
             root.chmod(0o755)
+            key = root / 'rpm-signing-key.asc'
+            fetch_source(manifest['signing_key']['url'], manifest['signing_key']['sha256'], key)
             rpms = root / 'rpms'
             rpms.mkdir()
             source = root / 'source'
@@ -159,6 +187,13 @@ def qualify(manifest, output):
                     fetch_source(fixture['url'], fixture['sha256'], path)
                     path.chmod(0o755 if path.suffix in ('.q', '.qtest', '.py')
                                or fixture['path'] == 'debian/tests/compiler' else 0o644)
+            install_env = installation_environment(manifest['family'], root)
+            run('import-signing-key', ['rpm', '--import', str(key)])
+            for entry in manifest['packages']:
+                signature = run('verify-signature-' + entry['name'],
+                    ['rpmkeys', '--checksig', '--verbose', str(rpms / entry['filename'])],
+                    env={**os.environ, 'LC_ALL': 'C'})
+                require_rpm_signature(signature)
             run('create-user', ['useradd', '-M', '-U', 'qoretester'])
             for name in ('qore', 'qore-devel', 'gcc', 'gcc-c++'):
                 probe = subprocess.run(['rpm', '-q', name], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -172,7 +207,7 @@ def qualify(manifest, output):
                     paths.append('cmake')
                 if any(entry['name'] == 'process' for entry in manifest.get('modules', [])):
                     paths.append('procps' if manifest['family'] == 'suse' else 'procps-ng')
-                run(phase + '-install', install_command(manifest['family'], paths))
+                run(phase + '-install', install_command(manifest['family'], paths), env=install_env)
                 names = [entry['name'] for entry in entries]
                 run(phase + '-rpm-verify', ['rpm', '-V', *names])
                 run(phase + '-inventory', ['rpm', '-qa', '--qf', '%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n'])

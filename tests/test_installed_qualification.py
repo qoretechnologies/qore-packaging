@@ -16,6 +16,7 @@ loader.loader.exec_module(module)
 class InstalledQualificationTest(unittest.TestCase):
     def setUp(self):
         self.manifest = {'schema': 1, 'family': 'fedora', 'arch': 'aarch64', 'core_commit': 'a' * 40,
+                         'signing_key': {'url': 'https://example.org/key.asc', 'sha256': 'f' * 64},
                          'fixtures': [{'path': path, 'sha256': 'b' * 64, 'url': 'https://example.org/' + path}
                                       for path in sorted(module.FIXTURES)], 'packages': []}
         for name in ('qore', 'libqore', 'qore-stdlib', 'qore-devel', 'qore-rpm-macros', 'qore-misc-tools', 'qore-debug-tools'):
@@ -61,6 +62,55 @@ class InstalledQualificationTest(unittest.TestCase):
             command = module.install_command(family, [path])
             self.assertEqual(command[-1], path)
             self.assertIn('--setopt=install_weak_deps=False', command)
+            self.assertIn('--setopt=gpgcheck=True', command)
+            self.assertIn('--setopt=localpkg_gpgcheck=True', command)
+        for family in ('suse', 'fedora', 'el'):
+            self.assertFalse({'--nogpgcheck', '--no-gpg-checks', '--allow-unsigned-rpm'}
+                             & set(module.install_command(family, [path])))
+
+    def test_signing_key_requires_complete_https_pin(self):
+        for key in (None, [], {}, {'url': 'https://example.org/key.asc'},
+                    {'url': 'http://example.org/key.asc', 'sha256': 'f' * 64},
+                    {'url': 'https://example.org/key.asc', 'sha256': 'bad'}):
+            manifest = copy.deepcopy(self.manifest)
+            if key is None:
+                del manifest['signing_key']
+            else:
+                manifest['signing_key'] = key
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                module.validate(manifest)
+
+    def test_unsigned_rpm_digests_are_not_signatures(self):
+        for output in ('Payload SHA256 digest: OK\n', '',
+                       'Header V3 RSA/SHA256 Signature, key ID 10df018c: NOKEY\n',
+                       'Header V3 RSA/SHA256 Signature, key ID 10df018c: BAD\n',
+                       'Header OpenPGP V3 RSA/SHA256 signature, key fingerprint: '
+                       '3c3e3e9e0eadde7c47e49c549960899f10df018c: NOKEY\n'):
+            with self.subTest(output=output), self.assertRaises(ValueError):
+                module.require_rpm_signature(output)
+        for version in ('3', '4', '6'):
+            module.require_rpm_signature('test.rpm:\n    Header V' + version
+                + ' RSA/SHA256 Signature, key ID 10df018c: OK\n    Payload SHA256 digest: OK\n')
+        module.require_rpm_signature('    Header OpenPGP V3 RSA/SHA256 signature, key fingerprint: '
+            '3c3e3e9e0eadde7c47e49c549960899f10df018c: OK\n')
+
+    def test_leap_installs_documentation_without_changing_system_config(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            config = root / 'system.conf'
+            for settings in ('rpm.install.excludedocs = yes\n',
+                             '# rpm.install.excludedocs = yes\n',
+                             'rpm.install.excludedocs = no\n'):
+                original = 'solver.onlyRequires = true\n' + settings
+                config.write_text(original)
+                environment = module.installation_environment('suse', root, config)
+                actual = Path(environment['ZYPP_CONF']).read_text()
+                self.assertEqual(config.read_text(), original)
+                self.assertIn('solver.onlyRequires = true', actual)
+                self.assertIn('rpm.install.excludedocs = no', actual)
+                self.assertNotIn('\nrpm.install.excludedocs = yes', actual)
+            self.assertEqual(module.installation_environment('fedora', root, root / 'absent'),
+                             dict(module.os.environ))
 
     def test_missing_unprivileged_runner_is_diagnosed_before_installation(self):
         with patch.object(module.shutil, 'which', side_effect=lambda name: None if name == 'runuser' else '/bin/' + name):
@@ -153,6 +203,21 @@ class InstalledQualificationTest(unittest.TestCase):
                     module.qualify(self.manifest, output)
                 run.assert_not_called()
             self.assertIn('fixture checksum mismatch', (output / 'qualification.json').read_text())
+
+    def test_bad_key_hash_precedes_all_rpm_operations(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary) / 'output'
+            with (patch.object(module.platform, 'machine', return_value='aarch64'),
+                  patch.object(module.os, 'geteuid', return_value=0),
+                  patch.object(module, 'check_prerequisites'),
+                  patch.object(module, 'fetch_source', side_effect=ValueError('key checksum mismatch')) as fetch,
+                  patch.object(module.subprocess, 'run') as run):
+                with self.assertRaisesRegex(ValueError, 'key checksum mismatch'):
+                    module.qualify(self.manifest, output)
+                run.assert_not_called()
+                self.assertEqual(fetch.call_args.args[:2],
+                                 (self.manifest['signing_key']['url'], self.manifest['signing_key']['sha256']))
+            self.assertIn('key checksum mismatch', (output / 'qualification.json').read_text())
 
 
 if __name__ == '__main__':
