@@ -47,6 +47,40 @@ class DependencyTest(unittest.TestCase):
         for name, digest in result["sources"].items():
             self.assertEqual(hashlib.sha256((self.root / "output" / name).read_bytes()).hexdigest(), digest)
 
+    def test_generated_obs_changelog_is_pinned_without_changing_recipe(self):
+        path = self.repo / 'dependencies/probe.spec'
+        recipe = path.read_text() + ('%changelog\n* Tue Oct 06 2026 Test <test@example.invalid> - 1.0-1\n'
+                                    '- Offline dependency package.\n')
+        path.write_text(recipe)
+        manifest = self.prepare(candidate=True)
+        changes = (self.root / 'output/probe.changes').read_bytes()
+        self.assertEqual(changes.decode(), dependencies.packaging.obs_changelog(recipe))
+        self.assertEqual(manifest['sources']['probe.changes'], hashlib.sha256(changes).hexdigest())
+        self.assertEqual((self.root / 'output/probe.spec').read_text(), recipe)
+        self.assertEqual((self.root / 'output/probe-1.0.tar.gz').read_bytes(), b'archive fixture')
+
+    def test_conflicting_obs_changelog_cannot_replace_declared_source(self):
+        path = self.repo / 'dependencies/probe.spec'
+        path.write_text(path.read_text() + '%changelog\n* Tue Oct 06 2026 Test\n- Note.\n')
+        self.info['extra_sources'].append('probe.changes')
+        self.write_config()
+        (self.repo / 'dependencies/probe.changes').write_text('different input')
+        with self.assertRaisesRegex(ValueError, 'changelog disagrees'):
+            self.prepare(candidate=True)
+        self.assertFalse((self.root / 'output').exists())
+        self.assertEqual(list(self.root.glob('.dependency-*')), [])
+
+    def test_matching_declared_obs_changelog_is_preserved(self):
+        path = self.repo / 'dependencies/probe.spec'
+        recipe = path.read_text() + '%changelog\n* Tue Oct 06 2026 Test\n- Note.\n'
+        path.write_text(recipe)
+        self.info['extra_sources'].append('probe.changes')
+        self.write_config()
+        changes = dependencies.packaging.obs_changelog(recipe)
+        (self.repo / 'dependencies/probe.changes').write_text(changes)
+        self.prepare(candidate=True)
+        self.assertEqual((self.root / 'output/probe.changes').read_text(), changes)
+
     def test_committed_packaging_ignores_dirty_working_files(self):
         def git(*args):
             return subprocess.check_output(["git", "-C", str(self.repo), *args], stderr=subprocess.PIPE)

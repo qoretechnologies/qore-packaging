@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "root_cause": "OBS recipe_create_changelog reads .changes to provide BUILD_CHANGELOG_TIMESTAMP before RPM starts. Existing spec-only uploads left this unset. Leap profile then emitted a missing-epoch warning and a secondary misleading BUILD_RELEASE warning. RPM later derived the correct spec changelog epoch, but that occurred after shell initialization.",
+  "fix": "Both preparation tools derive the standard .changes sidecar from the complete spec changelog with explicit midnight UTC dates and pin its hash. Spec, source archives, existing release notes and compiler flags are unchanged.",
+  "unit_tests": 173,
+  "converter_roundtrips": 57,
+  "inventory_scope": "All 37 committed catalog recipes available at their pins and 20 dependency working-tree recipes. The NATS module catalog pin predates its pending spec and is excluded.",
+  "roundtrip_comparison": "The actual OBS converter preserves dates, authors, releases and all nonblank note lines. RPM header day padding is normalized for comparison; every generated UTC timestamp equals the newest entry.",
+  "unchanged_leap_profile": [
+    {
+      "name": "no-changes",
+      "environment": "BUILD_RELEASE=2.1\n",
+      "exit_code": 0,
+      "expected_warning_count": 2,
+      "epoch_result": "unset unset"
+    },
+    {
+      "name": "missing-release",
+      "environment": "BUILD_CHANGELOG_TIMESTAMP=1791244800\n",
+      "exit_code": 0,
+      "expected_warning_count": 1,
+      "epoch_result": "unset unset"
+    },
+    {
+      "name": "complete",
+      "environment": "BUILD_RELEASE=2.1\nBUILD_CHANGELOG_TIMESTAMP=1791244800\n",
+      "exit_code": 0,
+      "expected_warning_count": 0,
+      "epoch_result": "1791244800 1791244801"
+    },
+    {
+      "name": "invalid-counter",
+      "environment": "BUILD_RELEASE=2.0\nBUILD_CHANGELOG_TIMESTAMP=1791244800\n",
+      "exit_code": 0,
+      "expected_warning_count": 1,
+      "epoch_result": "1791244800 1791244800"
+    }
+  ],
+  "canonical_bundle": "PostgreSQL source commit 5659782a695a4337f266a9895972b15f5fd9a9af re-prepared; spec and archive are byte-identical to the already qualified release 2. Only .changes and its manifest hash are added.",
+  "limits": "Existing OBS revisions do not change automatically. Native verification of the new metadata upload remains pending. No compiler or diagnostic suppression is added.",
+  "upstream": {
+    "url": "https://api.opensuse.org/source/SUSE:SLFO:1.2/post-build-checks/post-build-checks-84.87+git20250725.0c3a172.tar.xz",
+    "sha256": "32215cab72f9355579c02be2f21c5a4b1b5e40bd362ff985ea66e0a14a632eab",
+    "obs_md5": "e1bb4a690f3635593edd6d5663dbb800"
+  },
+  "files_sha256": {
+    "evidence/controls/obs-changelog-20261006/build-recipe.gz": "97f23befc209e21de44978e3730ad81571c6818a4bb71cb272683126b6a2848a",
+    "evidence/controls/obs-changelog-20261006/build.gz": "c1add714b42a4c22cb1c0b8c17b6667d778cf313081f6bbe0c3fa7d9c6bae51d",
+    "evidence/controls/obs-changelog-20261006/changelog2spec.gz": "693aff88715ab06d331926dc52aa9c0a9ce5d4990dffbd3e54ba789e650a3717",
+    "evidence/controls/obs-changelog-20261006/check-roundtrip.py": "864c7d85b5d812f24eb1ede07ba7ef90d91caf797d4e44096d3a6160d8736d1d",
+    "evidence/controls/obs-changelog-20261006/control.py": "c8b6fdcacd18b37196fee39fe951cd980502630ffb5a2b1a0506e64351049586",
+    "evidence/controls/obs-changelog-20261006/pgsql-timestamp": "9f1e7aa808939cde9a47db45e28b416c91f1cd191414f162361f32d782bc2889",
+    "evidence/controls/obs-changelog-20261006/profile-control/checks.json": "a95eae4dc04c93aee8258e5b6000aab9891cce9c150c15f40831b833266f22eb",
+    "evidence/controls/obs-changelog-20261006/profile-control/command.json": "a776a824612e9f98e3734fa0c0ab6325749c341ab028c6add11fb10d8898f34b",
+    "evidence/controls/obs-changelog-20261006/profile-control/complete.stderr": "cc5f248f5b9ed176e0dae9274a8a8868b9077a56b43f06122382ca89e50f8e32",
+    "evidence/controls/obs-changelog-20261006/profile-control/complete.stdout": "6b05c212731c807da29dad628356c1198f3a56d7992eaa6c2547f6f8b3a8ba55",
+    "evidence/controls/obs-changelog-20261006/profile-control/invalid-counter.stderr": "ee8f6b2f46665916e5370915c9151022857bb7e7690dee51e0c3985ab5c524cd",
+    "evidence/controls/obs-changelog-20261006/profile-control/invalid-counter.stdout": "0f5f9e1dbc523c2f2e11c8dab08b9fcd301cab4801375fab703788cd7958f775",
+    "evidence/controls/obs-changelog-20261006/profile-control/missing-release.stderr": "348ae09dc114a2b78f3b9444793464ccb430b472855cba5ce8cae27e4d74f0f9",
+    "evidence/controls/obs-changelog-20261006/profile-control/missing-release.stdout": "16d2df06e95d1b14b3b4ee6198644da883041ad722454494971fa41f27bcf8b2",
+    "evidence/controls/obs-changelog-20261006/profile-control/no-changes.stderr": "83880dbc241060e3413bcf397d3da5ed0e9d18ba4fc8d9b3b3d0e34a3d895d2c",
+    "evidence/controls/obs-changelog-20261006/profile-control/no-changes.stdout": "16d2df06e95d1b14b3b4ee6198644da883041ad722454494971fa41f27bcf8b2",
+    "evidence/controls/obs-changelog-20261006/profile-control/run.log": "f25856e6191b4ec0b32be2e4c73ea32290ab17592f6af61250653eabe13cafa2",
+    "evidence/controls/obs-changelog-20261006/qore-pgsql-module.changes": "7920115f24866ce14ec2575c1038ca4049ab280c63100e9734a7498534c6e741",
+    "evidence/controls/obs-changelog-20261006/roundtrip-results.json": "02e860b46601362bba6dc24b6187817ee436c10e82739394873bc1f0d3552442",
+    "evidence/controls/obs-changelog-20261006/suse-buildsystem.sh": "03a850537a93bd61de023dcdd0d0ef4fbc1e65824065e2756f7c363ebf2dfd81",
+    "evidence/controls/obs-changelog-20261006/tools-tests.log": "36683a35192b7eb1900e9439d783e8feddb20114c8210360ce0670972f69a91e",
+    "evidence/controls/obs-changelog-20261006/upstream.json": "4db2bccc1f6c25ba97440bc79ba2a1e37594e5f248737e40637006d9656ca60a"
+  }
+}

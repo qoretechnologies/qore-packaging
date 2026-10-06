@@ -74,6 +74,42 @@ class RecipeSourceTests(unittest.TestCase):
                 packaging.validate_recipe_sources("Source0: " + value + "\n", {"sources": {}})
 
 
+class ObsChangelogTests(unittest.TestCase):
+    def test_preserves_dates_authors_releases_and_complete_notes(self):
+        recipe = ('Name: sample\n%changelog\n'
+                  '* Tue Oct 06 2026 Example Author <author@example.invalid> - 2.0-3\n'
+                  '- First fix for %{name}.\n  Wrapped detail.\n\n'
+                  '* Mon Oct 5 2026 Renée Author <other@example.invalid> - 2.0-2\n'
+                  '- Previous fix.\n')
+        expected = ('-------------------------------------------------------------------\n'
+                    'Tue Oct 06 00:00:00 UTC 2026 - Example Author <author@example.invalid> - 2.0-3\n\n'
+                    '- First fix for %{name}.\n  Wrapped detail.\n\n'
+                    '-------------------------------------------------------------------\n'
+                    'Mon Oct 05 00:00:00 UTC 2026 - Renée Author <other@example.invalid> - 2.0-2\n\n'
+                    '- Previous fix.\n\n')
+        for timezone in ('UTC', 'Europe/Prague', 'Pacific/Honolulu'):
+            with self.subTest(timezone=timezone), patch.dict(os.environ, {'TZ': timezone}):
+                self.assertEqual(packaging.obs_changelog(recipe), expected)
+
+    def test_absent_section_and_valid_leap_day(self):
+        self.assertIsNone(packaging.obs_changelog('Name: sample\n%description\nNo changelog.\n'))
+        result = packaging.obs_changelog('%changelog\n* Thu Feb 29 2024 A <a@example.invalid>\n- Fix.\n')
+        self.assertIn('Thu Feb 29 00:00:00 UTC 2024 - A <a@example.invalid>', result)
+
+    def test_rejects_malformed_or_misordered_entries(self):
+        valid = '* Tue Oct 06 2026 A <a@example.invalid>\n- Fix.\n'
+        invalid = ['', '- Orphan note.\n' + valid, valid + '%changelog\n' + valid,
+                   '* malformed\n- Fix.\n', '* Tue Oct 06 2026 \n- Fix.\n',
+                   valid.replace('Tue Oct', 'Mon Oct'), valid.replace('Oct', 'Foo'),
+                   valid.replace('06', '32'), valid.replace('2026', '0000'),
+                   valid.replace('Tue Oct 06 2026', 'Wed Feb 29 2023'),
+                   valid.replace('- Fix.\n', ''),
+                   valid + '* Wed Oct 07 2026 A <a@example.invalid>\n- Newer.\n']
+        for body in invalid:
+            with self.subTest(body=body), self.assertRaises(ValueError):
+                packaging.obs_changelog('%changelog\n' + body)
+
+
 class SourceFixture(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -102,6 +138,33 @@ class SourceFixture(unittest.TestCase):
 
 
 class SourceTests(SourceFixture):
+    def test_obs_sidecar_is_reproducible_and_hash_pinned(self):
+        recipe = ('Name: qore-test-module\nVersion: 1.0\n'
+                  'Source0: %{name}-%{version}.tar.xz\n%changelog\n'
+                  '* Tue Oct 06 2026 Packaging Tests <test@example.invalid> - 1.0-1\n'
+                  '- Preserve the source epoch metadata.\n')
+        (self.repo / 'module.spec').write_text(recipe)
+        self.git('add', 'module.spec')
+        self.git('commit', '-qm', 'spec with changelog')
+        first = self.prepare('first', spec_path='module.spec')
+        second = self.prepare('second', spec_path='module.spec')
+        self.assertEqual(first, second)
+        name = 'qore-test-module.changes'
+        payload = (self.root / 'first' / name).read_bytes()
+        self.assertEqual(payload, (self.root / 'second' / name).read_bytes())
+        self.assertEqual(first['sources'][name], packaging.hashlib.sha256(payload).hexdigest())
+        self.assertEqual(payload.decode(), packaging.obs_changelog(recipe))
+
+    def test_invalid_obs_sidecar_does_not_leave_a_source_bundle(self):
+        (self.repo / 'module.spec').write_text('Name: qore-test-module\nVersion: 1.0\n'
+                                              '%changelog\n* Invalid header\n- Note.\n')
+        self.git('add', 'module.spec')
+        self.git('commit', '-qm', 'malformed changelog')
+        with self.assertRaisesRegex(ValueError, 'changelog header'):
+            self.prepare(spec_path='module.spec')
+        self.assertFalse((self.root / 'result').exists())
+        self.assertEqual(list(self.root.glob('.qore-source-*')), [])
+
     def test_repository_tar_umask_does_not_change_source_bundle_permissions(self):
         script = self.repo / 'run.sh'
         script.write_text('#!/bin/sh\nexit 0\n')

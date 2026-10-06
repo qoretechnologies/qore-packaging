@@ -61,6 +61,12 @@ def prepare(repo, name, cache, output, ref=None, candidate=False):
         packaging.git(repo, "show", "-s", "--format=%ct", commit).decode())
     if type(timestamp) is not int or timestamp < 0:
         raise ValueError("Invalid dependency timestamp")
+    changes = packaging.obs_changelog(recipe)
+    if changes is not None:
+        filename = name + ".changes"
+        if filename in payloads and payloads[filename] != changes.encode():
+            raise ValueError("Existing OBS changelog disagrees with the RPM recipe")
+        payloads[filename] = changes.encode()
     manifest = {"schema": 1, "name": name, "version": info["version"], "commit": commit,
                 "source_date_epoch": timestamp, "spec": name + ".spec",
                 "upstream": {"url": info["url"], "sha256": info["sha256"]},

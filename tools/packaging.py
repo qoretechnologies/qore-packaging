@@ -4,6 +4,7 @@
 """Reproducible source preparation and inventory for Qore's RPM packages."""
 
 import argparse
+import datetime
 import hashlib
 import io
 import json
@@ -47,6 +48,53 @@ def validate_recipe_sources(recipe, manifest):
         filename = posixpath.basename(url.fragment or url.path)
         if not filename or filename not in manifest["sources"]:
             raise ValueError("Declared source or patch is missing from the bundle: " + filename)
+
+
+def obs_changelog(recipe):
+    """Preserve an RPM changelog as OBS metadata with an explicit UTC timestamp.
+
+    OBS creates BUILD_CHANGELOG_TIMESTAMP from a .changes sidecar before RPM
+    reads the spec. Keep every existing entry, author, release and body; never
+    substitute wall-clock time or an invented release note.
+    """
+    sections = list(re.finditer(r"^%changelog[ \t]*$", recipe, re.M))
+    if not sections:
+        return None
+    if len(sections) != 1:
+        raise ValueError("Expected one RPM changelog section")
+    months = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+              'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+    weekdays = ('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun')
+    entries = []
+    current = None
+    previous = None
+    for line in recipe[sections[0].end():].splitlines():
+        if line.startswith('*'):
+            match = re.fullmatch(r'\* ([A-Za-z]{3}) ([A-Za-z]{3}) +([0-9]{1,2}) ([0-9]{4}) (\S.*)', line)
+            if not match:
+                raise ValueError("Invalid RPM changelog header")
+            weekday, month, day, year, author = match.groups()
+            try:
+                date = datetime.date(int(year), months.index(month) + 1, int(day))
+            except (ValueError, OverflowError) as error:
+                raise ValueError("Invalid RPM changelog date") from error
+            if weekday != weekdays[date.weekday()]:
+                raise ValueError("RPM changelog weekday does not match date")
+            if previous is not None and date > previous:
+                raise ValueError("RPM changelog must list newest entries first")
+            previous = date
+            current = [f'{weekday} {month} {date.day:02d} 00:00:00 UTC {date.year:04d} - {author}', []]
+            entries.append(current)
+        elif current is None:
+            if line.strip():
+                raise ValueError("RPM changelog text precedes its first entry")
+        else:
+            current[1].append(line)
+    if not entries or any(not '\n'.join(body).strip() for _, body in entries):
+        raise ValueError("RPM changelog entries require release notes")
+    return ''.join('-------------------------------------------------------------------\n'
+                   + header + '\n\n' + '\n'.join(body).strip('\n') + '\n\n'
+                   for header, body in entries)
 
 
 def git(repo, *args):
@@ -164,6 +212,9 @@ def prepare_source(repo, ref, name, version, output, exclusions=(), packaging_ov
     if recipe is not None:
         manifest["spec"] = name + ".spec"
         manifest["sources"][name + ".spec"] = hashlib.sha256(recipe.encode()).hexdigest()
+    changes = obs_changelog(recipe) if recipe is not None else None
+    if changes is not None:
+        manifest["sources"][name + ".changes"] = hashlib.sha256(changes.encode()).hexdigest()
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix=".qore-source-", dir=output.parent) as temporary:
         staging = Path(temporary) / "ready"
@@ -171,6 +222,8 @@ def prepare_source(repo, ref, name, version, output, exclusions=(), packaging_ov
         (staging / filename).write_bytes(payload)
         if recipe is not None:
             (staging / (name + ".spec")).write_text(recipe)
+        if changes is not None:
+            (staging / (name + ".changes")).write_text(changes)
         if vendor_manifest:
             components = prepare_components(repo, commit, vendor_manifest, overlays, cache,
                                             staging, timestamp, set(manifest["sources"]))

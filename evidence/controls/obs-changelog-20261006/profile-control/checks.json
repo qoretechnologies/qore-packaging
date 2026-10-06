@@ -1,0 +1,30 @@
+[
+  {
+    "name": "no-changes",
+    "environment": "BUILD_RELEASE=2.1\n",
+    "exit_code": 0,
+    "expected_warning_count": 2,
+    "epoch_result": "unset unset"
+  },
+  {
+    "name": "missing-release",
+    "environment": "BUILD_CHANGELOG_TIMESTAMP=1791244800\n",
+    "exit_code": 0,
+    "expected_warning_count": 1,
+    "epoch_result": "unset unset"
+  },
+  {
+    "name": "complete",
+    "environment": "BUILD_RELEASE=2.1\nBUILD_CHANGELOG_TIMESTAMP=1791244800\n",
+    "exit_code": 0,
+    "expected_warning_count": 0,
+    "epoch_result": "1791244800 1791244801"
+  },
+  {
+    "name": "invalid-counter",
+    "environment": "BUILD_RELEASE=2.0\nBUILD_CHANGELOG_TIMESTAMP=1791244800\n",
+    "exit_code": 0,
+    "expected_warning_count": 1,
+    "epoch_result": "1791244800 1791244800"
+  }
+]

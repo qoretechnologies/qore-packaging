@@ -41,6 +41,28 @@ vendor manifests; these bundles are marked candidates and cannot be uploaded
 by the OBS tool. Corrupt downloads, missing licenses, unsafe paths and filename
 collisions fail before a completed output directory is exposed.
 
+OBS changelog metadata
+----------------------
+
+Both source preparation tools generate ``PACKAGE.changes`` from the spec's
+``%changelog``. OBS reads this sidecar before running RPM to provide
+``BUILD_CHANGELOG_TIMESTAMP`` to the distribution's build environment. This
+lets Leap set its reproducible build timestamps during shell initialization.
+
+Entries retain their dates, authors, releases and complete notes. For example,
+``* Tue Oct 06 2026 Author <author@example.invalid> - 1.0-2`` becomes
+``Tue Oct 06 00:00:00 UTC 2026 - Author <author@example.invalid> - 1.0-2``.
+The date has an explicit UTC timezone; preparation never uses the current
+clock. The spec and source archive remain byte for byte unchanged, and the
+source manifest pins the additional file's SHA-256 alongside the other inputs.
+
+Malformed dates, mismatched weekdays, empty entries and entries ordered from
+oldest to newest fail preparation before an output bundle is published.
+Dependency sidecars explicitly listed as sources must match the generated
+metadata. Recipes without a changelog retain their previous behavior and do
+not gain a sidecar. Existing OBS source revisions acquire the metadata when
+they are prepared and uploaded again; adding it creates a new OBS revision.
+
 Long builds
 -----------
 
