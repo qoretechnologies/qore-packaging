@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "User approved the four exact compiler diagnostics on 2026-10-06. Normal compiler flags and warnings remain unchanged.",
+  "scope": [
+    {
+      "path": "deps/v8/src/compiler/code-assembler.cc",
+      "declaration_line": 957,
+      "variable": "write_barrier_kind",
+      "reported_path": "deps/v8/src/compiler/simplified-operator.h:247"
+    },
+    {
+      "path": "deps/v8/src/compiler/turboshaft/graph-builder.cc",
+      "declaration_line": 1020,
+      "variable": "input_requirement",
+      "reported_line": 1035
+    },
+    {
+      "path": "deps/v8/src/compiler/turboshaft/graph-builder.cc",
+      "declaration_line": 1122,
+      "variable": "from_kind",
+      "reported_line": 1135
+    },
+    {
+      "path": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+      "declaration_line": 4329,
+      "variable": "input_requirement",
+      "reported_path": "deps/v8/src/compiler/turboshaft/operations.h:5115"
+    }
+  ],
+  "root_cause": "GCC 13 considers undeclared values beyond exhaustive enum switches. Every declared input enum assigns the output before it is read. The unchanged branch bodies reproduce all four warnings.",
+  "source_invariants": [
+    "StoreToObjectWriteBarrier has exactly kNone, kMap and kFull. Every branch assigns the barrier; kNone uses the unchanged CanBeTaggedPointer predicate to choose assertion versus no barrier. Calls pass typed enum values.",
+    "CheckTaggedInputParameters stores its typed four-value input mode directly. Both Turboshaft switches handle all four values. Simplified operators construct cached variants from declared constants.",
+    "The Maglev checked-conversion constructor writes its typed three-value conversion mode into a two-bit field. Its accessor decodes the same field, and the consuming switch handles each declared mode. Builder call paths pass conversion enum values; no integer-to-mode casts were found in these production sources."
+  ],
+  "coverage": "All 21 machine representations, all three store barriers, four argument permutations, all four tagged input modes through both mappings and all three Maglev conversion modes. Each normal/Valgrind release/debug control passes 2630000 checks: 10520000 total. Both Valgrind runs report zero errors and all allocations freed.",
+  "limits": "Controls use unchanged helper/switch bodies and exact enum declarations. Typed recording adapters replace graph nodes and raw assembler emission; they check passed arguments and mapping results, not an entire V8 compiler pipeline. Enum-domain validity is established by source review, not by injecting undeclared enum values. Debug mode defines DEBUG with optimization enabled to reproduce the same diagnostics; these are compiler controls, not performance benchmarks.",
+  "policy": "No production code, compiler flags, warnings or behavior changed. No suppression.",
+  "files_sha256": {
+    "evidence/controls/node-conversion-enum-20261006/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-conversion-enum-20261006/command.json": "c0f529235c6c7b18ee8a85005e450f9e628acc825393f84c21450286bb6831c4",
+    "evidence/controls/node-conversion-enum-20261006/control.cc": "6846c1d6f47cffd07a5d671b69ed3c30d8bd6b7a78546292a5bb1fc7d1526660",
+    "evidence/controls/node-conversion-enum-20261006/debug-compile.log": "37294ec6d80e555b46a5a60c674ca0187ed1f5b37ba5f407f3dde56f1a2fe158",
+    "evidence/controls/node-conversion-enum-20261006/debug-memory.log": "e1cad9b8c646f0e4e6a5e9120afa885b133466f0ef7480f8389b4bb154ed93b0",
+    "evidence/controls/node-conversion-enum-20261006/debug-normal.log": "e1cad9b8c646f0e4e6a5e9120afa885b133466f0ef7480f8389b4bb154ed93b0",
+    "evidence/controls/node-conversion-enum-20261006/debug-valgrind.log": "91a611d2d2ac5b6821d693780090a01b9d300943c4d7e6fbb359771d1663bc14",
+    "evidence/controls/node-conversion-enum-20261006/prepare.py": "8ff2cc88f4ecdeb24f641a23f7dee0c702826b7810ec821cf5061b505a3f9f43",
+    "evidence/controls/node-conversion-enum-20261006/release-compile.log": "37294ec6d80e555b46a5a60c674ca0187ed1f5b37ba5f407f3dde56f1a2fe158",
+    "evidence/controls/node-conversion-enum-20261006/release-memory.log": "e1cad9b8c646f0e4e6a5e9120afa885b133466f0ef7480f8389b4bb154ed93b0",
+    "evidence/controls/node-conversion-enum-20261006/release-normal.log": "e1cad9b8c646f0e4e6a5e9120afa885b133466f0ef7480f8389b4bb154ed93b0",
+    "evidence/controls/node-conversion-enum-20261006/release-valgrind.log": "f4de6bdcd9d22a5b023dc9db599e83e3fa40c948420cfe49911adcd4b8f30b7e",
+    "evidence/controls/node-conversion-enum-20261006/run.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-conversion-enum-20261006/run.py": "2cbcf243b957b3b4c48c78f386bf34f74394e7faa60cf8f73befb3bf6b295104",
+    "evidence/controls/node-conversion-enum-20261006/source-extracts.json": "12bc0710015affa10401c3c0f28e73844c7e5dd593d57bd03b6aa020e7864a12",
+    "evidence/controls/node-conversion-enum-20261006/status.json": "d4498ee556a820ac1c3199b446ab3e7661b6f3442e8f90fd46e978fa6188fd23"
+  },
+  "approval": "Allow these four exact diagnostics"
+}

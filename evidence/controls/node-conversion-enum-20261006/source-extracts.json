@@ -1,0 +1,68 @@
+[
+  {
+    "file": "deps/v8/src/codegen/machine-type.h",
+    "line": 19,
+    "body": "enum class MachineRepresentation : uint8_t {\n  kNone,\n  kBit,\n  // Integral representations must be consecutive, in order of increasing order.\n  kWord8,\n  kWord16,\n  kWord32,\n  kWord64,\n  // (uncompressed) MapWord\n  // kMapWord is the representation of a map word, i.e. a map in the header\n  // of a HeapObject.\n  // If V8_MAP_PACKING is disabled, a map word is just the map itself. Hence\n  //     kMapWord is equivalent to kTaggedPointer -- in fact it will be\n  //     translated to kTaggedPointer during memory lowering.\n  // If V8_MAP_PACKING is enabled, a map word is a Smi-like encoding of a map\n  //     and some meta data. Memory lowering of kMapWord loads/stores\n  //     produces low-level kTagged loads/stores plus the necessary\n  //     decode/encode operations.\n  // In either case, the kMapWord representation is not used after memory\n  // lowering.\n  kMapWord,\n  kTaggedSigned,       // (uncompressed) Smi\n  kTaggedPointer,      // (uncompressed) HeapObject\n  kTagged,             // (uncompressed) Object (Smi or HeapObject)\n  kCompressedPointer,  // (compressed) HeapObject\n  kCompressed,         // (compressed) Object (Smi or HeapObject)\n  kProtectedPointer,   // (uncompressed) TrustedObject\n  kIndirectPointer,    // (indirect) HeapObject\n  // A 64-bit pointer encoded in a way (e.g. as offset) that guarantees it will\n  // point into the sandbox.\n  kSandboxedPointer,\n  // kFloat16RawBits is not a real FP representation! It's representation of a\n  // float16 bitcast to a word16, and is used for conversions to and from\n  // Float16Array elements. It is not used after machine lowering.\n  kFloat16RawBits,\n  // FP and SIMD representations must be last, and in order of increasing size.\n  kFloat16,\n  kFloat32,\n  kFloat64,\n  kSimd128,\n  kSimd256,\n  kFirstFPRepresentation = kFloat16,\n  kLastRepresentation = kSimd256\n};",
+    "sha256": "e53dc457bd1be596eb1cad83b7eb318d375e0af6b809725ffbd6e7a7d31f59df"
+  },
+  {
+    "file": "deps/v8/src/codegen/machine-type.h",
+    "line": 398,
+    "body": "constexpr inline bool CanBeTaggedPointer(MachineRepresentation rep) {\n  return rep == MachineRepresentation::kTagged ||\n         rep == MachineRepresentation::kTaggedPointer ||\n         rep == MachineRepresentation::kMapWord;\n}",
+    "sha256": "c242c73ae572553ae521c6ed5301e4fb4cc7abfc2fb6900c0ac3c0a202814b18"
+  },
+  {
+    "file": "deps/v8/src/compiler/write-barrier-kind.h",
+    "line": 17,
+    "body": "enum WriteBarrierKind : uint8_t {\n  kNoWriteBarrier,\n  kAssertNoWriteBarrier,\n  kMapWriteBarrier,\n  kPointerWriteBarrier,\n  kIndirectPointerWriteBarrier,\n  kEphemeronKeyWriteBarrier,\n  kFullWriteBarrier\n};",
+    "sha256": "658a6a21410e159ea0cb23fd4e5e535629b264d3dff267f96989a4a85a39bdc3"
+  },
+  {
+    "file": "deps/v8/src/compiler/code-assembler.h",
+    "line": 97,
+    "body": "enum class StoreToObjectWriteBarrier { kNone, kMap, kFull };",
+    "sha256": "ea1957831c3f4411d34fcf0ddc1c2dc853db0d1c55640cfb5580484637fb83e0"
+  },
+  {
+    "file": "deps/v8/src/compiler/simplified-operator.h",
+    "line": 377,
+    "body": "enum class CheckTaggedInputMode : uint8_t {\n  kAdditiveSafeInteger,\n  kNumber,\n  kNumberOrBoolean,\n  kNumberOrOddball,\n};",
+    "sha256": "b2609613d3646dff03fcce8c0ab9f09650af884e6f1db907bfcac76f7f19a768"
+  },
+  {
+    "file": "deps/v8/src/maglev/maglev-ir.h",
+    "line": 853,
+    "body": "enum class TaggedToFloat64ConversionType : uint8_t {\n  kOnlyNumber,\n  kNumberOrBoolean,\n  kNumberOrOddball,\n};",
+    "sha256": "54111c547684b7b17dd31d24a60eb9d78f22a2f0c2ece7f48f1ad58af434326c"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 4966,
+    "body": "  enum class JSPrimitiveKind : uint8_t {\n    kAdditiveSafeInteger,\n    kNumber,\n    kNumberOrBoolean,\n    kNumberOrOddball,\n    kNumberOrString,\n    kSmi,\n  };",
+    "sha256": "5fb6cd221ce341955ce962b73c6faa71ea50c41476e634ebacabe070257404c8"
+  },
+  {
+    "file": "deps/v8/src/compiler/code-assembler.cc",
+    "line": 953,
+    "body": "void CodeAssembler::StoreToObject(MachineRepresentation rep,\n                                  TNode<Object> object, TNode<IntPtrT> offset,\n                                  Node* value,\n                                  StoreToObjectWriteBarrier write_barrier) {\n  WriteBarrierKind write_barrier_kind;\n  switch (write_barrier) {\n    case StoreToObjectWriteBarrier::kFull:\n      write_barrier_kind = WriteBarrierKind::kFullWriteBarrier;\n      break;\n    case StoreToObjectWriteBarrier::kMap:\n      write_barrier_kind = WriteBarrierKind::kMapWriteBarrier;\n      break;\n    case StoreToObjectWriteBarrier::kNone:\n      if (CanBeTaggedPointer(rep)) {\n        write_barrier_kind = WriteBarrierKind::kAssertNoWriteBarrier;\n      } else {\n        write_barrier_kind = WriteBarrierKind::kNoWriteBarrier;\n      }\n      break;\n  }\n  raw_assembler()->StoreToObject(rep, object, offset, value,\n                                 write_barrier_kind);\n}",
+    "sha256": "2296304d4345eb2d5c9bd9ae3eb59d67e75e798be5e9ae9018f6abf270560223"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/graph-builder.cc",
+    "line": 1019,
+    "body": "      using IR = TruncateJSPrimitiveToUntaggedOrDeoptOp::InputRequirement;\n      IR input_requirement;\n      switch (CheckTaggedInputParametersOf(node->op()).mode()) {\n        case CheckTaggedInputMode::kAdditiveSafeInteger:\n          input_requirement = IR::kAdditiveSafeInteger;\n          break;\n        case CheckTaggedInputMode::kNumber:\n          input_requirement = IR::kNumber;\n          break;\n        case CheckTaggedInputMode::kNumberOrBoolean:\n          input_requirement = IR::kNumberOrBoolean;\n          break;\n        case CheckTaggedInputMode::kNumberOrOddball:\n          input_requirement = IR::kNumberOrOddball;\n          break;\n      }",
+    "sha256": "4497a233db75d8692617f0daa11ebf572c58607a1de3f116d85d4d5c08fdd19d"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/graph-builder.cc",
+    "line": 1122,
+    "body": "      ConvertJSPrimitiveToUntaggedOrDeoptOp::JSPrimitiveKind from_kind;\n      switch (params.mode()) {\n#define CASE(mode)                                                       \\\n  case CheckTaggedInputMode::k##mode:                                    \\\n    from_kind =                                                          \\\n        ConvertJSPrimitiveToUntaggedOrDeoptOp::JSPrimitiveKind::k##mode; \\\n    break;\n        CASE(AdditiveSafeInteger)\n        CASE(Number)\n        CASE(NumberOrBoolean)\n        CASE(NumberOrOddball)\n#undef CASE\n      }",
+    "sha256": "a23b550a60c0422f82c88dfd1b173062fcba5210903a0ce14876a202a70f8ebe"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+    "line": 4329,
+    "body": "    TruncateJSPrimitiveToUntaggedOrDeoptOp::InputRequirement input_requirement;\n    switch (node->conversion_type()) {\n      case maglev::TaggedToFloat64ConversionType::kOnlyNumber:\n        input_requirement =\n            TruncateJSPrimitiveToUntaggedOrDeoptOp::InputRequirement::kNumber;\n        break;\n      case maglev::TaggedToFloat64ConversionType::kNumberOrBoolean:\n        input_requirement = TruncateJSPrimitiveToUntaggedOrDeoptOp::\n            InputRequirement::kNumberOrBoolean;\n        break;\n      case maglev::TaggedToFloat64ConversionType::kNumberOrOddball:\n        input_requirement = TruncateJSPrimitiveToUntaggedOrDeoptOp::\n            InputRequirement::kNumberOrOddball;\n        break;\n    }",
+    "sha256": "7e4ac0c2d4ef084c72302df8478cf67988afb9a2b8ff589cf2ba3140e0d03b79"
+  }
+]

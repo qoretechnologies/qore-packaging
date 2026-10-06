@@ -1,0 +1,30 @@
+In member function ‘void RawAssembler::StoreToObject(MachineRepresentation, Node*, Node*, Node*, WriteBarrierKind)’,
+    inlined from ‘void CodeAssembler::StoreToObject(MachineRepresentation, TNode<Object>, TNode<IntPtrT>, Node*, StoreToObjectWriteBarrier)’ at /work/control.cc:128:33:
+/work/control.cc:103:134: warning: ‘write_barrier_kind’ may be used uninitialized [-Wmaybe-uninitialized]
+  103 |  void StoreToObject(MachineRepresentation r,Node* o,Node* off,Node* v,WriteBarrierKind b) { rep=r;object=o;offset=off;value=v;barrier=b;++calls; }
+      |                                                                                                                               ~~~~~~~^~
+/work/control.cc: In member function ‘void CodeAssembler::StoreToObject(MachineRepresentation, TNode<Object>, TNode<IntPtrT>, Node*, StoreToObjectWriteBarrier)’:
+/work/control.cc:112:20: note: ‘write_barrier_kind’ was declared here
+  112 |   WriteBarrierKind write_barrier_kind;
+      |                    ^~~~~~~~~~~~~~~~~~
+/work/control.cc: In function ‘IR Truncate(GraphNode*)’:
+/work/control.cc:148:8: warning: ‘input_requirement’ may be used uninitialized [-Wmaybe-uninitialized]
+  148 | return input_requirement;
+      |        ^~~~~~~~~~~~~~~~~
+/work/control.cc:133:10: note: ‘input_requirement’ was declared here
+  133 |       IR input_requirement;
+      |          ^~~~~~~~~~~~~~~~~
+/work/control.cc: In function ‘IR Convert(const Params&)’:
+/work/control.cc:164:8: warning: ‘from_kind’ may be used uninitialized [-Wmaybe-uninitialized]
+  164 | return from_kind;
+      |        ^~~~~~~~~
+/work/control.cc:151:62: note: ‘from_kind’ was declared here
+  151 |       ConvertJSPrimitiveToUntaggedOrDeoptOp::JSPrimitiveKind from_kind;
+      |                                                              ^~~~~~~~~
+/work/control.cc: In function ‘IR MaglevTruncate(MaglevNode*)’:
+/work/control.cc:182:8: warning: ‘input_requirement’ may be used uninitialized [-Wmaybe-uninitialized]
+  182 | return input_requirement;
+      |        ^~~~~~~~~~~~~~~~~
+/work/control.cc:167:62: note: ‘input_requirement’ was declared here
+  167 |     TruncateJSPrimitiveToUntaggedOrDeoptOp::InputRequirement input_requirement;
+      |                                                              ^~~~~~~~~~~~~~~~~
