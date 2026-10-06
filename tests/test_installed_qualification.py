@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 import copy
 import importlib.util
+import os
 from pathlib import Path
 import sys
 import tempfile
@@ -14,6 +15,56 @@ loader.loader.exec_module(module)
 
 
 class InstalledQualificationTest(unittest.TestCase):
+    def test_fixture_log_preserves_reopened_stdout_and_stderr(self):
+        script = '''import os
+os.write(1, b'before\\n')
+saved = os.open('/proc/self/fd/1', os.O_WRONLY)
+os.dup2(saved, 1)
+os.close(saved)
+os.write(1, b'after\\n')
+os.write(2, b'diagnostic\\n')
+'''
+        with tempfile.TemporaryDirectory() as temporary:
+            log = Path(temporary) / 'output.log'
+            result = module.run_logged([sys.executable, '-c', script], log,
+                                       owner=(os.getuid(), os.getgid()))
+            self.assertEqual(result.returncode, 0)
+            self.assertEqual(log.read_bytes(), b'before\nafter\ndiagnostic\n')
+
+    def test_fixture_log_streams_large_output_and_retains_failure(self):
+        script = 'import os; os.write(1, b"x" * 1048576); os.write(2, b"failure"); raise SystemExit(7)'
+        with tempfile.TemporaryDirectory() as temporary:
+            log = Path(temporary) / 'output.log'
+            result = module.run_logged([sys.executable, '-c', script], log,
+                                       owner=(os.getuid(), os.getgid()))
+            self.assertEqual(result.returncode, 7)
+            self.assertEqual(log.read_bytes(), b'x' * 1048576 + b'failure')
+
+    def test_fixture_log_failure_closes_descriptors_without_starting_child(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            log = Path(temporary) / 'output.log'
+            before = set(os.listdir('/proc/self/fd'))
+            with (patch.object(module.os, 'fchown', side_effect=PermissionError('owner')),
+                  patch.object(module.subprocess, 'Popen') as start):
+                with self.assertRaises(PermissionError):
+                    module.run_logged(['not-started'], log, owner=(os.getuid(), os.getgid()))
+                start.assert_not_called()
+            self.assertEqual(set(os.listdir('/proc/self/fd')), before)
+            with self.assertRaises(FileNotFoundError):
+                module.run_logged(['/nonexistent/qore-fixture'], log,
+                                  owner=(os.getuid(), os.getgid()))
+            self.assertEqual(set(os.listdir('/proc/self/fd')), before)
+
+    def test_fixture_log_write_failure_terminates_child_and_closes_descriptors(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            log = Path(temporary) / 'output.log'
+            before = set(os.listdir('/proc/self/fd'))
+            with patch.object(module.shutil, 'copyfileobj', side_effect=OSError('full')):
+                with self.assertRaisesRegex(OSError, 'full'):
+                    module.run_logged([sys.executable, '-c', 'import os; os.read(0, 1)'],
+                                      log, owner=(os.getuid(), os.getgid()))
+            self.assertEqual(set(os.listdir('/proc/self/fd')), before)
+
     def setUp(self):
         self.manifest = {'schema': 1, 'family': 'fedora', 'arch': 'aarch64', 'core_commit': 'a' * 40,
                          'signing_key': {'url': 'https://example.org/key.asc', 'sha256': 'f' * 64},

@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import pwd
 import re
 import shutil
 import subprocess
@@ -255,6 +256,41 @@ def check_prerequisites(family):
         raise ValueError('Missing qualification fixture commands: ' + ', '.join(missing))
 
 
+def run_logged(command, path, cwd=None, env=None, owner=None):
+    """Stream fixture output through a pipe owned by its unprivileged writer.
+
+    A fixture may save and restore stdout using /proc/self/fd. Giving it a
+    root-owned regular log prevents reopening that descriptor; a writable
+    regular file instead permits independent offsets to overwrite earlier
+    output. An owned pipe supports descriptor reopening and preserves every
+    byte in the parent-owned log without buffering the whole suite in memory.
+    """
+    with path.open('wb') as log:
+        if owner is None:
+            return subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, cwd=cwd, env=env)
+        read_fd, write_fd = os.pipe()
+        try:
+            os.fchown(write_fd, *owner)
+            with os.fdopen(read_fd, 'rb') as reader:
+                read_fd = None
+                with os.fdopen(write_fd, 'wb') as writer:
+                    write_fd = None
+                    with subprocess.Popen(command, stdout=writer, stderr=subprocess.STDOUT,
+                                          cwd=cwd, env=env) as process:
+                        writer.close()
+                        try:
+                            shutil.copyfileobj(reader, log)
+                        except BaseException:
+                            process.kill()
+                            raise
+                        return subprocess.CompletedProcess(command, process.wait())
+        finally:
+            if read_fd is not None:
+                os.close(read_fd)
+            if write_fd is not None:
+                os.close(write_fd)
+
+
 def qualify(manifest, output):
     validate(manifest)
     if platform.machine() != manifest['arch']:
@@ -267,9 +303,10 @@ def qualify(manifest, output):
     result = {'manifest': manifest, 'machine': platform.machine(),
               'runner_arch': os.environ.get('CI_RUNNER_EXECUTABLE_ARCH'), 'steps': []}
 
-    def run(name, command, cwd=None, env=None):
-        with (output / (name + '.log')).open('w') as log:
-            process = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, cwd=cwd, env=env)
+    def run(name, command, cwd=None, env=None, fixture=False):
+        owner = pwd.getpwnam('qoretester') if fixture else None
+        process = run_logged(command, output / (name + '.log'), cwd=cwd, env=env,
+                             owner=(owner.pw_uid, owner.pw_gid) if owner else None)
         result['steps'].append({'name': name, 'command': command, 'exit_code': process.returncode})
         print(name, process.returncode, flush=True)
         process.check_returncode()
@@ -332,7 +369,8 @@ def qualify(manifest, output):
                     directory.mkdir()
                     subprocess.run(['chown', 'qoretester:qoretester', str(directory)], check=True)
                     run(phase + '-' + suite, ['runuser', '-u', 'qoretester', '--', 'env',
-                        'QORE_RPM_TEST_TMP=' + str(directory), str(source / 'rpm/tests-installed' / suite)])
+                        'QORE_RPM_TEST_TMP=' + str(directory), str(source / 'rpm/tests-installed' / suite)],
+                        fixture=True)
                 for entry in manifest.get('modules', []):
                     name = entry['name']
                     directory = root / (phase + '-' + name)
@@ -356,7 +394,8 @@ def qualify(manifest, output):
                         environment.extend(['-u', variable])
                     environment.append('AUTOPKGTEST_TMP=' + str(directory))
                     for suite, command in module_commands(name, phase, directory, binary, driver, files):
-                        run(phase + '-' + name + '-' + suite, environment + command, cwd=directory)
+                        run(phase + '-' + name + '-' + suite, environment + command,
+                            cwd=directory, fixture=True)
         result['exit_code'] = 0
     except BaseException as error:
         result.update(exit_code=1, error=repr(error))

@@ -80,6 +80,9 @@ The manifest validator rejects missing fixtures, cross-repository URLs, mutable
 revisions, duplicate modules and incorrect package phases before installation.
 Native results and raw logs are retained as pipeline artifacts. A passing build
 or local command check alone does not qualify the native installed packages.
+Fixture output uses a pipe owned by the test user, streamed into the runner's
+log. Tests can save and restore stdout without permission failures or overwriting
+earlier log entries; nonzero exit statuses still fail qualification.
 
 ``RPM_NATIVE_QUALIFICATION=modules3`` retains those five modules and adds
 filesystem events, TAR, ZIP, ncurses and MessagePack. AOT providers are resolved

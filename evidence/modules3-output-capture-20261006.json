@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "root_cause": "Qualification gave unprivileged suites a root-owned regular stdout/stderr file. Ncurses tests reopen these descriptors to exercise redirection. Reopening for writing fails; granting file ownership instead permits independent file offsets to overwrite earlier output. The runner now streams an unprivileged-user-owned pipe into its private regular log. This preserves access, byte order, bounded memory and failure statuses. Package code and test expectations are unchanged.",
+  "native_failures": {
+    "fedora": 208746,
+    "leap": 208747,
+    "el10": 208748
+  },
+  "controls": {
+    "root": {
+      "log": "work/ncurses-log-control-20261006/root.log",
+      "sha256": "a00ce4be8fbb78ef2b48a044a42d5496e2e899fa3ca404d438448bf7b71250e5",
+      "suites": 5,
+      "cases": 206,
+      "assertions": 878
+    },
+    "user": {
+      "log": "work/ncurses-log-control-20261006/user.log",
+      "sha256": "ab3972823d5225dc59984642416864738b544d7761f0b89fe85630a8efcbce7c",
+      "suites": 11,
+      "cases": 372,
+      "assertions": 1585
+    },
+    "pipe": {
+      "log": "work/ncurses-pipe-control-20261006/output.log",
+      "sha256": "9ba910667cd016a9ea63cec1c5baee55734d877a8207c47f6efba7b8706908ab",
+      "suites": 11,
+      "cases": 372,
+      "assertions": 1585
+    }
+  },
+  "unit_tests": {
+    "count": 156,
+    "result": "pass",
+    "log": "results/modules3-log-runner-tests-20261006.log"
+  },
+  "diagnostics": "Only previously approved ProviderIndexUtil/msgpack fallback in complete pipe control.",
+  "status": "Local unit and installed controls pass; repeat native ARM qualification required."
+}
