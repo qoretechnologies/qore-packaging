@@ -1,0 +1,38 @@
+{
+  "base_image": "sha256:e60c2cce164312f4c0c8dd2a74a69c6d0a011a9d0d174437e862f63eb674aeab",
+  "image": "sha256:70aa8d565f44e594fcf8326e517e8c3a12a3fa6e7b2b36a439dd50338c851706",
+  "packages": [
+    "/qualified/rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261003.21-21.fc44.noarch.rpm",
+    "/qualified/rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261003.21-21.fc44.noarch.rpm",
+    "/qualified/rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261003.21-21.fc44.noarch.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261003.21-21.fc44.x86_64.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/qore-3.0.0~git20261003.21-21.fc44.x86_64.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261003.21-21.fc44.x86_64.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261003.21-21.fc44.x86_64.rpm"
+  ],
+  "command": [
+    "docker",
+    "create",
+    "--name",
+    "qore-zmq-sdk21-fedora-20261006",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-21:/qualified:ro",
+    "sha256:e60c2cce164312f4c0c8dd2a74a69c6d0a011a9d0d174437e862f63eb674aeab",
+    "sh",
+    "-eu",
+    "-c",
+    "rpm -Uvh \"$@\"\npython3 -c 'from pathlib import Path; assert \"option(QORE_GENERATE_JAVA_BINDINGS\" in Path(\"/usr/lib64/cmake/Qore/QoreMacros.cmake\").read_text()'\n/usr/bin/qore --version",
+    "refresh-sdk",
+    "/qualified/rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261003.21-21.fc44.noarch.rpm",
+    "/qualified/rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261003.21-21.fc44.noarch.rpm",
+    "/qualified/rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261003.21-21.fc44.noarch.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/libqore-3.0.0~git20261003.21-21.fc44.x86_64.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/qore-3.0.0~git20261003.21-21.fc44.x86_64.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261003.21-21.fc44.x86_64.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261003.21-21.fc44.x86_64.rpm"
+  ],
+  "exit_code": 0,
+  "log_sha256": "176c0b983d9158a21df7aa24421f557cb46b43de81d08cff88651cb3def56718"
+}

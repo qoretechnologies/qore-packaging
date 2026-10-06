@@ -1,0 +1,17 @@
+[
+  "docker",
+  "run",
+  "--rm",
+  "--init",
+  "--network",
+  "none",
+  "--user",
+  "1019:100",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/work/zmq-sandbox-debug-20261006:/work",
+  "sha256:20df4aae2e0be4bbe88da93d76814c4b3eddcf329f4eb6e6cc901264d075ab46",
+  "sh",
+  "-eu",
+  "-c",
+  "set -eu\ntest \"$(command -v qore)\" = /usr/bin/qore\ncd /work/qore-zmq-module-1.2.0\ncmake -S . -B build-debug -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/usr -DUSE_SYSTEM_ZMQ=OFF -DFETCHCONTENT_FULLY_DISCONNECTED=ON -DFETCHCONTENT_SOURCE_DIR_LIBZMQ=\"$PWD/libzmq-4.3.5\" -DFETCHCONTENT_SOURCE_DIR_CZMQ=\"$PWD/czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017\" -DENABLE_WS=ON -DWITH_TLS=ON -DWITH_LIBBSD=ON -DCZMQ_WITH_UUID=ON -DCZMQ_WITH_LZ4=ON -DCZMQ_WITH_SYSTEMD=OFF -DCZMQ_WITH_LIBCURL=OFF -DCZMQ_WITH_NSS=OFF -DCZMQ_WITH_LIBMICROHTTPD=OFF -DCMAKE_SKIP_RPATH=ON -DCMAKE_DISABLE_FIND_PACKAGE_Doxygen=ON -DQore_DIR=/usr/lib64/cmake/Qore -DQORE_EXECUTABLE=/usr/bin/qore -DQORE_QPP_EXECUTABLE=/usr/bin/qpp\ncmake --build build-debug --parallel 2\ngrep -q '^CMAKE_BUILD_TYPE:STRING=Debug$' build-debug/CMakeCache.txt\nmodule=\"$PWD/build-debug/zmq-api-$(qore --latest-module-api).qmod\"\npython3 -B -W error test/run-sandbox-errors.py --module \"$module\"\nvalgrind --error-exitcode=99 --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=definite,indirect,possible --log-file=/work/valgrind.log qore -b --enable-debug -l \"$module\" test/zmq-sandbox-errors.qtest\n"
+]

@@ -1,0 +1,29 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results:/results:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/modules4-command-integration3-20261006:/work",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/checkouts/module-zmq-sandbox-20261006:/source:ro",
+    "sha256:06a3f6535f3ede6c8e1474bfc82e4dcb9b5139b78debbc2644a8164abc33bc3f",
+    "sh",
+    "-eu",
+    "-c",
+    "set -eu\nrpm -U --replacepkgs \"$@\"\nmodule=$(rpm -ql qore-zmq-module | sed -n '/\\.qmod$/p')\nexec setpriv --reuid=1019 --regid=100 --clear-groups --reset-env python3 -B -W error /source/test/run-sandbox-errors.py --module \"$module\"\n",
+    "install",
+    "/results/fedora-final-9-cairo/rpmbuild/RPMS/x86_64/qore-cairo-module-1.0.0-1.fc44.x86_64.rpm",
+    "/results/fedora-final-9-geos/rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-2.fc44.x86_64.rpm",
+    "/results/fedora-final-9-git/rpmbuild/RPMS/x86_64/qore-git-module-1.0.0-1.fc44.x86_64.rpm",
+    "/results/fedora-imagemagick-final/rpmbuild/RPMS/x86_64/qore-imagemagick-module-1.0.0-1.fc44.x86_64.rpm",
+    "/results/fedora-zmq-final/rpmbuild/RPMS/x86_64/qore-zmq-module-1.2.0-1.fc44.x86_64.rpm"
+  ],
+  "exit_code": 1,
+  "unhandled_errors": 699
+}

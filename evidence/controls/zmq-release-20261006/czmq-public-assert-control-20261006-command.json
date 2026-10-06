@@ -1,0 +1,21 @@
+[
+  "docker",
+  "run",
+  "--rm",
+  "--init",
+  "--network",
+  "none",
+  "--user",
+  "1019:100",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/work/zmq-sandbox-debug-20261006:/module:ro",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/work/czmq-public-assert-control-20261006:/work",
+  "-w",
+  "/work",
+  "sha256:097644586aca65bf80cfd3e3ff505112a414144e315642c9a4d93cd249e88b48",
+  "sh",
+  "-eu",
+  "-c",
+  "set -eu\nsource=/module/qore-zmq-module-1.2.0\nczmq=\"$source/czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017\"\nbuild=\"$source/build-debug\"\nfor mode in ndebug assertions; do\n  if test \"$mode\" = ndebug; then policy=-DNDEBUG; else policy=-UNDEBUG; fi\n  gcc -O2 -g -std=gnu99 -DZMQ_BUILD_DRAFT_API=1 -DCZMQ_BUILD_DRAFT_API=1 -DCZMQ_STATIC -DZMQ_STATIC -D_GNU_SOURCE \"$policy\" -I\"$czmq/src\" -I\"$czmq/include\" -I\"$build/_deps/czmq-build\" -I\"$source/libzmq-4.3.5/include\" -I\"$build/_deps/libzmq-build\" -c \"$czmq/src/zhashx.c\" -o \"$mode.o\"\n  gcc -O2 -g -std=gnu99 -DZMQ_BUILD_DRAFT_API=1 -DCZMQ_BUILD_DRAFT_API=1 -DCZMQ_STATIC -DZMQ_STATIC -D_GNU_SOURCE -DNDEBUG -I\"$czmq/include\" -I\"$build/_deps/czmq-build\" -I\"$source/libzmq-4.3.5/include\" -c control.c -o control.o\n  g++ control.o \"$mode.o\" \"$build/_deps/czmq-build/libczmq.a\" \"$build/_deps/libzmq-build/lib/libzmq.a\" -lsodium -lgnutls -llz4 -luuid -lbsd -pthread -o \"$mode\"\ndone\nset +e\n./ndebug > negative.log 2>&1\nstatus=$?\nset -e\ntest \"$status\" = 3\n./assertions\nvalgrind --error-exitcode=99 --leak-check=full --errors-for-leak-kinds=all --log-file=valgrind.log ./assertions\n"
+]
