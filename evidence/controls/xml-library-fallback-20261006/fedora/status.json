@@ -1,0 +1,24 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/xml-library-fallback2-20261006:/control:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/xml-library-fallback2-20261006/fedora:/output",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/fedora-xml-final-build-2/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.fc44.x86_64.rpm:/xml.rpm:ro",
+    "sha256:70aa8d565f44e594fcf8326e517e8c3a12a3fa6e7b2b36a439dd50338c851706",
+    "python3",
+    "-B",
+    "-W",
+    "error",
+    "/control/run.py"
+  ],
+  "xml_rpm_sha256": "e0883c042984614e2907bee093959bc39d0d84863354ab13eadf3053e606cbb3"
+}

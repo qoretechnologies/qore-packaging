@@ -1,0 +1,2178 @@
+# -*- mode: qore; indent-tabs-mode: nil -*-
+#! @file DataProvider.qm module for data access and introspection
+
+/*  DataProvider.qm Copyright 2019 - 2026 Qore Technologies, s.r.o.
+
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the "Software"),
+    to deal in the Software without restriction, including without limitation
+    the rights to use, copy, modify, merge, publish, distribute, sublicense,
+    and/or sell copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+*/
+
+# minimum required Qore version
+%requires qore >= 2.0
+# assume local scope for variables, do not use "$" signs
+%modern
+# Pipelines retain weak references to their components.
+%allow-weak-references
+# require type definitions everywhere
+# strict argument handling
+# enable all warnings
+
+%requires(reexport) reflection
+%requires(reexport) Util
+%requires(reexport) MapperUtil
+%requires(reexport) Mime
+%requires(reexport) Logger
+%requires(reexport) ProviderIndexUtil
+%requires i18n
+
+%requires yaml
+
+%requires json
+
+%try-module xml
+%define NoXml
+%endtry
+
+module DataProvider {
+    version = "3.9";
+    desc = "user module for data integration patterns and data and API introspection";
+    author = "David Nichols <david@qore.org>";
+    url = "http://qore.org";
+    license = "MIT";
+    init = sub () {
+        # register module-conditional expression implementations
+        hash<auto> extra;
+        extra += YamlExpressionImplementations;
+        extra += JsonExpressionImplementations;
+%ifndef NoXml
+        extra += XmlExpressionImplementations;
+%endif
+        if (extra) {
+            AbstractDataProvider::ExtraExpressionImplementations = extra;
+        }
+
+        # register the data provider factory
+        DataProvider::registerFactory(new NullDataProviderFactory());
+
+        # register the Qore processors data provider factory
+        DataProvider::registerFactory(new QoreProcessorsDataProviderFactory());
+
+        # register the Qore processors app
+        DataProviderActionCatalog::registerApp(<DataProviderAppInfo>{
+            "name": QoreApp::AppName,
+            "presentation_source_locale": "en",
+            "display_name": "Qore",
+            "short_desc": "Built-in data pipeline processors",
+            "desc": "Built-in Qore data pipeline processors for filtering, transforming, "
+                "and manipulating records in data pipelines",
+            "logo": QoreApp::QoreLogo,
+            "logo_file_name": "Qore-Q-square.svg",
+            "logo_mime_type": MimeTypeSvg,
+            "groups": (AppGroup::DataTransformation,),
+        });
+
+        # register filter-records action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "filter-records",
+            "display_name": "Filter Records",
+            "short_desc": "Filter records by expression or DPQL string",
+            "desc": "Filter pipeline records using either a structured `where_cond` expression or a `dpql_where` "
+                "string; matching records pass through, non-matching records are dropped",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_FILTER,
+            "output_data_type": DPAD_PASS_THROUGH,
+            "cls": "DataProvider::QoreFilterRecordsProcessor",
+            "groups": ("Filtering",),
+            "data_dependent_options": True,
+            "data_provider_info": <DataProviderInfo>{
+                "type": "QoreFilterRecordsProcessor",
+                "supports_pipeline_processor": True,
+                "expressions": DataProviderGenericExpressions,
+            },
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                {
+                    "where_cond": <DataProviderOptionInfo>{
+                        "display_name": "Filter Expression",
+                        "short_desc": "A boolean filter expression",
+                        "desc": "A boolean expression to filter records; matching records pass "
+                            "through, non-matching records are dropped",
+                        "type": AbstractDataProviderTypeMap."*bool",
+                        "server_expression_handling": True,
+                    },
+                    "dpql_where": <DataProviderOptionInfo>{
+                        "display_name": "DPQL Filter",
+                        "short_desc": "A DPQL string filter expression",
+                        "desc": "A DPQL string expression to filter records; use this option when writing the "
+                            "predicate directly as text instead of using the expression builder",
+                        "type": AbstractDataProviderTypeMap."*string",
+                        "example_value": "@status == \"active\" && @score >= 90",
+                    },
+                }, {
+                    "loc": "constructor",
+                    "default_view": UiOptionView::Expression,
+                }
+            ),
+        });
+
+        # register select-fields action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "select-fields",
+            "display_name": "Select Fields",
+            "short_desc": "Select and optionally rename fields from records",
+            "desc": "Select specific fields from each record and optionally rename them; "
+                "only the selected fields appear in the output.\n\n"
+                "Use `name` to keep a field as-is, or `new_name=old_name` to rename it",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_TRANSFORM,
+            "output_data_type": DPAD_MODIFIED_PASS_THROUGH,
+            "cls": "DataProvider::QoreSelectFieldsProcessor",
+            "groups": ("Transformation",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreSelectFieldsProcessor::ConstructorOptions, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register set-fields action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "set-fields",
+            "display_name": "Set Fields",
+            "short_desc": "Set fields to constant values in each record",
+            "desc": "Add or overwrite fields with constant values in each record passing through "
+                "the pipeline",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_TRANSFORM,
+            "output_data_type": DPAD_MODIFIED_PASS_THROUGH,
+            "cls": "DataProvider::QoreSetFieldsProcessor",
+            "groups": ("Transformation",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreSetFieldsProcessor::ConstructorOptions, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register remove-fields action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "remove-fields",
+            "display_name": "Remove Fields",
+            "short_desc": "Remove specified fields from records",
+            "desc": "Remove one or more fields from each record passing through the pipeline; "
+                "fields not in the removal list are passed through unchanged",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_TRANSFORM,
+            "output_data_type": DPAD_MODIFIED_PASS_THROUGH,
+            "cls": "DataProvider::QoreRemoveFieldsProcessor",
+            "groups": ("Transformation",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreRemoveFieldsProcessor::ConstructorOptions, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register search-replace action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "search-replace",
+            "display_name": "Search and Replace",
+            "short_desc": "Search and replace text in a record field",
+            "desc": "Perform search and replace on a string field in each record; supports both "
+                "literal string matching and regular expression patterns",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_TRANSFORM,
+            "output_data_type": DPAD_PASS_THROUGH,
+            "cls": "DataProvider::QoreSearchReplaceProcessor",
+            "groups": ("Transformation",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreSearchReplaceProcessor::ConstructorOptions{"field", "search", "replace"}, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ) + DataProviderActionCatalog::getActionOptionFromFields(
+                QoreSearchReplaceProcessor::ConstructorOptions{"is_regex", "regex_options"}, {
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register record-limit action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "record-limit",
+            "display_name": "Record Limit",
+            "short_desc": "Limit the number of records passing through",
+            "desc": "Limit the number of records passing through the pipeline; the first N records "
+                "pass through and all subsequent records are dropped",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_FILTER,
+            "output_data_type": DPAD_PASS_THROUGH,
+            "cls": "DataProvider::QoreRecordLimitProcessor",
+            "groups": ("Filtering",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreRecordLimitProcessor::ConstructorOptions, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register running-stats action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "running-stats",
+            "display_name": "Running Statistics",
+            "short_desc": "Compute running statistics over windows of numeric records",
+            "desc": "Compute running statistics over a sliding window of records for each "
+                "configured numeric field; emits one analytics event per field when each "
+                "window is full.\n\n"
+                "Computed statistics:\n"
+                "- `count`, `sum`, `avg` (mean)\n"
+                "- `min_val`, `max_val`\n"
+                "- `stddev` (standard deviation), `variance`",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_ANALYTICS,
+            "cls": "DataProvider::QoreRunningStatsProcessor",
+            "groups": ("Analytics",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreRunningStatsProcessor::ConstructorOptions, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register moving-average action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "moving-average",
+            "display_name": "Moving Average",
+            "short_desc": "Compute simple and exponential moving averages per record",
+            "desc": "Compute simple moving average (`SMA`) and exponential moving average (`EMA`) "
+                "for each configured numeric field; emits one analytics event per input record "
+                "with the current `SMA` and `EMA` values",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_ANALYTICS,
+            "cls": "DataProvider::QoreMovingAverageProcessor",
+            "groups": ("Analytics",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreMovingAverageProcessor::ConstructorOptions{"fields", "window_size"}, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ) + DataProviderActionCatalog::getActionOptionFromFields(
+                QoreMovingAverageProcessor::ConstructorOptions{"ema_alpha",}, {
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register trend-analysis action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "trend-analysis",
+            "display_name": "Trend Analysis",
+            "short_desc": "Detect trends using linear regression over windows of records",
+            "desc": "Compute linear regression trend analysis (`slope`, `intercept`, "
+                "`r_squared`, `direction`) over a window of records for each configured "
+                "numeric field; emits one analytics event per field when each window is full "
+                "with the trend direction (`rising`, `falling`, or `flat`)",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_ANALYTICS,
+            "cls": "DataProvider::QoreTrendAnalysisProcessor",
+            "groups": ("Analytics",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreTrendAnalysisProcessor::ConstructorOptions{"fields", "window_size"}, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ) + DataProviderActionCatalog::getActionOptionFromFields(
+                QoreTrendAnalysisProcessor::ConstructorOptions{"direction_threshold",}, {
+                    "preselected": True,
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register anomaly-detection action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "anomaly-detection",
+            "display_name": "Anomaly Detection",
+            "short_desc": "Detect anomalous values using z-score analysis per record",
+            "desc": "Detect anomalous values in each configured numeric field using z-score "
+                "analysis against a sliding window; emits one analytics event per input record "
+                "indicating whether the value exceeds the configured `threshold`",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_ANALYTICS,
+            "cls": "DataProvider::QoreAnomalyDetectionProcessor",
+            "groups": ("Analytics",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreAnomalyDetectionProcessor::ConstructorOptions{"fields", "window_size"}, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ) + DataProviderActionCatalog::getActionOptionFromFields(
+                QoreAnomalyDetectionProcessor::ConstructorOptions{"threshold",}, {
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register percentile action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "percentile",
+            "display_name": "Calculate Data Distribution",
+            "short_desc": "Computes median, quartiles, and spread of values",
+            "desc": "Analyzes the distribution of numeric values in each window by computing "
+                "percentiles (median, quartiles, and custom values), interquartile range "
+                "(`iqr`), skewness (whether the data leans left or right), and kurtosis "
+                "(whether values cluster tightly or spread out).\n\n"
+                "For example, for transaction amounts it can show that 50% are under "
+                "$100, 90% are under $500, and the spread between the 25th and 75th "
+                "percentile is $200.",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_ANALYTICS,
+            "cls": "DataProvider::QorePercentileProcessor",
+            "groups": ("Analytics",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QorePercentileProcessor::ConstructorOptions{"fields", "window_size"}, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ) + DataProviderActionCatalog::getActionOptionFromFields(
+                QorePercentileProcessor::ConstructorOptions{"percentiles",}, {
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register correlation action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "correlation",
+            "display_name": "Find Related Fields",
+            "short_desc": "Measures how strongly fields move together",
+            "desc": "Computes the Pearson correlation coefficient between all pairs of "
+                "configured numeric fields to measure how strongly they move together. "
+                "Values range from `-1.0` (perfect inverse relationship) to `1.0` (perfect "
+                "direct relationship), with `0.0` meaning no linear relationship.\n\n"
+                "For example, it can show that temperature and ice cream sales are strongly "
+                "correlated (`0.92`) while humidity and sales are weakly correlated (`-0.15`).",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_AGGREGATE,
+            "cls": "DataProvider::QoreCorrelationProcessor",
+            "groups": ("Analytics",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreCorrelationProcessor::ConstructorOptions, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register cross-correlation action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "cross-correlation",
+            "display_name": "Find Delayed Relationships",
+            "short_desc": "Discovers if changes in one field predict changes in another",
+            "desc": "Computes time-lagged cross-correlation between two fields to discover "
+                "whether changes in one field predict changes in another after a delay.\n\n"
+                "For example, it can show that a spike in marketing spend correlates with "
+                "increased revenue 3 periods later (`lag = 3`, `correlation = 0.85`).",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_AGGREGATE,
+            "cls": "DataProvider::QoreCrossCorrelationProcessor",
+            "groups": ("Analytics",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreCrossCorrelationProcessor::ConstructorOptions{
+                    "field_x", "field_y", "window_size",
+                }, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ) + DataProviderActionCatalog::getActionOptionFromFields(
+                QoreCrossCorrelationProcessor::ConstructorOptions{"max_lag",}, {
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register histogram action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "histogram",
+            "display_name": "Count Value Ranges",
+            "short_desc": "Groups values into ranges and counts how many fall in each",
+            "desc": "Creates a frequency distribution by dividing the range of values into "
+                "bins and counting how many values fall in each bin. Supports `uniform` "
+                "(equal-width) and `quantile` (equal-count) binning.\n\n"
+                "For example, for response times it can show that 80% of requests complete "
+                "in 0-100ms, 15% in 100-200ms, and 5% take over 200ms.",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_ANALYTICS,
+            "cls": "DataProvider::QoreHistogramProcessor",
+            "groups": ("Analytics",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreHistogramProcessor::ConstructorOptions{"fields", "window_size"}, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ) + DataProviderActionCatalog::getActionOptionFromFields(
+                QoreHistogramProcessor::ConstructorOptions{"n_bins", "bin_method"}, {
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register rate-of-change action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "rate-of-change",
+            "display_name": "Measure Speed of Change",
+            "short_desc": "Tracks how fast values are changing and accelerating",
+            "desc": "Computes the `rate_of_change` (first derivative), `acceleration` "
+                "(second derivative), and `percent_change` for each record relative to its "
+                "sliding window history.\n\n"
+                "For example, it can show that revenue is growing at $1,000/period and "
+                "accelerating (the growth rate is itself increasing).",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_ANALYTICS,
+            "cls": "DataProvider::QoreRateOfChangeProcessor",
+            "groups": ("Analytics",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreRateOfChangeProcessor::ConstructorOptions{"fields", "window_size"}, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ) + DataProviderActionCatalog::getActionOptionFromFields(
+                QoreRateOfChangeProcessor::ConstructorOptions{"smoothing",}, {
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register ewma-control-chart action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "ewma-control-chart",
+            "display_name": "Monitor Process Stability",
+            "short_desc": "Detects when values drift outside normal operating range",
+            "desc": "Monitors a process using an Exponentially Weighted Moving Average (EWMA) "
+                "control chart to detect when values drift outside the normal operating range. "
+                "The EWMA smooths out noise while detecting sustained shifts. Each record is "
+                "classified as `normal`, `upper_violation`, or `lower_violation`.\n\n"
+                "For example, it can detect when a server's average response time gradually "
+                "drifts upward beyond its normal range.",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_ANALYTICS,
+            "cls": "DataProvider::QoreEWMAControlChartProcessor",
+            "groups": ("Analytics",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreEWMAControlChartProcessor::ConstructorOptions{"fields", "window_size"}, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ) + DataProviderActionCatalog::getActionOptionFromFields(
+                QoreEWMAControlChartProcessor::ConstructorOptions{
+                    "lambda", "sigma_multiplier", "target",
+                }, {
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register seasonality-detection action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "seasonality-detection",
+            "display_name": "Detect Repeating Patterns",
+            "short_desc": "Finds cyclical patterns in data automatically",
+            "desc": "Detects repeating cyclical patterns in the data using autocorrelation "
+                "analysis. It automatically identifies the dominant period without requiring "
+                "the user to specify it upfront.\n\n"
+                "For example, it can discover that sales data has a weekly pattern "
+                "(`period = 7`) with a correlation of `0.85`, or that a temperature sensor "
+                "shows both daily (`period = 24`) and yearly patterns.",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_ANALYTICS,
+            "cls": "DataProvider::QoreSeasonalityDetectionProcessor",
+            "groups": ("Analytics",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreSeasonalityDetectionProcessor::ConstructorOptions{"fields", "window_size"}, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ) + DataProviderActionCatalog::getActionOptionFromFields(
+                QoreSeasonalityDetectionProcessor::ConstructorOptions{
+                    "max_period", "min_correlation",
+                }, {
+                    "loc": "constructor",
+                }
+            ),
+        });
+
+        # register group-by action
+        DataProviderActionCatalog::registerAction(<DataProviderActionInfo>{
+            "app": QoreApp::AppName,
+            "path": "/",
+            "action": "group-by",
+            "display_name": "Group By and Aggregate",
+            "short_desc": "Group records by field values and compute aggregates per group",
+            "desc": "Group records by one or more field values and compute aggregate "
+                "functions per group; emits one output record per group on flush with the "
+                "group field values and computed aggregates.\n\n"
+                "Supported aggregate functions: `count()`, `sum(field)`, `avg(field)`, "
+                "`min(field)`, `max(field)`, `first(field)`, `last(field)`",
+            "action_code": DPAT_PIPELINE_PROCESSOR,
+            "processor_capabilities": DPC_AGGREGATE,
+            "cls": "DataProvider::QoreGroupByProcessor",
+            "groups": ("Aggregation",),
+            "options": DataProviderActionCatalog::getActionOptionFromFields(
+                QoreGroupByProcessor::ConstructorOptions{"aggregates",}, {
+                    "preselected": True,
+                    "required": True,
+                    "loc": "constructor",
+                }
+            ) + DataProviderActionCatalog::getActionOptionFromFields(
+                QoreGroupByProcessor::ConstructorOptions{"group_by",}, {
+                    "preselected": True,
+                    "loc": "constructor",
+                }
+            ),
+        });
+    };
+}
+
+/** @mainpage DataProvider Module
+
+    @tableofcontents
+
+    @section dataproviderintro Introduction to the DataProvider Module
+
+    @htmlonly
+    <div class="image">
+      <img src="DataProvider-Full.svg" alt="DataProvider Logo" style="width:40%;">
+    </div>
+    @endhtmlonly
+
+    The %DataProvider module provides APIs for hierarchical data structures from arbitrary sources to be described,
+    queried, introspected, and updated.  It supports data providers supporting record-based APIs as well as
+    request-reply semantics such as REST schemas or with SOAP messaging, as well as event-based data providers.
+
+    The data provider module supports high-performance reading (native or simulated searching, also with advanced
+    search expression support) and writing as well as record creation, upserting, and transaction management for
+    record-based data providers if supported by the underlying data provider implementation as well.
+
+    The %Qore command-line program \c qdp provides a user-friendly interface to data provider functionality.
+    It auto-detects DPQL search expressions and also supports forcing DPQL parsing with the \c -q/--dpql option,
+    for example:
+    @code{.py}
+qdp mydb/tables/users search -q '@name == "John"'
+    @endcode
+
+    @section dataprovider_qdp qdp Command-Line Usage
+
+    The \c qdp CLI exposes the DataProvider API for inspection and data access. It supports DPQL for search criteria,
+    auto-detects DPQL expressions by default, and can show DPQL syntax help with \c --dpql-help. For a full DPQL
+    reference, see @ref dataprovider_dpql "DPQL - Data Provider Query Language".
+
+    @par Example Searches
+    @code{.py}
+qdp mydb/tables/users search '@name == "John"'
+qdp mydb/tables/users search '@age between 18 and 65'
+qdp mydb/tables/users search '(@active == true) && (@age >= 21)'
+qdp mydb/tables/users search '@role in ("admin", "editor")'
+    @endcode
+    Use \c - or \c {} as an empty expression to return all records.
+
+    This module provides the following primary classes:
+    - @ref DataProvider::AbstractDataField "AbstractDataField"
+    - @ref DataProvider::AbstractDataProcessor "AbstractDataProcessor"
+    - @ref DataProvider::AbstractDataProvider "AbstractDataProvider"
+    - @ref DataProvider::AbstractDataProviderBulkOperation "AbstractDataProviderBulkOperation"
+    - @ref DataProvider::AbstractDataProviderBulkRecordInterface "AbstractDataProviderBulkRecordInterface"
+    - @ref DataProvider::AbstractDataProviderFactory "AbstractDataProviderFactory"
+    - @ref DataProvider::AbstractDataProviderRecordIterator "AbstractDataProviderRecordIterator"
+    - @ref DataProvider::DataProvider "DataProvider"
+    - @ref DataProvider::DataProviderBulkRecordIterator "DataProviderBulkRecordIterator"
+    - @ref DataProvider::DataProviderPipeline "DataProviderPipeline"
+    - @ref DataProvider::DefaultBulkInserter "DefaultBulkInserter"
+    - @ref DataProvider::DefaultBulkUpserter "DefaultBulkUpserter"
+    - @ref DataProvider::DefaultBulkRecordInterface "DefaultBulkRecordInterface"
+    - @ref DataProvider::DefaultRecordIterator "DefaultRecordIterator"
+    - @ref DataProvider::QoreDataField "QoreDataField"
+
+    Many classes for specific data types are provided as well.
+
+    @subsection dataprovider_modules Data Provider Modules
+
+    This module uses the \c "QORE_DATA_PROVIDERS" environment variable to register data provider
+    modules.  Each data provider registration module must provide one of the following two public functions.
+
+    @subsubsection dataprovider_dynamic_discovery Data Provider Dynamic Discovery
+
+    Implement a public function with the following signature to support dynamic discovery of data providers:
+    @code{.py}
+# returns a hash of connection provider factory names to module names
+public hash<string, string> sub get_data_provider_map() { ... }
+    @endcode
+
+    @subsubsection dataprovider_type_dynamic_discovery Data Provider Type Dynamic Discovery
+
+    Implement a public function with the following signature to support dynamic discovery of data provider types:
+    @code{.py}
+# returns a hash of type prefix paths (ex: \c "qore/sftp") to module names
+public hash<string, string> sub get_type_provider_map() { ... }
+    @endcode
+
+    Data provider registration modules declared in the \c "QORE_DATA_PROVIDERS" environment variable must
+    be separated by the platform-specific @ref Qore::PathSep "PathSep" character as in the following
+    examples:
+
+    @par Unix Example
+    @verbatim
+export QORE_DATA_PROVIDERS=MyDataProvider:OtherDataProvider
+    @endverbatim
+
+    @par Windows CMD.EXE Example
+    @verbatim
+set QORE_DATA_PROVIDERS=MyDataProvider;OtherDataProvider
+    @endverbatim
+
+    @par Windows PowerShell Example
+    @verbatim
+$env:QORE_DATA_PROVIDERS="MyDataProvider;OtherDataProvider"
+    @endverbatim
+
+    @section dataprovider_pipelines Data Provider Pipelines
+
+    Data provider pipelines allow for efficient processing of record or other data in multiple streams and, if
+    desired, in multiple threads.
+
+    Pipeline data can be any data type except a list, as list values are interpreted as multiple output values in
+    @ref DataProvider::AbstractDataProcessor "pipeline procesor objects".
+
+    @section dataprovider_pipeline_bulk_processing Data Provider Pipeline Bulk Processing
+
+    Bulk processing is processing of record data that is in "hash of lists" form, so a single hash, where each key
+    value is a list of values for that key.  Records can be formed as by taking each hash key and then using each
+    list value in order for the values of each record.  In case a key is assigned a single value instead of a
+    list, it's interpreted as constant value for all records.  Note that the first key value for bulk data must be a
+    list of values in order for the bulk data to be properly detected.
+
+    Each pipeline processor element must declare if it is compatible with bulk processing by implementing the
+    @ref DataProvider::AbstractDataProcessor::supportsBulkApiImpl() "AbstractDataProcessor::supportsBulkApiImpl()"
+    method.
+
+    If a processor does not support the bulk API, but bulk data is submitted, then the bulk data will be separately
+    iterated, and each record will be passed separately to the processor with a significant performance penalty when
+    processing large volumes of data.
+
+    Native bulk readers can return their most efficient runtime representation with
+    @ref DataProvider::AbstractDataProviderBulkRecordInterface::getShapedValue()
+    "AbstractDataProviderBulkRecordInterface::getShapedValue()".  This preserves
+    \c BufferColumns and \c DataFrameBlock values for shape-aware pipelines.  The older
+    @ref DataProvider::AbstractDataProviderBulkRecordInterface::getValue()
+    "getValue()" method remains the compatibility API and materializes a hash-of-lists view
+    when the native block is columnar.
+
+    @subsection dataprovider_pipeline_shapes Data Provider Pipeline Shape Negotiation
+
+    Pipelines can also negotiate explicit data shapes between processor stages with
+    @ref DataProvider::DataProviderShape "DataProviderShape".  This extends the older
+    \c supportsBulkApi() boolean with enough information to keep columnar data in its
+    most useful representation for as long as possible.
+
+    Supported shapes are:
+    - @ref DataProvider::DataProviderShape::RowRecords "RowRecords": one logical row at a time
+    - @ref DataProvider::DataProviderShape::HashOfLists "HashOfLists": bulk record blocks in hash-of-lists form
+    - @ref DataProvider::DataProviderShape::BufferColumns "BufferColumns": dense column blocks represented by
+      @ref Qore::SQL::ColumnarResult "ColumnarResult" objects or hashes whose values are typed \c buffer<T>
+      columns
+    - @ref DataProvider::DataProviderShape::DataFrameBlock "DataFrameBlock": a \c DataFrame object block from the
+      \c dataframe module
+
+    Processor classes advertise shapes with
+    @ref DataProvider::AbstractDataProcessor::getSupportedInputShapes()
+    "AbstractDataProcessor::getSupportedInputShapes()" and
+    @ref DataProvider::AbstractDataProcessor::getSupportedOutputShapes()
+    "AbstractDataProcessor::getSupportedOutputShapes()".  Pipelines keep the current shape when the next processor
+    supports it; otherwise they convert with
+    @ref DataProvider::AbstractDataProcessor::convertShape() "AbstractDataProcessor::convertShape()".
+    Shape-aware built-in processors preserve \c DataFrameBlock and \c BufferColumns bulk blocks for filter,
+    projection, update, search/replace, grouping, and analytics results when they can represent the output columns
+    without row materialization.
+    \c DataFrameBlock values convert to \c HashOfLists with \c df.toColumnHash() and to row records with
+    \c df.toRecords().  \c DataFrameBlock values convert to \c BufferColumns with \c df.toColumnarResult().
+    \c BufferColumns values convert back to rows or hash-of-lists for processors that do not yet support dense
+    columns directly.
+
+    Data providers advertise native bulk read and write shapes with \c bulk_read_shapes, \c bulk_create_shapes, and
+    \c bulk_upsert_shapes in @ref DataProvider::DataProviderInfo "DataProviderInfo".  Callers can inspect these with
+    @ref DataProvider::AbstractDataProvider::getBulkReadShapes() "getBulkReadShapes()",
+    @ref DataProvider::AbstractDataProvider::getBulkCreateShapes() "getBulkCreateShapes()", and
+    @ref DataProvider::AbstractDataProvider::getBulkUpsertShapes() "getBulkUpsertShapes()".  The shaped
+    @ref DataProvider::AbstractDataProvider::createRecordsShape() "createRecordsShape()" and
+    @ref DataProvider::AbstractDataProvider::upsertRecordsShape() "upsertRecordsShape()" APIs preserve native
+    blocks for providers that support them and fall back to hash-of-lists compatibility otherwise.
+
+    @par DataFrame Pipeline Example
+    @code{.py}
+%requires DataProviderDataFrame
+
+DataFrame::DataFrame orders(
+    ({"customer": "Acme", "status": "open", "amount": 150.0},
+     {"customer": "Beta", "status": "closed", "amount": 80.0},
+     {"customer": "Core", "status": "open", "amount": 220.0}));
+
+hash<DataProviderExpression> filter_expr = <DataProviderExpression>{
+    "exp": "&&",
+    "args": (
+        <DataProviderExpression>{
+            "exp": "==",
+            "args": (<DataProviderFieldReference>{"field": "status"}, "open"),
+        },
+        <DataProviderExpression>{
+            "exp": ">",
+            "args": (<DataProviderFieldReference>{"field": "amount"}, 100.0),
+        },
+    ),
+};
+
+list<hash<auto>> rows;
+DataProviderPipeline pipeline(<PipelineOptionInfo>{
+    "name": "open-large-orders",
+    "output_callback": sub (auto row) {
+        push rows, row;
+    },
+});
+
+pipeline.append(new QoreFilterRecordsProcessor({"where_cond": filter_expr}));
+pipeline.submit(orders);
+pipeline.waitDone();
+# rows now contains the matching DataFrame rows as record hashes.
+    @endcode
+
+    The same filter can also be written directly as DPQL:
+    @code{.py}
+pipeline.append(new QoreFilterRecordsProcessor({
+    "dpql_where": '@status == "open" && @amount > 100.0',
+}));
+
+# The where_cond option also accepts a DPQL string for simple programmatic setup.
+pipeline.append(new QoreFilterRecordsProcessor({
+    "where_cond": '@status == "open" && @amount > 100.0',
+}));
+    @endcode
+
+    @note
+    The built-in @ref DataProvider::QoreFilterRecordsProcessor "QoreFilterRecordsProcessor" supports
+    \c DataFrameBlock and \c BufferColumns directly when configured with either a structured \c where_cond
+    expression, a DPQL \c where_cond string, or a DPQL \c dpql_where string.  Supported scalar comparisons,
+    expression-to-expression comparisons, computed arithmetic, numeric function, trim/concat/null-handling,
+    case-folding, date-part, and row-independent date arithmetic expressions, \c between, \c inRange,
+    \c in, \c notIn, null checks, string predicates including \c containsAny, list membership predicates,
+    list/hash accessors, ternary computed values, boolean combinations, and structured strict
+    equality/inequality compile to DataFrame row masks or dense ColumnarResult \c buffer<bool> masks;
+    BufferColumns temporal comparisons
+    against Qore/DPQL date literals compare the dense microsecond values without materializing rows.
+    String predicates support the legacy
+    bool ignore-case argument and, when the \c i18n module is available, a locale options hash such as
+    <tt>{"locale": "tr-TR"}</tt> or <tt>{"locale": "en-US", "strength": "primary"}</tt> for ICU-backed
+    locale-sensitive comparison.  BufferColumns input also lowers
+    SQL-like \c like and regular expression predicates to dense masks.  More complex expressions fall back
+    to row-record evaluation while preserving the negotiated shape when possible.
+    @ref DataProvider::QoreSelectFieldsProcessor "QoreSelectFieldsProcessor",
+    @ref DataProvider::QoreRemoveFieldsProcessor "QoreRemoveFieldsProcessor", and
+    @ref DataProvider::QoreRecordLimitProcessor "QoreRecordLimitProcessor" preserve \c DataFrameBlock and
+    \c BufferColumns values for simple top-level field projection/removal and contiguous limiting.
+    @ref DataProvider::QoreSetFieldsProcessor "QoreSetFieldsProcessor" and
+    @ref DataProvider::QoreSearchReplaceProcessor "QoreSearchReplaceProcessor" also preserve these shapes for
+    top-level constant-field and string-column updates.  For \c ColumnarResult input, these projection and
+    simple-update processors rebuild the output columnar block from referenced column containers instead of
+    constructing an intermediate DataFrame.
+    @ref DataProvider::QoreGroupByProcessor "QoreGroupByProcessor" supports \c DataFrameBlock and
+    \c BufferColumns input as well; it accumulates logical rows from the block and, when used through pipeline
+    \c flush(), preserves a DataFrame, ColumnarResult, or hash-of-lists aggregate block for downstream
+    shape-aware processors.
+    Analytics processors, including @ref DataProvider::QoreCorrelationProcessor "QoreCorrelationProcessor" and
+    @ref DataProvider::QoreCrossCorrelationProcessor "QoreCrossCorrelationProcessor", accept
+    \c DataFrameBlock and \c BufferColumns input directly and emit analytics event records as hash-of-lists blocks.
+    For top-level configured fields, these processors read only the selected DataFrame or dense ColumnarResult
+    columns instead of materializing the full input block as hash-of-lists data.
+    Direct calls to \c flushRecords() still return ordinary row records for compatibility.
+
+    @section dataprovider_debugging Debugging Data Providers
+
+    Data providers support an opt-in debug info collection mechanism that allows capturing technical details about
+    operations such as HTTP requests, WebSocket messages, and connection events. This is useful for debugging,
+    logging, and monitoring data provider interactions.
+
+    @subsection debug_collector_classes Debug Collector Classes
+
+    The following classes are provided for debug info collection:
+    - @ref DataProvider::AbstractDebugInfoCollector "AbstractDebugInfoCollector": Abstract base class - implement
+      your own collector by overriding the @ref DataProvider::AbstractDebugInfoCollector::collect "collect()" method
+    - @ref DataProvider::BufferedDebugInfoCollector "BufferedDebugInfoCollector": Stores debug info in memory for
+      later retrieval and analysis
+    - @ref DataProvider::ConsoleDebugInfoCollector "ConsoleDebugInfoCollector": Outputs debug info to the console
+      immediately, with optional colorized output
+
+    @subsection debug_info_structure Debug Info Structure
+
+    Debug info is captured in the @ref DataProvider::DataProviderDebugInfo "DataProviderDebugInfo" hashdecl which
+    includes:
+    - Operation type (request, response, connect, disconnect, send, receive)
+    - Timestamps and duration
+    - URL, HTTP method, and protocol (HTTP/1.1 or HTTP/2)
+    - Request and response headers
+    - Request and response bodies
+    - Status codes and error messages
+    - WebSocket message types and sizes
+    - TLS/SSL information
+
+    @subsection debug_usage Using Debug Collection
+
+    To enable debug collection, register a debug collector with a data provider:
+
+    @code{.py}
+# Using BufferedDebugInfoCollector for programmatic access
+BufferedDebugInfoCollector collector();
+provider.setDebugCollector(collector);
+
+# Make some requests
+auto response = provider.doRequest(request);
+
+# Retrieve collected debug info
+list<hash<DataProviderDebugInfo>> info = collector.getAll();
+foreach hash<DataProviderDebugInfo> debug in (info) {
+    printf("%s %s -> %d (%dms)\n", debug.method, debug.url, debug.status_code, debug.duration_ms);
+}
+
+# Clear the buffer when done
+collector.clear();
+    @endcode
+
+    @code{.py}
+# Using ConsoleDebugInfoCollector for immediate output
+# Verbosity: 1 = basic, 2 = headers, 3 = full with bodies
+ConsoleDebugInfoCollector collector(2);
+provider.setDebugCollector(collector);
+
+# Debug info is printed to console as operations occur
+auto response = provider.doRequest(request);
+
+# Disable debug collection when done
+provider.setDebugCollector();
+    @endcode
+
+    @subsection debug_custom_collector Custom Debug Collectors
+
+    You can create custom debug collectors by inheriting from
+    @ref DataProvider::AbstractDebugInfoCollector "AbstractDebugInfoCollector":
+
+    @code{.py}
+class MyDebugCollector inherits AbstractDebugInfoCollector {
+    collect(hash<DataProviderDebugInfo> info) {
+        # Log to a file, send to monitoring system, etc.
+        logger.info("Operation: %s %s -> %d", info.method, info.url, info.status_code);
+    }
+
+    flush() {
+        # Called when the data provider is done - flush any buffers
+    }
+
+    clear() {
+        # Called to clear any collected data
+    }
+}
+    @endcode
+
+    @section dataprovider_dpql DPQL - Data Provider Query Language
+
+    DPQL (Data Provider Query Language) is a human-readable query language for constructing DataProviderExpression
+    structures. It provides a simple, intuitive syntax for writing search expressions that can be used with data
+    provider search, update, and delete operations.
+
+    @subsection dpql_syntax DPQL Syntax
+
+    DPQL supports the following syntax elements:
+
+    @par Field References
+    Fields are referenced using the \c \@ prefix:
+    - \c \@name - simple field name
+    - <tt>\@\"field with spaces\"</tt> - quoted field names for special characters
+    - \c \@user.email - dotted paths for nested fields
+
+    @par Comparison Operators
+    These are standard DPQL operators; individual data providers can expose additional or different operators.
+    DPQL is translated to native server-side queries whenever possible to ensure maximum performance.
+    - \c == - equals
+    - \c != - not equals
+    - \c < - less than
+    - \c <= - less than or equal
+    - \c > - greater than
+    - \c >= - greater than or equal
+    - \c between - range comparison (\c \@age \c between \c 18 \c and \c 65)
+    - \c in - set membership (\c \@status \c in <tt>("active", "pending")</tt>)
+    - \c =~ - regex match (\c \@email \c =~ <tt>/example.com$/i</tt>)
+
+    @par Logical Operators
+    These are standard DPQL operators; individual data providers can expose additional or different operators.
+    - \c && - logical AND
+    - \c || - logical OR
+    - \c ! - logical NOT
+
+    @par Literals
+    - Strings: \c "hello" or \c 'world'
+    - Dates: <tt>2026-01-02</tt>, <tt>2026-01-02T15:20:11.123+01:00</tt>
+    - Binary: <tt>&lt;deadbeef&gt;</tt>
+    - Lists: <tt>(one, two, 3)</tt>
+    - Hashes: <tt>{a=1, b=two}</tt>
+    - Unquoted identifiers are treated as strings: \c \@domain \c == \c omq
+    - Numbers: \c 123, \c 45.67, \c -10
+    - Booleans: \c true, \c false
+    - Null: \c null
+
+    @par Function Calls
+    Custom functions can be used: <tt>calculate(\@score, 100)</tt> \c > \c 50
+    Built-in DataProvider functions such as <tt>containsAny(\@name, "li", "av")</tt>,
+    <tt>listContains(\@tags, "vip")</tt>, and
+    <tt>listContainsAny(\@tags, "trial", "standard")</tt> are available when the target provider exposes them.
+    The varargs form is the clearest DPQL syntax for list/string "any" predicates.
+
+    @par Accessors
+    DPQL can access nested values without changing the source record shape:
+    - <tt>\@scores[0] &gt;= 90</tt> - list or string index accessor
+    - <tt>\@scores[0..1]</tt> - list slice accessor
+    - <tt>\@payload{region} == "EU"</tt> - hash key accessor
+
+    @par Expression Operators
+    Operators that evaluate subexpressions in an operator-controlled context use Qore-style operator syntax
+    instead of function-call syntax:
+    - <tt>map \@name, \@users, \@age &gt; 28</tt> - evaluates the body expression against each element
+      of the source list and optionally filters elements
+    - <tt>hash_map \@name, \@age, \@users</tt> - evaluates key and value expressions against each
+      element of the source list and returns a hash
+
+    @subsection dpql_examples DPQL Examples
+
+    @par Simple Comparison
+    @code{.py}
+# Parse a simple equality expression
+hash<DataProviderExpression> exp = DataProvider::parseDpqlExpression('@name == "John"');
+# Result: {"exp": "==", "args": [{"field": "name"}, "John"]}
+    @endcode
+
+    @par Complex Query
+    @code{.py}
+# Parse a complex query with multiple conditions
+hash<DataProviderExpression> exp = DataProvider::parseDpqlExpression(
+    '@age > 18 && @status == "active" || @role == "admin"');
+    @endcode
+
+    @par Range Query
+    @code{.py}
+# Find records where age is between 18 and 65
+hash<DataProviderExpression> exp = DataProvider::parseDpqlExpression('@age between 18 and 65');
+    @endcode
+
+    @par Set Membership
+    @code{.py}
+# Find records with specific status values
+hash<DataProviderExpression> exp = DataProvider::parseDpqlExpression(
+    '@status in ("pending", "active", "review")');
+    @endcode
+
+    @par Nested Values And Lists
+    @code{.py}
+# Find high-scoring EU records tagged as VIP or trial
+hash<DataProviderExpression> exp = DataProvider::parseDpqlExpression(
+    '@payload{region} == "EU" && @scores[0] >= 90 && listContainsAny(@tags, "vip", "trial")');
+    @endcode
+
+    @par Structured Ternary Expression
+    @code{.py}
+# Ternary expressions are represented directly as DataProviderExpression hashes
+hash<DataProviderExpression> size_bucket = <DataProviderExpression>{
+    "exp": DP_SEARCH_OP_EQ,
+    "args": (
+        <DataProviderExpression>{
+            "exp": DP_OP_TERNARY,
+            "args": (
+                <DataProviderExpression>{
+                    "exp": DP_SEARCH_OP_GE,
+                    "args": (<DataProviderFieldReference>{"field": "amount"}, 150.0),
+                },
+                "large",
+                "small"
+            ),
+        },
+        "large"
+    ),
+};
+    @endcode
+
+    @par Regex Matching
+    @code{.py}
+# Find email addresses from a specific domain (case-insensitive)
+hash<DataProviderExpression> exp = DataProvider::parseDpqlExpression('@email =~ /example.com$/i');
+    @endcode
+
+    @par Date Literal
+    @code{.py}
+# Find records created before a specific date
+hash<DataProviderExpression> exp = DataProvider::parseDpqlExpression('@created < 2026-12-01');
+    @endcode
+
+    @par Binary Literal
+    @code{.py}
+# Match a binary hash field
+hash<DataProviderExpression> exp = DataProvider::parseDpqlExpression('@checksum == <deadbeef>');
+    @endcode
+
+    @par Negation
+    @code{.py}
+# Find non-deleted records
+hash<DataProviderExpression> exp = DataProvider::parseDpqlExpression('!(@deleted == true)');
+    @endcode
+
+    @par Using with Data Providers
+    @code{.py}
+# Search a data provider using parsed DPQL
+hash<DataProviderExpression> where = DataProvider::parseDpqlExpression(
+    '@created > 2024-01-01 && @type == "order"');
+AbstractDataProviderRecordIterator i = provider.searchRecords(where);
+
+# Providers that support search expressions can also accept a DPQL string directly
+AbstractDataProviderRecordIterator i2 = provider.searchRecords(
+    '@created > 2024-01-01 && @type == "order"');
+    @endcode
+
+    @subsection dpql_round_trip Round-Trip Conversion
+
+    DPQL expressions can be serialized back to strings:
+    @code{.py}
+# Parse and serialize an expression
+hash<DataProviderExpression> exp = DataProvider::parseDpqlExpression('@name == "John" && @age > 18');
+string dpql = DataProvider::serializeDpqlExpression(exp);
+# Result: '@name == "John" && @age > 18'
+    @endcode
+
+    @subsection dpql_diagnostics Error Handling and Diagnostics
+
+    The parser provides detailed diagnostics for syntax errors:
+    @code{.py}
+# Parse with diagnostics
+hash<DpqlParseResult> result = DataProvider::parseDpqlExpressionWithInfo('@name ==');
+if (!result.success) {
+    foreach hash<DpqlDiagnostic> diag in (result.diagnostics) {
+        printf("Error at line %d, column %d: %s (code: %s)\n",
+            diag.line, diag.column, diag.message, diag.code);
+    }
+}
+    @endcode
+
+    @subsection dpql_syntax_highlighting Syntax Highlighting
+
+    For IDE integration, DPQL provides token information with position tracking:
+    @code{.py}
+# Get tokens for syntax highlighting
+list<hash<DpqlTokenInfo>> tokens = DataProvider::getDpqlTokens('@name == "John"');
+foreach hash<DpqlTokenInfo> tok in (tokens) {
+    printf("Token: type=%d value='%s' at line %d, col %d\n",
+        tok.type, tok.value, tok.line, tok.column);
+}
+    @endcode
+
+    Token types include:
+    - \c DPQL_TOK_FIELD (1) - field references
+    - \c DPQL_TOK_STRING (2) - string literals
+    - \c DPQL_TOK_NUMBER (3) - numeric literals
+    - \c DPQL_TOK_BOOLEAN (4) - boolean values
+    - \c DPQL_TOK_IDENTIFIER (6) - identifiers/keywords
+    - \c DPQL_TOK_DATE (7) - date literals
+    - \c DPQL_TOK_BINARY (8) - binary literals
+    - \c DPQL_TOK_LIST (21) - list literals
+    - \c DPQL_TOK_HASH (22) - hash literals
+    - \c DPQL_TOK_OP_EQ (10) through \c DPQL_TOK_OP_REGEX (19) - operators
+    - \c DPQL_TOK_REGEX (20) - regex patterns
+
+    @subsection dpql_completions Auto-Completion
+
+    For IDE integration, DPQL provides context-aware completions:
+    @code{.py}
+# Get completions at cursor position
+hash<string, AbstractDataField> fields = {
+    "name": new QoreDataField("name", "Name", StringType),
+    "age": new QoreDataField("age", "Age", IntType),
+    "email": new QoreDataField("email", "Email", StringType),
+};
+list<hash<DpqlCompletionItem>> items = DataProvider::getDpqlCompletions('@na', 3, fields);
+# Returns completions matching "na", e.g., [{"label": "name", "kind": "field", ...}]
+    @endcode
+
+    @subsection dpql_websocket DPQL WebSocket API
+
+    The DPQL WebSocket API is provided by the optional <a href="../../DpqlWebSocket/html/index.html">DpqlWebSocket</a> module. It exposes
+    language-server services for tokenization, parsing, validation, and completion, and can be used by UI clients
+    for syntax highlighting, diagnostics, and completions in the context of a data provider.
+
+    For Creator WebSocket integrations, the action-based @ref DataProvider::DpqlActionSession "DpqlActionSession"
+    class provides a transport-agnostic DPQL service with context-aware operations and token output suitable for
+    editor integrations.
+
+    @code{.py}
+%requires HttpServer
+%requires DpqlWebSocket
+
+DataProvider::DpqlWebSocketHandler handler();
+HttpServer server({"port": 8080});
+server.addHandler("/ws/dpql", handler);
+server.start();
+    @endcode
+
+    The WebSocket message protocol is defined in:
+    - @c DpqlWebSocket/DpqlApi.asyncapi.yaml
+
+    @subsection dpql_validation Expression Validation
+
+    Expressions can be validated against available fields:
+    @code{.py}
+# Validate expression against fields
+hash<string, AbstractDataField> fields = {
+    "name": new QoreDataField("name", "Name", StringType),
+};
+list<hash<DpqlDiagnostic>> errors = DataProvider::validateDpqlExpression(
+    '@unknown_field == "test"', fields);
+if (errors) {
+    printf("Validation error: %s\n", errors[0].message);
+    # Output: "Validation error: Unknown field 'unknown_field'"
+}
+    @endcode
+
+    @section dataprovider_watch Watch Data Providers
+
+    A <b>watch data provider</b> polls an external system and raises an event for each new item it
+    finds. Getting that right is mostly about one question: what happens to an item when something
+    fails? The answers are contracts, not implementation details, so they are stated here.
+
+    @subsection dataprovider_watch_template The Shared Processing Sequence
+
+    @ref DataProvider::AbstractOrderedWatchDataProvider "AbstractOrderedWatchDataProvider" implements
+    the sequence every ordered watch provider needs:
+
+    @code
+fetch
+  -> discard items at or before the durable cursor
+  -> sort ascending by the provider-defined ordering key
+  -> optionally collapse superseded items (snapshot mode)
+  -> optionally bound the batch from the oldest end (dispatch budget)
+  -> for each item: fetch payload -> dispatch -> persist and advance the cursor
+                    -> run the post-success hook -> apply the superseded action
+    @endcode
+
+    A provider supplies only the provider-specific pieces as typed hooks over
+    @ref DataProvider::WatchItemInfo "WatchItemInfo" descriptors. Items are cheap descriptors, not
+    payloads, so ordering and collapse decisions are made before anything expensive is retrieved.
+
+    @ref DataProvider::AbstractTimestampWatchDataProvider "AbstractTimestampWatchDataProvider"
+    implements the common "records changed since <i>t</i>" cursor on top of it: a timestamp plus the
+    IDs already delivered at exactly that timestamp, which is what makes the cursor safe at its own
+    boundary.
+
+    @subsection dataprovider_watch_ordering Dispatch Order
+
+    Events representing an ordered feed are dispatched in ascending source order. This is a
+    correctness property, not a presentation one: a watch cursor is monotonic, so dispatching a newer
+    item before an older one advances the cursor past an item that has not been delivered, and a
+    failure at that point drops the older item permanently.
+
+    Every provider declares how its upstream feed is ordered with
+    @ref DataProvider::AbstractWatchDataProviderBase::getSourceOrdering() "getSourceOrdering()":
+
+    |!Classification|!Meaning
+    |@ref DataProvider::WSO_ASCENDING|the upstream API returns items in ascending source order
+    |@ref DataProvider::WSO_DESCENDING|the upstream API returns items newest-first; the provider reverses them
+    |@ref DataProvider::WSO_UNORDERED|the feed has no comparable source order, so no ordering can be guaranteed
+    |@ref DataProvider::WSO_UNKNOWN|the upstream ordering has not been established; the provider orders items \
+        itself before delivery, but makes no claim about the API
+
+    @ref DataProvider::AbstractWatchDataProviderBase::hasAscendingDispatch() "hasAscendingDispatch()"
+    answers the question a consumer actually cares about: whether events arrive oldest-first. Both
+    ascending and descending upstream feeds do; an unordered feed does not.
+
+    @subsection dataprovider_watch_failure Advance On Success Only
+
+    The cursor advances only after an item has been dispatched successfully, and a cycle <b>stops at
+    the first failure</b> rather than continuing with later items. Continuing would advance the
+    monotonic cursor past the failed item and lose it. The failed item and everything after it is
+    retried on the next cycle, so delivery is <b>at-least-once</b> and never at-most-once.
+
+    The same rule applies to the checkpoint write itself: the replacement checkpoint is stored before
+    the in-memory cursor changes, so a storage failure retries the item instead of silently advancing
+    past it.
+
+    An item is never skipped to unblock the feed, because skipping is exactly the loss this rule
+    exists to prevent. The cost is that an item that fails permanently holds the feed indefinitely,
+    so the block is reported rather than left to be inferred from a log that has gone quiet:
+    @ref DataProvider::AbstractOrderedWatchDataProvider::setWatchItemBlockedHandler() "setWatchItemBlockedHandler()"
+    registers a handler called once the same item has failed a configurable number of consecutive
+    cycles, and called again when that item is finally delivered.
+
+    @subsection dataprovider_watch_durability Durability
+
+    Checkpoint persistence is optional at this layer because %Qore does not own a database:
+    - <b>with</b> a callback configured through
+      @ref DataProvider::AbstractWatchDataProviderBase::setCheckpointPersistence() "setCheckpointPersistence()":
+      the cursor survives a host reload or restart, so an item that was never delivered is still
+      delivered afterwards;
+    - <b>without</b> one: the cursor lives only in memory, and behavior after a restart is
+      provider-specific — typically the provider resumes from its configured start position, or from
+      the restart time when it has none, which means items that arrived while it was down are never
+      reported.
+
+    The checkpoint value is opaque to the base class; each provider validates and restores its own
+    format and rejects one it does not recognize, so a stored checkpoint from a different provider or
+    an older format cannot be silently ignored.
+
+    @subsection dataprovider_watch_snapshot Snapshot Collapse
+
+    Some feeds are snapshots rather than logs: each item restates the current state, so after an
+    outage only the last one is worth processing. A provider that supports snapshot mode raises one
+    event per group carrying the newest item, reports what it collapsed away in the event metadata,
+    and can optionally remove the superseded items — see
+    @ref DataProvider::WatchSupersededAction "WatchSupersededAction". Superseded items are identified
+    before their payloads are retrieved, so a large backlog costs one payload retrieval per group
+    rather than one per item.
+
+    A superseded-item removal that fails is logged and the item is left in place; it is not retried,
+    because the retained event has already been raised and the cursor has already moved past it. The
+    item is therefore never raised as an event again, but it is also never lost silently.
+
+    @subsection dataprovider_watch_delivery Observer Failures Reach The Source
+
+    @ref DataProvider::Observable::notifyObservers() "notifyObservers()" notifies every subscribed
+    observer, collects the failures, and then throws an aggregate \c OBSERVER-NOTIFICATION-ERROR
+    exception carrying the individual exceptions.
+
+    Both halves of that are load-bearing. Notifying every observer means one broken handler cannot
+    starve the handlers registered after it. Letting the failures out means the event source is told
+    the truth: a watch provider's entire durability guarantee rests on the fact that raising an event
+    returned without an exception, so an observer that catches its own processing failure and returns
+    normally reports the item as delivered. The cursor then advances past it and any post-dispatch
+    action runs — the item is lost, silently, and the log shows a clean cycle.
+
+    An @ref DataProvider::Observer "Observer" that cannot process an event therefore lets the
+    exception out. An event source that genuinely wants no back-pressure — a fire-and-forget push
+    feed with no cursor to protect — catches around
+    @ref DataProvider::Observable::notifyObservers() "notifyObservers()" itself, where the decision
+    is visible in the source rather than hidden in every handler.
+
+    @subsection dataprovider_watch_removal Removal Follows The Delivery Call
+
+    A watch provider observes exactly one thing: that raising an event returned without an exception.
+    Because observer failures reach it (see @ref dataprovider_watch_delivery), that one fact covers a
+    consumer that does its work <b>in the delivery thread</b>: the consumer signals failure by
+    throwing, the cycle stops without advancing the cursor, no removal runs, and the item is
+    delivered again on the next cycle.
+
+    It does not — and at this layer cannot — cover a consumer that hands the event off to another
+    thread, queue, or process. There the delivery call returns as soon as the hand-off succeeds, so
+    an option that removes the source item after its event has been raised (deleting mail, flagging a
+    message, emptying a queue) removes it while the real work is still outstanding. Providers
+    document such options in exactly those terms and must not describe them as covering an
+    asynchronous consumer.
+
+    For a workload with an asynchronous consumer, leave those options unset and act from the consumer
+    once processing has succeeded: every event carries the identity of its source item, and providers
+    expose first-class actions that take it.
+
+    @section dataprovider_relnotes Release Notes
+
+    @subsection dataprovider_v3_9 DataProvider v3.9
+    - fixed DPQL string literals and quoted field names containing multibyte characters retaining a closing
+      quote; accent-removal expressions such as \c unaccent("café") now receive the correct string value
+    - fixed DPQL serialization of multibyte strings raising \c RUNTIME-TYPE-ERROR and embedded double quotes
+      being escaped twice
+    - @ref DataProvider::DataProviderActionCatalog::sealDiscovery() "DataProviderActionCatalog::sealDiscovery()"
+      takes an optional \c record_app_failures argument, with which the failures of individual apps and actions do
+      not block a discovery generation, but are returned in the new \c unavailable member of
+      @ref DataProvider::DataProviderDiscoveryReportInfo "DataProviderDiscoveryReportInfo"; added
+      @ref DataProvider::DataProviderActionCatalog::isAppDiscoveryFailure() "DataProviderActionCatalog::isAppDiscoveryFailure()"
+    - fixed the static initializers registered after one that fails being discarded without being run; they are now
+      run by the next @ref DataProvider::DataProvider::checkStaticInit() "DataProvider::checkStaticInit()"
+    - added @ref DataProvider::DataProviderPresentationCatalog::getEffectiveCatalogFiles() "DataProviderPresentationCatalog::getEffectiveCatalogFiles()",
+      which returns the catalog files a requested locale resolves to, and
+      @ref DataProvider::DataProviderPresentationCatalog::forRequestedLocale() "DataProviderPresentationCatalog::forRequestedLocale()",
+      which returns the catalog of another requested locale resolving to the same files without parsing or composing
+      them again; a cache of presentation catalogs can then load the files of regional variants such as \c es-ES,
+      \c es, and \c es-MX once instead of once per variant
+    - added @ref DataProvider::DataProviderPresentationCatalog::getCatalogFiles() "DataProviderPresentationCatalog::getCatalogFiles()"
+      and @ref DataProvider::DataProviderPresentationCatalog::getDomain() "DataProviderPresentationCatalog::getDomain()"
+    - added @ref DataProvider::AbstractDataProvider::finishCreate() "AbstractDataProvider::finishCreate()", called
+      once after a create action's records are created: data providers that buffer created records write them to
+      their destination there, so write errors are reported to the caller instead of when the provider is destroyed
+    - added the @ref DataProvider::DPAD_CREATE_OUTPUT "DPAD_CREATE_OUTPUT" (\c "create-output") action output data
+      type for create actions that return the data a provider generates from the records, such as a spreadsheet
+      or JSON document generated in memory, with
+      @ref DataProvider::GeneratedDataOutputDataType "GeneratedDataOutputDataType" and
+      @ref DataProvider::GeneratedDataInfo "GeneratedDataInfo" describing the generated data
+
+    @subsection dataprovider_v3_8 DataProvider v3.8
+    - added @ref DataProvider::DataProvider::listKnownFactories() "DataProvider::listKnownFactories()", which returns
+      the factories registered, in the data provider index, or known to the module, without loading any module, and
+      @ref DataProvider::DataProvider::tryGetFactoryInfoAsData() "DataProvider::tryGetFactoryInfoAsData()", which
+      returns a factory's info from the registered factory or from the index, and only otherwise loads the factory's
+      module; @ref DataProvider::DataProvider::listFactories() "DataProvider::listFactories()" still returns only the
+      registered factories, which with a data provider index are only those whose modules have been loaded
+    - omit generated examples that violate type constraints, omit optional fields without examples from object
+      examples, and try later union alternatives when an example does not satisfy the union
+    - stopping a watch data provider cancels its polling thread, which ends a blocking operation in it, such as an
+      HTTP request, at once; observer notifications and checkpoint persistence run with cancellation deferred, so
+      they are not interrupted.  The watch data providers of the REST-based modules no longer close their REST
+      client to cancel an in-flight request: the client is shared with the other data providers of the connection,
+      and closing a <a href="../../RestClientIo/html/index.html">RestClientIo</a> shuts down its connection manager
+      for good, so every later request failed with \c HTTPCLIENT-SHUTDOWN once a watch data provider had been
+      stopped or destroyed (<a href="https://github.com/qoretechnologies/qore/issues/5469">issue 5469</a>)
+    - added @ref DataProvider::DataProviderStaticMetadataHelper "DataProviderStaticMetadataHelper", which marks the
+      current thread as reading static metadata, so that fields do not run context-dependent dynamic type, default
+      value, or example value callbacks
+    - added @ref DataProvider::DataProviderIndexedActionInfo "DataProviderIndexedActionInfo" and
+      @ref DataProvider::IndexedActionOptionInfo "IndexedActionOptionInfo" for actions from the data provider index,
+      whose option types are described by plain data; the fields shared with registered actions are in the new
+      @ref DataProvider::DataProviderActionBaseInfo "DataProviderActionBaseInfo" and
+      @ref DataProvider::ActionOptionBaseInfo "ActionOptionBaseInfo" hashdecls
+    - added @ref DataProvider::DataProviderIndexedActionSummaryInfo "DataProviderIndexedActionSummaryInfo", the
+      action-level record of an action from the data provider index, with the names of its options and whether it
+      declares expressions, which lists and selects indexed actions without restoring their types
+    - added @ref DataProvider::IndexedDataProviderInfo "IndexedDataProviderInfo", the data provider info of an action
+      from the data provider index, in which the types of options, expressions, events, and messages are described
+      by plain data, so an indexed action has no objects and can be serialized;
+      @ref DataProvider::DataProvider::getIndexedInfo() "DataProvider::getIndexedInfo()" and
+      @ref DataProvider::DataProvider::restoreIndexedInfo() "DataProvider::restoreIndexedInfo()" convert between it
+      and @ref DataProvider::DataProviderInfo "DataProviderInfo", whose members without types are in the new
+      @ref DataProvider::DataProviderBaseInfo "DataProviderBaseInfo" hashdecl, as are those of options and
+      expressions in @ref DataProvider::DataProviderOptionBaseInfo "DataProviderOptionBaseInfo" and
+      @ref DataProvider::DataProviderExpressionBaseInfo "DataProviderExpressionBaseInfo";
+      @ref DataProvider::DataProviderInfoOptionMembers "DataProviderInfoOptionMembers" lists the option info members
+    - a type description with neither a restorable name nor any returned types fails to restore with
+      \c TYPE-ERROR instead of an internal runtime type error
+    - @ref DataProvider::AbstractDataProviderType::get() "AbstractDataProviderType::get()"
+      restores types from their descriptions more faithfully: class-backed named types in unions, hash types
+      without fields, options of "or nothing" types, and the descriptions of union types are restored, an
+      example value that the restored field does not accept is dropped instead of failing the restoration, and a
+      description whose type path is registered only where its provider is loaded, such as a TypeScript action's
+      option type, is restored from its structure in a process that has not loaded the provider
+    - generated example values respect the field's allowed values and the formats of the string format types, so
+      a field no longer publishes an example that it would reject
+    - @ref DataProvider::QoreUnionDataType "QoreUnionDataType" accepts an explicit display name and descriptions
+    - added validation constraints (@ref DataProvider::DataTypeConstraintInfo "DataTypeConstraintInfo"): numeric
+      bounds and multiples, string lengths, patterns, and enumerations, list sizes and unique elements, hash sizes,
+      and for unions whether exactly one alternative may match and a discriminator key selecting the alternative;
+      the types of this module enforce them, and they are part of a type's description, so a type restored from its
+      description enforces them too
+    - @ref DataProvider::AbstractDataProviderType::get() "AbstractDataProviderType::get()" returns
+      @ref DataProvider::QoreBoolDataTypeBase "QoreBoolDataTypeBase" for boolean types, so every soft boolean type
+      validates strings: \c "x" is no longer accepted as @ref True
+    - a mandatory @ref DataProvider::SoftListDataType "SoftListDataType" does not accept @ref nothing, like the Qore
+      \c list type, and does not list it among its accepted types
+    - a type description whose type is known only in the program defining it, such as a type based on a custom Qore
+      type, is restored from the value type it returns and the values it accepts instead of failing, and keeps the
+      name and presentation it is described with
+    - simulating a write to an empty table works: the table's example record falls back to data generated from its
+      record type instead of failing with a runtime type error, so a simulated test step can create a record in a
+      table that has no rows yet
+    - the default bulk record adapter appends each field value as one column cell; a list-valued field
+      previously had its elements concatenated into the column, so a block of records with nested lists
+      reported more column values than records and was rejected as malformed
+      (<a href="https://github.com/qoretechnologies/qorus/issues/542">Qorus issue 542</a>)
+    - optional @ref DataProvider::SoftListDataType "soft lists" preserve absent collections as NOTHING;
+      collection defaults are validated item by item, while explicit NULL and missing-valued list items
+      retain their element-type validation
+    - added generation-scoped provider discovery qualification with typed expected-inventory callbacks, structured
+      failure reports, revision-bound single-use publication tokens, and qualified atomic ProviderIndex publication;
+      healthy registrations remain usable and failures remain retryable in live processes, but a partial result cannot
+      silently certify an authoritative index
+    - environment-driven provider discovery now returns typed registration and provider-module failures to
+      ProviderIndex qualification; failed modules remain retryable instead of being marked loaded and then silently
+      skipped by later discovery generations
+    - provider presentation catalogs now recursively extract structured option fields, list elements, union branches,
+      and nested allowed values with stable bounded IDs while preserving existing flat IDs; anonymous nested types
+      are action-scoped and include any stable producer schema path so equal-shaped objects with different semantics
+      cannot silently share translations. New static
+      @ref DataProvider::AbstractDataField::getPresentationInfo() "presentation metadata" and
+      @ref DataProvider::AbstractDataField::getDeclaredType() "declared types" keep extraction deterministic without
+      invoking context-dependent dynamic type, default, or example callbacks
+    - fixed allowed list-element choices to use converted values for both scalar and structured items;
+      replacing choices now clears stale membership rules, and a failed replacement preserves the previous choices
+    - distinguish absent required fields from explicitly supplied null values, and clear requiredness
+      when making an already nullable field optional
+    - fixed short descriptions containing quoted parameter names or numbers to preserve ordinary words
+      and literal braces while ignoring sentence punctuation inside quoted spans
+    - fixed @ref DataProvider::QoreStringDataTypeBase "QoreStringDataTypeBase" to honor the value conversion
+      implemented by a wrapped user-defined [Type](../../reflection/html/classQore_1_1Reflection_1_1Type.html) subclass; the generic string
+      conversion silently replaced the type's own [acceptsValue()](../../reflection/html/classQore_1_1Reflection_1_1Type.html)
+      override, so a type that renders a boolean as the string \c "true" or \c "false" for a REST query
+      argument produced \c "1" or \c "0" instead
+    - @ref DataProvider::AbstractDataField::getDisplayName() "AbstractDataField::getDisplayName()" now renders
+      acronyms, initialisms, and irregularly capitalized proper nouns in their canonical form regardless of
+      the case they are written in in the technical name, so that lower-case and camel-case technical names
+      produce the same display names as upper-case ones (ex: \c "api_key" -> \c "API Key",
+      \c "saas_provider" -> \c "SaaS Provider", \c "ipv4_address" -> \c "IPv4 Address"); the renderings are
+      given by @ref DataProvider::AbstractDataField::WordRenderings "AbstractDataField::WordRenderings"
+    - fixed @ref DataProvider::AbstractDataField::getDisplayName() "AbstractDataField::getDisplayName()" to
+      stop treating short English function words in upper-case technical names as acronyms
+      (ex: \c "CREATED_AT" previously yielded \c "Created AT" and now yields \c "Created At"); such words
+      are listed in @ref DataProvider::AbstractDataField::FunctionWords "AbstractDataField::FunctionWords"
+      and are written in lower case in the middle of a display name in accordance with English title case
+      (ex: \c "wait_for_active_shards" -> \c "Wait for Active Shards")
+    - @ref DataProvider::AbstractDataField::getDisplayName() "AbstractDataField::getDisplayName()" now
+      produces a single word break for consecutive word separators instead of one space per separator
+    - fixed @ref DataProvider::AbstractDataField::getDisplayName() "AbstractDataField::getDisplayName()" to
+      case-fold words in upper case that contain a lower-case letter with no single-character upper-case form,
+      such as the German sharp s or a typographic ligature; such a letter is the only form it has and said
+      nothing about the case the word was written in, but it suppressed case folding and then introduced a
+      spurious word break (ex: \c "STRAßE_NAME" previously yielded \c "STRAß E Name" and now yields
+      \c "Straße Name")
+    - fixed expression rendering to parenthesize an argument only where the grouping requires it, in both
+      @ref DataProvider::DataProvider::renderExpression() "DataProvider::renderExpression()" and
+      @ref DataProvider::DpqlSerializer "DpqlSerializer", which answered the question separately and were each
+      wrong in a different direction; the description parenthesized every nested operator, so the left-nested
+      tree for \c "1 + 2 + 3" was described as \c "(1 + 2) + 3", and the serializer parenthesized none at equal
+      precedence, so \c "1 - (2 - 3)" was serialized as \c "1 - 2 - 3", which parses as \c "(1 - 2) - 3" and is
+      a different expression (2 serialized as -4); both now use
+      @ref DataProvider::DpqlSerializer::getArgumentContext() "DpqlSerializer::getArgumentContext()", which
+      leaves the first argument bare (parsing restores that grouping) and parenthesizes a later one unless the
+      operator is listed in @ref DataProvider::DpqlAssociativeOperators "DpqlAssociativeOperators"; \c + is
+      deliberately not listed, as it concatenates when an operand is a string
+      (\c "1 + (2 + \"a\")" is \c "12a" where \c "1 + 2 + \"a\"" is \c "3a")
+    - fixed @ref DataProvider::DataProvider::renderExpression() "DataProvider::renderExpression()" to
+      render a \c value expression as the literal it holds; the expression carries no symbol, so every
+      literal was rendered with a leading space (\c " 0", \c " \"x\"") and an explicit null rendered as a
+      single space and nothing else — which is what an author writing \c null in a DPQL editor produces,
+      so "no value" was the one literal the rendering could not state
+    - fixed @ref DataProvider::DpqlSerializer "DpqlSerializer" to serialize SQL \c NULL as the \c null
+      literal; it fell through to the string branch, where \c string(NULL) is empty, so a NULL serialized
+      to \c "" and parsed back as an empty string — "there is nothing here" became "there is a string here
+      and it is empty"
+    - made the DPQL operator precedence levels (@ref DPQL_PREC_PRIMARY etc),
+      @ref DataProvider::DpqlOperatorPrecedence "DpqlOperatorPrecedence" and
+      @ref DataProvider::DpqlAssociativeOperators "DpqlAssociativeOperators" public, and added
+      @ref DataProvider::DpqlSerializer::getOperatorPrecedence() "DpqlSerializer::getOperatorPrecedence()" and
+      @ref DataProvider::DpqlSerializer::getArgumentContext() "DpqlSerializer::getArgumentContext()", so that
+      any renderer can parenthesize expressions by the same rule the parser reads them by
+    - fixed @ref DataProvider::AbstractDataProviderType::getSoftType() "soft type conversion" to convert each
+      distinct type in a type graph once; a type reached by more than one path was converted once per path, which
+      is exponential in the depth of the graph, so a schema with shared subtypes could not be converted in
+      bounded time or memory, and a recursive type could not be converted at all
+    - soft type conversion now converts the element type of a @ref DataProvider::ListDataType "list type"; a type
+      reachable only through a list was left strict, so a soft record could still reject values it was meant to
+      accept
+    - fixed @ref DataProvider::ListDataType::copyWithElementType() "ListDataType::copyWithElementType()" and
+      @ref DataProvider::ListDataType::updateElementType() "updateElementType()" to regenerate the %Qore type, the
+      accepted and returned type hashes, and a generated name from the new element type; the list went on
+      describing - and accepting - values of the element type it no longer had.  A list whose element type is
+      replaced therefore reports the type it actually holds, which changes the generated presentation identity of
+      such a list, and with it the message IDs of the translation catalogs that describe it; the affected
+      catalogs have been regenerated
+    - fixed @ref DataProvider::SoftListDataType "SoftListDataType" to fall back to an untyped \b soft list when
+      its element type has no single %Qore type - one produced by an OpenAPI \c anyOf or \c oneOf, say - instead
+      of a plain untyped list; the plain list advertised that a single value could not be given in place of a
+      list, which is the one thing a soft list always accepts, and which
+      @ref DataProvider::SoftListDataType::acceptsValue() "SoftListDataType::acceptsValue()" accepted anyway
+
+    @subsection dataprovider_v3_7 DataProvider v3.7
+    - generated date examples now use a fixed UTC sample instead of the current time, making repeated metadata
+      reads and nested examples reproducible; explicitly supplied examples, defaults and allowed values are unchanged
+    - fixed \c HashDataType required-field tracking when an optional field with a default is added after a
+      mandatory field; record metadata now retains mandatory status independently of field insertion order
+    - added source-owned native i18n catalog metadata and deterministic message identities for localized application,
+      action, and option presentation without changing technical identities
+    - fixed provider catalog composition when the same module owner is installed in multiple catalog search roots;
+      the highest-precedence installation is now used instead of treating stale shadowed copies as independent
+      contributions
+    - provider presentation catalogs read and parse each discovered catalog file exactly once, and owner-fragment
+      collisions are detected by \c I18n::MessageCatalog while it composes the catalog instead of in a separate pass
+      over every message; the new static method
+      @ref DataProvider::DataProviderPresentationCatalog::buildDomainCatalogs() "buildDomainCatalogs()" builds the
+      catalogs for several locales of one domain while parsing the files they share, such as \c root.json, only once,
+      and @ref DataProvider::DataProviderPresentationCatalog::forEachDomainCatalog() "forEachDomainCatalog()" does
+      the same while holding only one catalog at a time
+    - @ref DataProvider::DataProviderPresentationCatalog "DataProviderPresentationCatalog" accepts an optional
+      \c I18n::CatalogDiscoveryIndex so that an operation building catalogs for many domains and locales reads
+      each catalog directory once instead of once per catalog; multilingual embedding population uses one index for
+      each domain population
+    - fixed app and action module ownership when a deferred initialization closure loads another module; apps and
+      actions registered by the loaded module while its own initializer runs were attributed to the module whose
+      pending app was being initialized, so
+      @ref DataProvider::DataProviderActionCatalog::getPresentationContributionsForModule() reported foreign
+      presentation strings as owned by that module
+
+    @subsection dataprovider_v3_6 DataProvider v3.6
+    - added a declarative single-file read/write mapping so that generic consumers can read and write a file
+      through any application without knowing its action and option names, which differ from application to
+      application; used by the \c "conn://" scheme in the \c FileLocationHandler module:
+      - @ref DataProvider::DataProviderFileApiInfo "DataProviderFileApiInfo"
+      - @ref DataProvider::DataProviderActionCatalog::registerAppFileApi()
+        "DataProviderActionCatalog::registerAppFileApi()"
+      - @ref DataProvider::DataProviderActionCatalog::getAppFileApi()
+        "DataProviderActionCatalog::getAppFileApi()"
+      \n
+      (<a href="https://github.com/qoretechnologies/qore/issues/5386">issue 5386</a>)
+    - the generic data provider APIs now preserve the exception they wrap: the provider-specific exception is
+      reported under the \c "ex" key of the wrapping exception's argument, so a caller catching a generic error
+      such as \c SEND-MESSAGE-ERROR can recover the original error code and any machine-readable detail the
+      provider attached to it - a protocol status code, for example.  Previously several of these wrappers
+      discarded the original argument entirely, leaving the rendered description as the only place that detail
+      appeared, and description text cannot be parsed reliably by a caller; the keys of an argument that was
+      already forwarded are still reported where they were
+    - added @ref DataProvider::DataProviderActionCatalog::cacheAllRegisteredApps() "DataProviderActionCatalog::cacheAllRegisteredApps()",
+      which populates the provider index app cache from all registered applications; this allows a complete app
+      catalog to be recovered when the data provider index cannot be read, instead of silently degrading to the
+      apps registered by already-loaded modules
+      (<a href="https://github.com/qoretechnologies/qore/issues/5383">issue 5383</a>)
+    - added @ref DataProvider::AbstractOrderedWatchDataProvider "AbstractOrderedWatchDataProvider", which
+      implements the shared watch processing sequence — fetch, cursor filtering, ascending sort, optional
+      snapshot collapse, optional dispatch budget, in-order dispatch, advance-on-success, and the post-success
+      hook — with typed @ref DataProvider::WatchItemInfo "WatchItemInfo" item and cursor contracts; see
+      @ref dataprovider_watch
+    - added @ref DataProvider::AbstractTimestampWatchDataProvider "AbstractTimestampWatchDataProvider", which
+      implements the common "records changed since <i>t</i>" cursor on top of the shared template, using a
+      durable timestamp plus the record IDs delivered at that timestamp so the cursor is safe at its own
+      boundary
+    - a watch cycle now <b>stops at the first dispatch failure</b> instead of continuing with later items;
+      continuing advanced the monotonic cursor past the failed item and dropped it permanently on what may
+      well have been a transient error
+    - @ref DataProvider::Observable::notifyObservers() "notifyObservers()" now notifies <b>every</b>
+      subscribed observer and reports any failures as a single aggregate \c OBSERVER-NOTIFICATION-ERROR
+      exception carrying the individual exceptions; previously the first observer that threw silently
+      skipped every observer registered after it, so one broken handler could starve the others; see
+      @ref dataprovider_watch_delivery
+    - documented at the @ref DataProvider::Observer "Observer" contract level that observer exceptions
+      reach the event source, and that an observer must not swallow a processing failure: a watch
+      provider reads a clean return as proof of delivery, advances its durable cursor, and runs any
+      post-dispatch removal, so a swallowed failure loses the source item silently
+    - a watch cycle now reports the items its durable cursor discarded, with the highest discarded
+      ordering key and the cursor position, instead of dropping them with no log line at all — a cycle
+      that listed items and then did nothing was indistinguishable from a hung poller
+    - added
+      @ref DataProvider::AbstractOrderedWatchDataProvider::setWatchItemBlockedHandler() "setWatchItemBlockedHandler()",
+      which reports an item that has failed a configurable number of consecutive cycles and is therefore
+      holding up the whole feed, and reports again when that item is finally delivered; stopping at the
+      first failure is what keeps the item from being lost, but without this the resulting stall had no
+      signal at all
+    - added an explicit dispatch-order contract: every watch provider declares how its upstream feed is
+      ordered with @ref DataProvider::AbstractWatchDataProviderBase::getSourceOrdering() "getSourceOrdering()"
+      and whether its events arrive oldest-first with
+      @ref DataProvider::AbstractWatchDataProviderBase::hasAscendingDispatch() "hasAscendingDispatch()", so a
+      consumer no longer has to infer either from the implementation
+    - added optional snapshot collapse to the shared template: a backlog can be reduced to the latest item per
+      group, with the collapsed items reported in the event metadata and optionally removed according to
+      @ref DataProvider::WatchSupersededAction "WatchSupersededAction"; superseded items are identified before
+      their payloads are retrieved
+    - added an optional per-cycle dispatch budget, applied from the oldest end so that the durable cursor still
+      advances contiguously and the remainder is delivered by later cycles rather than skipped
+    - documented that checkpoint persistence is what makes delivery at-least-once across host reloads, that
+      without it a provider's restart behavior is provider-specific, and that watch options which remove the
+      source item act on event <b>dispatch</b> and not on consumer <b>processing</b>
+    - @ref DataProvider::AbstractDataField::getDisplayName() "AbstractDataField::getDisplayName()" now case-folds
+      words in all upper case, so that technical names in upper case produce readable display names (ex:
+      \c "PAYMENT-DISPUTE-ADJUDICATE-28" -> \c "Payment Dispute Adjudicate 28"); acronyms are preserved, and an
+      explicit acronym classification can be given for domain- or language-specific words
+    - fixed @ref DataProvider::AbstractDataField::getDisplayName() "AbstractDataField::getDisplayName()" to
+      recognize case in all scripts; previously word breaks after acronyms were only detected in Latin script,
+      and an empty name caused a \c RUNTIME-TYPE-ERROR exception
+    - added semantic string-backed data types (\c email, \c uri, \c uuid, \c hostname, \c ipv4, \c ipv6, and
+      \c phone) that carry a UI-renderable format identity while remaining string-compatible; Swagger and
+      OpenAPI schema \c format values are mapped to these types on import and emitted on schema generation
+    - @ref DataProvider::DataProviderActionCatalog::getActionOptionFromFields() "getActionOptionFromFields()"
+      now propagates a source field's \c ui_type into the derived application-action option
+    - class-backed named types (\c file, \c rgbcolor, and the new semantic string types) are now resolvable
+      by name through @ref DataProvider::AbstractDataProviderType::get() "AbstractDataProviderType::get()",
+      so fields and options can reference them by name
+
+    @subsection dataprovider_v3_5 DataProvider v3.5
+    - added explicit expression pushdown capability metadata so action sessions and database providers can
+      distinguish backend-native expressions from generic client implementations
+    - added template context, template value, and template type-resolution forwarding methods to the public
+      @ref DataProvider::DataProvider "DataProvider" facade
+    - made limited and exhausted @ref DataProvider::DefaultRecordIterator "DefaultRecordIterator" instances
+      release wrapped iterators immediately, including their database transaction resources
+    - update and delete implementations must return affected-row counts, ensuring the public mutation APIs always
+      return an integer and allowing uniform \c max_records and \c requires_result enforcement
+    - @ref DataProvider::DefaultRecordIterator "DefaultRecordIterator" now prepares typed expressions once at
+      construction for efficient repeated evaluation
+    - record update and delete APIs now enforce \c max_records against affected-row counts and preserve
+      \c MAX-RECORDS-EXCEEDED instead of wrapping it in a generic mutation error
+    - bulk record-shape validation now rejects heterogeneous record field sets and unequal list or buffer column
+      lengths before provider mutation; scalar hash-of-lists values remain supported as row broadcasts
+    - fixed the generic \c "in" expression to accept both the canonical \c (field, list) form and the
+      variadic \c (field, v1, v2, ...) form produced by the DPQL parser, and to compare each value
+      individually; previously the variadic form was rejected as having too many arguments and the
+      in-memory implementation only compared against the first value
+    - added @ref DataProvider::DataProviderShape "DataProviderShape" and shape-aware pipeline APIs on
+      @ref DataProvider::AbstractDataProcessor "AbstractDataProcessor" for row records, hash-of-lists bulk blocks,
+      dense buffer-column blocks, and DataFrame blocks
+    - added @ref DataProvider::AbstractDataProviderBulkRecordInterface::getShapedValue()
+      "AbstractDataProviderBulkRecordInterface::getShapedValue()" and
+      @ref DataProvider::AbstractDataProviderBulkRecordInterface::getValueShape()
+      "getValueShape()" so native bulk readers can preserve \c BufferColumns and \c DataFrameBlock values while
+      keeping @ref DataProvider::AbstractDataProviderBulkRecordInterface::getValue() "getValue()" as a
+      hash-of-lists compatibility API
+    - added automatic DataProvider pipeline shape routing and conversion with row-record boundary preservation for
+      legacy \c submitImpl() processors
+    - added DataProvider bulk read/create/upsert shape metadata and shaped create/upsert entry points so providers
+      can accept \c BufferColumns or \c DataFrameBlock input without row materialization
+    - updated @ref DataProvider::QoreFilterRecordsProcessor "QoreFilterRecordsProcessor" to process
+      \c DataFrameBlock and \c BufferColumns input directly for supported scalar, expression-to-expression,
+      and computed \c between / \c in comparisons, numeric function calls, trim/concat/null-handling functions,
+      date-part functions, row-independent date arithmetic, structured strict equality/inequality,
+      \c containsAny and other string predicates, list membership predicates, list/hash accessors, ternary computed values,
+      boolean combinations, and null checks; BufferColumns filters also lower temporal date comparisons, \c like,
+      and regular expression predicates to dense masks
+    - added DPQL string support to @ref DataProvider::QoreFilterRecordsProcessor "QoreFilterRecordsProcessor"
+      through \c dpql_where and string-valued \c where_cond options so pipeline filters can be configured directly
+      with DPQL while retaining the DataFrame and dense BufferColumns fast paths
+    - added @ref DataProvider::ColumnarExpressionFilter "ColumnarExpressionFilter" as the shared DataFrame and
+      ColumnarResult expression engine used by shape-aware processors and DataFrame-backed providers
+    - added DPQL/DataProvider generic expression support for Qore-style streaming prefix operators
+      \c select, \c first, \c any, \c all, \c count, \c take, \c drop, \c takewhile, and
+      \c takeuntil over list and hash sources; shape-aware DataFrame and BufferColumns filters preserve
+      correctness for these expressions through generic row evaluation when no dense mask lowering is available
+    - updated @ref DataProvider::QoreGroupByProcessor "QoreGroupByProcessor" to process hash-of-lists,
+      \c BufferColumns, and DataFrame blocks directly and preserve shaped aggregate blocks on pipeline flush
+    - optimized @ref DataProvider::QoreGroupByProcessor "QoreGroupByProcessor" to lower \c avg(field)
+      to the native DataFrame \c mean aggregate when the aggregate block can stay columnar
+    - updated @ref DataProvider::QoreSelectFieldsProcessor "QoreSelectFieldsProcessor",
+      @ref DataProvider::QoreRemoveFieldsProcessor "QoreRemoveFieldsProcessor", and
+      @ref DataProvider::QoreRecordLimitProcessor "QoreRecordLimitProcessor" to preserve shaped
+      \c DataFrameBlock and \c BufferColumns values for simple projection/removal and limiting
+    - updated @ref DataProvider::QoreSetFieldsProcessor "QoreSetFieldsProcessor" and
+      @ref DataProvider::QoreSearchReplaceProcessor "QoreSearchReplaceProcessor" to preserve shaped
+      \c DataFrameBlock and \c BufferColumns values for top-level constant-field and string-column updates
+    - optimized \c ColumnarResult projection and simple-update processors to rebuild output blocks from referenced
+      column containers directly, avoiding intermediate DataFrame construction
+    - updated analytics processors, including @ref DataProvider::QoreCorrelationProcessor
+      "QoreCorrelationProcessor" and @ref DataProvider::QoreCrossCorrelationProcessor
+      "QoreCrossCorrelationProcessor", to accept \c DataFrameBlock and \c BufferColumns input and preserve
+      shaped rectangular event blocks, including flush-time output from partial windows; this covers the full
+      @ref DataProvider::AbstractAnalyticsProcessor "AbstractAnalyticsProcessor" family, and top-level configured
+      fields are read directly from selected columns to avoid full-block hash-of-lists materialization
+    - added framework-level auto-injection of a generic "Make an API call" action for every
+      REST-capable @ref DataProvider::DataProviderActionCatalog "data provider app":
+      - apps that declare a connection \c scheme automatically receive an auto-registered
+        @ref DataProvider::DPAT_API "DPAT_API" action with action name
+        @ref DataProvider::AbstractDataProvider::GenericApiCallActionName "make-api-call",
+        accepting per-call \c method, \c path, \c query_args, \c body, and \c hdr inputs
+      - the action is backed by an auto-injected virtual child provider named
+        @ref DataProvider::AbstractDataProvider::GenericApiCallChildName "\"__call__\"",
+        constructed lazily from the value returned by
+        @ref DataProvider::AbstractDataProvider::getRestClientForGenericCall()
+      - the child is injected exactly once per provider tree, at its root, matching the \c "/__call__"
+        path the action is registered with; the child is built from the REST client alone and carries no
+        context from its parent, so a copy on every descendant provider (each of which normally inherits
+        the same \c rest member from a shared base class) would be an exact duplicate; see
+        @ref DataProvider::AbstractDataProvider::hasGenericApiCallChild() for the gating rules
+      - the reserved child name is always resolved by the framework and is never passed to
+        @ref DataProvider::AbstractDataProvider::getChildProviderImpl(), at any level of the tree, so
+        providers that resolve children with a remote lookup never issue a request for a child that
+        cannot exist
+      - providers belonging to an app that sets
+        @ref DataProvider::DataProviderAppInfo::disable_generic_api_call "disable_generic_api_call"
+        declare the same opt-out at runtime by overriding
+        @ref DataProvider::AbstractDataProvider::hasGenericApiCallChildImpl()
+      - REST-based data providers are auto-discovered via reflection: the default impl of
+        @ref DataProvider::AbstractDataProvider::getRestClientForGenericCallImpl() walks the actual
+        class hierarchy of @c self looking for either:
+        - a member named
+          @ref DataProvider::AbstractDataProvider::GenericApiCallRestMemberName "\"rest\""
+          whose value is an object responding to @c restDoRequest() — the qore qlib convention; or
+        - a member named
+          @ref DataProvider::AbstractDataProvider::GenericApiCallConnectionMemberName "\"conn\""
+          whose value is an @c AbstractConnection; the framework calls @c conn.get(False) to
+          acquire the underlying client without establishing a network connection — the module-v8
+          @c TypeScriptActionInterface convention
+        This covers all REST-based providers in both ecosystems with no per-provider boilerplate.
+      - providers using a non-standard member name can still override
+        @ref DataProvider::AbstractDataProvider::getRestClientForGenericCallImpl() explicitly
+      - apps that should not expose this action (e.g. non-REST databases, FTP, WebSocket)
+        opt out via the new
+        @ref DataProvider::DataProviderAppInfo::disable_generic_api_call "disable_generic_api_call"
+        field
+      - the underlying generic call provider implementation is supplied by the
+        @c RestClientDataProvider module through the new
+        @ref DataProvider::AbstractDataProvider::setGenericApiCallChildBuilder()
+        and
+        @ref DataProvider::DataProviderActionCatalog::setGenericApiCallActionBuilder()
+        hooks, keeping the @c DataProvider module free of any direct dependency on a specific
+        REST transport
+    - added an optional \c module_context argument to
+      @ref DataProvider::DataProviderActionCatalog::registerPendingApp() so that callers
+      registering an app on behalf of another module can associate the correct module path with
+      the app (reported by
+      @ref DataProvider::DataProviderActionCatalog::getModulePathsForApp()); when omitted, the
+      current module context is used as before, preserving backwards compatibility
+    - fixed a memory leak where deregistering an app
+      (@ref DataProvider::DataProviderActionCatalog::deregisterDynamicApp() and the internal
+      app-deregistration path) left the app's actions - and the entire option and data-type graph
+      attached to them - in the static top-level action map instead of removing them, causing
+      unbounded memory growth under repeated app/connection registration and deregistration
+    - fixed a memory leak where registering a dynamic app at runtime left an undischarged
+      module-initialization rollback closure on the per-thread implicit module transaction list
+
+    @subsection dataprovider_v3_4 DataProvider v3.4
+    - added @ref DataProvider::AbstractSimulationRecorder "AbstractSimulationRecorder" and
+      @ref DataProvider::AbstractDataProvider::simulateRequest() "AbstractDataProvider::simulateRequest()" for
+      side-effect-free dry-run execution
+    - added @ref DataProvider::AbstractDataProvider::getSimulationVolatileFields()
+      "AbstractDataProvider::getSimulationVolatileFields()" for simulation signature hashing
+    - updated the DPQL \c map and \c hash_map expressions to be operators with Qore-style prefix syntax,
+      allowing their body, key, value, and filter subexpressions to be evaluated per source element
+
+    @subsection dataprovider_v3_3 DataProvider v3.3
+    - added 67 generic DPQL expressions for use in data-driven contexts (arithmetic, string
+      operations, type conversions, encoding, cryptographic operations, regex, date/time,
+      collection operations, and serialization functions)
+    - new expression categories: arithmetic (\c +, \c -, \c *, \c /), string (\c upr, \c lwr,
+      \c trim, \c substr, \c join, \c replace), type conversion (\c toString, \c toInt,
+      \c toFloat, \c toNumber, \c toBool, \c toDate), encoding (\c to-hex, \c to-base64,
+      \c parse_hex, \c parse_base64), crypto (\c digest, \c hmac, \c encrypt, \c decrypt),
+      serialization (\c make_yaml, \c parse_yaml, \c make_json, \c parse_json, \c make_xml,
+      \c parse_xml)
+    - added \c now() function returning current timestamp with microsecond precision
+    - added @ref DataProvider::AbstractDataProvider::ExtraExpressionImplementations
+      "ExtraExpressionImplementations" static member for module-conditional expression
+      registration (YAML, JSON, XML expressions registered when modules are available)
+    - added @ref DataProvider::dp_get_all_expression_info() "dp_get_all_expression_info()"
+      public function to retrieve all available expression metadata
+    - added 60+ operator alias mappings for user-friendly expression names
+    - added @ref DataProvider::DPAD_PASS_THROUGH "DPAD_PASS_THROUGH" constant for pipeline processor
+      actions whose output type is the same as their input type (e.g., filter processors that
+      drop non-matching records but do not modify matching ones)
+    - set \c output_data_type to @ref DataProvider::DPAD_PASS_THROUGH "DPAD_PASS_THROUGH" on
+      \c filter-records and \c record-limit pipeline processor registrations
+    - added \c input_field_names boolean field to
+      @ref DataProvider::BaseOptionInfo "BaseOptionInfo" to mark pipeline processor options whose
+      allowed values should be dynamically populated from the preceding pipeline state's output
+      type field names
+    - added @ref DataProvider::AbstractDataProviderType::getFieldNamesAsAllowedValues()
+      "AbstractDataProviderType::getFieldNamesAsAllowedValues()" static method to recursively
+      enumerate field names from a data provider type as allowed value entries, including
+      dot-notation paths for nested hash fields
+    - added @ref DataProvider::AbstractDataProvider::getFieldValue()
+      "AbstractDataProvider::getFieldValue()" static method for dot-notation field access in
+      record hashes (e.g. \c "address.city")
+    - added @ref DataProvider::AbstractDataProvider::parseFieldList()
+      "AbstractDataProvider::parseFieldList()" static method for backward-compatible parsing of
+      field lists from both comma-separated strings and string lists
+    - changed multi-field processor options (\c fields, \c group_by) from \c string to
+      \c softlist<string> for multi-select UI support; all processors accept both formats for
+      backward compatibility
+    - added \c input_field_names marker to single-field options (\c field, \c field_x, \c field_y,
+      \c target_field) for dynamic allowed value population
+    - all field-name-based processor options now support dot-notation for nested field access
+    - fixed @ref DataProvider::DataProviderPipeline "DataProviderPipeline"
+      @ref DataProvider::PipelineMetricsSnapshot "PipelineMetricsSnapshot".\c total_records_submitted
+      always being 0 in fan-out topologies where queue 0's first element is a fan-out list
+    - fixed @ref DataProvider::DataProviderPipeline "DataProviderPipeline"
+      @ref DataProvider::PipelineMetricsSnapshot "PipelineMetricsSnapshot".\c total_records_completed
+      to count the sum of output records from the last processor of each terminal queue; in fan-out
+      topologies each child queue contributes its own terminal output to this total
+    - removed \c total_records_dropped from
+      @ref DataProvider::PipelineMetricsSnapshot "PipelineMetricsSnapshot" and \c records_dropped
+      from @ref DataProvider::PipelineMetricsDelta "PipelineMetricsDelta" — pipeline processors can
+      add or remove records arbitrarily, so a conservation model does not hold; per-element
+      \c records_processed / \c records_output provides the actual detail
+    - removed \c records_in_flight from
+      @ref DataProvider::PipelineMetricsSnapshot "PipelineMetricsSnapshot" — the conservation
+      formula it relied on (\c submitted \c = \c completed \c + \c dropped) does not hold when
+      processors change record counts
+    - added 11 streaming analytics and statistical pipeline processors:
+      - @ref DataProvider::QoreRunningStatsProcessor "running-stats": compute running statistics
+        (count, sum, avg, min, max, stddev, variance) over windows of records
+      - @ref DataProvider::QoreMovingAverageProcessor "moving-average": compute simple and exponential
+        moving averages per record
+      - @ref DataProvider::QoreTrendAnalysisProcessor "trend-analysis": compute linear regression trend
+        analysis (slope, intercept, r-squared, direction) over windows
+      - @ref DataProvider::QoreAnomalyDetectionProcessor "anomaly-detection": z-score based anomaly
+        detection per record
+      - @ref DataProvider::QorePercentileProcessor "percentile": compute percentiles
+        (P25, P50/median, P75, P90, P95, P99), IQR, skewness, and kurtosis over windows
+      - @ref DataProvider::QoreCorrelationProcessor "correlation": compute Pearson correlation
+        matrix between all pairs of configured numeric fields
+      - @ref DataProvider::QoreCrossCorrelationProcessor "cross-correlation": compute time-lagged
+        cross-correlation between two fields to discover delayed relationships
+      - @ref DataProvider::QoreHistogramProcessor "histogram": compute frequency distributions
+        with configurable uniform or quantile binning
+      - @ref DataProvider::QoreRateOfChangeProcessor "rate-of-change": compute first derivative
+        (rate of change), second derivative (acceleration), and percentage change per record
+      - @ref DataProvider::QoreEWMAControlChartProcessor "ewma-control-chart": EWMA statistical
+        process control with upper and lower control limits for drift detection
+      - @ref DataProvider::QoreSeasonalityDetectionProcessor "seasonality-detection":
+        autocorrelation-based detection of repeating cyclical patterns
+    - added the @ref DataProvider::AbstractAnalyticsProcessor "AbstractAnalyticsProcessor" abstract base
+      class for building streaming analytics processors with window and record emission modes
+    - added the @ref DataProvider::DPC_ANALYTICS "DPC_ANALYTICS" processor capability constant for analytics processors
+    - added analytics event hashdecls: @ref DataProvider::AnalyticsEventInfo "AnalyticsEventInfo",
+      @ref DataProvider::StatisticsEventInfo "StatisticsEventInfo",
+      @ref DataProvider::MovingAverageEventInfo "MovingAverageEventInfo",
+      @ref DataProvider::TrendEventInfo "TrendEventInfo",
+      @ref DataProvider::AnomalyEventInfo "AnomalyEventInfo",
+      @ref DataProvider::PercentileEventInfo "PercentileEventInfo",
+      @ref DataProvider::CorrelationEventInfo "CorrelationEventInfo",
+      @ref DataProvider::CrossCorrelationEventInfo "CrossCorrelationEventInfo",
+      @ref DataProvider::HistogramEventInfo "HistogramEventInfo",
+      @ref DataProvider::RateOfChangeEventInfo "RateOfChangeEventInfo",
+      @ref DataProvider::EWMAControlChartEventInfo "EWMAControlChartEventInfo",
+      @ref DataProvider::SeasonalityDetectionEventInfo "SeasonalityDetectionEventInfo"
+    - added @ref DataProvider::QoreGroupByProcessor "group-by": group records by field values and
+      compute aggregate functions (count, sum, avg, min, max, first, last) per group
+    - added 11 new analytics/aggregation actions to the Qore app in the "Analytics" group
+    - updated @ref DataProvider::QoreProcessorsDataProvider "qore-processors" factory with 12 new
+      processor children (11 analytics + 1 aggregation)
+    - added the built-in "Qore" app with pipeline processor actions for filtering, transforming, and
+      manipulating records in data pipelines:
+      - @ref DataProvider::QoreFilterRecordsProcessor "filter-records": filter records by DPQL expression
+        or field comparison
+      - @ref DataProvider::QoreSelectFieldsProcessor "select-fields": select and rename fields
+      - @ref DataProvider::QoreSetFieldsProcessor "set-fields": set a field to a constant value
+      - @ref DataProvider::QoreRemoveFieldsProcessor "remove-fields": remove fields from records
+      - @ref DataProvider::QoreSearchReplaceProcessor "search-replace": search and replace text in fields
+      - @ref DataProvider::QoreRecordLimitProcessor "record-limit": limit the number of records
+    - added the @ref DataProvider::QoreProcessorsDataProviderFactory "qore-processors" factory for
+      navigating built-in pipeline processors
+    - added a return-based API to @ref DataProvider::AbstractDataProcessor "AbstractDataProcessor"
+      (@ref DataProvider::AbstractDataProcessor::processRecord() "processRecord()",
+      @ref DataProvider::AbstractDataProcessor::processRecords() "processRecords()",
+      @ref DataProvider::AbstractDataProcessor::processRecordsBulk() "processRecordsBulk()",
+      @ref DataProvider::AbstractDataProcessor::flushRecords() "flushRecords()")
+    - made @ref DataProvider::AbstractDataProcessor::submitImpl() "submitImpl()" and
+      @ref DataProvider::AbstractDataProcessor::supportsBulkApiImpl() "supportsBulkApiImpl()" non-abstract
+      with bidirectional defaults bridging to the new return-based API
+    - added processor capability constants (@ref DataProvider::DPC_TRANSFORM "DPC_TRANSFORM", @ref DataProvider::DPC_FILTER "DPC_FILTER", @ref DataProvider::DPC_EXPAND "DPC_EXPAND",
+      @ref DataProvider::DPC_AGGREGATE "DPC_AGGREGATE", @ref DataProvider::DPC_SINK "DPC_SINK") and
+      @ref DataProvider::AbstractDataProcessor::getProcessorCapabilities() "getProcessorCapabilities()"
+    - added utility methods @ref DataProvider::AbstractDataProcessor::hashListToRecords() "hashListToRecords()"
+      and @ref DataProvider::AbstractDataProcessor::recordsToHashList() "recordsToHashList()"
+    - added @ref DataProvider::AbstractDataProcessor::submitAndCollect() "submitAndCollect()" and
+      @ref DataProvider::AbstractDataProcessor::flushAndCollect() "flushAndCollect()" methods
+    - @ref DataProvider::AbstractDataProvider "AbstractDataProvider" now inherits
+      @ref DataProvider::AbstractDataProcessor "AbstractDataProcessor" so data providers can serve as
+      pipeline processors
+    - added @ref DataProvider::AbstractDataProvider::supportsPipelineProcessor() "supportsPipelineProcessor()"
+      query method
+    - added pipeline processor type API methods:
+      @ref DataProvider::AbstractDataProvider::getPipelineProcessorInputType() "getPipelineProcessorInputType()",
+      @ref DataProvider::AbstractDataProvider::getPipelineProcessorInputTypeWithOptions() "getPipelineProcessorInputTypeWithOptions()",
+      @ref DataProvider::AbstractDataProvider::getPipelineProcessorOutputType() "getPipelineProcessorOutputType()",
+      @ref DataProvider::AbstractDataProvider::getPipelineProcessorOutputTypeWithOptions() "getPipelineProcessorOutputTypeWithOptions()"
+    - added
+      @ref DataProvider::AbstractDataProvider::tryGetActionOptionsForPipelineProcessorWithOptions() "tryGetActionOptionsForPipelineProcessorWithOptions()"
+      method and \c DPAT_PIPELINE_PROCESSOR case in the dynamic options dispatch
+    - added expression builder support to the
+      @ref DataProvider::QoreFilterRecordsProcessor "filter-records" processor via the \c where_cond
+      constructor option and dynamic action option with \c supports_expressions
+    - added \c supports_pipeline_processor, \c processor_capabilities, and
+      \c children_can_support_pipeline_processors fields to
+      @ref DataProvider::DataProviderSummaryInfo "DataProviderSummaryInfo" and
+      @ref DataProvider::DataProviderInfo "DataProviderInfo"
+    - added \c pipeline_processor_options to @ref DataProvider::DataProviderInfo "DataProviderInfo"
+    - added @ref DataProvider::DPAT_PIPELINE_PROCESSOR "DPAT_PIPELINE_PROCESSOR" action type code for pipeline processor actions
+    - added \c supports_pipeline_processors to
+      @ref DataProvider::DataProviderAppInfo "DataProviderAppInfo"
+    - added \c processor_capabilities to
+      @ref DataProvider::DataProviderActionInfo "DataProviderActionInfo"
+    - updated @ref DataProvider::DataProviderPipeline "DataProviderPipeline" to use the return-based API
+      internally via
+      @ref DataProvider::AbstractDataProcessor::submitAndCollect() "submitAndCollect()" and
+      @ref DataProvider::AbstractDataProcessor::flushAndCollect() "flushAndCollect()"
+    - added the \c synchronous option to @ref DataProvider::PipelineOptionInfo "PipelineOptionInfo" for
+      low-latency single-queue processor pipelines that submit data and wait for results on the caller's thread
+    - added methods to return data provider types in the context of option dataprovider_message_support
+    - @ref DataProvider::BaseOptionInfo "BaseOptionInfo": added @c required, @c readonly, @c disabled,
+      @c preselected, @c has_dependents, @c depends_on, and @c on_change fields; these fields were previously
+      defined only in child hashdecls and are now shared across all option types
+    - @ref DataProvider::DataProviderAppInfo "DataProviderAppInfo": added @c connection_options and @c auto_url
+      fields to support per-app connection option overrides for connection creation forms
+    - moved @c ConnectionOptionInfo from the @c ConnectionProvider module to the @c DataProvider module to
+      resolve circular dependency; the hashdecl remains in the @c ConnectionProvider namespace for backward
+      compatibility
+    - added async CRUD API to @ref DataProvider::AbstractDataProvider "AbstractDataProvider" using
+      Promise/Future with background thread fallback:
+      - @ref DataProvider::AbstractDataProvider::createRecordAsync() "createRecordAsync()"
+      - @ref DataProvider::AbstractDataProvider::searchRecordsAsync() "searchRecordsAsync()"
+      - @ref DataProvider::AbstractDataProvider::updateRecordsAsync() "updateRecordsAsync()"
+      - @ref DataProvider::AbstractDataProvider::deleteRecordsAsync() "deleteRecordsAsync()"
+      - @ref DataProvider::AbstractDataProvider::upsertRecordAsync() "upsertRecordAsync()"
+      - @ref DataProvider::AbstractDataProvider::doRequestAsync() "doRequestAsync()"
+
+    @subsection dataprovider_v3_2_2 DataProvider v3.2.2
+    - fixed setting the mandatory flag for hashes with dynamic fields
+      (<a href="https://github.com/qoretechnologies/qore/issues/4992">issue 4992</a>)
+    - fixed returning dynamic options for data-dependent action options
+      (<a href="https://github.com/qoretechnologies/qore/issues/4985">issue 4985</a>)
+    - default values are no longer generated for optional hash types based on their fields
+      (<a href="https://github.com/qoretechnologies/qore/issues/4972">issue 4972</a>)
+    - fixed typos in @ref DataProvider::DataProviderActionCatalog::getTypeForActionOptions()
+      "DataProviderActionCatalog::getTypeForActionOptions()"
+      (<a href="https://github.com/qoretechnologies/qore/issues/4971">issue 4971</a>)
+
+    @subsection dataprovider_v3_2_1 DataProvider v3.2.1
+    - improved logic handling locked types in the type cache
+
+    @subsection dataprovider_v3_2 DataProvider v3.2
+    - added the SuperSoftStringDataType and SuperSoftStringOrNothingDataType types to support
+      "soft" string types that accept almost any type and convert it to a string
+
+    @subsection dataprovider_v3_1 DataProvider v3.1
+    - added an API to retrieve event data in the context of specific option values
+    - fixed handling element allowed values in fields
+      (<a href="https://github.com/qoretechnologies/qore/issues/4951">issue 4951</a>)
+    - fixed handling implicit default values in @ref DataProvider::HashDataType "HashDataType"
+      (<a href="https://github.com/qoretechnologies/qore/issues/4941">issue 4941</a>)
+
+    @subsection dataprovider_v3_0 DataProvider v3.0
+    - added support for a data provider action catalog
+      (<a href="https://github.com/qoretechnologies/qore/issues/4808">issue 4808</a>)
+    - added support for automatically deregistering factories, applications, and actions if an error occurs during
+      foreign module initialization
+      (<a href="https://github.com/qoretechnologies/qore/issues/4816">issue 4816</a>)
+
+    @subsection dataprovider_v2_7_5 DataProvider v2.7.5
+    - fixed conversion of soft binary, bool, float, int, and number "or nothing" types from an empty string to
+      @ref NOTHING
+      (<a href="https://github.com/qoretechnologies/qore/issues/4836">issue 4836</a>)
+
+    @subsection dataprovider_v2_7_4 DataProvider v2.7.4
+    - added \c allowed_values to field data info
+      (<a href="https://github.com/qoretechnologies/qore/issues/4762">issue 4762</a>)
+
+    @subsection dataprovider_v2_7_3 DataProvider v2.7.3
+    - added missing \c base64binary and \c hexbinary type support
+      (<a href="https://github.com/qoretechnologies/qore/issues/4732">issue 4732</a>)
+
+    @subsection dataprovider_v2_7_2 DataProvider v2.7.2
+    - fixed bugs handling null hash assignments with fields with default values in
+      @ref DataProvider::HashDataType "HashDataType"
+      (<a href="https://github.com/qoretechnologies/qore/issues/4715">issue 4715</a>)
+
+    @subsection dataprovider_v2_7_1 DataProvider v2.7.1
+    - added
+      @ref DataProvider::DataProvider::getFactoryObjectWithTemplate() "DataProvider::getFactoryObjectWithTemplate()"
+      and
+      @ref DataProvider::AbstractDataProviderFactory::createWithTemplate() "AbstractDataProviderFactory::createWithTemplate()"
+      to allow data providers to be created from factories with template arguments
+      (<a href="https://github.com/qoretechnologies/qore/issues/4624">issue 4624</a>)
+    - \c AbstractDataProvider::search*() fails with record-based data providers that do not provide a record
+      definition
+      (<a href="https://github.com/qoretechnologies/qore/issues/4624">issue 4624</a>)
+    - \c AbstractDataProvider::search*() methods fail with an empty \c where hash argument
+      (<a href="https://github.com/qoretechnologies/qore/issues/4622">issue 4622</a>)
+
+    @subsection dataprovider_v2_7 DataProvider v2.7
+    - fixed a bug accepting the element type in @ref DataProvider::SoftListDataType "SoftListDataType"
+      (<a href="https://github.com/qoretechnologies/qore/issues/4603">issue 4603</a>)
+    - added child capability support to data provider summary info
+      (<a href="https://github.com/qoretechnologies/qore/issues/4576">issue 4576</a>)
+
+    @subsection dataprovider_v2_6 DataProvider v2.6
+    - added child capability support to data provider info
+      (<a href="https://github.com/qoretechnologies/qore/issues/4572">issue 4572</a>)
+
+    @subsection dataprovider_v2_5 DataProvider v2.5
+    - implemented support for the observer pattern / event API
+      (<a href="https://github.com/qoretechnologies/qore/issues/4557">issue 4557</a>)
+
+    @subsection dataprovider_v2_4 DataProvider v2.4
+    - allow data providers to be introspected with additional information about children
+      (<a href="https://github.com/qoretechnologies/qore/issues/4543">issue 4543</a>)
+
+    @subsection dataprovider_v2_3 DataProvider v2.3
+    - updated to use new generic expression support for searches
+      (<a href="https://github.com/qoretechnologies/qore/issues/4538">issue 4538</a>)
+    - addded support for data provider options to support default values
+      (<a href="https://github.com/qoretechnologies/qore/issues/4532">issue 4532</a>)
+    - addded \c search_operators to the data provider response to report supported search operators
+      (<a href="https://github.com/qoretechnologies/qore/issues/4528">issue 4528</a>)
+    - fixed a type error in \c DataProvider::search*() calls with an empty \c where hash argument
+      (<a href="https://github.com/qoretechnologies/qore/issues/4511">issue 4511</a>)
+
+    @subsection dataprovider_v2_2_1 DataProvider v2.2.1
+    - made it possible to determine the default field type in @ref DataProvider::HashDataType "HashDataType"
+      (<a href="https://github.com/qoretechnologies/qore/issues/4491">issue 4491</a>)
+
+    @subsection dataprovider_v2_2 DataProvider v2.2
+    - added an attribute to factories to indicate if any children can support the request-response pattern
+      (<a href="https://github.com/qoretechnologies/qore/issues/4486">issue 4486</a>)
+    - added the @ref DataProvider::DTT_ClientOnly "DTT_ClientOnly" type tag constant
+      (<a href="https://github.com/qoretechnologies/qore/issues/4477">issue 4477</a>)
+
+    @subsection dataprovider_v2_1_2 DataProvider v2.1.2
+    - fixed a bug where %DataProvider types based on string that accept multiple input types with conversions but are
+      not soft types threw spurious errors at runtime with non-string types
+      (<a href="https://github.com/qoretechnologies/qore/issues/4471">issue 4471</a>)
+    - added the \c desc key supporting a markdown description to data provider info
+      (<a href="https://github.com/qoretechnologies/qore/issues/4465">issue 4465</a>)
+    - fixed a bug where hash types incorrectly claimed compatibility with incompatible hashes
+      (<a href="https://github.com/qoretechnologies/qore/issues/4463">issue 4463</a>)
+
+    @subsection dataprovider_v2_1_1 DataProvider v2.1.1
+    - fixed a type error iterating data in @ref DataProvider::DefaultBulkRecordInterface "DefaultBulkRecordInterface"
+      (<a href="https://github.com/qoretechnologies/qore/issues/4457">issue 4457</a>)
+
+    @subsection dataprovider_v2_1 DataProvider v2.1
+    - added support for tags on data provider types (i.e.
+      @ref DataProvider::AbstractDataProviderType "AbstractDataProviderType")
+      (<a href="https://github.com/qoretechnologies/qore/issues/4442">issue 4442</a>)
+    - fixed data provider factory info to provide info about the actual data provider factory instead of only provider
+      info
+      (<a href="https://github.com/qoretechnologies/qore/issues/4438">issue 4438</a>)
+    - added "from example" APIs to data provider factories:
+      - @ref DataProvider::AbstractDataProviderFactory::getProviderFromExample() "AbstractDataProviderFactory::getProviderFromExample()"
+      - @ref DataProvider::AbstractDataProviderFactory::getExampleProviderRecordOutput() "AbstractDataProviderFactory::getExampleProviderRecordOutput()"
+      (<a href="https://github.com/qoretechnologies/qore/issues/4430">issue 4430</a>)
+    - added generic search capabilities to data providers with no native search capabilities
+      (<a href="https://github.com/qoretechnologies/qore/issues/4430">issue 4430</a>)
+
+    @subsection dataprovider_v2_0 DataProvider v2.0
+    - added a logger to the @ref DataProvider::AbstractDataProvider "AbstractDataProvider" class to enable logging
+      (<a href="https://github.com/qoretechnologies/qore/issues/4409">issue 4409</a>)
+    - added support for creating, reading, updating, and modifying data providers
+      (<a href="https://github.com/qoretechnologies/qore/issues/4395">issue 4395</a>)
+
+    @subsection dataprovider_v1_2_3 DataProvider v1.3
+    - added @ref DataProvider::DataProviderTypeCache::listParentTypes() "DataProviderTypeCache::listParentTypes()" to
+      allow a list of parent types to be returned
+      (<a href="https://github.com/qoretechnologies/qore/issues/4385">issue 4385</a>)
+
+    @subsection dataprovider_v1_2_2 DataProvider v1.2.2
+    - added support for starting a transaction with DataProviders that support transaction management
+      (<a href="https://github.com/qoretechnologies/qore/issues/4346">issue 4346</a>)
+
+    @subsection dataprovider_v1_2_1 DataProvider v1.2.1
+    - return the \c base_type key in input type info in
+      AbstractDataProviderType::getInputInfo()
+      (<a href="https://github.com/qoretechnologies/qore/issues/4311">issue 4311</a>)
+
+    @subsection dataprovider_v1_2 DataProvider v1.2
+    - greatly improved dataprovider and type acquisition speed from clients requiring initialization from the environment
+      (<a href="https://github.com/qoretechnologies/qore/issues/4305">issue 4305</a>)
+
+    @subsection dataprovider_v1_1 DataProvider v1.1
+    - the @ref DataProvider::DefaultRecordIterator class supports the \c limit search option
+
+    @subsection dataprovider_v1_0_6 DataProvider v1.0.6
+    - fixed a bug where the @ref data_type "data" type was not supported correctly as a data provider type
+      (<a href="https://github.com/qoretechnologies/qore/issues/4232">issue 4232</a>)
+
+    @subsection dataprovider_v1_0_5 DataProvider v1.0.5
+    - fixed an issue where it was not possible for pipeline to flush any pending data or to perform reset or purge
+      operations when pipeline processing is complete; for this the
+      @ref DataProvider::AbstractDataProcessor::flush() "AbstractDataProcessor::flush()" and
+      @ref DataProvider::AbstractDataProcessor::flushImpl() "AbstractDataProcessor::flushImpl()" methods were
+      implemented
+      (<a href="https://github.com/qoretechnologies/qore/issues/4107">issue 4107</a>)
+
+    @subsection dataprovider_v1_0_4 DataProvider v1.0.4
+    - fixed type-handling bugs handling data provider options
+      (<a href="https://github.com/qoretechnologies/qore/issues/4062">issue 4062</a>)
+
+    @subsection dataprovider_v1_0_3 DataProvider v1.0.3
+    - fixed bugs in the default return value for
+      @ref DataProvider::AbstractDataProcessor::getExpectedType() "AbstractDataProcessor::getExpectedType()" and
+      @ref DataProvider::AbstractDataProcessor::getReturnType() "AbstractDataProcessor::getReturnType()"
+      (<a href="https://github.com/qoretechnologies/qore/issues/4043">issue 4043</a>)
+
+    @subsection dataprovider_v1_0_2 DataProvider v1.0.2
+    - fixed a bug where @ref DataProvider::HashDataType "HashDataType" would not enforce fields or field types when
+      checking for type and value compatibility
+      (<a href="https://github.com/qoretechnologies/qore/issues/4037">issue 4037</a>)
+    - added new %Qore base types to the data type hierarchy
+    - implemented the following classes:
+      - @ref DataProvider::AbstractDataProcessor "AbstractDataProcessor"
+      - @ref DataProvider::DataProviderBulkRecordIterator "DataProviderBulkRecordIterator"
+      - @ref DataProvider::DataProviderPipeline "DataProviderPipeline"\n
+      (<a href="https://github.com/qoretechnologies/qore/issues/3876">issue 3876</a>)
+    - added \c DUPLICATE-RECORD exception documentation for
+      @ref DataProvider::AbstractDataProvider::createRecord() "AbstractDataProvider::createRecord()"
+    - updated to allow data provider type attributes to appear as children in the type hierarchy
+      (<a href="https://github.com/qoretechnologies/qore/issues/4015">issue 4015</a>)
+
+    @subsection dataprovider_v1_0_1 DataProvider v1.0.1
+    - implemented callbacks to allow for dynamic elements of request-response data providers (such as URI paths) to be
+      resolved at runtime
+      (<a href="https://github.com/qoretechnologies/qore/issues/3838">issue 3838</a>)
+    - @ref DataProvider::AbstractDataProviderType "AbstractDataProviderType" and
+      @ref DataProvider::AbstractDataField "AbstractDataField" classes made serializable
+      (<a href="https://github.com/qoretechnologies/qore/issues/3809">issue 3809</a>)
+    - implemented the @ref DataProvider::DataProviderTypeCache "DataProviderTypeCache" class to encapsulate reusable
+      type caching logic
+      (<a href="https://github.com/qoretechnologies/qore/issues/3810">issue 3810</a>)
+
+    @subsection dataprovider_v1_0 DataProvider v1.0
+    - initial release of the module
+*/
+
+#! contains all public definitions in the DataProvider module
+public namespace DataProvider {
+}

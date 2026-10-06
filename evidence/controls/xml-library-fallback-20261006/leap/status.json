@@ -1,0 +1,24 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/xml-library-fallback2-20261006:/control:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/xml-library-fallback2-20261006/leap:/output",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/leap-xml-final-build-2/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.x86_64.rpm:/xml.rpm:ro",
+    "sha256:7d41daec733c59490e7a5141cacf7373e6b9ec5cf49aa5c888b75ada184b76fa",
+    "python3",
+    "-B",
+    "-W",
+    "error",
+    "/control/run.py"
+  ],
+  "xml_rpm_sha256": "91aea0be90122912796a6e59a8f952c45686eba550df237812cd35958cc62e9b"
+}

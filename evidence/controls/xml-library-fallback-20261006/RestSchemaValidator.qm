@@ -1,0 +1,3374 @@
+# -*- mode: qore; indent-tabs-mode: nil -*-
+#! @file RestSchemaValidator.qm an abstract API for validating REST schemas
+
+/*  RestSchemaValidator.qm Copyright (C) 2017 - 2026 Qore Technologies, s.r.o.
+
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the "Software"),
+    to deal in the Software without restriction, including without limitation
+    the rights to use, copy, modify, merge, publish, distribute, sublicense,
+    and/or sell copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+*/
+
+%modern
+
+# make sure we have the required qore version
+%requires qore >= 2.0
+
+# requires the HttpServerUtil module
+%requires(reexport) HttpServerUtil >= 0.3.12
+
+# need mime definitions
+%requires(reexport) Mime >= 1.7
+
+# supports using the DataProvider module to describe input and output records
+%requires(reexport) DataProvider
+
+# supports loading files from URLs
+%requires(reexport) FileLocationHandler
+
+# supports logging with the Logger module
+%requires(reexport) Logger
+
+# supports reflection for dynamic schema loading
+%requires reflection
+
+%requires yaml
+
+%try-module xml >= 1.3
+%define NoXml
+%endtry
+
+%requires json
+
+module RestSchemaValidator {
+    version = "2.5";
+    desc = "RestSchemaValidator module providing an abstract REST schema validation API";
+    author = "David Nichols <david.nichols@qoretechnologies.com>";
+    url = "http://qore.org";
+    license = "MIT";
+}
+
+/** @mainpage RestSchemaValidator module
+
+    @tableofcontents
+
+    @section restschemavalidatorintro RestSchemaValidator Module Introduction
+
+    The %RestSchemaValidator module provides an abstract <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</a> schema validation API to %Qore.
+
+    Primary classes provided by this module:
+    - @ref RestSchemaValidator::AbstractRestSchemaValidator "AbstractRestSchemaValidator"
+    - @ref RestSchemaValidator::NullRestSchemaValidator "NullRestSchemaValidator"
+
+    @section restschemavalidator_relnotes RestSchemaValidator Module Release Notes
+
+    @subsection restschemavalidator_2_5 RestSchemaValidator v2.5
+    - prefer valid schema examples when describing fields and omit generated examples that violate the field type
+    - JSON and YAML response bodies in another encoding than UTF-8 are converted to UTF-8 before they are parsed,
+      instead of relabeling ISO-8859-1 text as UTF-8; HTTP bodies are decoded with their actual encoding (see
+      @ref Qore::decode_http_body() "decode_http_body()"), and YAML with a UTF-16 byte order mark is parsed correctly
+    - schema data types describe and enforce the schema's validation constraints (bounds, lengths, patterns,
+      enumerations, and item and property counts), so a value violating them is rejected when it is accepted by the
+      type rather than only when a request is validated
+    - accept unconstrained array elements when `items` is absent while retaining bounds and uniqueness
+    - compare unique JSON array values with structural typed keys instead of loose equality
+    - preserve decimal numeric boundaries so exact fractional endpoints validate consistently
+      (public minimum/maximum and numeric exclusive bounds now use Qore numbers instead of floats)
+    - accept opaque GLB model responses as binary media
+    - retain supplied enumeration labels and descriptions in structured field choices
+    - enforce boolean enumerations and preserve false values in generated enumeration examples
+    - preserve opaque audio, image, and video response bytes in the null schema validator
+    - retain nullable value types and independent presence requirements across cached field uses
+    - extracted shared base classes for schema validation across Swagger, OpenApi3, and AsyncApi modules:
+      - @ref RestSchemaValidator::AbstractObjectBase "AbstractObjectBase": vendor extensions support
+      - @ref RestSchemaValidator::AbstractSchemaBaseValidator "AbstractSchemaBaseValidator": shared validation methods
+      - @ref RestSchemaValidator::AbstractComposableSchemaObject "AbstractComposableSchemaObject": allOf/oneOf/anyOf/not composition
+      - @ref RestSchemaValidator::AbstractRestSchemaObject "AbstractRestSchemaObject": shared REST schema object methods
+    - fixed Swagger min/max error messages that incorrectly reported maximum instead of minimum values
+    - fixed two parameters that share a name and a schema sharing one another's documentation: the derived
+      field was cached under the parameter name alone, although a field also carries what the **use**
+      supplies - its own description and default value - so whichever operation was registered second
+      published the first one's.  The cached field is still shared, because it is also what stops a
+      recursive property from recursing forever, and a use whose description or default differs from it now
+      gets its own copy over the same type
+    - fixed a parameter description being joined to its schema's when one already contains the other, which
+      published a repeated sentence such as \c "Agent run ID.: Agent run ID. New run IDs are returned with
+      the \c agent_run_ prefix."; whichever says more is now kept
+    - fixed a bug where a response with a non-text \c Content-Type and a binary body raised
+      \c DESERIALIZATION-ERROR; the check assumed every body arrives as a string, which holds for the synchronous
+      \c HTTPClient path but not for the asynchronous transport used by the \c RestClientIo module, making binary
+      responses impossible over that client
+      (<a href="https://github.com/qoretechnologies/qore/issues/5386">issue 5386</a>)
+    - added abstract \c check() method to @ref RestSchemaValidator::AbstractSchemaObject "AbstractSchemaObject"
+    - added CBOR serialization/deserialization support (\c "application/cbor") when the \c json module
+      version 1.12+ is available (RFC 8949)
+    - added official YAML MIME type \c "application/yaml" (RFC 9512) to serialization/deserialization
+      support (alongside existing \c "text/x-yaml" and \c "application/x-yaml")
+    - added query date serialization option accessors to
+      @ref RestSchemaValidator::AbstractRestSchemaValidator "AbstractRestSchemaValidator"
+    - added uniform reusable-schema reference type accessors to
+      @ref RestSchemaValidator::AbstractRestSchemaValidator "AbstractRestSchemaValidator" so that referenced
+      types can be retrieved and replaced polymorphically across Swagger 2.0 and OpenAPI 3.x schemas:
+      - @ref RestSchemaValidator::AbstractRestSchemaValidator::getTypeForReference() "AbstractRestSchemaValidator::getTypeForReference()"
+      - @ref RestSchemaValidator::AbstractRestSchemaValidator::replaceTypeForReference() "AbstractRestSchemaValidator::replaceTypeForReference()"
+      along with @ref RestSchemaValidator::AbstractRestSchemaObject::replaceType() "AbstractRestSchemaObject::replaceType()"
+
+    @subsection restschemavalidator_2_4 RestSchemaValidator v2.4
+    - added @ref RestSchemaValidator::RestSchemaLoader "RestSchemaLoader" class for auto-detecting and loading
+      Swagger 2.0 or OpenAPI 3.x schemas without needing to know the format in advance
+      (<a href="https://github.com/qorelanguage/qore/issues/5006">issue 5006</a>)
+    - added abstract methods to enable polymorphic access for data providers:
+      - @ref RestSchemaValidator::AbstractSchemaObject::getField() "AbstractSchemaObject::getField()"
+      - @ref RestSchemaValidator::AbstractRestSchemaValidator::getFieldFromSchema() "AbstractRestSchemaValidator::getFieldFromSchema()"
+      - @ref RestSchemaValidator::AbstractRestSchemaValidator::getFieldForHeaders() "AbstractRestSchemaValidator::getFieldForHeaders()"
+      (<a href="https://github.com/qorelanguage/qore/issues/5006">issue 5006</a>)
+
+    @subsection restschemavalidator_2_3 RestSchemaValidator v2.3
+    - added abstract base classes for REST schema objects to enable polymorphic usage:
+      - @ref RestSchemaValidator::AbstractSchemaBase "AbstractSchemaBase": base class for schema validation constraints
+      - @ref RestSchemaValidator::AbstractSchemaObject "AbstractSchemaObject": base class for JSON schema objects
+      - @ref RestSchemaValidator::AbstractParameterObject "AbstractParameterObject": base class for parameter objects
+      - @ref RestSchemaValidator::AbstractResponseObject "AbstractResponseObject": base class for response objects
+      - @ref RestSchemaValidator::AbstractResponsesObject "AbstractResponsesObject": base class for responses container
+      - @ref RestSchemaValidator::AbstractPathItemObject "AbstractPathItemObject": base class for path item objects
+      - @ref RestSchemaValidator::AbstractOperationObject "AbstractOperationObject": base class for operation objects
+
+    @subsection restschemavalidator_2_2_1 RestSchemaValidator v2.2.1
+    - assume UTF-8 encoding for JSON and YAML payloads, as otherwise deserialization errors occur
+
+    @subsection restschemavalidator_2_2 RestSchemaValidator v2.2
+    - parse and report path arguments when processing REST requests on the server side
+      (<a href="https://github.com/qoretechnologies/qore/issues/4661">issue 4661</a>)
+
+    @subsection restschemavalidator_2_1_3 RestSchemaValidator v2.1.3
+    - REST handlers must throw a \c DESERIALIZATION-ERROR when deserialization errors occur, so that a
+      <tt>400 Bad Request</tt> response is returned
+      (<a href="https://github.com/qoretechnologies/qore/issues/4647">issue 4647</a>)
+    - allow for the client's time zone locale to be set for data serialization / deserialization
+      (<a href="https://github.com/qoretechnologies/qore/issues/4639">issue 4639</a>)
+
+    @subsection restschemavalidator_2_1_2 RestSchemaValidator v2.1.2
+    - allow a logger to be set in validators
+      (<a href="https://github.com/qoretechnologies/qore/issues/4509">issue 4509</a>)
+
+    @subsection restschemavalidator_2_1_1 RestSchemaValidator v2.1.1
+    - better fixes to REST URI path handling with schema validation; allow REST validator objects to declare if they
+      manage the URI path in requests or not
+      (<a href="https://github.com/qoretechnologies/qore/issues/4059">issue 4059</a>)
+
+    @subsection restschemavalidator_2_1 RestSchemaValidator v2.1
+    - fixed a bug handling complex \c Content-Type headers in responses
+      (<a href="https://github.com/qoretechnologies/qore/issues/4019">issue 4019</a>)
+    - fixed a bug where the \c Expect header was not supported and where binary message bodies were read as strings
+      (<a href="https://github.com/qoretechnologies/qore/issues/4035">issue 4035</a>)
+
+    @subsection restschemavalidator_2_0 RestSchemaValidator v2.0
+    - implemented support for the DataProvider API
+      (<a href="https://github.com/qoretechnologies/qore/issues/3545">issue 3545</a>)
+
+    @subsection restschemavalidator_1_1_2 RestSchemaValidator v1.1.2
+    - fixed \c NullRestSchemaValidator to report serialization errors instead of ignoring them and returning about
+      <tt>200 OK</tt> response
+      (<a href="https://github.com/qoretechnologies/qore/issues/3547">issue 3547</a>)
+
+    @subsection restschemavalidator_1_1_1 RestSchemaValidator v1.1.1
+    - fixed \c NullRestSchemaValidator not respecting set Content-Type header from RestClass
+      (<a href="https://github.com/qoretechnologies/qore/issues/3427">issue 3427</a>)
+
+    @subsection restschemavalidator_1_1 RestSchemaValidator v1.1
+    - updated the default validator to try all serialization methods if multiple methods are available and one fails
+      (<a href="https://github.com/qoretechnologies/qore/issues/2831">issue 2831</a>)
+
+    @subsection restschemavalidator_1_0_2 RestSchemaValidator v1.0.2
+    - fixed the null validator to handle binary message bodies; fixed issues with \c "text"
+      serialization with binary message bodies
+      (<a href="https://github.com/qoretechnologies/qore/issues/2816">issue 2816</a>)
+
+    @subsection restschemavalidator_1_0_1 RestSchemaValidator v1.0.1
+    - updated docs for @ref RestSchemaValidator::AbstractRestSchemaValidator::parseRequest() "AbstractRestSchemaValidator::parseRequest()" to reflect how validation exceptions should be raised for proper error reporting (<a href="https://github.com/qoretechnologies/qore/issues/2344">issue 2344</a>)
+    - fixed handling of messages with non-object (i.e. non-hash) bodies (<a href="https://github.com/qoretechnologies/qore/issues/2366">issue 2366</a>)
+
+    @subsection restschemavalidator_1_0 RestSchemaValidator v1.0
+    - initial release of the RestSchemaValidator module
+*/
+
+#! main namespace for all public RestSchemaValidator declarations
+public namespace RestSchemaValidator {
+    #! a hash of information about a client-side request
+    public hashdecl RestRequestClientInfo {
+        #! the URI path for the request
+        string uri_path;
+        #! the Content-Type for the message
+        string content;
+        #! Content-Type for the response message if available
+        /** to be used for the Accept header
+        */
+        *list<string> response_content;
+        #! the serialized message body hash
+        *data body;
+    }
+
+    #! a hash of information about a server-side request
+    public hashdecl RestRequestServerInfo {
+        #! the URI path without query arguments
+        string path;
+        #! any query arguments
+        *hash<auto> query;
+        #! any path arguments
+        *hash<auto> path_args;
+        #! the deserialized message body data
+        auto body;
+        #! miscellaneous free-form info about the parsed request
+        hash<auto> info;
+    }
+
+    #! a hash of information about a response from the server
+    public hashdecl RestResponseClientInfo {
+        #! the HTTP status code
+        int code;
+        #! the deserialized message body
+        auto body;
+        #! the HTTP headers received
+        hash<auto> hdr;
+        #! miscellaneous free-form info about the parsed response
+        hash<auto> info;
+    }
+
+    #! a hash giving example info for example HTTP request messages
+    public hashdecl RestExampleRequestInfo {
+        #! the HTTP request URI
+        string request_uri;
+        #! the HTTP request header hash
+        hash<auto> hdr;
+        #! the HTTP request body
+        string body;
+    }
+
+    #! a hash giving example info for example HTTP response messages
+    public hashdecl RestExampleResponseInfo {
+        #! the HTTP response URI
+        string response_uri;
+        #! the HTTP status code
+        int code;
+        #! the HTTP response header hash
+        hash<auto> hdr;
+        #! the HTTP response body
+        string body;
+    }
+
+    #! a hash giving example information for building a request or response in Qore
+    public hashdecl RestQoreExampleCodeInfo {
+        #! a hash giving example hashdecl declarations for hash objects in the message; keys are hashdecl names; string values are Qore example code declarations of the given hashdecl
+        hash<string, string> hashdecls();
+
+        #! a string giving the example code generation
+        string example;
+    }
+
+    #! Abstract base class for objects with vendor extensions
+    /** This class provides common vendor extension support shared across
+        Swagger 2.0, OpenAPI 3.0, and AsyncAPI 3.0 schema definitions.
+
+        @since RestSchemaValidator 2.5
+    */
+    public class AbstractObjectBase inherits Qore::Serializable {
+        public {
+            #! Allows extensions to the schema
+            /**
+                The field name MUST begin with \c x-, for example, \c x-internal-id.
+                The value can be \c null, a primitive, an array or an object.
+            */
+            hash<auto> vendorExtensions;
+        }
+
+        #! Constructor
+        public constructor() {
+        }
+
+        #! Constructor
+        /**
+            @param oh deserialized hash from the source schema description describing the object
+        */
+        public constructor(hash<auto> oh) {
+            initialize(oh);
+        }
+
+        #! Copy constructor
+        constructor(AbstractObjectBase other) {
+            vendorExtensions = other.vendorExtensions;
+        }
+
+        #! Initialize
+        /**
+            @param oh deserialized hash from the source schema description
+        */
+        public initialize(hash<auto> oh) {
+            vendorExtensions = map {$1.key: $1.value}, oh.pairIterator(), $1.key =~ /^x-/;
+        }
+
+        #! Returns True if this object has the x-deprecated extension set
+        *bool isXDeprecated() {
+            return vendorExtensions."x-deprecated";
+        }
+
+        #! Returns True if this object has the x-internal extension set
+        *bool isInternal() {
+            return vendorExtensions."x-internal";
+        }
+
+        #! Returns True if this object has the x-hidden extension set
+        *bool isHidden() {
+            return vendorExtensions."x-hidden";
+        }
+
+        #! Returns the x-displayName extension value if set
+        *string getDisplayName() {
+            return vendorExtensions."x-displayName";
+        }
+    }
+
+    #! Abstract base class for schema validation constraints (JSON Schema)
+    /** This class provides common validation constraint members shared by both
+        Swagger 2.0 and OpenAPI 3.0 schema definitions.
+    */
+    public class AbstractSchemaBase inherits Qore::Serializable {
+        #! Keeps decimal schema bounds independent of binary floating point expansion
+        /** Parsers validate member types before calling this helper. JSON decimal literals and Qore
+            decimal values must compare identically at inclusive and exclusive boundaries.
+            @param source original schema properties
+        */
+        private normalizeNumericBounds(hash<auto> source) {
+            if (exists source.minimum) { minimum = decimalBound(source.minimum); }
+            if (exists source.maximum) { maximum = decimalBound(source.maximum); }
+        }
+
+        private static number decimalBound(auto value) {
+            return value.typeCode() == NT_FLOAT ? number(value.toString()) : number(value);
+        }
+        public {
+            #! Maximum value constraint
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.1.2
+            */
+            *softnumber maximum;
+
+            #! Minimum value constraint
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.1.3
+            */
+            *softnumber minimum;
+
+            #! Exclusive maximum flag
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.1.2
+            */
+            *bool exclusiveMax;
+
+            #! Exclusive minimum flag
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.1.3
+            */
+            *bool exclusiveMin;
+
+            #! Maximum string length
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.2.1
+            */
+            *int maxLength;
+
+            #! Minimum string length
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.2.2
+            */
+            *int minLength;
+
+            #! Regex pattern constraint
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.2.3
+            */
+            *string pattern;
+
+            #! Maximum array items
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.3.2
+            */
+            *int maxItems;
+
+            #! Minimum array items
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.3.3
+            */
+            *int minItems;
+
+            #! Unique items constraint
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.3.4
+            */
+            *bool uniqueItems;
+
+            #! Enum values as a hash for fast lookup
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.5.1
+
+                @note enums can be of any type, but we only support enums of simple types that can be
+                converted to a string for fast lookups in a hash
+            */
+            hash<string, bool> enumValues;
+
+            #! Multiple-of constraint
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.1.1
+            */
+            *float multipleOf;
+        }
+
+        #! Returns the validation constraints of the schema for its data type
+        /** @return the constraints of the schema that its data type enforces and describes, if any
+
+            @since RestSchemaValidator 2.5
+        */
+        *hash<DataTypeConstraintInfo> getConstraintInfo() {
+            hash<auto> rv;
+            if (exists maximum) {
+                rv{exclusiveMax ? "exclusive_maximum" : "maximum"} = maximum;
+            }
+            if (exists minimum) {
+                rv{exclusiveMin ? "exclusive_minimum" : "minimum"} = minimum;
+            }
+            if (multipleOf) {
+                # a float converted directly to a number carries its binary rounding error
+                rv.multiple_of = number(multipleOf.toString());
+            }
+            if (exists minLength) {
+                rv.min_length = minLength;
+            }
+            if (exists maxLength) {
+                rv.max_length = maxLength;
+            }
+            if (pattern.val()) {
+                rv.pattern = pattern;
+            }
+            if (exists minItems) {
+                rv.min_items = minItems;
+            }
+            if (exists maxItems) {
+                rv.max_items = maxItems;
+            }
+            if (uniqueItems) {
+                rv.unique_items = True;
+            }
+            if (enumValues) {
+                # validation compares enum values as strings
+                rv.enum_values = keys enumValues;
+            }
+            return rv ? cast<hash<DataTypeConstraintInfo>>(rv) : NOTHING;
+        }
+    }
+
+    #! Abstract base class for schema validation with shared check methods
+    /** This class provides the common validation methods shared across
+        Swagger 2.0, OpenAPI 3.0, and AsyncAPI 3.0 schema definitions.
+
+        Subclasses must implement @ref getPathLabel() and @ref getMethodLabel()
+        to provide context-appropriate error message terminology.
+
+        @since RestSchemaValidator 2.5
+    */
+    public class AbstractSchemaBaseValidator inherits AbstractSchemaBase {
+        public {
+            #! Numeric exclusiveMaximum value (JSON Schema draft-07+ / OpenAPI 3.1)
+            /** In JSON Schema draft-07+, exclusiveMaximum is a direct numeric value (not a boolean modifier)
+            */
+            *softnumber exclusiveMaxValue;
+
+            #! Numeric exclusiveMinimum value (JSON Schema draft-07+ / OpenAPI 3.1)
+            /** In JSON Schema draft-07+, exclusiveMinimum is a direct numeric value (not a boolean modifier)
+            */
+            *softnumber exclusiveMinValue;
+        }
+
+        #! Returns the validation constraints of the schema for its data type
+        /** @return the constraints of the schema that its data type enforces and describes, including numeric
+            exclusive bounds, if any
+
+            @since RestSchemaValidator 2.5
+        */
+        *hash<DataTypeConstraintInfo> getConstraintInfo() {
+            hash<auto> rv = AbstractSchemaBase::getConstraintInfo() ?? {};
+            if (exists exclusiveMaxValue) {
+                rv.exclusive_maximum = exclusiveMaxValue;
+            }
+            if (exists exclusiveMinValue) {
+                rv.exclusive_minimum = exclusiveMinValue;
+            }
+            return rv ? cast<hash<DataTypeConstraintInfo>>(rv) : NOTHING;
+        }
+
+        #! Returns the label for path/channel in error messages
+        /** @return \c "path" for REST APIs, \c "channel" for AsyncAPI
+        */
+        abstract string getPathLabel();
+
+        #! Returns the label for method/operation in error messages
+        /** @return \c "method" for REST APIs, \c "operation" for AsyncAPI
+        */
+        abstract string getMethodLabel();
+
+        #! Returns a candidate example for the given type; callers validate it against the finished field type
+        private auto getExampleValueWithFormat(string type, *string format, *string fname) {
+            if (enumValues) {
+                auto rv = enumValues.firstKey();
+                switch (type) {
+                    case "integer": {
+                        rv = rv.toInt();
+                        switch (format) {
+                            case "unix-time":
+                                rv = localtime(rv);
+                                break;
+                        }
+                        break;
+                    }
+                    case "number": rv = (format && ValidNumberFormatsHash{format} ? rv.toFloat() : rv.toNumber()); break;
+                    case "boolean": rv = parse_boolean(rv); break;
+                    case "string": {
+                        switch (format) {
+                            case "byte": return parse_base64_string(rv);
+                            case "date":
+                            case "date-time":
+                            default:
+                                break;
+                        }
+                    }
+                }
+                return rv;
+            }
+            switch (type) {
+                case "string": {
+                    switch (format) {
+                        case "byte":
+                        case "binary": return <feedface>;
+                        case "date": return 1987-05-23;
+                        case "date-time": return 1987-05-23T07:45:30Z;
+                        case "uuid": return "d242e639-4ed6-4930-a375-b139c13f89da";
+                        default:
+                            return sprintf("Example %s", fname ?? "string");
+                    }
+                }
+                case "integer": {
+                    switch (format) {
+                        case "unix-time": return 1726733382;
+                    }
+                    if (exists minimum)
+                        return exclusiveMin ? minimum + 1 : minimum;
+                    if (exists maximum)
+                        return exclusiveMax ? maximum - 1 : maximum;
+                    return 1;
+                }
+                case "number": {
+                    number rv;
+                    if (exists minimum)
+                        rv = exclusiveMin ? minimum + 0.1 : minimum;
+                    else if (exists maximum)
+                        rv = exclusiveMax ? maximum - 0.1 : maximum;
+                    else
+                        rv = 1.1n;
+                    if (format && ValidNumberFormatsHash{format})
+                        return rv.toFloat();
+                    return rv;
+                }
+                case "boolean":
+                    return True;
+                case "null":
+                    return NOTHING;
+                case "any": {
+                    return "any value";
+                }
+            }
+        }
+
+        #! Returns True if date/date-time string values should be converted to date objects during serialization
+        /** Override to return False if date-time strings should be kept as-is during serialization */
+        bool serializeDateTimeStrings() {
+            return True;
+        }
+
+        #! Validates the value against the schema definition
+        private check(bool serialize, bool request, string type, *string format, *AbstractSchemaObject items,
+                string path, string method, string name, reference<auto> value) {
+            # accept a single value for an array (= one-element list)
+            if (type == "array") {
+                # convert to a list before checking
+                if (exists value && value.typeCode() != NT_LIST) {
+                    value = (value,);
+                }
+                checkArrayParam(serialize, request, items, path, method, name, \value);
+            } else {
+                on_error rethrow $1.err, sprintf("%s (while checking parameter %y)", $1.desc, name);
+                # SQL NULL and "no value" are the same thing to a REST schema, and a record-based data
+                # provider returns NULL for every unset column, so any API serving a value read from a
+                # database presents them.  NULL is a type of its own with no checkIntern() variant, so
+                # it is dispatched on the no-value variant to get a verdict from the schema; the value
+                # itself is left alone, as validating it must not rewrite it
+                if (value === NULL) {
+                    checkIntern(serialize, request, type, format, path, method, name, NOTHING, \value);
+                    return;
+                }
+                checkIntern(serialize, request, type, format, path, method, name, value, \value);
+            }
+        }
+
+        private checkStringIntern(string path, string method, string name, string value) {
+            string pl = getPathLabel();
+            string ml = getMethodLabel();
+            # minLength and maxLength are based on the number of characters in the string, not bytes
+            if (exists maxLength && value.length() > maxLength)
+                throw "SCHEMA-VALIDATION-ERROR",
+                    sprintf("Parameter %y for %s %y and %s %y is too long (maxLength: %d, actual: %d)",
+                        name, pl, path, ml, method, maxLength, value.length());
+            if (exists minLength && value.length() < minLength)
+                throw "SCHEMA-VALIDATION-ERROR",
+                    sprintf("Parameter %y for %s %y and %s %y is too short (minLength: %d, actual: %d)",
+                        name, pl, path, ml, method, minLength, value.length());
+            if (exists pattern && !value.regex(pattern))
+                throw "SCHEMA-VALIDATION-ERROR",
+                    sprintf("Parameter %y for %s %y and %s %y does not fit the parameter string pattern "
+                        "(pattern: %y, value: %y)", name, pl, path, ml, method, pattern, value);
+            if (enumValues && !enumValues{value})
+                throw "SCHEMA-VALIDATION-ERROR",
+                    sprintf("Parameter %y for %s %y and %s %y does not fit the enumerated values (enum: %y, "
+                        "actual: %y)", name, pl, path, ml, method, keys enumValues, value);
+        }
+
+        private checkIntern(bool serialize, bool request, string type, *string format, string path, string method,
+                string name, list<auto> v, reference<list> value) {
+            if (type != "list" && type != "any")
+                throw "SCHEMA-VALIDATION-ERROR", sprintf("Parameter %y for %s %y and %s %y is an array (%y), but "
+                    "the expected type is %y", name, getPathLabel(), path, getMethodLabel(), method, v, type);
+        }
+
+        private checkIntern(bool serialize, bool request, string type, *string format, string path, string method,
+                string name, hash<auto> v, reference<hash> value) {
+            if (type != "file" && type != "any" && type != "object")
+                throw "SCHEMA-VALIDATION-ERROR", sprintf("Parameter %y for %s %y and %s %y is an object (%y), but "
+                    "the expected type is %y", name, getPathLabel(), path, getMethodLabel(), method, v, type);
+        }
+
+        private checkIntern(bool serialize, bool request, string type, *string format, string path, string method,
+                string name, int v, reference<auto> value) {
+            # NOTE: "number" also accepts "int"
+            if (type == "number") {
+                checkIntern(serialize, request, type, format, path, method, name, v.toNumber(), \value);
+                return;
+            }
+            if (type != "integer" && type != "any")
+                throwInvalidType(name, "integer", type, v);
+
+            if (!serialize) {
+                switch (format) {
+                    case "unix-time":
+                        value = localtime(v);
+                        break;
+                }
+            }
+
+            string pl = getPathLabel();
+            string ml = getMethodLabel();
+
+            # Check maximum constraint (boolean exclusiveMax)
+            if (exists maximum) {
+                if (exclusiveMax) {
+                    if (value >= maximum)
+                        throw "SCHEMA-VALIDATION-ERROR",
+                            sprintf("Parameter %y for %s %y and %s %y is too big (maximum: %f, actual: %d)",
+                                name, pl, path, ml, method, maximum, value);
+                } else {
+                    if (value > maximum)
+                        throw "SCHEMA-VALIDATION-ERROR",
+                            sprintf("Parameter %y for %s %y and %s %y is too big (maximum: %f, actual: %d)",
+                                name, pl, path, ml, method, maximum, value);
+                }
+            }
+
+            # Check exclusiveMaximum constraint (numeric value, JSON Schema draft-07+)
+            if (exists exclusiveMaxValue) {
+                if (value >= exclusiveMaxValue)
+                    throw "SCHEMA-VALIDATION-ERROR",
+                        sprintf("Parameter %y for %s %y and %s %y is too big (exclusiveMaximum: %f, actual: %d)",
+                            name, pl, path, ml, method, exclusiveMaxValue, value);
+            }
+
+            # Check minimum constraint (boolean exclusiveMin)
+            if (exists minimum) {
+                if (exclusiveMin) {
+                    if (value <= minimum)
+                        throw "SCHEMA-VALIDATION-ERROR",
+                            sprintf("Parameter %y for %s %y and %s %y is too small (minimum: %f, actual: %d)",
+                                name, pl, path, ml, method, minimum, value);
+                } else {
+                    if (value < minimum)
+                        throw "SCHEMA-VALIDATION-ERROR",
+                            sprintf("Parameter %y for %s %y and %s %y is too small (minimum: %f, actual: %d)",
+                                name, pl, path, ml, method, minimum, value);
+                }
+            }
+
+            # Check exclusiveMinimum constraint (numeric value, JSON Schema draft-07+)
+            if (exists exclusiveMinValue) {
+                if (value <= exclusiveMinValue)
+                    throw "SCHEMA-VALIDATION-ERROR",
+                        sprintf("Parameter %y for %s %y and %s %y is too small (exclusiveMinimum: %f, actual: %d)",
+                            name, pl, path, ml, method, exclusiveMinValue, value);
+            }
+
+            if (enumValues && !enumValues{value})
+                throw "SCHEMA-VALIDATION-ERROR",
+                    sprintf("Parameter %y for %s %y and %s %y does not fit the enumerated values (enum: %y, "
+                        "actual: %d)", name, pl, path, ml, method, keys enumValues, value);
+        }
+
+        private checkIntern(bool serialize, bool request, string type, *string format, string path, string method,
+                string name, number v, reference<number> value) {
+            checkInternNumber(serialize, request, type, format, path, method, name, v, \value);
+        }
+
+        private checkIntern(bool serialize, bool request, string type, *string format, string path, string method,
+                string name, float v, reference<number> value) {
+            checkInternNumber(serialize, request, type, format, path, method, name, v, \value);
+        }
+
+        private checkInternNumber(bool serialize, bool request, string type, *string format, string path,
+                string method, string name, auto v, reference<auto> value) {
+            if (type != "number" && type != "any")
+                throwInvalidType(name, "number", type, v);
+
+            string pl = getPathLabel();
+            string ml = getMethodLabel();
+
+            # Compare the original decimal value, before the transport's final float conversion.
+            value = decimalBound(v);
+
+            # Check maximum constraint (boolean exclusiveMax)
+            if (exists maximum) {
+                if (exclusiveMax) {
+                    if (value >= maximum)
+                        throw "SCHEMA-VALIDATION-ERROR",
+                            sprintf("Parameter %y for %s %y and %s %y is too big (maximum: %f, actual: %f)",
+                                name, pl, path, ml, method, maximum, value);
+                } else {
+                    if (value > maximum)
+                        throw "SCHEMA-VALIDATION-ERROR",
+                            sprintf("Parameter %y for %s %y and %s %y is too big (maximum: %f, actual: %f)",
+                                name, pl, path, ml, method, maximum, value);
+                }
+            }
+
+            # Check exclusiveMaximum constraint (numeric value)
+            if (exists exclusiveMaxValue) {
+                if (value >= exclusiveMaxValue)
+                    throw "SCHEMA-VALIDATION-ERROR",
+                        sprintf("Parameter %y for %s %y and %s %y is too big (exclusiveMaximum: %f, actual: %f)",
+                            name, pl, path, ml, method, exclusiveMaxValue, value);
+            }
+
+            # Check minimum constraint (boolean exclusiveMin)
+            if (exists minimum) {
+                if (exclusiveMin) {
+                    if (value <= minimum)
+                        throw "SCHEMA-VALIDATION-ERROR",
+                            sprintf("Parameter %y for %s %y and %s %y is too small (minimum: %f, actual: %f)",
+                                name, pl, path, ml, method, minimum, value);
+                } else {
+                    if (value < minimum)
+                        throw "SCHEMA-VALIDATION-ERROR",
+                            sprintf("Parameter %y for %s %y and %s %y is too small (minimum: %f, actual: %f)",
+                                name, pl, path, ml, method, minimum, value);
+                }
+            }
+
+            # Check exclusiveMinimum constraint (numeric value)
+            if (exists exclusiveMinValue) {
+                if (value <= exclusiveMinValue)
+                    throw "SCHEMA-VALIDATION-ERROR",
+                        sprintf("Parameter %y for %s %y and %s %y is too small (exclusiveMinimum: %f, actual: %f)",
+                            name, pl, path, ml, method, exclusiveMinValue, value);
+            }
+
+            if (enumValues && !enumValues{value}) {
+                throw "SCHEMA-VALIDATION-ERROR",
+                    sprintf("Parameter %y for %s %y and %s %y does not fit the enumerated values (enum: %y, "
+                        "actual: %f)", name, pl, path, ml, method, keys enumValues, value);
+            }
+
+            switch (format) {
+                case "float":
+                case "double":
+                case NOTHING:
+                    value = v.toFloat();
+                    break;
+
+                default:
+                    throw "SCHEMA-VALIDATION-ERROR",
+                    sprintf("Parameter %y for %s %y and %s %y has an invalid format: %y; expecting (\"float\", "
+                        "\"double\", or no value; value provided: %y)", name, pl, path, ml, method, format, value);
+            }
+        }
+
+        #! Converts binary values to strings for supported formats
+        private checkIntern(bool serialize, bool request, string type, *string format, string path, string method,
+                string name, binary v, reference value) {
+            if (type != "string" && type != "any")
+                throwInvalidType(name, "string", type, v);
+
+            if (serialize) {
+                switch (format) {
+                    case "byte":
+                        value = make_base64_string(v);
+                        break;
+                    case "binary":
+                        value = v;
+                        return;
+                    default:
+                        throw "SCHEMA-VALIDATION-ERROR", sprintf("%s %s: parameters %y: cannot serialize a binary "
+                            "value to a string value with format %y", method.upr(), path, name, format);
+                }
+                checkStringIntern(path, method, name, value);
+            }
+        }
+
+        #! Validates string values
+        private checkIntern(bool serialize, bool request, string type, *string format, string path, string method,
+                string name, string v, reference<auto> value) {
+            if (type != "string" && type != "any") {
+                throwInvalidType(name, "string", type, v);
+            }
+
+            string pl = getPathLabel();
+            string ml = getMethodLabel();
+
+            if (serialize) {
+                switch (format) {
+                    case "byte":
+                        value = make_base64_string(v);
+                        break;
+                    case "binary":
+                        value = binary(v);
+                        break;
+                    case "date":
+                    case "date-time":
+                        if (serializeDateTimeStrings()) {
+                            # issue #3847: with non-YAML serialization, this will always be a string
+                            value = date(v);
+                        }
+                        break;
+                }
+            } else {
+                switch (format) {
+                    # NOTE: deserializes to a binary object
+                    case "byte":
+                        try {
+                            value = parse_base64_string(v);
+                        } catch (hash<ExceptionInfo> ex) {
+                            throw "SCHEMA-VALIDATION-ERROR", sprintf("Parameter %y for %s %y and %s %y of type %y "
+                                "is invalid; value provided: %y (%s)", name, pl, path, ml, method, format, v,
+                                ex.desc);
+                        }
+                        break;
+                    # NOTE: deserializes to a binary object
+                    case "binary":
+                        try {
+                            value = binary(v);
+                        } catch (hash<ExceptionInfo> ex) {
+                            throw "SCHEMA-VALIDATION-ERROR", sprintf("Parameter %y for %s %y and %s %y of type %y "
+                                "is invalid; value provided: %y (%s)", name, pl, path, ml, method, format, v,
+                                ex.desc);
+                        }
+                        break;
+                    # NOTE: deserializes to a date/time value
+                    case "date":
+                    case "date-time":
+                        try {
+                            # https://xml2rfc.tools.ietf.org/public/rfc/html/rfc3339.html#anchor14
+                            value = date(v);
+                        } catch (hash<ExceptionInfo> ex) {
+                            throw "SCHEMA-VALIDATION-ERROR", sprintf("Parameter %y for %s %y and %s %y of type %y "
+                                "is invalid; value provided: %y (%s)", name, pl, path, ml, method, format, v,
+                                ex.desc);
+                        }
+                        break;
+                }
+            }
+            if (value.typeCode() == NT_STRING) {
+                checkStringIntern(path, method, name, value);
+            }
+        }
+
+        #! Converts dates to/from string or int values for supported formats
+        private checkIntern(bool serialize, bool request, string type, *string format, string path, string method,
+                string name, date v, reference<auto> value) {
+            if (type != "string" && type != "any" && (type != "integer" || format != "unix-time"))
+                throwInvalidType(name, "string", type, v);
+
+            if (serialize) {
+                if (type == "integer" && format == "unix-time") {
+                    value = v.getEpochSeconds();
+                } else {
+                    switch (format) {
+                        case "date":
+                            # https://xml2rfc.tools.ietf.org/public/rfc/html/rfc3339.html#anchor14
+                            value = v.format("YYYY-MM-DD");
+                            break;
+                        case "date-time":
+                            # https://xml2rfc.tools.ietf.org/public/rfc/html/rfc3339.html#anchor14
+                            if (v.milliseconds() != 0)
+                                value = v.format("YYYY-MM-DDTHH:mm:SS.yZ");
+                            else
+                                value = v.format("YYYY-MM-DDTHH:mm:SSZ");
+                            break;
+                        default:
+                            throw "SCHEMA-VALIDATION-ERROR", sprintf("%s %s: parameters %y: cannot serialize a "
+                                "date/time value to a string value with format %y", method.upr(), path, name, format);
+                    }
+                    checkStringIntern(path, method, name, value);
+                }
+            }
+        }
+
+        private checkIntern(bool serialize, bool request, string type, *string format, string path, string method,
+                string name, bool v, reference<bool> value) {
+            if (type != "boolean" && type != "any") {
+                throwInvalidType(name, "boolean", type, v);
+            }
+            if (enumValues && !enumValues{value.toString()}) {
+                throw "SCHEMA-VALIDATION-ERROR", sprintf("Parameter %y for %s %y and %s %y does not fit the "
+                    "enumerated values (enum: %y, actual: %y)", name, getPathLabel(), path, getMethodLabel(),
+                    method, keys enumValues, value);
+            }
+        }
+
+        # NOTE: the reference is deliberately untyped: the value being checked can be a hash member or
+        #       any other "auto" lvalue, and a "reference<nothing>" parameter binds neither, which made
+        #       this variant unreachable for every value that is not already declared to hold nothing
+        private checkIntern(bool serialize, bool request, string type, *string format, string path, string method,
+                string name, nothing v, reference value) {
+            if (type != "null" && type != "any")
+                throw "SCHEMA-VALIDATION-ERROR", sprintf("Parameter %y for %s %y and %s %y is null, but the "
+                    "expected type is %y", name, getPathLabel(), path, getMethodLabel(), method, type);
+        }
+
+        #! Validates the value against the schema definition
+        private checkArrayParam(bool serialize, bool request, *AbstractSchemaObject items, string path, string method,
+                string name, reference<list<auto>> value) {
+            string pl = getPathLabel();
+            string ml = getMethodLabel();
+            if (exists maxItems && value.size() > maxItems) {
+                throw "SCHEMA-VALIDATION-ERROR",
+                    sprintf("Parameter %y for %s %y and %s %y has too many items (maxItems: %d, actual: %d)",
+                        name, pl, path, ml, method, maxItems, value.size());
+            }
+            if (exists minItems && value.size() < minItems) {
+                throw "SCHEMA-VALIDATION-ERROR",
+                    sprintf("Parameter %y for %s %y and %s %y has too few items (minItems: %d, actual: %d)",
+                        name, pl, path, ml, method, minItems, value.size());
+            }
+
+            if (!value) {
+                return;
+            }
+
+            hash<string, bool> seen;
+            foreach auto val in (\value) {
+                if (items) { items.check(serialize, request, path, method, name, \val); }
+                if (uniqueItems) {
+                    string key = AbstractSchemaBaseValidator::uniqueValueKey(val);
+                    if (seen{key}) {
+                        throw "SCHEMA-VALIDATION-ERROR", sprintf("%s %s: Array parameter %y does not have unique items",
+                            method, path, name);
+                    }
+                    seen{key} = True;
+                }
+            }
+        }
+
+        #! Canonical typed key for JSON equality without scalar coercion or quadratic list scans
+        private static string uniqueValueKey(auto value, int depth = 0) {
+            if (depth > 128) { throw "SCHEMA-VALIDATION-ERROR", "array element exceeds the supported nesting depth"; }
+            int tc = value.typeCode();
+            if (inlist(tc, (NT_INT, NT_FLOAT, NT_NUMBER))) { return "number:" + number(value).toString(); }
+            if (tc == NT_NULL || tc == NT_NOTHING) { return "null"; }
+            if (tc == NT_LIST) {
+                return "list:" + make_json(map AbstractSchemaBaseValidator::uniqueValueKey($1, depth + 1), value);
+            }
+            if (tc == NT_HASH) {
+                hash<string, string> sorted = {};
+                foreach string key in (sort(keys value)) {
+                    sorted{key} = AbstractSchemaBaseValidator::uniqueValueKey(value{key}, depth + 1);
+                }
+                return "object:" + make_json(sorted);
+            }
+            return value.type() + ":" + make_json(value);
+        }
+
+        #! Throws an \c SCHEMA-VALIDATION-ERROR exception
+        static private throwInvalidType(string name, string actual, string expected, auto value) {
+            throw "SCHEMA-VALIDATION-ERROR",
+                sprintf("Parameter %y has invalid type %y (should be %y); value: %y", name, actual, expected, value);
+        }
+
+        #! Checks the value against the type
+        /** @return True if the value is OK, False if not
+        */
+        static bool checkValueType(reference<auto> value, string type) {
+            if (type == "any") {
+                return True;
+            }
+            int vt = value.typeCode();
+
+            # check for string values
+            if (vt == NT_STRING) {
+                if (type == "boolean") {
+                    if (value == "true") {
+                        value = True;
+                        return True;
+                    } else if (value == "false") {
+                        value = False;
+                        return True;
+                    }
+                } else if (type == "int" && value =~ /^[0-9]+$/) {
+                    value = value.toInt();
+                    return True;
+                }
+            }
+
+            # check for number values
+            if (vt == NT_INT && type == "number") {
+                value = value.toFloat();
+                return True;
+            }
+
+            if ((vt == NT_BOOLEAN && type != "boolean") ||
+                (vt == NT_INT && type != "integer") ||
+                (vt == NT_FLOAT && type != "number") ||
+                (vt == NT_STRING && (type != "string" && type != "file")) ||
+                (vt == NT_LIST && type != "array")) {
+                return False;
+            }
+            return True;
+        }
+
+        #! Valid number type formats
+        const ValidNumberFormats = ("double", "float");
+
+        #! A hash of valid number type formats
+        const ValidNumberFormatsHash = map {$1: True}, ValidNumberFormats;
+    }
+
+    #! Abstract base class for schema objects (JSON Schema)
+    /** This class provides the common interface for schema objects shared by both
+        Swagger 2.0 and OpenAPI 3.0 specifications.
+    */
+    public class AbstractSchemaObject inherits AbstractSchemaBase {
+        public {
+            #! The name of this object for documentation and example purposes
+            string name;
+
+            #! The data type (string, integer, boolean, object, array, etc.)
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.5.2
+
+                MUST be either a string or an array (list). If it's an array,
+                its elements MUST be strings and MUST be unique.
+            */
+            string type;
+
+            #! The extending format for the type (date-time, int64, etc.)
+            /** See Data Type Formats for further details.
+            */
+            *string format;
+
+            #! Title for documentation
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-6.1
+            */
+            *string title;
+
+            #! Description
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-6.1
+            */
+            *string desc;
+
+            #! Default value
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-6.2
+            */
+            auto defaultVal;
+
+            #! Maximum number of properties (for objects)
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.4.1
+            */
+            *int maxProperties;
+
+            #! Minimum number of properties (for objects)
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.4.2
+            */
+            *int minProperties;
+
+            #! Whether the value can be null
+            /** Extension that allows types to be nullable; the OpenAPI specification 2.0
+                otherwise does not allow for nullable types.
+            */
+            bool nullable = False;
+
+            #! Required properties (for objects)
+            /** @see https://tools.ietf.org/html/draft-fge-json-schema-validation-00#section-5.4.3
+
+                Set of strings. Must have at least one element.
+            */
+            hash<string, bool> required;
+
+            #! Discriminator for polymorphism
+            /** The discriminator is the schema property name that is used to
+                differentiate between other schemas that inherit this schema.
+            */
+            *string discriminator;
+
+            #! Read-only flag
+            /** Declares the property as "read only". This means that it MAY be sent
+                as part of a response but MUST NOT be sent as part of the request.
+            */
+            bool readOnly = False;
+        }
+
+        #! Returns the validation constraints of the schema for its data type
+        /** @return the constraints of the schema that its data type enforces and describes, including the number
+            of properties of objects, if any
+
+            @since RestSchemaValidator 2.5
+        */
+        *hash<DataTypeConstraintInfo> getConstraintInfo() {
+            hash<auto> rv = AbstractSchemaBase::getConstraintInfo() ?? {};
+            if (exists minProperties) {
+                rv.min_properties = minProperties;
+            }
+            if (exists maxProperties) {
+                rv.max_properties = maxProperties;
+            }
+            return rv ? cast<hash<DataTypeConstraintInfo>>(rv) : NOTHING;
+        }
+
+        #! Validates the value against the schema definition
+        /** @param serialize if serializing the value
+            @param request if processing a request (vs response)
+            @param path the URI path or channel name
+            @param method the HTTP method or operation name
+            @param name the parameter name
+            @param value reference to the value to validate/transform
+        */
+        abstract check(bool serialize, bool request, string path, string method,
+            string name, reference<auto> value);
+
+        #! Returns the items schema for arrays
+        abstract *AbstractSchemaObject getItems();
+
+        #! Returns a hash of property schemas for objects
+        abstract *hash<string, AbstractSchemaObject> getProperties();
+
+        #! Returns a data field definition from this schema
+        /** @param name the name of the field
+            @param desc optional description for the field
+            @param required if the field is required
+            @param rest optional REST client for URL resolution
+            @param default_value optional default value
+
+            @return the data field definition
+        */
+        abstract AbstractDataField getField(string name, *string desc, bool required = True, *object rest,
+            auto default_value);
+    }
+
+    #! Abstract base class for schema objects with composition support (allOf/oneOf/anyOf/not)
+    /** This class provides composition validation for JSON Schema composition keywords
+        shared across OpenAPI 3.0 and AsyncAPI 3.0 specifications. Swagger 2.0 only uses allOf.
+
+        @since RestSchemaValidator 2.5
+    */
+    public class AbstractComposableSchemaObject inherits AbstractSchemaObject {
+        public {
+            #! allOf schemas - value must match all schemas
+            *list<AbstractSchemaObject> allOfSchemas;
+
+            #! oneOf schemas - value must match exactly one schema
+            *list<AbstractSchemaObject> oneOfSchemas;
+
+            #! anyOf schemas - value must match at least one schema
+            *list<AbstractSchemaObject> anyOfSchemas;
+
+            #! not schema - value must NOT match this schema
+            *AbstractSchemaObject notSchema;
+        }
+
+        #! Validates composition constraints (allOf/oneOf/anyOf/not)
+        /** @param serialize if serializing the value
+            @param request if processing a request (vs response)
+            @param path the URI path or channel name
+            @param method the HTTP method or operation name
+            @param name the parameter name
+            @param value reference to the value to validate/transform
+        */
+        validateComposition(bool serialize, bool request, string path, string method,
+                string name, reference<auto> value) {
+            # check "allOf" schemas, if any - all must match
+            if (allOfSchemas) {
+                foreach AbstractSchemaObject schema in (allOfSchemas) {
+                    schema.check(serialize, request, path, method, name, \value);
+                }
+            }
+
+            # check "oneOf" schemas, if any - value must match exactly one schema
+            if (oneOfSchemas) {
+                int matches = 0;
+                list<string> matched_schemas;
+                foreach AbstractSchemaObject schema in (oneOfSchemas) {
+                    try {
+                        auto test_value = value;
+                        schema.check(serialize, request, path, method, name, \test_value);
+                        ++matches;
+                        matched_schemas += schema.name;
+                    } catch (hash<ExceptionInfo> ex) {
+                        # schema didn't match, continue
+                    }
+                }
+                if (matches == 0) {
+                    throw "SCHEMA-VALIDATION-ERROR", sprintf("%s %s: value for %y does not match any of the oneOf "
+                        "schemas", method.upr(), path, name);
+                }
+                if (matches > 1) {
+                    throw "SCHEMA-VALIDATION-ERROR", sprintf("%s %s: value for %y matches multiple oneOf schemas "
+                        "(%y); must match exactly one", method.upr(), path, name, matched_schemas);
+                }
+            }
+
+            # check "anyOf" schemas, if any - value must match at least one schema
+            if (anyOfSchemas) {
+                bool matched = False;
+                foreach AbstractSchemaObject schema in (anyOfSchemas) {
+                    try {
+                        auto test_value = value;
+                        schema.check(serialize, request, path, method, name, \test_value);
+                        matched = True;
+                        break;
+                    } catch (hash<ExceptionInfo> ex) {
+                        # schema didn't match, continue
+                    }
+                }
+                if (!matched) {
+                    throw "SCHEMA-VALIDATION-ERROR", sprintf("%s %s: value for %y does not match any of the anyOf "
+                        "schemas", method.upr(), path, name);
+                }
+            }
+
+            # check "not" schema, if any - value must NOT match the schema
+            if (notSchema) {
+                try {
+                    auto test_value = value;
+                    notSchema.check(serialize, request, path, method, name, \test_value);
+                    # if we get here, the value matched the "not" schema, which is an error
+                    throw "SCHEMA-VALIDATION-ERROR", sprintf("%s %s: value for %y must not match the 'not' schema",
+                        method.upr(), path, name);
+                } catch (hash<ExceptionInfo> ex) {
+                    if (ex.err == "SCHEMA-VALIDATION-ERROR" && ex.desc !~ /must not match/) {
+                        # good - the value didn't match the "not" schema
+                    } else {
+                        rethrow;
+                    }
+                }
+            }
+        }
+    }
+
+    #! Abstract base class for REST API schema objects (shared by Swagger and OpenApi3)
+    /** Provides shared methods for data type generation, field generation, example code generation,
+        and object property validation. AsyncApi uses a simpler schema object and does not inherit
+        this class.
+    */
+    public class AbstractRestSchemaObject inherits AbstractComposableSchemaObject {
+        public {
+            #! Items schema for arrays
+            *AbstractSchemaObject items;
+
+            #! Properties for objects
+            hash<string, AbstractSchemaObject> properties;
+
+            #! Extension to allow properties to be nullable
+            hash<string, bool> nullable_properties;
+
+            #! Additional properties - MUST be a bool or an AbstractSchemaObject
+            auto additionalProperties;
+
+            #! A free-form property to include an example of an instance for this schema
+            auto example;
+
+            #! The data type of the schema (required)
+            *AbstractDataProviderType dataType;
+
+            #! The data type of the schema (not required)
+            *AbstractDataProviderType orNothingDataType;
+        }
+
+        private {
+            #! maps fields: name -> {Y,N} -> field
+            /** The canonical field for a name, and also the **recursion cut**:
+                @ref getFieldIntern() registers a field here before building its type and then updates
+                that same field in place, so a property on the far side of a cycle is handed the very
+                same object and still ends up with the real type.
+
+                It is therefore keyed by the name alone and has to stay that way: keying it by anything a
+                *use* supplies means a recursive re-entry with a different description misses the
+                placeholder, and the type built at that depth is the incomplete one.  Per-use differences
+                live in @ref usemap instead.
+            */
+            hash<string, hash<string, AbstractDataField>> fieldmap;
+
+            #! maps per-use fields: use key -> {Y,N} -> field
+            /** A schema object is interned by its content, so two parameters with the same name and the
+                same schema are one object.  That is right for the type, which the schema determines
+                completely, and wrong for the field: a field also carries what the **use** supplies - its
+                own description and default value.  Publishing the canonical field for every use gave
+                whichever operation was registered second the first one's documentation.
+
+                A use that differs from the one the canonical field was built from gets a copy carrying
+                its own description and default over the canonical (finished) type.
+            */
+            hash<string, hash<string, AbstractDataField>> usemap;
+
+            #! The use key each name's canonical field was built from
+            hash<string, string> field_use;
+
+            #! Names whose canonical field is being built right now
+            /** A field in here is the recursion cut and is deliberately incomplete: its type is a
+                placeholder that is replaced in place once the build finishes.  Copying one would keep the
+                placeholder forever, so a use that arrives while its name is in here takes the canonical
+                field, exactly as every use did before per-use copies existed.
+            */
+            hash<string, bool> building;
+        }
+
+        #! Returns the data provider type for a given type/format/items path
+        /** Must be implemented by each module to delegate to the module-specific schema's getType() method.
+        */
+        abstract AbstractDataProviderType getSchemaType(string path, string typestr, *string format,
+            *AbstractSchemaObject arrayItems, bool required);
+
+        #! Returns True if this schema has composition features that require special type handling
+        /** Override in modules that support oneOf/anyOf/not to check for composition features.
+            Default returns False (Swagger behavior).
+        */
+        bool hasSchemaCompositionFeatures() {
+            return False;
+        }
+
+        #! Returns True if this schema has composition keywords (oneOf/anyOf/not) that require
+        #! relaxed additionalProperties handling
+        /** Override in modules that support composition keywords.
+            Default returns False.
+
+            @note This is separate from hasSchemaCompositionFeatures() which also considers
+            readOnly/writeOnly for data type creation purposes.
+        */
+        bool hasCompositionKeywords() {
+            return False;
+        }
+
+        #! Factory method to create a HashDataType
+        /** Override in modules that need specialized hash data types (e.g., OpenApi3HashDataType).
+        */
+        HashDataType createHashDataType(Type base_type, string typename) {
+            return new HashDataType(base_type, typename);
+        }
+
+        #! Returns the data type for this schema
+        AbstractDataProviderType getDataType(bool required = True, *object rest) {
+            if (required) {
+                if (!dataType) {
+                    if (orNothingDataType) {
+                        dataType = orNothingDataType.getMandatoryType();
+                    } else {
+                        # "dataType" is assigned in the call below
+                        getDataTypeIntern("/", True, rest);
+                    }
+                }
+                return dataType;
+            }
+            if (!orNothingDataType) {
+                if (dataType) {
+                    orNothingDataType = dataType.getOrNothingType();
+                } else {
+                    # "orNothingDataType" is assigned in the call below
+                    getDataTypeIntern("/", False, rest);
+                }
+            }
+            return orNothingDataType;
+        }
+
+        #! Replaces the cached data type(s) for this schema with the given type
+        /** Updates the mandatory and/or "or nothing" cached data types from the given type, preserving the
+            required/optional cardinality already present in the schema.
+
+            @param t the new data type to use for this schema
+
+            @since RestSchemaValidator 2.5
+        */
+        replaceType(AbstractDataProviderType t) {
+            if (t.isOrNothingType()) {
+                if (dataType) {
+                    dataType = t.getMandatoryType();
+                }
+                if (orNothingDataType) {
+                    orNothingDataType = t;
+                }
+            } else {
+                if (dataType) {
+                    dataType = t;
+                }
+                if (orNothingDataType) {
+                    orNothingDataType = t.getOrNothingType();
+                }
+            }
+        }
+
+        #! Returns the data type for the given schema
+        private AbstractDataProviderType getDataTypeIntern(string path, bool required = True, *object rest) {
+            if (type == "string") {
+                AbstractDataProviderType t = AbstractDataProviderType::get((required ? "" : "*") + "string")
+                    .copyWithConstraints(getConstraintInfo());
+                if (required) {
+                    dataType = t;
+                } else {
+                    orNothingDataType = t;
+                }
+                return t;
+            }
+
+            # For "any" type schemas without properties and without composition features, return an auto type
+            if (type == "any" && !properties && !hasSchemaCompositionFeatures()) {
+                AbstractDataProviderType t = AbstractDataProviderType::get(required ? "auto" : "*auto")
+                    .copyWithConstraints(getConstraintInfo());
+                if (required) {
+                    dataType = t;
+                } else {
+                    orNothingDataType = t;
+                }
+                return t;
+            }
+
+            auto def_body;
+            if (rest) {
+                # preprocessRequestBody is now on AbstractRestClient (identity default);
+                # MewsRestClient-family subclasses override it to return the default body
+                # with injected auth-token fields used as required field defaults here
+                def_body = rest.preprocessRequestBody();
+                if (exists def_body && def_body.typeCode() != NT_HASH) {
+                    remove def_body;
+                }
+            }
+
+            string typename = required
+                ? name
+                : "*" + name;
+
+            HashDataType t = createHashDataType(required ? AutoHashType : AutoHashOrNothingType, typename);
+            # set before the type is referenced by any field, which a recursive schema does
+            if (*hash<DataTypeConstraintInfo> constraints = getConstraintInfo()) {
+                t = cast<HashDataType>(t.copyWithConstraints(constraints));
+            }
+
+            if (required) {
+                dataType = t;
+            } else {
+                orNothingDataType = t;
+            }
+            getSchemaObjectFields(t, path, def_body);
+            if (additionalProperties === True) {
+                t.setDefaultOtherFieldType(AbstractDataProviderTypeMap."auto");
+            } else if (additionalProperties) {
+                string new_path = path == "/"
+                    ? "/" + additionalProperties.type
+                    : path + "/" + additionalProperties.type;
+                t.setDefaultOtherFieldType(getSchemaType(new_path,
+                    additionalProperties.type, additionalProperties.format,
+                    additionalProperties.items,
+                    !additionalProperties.nullable));
+            } else if (hasCompositionKeywords()) {
+                # For schema composition (oneOf/anyOf/not), allow additional properties since
+                # the composition validation will handle checking
+                t.setDefaultOtherFieldType(AbstractDataProviderTypeMap."auto");
+            } else {
+                # make sure that extra fields are not supported
+                t.setDefaultOtherFieldType();
+            }
+
+            return t;
+        }
+
+        #! Returns a field definition from the schema parameter
+        AbstractDataField getField(string name, *string desc, bool required = True, *object rest,
+                auto default_value) {
+            return getFieldForUse(name, name, desc, required, rest, default_value);
+        }
+
+        #! Returns a field definition from the schema parameter
+        AbstractDataField getField(string path, string name, *string desc, bool required = True, *object rest,
+                auto default_value) {
+            return getFieldForUse(path, name, desc, required, rest, default_value);
+        }
+
+        #! Returns the field for one use of this schema, building or decorating it as needed
+        private AbstractDataField getFieldForUse(string path, string name, *string desc, bool required,
+                *object rest, auto default_value) {
+            string rstr = required ? "Y" : "N";
+            string ukey = AbstractRestSchemaObject::getFieldUseKey(name, desc, default_value);
+            if (*AbstractDataField rv = getCacheField(\usemap{ukey}, rstr)) {
+                return rv;
+            }
+            if (*AbstractDataField rv = getCacheField(\fieldmap{name}, rstr)) {
+                return decorateField(rv, ukey, name, desc, required, default_value, rstr);
+            }
+            return decorateField(getFieldIntern(path, name, desc, required, rest, default_value, rstr, ukey),
+                ukey, name, desc, required, default_value, rstr);
+        }
+
+        #! Returns the key identifying one **use** of this schema as a field
+        /** @param name the field name
+            @param desc the description supplied by the use, before this schema's own is merged into it
+            @param default_value the default value supplied by the use
+
+            @return the use key
+
+            @note The common case - no description and no default - keeps the name as its own key rather
+            than paying for a digest; the two forms cannot collide because each carries its own prefix.
+        */
+        private static string getFieldUseKey(string name, *string desc, auto default_value) {
+            if (!desc.val() && !exists default_value) {
+                return "n:" + name;
+            }
+            return "h:" + sprintf("%y\n%y\n%y", name, desc, default_value).toSHA256();
+        }
+
+        #! Returns the field a use should see, which is a copy when it differs from the canonical one
+        /** @param canonical the field cached under this name
+            @param ukey the use key
+            @param name the field name
+            @param desc the description supplied by the use, before this schema's own is merged into it
+            @param required whether the use declares the field required
+            @param default_value the default value supplied by the use
+            @param rstr the requiredness cache key
+
+            @return the field for this use
+
+            @note A use that arrives while the canonical field is still being built takes it as it is; see
+            @ref building.
+        */
+        private AbstractDataField decorateField(AbstractDataField canonical, string ukey, string name,
+                *string desc, bool required, auto default_value, string rstr) {
+            if (building{name} || field_use{name} == ukey) {
+                return canonical;
+            }
+            # built exactly as getFieldIntern() builds the canonical field, and given its finished type the
+            # same way: the schema's enum values are hash keys and therefore strings, and it is
+            # updateFieldType() that converts them to the type they belong to.  Constructing the copy with
+            # the final type instead leaves an integer enum published as a list of strings.
+            RestSchemaExampleDataField rv({
+                "name": name,
+                "desc": getMergedFieldDesc(desc),
+                "type": AutoType,
+                "allowed_values": getFieldEnumValues(),
+                "default_value": default_value,
+            } + ((type == "object" || hasSchemaCompositionFeatures()) && required ? {
+                "attr": {
+                    "preselected": True,
+                    "required": True,
+                },
+            } : NOTHING), getValidatedExampleCandidates(), getConstraintInfo());
+            rv.updateFieldType(canonical.getType());
+            usemap{ukey}{rstr} = rv;
+            return rv;
+        }
+
+        #! Returns the description a field carries, with this schema's own merged into the use's
+        /** @param desc the description supplied by the use
+
+            @return the description to give the field, never @ref nothing
+        */
+        private string getMergedFieldDesc(*string desc) {
+            if (self.desc.val()) {
+                # a parameter and the schema it points at often carry the same text - every document
+                # FastAPI generates does this - and joining those gives "X: X", which is what the
+                # user then reads on the option.  One being a prefix of the other is the same case
+                # with one side merely saying more: Exa documents an agent run id as "Agent run ID."
+                # on the parameter and "Agent run ID. New run IDs are returned with the `agent_run_`
+                # prefix." on the schema, and joining those repeats the first sentence.  Keep
+                # whichever says more instead
+                string schema_desc = trim(self.desc);
+                string param_desc = desc.val() ? trim(desc) : "";
+                if (!param_desc.val()) {
+                    desc = self.desc;
+                } else if (param_desc == schema_desc || schema_desc.find(param_desc) == 0) {
+                    desc = self.desc;
+                } else if (param_desc.find(schema_desc) != 0) {
+                    desc += ": " + self.desc;
+                }
+            }
+            return desc.val() ? desc.getDecoded(CE_XHTML) : "";
+        }
+
+        #! Returns enumeration values for field construction
+        /** Subclasses can attach structured presentation metadata. updateFieldType() restores
+            each value's declared scalar type after the placeholder field is constructed.
+        */
+        private *list<auto> getFieldEnumValues() {
+            return keys enumValues;
+        }
+
+        #! Returns schema examples followed by the default
+        /** @return candidate values in preference order; each is validated against the finished field type
+        */
+        private list<auto> getExampleCandidates() {
+            return (example, defaultVal);
+        }
+
+        #! Checks declared candidates against the schema before they are attached to a field
+        private list<auto> getValidatedExampleCandidates() {
+            list<auto> rv = ();
+            foreach auto candidate in (getExampleCandidates()) {
+                if (exists candidate) {
+                    try {
+                        check(False, True, "/", "POST", name, \candidate);
+                        push rv, candidate;
+                    } catch (hash<ExceptionInfo> ex) {
+                        # Specifications can contain invalid examples, including invalid nested properties.
+                    }
+                }
+            }
+            return rv;
+        }
+
+        #! Returns a field object from the given cache
+        private *AbstractDataField getCacheField(reference<hash<string, AbstractDataField>> h, string key) {
+            if (h) {
+                if ((key == "N") && !h.N) {
+                    return h.N = h.Y.getOrNothingType();
+                }
+                if ((key == "Y") && !h.Y) {
+                    if (nullable) {
+                        # A required nullable use has the same value type as an optional use;
+                        # only property presence changes. Never mutate the shared cached field.
+                        AbstractDataField field = h.N.copy();
+                        field.setAttributes({"required": True, "preselected": True});
+                        return h.Y = field;
+                    }
+                    return h.Y = h.N.getMandatoryType();
+                }
+                return h{key};
+            }
+        }
+
+        #! Sets fields of a schema object
+        private getSchemaObjectFields(HashDataType t, string path, auto def_body) {
+            map t.addField($1.value.getField(path + "/" + $1.key, $1.key, NOTHING,
+                required{$1.key} ?? False, NOTHING, def_body{$1.key})), properties.pairIterator();
+        }
+
+        #! Returns a field definition from the schema parameter
+        private AbstractDataField getFieldIntern(string path, string name, *string desc, bool required = True,
+                *object rest, auto default_value, *string rstr, *string ukey) {
+            if (!rstr) {
+                rstr = required ? "Y" : "N";
+            }
+            # recorded before this schema's own description is merged into "desc" below, so that a use
+            # and the canonical field it matches always agree on the key
+            if (!ukey.val()) {
+                ukey = AbstractRestSchemaObject::getFieldUseKey(name, desc, default_value);
+            }
+            field_use{name} = ukey;
+            string field_desc = getMergedFieldDesc(desc);
+            # the field registered below is handed to anything that re-enters this schema while its type
+            # is being built, so it must not be copied until that build has finished
+            building{name} = True;
+            on_exit remove building{name};
+            if (type == "object" || hasSchemaCompositionFeatures()) {
+                # create the field with a placeholder type
+                RestSchemaExampleDataField field({
+                    "name": name,
+                    "desc": field_desc,
+                    "type": AutoType,
+                    "allowed_values": getFieldEnumValues(),
+                    "default_value": default_value,
+                } + (required ? {
+                    "attr": {
+                        "preselected": True,
+                        "required": True,
+                    },
+                } : NOTHING), getValidatedExampleCandidates(), getConstraintInfo());
+                fieldmap{name}{rstr} = field;
+                field.updateFieldType(getDataType(required, rest));
+                return field;
+            }
+
+            # create the field with a placeholder type
+            RestSchemaExampleDataField field({
+                "name": name,
+                "desc": field_desc,
+                "type": AutoType,
+                "allowed_values": getFieldEnumValues(),
+                "default_value": default_value,
+            }, getValidatedExampleCandidates(), getConstraintInfo());
+            fieldmap{name}{rstr} = field;
+            field.updateFieldType(getSchemaType(path, type, format, items, required));
+            return field;
+        }
+
+        #! Validates default values
+        private static checkValueType(reference<auto> value, string type, *AbstractSchemaObject items, *string loc) {
+            int vt = value.typeCode();
+            if (type == "array") {
+                if (vt != NT_LIST)
+                    throw "INVALID-FIELD-TYPE", sprintf("Schema Object: 'default' value%s has invalid type %y "
+                        "(expecting schema type %y)", loc, value.type(), type);
+                AbstractRestSchemaObject::checkValueType(\value[0], items.type, items.getItems(), loc + "[0]");
+            }
+            if (!AbstractSchemaBaseValidator::checkValueType(\value, type)) {
+                throw "INVALID-FIELD-TYPE", sprintf("Schema Object: 'default' value%s has invalid type %y (val: %y) "
+                    "(expecting schema type %y)", loc, value.type(), value, type);
+            }
+        }
+
+        #! Returns the items schema for arrays
+        *AbstractSchemaObject getItems() {
+            return items;
+        }
+
+        #! Returns a hash of property schemas for objects
+        *hash<string, AbstractSchemaObject> getProperties() {
+            return properties;
+        }
+    }
+
+    #! A schema field whose example candidates are validated after its type is complete
+    /** Schema fields initially carry placeholder types to break recursive graphs. Validation is deferred until
+        an example is requested so that it sees the finished type, including any action-specific conversions.
+        Candidates are immutable and copied with the field when its type or presentation changes.
+
+        @par Example:
+        A product identifier constrained by a pattern uses the vendor's valid example identifier; an invalid
+        placeholder is omitted instead of preventing the action's input fields from being constructed.
+
+        @since RestSchemaValidator 2.5
+    */
+    public class RestSchemaExampleDataField inherits QoreDataField {
+        private {
+            list<auto> candidates;
+            AbstractDataProviderType example_constraints;
+        }
+
+        #! Creates a schema field with candidate example values
+        /** @param info field construction information
+            @param candidates schema examples, defaults, and scalar examples in preference order
+            @param constraints schema constraints to check even when the field type does not describe them
+            @throw QORE-DATA-FIELD-ERROR invalid field construction information
+            @throw RUNTIME-TYPE-ERROR a supplied field value violates its type
+        */
+        constructor(hash<auto> info, list<auto> candidates, *hash<DataTypeConstraintInfo> constraints)
+                : QoreDataField(info) {
+            self.candidates = candidates;
+            example_constraints = AbstractDataProviderTypeMap."auto".copyWithConstraints(constraints);
+        }
+
+        #! Returns the first accepted schema example or a generated example
+        /** @param emap types already visited by the example traversal
+            @param fname field context for generated values
+            @return an accepted example, or @ref nothing when no example can be generated
+        */
+        auto getExampleValue(*hash<string, bool> emap, *string fname) {
+            foreach auto candidate in (candidates) {
+                if (exists candidate) {
+                    try {
+                        auto value = acceptsValue(candidate);
+                        example_constraints.checkConstraints(value);
+                        return value;
+                    } catch (hash<ExceptionInfo> ex) {
+                        # An invalid example in a specification must not invalidate its field metadata.
+                    }
+                }
+            }
+            auto candidate = QoreDataField::getExampleValue(emap, fname);
+            if (exists candidate) {
+                try {
+                    auto value = acceptsValue(candidate);
+                    example_constraints.checkConstraints(value);
+                    return value;
+                } catch (hash<ExceptionInfo> ex) {
+                    # Field defaults and choices can have been attached to the original placeholder type.
+                }
+            }
+        }
+    }
+
+    #! Abstract base class for parameter objects
+    /** This class provides the common interface for parameter objects shared by both
+        Swagger 2.0 and OpenAPI 3.0 specifications.
+    */
+    public class AbstractParameterObject inherits Qore::Serializable {
+        public {
+            #! The name of the parameter (case sensitive)
+            /** - If @ref inLoc is \c "path", the \c name field MUST correspond to the
+                  associated path segment from the path field in the Paths Object.
+                - For all other cases, the name corresponds to the parameter name
+                  used based on the @ref inLoc property.
+            */
+            string name;
+
+            #! The location of the parameter
+            /** Possible values are \c "query", \c "header", \c "path", \c "formData" or \c "body".
+            */
+            string inLoc;
+
+            #! Description of the parameter
+            /** This could contain examples of use. GFM/CommonMark syntax can be used for
+                rich text representation.
+            */
+            *string desc;
+
+            #! Whether the parameter is required
+            /** If the parameter is in "path", this property is required and its value
+                MUST be \c True. Otherwise, the property MAY be included and its default
+                value is \c False.
+            */
+            bool required = False;
+        }
+
+        #! Validates the parameter value
+        /** @param serialize if serializing the value
+            @param request if processing a request (vs response)
+            @param path the URI path
+            @param method the HTTP method
+            @param name the parameter name
+            @param value reference to the value to validate/transform
+        */
+        abstract check(bool serialize, bool request, string path, string method,
+            string name, reference value);
+
+        #! Returns the schema for this parameter, if any
+        abstract *AbstractSchemaObject getSchema();
+
+        #! Converts one query argument to the type its schema declares for it
+        /** A query argument travels in the URI as a string and is read back out of it as one, so a
+            parameter declared as anything else has to be converted before it is checked, or every request
+            carrying it is rejected for sending the value in the only form a URI can carry.
+
+            An **array** is converted element by element as well.  The element schema is checked strictly,
+            so an array of integers would otherwise be rejected for holding the strings it must be sent as,
+            and the parameter would be unusable: this is what made a search on a list of identifiers fail
+            with <tt>invalid type "string" (should be "integer")</tt>.
+
+            @param type the schema type to convert to
+            @param format the schema format, where the type alone does not say what the value is
+            @param items the element schema, required when \a type is \c "array"
+            @param path the URI path, for error messages
+            @param method the HTTP method, for error messages
+            @param name the parameter name, for error messages
+            @param value the value to convert
+
+            @return the converted value; a value the schema does not describe is returned unchanged
+
+            @throw SCHEMA-VALIDATION-ERROR the value cannot be read as the type declared for it
+
+            @since RestSchemaValidator 2.5
+        */
+        static auto convertQueryArg(*string type, *string format, *AbstractSchemaObject items, string path,
+                string method, string name, auto value) {
+            if (type != "array") {
+                return AbstractParameterObject::convertQueryScalar(type, format, path, method, name, value);
+            }
+            switch (value.typeCode()) {
+                case NT_STRING:
+                    value = value.split(",");
+                    break;
+                case NT_LIST:
+                    break;
+                default:
+                    value = exists value ? (value,) : ();
+                    break;
+            }
+            if (!items) {
+                return value;
+            }
+            list<auto> rv = ();
+            foreach auto v in (value) {
+                rv += AbstractParameterObject::convertQueryScalar(items.type, items.format, path, method,
+                    name, v);
+            }
+            return rv;
+        }
+
+        #! Converts one scalar query argument value to the type its schema declares for it
+        /** @see @ref convertQueryArg()
+        */
+        private static auto convertQueryScalar(*string type, *string format, string path, string method,
+                string name, auto value) {
+            switch (type) {
+                case "integer": {
+                    if (value.typeCode() == NT_STRING) {
+                        if (value =~ /[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-2][0-9]:[0-5][0-9]:[0-5][0-9])?/) {
+                            return date(value).getEpochSeconds();
+                        }
+                        if (value !~ /^([+-])?[0-9]+$/) {
+                            throw "SCHEMA-VALIDATION-ERROR", sprintf("Parameter %y for path %y and method "
+                                "%y of type \"integer\" is invalid; value provided: %y", name, path, method,
+                                value);
+                        }
+                        return value.toInt();
+                    }
+                    break;
+                }
+                case "number":
+                    if (value.typeCode() == NT_STRING) {
+                        return value.toNumber();
+                    }
+                    break;
+                case "string":
+                    switch (format) {
+                        case "date":
+                        case "date-time":
+                            try {
+                                return date(value);
+                            } catch (hash<ExceptionInfo> ex) {
+                                throw "SCHEMA-VALIDATION-ERROR", sprintf("Parameter %y for path %y and "
+                                    "method %y of type \"date\" is invalid; value provided: %y (%s)", name,
+                                    path, method, value, ex.desc);
+                            }
+                        case "binary":
+                            try {
+                                return binary(value);
+                            } catch (hash<ExceptionInfo> ex) {
+                                throw "SCHEMA-VALIDATION-ERROR", sprintf("Parameter %y for path %y and "
+                                    "method %y of type \"binary\" is invalid; value provided: %y (%s)",
+                                    name, path, method, value, ex.desc);
+                            }
+                        case "byte":
+                            try {
+                                return parse_base64_string(value);
+                            } catch (hash<ExceptionInfo> ex) {
+                                throw "SCHEMA-VALIDATION-ERROR", sprintf("Parameter %y for path %y and "
+                                    "method %y of type \"binary\" is invalid; value provided: %y (%s)",
+                                    name, path, method, value, ex.desc);
+                            }
+                    }
+                    break;
+                case "boolean":
+                    return parse_boolean(value);
+            }
+            return value;
+        }
+    }
+
+    #! Abstract base class for response objects
+    /** This class provides the common interface for response objects shared by both
+        Swagger 2.0 and OpenAPI 3.0 specifications.
+    */
+    public class AbstractResponseObject inherits Qore::Serializable {
+        public {
+            #! A short description of the response
+            /** GFM/CommonMark syntax can be used for rich text representation.
+            */
+            string desc;
+
+            #! A hash of headers that can be sent with the response
+            /** Keys are header names.
+            */
+            hash<auto> headers;
+
+            #! A hash of example response messages
+            hash examples;
+        }
+
+        #! Returns the response schema, if any
+        abstract *AbstractSchemaObject getSchema();
+    }
+
+    #! Abstract base class for responses container
+    /** This class provides the common interface for the responses object shared by both
+        Swagger 2.0 and OpenAPI 3.0 specifications.
+    */
+    public class AbstractResponsesObject inherits Qore::Serializable {
+        #! Returns the default response, if any
+        abstract *AbstractResponseObject getDefaultResponse();
+
+        #! Returns the hash of responses by HTTP status code
+        abstract *hash<string, AbstractResponseObject> getResponses();
+    }
+
+    #! Abstract base class for path item objects
+    /** This class provides the common interface for path item objects shared by both
+        Swagger 2.0 and OpenAPI 3.0 specifications.
+    */
+    public class AbstractPathItemObject inherits Qore::Serializable {
+        #! Returns the operation for the given HTTP method
+        /** @param method the HTTP method name (case insensitive)
+            @param path the path for error reporting
+
+            @return the operation object for the given method
+
+            @throws INVALID-METHOD the given path does not have any operation defined for the given method
+        */
+        abstract AbstractOperationObject getOperation(string method, string path);
+
+        #! Returns a list of HTTP methods supported by this path
+        abstract softlist getMethods();
+
+        #! Returns the body parameter defined at the path level, if any
+        abstract *AbstractParameterObject getBody();
+
+        #! Returns a hash of parameters defined at the path level
+        abstract *hash<string, AbstractParameterObject> getParameters();
+    }
+
+    #! Abstract base class for operation objects
+    /** This class provides the common interface for operation objects shared by both
+        Swagger 2.0 and OpenAPI 3.0 specifications.
+    */
+    public class AbstractOperationObject inherits Qore::Serializable {
+        public {
+            #! The URI path for the operation
+            string path;
+
+            #! The HTTP method (uppercase)
+            string method;
+
+            #! A short summary of what the operation does
+            *string summary;
+
+            #! A verbose explanation of the operation behavior
+            /** GFM/CommonMark syntax can be used for rich text representation.
+            */
+            *string desc;
+
+            #! MIME types the operation can consume
+            hash<string, bool> consumes;
+
+            #! MIME types the operation can produce
+            hash<string, bool> produces;
+        }
+
+        #! Returns the responses object for this operation
+        abstract AbstractResponsesObject getResponses();
+
+        #! Returns the body parameter, if any
+        abstract *AbstractParameterObject getBody();
+
+        #! Returns a hash of parameters for this operation
+        abstract *hash<string, AbstractParameterObject> getParameters();
+
+        #! Validates the request against the schema
+        /** @param serialize if \c True, serialize the body
+            @param pio the path item object
+            @param h reference to URI query info
+            @param body reference to the request body
+            @param headers reference to headers
+            @param mime_types reference to accepted MIME types
+            @param freeform if \c True, allow freeform validation (optional, Swagger-specific)
+        */
+        abstract validateRequest(bool serialize, AbstractPathItemObject pio,
+            reference<hash<UriQueryInfo>> h, reference<auto> body,
+            reference<hash> headers, *reference<hash<string, bool>> mime_types,
+            *bool freeform);
+
+        #! Returns the serialized request body
+        /** @param pio the path item object
+            @param body the request body
+            @param headers reference to headers
+            @param freeform if \c True, allow freeform validation (optional)
+
+            @return the serialized request body data
+        */
+        abstract *data getRequestBody(AbstractPathItemObject pio, auto body,
+            reference<hash<auto>> headers, *bool freeform);
+    }
+
+    #! abstract REST schema validation classes
+    public class AbstractRestSchemaValidator inherits Logger::LoggerWrapper, Qore::Serializable {
+        #! Creates the object without a logger
+        constructor() {
+        }
+
+        #! Creates the object with the given logger
+        constructor(Logger::LoggerInterface logger) : LoggerWrapper(logger) {
+        }
+
+        #! Returns the data type corresponding to the given reusable schema reference
+        /** @param rstr the name of the reusable schema reference (ex: a \c "#/definitions/..." entry for Swagger 2.0
+            or a \c "#/components/schemas/..." entry for OpenAPI 3.x)
+            @param required if @ref True "True" then the mandatory type is returned, otherwise the "or nothing" type
+            @param rest an optional REST client object used for type resolution
+
+            @return the data type corresponding to the given reusable schema reference
+
+            @throw INVALID-REFERENCE-TYPE the given reference is not a known type in the schema
+
+            @since RestSchemaValidator 2.5
+        */
+        AbstractDataProviderType getTypeForReference(string rstr, bool required = True, *object rest) {
+            *AbstractRestSchemaObject ref = getSchemaObjectForReferenceImpl(rstr);
+            if (!ref) {
+                throw "INVALID-REFERENCE-TYPE", sprintf("%y is not a known type", rstr);
+            }
+            return ref.getDataType(required, rest);
+        }
+
+        #! Replaces the cached data type for the given reusable schema reference
+        /** @param rstr the name of the reusable schema reference (ex: a \c "#/definitions/..." entry for Swagger 2.0
+            or a \c "#/components/schemas/..." entry for OpenAPI 3.x)
+            @param t the new data type to use for the given reference
+
+            @throw INVALID-REFERENCE-TYPE the given reference is not a known type in the schema
+
+            @since RestSchemaValidator 2.5
+        */
+        replaceTypeForReference(string rstr, AbstractDataProviderType t) {
+            *AbstractRestSchemaObject ref = getSchemaObjectForReferenceImpl(rstr);
+            if (!ref) {
+                throw "INVALID-REFERENCE-TYPE", sprintf("%y is not a known type", rstr);
+            }
+            ref.replaceType(t);
+        }
+
+        #! Returns the reusable schema object for the given reference name or @ref nothing if there is none
+        /** Each schema type stores reusable schemas in a type-specific member (ex: \c definitions for Swagger 2.0,
+            \c components.schemas for OpenAPI 3.x); this method abstracts the lookup so that
+            getTypeForReference() and replaceTypeForReference() can be implemented uniformly in the base class.
+
+            @param rstr the name of the reusable schema reference
+
+            @return the reusable schema object for the given reference name or @ref nothing if there is none
+
+            @since RestSchemaValidator 2.5
+        */
+        private abstract *AbstractRestSchemaObject getSchemaObjectForReferenceImpl(string rstr);
+
+        #! returns a unique hash for the schema that can be used to compare schemas
+        /** @return a unique hash for the schema that can be used to compare schemas
+
+            @since RestSchemaValidator 2.0
+        */
+        string getHash() {
+            return getHashImpl();
+        }
+
+        #! returns the target URL for the schema
+        /** @return the target URL for the schema
+
+            @throws MISSING-TARGET-URL no target URL provided for the schema
+        */
+        string getTargetUrl() {
+            return getTargetUrlImpl();
+        }
+
+        #! processes a client-side REST request and returns a hash that can be used to make the outgoing client-side HTTP request
+        /** @param method the HTTP method (case-insensitive)
+            @param path the URI path with any query arguments
+            @param body the unserialized message body data
+            @param headers any headers to include in the request; note that the \c Content-Type header should not be sent here as it will be overridden when the message is serialized
+            @param content_types the desired MIME types for serialization in order of preference; if none are usable then an exception is thrown
+
+            @return a @ref RestRequestClientInfo hash with information about the request
+
+            @throws SERIALIZATION-ERROR unsupported message body MIME type requested or missing serialization module
+        */
+        hash<RestRequestClientInfo> processRequest(string method, string path, auto body, *hash<auto> headers,
+                *softlist<string> content_types) {
+            return processRequestImpl(method, path, body, headers, content_types);
+        }
+
+        #! processes and parses a client request and returns the deserialized message body (if any)
+        /** @param method the HTTP method (case-insensitive)
+            @param path the URI path with any query arguments
+            @param http_body the serialized message body
+            @param headers a reference to the hash of HTTP headers received; any default header values to be assumed
+            by the server for the request will be added here
+
+            @return a @ref RestRequestServerInfo hash of request information
+
+            @throw DESERIALIZATION-ERROR the request body could not be deserialized, results in a
+            <tt>400 Bad Request</tt> response returned to the caller
+            @throw SCHEMA-VALIDATION-ERROR this exception should be thrown if there is a validation error in the
+            request so that a <tt>400 Bad Request</tt> response can be returned to the caller
+            @throw INVALID-METHOD invalid HTTP method for the request; the \c arg argument should have a list of
+            acceptable HTTP methods for this request
+        */
+        hash<RestRequestServerInfo> parseRequest(string method, string path, *data http_body,
+                reference<hash<auto>> headers) {
+            return parseRequestImpl(method, path, http_body, \headers);
+        }
+
+        #! Processes a REST response with a serialized message body
+        /** Validates any response data against schema definitions if possible
+
+            @param method the HTTP method of the original request
+            @param path the URI path of the original request (without query arguments)
+            @param code the HTTP response code
+            @param response_body the response body data (if any)
+            @param headers HTTP headers to include in the response
+            @param content_types the desired MIME types for serialization in order of preference; if none are usable
+            then an exception is thrown; if this argument is not present, then json is preferred over yaml
+
+            @return an @ref HttpServer::HttpResponseInfo hash for the response
+
+            @throw ACCEPT-ERROR the response body could not be serialized because the client does not accept a
+            supported type
+            @throw SERIALIZATION-ERROR the response body could not be serialized due to an error
+
+            @note <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html>RFC 2616 section 14</a>: If an
+            \c Accept header field is present, and if the server cannot send a response which is acceptable according
+            to the combined \c Accept field value, then the server SHOULD send a 406 (not acceptable) response.  To
+            ensure this happens, if an \c Accept error of this nature occurs in this call, an \c "ACCEPT-ERROR" must
+            be thrown
+        */
+        hash<HttpResponseInfo> processResponse(string method, string path, int code, auto response_body,
+                *hash<auto> headers, *softlist<string> content_types) {
+            return processResponseImpl(method, path, code, response_body, headers, content_types);
+        }
+
+        #! parses and validates the response from the server and returns a hash of the processed info
+        /** @param method the HTTP method (case insensitive)
+            @param path the URI path of the original request (without any query arguments)
+            @param code the HTTP response code
+            @param response_body the HTTP response body data (if any)
+            @param hdr as hash of HTTP headers received
+
+            @throw DESERIALIZATION-ERROR the request body could not be deserialized or had an invalid \c Content-Type
+        */
+        hash<RestResponseClientInfo> parseResponse(string method, string path, int code, *data response_body,
+                hash<auto> hdr) {
+            # strip any query arguments from the path when validating
+            path =~ s/\?.*//;
+            return parseResponseImpl(method, path, code, response_body, hdr);
+        }
+
+        #! returns a hash of example Qore code for the given request
+        /** @param method the HTTP method (case insensitive)
+            @param path the URI path of the request
+
+            @return a @ref RestSchemaValidator::RestQoreExampleCodeInfo "RestQoreExampleCodeInfo" hash giving example Qore code to generate the given request message
+        */
+        hash<RestQoreExampleCodeInfo> getQoreExampleRequest(string method, string path) {
+            return getQoreExampleRequestImpl(method, path);
+        }
+
+        #! returns a hash of example message information for the given request
+        /** @param method the HTTP method (case insensitive)
+            @param path the URI path of the request
+            @param content_types the desired MIME types for serialization in order of preference; if none are usable then an exception is thrown
+
+            @return a @ref RestExampleRequestInfo of example message information for the given request
+        */
+        hash<RestExampleRequestInfo> getExampleRequest(string method, string path, *softlist<string> content_types) {
+            return getExampleRequestImpl(method, path, content_types);
+        }
+
+        #! returns example Qore code for the given response
+        /** @param method the HTTP method of the original request (case insensitive)
+            @param path the URI path of the original request
+            @param code the HTTP response code of the response
+
+            @return a @ref RestSchemaValidator::RestQoreExampleCodeInfo "RestQoreExampleCodeInfo" hash giving example Qore code to generate the given response message
+        */
+        hash<RestQoreExampleCodeInfo> getQoreExampleResponse(string method, string path, int code) {
+            return getQoreExampleResponseImpl(method, path, code);
+        }
+
+        #! returns a hash of example message information for the given request
+        /** @param method the HTTP method of the original request (case insensitive)
+            @param path the URI path of the original request
+            @param code the HTTP response code of the response
+            @param content_types the desired MIME types for serialization in order of preference; if none are usable then an exception is thrown
+
+            @return a @ref RestSchemaValidator::RestExampleResponseInfo "RestExampleResponseInfo" hash giving example response message info
+        */
+        hash<RestExampleResponseInfo> getExampleResponse(string method, string path, int code,
+                *softlist<string> content_types) {
+            hash<RestExampleResponseInfo> rv = getExampleResponseImpl(method, path, code, content_types);
+            if (!rv.response_uri)
+                rv.response_uri = sprintf("HTTP/1.1 %d %s", code, HttpCodes{code} ?? "Unknown");
+            return rv;
+        }
+
+        #! returns a hash of URI paths as keys with values as lists of supported HTTP methods
+        /** @return a hash of URI paths as keys with values as lists of supported HTTP methods
+        */
+        hash<string, list<string>> getPathOperationHash() {
+            return getPathOperationHashImpl();
+        }
+
+        #! returns the base path prefix for all requests in this schema
+        /** @return the base path prefix for all requests in this schema
+        */
+        string getBasePath() {
+            return getBasePathImpl();
+        }
+
+        #! overrides the basePath value
+        /** @param basePath the new base path value; use an empty string here to clear the basePath
+        */
+        setBasePath(string basePath) {
+            setBasePathImpl(basePath);
+        }
+
+        #! returns a data provider object for this connection, if supported by any REST schema validator object
+        /** @param rest the \c RestClient object to make the connection
+
+            @return a data provider object for this connection, if supported by any REST schema validator object
+
+            @throw DATA-PROVIDER-ERROR this class does not support the data provider API
+
+            @note \a rest must be a \c RestClient object; this parameter is declared with a base class to avoid a
+            circular dependency between modules
+        */
+        DataProvider::AbstractDataProvider getDataProvider(object rest) {
+            return getDataProviderImpl(rest);
+        }
+
+        #! returns @ref True if the provider manages the URI path
+        /** The base class method returns @ref True by default, override in child classes to return @ref False
+        */
+        bool managesUriPath() {
+            return True;
+        }
+
+        #! Allows the time zone locale to be set for serialization / deserialization
+        /** @param tz the time zone locale to set
+
+            @since RestSchemaValidator 2.1.3
+        */
+        setTimeZoneLocale(*TimeZone tz) {
+            # must be performed in the implementing module's Program container
+            setTimeZoneLocaleImpl(tz);
+        }
+
+        #! Returns the time zone locale used for serialization / deserialization
+        /** @return the time zone locale to set
+
+            @since RestSchemaValidator 2.1.3
+        */
+        *TimeZone getTimeZoneLocale() {
+            # must be performed in the implementing module's Program container
+            return getTimeZoneLocaleImpl();
+        }
+
+        #! Returns @ref True if date/time values in query arguments should be serialized in UTC
+        /** The base class returns NOTHING by default; schema implementations can override this method to expose
+            schema-specific serialization options.
+
+            @return @ref True if date/time values in query arguments should be serialized in UTC
+
+            @since RestSchemaValidator 2.5
+        */
+        *bool getUtcDates() {
+            return NOTHING;
+        }
+
+        #! Returns the format string for serializing date/time values in query arguments
+        /** The base class returns NOTHING by default; schema implementations can override this method to expose
+            schema-specific serialization options.
+
+            @return the format string for serializing date/time values in query arguments
+
+            @since RestSchemaValidator 2.5
+        */
+        *string getQueryDateFormat() {
+            return NOTHING;
+        }
+
+        #! returns a data provider object for this connection, if supported by any REST schema validator object
+        /** @param rest the \c RestClient object to make the connection
+
+            @return a data provider object for this connection, if supported by any REST schema validator object
+
+            @throw DATA-PROVIDER-ERROR this class does not support the data provider API
+
+            @note \a rest must be a \c RestClient object; this parameter is declared with a base class to avoid a
+            circular dependency between modules
+        */
+        private DataProvider::AbstractDataProvider getDataProviderImpl(object rest) {
+            throw "DATA-PROVIDER-ERROR", sprintf("the %s class does not support the data provider API",
+                self.className());
+        }
+
+        #! returns a unique hash for the schema that can be used to compare schemas
+        /** @return a unique hash for the schema that can be used to compare schemas
+
+            @since RestSchemaValidator 2.0
+        */
+        private abstract string getHashImpl();
+
+        #! returns the target URL for the schema
+        /** @return the target URL for the schema
+
+            @throws MISSING-TARGET-URL no target URL provided for the schema
+        */
+        private abstract string getTargetUrlImpl();
+
+        #! processes a client-side REST request and returns a hash that can be used to make the outgoing client-side HTTP request
+        /** @param method the HTTP method (case-insensitive)
+            @param path the URI path with any query arguments
+            @param body the unserialized message body data
+            @param headers any headers to include in the request; note that the \c Content-Type header should not be sent here as it will be overridden when the message is serialized
+            @param content_types the desired MIME types for serialization in order of preference; if none are usable then an exception is thrown
+
+            @return a @ref RestRequestClientInfo hash with information about the request
+
+            @throws SERIALIZATION-ERROR unsupported message body MIME type requested or missing serialization module
+        */
+        private abstract hash<RestRequestClientInfo> processRequestImpl(string method, string path, auto body,
+                *hash<auto> headers, *softlist<string> content_types);
+
+        #! processes and parses a client request and returns the deserialized message body (if any)
+        /** @param method the HTTP method (case-insensitive)
+            @param path the URI path with any query arguments
+            @param http_body the serialized message body
+            @param headers a reference to the hash of HTTP headers received; any default header values to be assumed by the server for the request will be added here
+
+            @return a @ref RestRequestServerInfo hash of request information
+
+            @throw DESERIALIZATION-ERROR the request body could not be deserialized, results in a <tt>400 Bad Request</tt> response returned to the caller
+            @throw SCHEMA-VALIDATION-ERROR this exception should be thrown if there is a validation error in the request so that a <tt>400 Bad Request</tt> response can be returned to the caller
+            @throw INVALID-METHOD invalid HTTP method for the request; the \c arg argument should have a list of acceptable HTTP methods for this request
+        */
+        private abstract hash<RestRequestServerInfo> parseRequestImpl(string method, string path, *data http_body,
+                reference<hash> headers);
+
+        #! processes a REST response with a serialized message body, validates any response data against schema definitions if possible
+        /** @param method the HTTP method of the original request
+            @param path the URI path of the original request (without query arguments)
+            @param code the HTTP response code
+            @param response_body the response body data (if any)
+            @param headers HTTP headers to include in the response
+            @param content_types the desired MIME types for serialization in order of preference; if none are usable then an exception is thrown; if this argument is not present, then json is preferred over yaml
+
+            @return an HttpResponseInfo hash for the response
+
+            @throw ACCEPT-ERROR the response body could not be serialized because the client does not accept a supported type
+            @throw SERIALIZATION-ERROR the response body could not be serialized due to an error
+
+            @note <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html>RFC 2616 section 14</a>: If an Accept header field is present, and if the server cannot send a response which is acceptable according to the combined Accept field value, then the server SHOULD send a 406 (not acceptable) response.  To ensure this happens, if
+            an Accept error of this nature occurs in this call, an \c "ACCEPT-ERROR" must be thrown
+        */
+        private abstract hash<HttpResponseInfo> processResponseImpl(string method, string path, int code,
+                auto response_body, *hash<auto> headers, *softlist<string> content_types);
+
+        #! parses and validates the response from the server and returns a hash of the processed info
+        /** @param method the HTTP method (case insensitive)
+            @param path the URI path of the original request (without any query arguments)
+            @param code the HTTP response code
+            @param response_body the HTTP response body data (if any)
+            @param hdr as hash of HTTP headers received
+
+            @throw DESERIALIZATION-ERROR the request body could not be deserialized or had an invalid \c Content-Type
+        */
+        private abstract hash<RestResponseClientInfo> parseResponseImpl(string method, string path, int code,
+                *data response_body, hash<auto> hdr);
+
+        #! returns a hash of URI paths as keys with values as lists of supported HTTP methods
+        /** @return a hash of URI paths as keys with values as lists of supported HTTP methods
+        */
+        private abstract hash<string, list<string>> getPathOperationHashImpl();
+
+        #! returns the base path prefix for all requests in this schema
+        /** @return the base path prefix for all requests in this schema
+        */
+        private abstract string getBasePathImpl();
+
+        #! overrides the basePath value
+        /** @param basePath the new base path value; use an empty string here to clear the basePath
+        */
+        private abstract setBasePathImpl(string basePath);
+
+        #! returns a hash of example Qore code for the given request
+        /** @param method the HTTP method (case insensitive)
+            @param path the URI path of the request
+
+            @return a @ref RestSchemaValidator::RestQoreExampleCodeInfo "RestQoreExampleCodeInfo" hash giving example Qore code to generate the given request message
+        */
+        private abstract hash<RestQoreExampleCodeInfo> getQoreExampleRequestImpl(string method, string path);
+
+        #! returns a hash of example message information for the given request
+        /** @param method the HTTP method (case insensitive)
+            @param path the URI path of the request
+            @param content_types the desired MIME types for serialization in order of preference; if none are usable then an exception is thrown
+
+            @return a @ref RestExampleRequestInfo of example message information for the given request
+        */
+        private abstract hash<RestExampleRequestInfo> getExampleRequestImpl(string method, string path,
+                *softlist<string> content_types);
+
+        #! returns example Qore code for the given response
+        /** @param method the HTTP method of the original request (case insensitive)
+            @param path the URI path of the original request
+            @param code the HTTP response code of the response
+
+            @return a @ref RestSchemaValidator::RestQoreExampleCodeInfo "RestQoreExampleCodeInfo" hash giving example Qore code to generate the given response message
+        */
+        private abstract hash<RestQoreExampleCodeInfo> getQoreExampleResponseImpl(string method, string path,
+                int code);
+
+        #! returns a hash of example message information for the given request
+        /** @param method the HTTP method of the original request (case insensitive)
+            @param path the URI path of the original request
+            @param code the HTTP response code of the response
+            @param content_types the desired MIME types for serialization in order of preference; if none are usable then an exception is thrown
+
+            @return a @ref RestSchemaValidator::RestExampleResponseInfo "RestExampleResponseInfo" hash giving example response message info
+        */
+        private abstract hash<RestExampleResponseInfo> getExampleResponseImpl(string method, string path, int code,
+                *softlist<string> content_types);
+
+        #! Allows the time zone locale to be set for serialization / deserialization
+        /** @param tz the time zone locale to set
+
+            @since RestSchemaValidator 2.1.3
+        */
+        private abstract setTimeZoneLocaleImpl(*TimeZone tz);
+
+        #! Returns the time zone locale used for serialization / deserialization
+        /** @return the time zone locale to set
+
+            @since RestSchemaValidator 2.1.3
+        */
+        private abstract *TimeZone getTimeZoneLocaleImpl();
+
+        #! Returns a field definition from a schema object
+        /** @param name the name of the field
+            @param desc optional description for the field
+            @param schema the schema object
+            @param required if the field is required
+            @param rest optional REST client for URL resolution
+
+            @return the data field definition
+
+            @since RestSchemaValidator 2.4
+        */
+        abstract AbstractDataField getFieldFromSchema(string name, *string desc, AbstractSchemaObject schema,
+            bool required = True, *object rest);
+
+        #! Returns a field for header fields
+        /** @param name the name of the field
+            @param headers a hash of header definitions
+
+            @return a data field for the headers
+
+            @since RestSchemaValidator 2.4
+        */
+        abstract AbstractDataField getFieldForHeaders(string name, hash<auto> headers);
+    }
+
+    #! null REST validator; no schema is used but default serialization and deserialization is performed
+    public class NullRestSchemaValidator inherits AbstractRestSchemaValidator {
+        public {
+            #! Data serialization support mapping codes to MIME types and de/serialization functions
+            const SupportsCbor =
+                exists_function("make_cbor") && exists_function("parse_cbor")
+            ;
+
+            const DataSerializationSupport =
+                # JSON-compatible MIME types from centralized list - use foldl to merge into single hash
+                (foldl $1 + $2, (map {$1: \make_json()}, keys MimeTypesJson)) +
+                (SupportsCbor ? {MimeTypeCbor: get_call_reference("make_cbor")} : {}) +
+            {
+                MimeTypeYamlRpc: \make_yaml(),
+                MimeTypeYaml: \make_yaml(),
+                "text/x-yaml": \make_yaml(),
+%ifndef NoXml
+                MimeTypeXml: \make_xmlrpc_value(),
+                MimeTypeXmlApp: string sub (auto v) {
+                    switch (v.typeCode()) {
+                        case NT_LIST: return make_xml(("list": ("element": v)));
+                        case NT_HASH: return v.size() == 1 && v.firstValue().lsize() == 1 ? make_xml(v) : make_xml(("value": v));
+                    }
+                    return make_xml(("value": v));
+                },
+%endif
+                MimeTypeFormUrlEncoded: string sub (auto v) {
+                    if (v.typeCode() == NT_HASH)
+                        return mime_get_form_urlencoded_string(v);
+                    throw "FORMURLENCODING-ERROR", sprintf("form URL encoding can only encode hashes; type %y requested", v.type());
+                },
+                MimeTypeText: data sub (auto s) {
+                    switch (s.typeCode()) {
+                        case NT_STRING:
+                        case NT_BINARY:
+                            return s;
+                        default:
+                            # issue #3547: send as a YAML-serialized string if possible to catch unserializable data
+                            return make_yaml(s);
+                    }
+                },
+                MimeTypeOctetStream: binary sub (auto s) {
+                    switch (s.typeCode()) {
+                        case NT_STRING:
+                            return binary(s);
+                        case NT_BINARY:
+                            return s;
+                        default:
+                            # issue #3547: send as a YAML-serialized string if possible to catch unserializable data
+                            return binary(make_yaml(s));
+                    }
+                },
+            };
+
+            const DataSerializationSupportList = keys DataSerializationSupport;
+
+            const DeserializeYaml = (
+                "code": "yaml",
+                "in": \parse_yaml(),
+            );
+%ifndef NoXml
+            const DeserializeXml = (
+                "code": "xml",
+                "arg": True,
+                "in": auto sub (string xml, reference<string> type) {
+                    try {
+                        on_success type = "xml";
+                        return parse_xmlrpc_value(xml);
+                    } catch (hash<ExceptionInfo> ex) {
+                        try {
+                            on_success type = "rawxml";
+                            return parse_xml(xml);
+                        } catch () {
+                        }
+                        rethrow;
+                    }
+                },
+            );
+%endif
+
+            #! Data deserialization support MIME types to codes and de/serialization functions
+            const DataDeserializationSupport = {
+                MimeTypeFormUrlEncoded: (
+                    "code": "url",
+                    "in": \mime_parse_form_urlencoded_string(),
+                ),
+            } +
+                # JSON-compatible MIME types from centralized list - use foldl to merge into single hash
+                (foldl $1 + $2, (map {$1: {"code": "json", "in": \parse_json()}}, keys MimeTypesJson)) +
+                (SupportsCbor ? {MimeTypeCbor: {"code": "cbor", "in": get_call_reference("parse_cbor")}} : {}) +
+            {
+                MimeTypeYamlRpc: DeserializeYaml,
+                MimeTypeYaml: DeserializeYaml,
+                "text/x-yaml": DeserializeYaml,
+%ifndef NoXml
+                MimeTypeXml: DeserializeXml,
+                MimeTypeXmlApp: DeserializeXml,
+%endif
+                MimeTypeText: (
+                    "code": "text",
+                    "in": data sub (data s) { return s; },
+                ),
+
+                MimeTypeOctetStream: {
+                    "code": "bin",
+                    "in": binary sub (data s) {
+                        return s.typeCode() == NT_BINARY ? s : binary(s);
+                    },
+                },
+            };
+
+            #! a unique hash for the null schema
+            /** @since RestSchemaValidator 2.0
+            */
+            const NullSchemaHashStr = "<null rest schema>";
+        }
+
+        #! Creates the object without a logger
+        constructor() {
+        }
+
+        #! Creates the object with the given logger
+        constructor(Logger::LoggerInterface logger) : AbstractRestSchemaValidator(logger) {
+        }
+
+        #! returns @ref True if the provider manages the URI path
+        /** This method returns @ref False
+        */
+        bool managesUriPath() {
+            return False;
+        }
+
+        #! returns a unique hash for the schema that can be used to compare schemas
+        /** @return a unique hash for the schema that can be used to compare schemas
+
+            @since RestSchemaValidator 2.0
+        */
+        private string getHashImpl() {
+            return NullSchemaHashStr;
+        }
+
+        #! the null validator has no reusable schema references
+        private *AbstractRestSchemaObject getSchemaObjectForReferenceImpl(string rstr) {
+        }
+
+        #! returns the target URL for the schema
+        /** @return the target URL for the schema
+
+            @throws MISSING-TARGET-URL no target URL provided for the schema
+        */
+        private string getTargetUrlImpl() {
+            throw "MISSING-TARGET-URL", "no target URL provided";
+        }
+
+        #! processes a client-side REST request and returns a hash that can be used to make the outgoing client-side HTTP request
+        /** @param method the HTTP method (case-insensitive)
+            @param path the URI path with any query arguments
+            @param body the unserialized message body data
+            @param headers any headers to include in the request; note that the \c Content-Type header should not be sent here as it will be overridden when the message is serialized
+            @param content_types the desired MIME types for serialization in order of preference; if none are usable then an exception is thrown
+
+            @return a @ref RestRequestClientInfo hash with information about the request
+
+            @throws SERIALIZATION-ERROR unsupported message body MIME type requested or missing serialization module
+        */
+        private hash<RestRequestClientInfo> processRequestImpl(string method, string path, auto body, *hash<auto> headers, *softlist<string> content_types) {
+            string ct = content_types[0] ?? DataSerializationSupportList[0];
+            return cast<hash<RestRequestClientInfo>>((
+                "uri_path": path,
+                "content": ct,
+                "body": exists body ? DataSerializationSupport{ct}(body) : NOTHING,
+            ));
+        }
+
+        #! processes and parses a client request and returns the deserialized message body (if any)
+        /** @param method the HTTP method (case-insensitive)
+            @param path the URI path with any query arguments
+            @param http_body the serialized message body
+            @param headers a reference to the hash of HTTP headers received; any default header values to be assumed by the server for the request will be added here
+
+            @return a @ref RestRequestServerInfo hash of request information
+
+            @throw DESERIALIZATION-ERROR the request body could not be deserialized, results in a <tt>400 Bad Request</tt> response returned to the caller
+            @throw SCHEMA-VALIDATION-ERROR this exception should be thrown if there is a validation error in the request so that a <tt>400 Bad Request</tt> response can be returned to the caller
+            @throw INVALID-METHOD invalid HTTP method for the request; the \c arg argument should have a list of acceptable HTTP methods for this request
+        */
+        private hash<RestRequestServerInfo> parseRequestImpl(string method, string path, *data http_body,
+                reference<hash> headers) {
+            hash<UriQueryInfo> h = parse_uri_query(path);
+
+            hash<RestRequestServerInfo> rv({
+                "path": h.method,
+                "query": h.params,
+            });
+
+            *string ct = mime_get_base_type(headers."content-type");
+
+            if (exists http_body) {
+                *hash<auto> dh = DataDeserializationSupport{ct};
+                if (!dh) {
+                    throw "DESERIALIZATION-ERROR", sprintf("cannot deserialize request body; content-type is: %y; "
+                        "types supported: %y; response body: %y", ct, keys DataDeserializationSupport, http_body);
+                }
+
+                # Convert body to binary for non-text content types (e.g. CBOR)
+                if (!is_mime_text(ct) && http_body.typeCode() == NT_STRING) {
+                    http_body = binary(http_body);
+                }
+
+                string ds_code = dh.code;
+                try {
+                    rv.body = dh.arg
+                        ? dh.in(http_body, \ds_code)
+                        : dh.in(http_body);
+                } catch (hash<ExceptionInfo> ex) {
+                    rethrow "DESERIALIZATION-ERROR", sprintf("%s: %s", ex.err, ex.desc);
+                }
+
+                rv.info.code = ds_code;
+            }
+
+            return rv;
+        }
+
+        #! processes a REST response with a serialized message body, validates any response data against schema definitions if possible
+        /** @param method the HTTP method of the original request
+            @param path the URI path of the original request (without query arguments)
+            @param code the HTTP response code
+            @param response_body the response body data (if any)
+            @param headers HTTP headers to include in the response; note that if this value contains a \c Content-Type
+            key, this type will be used for the response serialization if it is supported and if the client can accept
+            it, otherwise an \c ACCEPT-ERROR exception is raised resulting in a <tt>406 Not Acceptable</tt> error
+            being returned to the client
+            @param content_types the desired MIME types for serialization in order of preference; if none are usable
+            then an exception is thrown; if this argument is not present, then json is preferred over yaml
+
+            @return an HttpResponseInfo hash for the response
+
+            @throw ACCEPT-ERROR the response body could not be serialized because the client does not accept a
+            supported type; results in a <tt>406 Not Acceptable</tt> error being returned to the client
+            @throw SERIALIZATION-ERROR the response body could not be serialized due to an error
+
+            @note <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html>RFC 2616 section 14</a>: If an
+            \c Accept header field is present, and if the server cannot send a response which is acceptable according
+            to the combined Accept field value, then the server SHOULD send a 406 (not acceptable) response.  To
+            ensure this happens, if an \c Accept error of this nature occurs in this call, an \c "ACCEPT-ERROR" must
+            be thrown
+        */
+        private hash<HttpResponseInfo> processResponseImpl(string method, string path, int code, auto response_body,
+                *hash<auto> headers, *softlist<string> content_types) {
+            hash<HttpResponseInfo> rv((
+                "code": code,
+                "hdr": headers,
+            ));
+
+            if (exists response_body) {
+                if (checkResponseContentTypeHeader(\rv, response_body, headers, content_types)) {
+                    return rv;
+                }
+
+                list<string> ctl;
+                if (*string ct = headers."Content-Type" ?? headers."content-type") {
+                    # strip parameters (e.g. ";charset=utf-8") for MIME type lookup — the
+                    # keys in DataSerializationSupport are bare MIME types
+                    string base_ct = mime_get_base_type(ct);
+                    ctl = (base_ct,);
+                    if (!DataSerializationSupport{base_ct}) {
+                        log(LoggerLevel::ERROR, "error serializing response with unsupported "
+                            "Content-Type %y required by the REST handler response: failed with response body: %Y",
+                            ct, response_body);
+                        throw "ACCEPT-ERROR", sprintf("cannot serialize response; you claim to accept only: %y; "
+                            "types supported: %y (required by REST response handler); discarding response: %y",
+                            content_types, keys DataSerializationSupport, response_body),
+                            {"types": ctl};
+                    }
+                } else {
+                    ctl = !content_types
+                        ? keys DataSerializationSupport
+                        : map $1, content_types, DataSerializationSupport{$1};
+                }
+
+                if (!ctl) {
+                    throw "ACCEPT-ERROR", sprintf("cannot serialize response; you claim to accept only: %y; types "
+                        "supported: %y; discarding response: %y", content_types, keys DataSerializationSupport,
+                        response_body), {"types": keys DataSerializationSupport};
+                }
+                bool ok;
+                hash<ExceptionInfo> ex;
+                # last serializer used
+                code last_serializer;
+                foreach string ct in (ctl) {
+                    try {
+                        code serializer = DataSerializationSupport{ct};
+                        if (serializer == last_serializer) {
+                            continue;
+                        }
+                        last_serializer = serializer;
+                        response_body = serializer(response_body);
+                        headers."Content-Type" = ct;
+                        ok = True;
+                        break;
+                    } catch (hash<ExceptionInfo> ex1) {
+                        log(LoggerLevel::ERROR, "error serializing response with Content-Type %y (%d/%d): "
+                            "%s; failed with response body: %Y", ct, $#, ctl.size(), get_exception_string(ex1),
+                            response_body);
+                        # ignore serialization exceptions
+                        ex = ex1;
+                    }
+                }
+                # rethrow last exception if the response cannot be serialized
+                if (!ok) {
+                    throw "ACCEPT-ERROR", sprintf("error serializing response; tried: %y; last error: %s: %s", ctl,
+                        ex.err, ex.desc), ex.arg;
+                }
+            }
+
+            rv.body = response_body;
+            rv.hdr = headers;
+            return rv;
+        }
+
+        #! parses and validates the response from the server and returns a hash of the processed info
+        /** @param method the HTTP method (case insensitive)
+            @param path the URI path of the original request (without any query arguments)
+            @param code the HTTP response code
+            @param response_body the HTTP response body data (if any)
+            @param hdr as hash of HTTP headers received
+
+            @throw DESERIALIZATION-ERROR the request body could not be deserialized or had an invalid \c Content-Type
+        */
+        private hash<RestResponseClientInfo> parseResponseImpl(string method, string path, int code,
+                *data response_body, hash<auto> hdr) {
+            hash<RestResponseClientInfo> rv({
+                "code": code,
+                "hdr": hdr,
+            });
+
+            if (response_body.val()) {
+                string raw_ct = (hdr."content-type".typeCode() == NT_LIST
+                    ? hdr."content-type"[0]
+                    : hdr."content-type") ?? "";
+                if (!raw_ct.val()) {
+                    throw "DESERIALIZATION-ERROR", sprintf("cannot deserialize response body without a content-type; "
+                        "response body: %y; headers: %y", response_body, hdr);
+                }
+                *string ct = mime_get_base_type(raw_ct);
+                *hash<auto> dh = ct ? DataDeserializationSupport{ct} : NOTHING;
+                # Media responses have no structured deserializer: preserve their bytes as for
+                # application/octet-stream. This includes generated audio returned by inference APIs.
+                if (!dh && (ct =~ /^(audio|image|video)\// || inlist(ct,
+                        ("application/pdf", "model/gltf-binary"))) && !is_mime_text(ct)) {
+                    dh = DataDeserializationSupport{MimeTypeOctetStream};
+                }
+                if (!dh) {
+                    throw "DESERIALIZATION-ERROR", sprintf("cannot deserialize response body; content-type is: %y; "
+                        "types supported: %y; response body: %y", hdr."content-type",
+                        keys DataDeserializationSupport, response_body);
+                }
+
+                # Convert the body to binary for non-text content types (e.g. CBOR, octet-stream); binary formats
+                # need the raw bytes.
+                #
+                # The transport determines the type the body arrives as: the synchronous HTTPClient::send() path
+                # returns every body as a string, so binary formats have to be converted here, while the
+                # asynchronous HttpClientIo path used by RestClientIo delivers binary bodies unchanged.  Both are
+                # valid; every deserializer registered for a non-text type in DataDeserializationSupport accepts
+                # binary as well as string input.  Rejecting binary here made any binary response impossible over
+                # RestClientIo (issue #5386).
+                if (!is_mime_text(ct)) {
+                    if (response_body.typeCode() == NT_STRING) {
+                        response_body = binary(response_body);
+                    } else if (response_body.typeCode() != NT_BINARY) {
+                        throw "DESERIALIZATION-ERROR", sprintf("cannot deserialize response body; content-type is: "
+                            "%y but body type is %y", ct, response_body.type());
+                    }
+                } else if (response_body.typeCode() != NT_STRING) {
+                    throw "DESERIALIZATION-ERROR", sprintf("cannot deserialize response body; content-type is: %y but "
+                        "body type is %y", ct, response_body.type());
+                }
+
+                # the parsers need UTF-8; HTTP bodies are decoded with their actual encoding (see
+                # decode_http_body()), which is UTF-8 for JSON and UTF-8 or a byte-order-mark encoding for YAML, so
+                # text in another encoding is converted
+                if ((ct == MimeTypeJson || ct == MimeTypeYaml)
+                    && response_body.typeCode() == NT_STRING
+                    && response_body.encoding() != "UTF-8") {
+                    response_body = convert_encoding(response_body, "UTF-8");
+                }
+
+                string ds_code = dh."code";
+                try {
+                    rv.body = dh.arg
+                        ? dh.in(response_body, \ds_code)
+                        : dh.in(response_body);
+                } catch (hash<ExceptionInfo> ex) {
+                    rethrow "DESERIALIZATION-ERROR", sprintf("%s: %s (response body encoding: %s Content-Type: %y)",
+                        ex.err, ex.desc, response_body.encoding(), ct);
+                }
+
+                rv.info."code" = ds_code;
+            }
+
+            return rv;
+        }
+
+        #! Check if the headers contain a content-type header which is accepted and if so, modify the response hash.
+        /** @param resp response hash
+            @param body response body data (if any)
+            @param headers HTTP headers to include in the response
+            @param content_types the accepted MIME types in order of preference
+
+            @return whether the headers contained a \c Content-Type header and the rv was modified
+
+            @note if there are more \c Content-Type headers, then @ref False is returned and response is not modified
+        */
+        private:internal bool checkResponseContentTypeHeader(reference<hash<HttpResponseInfo>> resp, auto body,
+                *hash<auto> headers, *softlist<string> content_types) {
+            # quickly return if body is not in data format
+            if (body.typeCode() != NT_BINARY && body.typeCode() != NT_STRING)
+                return False;
+
+            # Find the \c Content-Type header by exact case-insensitive match — prior
+            # substring match of \c /content-type/i also matched unrelated headers such
+            # as \c X-Content-Type-Options and \c DataStream-Content-Type, which caused
+            # this function to fall through to serialization and re-wrap already-
+            # serialized bodies.
+            *list<string> ct = map $1, keys headers, $1 =~ /^content-type$/i;
+
+            # if found and it is accepted, use it and don't serialize the body
+            if (ct && ct.size() == 1) {
+                if (!content_types) { # no content types means */* is accepted
+                    resp.body = body;
+                    resp.hdr = resp.hdr + ("Content-Type": remove resp.hdr{ct[0]});
+                    return True;
+                }
+                # Compare against the bare MIME type (parameters like ";charset=utf-8"
+                # stripped) so a response with Content-Type "text/x-yaml;charset=utf-8"
+                # matches an accept entry of "text/x-yaml".
+                string contentType = headers{ct[0]};
+                string base_ct = mime_get_base_type(contentType) ?? "";
+                foreach string accepted in (content_types) {
+                    accepted =~ s/\*/.*/;
+                    if (base_ct.regex(accepted) || contentType.regex(accepted)) {
+                        resp.body = body;
+                        resp.hdr = resp.hdr + ("Content-Type": remove resp.hdr{ct[0]});
+                        return True;
+                    }
+                }
+            }
+            return False;
+        }
+
+        #! returns a hash of URI paths as keys with values as lists of supported HTTP methods
+        /** @return a hash of URI paths as keys with values as lists of supported HTTP methods
+        */
+        private hash<string, list<string>> getPathOperationHashImpl() {
+            return new hash<string, list<string>>();
+        }
+
+        #! returns the base path prefix for all requests in this schema
+        /** @return the base path prefix for all requests in this schema
+        */
+        private string getBasePathImpl() {
+            return "";
+        }
+
+        #! overrides the basePath value
+        /** @param basePath the new base path value; use an empty string here to clear the basePath
+        */
+        private setBasePathImpl(string basePath) {
+            throw "UNSUPPORTED-OPERATION", sprintf("the basePath cannot be overridden in the NullRestSchemaValidator class");
+        }
+
+        #! returns a hash of example Qore code for the given request
+        /** @param method the HTTP method (case insensitive)
+            @param path the URI path of the request
+
+            @return a @ref RestSchemaValidator::RestQoreExampleCodeInfo "RestQoreExampleCodeInfo" hash giving example Qore code to generate the given request message
+        */
+        private hash<RestQoreExampleCodeInfo> getQoreExampleRequestImpl(string method, string path) {
+            return new hash<RestQoreExampleCodeInfo>();
+        }
+
+        #! returns a hash of example message information for the given request
+        /** @param method the HTTP method (case insensitive)
+            @param path the URI path of the request
+            @param content_types the desired MIME types for serialization in order of preference; if none are usable then an exception is thrown
+
+            @return a @ref RestExampleRequestInfo of example message information for the given request
+        */
+        private hash<RestExampleRequestInfo> getExampleRequestImpl(string method, string path,
+                *softlist<string> content_types) {
+            return new hash<RestExampleRequestInfo>();
+        }
+
+        #! returns example Qore code for the given response
+        /** @param method the HTTP method of the original request (case insensitive)
+            @param path the URI path of the original request
+            @param code the HTTP response code of the response
+
+            @return a @ref RestSchemaValidator::RestQoreExampleCodeInfo "RestQoreExampleCodeInfo" hash giving example Qore code to generate the given response message
+        */
+        private hash<RestQoreExampleCodeInfo> getQoreExampleResponseImpl(string method, string path, int code) {
+            return new hash<RestQoreExampleCodeInfo>();
+        }
+
+        #! returns a hash of example message information for the given request
+        /** @param method the HTTP method of the original request (case insensitive)
+            @param path the URI path of the original request
+            @param code the HTTP response code of the response
+            @param content_types the desired MIME types for serialization in order of preference; if none are usable then an exception is thrown
+
+            @return a @ref RestSchemaValidator::RestExampleResponseInfo "RestExampleResponseInfo" hash giving example response message info
+        */
+        private hash<RestExampleResponseInfo> getExampleResponseImpl(string method, string path, int code,
+                *softlist<string> content_types) {
+            return new hash<RestExampleResponseInfo>();
+        }
+
+        #! Allows the time zone locale to be set for serialization / deserialization
+        /** @param tz the time zone locale to set
+
+            @since RestSchemaValidator 2.1.3
+        */
+        private setTimeZoneLocaleImpl(*TimeZone tz) {
+            set_thread_tz(tz);
+        }
+
+        #! Returns the time zone locale used for serialization / deserialization
+        /** @return the time zone locale to set
+
+            @since RestSchemaValidator 2.1.3
+        */
+        private *TimeZone getTimeZoneLocaleImpl() {
+            return get_thread_tz();
+        }
+
+        #! Returns a field definition from a schema object
+        /** @param name the name of the field
+            @param desc optional description for the field
+            @param schema the schema object
+            @param required if the field is required
+            @param rest optional REST client for URL resolution
+
+            @return the data field definition
+
+            @since RestSchemaValidator 2.4
+
+            @throws UNSUPPORTED-OPERATION the NullRestSchemaValidator does not support schema operations
+        */
+        AbstractDataField getFieldFromSchema(string name, *string desc, AbstractSchemaObject schema,
+                bool required = True, *object rest) {
+            throw "UNSUPPORTED-OPERATION", "the NullRestSchemaValidator class does not support schema operations";
+        }
+
+        #! Returns a field for header fields
+        /** @param name the name of the field
+            @param headers a hash of header definitions
+
+            @return a data field for the headers
+
+            @since RestSchemaValidator 2.4
+
+            @throws UNSUPPORTED-OPERATION the NullRestSchemaValidator does not support schema operations
+        */
+        AbstractDataField getFieldForHeaders(string name, hash<auto> headers) {
+            throw "UNSUPPORTED-OPERATION", "the NullRestSchemaValidator class does not support schema operations";
+        }
+    }
+
+    #! Generic REST schema loader that auto-detects Swagger 2.0 vs OpenAPI 3.x schemas
+    /** This class provides a unified interface for loading REST API schemas without needing
+        to know the schema format in advance. It automatically detects the schema type and
+        loads the appropriate module (Swagger or OpenApi3) dynamically.
+
+        @since RestSchemaValidator 2.4
+    */
+    public class RestSchemaLoader {
+        #! Load a REST schema definition from a string, auto-detecting the format
+        /**
+            @param schemaSource the REST API schema specification (JSON or YAML)
+            @param json whether the specification is in JSON or YAML format; if not given the source encoding will be
+            detected automatically
+            @param opts options passed to the schema constructor
+
+            @return the loaded schema object
+
+            @throws JSON-MODULE-MISSING trying to parse a JSON schema with JSON module unavailable
+            @throws UNKNOWN-SCHEMA-TYPE unable to detect schema type from parsed content
+        */
+        static AbstractRestSchemaValidator fromString(string schemaSource, *bool json, *hash<auto> opts) {
+            string ser;
+            if (!exists json) {
+                ser = RestSchemaLoader::detectSourceEncoding(schemaSource);
+            } else {
+                ser = json ? "json" : "yaml";
+            }
+            hash<auto> parsed = RestSchemaLoader::parseSchemaSource(schemaSource, ser);
+            string schemaType = RestSchemaLoader::detectSchemaType(parsed);
+            return RestSchemaLoader::loadSchema(schemaType, schemaSource, json, opts);
+        }
+
+        #! Load a REST schema definition from a file, auto-detecting the format
+        /**
+            @param filepath path to the REST schema file
+            @param opts options passed to the schema constructor
+
+            @return the loaded schema object
+
+            @throws EMPTY-SCHEMA-FILE schema file is empty
+            @throws JSON-MODULE-MISSING trying to parse a JSON schema with the json module unavailable
+            @throws XML-MODULE-MISSING trying to parse an XML schema with the xml module unavailable
+            @throws UNKNOWN-SCHEMA-TYPE unable to detect schema type from parsed content
+        */
+        static AbstractRestSchemaValidator fromFile(string filepath, *hash<auto> opts) {
+            string file_data = ReadOnlyFile::readTextFile(filepath);
+            if (!file_data) {
+                throw "EMPTY-SCHEMA-FILE", sprintf("%y: file is empty", filepath);
+            }
+            hash<auto> parsed = RestSchemaLoader::parseSchemaContent(filepath, file_data);
+            string schemaType = RestSchemaLoader::detectSchemaType(parsed);
+            return RestSchemaLoader::loadSchemaFromFile(schemaType, filepath, opts);
+        }
+
+        #! Load a REST schema definition from a URL or file path, auto-detecting the format
+        /**
+            @param url URL to the REST schema file; uses the FileLocationHandler to load the file
+            @param json whether the specification is in JSON or YAML format; if not given the source encoding will be
+            detected automatically
+            @param opts options passed to the schema constructor
+
+            @return the loaded schema object
+
+            @throws EMPTY-SCHEMA-FILE schema file is empty
+            @throws JSON-MODULE-MISSING trying to parse a JSON schema with the json module unavailable
+            @throws XML-MODULE-MISSING trying to parse an XML schema with the xml module unavailable
+            @throws UNKNOWN-SCHEMA-TYPE unable to detect schema type from parsed content
+        */
+        static AbstractRestSchemaValidator fromUrl(string url, *bool json, *hash<auto> opts) {
+            if (!exists json) {
+                if (url =~ /\.yaml$/i) {
+                    json = False;
+                } else if (url =~ /\.json$/i) {
+                    json = True;
+                }
+            }
+            on_error {
+                rethrow $1.err, sprintf("%s (from URL %y)", $1.desc, get_safe_url(url));
+            }
+            return RestSchemaLoader::fromString(FileLocationHandler::getTextFileFromLocation(url), json, opts);
+        }
+
+        #! Detects whether the source is JSON, YAML, or XML
+        /** @param str the schema source string
+
+            @return either "json", "yaml", or "xml"
+        */
+        static string detectSourceEncoding(string str) {
+            # strip leading whitespace
+            str =~ s/^[\s\n]+//;
+            # check for XML declaration or root element
+            if (str =~ /^<(\?xml|[a-zA-Z])/) {
+                return "xml";
+            }
+            # check for JSON: a JSON object always has a double-quoted key (or is empty) immediately
+            # after the opening brace.  YAML flow style (e.g. "{openapi: ...}") uses unquoted keys and
+            # is not valid JSON, so it must be parsed as YAML.
+            if (str =~ /^\{\s*["}]/) {
+                return "json";
+            }
+            # default to YAML (covers block style and flow style with unquoted keys)
+            return "yaml";
+        }
+
+        #! Parses schema source from a string
+        /** @param str the schema source string
+            @param ser the serialization type ("json", "yaml", or "xml")
+
+            @return the parsed schema as a hash
+
+            @throws JSON-MODULE-MISSING trying to parse a JSON schema with json module unavailable
+            @throws XML-MODULE-MISSING trying to parse an XML schema with xml module unavailable
+        */
+        static hash<auto> parseSchemaSource(string str, string ser) {
+            auto rv;
+            switch (ser) {
+                case "json": {
+                    rv = parse_json(str);
+                    break;
+                }
+                case "yaml": {
+                    rv = parse_yaml(str);
+                    break;
+                }
+                case "xml": {
+%ifdef NoXml
+                    throw "XML-MODULE-MISSING", "Trying to parse an XML schema, but the xml module is unavailable";
+%else
+                    rv = parse_xml(str);
+                    break;
+%endif
+                }
+            }
+            if (rv.typeCode() != NT_HASH) {
+                throw "INVALID-SCHEMA", sprintf("REST schema must be a hash; parsed %s document has top-level type %y",
+                    ser.upr(), rv.type());
+            }
+            return rv;
+        }
+
+        #! Parses schema content from a file
+        /** @param filepath path to the schema file
+            @param str the file content to parse
+
+            @return the parsed schema as a hash
+
+            @throws EMPTY-SCHEMA-FILE schema file is empty
+            @throws JSON-MODULE-MISSING trying to parse a JSON schema with the json module unavailable
+            @throws XML-MODULE-MISSING trying to parse an XML schema with the xml module unavailable
+        */
+        static hash<auto> parseSchemaContent(string filepath, string str) {
+            if (!str) {
+                throw "EMPTY-SCHEMA-FILE", sprintf("%y: file is empty", filepath);
+            }
+
+            string ser;
+            string filename = basename(filepath);
+            if (filename =~ /.*\.json$/i) {
+                ser = "json";
+            } else if (filename =~ /.*\.yaml$/i) {
+                ser = "yaml";
+            } else if (filename =~ /.*\.xml$/i) {
+                ser = "xml";
+            } else {
+                ser = RestSchemaLoader::detectSourceEncoding(str);
+            }
+
+            if (ser == "xml") {
+%ifdef NoXml
+                throw "XML-MODULE-MISSING", "Trying to parse an XML schema, but the xml module is unavailable";
+%else
+                auto rv = parse_xml(str);
+                if (rv.typeCode() != NT_HASH) {
+                    throw "INVALID-SCHEMA", sprintf("REST schema must be a hash; parsed XML document has top-level "
+                        "type %y", rv.type());
+                }
+                return rv;
+%endif
+            }
+            return RestSchemaLoader::parseSchemaSource(str, ser);
+        }
+
+        #! Detects the schema type from parsed content
+        /** @param parsed the parsed schema hash
+
+            @return either "swagger" or "openapi3"
+
+            @throws UNKNOWN-SCHEMA-TYPE unable to detect schema type from parsed content
+        */
+        static string detectSchemaType(hash<auto> parsed) {
+            # Check for Swagger 2.0: has "swagger" key with value "2.0"
+            if (parsed.swagger.typeCode() == NT_STRING && parsed.swagger == "2.0") {
+                return "swagger";
+            }
+            # Check for OpenAPI 3.x: has "openapi" key starting with "3."
+            if (parsed.openapi.typeCode() == NT_STRING && parsed.openapi =~ /^3\./) {
+                return "openapi3";
+            }
+            # Provide more specific error messages for malformed version values
+            if (parsed.hasKey("swagger")) {
+                throw "UNKNOWN-SCHEMA-TYPE", sprintf("unsupported Swagger version %y; only version \"2.0\" is "
+                    "supported", parsed.swagger);
+            }
+            if (parsed.hasKey("openapi")) {
+                throw "UNKNOWN-SCHEMA-TYPE", sprintf("unsupported OpenAPI version %y; only versions \"3.x.x\" are "
+                    "supported", parsed.openapi);
+            }
+            throw "UNKNOWN-SCHEMA-TYPE", sprintf("unable to detect REST schema type; expected 'swagger: \"2.0\"' or "
+                "'openapi: \"3.x.x\"' key; got keys: %y", keys parsed);
+        }
+
+        #! Loads the appropriate schema module and creates a schema object from a string
+        private static AbstractRestSchemaValidator loadSchema(string schemaType, string schemaSource, *bool json,
+                *hash<auto> opts) {
+            string className = schemaType == "swagger"
+                ? "Swagger::SwaggerLoader"
+                : "OpenApi3::OpenApi3Loader";
+            load_module(schemaType == "swagger" ? "Swagger" : "OpenApi3");
+            Reflection::Class cls = Reflection::Class::forName(className);
+            Reflection::StaticMethod method = cls.getMethod("fromString");
+            return method.call(schemaSource, json, opts);
+        }
+
+        #! Loads the appropriate schema module and creates a schema object from a file
+        private static AbstractRestSchemaValidator loadSchemaFromFile(string schemaType, string filepath,
+                *hash<auto> opts) {
+            string className = schemaType == "swagger"
+                ? "Swagger::SwaggerLoader"
+                : "OpenApi3::OpenApi3Loader";
+            load_module(schemaType == "swagger" ? "Swagger" : "OpenApi3");
+            Reflection::Class cls = Reflection::Class::forName(className);
+            Reflection::StaticMethod method = cls.getMethod("fromFile");
+            return method.call(filepath, opts);
+        }
+    }
+}
