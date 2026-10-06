@@ -1,0 +1,206 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "rpm_source_commit": "5659782a695a4337f266a9895972b15f5fd9a9af",
+  "local_commands": "All three SDK-based command controls pass the full 32-case runtime suite twice and the compiled binding/transaction example. Fedora includes pgvector and 382 assertions per phase; Leap/AlmaLinux have336. Clean minimal runtime is a separate native-CI gate.",
+  "compiler_fixture": "Same SQL/binding/return checks as debian/tests/compiler, executed with the RPM Unix-socket harness. Fixture-only addition; release2 RPM remains unchanged. Initial attempts to compile the full interpreter suite or move on_exit to top level were correctly rejected as unsupported by the pinned AOT compiler; neither is used in this fixture.",
+  "negative_controls": "All three compiled programs return3 and the exact DBI:PGSQL:ERROR for the deliberately nonexistent socket. The output is captured and checked, not filtered.",
+  "status": "Prepared for native ARM runtime/SDK qualification. AlmaLinux OBS waits on rebuilt dependencies.",
+  "artifacts_sha256": {
+    "evidence/controls/pgsql-installed-20261006/compiler.qr": "e832878ef444c1b1c4c5871521343685eb85a0d4cfc4eaef0b3ad4080ae24176",
+    "evidence/controls/pgsql-installed-20261006/el10/checks.json": "d182fd57f4c2150a7ce68806e159c79a3589435ce0450092d4cbc30341c7dc9d",
+    "evidence/controls/pgsql-installed-20261006/el10/command.json": "aa3e4890df0d686f39414ba0c6d124d014d7c54c634859cf0591f9629f45903a",
+    "evidence/controls/pgsql-installed-20261006/el10/commands.json": "297c16cc87fdf24dc614a3d27238f62314ae1d4167bc9ae21410bccf4655b904",
+    "evidence/controls/pgsql-installed-20261006/el10/negative-result.json": "37ebb3ae21a3f02142a28022e16a92c85452ff7daadeb55288a5d6e834927963",
+    "evidence/controls/pgsql-installed-20261006/el10/negative-stderr.log": "1c6321706969475a500b1b55955c25a1cf63f2f3dfb8175a00e381de5a665194",
+    "evidence/controls/pgsql-installed-20261006/el10/negative-stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/pgsql-installed-20261006/el10/run.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/pgsql-installed-20261006/el10/runtime-tests.log.gz": "46f01cfb72d346dd6af1b929a3f5a4c5720f7ea8af981c0912da57b7ed140339",
+    "evidence/controls/pgsql-installed-20261006/el10/sdk-compiled-tests.log.gz": "078a012eadd198e7dc155fea4148d45a7a08b7c6b10dc831c22de3347354ed29",
+    "evidence/controls/pgsql-installed-20261006/el10/sdk-compiler.log.gz": "56aecaabdaee69b53601db93fb5e80ddd5717d4c4b890cb447fa6ea8af3c53b8",
+    "evidence/controls/pgsql-installed-20261006/el10/sdk-tests.log.gz": "b3ef97f8e673a27922553e6bcbbcc388c54d591341de7514e4988869f15dad35",
+    "evidence/controls/pgsql-installed-20261006/el10/status.json": "81868a6e94ffc0178bf833deb1c9013d9fab4ee95ddb876a5e8ec4f1d26376d2",
+    "evidence/controls/pgsql-installed-20261006/fedora/checks.json": "eff3df89dad1c3cb568403c860d756f46269b561c710d1998efb0d2c190763cc",
+    "evidence/controls/pgsql-installed-20261006/fedora/command.json": "b489dbd332fbe041014caba93f50ecda9e56e04280195be5af9d57e8427402a3",
+    "evidence/controls/pgsql-installed-20261006/fedora/commands.json": "13238e13e80755913b4f46daf0b29df953813e641b0a4b4f7d2ad5b38508db1c",
+    "evidence/controls/pgsql-installed-20261006/fedora/negative-result.json": "61bc1947a36fccf84a9c218e62df45dfdf8853b3f598564a6bdb3ef3832593f1",
+    "evidence/controls/pgsql-installed-20261006/fedora/negative-stderr.log": "0580e4a7e9df5978a190a878340e5db4e4837e2fe76bba59683aa18533502ca0",
+    "evidence/controls/pgsql-installed-20261006/fedora/negative-stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/pgsql-installed-20261006/fedora/run.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/pgsql-installed-20261006/fedora/runtime-tests.log.gz": "14ee4915fe91dfacebaace983fc5bb02383e899e0cc2adf28abf2e6b57b3f2b9",
+    "evidence/controls/pgsql-installed-20261006/fedora/sdk-compiled-tests.log.gz": "b11643c56f8d6d5e43bff53be39e9f868bac5e5735dbde9370f8347d0c86dd2e",
+    "evidence/controls/pgsql-installed-20261006/fedora/sdk-compiler.log.gz": "e81dac8e04e4c842f9b4e66dc23205de6b906c7f222aa6dce6529f9e163a5534",
+    "evidence/controls/pgsql-installed-20261006/fedora/sdk-tests.log.gz": "fbd3f21c9c118017acb9a962433fb37b4a10fb0198ea872e97f0654a08060e7e",
+    "evidence/controls/pgsql-installed-20261006/fedora/status.json": "81868a6e94ffc0178bf833deb1c9013d9fab4ee95ddb876a5e8ec4f1d26376d2",
+    "evidence/controls/pgsql-installed-20261006/leap/checks.json": "d182fd57f4c2150a7ce68806e159c79a3589435ce0450092d4cbc30341c7dc9d",
+    "evidence/controls/pgsql-installed-20261006/leap/command.json": "3e6f33cbaaa8479dc916fbabcefc53d63be3682eb5572d28083ea804433ae6f5",
+    "evidence/controls/pgsql-installed-20261006/leap/commands.json": "297c16cc87fdf24dc614a3d27238f62314ae1d4167bc9ae21410bccf4655b904",
+    "evidence/controls/pgsql-installed-20261006/leap/negative-result.json": "5a027b1eae73fd2a9db2d59f1615f207f31de8ca11660244370f9424a36e848f",
+    "evidence/controls/pgsql-installed-20261006/leap/negative-stderr.log": "f8530b5f696bf75cafd25e67380a159f1cb41138d5a59a8d39901e04f1e4d76b",
+    "evidence/controls/pgsql-installed-20261006/leap/negative-stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/pgsql-installed-20261006/leap/run.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/pgsql-installed-20261006/leap/runtime-tests.log.gz": "88362efc523135214ce2ada580a457d8a75ba6664502dc2fd5022c1d92fcc272",
+    "evidence/controls/pgsql-installed-20261006/leap/sdk-compiled-tests.log.gz": "25342c9af20d40a6638ccc634f321fbdb31d7d592ea6d200365cf5f24b37a751",
+    "evidence/controls/pgsql-installed-20261006/leap/sdk-compiler.log.gz": "8e2bde6d9e106d82ada37acd3478889fef0f57f7b5372bf8fff1ac97ec2a9b85",
+    "evidence/controls/pgsql-installed-20261006/leap/sdk-tests.log.gz": "fdaeb6920d87671b71a7ab0b7c01125a4471837911c9d19b26ef661fe59abdf0",
+    "evidence/controls/pgsql-installed-20261006/leap/status.json": "81868a6e94ffc0178bf833deb1c9013d9fab4ee95ddb876a5e8ec4f1d26376d2",
+    "evidence/controls/pgsql-installed-20261006/native-fedora-binaries.xml": "575def5e5cdcf04575045f16e897764efe345d4c45969544f80d983439f61061",
+    "evidence/controls/pgsql-installed-20261006/native-fedora-history.xml": "91542d99153edf358c073262cde61b8eb410c24f273bdc715a4bc224ecae07d8",
+    "evidence/controls/pgsql-installed-20261006/native-leap-binaries.xml": "3e4bb28b89532ea46849e1e71eb2d9d0e05a0f13bed55d637979e96b2a10b33b",
+    "evidence/controls/pgsql-installed-20261006/native-leap-history.xml": "f9fe910dfcc15dd9d988a2c3fa14331bcda11541591adcc10cd9b48e328f5f6b",
+    "evidence/controls/pgsql-installed-20261006/native-source.xml": "4977ee89c2c7ecc498272ff0c42688de0e79d1a001eaafe374e0eaea57f0d916",
+    "evidence/controls/pgsql-installed-20261006/pgsql-ci-lint-20261006.json": "bc2e34bf737a4674274526d9edab482c2a10507f06f30811451c972f2dc573f2",
+    "evidence/controls/pgsql-installed-20261006/pgsql-installed-all-tests-final-20261006.log": "ff644a9080efe1d23f515070eb92ff393d8457375bd5c7a93572fef21187a10f"
+  },
+  "native_sources": {
+    "rpm": {
+      "schema": 1,
+      "commit": "5659782a695a4337f266a9895972b15f5fd9a9af",
+      "source_date_epoch": 1791294079,
+      "name": "qore-pgsql-module",
+      "version": "3.5.0",
+      "exclusions": [],
+      "sources": {
+        "qore-pgsql-module-3.5.0.tar.xz": "36e05b209d2e1bb651245ef90d6b711bec83b712efa3be9fadbc9eb4c2fcc04a",
+        "qore-pgsql-module.spec": "34dd420d9ba651e2f9c2a5107fd35b46b76714c1e59b903096947a3e9d44fcee"
+      },
+      "spec": "qore-pgsql-module.spec"
+    },
+    "fixture_commit": "9bfb7a7ede4a1b4f8ec9b1d85310171018baf96d",
+    "srcmd5": "9813ceec03d09e3dee781bbb1c437534",
+    "fixture_only_change": true
+  },
+  "native_build_results": {
+    "source": {
+      "schema": 1,
+      "commit": "5659782a695a4337f266a9895972b15f5fd9a9af",
+      "source_date_epoch": 1791294079,
+      "name": "qore-pgsql-module",
+      "version": "3.5.0",
+      "exclusions": [],
+      "sources": {
+        "qore-pgsql-module-3.5.0.tar.xz": "36e05b209d2e1bb651245ef90d6b711bec83b712efa3be9fadbc9eb4c2fcc04a",
+        "qore-pgsql-module.spec": "34dd420d9ba651e2f9c2a5107fd35b46b76714c1e59b903096947a3e9d44fcee"
+      },
+      "spec": "qore-pgsql-module.spec"
+    },
+    "srcmd5": "9813ceec03d09e3dee781bbb1c437534",
+    "builds": [
+      {
+        "repository": "openSUSE_Leap_16.0",
+        "arch": "x86_64",
+        "status": "succeeded",
+        "srcmd5": "9813ceec03d09e3dee781bbb1c437534",
+        "log_sha256": "e22cf2d74bab92035a72f3c5be32eb36333ed80335b6e1d780e0bca37a509bc6",
+        "diagnostics": [
+          "[   11s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2",
+          "[   21s] WARNING could not set SOURCE_DATE_EPOCH, ensure mtime is in $TOPDIR/SOURCES/_scmsync.obsinfo or BUILD_CHANGELOG_TIMESTAMP is set in /.buildenv",
+          "[   21s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv",
+          "[   23s] WARNING could not set SOURCE_DATE_EPOCH, ensure mtime is in $TOPDIR/SOURCES/_scmsync.obsinfo or BUILD_CHANGELOG_TIMESTAMP is set in /.buildenv",
+          "[   23s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv",
+          "[   39s] WARNING could not set SOURCE_DATE_EPOCH, ensure mtime is in $TOPDIR/SOURCES/_scmsync.obsinfo or BUILD_CHANGELOG_TIMESTAMP is set in /.buildenv",
+          "[   39s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv"
+        ],
+        "tests": [
+          "[    5s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   29s] Ran 5 tests in 0.009s",
+          "[   30s] Ran 3 tests in 0.028s",
+          "[   30s] Ran 3 tests in 0.028s",
+          "[   32s] Ran 2 test cases, 2 succeeded (5 assertions)",
+          "[   33s] Ran 4 test cases, 4 succeeded (34 assertions)",
+          "[   34s] Ran 7 test cases, 7 succeeded (27 assertions)",
+          "[   36s] Ran 19 test cases, 19 succeeded (270 assertions)"
+        ]
+      },
+      {
+        "repository": "openSUSE_Leap_16.0",
+        "arch": "aarch64",
+        "status": "succeeded",
+        "srcmd5": "9813ceec03d09e3dee781bbb1c437534",
+        "log_sha256": "8507cc90bbd96ea4435758b67083d589c59340eede4ca75b38b6be24447e5af4",
+        "diagnostics": [
+          "[   19s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2",
+          "[   40s] WARNING could not set SOURCE_DATE_EPOCH, ensure mtime is in $TOPDIR/SOURCES/_scmsync.obsinfo or BUILD_CHANGELOG_TIMESTAMP is set in /.buildenv",
+          "[   40s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv",
+          "[   43s] WARNING could not set SOURCE_DATE_EPOCH, ensure mtime is in $TOPDIR/SOURCES/_scmsync.obsinfo or BUILD_CHANGELOG_TIMESTAMP is set in /.buildenv",
+          "[   43s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv",
+          "[   79s] WARNING could not set SOURCE_DATE_EPOCH, ensure mtime is in $TOPDIR/SOURCES/_scmsync.obsinfo or BUILD_CHANGELOG_TIMESTAMP is set in /.buildenv",
+          "[   79s] WARNING could not set SOURCE_DATE_EPOCH, ensure BUILD_RELEASE is set in /.buildenv"
+        ],
+        "tests": [
+          "[    8s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   60s] Ran 5 tests in 0.056s",
+          "[   60s] Ran 3 tests in 0.098s",
+          "[   61s] Ran 3 tests in 0.078s",
+          "[   65s] Ran 2 test cases, 2 succeeded (5 assertions)",
+          "[   65s] Ran 4 test cases, 4 succeeded (34 assertions)",
+          "[   68s] Ran 7 test cases, 7 succeeded (27 assertions)",
+          "[   72s] Ran 19 test cases, 19 succeeded (270 assertions)"
+        ]
+      },
+      {
+        "repository": "Fedora_44",
+        "arch": "x86_64",
+        "status": "succeeded",
+        "srcmd5": "9813ceec03d09e3dee781bbb1c437534",
+        "log_sha256": "997ebed3bc44b0f99fa16d0ab29a328707acafff60e734a8b6c88334c225e9de",
+        "diagnostics": [
+          "[   65s] Warning: mkbaselibs missing in build root, skipping baselibs"
+        ],
+        "tests": [
+          "[    9s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   10s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   58s] Ran 5 tests in 0.008s",
+          "[   58s] Ran 3 tests in 0.048s",
+          "[   58s] Ran 3 tests in 0.025s",
+          "[   61s] Ran 2 test cases, 2 succeeded (5 assertions)",
+          "[   61s] Ran 4 test cases, 4 succeeded (34 assertions)",
+          "[   62s] Ran 7 test cases, 7 succeeded (27 assertions)",
+          "[   63s] Ran 19 test cases, 19 succeeded (316 assertions)"
+        ]
+      },
+      {
+        "repository": "Fedora_44",
+        "arch": "aarch64",
+        "status": "succeeded",
+        "srcmd5": "9813ceec03d09e3dee781bbb1c437534",
+        "log_sha256": "558aca2b5efaf8fce1d583b4fad8914dfefe5cd66541597791f70505b06cc175",
+        "diagnostics": [
+          "[   82s] Warning: mkbaselibs missing in build root, skipping baselibs"
+        ],
+        "tests": [
+          "[   10s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   11s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   74s] Ran 5 tests in 0.011s",
+          "[   74s] Ran 3 tests in 0.065s",
+          "[   74s] Ran 3 tests in 0.033s",
+          "[   77s] Ran 2 test cases, 2 succeeded (5 assertions)",
+          "[   77s] Ran 4 test cases, 4 succeeded (34 assertions)",
+          "[   79s] Ran 7 test cases, 7 succeeded (27 assertions)",
+          "[   80s] Ran 19 test cases, 19 succeeded (316 assertions)"
+        ]
+      },
+      {
+        "repository": "AlmaLinux_10",
+        "arch": "x86_64",
+        "status": "blocked",
+        "details": "qore-devel, qore-rpm-macros, libqore, qore, qore-stdlib, onnxruntime"
+      },
+      {
+        "repository": "AlmaLinux_10",
+        "arch": "aarch64",
+        "status": "blocked",
+        "details": "qore-devel, qore-rpm-macros, libqore, qore, qore-stdlib, onnxruntime"
+      }
+    ]
+  },
+  "tool_tests": 165,
+  "ci_lint": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "merged_yaml": "---\nstages:\n- \".pre\"\n- test\n- \".post\"\npackaging-tools:\n  stage: test\n  image: python:3.13-bookworm@sha256:227b6570d6ee07061ae6ca2eb04dedfb6d2b34045835f343065b9869e4d427ea\n  tags:\n  - k8s\n  - amd64\n  rules:\n  - changes:\n    - tools/**/*\n    - tests/**/*\n    - dependencies/*.py\n    - \".gitlab-ci.yml\"\n  script:\n  - python3 -B -W error -m unittest discover -s tests -v\n\".rpm-native-installed\":\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"core21\"\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\nrpm-fedora-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"core21\" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET\n      == \"fedora\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: \".rpm-native-installed\"\n  image: registry.fedoraproject.org/fedora@sha256:bd539c7c03d6ee316e0f9396d4a44e6a137d2c4cd6bf6a019f608cfa2fba6fa6\n  variables:\n    RPM_MANIFEST: qualification/core21-fedora-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils\nrpm-leap-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"core21\" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET\n      == \"leap\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: \".rpm-native-installed\"\n  image: opensuse/leap@sha256:e8997b5b4278bb91ef108750b5d103e2d55bbf1f22965bb46a2ba3b35487b292\n  variables:\n    RPM_MANIFEST: qualification/core21-leap-aarch64.json\n  before_script:\n  - zypper --non-interactive install --no-recommends python3 ca-certificates shadow\n    util-linux findutils\nrpm-el10-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"core21\" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET\n      == \"el10\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: \".rpm-native-installed\"\n  image: almalinux@sha256:957738702313e6ee452cdb17bc1431542c467be9a4e2f4da3b8e551b0ebb9677\n  variables:\n    RPM_MANIFEST: qualification/core21-el10-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils dnf-plugins-core epel-release\n  - dnf config-manager --set-enabled crb\nrpm-pgsql-fedora-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"pgsql\" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET\n      == \"fedora\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-fedora-arm64\n  image: registry.fedoraproject.org/fedora@sha256:bd539c7c03d6ee316e0f9396d4a44e6a137d2c4cd6bf6a019f608cfa2fba6fa6\n  variables:\n    RPM_MANIFEST: qualification/pgsql-fedora-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils\nrpm-pgsql-leap-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"pgsql\" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET\n      == \"leap\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-leap-arm64\n  image: opensuse/leap@sha256:e8997b5b4278bb91ef108750b5d103e2d55bbf1f22965bb46a2ba3b35487b292\n  variables:\n    RPM_MANIFEST: qualification/pgsql-leap-aarch64.json\n  before_script:\n  - zypper --non-interactive install --no-recommends python3 ca-certificates shadow\n    util-linux findutils\nrpm-treesitter-fedora-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"treesitter\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"fedora\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-fedora-arm64\n  image: registry.fedoraproject.org/fedora@sha256:bd539c7c03d6ee316e0f9396d4a44e6a137d2c4cd6bf6a019f608cfa2fba6fa6\n  variables:\n    RPM_MANIFEST: qualification/treesitter-fedora-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils\nrpm-treesitter-leap-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"treesitter\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"leap\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-leap-arm64\n  image: opensuse/leap@sha256:e8997b5b4278bb91ef108750b5d103e2d55bbf1f22965bb46a2ba3b35487b292\n  variables:\n    RPM_MANIFEST: qualification/treesitter-leap-aarch64.json\n  before_script:\n  - zypper --non-interactive install --no-recommends python3 ca-certificates shadow\n    util-linux findutils\nrpm-treesitter-el10-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"treesitter\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"el10\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-el10-arm64\n  image: almalinux@sha256:957738702313e6ee452cdb17bc1431542c467be9a4e2f4da3b8e551b0ebb9677\n  variables:\n    RPM_MANIFEST: qualification/treesitter-el10-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils dnf-plugins-core epel-release\n  - dnf config-manager --set-enabled crb\nrpm-modules-fedora-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules1\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"fedora\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-fedora-arm64\n  image: registry.fedoraproject.org/fedora@sha256:bd539c7c03d6ee316e0f9396d4a44e6a137d2c4cd6bf6a019f608cfa2fba6fa6\n  variables:\n    RPM_MANIFEST: qualification/modules1-fedora-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils\nrpm-modules-leap-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules1\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"leap\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-leap-arm64\n  image: opensuse/leap@sha256:e8997b5b4278bb91ef108750b5d103e2d55bbf1f22965bb46a2ba3b35487b292\n  variables:\n    RPM_MANIFEST: qualification/modules1-leap-aarch64.json\n  before_script:\n  - zypper --non-interactive install --no-recommends python3 ca-certificates shadow\n    util-linux findutils\nrpm-modules-el10-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules1\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"el10\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-el10-arm64\n  image: almalinux@sha256:957738702313e6ee452cdb17bc1431542c467be9a4e2f4da3b8e551b0ebb9677\n  variables:\n    RPM_MANIFEST: qualification/modules1-el10-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils dnf-plugins-core epel-release\n  - dnf config-manager --set-enabled crb\nrpm-odbc-fedora-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"odbc\" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET\n      == \"fedora\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-fedora-arm64\n  image: registry.fedoraproject.org/fedora@sha256:bd539c7c03d6ee316e0f9396d4a44e6a137d2c4cd6bf6a019f608cfa2fba6fa6\n  variables:\n    RPM_MANIFEST: qualification/odbc-fedora-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils\nrpm-odbc-leap-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"odbc\" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET\n      == \"leap\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-leap-arm64\n  image: opensuse/leap@sha256:e8997b5b4278bb91ef108750b5d103e2d55bbf1f22965bb46a2ba3b35487b292\n  variables:\n    RPM_MANIFEST: qualification/odbc-leap-aarch64.json\n  before_script:\n  - zypper --non-interactive install --no-recommends python3 ca-certificates shadow\n    util-linux findutils\nrpm-odbc-el10-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"odbc\" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET\n      == \"el10\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-el10-arm64\n  image: almalinux@sha256:957738702313e6ee452cdb17bc1431542c467be9a4e2f4da3b8e551b0ebb9677\n  variables:\n    RPM_MANIFEST: qualification/odbc-el10-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils dnf-plugins-core epel-release\n  - dnf config-manager --set-enabled crb\nrpm-modules2-fedora-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules2\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"fedora\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-fedora-arm64\n  image: registry.fedoraproject.org/fedora@sha256:bd539c7c03d6ee316e0f9396d4a44e6a137d2c4cd6bf6a019f608cfa2fba6fa6\n  variables:\n    RPM_MANIFEST: qualification/modules2-fedora-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils\nrpm-modules2-leap-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules2\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"leap\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-leap-arm64\n  image: opensuse/leap@sha256:e8997b5b4278bb91ef108750b5d103e2d55bbf1f22965bb46a2ba3b35487b292\n  variables:\n    RPM_MANIFEST: qualification/modules2-leap-aarch64.json\n  before_script:\n  - zypper --non-interactive install --no-recommends python3 ca-certificates shadow\n    util-linux findutils\nrpm-modules2-el10-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules2\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"el10\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-el10-arm64\n  image: almalinux@sha256:957738702313e6ee452cdb17bc1431542c467be9a4e2f4da3b8e551b0ebb9677\n  variables:\n    RPM_MANIFEST: qualification/modules2-el10-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils dnf-plugins-core epel-release\n  - dnf config-manager --set-enabled crb\nrpm-modules3-fedora-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules3\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"fedora\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-fedora-arm64\n  image: registry.fedoraproject.org/fedora@sha256:bd539c7c03d6ee316e0f9396d4a44e6a137d2c4cd6bf6a019f608cfa2fba6fa6\n  variables:\n    RPM_MANIFEST: qualification/modules3-fedora-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils\nrpm-modules3-leap-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules3\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"leap\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-leap-arm64\n  image: opensuse/leap@sha256:e8997b5b4278bb91ef108750b5d103e2d55bbf1f22965bb46a2ba3b35487b292\n  variables:\n    RPM_MANIFEST: qualification/modules3-leap-aarch64.json\n  before_script:\n  - zypper --non-interactive install --no-recommends python3 ca-certificates shadow\n    util-linux findutils\nrpm-modules3-el10-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules3\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"el10\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-el10-arm64\n  image: almalinux@sha256:957738702313e6ee452cdb17bc1431542c467be9a4e2f4da3b8e551b0ebb9677\n  variables:\n    RPM_MANIFEST: qualification/modules3-el10-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils dnf-plugins-core epel-release\n  - dnf config-manager --set-enabled crb\nrpm-modules4-fedora-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules4\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"fedora\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-fedora-arm64\n  image: registry.fedoraproject.org/fedora@sha256:bd539c7c03d6ee316e0f9396d4a44e6a137d2c4cd6bf6a019f608cfa2fba6fa6\n  variables:\n    RPM_MANIFEST: qualification/modules4-fedora-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils\nrpm-modules4-leap-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules4\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"leap\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-leap-arm64\n  image: opensuse/leap@sha256:e8997b5b4278bb91ef108750b5d103e2d55bbf1f22965bb46a2ba3b35487b292\n  variables:\n    RPM_MANIFEST: qualification/modules4-leap-aarch64.json\n  before_script:\n  - zypper --non-interactive install --no-recommends python3 ca-certificates shadow\n    util-linux findutils\nrpm-modules4-el10-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules4\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"el10\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-el10-arm64\n  image: almalinux@sha256:957738702313e6ee452cdb17bc1431542c467be9a4e2f4da3b8e551b0ebb9677\n  variables:\n    RPM_MANIFEST: qualification/modules4-el10-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils dnf-plugins-core epel-release\n  - dnf config-manager --set-enabled crb\nrpm-modules5-fedora-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules5\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"fedora\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-fedora-arm64\n  image: registry.fedoraproject.org/fedora@sha256:bd539c7c03d6ee316e0f9396d4a44e6a137d2c4cd6bf6a019f608cfa2fba6fa6\n  variables:\n    RPM_MANIFEST: qualification/modules5-fedora-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils\nrpm-modules5-leap-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules5\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"leap\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-leap-arm64\n  image: opensuse/leap@sha256:e8997b5b4278bb91ef108750b5d103e2d55bbf1f22965bb46a2ba3b35487b292\n  variables:\n    RPM_MANIFEST: qualification/modules5-leap-aarch64.json\n  before_script:\n  - zypper --non-interactive install --no-recommends python3 ca-certificates shadow\n    util-linux findutils\nrpm-modules5-el10-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules5\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"el10\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-el10-arm64\n  image: almalinux@sha256:957738702313e6ee452cdb17bc1431542c467be9a4e2f4da3b8e551b0ebb9677\n  variables:\n    RPM_MANIFEST: qualification/modules5-el10-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils dnf-plugins-core epel-release\n  - dnf config-manager --set-enabled crb\nrpm-modules6-fedora-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules6\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"fedora\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-fedora-arm64\n  image: registry.fedoraproject.org/fedora@sha256:bd539c7c03d6ee316e0f9396d4a44e6a137d2c4cd6bf6a019f608cfa2fba6fa6\n  variables:\n    RPM_MANIFEST: qualification/modules6-fedora-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils\nrpm-modules6-leap-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules6\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"leap\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-leap-arm64\n  image: opensuse/leap@sha256:e8997b5b4278bb91ef108750b5d103e2d55bbf1f22965bb46a2ba3b35487b292\n  variables:\n    RPM_MANIFEST: qualification/modules6-leap-aarch64.json\n  before_script:\n  - zypper --non-interactive install --no-recommends python3 ca-certificates shadow\n    util-linux findutils\nrpm-modules6-el10-arm64:\n  stage: test\n  tags:\n  - k8s\n  - arm64\n  rules:\n  - if: $RPM_NATIVE_QUALIFICATION == \"modules6\" && ($RPM_NATIVE_TARGET == null ||\n      $RPM_NATIVE_TARGET == \"el10\")\n  script:\n  - python3 -B -W error tools/qualify-installed.py \"$RPM_MANIFEST\" --output results/native-installed\n  artifacts:\n    when: always\n    paths:\n    - results/native-installed/\n    expire_in: 14 days\n  extends: rpm-el10-arm64\n  image: almalinux@sha256:957738702313e6ee452cdb17bc1431542c467be9a4e2f4da3b8e551b0ebb9677\n  variables:\n    RPM_MANIFEST: qualification/modules6-el10-aarch64.json\n  before_script:\n  - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils\n    util-linux findutils dnf-plugins-core epel-release\n  - dnf config-manager --set-enabled crb\n",
+    "includes": []
+  }
+}

@@ -1,0 +1,19 @@
+[
+  "docker",
+  "run",
+  "--rm",
+  "--init",
+  "--network",
+  "none",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/work/pgsql-compiler-commands3-20261006/fedora:/work",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/work/pgsql-compiler-commands3-20261006/run.py:/run.py:ro",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/results/fedora-pgsql-metadata-canonical-20261006/rpmbuild/RPMS/x86_64/qore-pgsql-module-3.5.0-2.fc44.x86_64.rpm:/pgsql.rpm:ro",
+  "sha256:d908000fbfe9e7a5357bec4d102474ebaa6e58da96ddd380c5c64ea33fe3fbbb",
+  "sh",
+  "-eu",
+  "-c",
+  "rpm -U --replacepkgs /pgsql.rpm\nexec setpriv --reuid=1019 --regid=100 --clear-groups --reset-env python3 -B -W error /run.py"
+]

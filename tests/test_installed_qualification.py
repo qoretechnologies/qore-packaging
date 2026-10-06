@@ -310,6 +310,33 @@ os.write(2, b'diagnostic\\n')
         for family in ('fedora', 'suse', 'el'):
             self.assertEqual(module.module_dependencies('treesitter', 'runtime', family), [])
 
+    def test_pgsql_uses_private_fixture_and_installed_compiler(self):
+        directory = Path('/tmp/installed PostgreSQL fixtures')
+        for family in ('fedora', 'suse', 'el'):
+            with self.subTest(family=family):
+                vector = 'QORE_TEST_REQUIRE_PGVECTOR=' + ('1' if family == 'fedora' else '0')
+                runtime = module.module_commands('pgsql', 'runtime', directory, family=family)
+                self.assertEqual(runtime, [('tests', ['env', vector,
+                    'QORE_RPM_TEST_TMP=/tmp/installed PostgreSQL fixtures/runtime-fixture',
+                    '/tmp/installed PostgreSQL fixtures/rpm/tests-installed-runtime'])])
+                sdk = module.module_commands('pgsql', 'sdk', directory, family=family)
+                self.assertEqual(sdk, runtime + [
+                    ('compiler', ['qcc', '-o', str(directory / 'pgsql-compiled'),
+                                  str(directory / 'rpm/compiler.qr')]),
+                    ('compiled-tests', ['env', vector, 'python3', '-B', '-W', 'error',
+                        str(directory / 'rpm/with-postgres.py'), '--', str(directory / 'pgsql-compiled'), '-v']),
+                ])
+                self.assertEqual(module.module_dependencies('pgsql', 'runtime', family),
+                                 ['postgresql-server'] + (['pgvector'] if family == 'fedora' else []))
+                self.assertEqual(module.module_dependencies('pgsql', 'sdk', family), [])
+        self.assertEqual(module.MODULE_FIXTURES['pgsql'], {
+            'rpm/tests-installed-runtime', 'rpm/run-suites', 'rpm/with-postgres.py', 'rpm/compiler.qr',
+            'test/pgsql.qtest', 'test/pgsql-native-bulk-load.qtest',
+            'test/pgsql-cancel-callback.qtest', 'test/pgsql-mutation-observer.qtest'})
+        for family in (None, '', 'debian', '../fedora'):
+            with self.subTest(family=family), self.assertRaisesRegex(ValueError, 'supported distribution'):
+                module.module_commands('pgsql', 'runtime', directory, family=family)
+
     def test_every_added_suite_rejects_incomplete_fixtures(self):
         self.add_modules()
         for entry in self.manifest['modules']:

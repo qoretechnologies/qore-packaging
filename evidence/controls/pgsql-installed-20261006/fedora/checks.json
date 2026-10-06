@@ -1,0 +1,30 @@
+[
+  {
+    "name": "sdk-compiler",
+    "command": [
+      "qcc",
+      "-o",
+      "/work/sdk/pgsql-compiled",
+      "/work/sdk/rpm/compiler.qr"
+    ],
+    "cwd": "/work/sdk",
+    "exit_code": 0
+  },
+  {
+    "name": "sdk-compiled-tests",
+    "command": [
+      "env",
+      "QORE_TEST_REQUIRE_PGVECTOR=1",
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "/work/sdk/rpm/with-postgres.py",
+      "--",
+      "/work/sdk/pgsql-compiled",
+      "-v"
+    ],
+    "cwd": "/work/sdk",
+    "exit_code": 0
+  }
+]

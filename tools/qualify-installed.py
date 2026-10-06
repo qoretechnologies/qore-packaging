@@ -18,6 +18,9 @@ from packaging import fetch_source
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'pgsql': {'rpm/tests-installed-runtime', 'rpm/run-suites', 'rpm/with-postgres.py', 'rpm/compiler.qr'}
+        | {'test/' + name + '.qtest' for name in
+           ('pgsql', 'pgsql-native-bulk-load', 'pgsql-cancel-callback', 'pgsql-mutation-observer')},
     'treesitter': {'test/treesitter.qtest', 'debian/tests/compiler'},
     'xmlsec': {'rpm/run-tests.py', 'debian/tests/compiler', 'test/xmlsec.qtest',
                'test/test-cert.pem', 'test/test-key.pem'},
@@ -184,6 +187,8 @@ def module_dependencies(name, phase, family):
     if name == 'odbc':
         return (['postgresql-server', 'psqlODBC' if family == 'suse' else 'postgresql-odbc']
                 if phase == 'runtime' else ['unixODBC-devel'])
+    if name == 'pgsql' and phase == 'runtime':
+        return ['postgresql-server'] + (['pgvector'] if family == 'fedora' else [])
     if name == 'zip' and phase == 'runtime':
         return ['unzip', 'diffutils']
     if name in ('cairo', 'imagemagick') and phase == 'runtime':
@@ -199,10 +204,24 @@ def installed_module_file(name, files, suffix):
     return candidates[0]
 
 
-def module_commands(name, phase, directory, binary=None, driver=None, installed_files=''):
+def module_commands(name, phase, directory, binary=None, driver=None, installed_files='', family=None):
     """Fixed commands only; manifests select reviewed suites, never shell text."""
     if name not in MODULE_FIXTURES or phase not in ('runtime', 'sdk'):
         raise ValueError('Unknown module suite or phase')
+    if name == 'pgsql':
+        if family not in ('fedora', 'suse', 'el'):
+            raise ValueError('PostgreSQL checks require a supported distribution')
+        environment = ['env', 'QORE_TEST_REQUIRE_PGVECTOR=' + ('1' if family == 'fedora' else '0')]
+        commands = [('tests', environment + ['QORE_RPM_TEST_TMP=' + str(directory / 'runtime-fixture'),
+                                             str(directory / 'rpm/tests-installed-runtime')])]
+        if phase == 'sdk':
+            compiled = directory / 'pgsql-compiled'
+            commands.extend([
+                ('compiler', ['qcc', '-o', str(compiled), str(directory / 'rpm/compiler.qr')]),
+                ('compiled-tests', environment + ['python3', '-B', '-W', 'error',
+                    str(directory / 'rpm/with-postgres.py'), '--', str(compiled), '-v']),
+            ])
+        return commands
     if name == 'treesitter':
         commands = [('tests', ['env', '-u', 'QORE_TREESITTER_QUERY_DIR',
                               'qore', '-b', '--enable-debug',
@@ -477,7 +496,8 @@ def qualify(manifest, output):
                                      'LD_LIBRARY_PATH', 'LD_PRELOAD'):
                         environment.extend(['-u', variable])
                     environment.append('AUTOPKGTEST_TMP=' + str(directory))
-                    for suite, command in module_commands(name, phase, directory, binary, driver, files):
+                    for suite, command in module_commands(name, phase, directory, binary, driver, files,
+                                                          family=manifest['family']):
                         run(phase + '-' + name + '-' + suite, environment + command,
                             cwd=directory, fixture=True)
         result['exit_code'] = 0
