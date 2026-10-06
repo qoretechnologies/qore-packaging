@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "date": "2026-10-06",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User approved the four exact compiler diagnostics on 2026-10-06. Normal flags and warnings remain unchanged.",
+  "scope": [
+    {
+      "path": "deps/v8/src/builtins/builtins-collections-gen.cc",
+      "line": 443,
+      "variable": "index",
+      "function": "GetConstructor"
+    },
+    {
+      "path": "deps/v8/src/builtins/builtins-collections-gen.cc",
+      "line": 463,
+      "variable": "index",
+      "function": "GetInitialAddFunction"
+    },
+    {
+      "path": "deps/v8/src/builtins/builtins-collections-gen.cc",
+      "line": 520,
+      "variable": "initial_prototype_index",
+      "function": "GetInitialCollectionPrototype"
+    },
+    {
+      "path": "deps/v8/src/codegen/code-stub-assembler.cc",
+      "declaration_line": 16113,
+      "variable": "fallback_runtime_function_id",
+      "reported_path": "deps/v8/src/compiler/code-assembler.h:1313",
+      "function": "HasProperty"
+    }
+  ],
+  "root_cause": "GCC 13 analyzes values outside the declared enums and reports uninitialized outputs from exhaustive mode switches. The unchanged branches reproduce all four warnings.",
+  "source_invariants": [
+    "BaseCollectionsAssembler::Variant contains kMap, kSet, kWeakMap and kWeakSet. Each of the three helper switches assigns the context slot for all four modes. Collection constructors and shared helpers pass these typed variants.",
+    "HasPropertyLookupMode contains kHasProperty and kForInHasProperty. The runtime fallback switch assigns its function ID for both. HasProperty_Inline passes kHasProperty; the for-in builtin passes kForInHasProperty."
+  ],
+  "coverage": "Four collection variants through each of the three full helper bodies, and both property lookup modes through the unchanged fallback branch. Four distinct context objects and exact runtime object/key/context forwarding checked. 560000 checks in each of four optimized release/debug normal/Valgrind runs: 2240000 total; zero Valgrind errors and all allocations freed.",
+  "limits": "The helpers and enum declarations are unchanged. Context-slot numbers and runtime IDs are distinct adapter sentinels, not V8 ABI offsets. Typed recording adapters replace IR context loads, CAST and CallRuntime. Controls prove dispatch and argument forwarding, not the full V8 graph/prototype lookup pipeline. No out-of-domain enum values are injected. Debug variant defines DEBUG with optimization to reproduce diagnostics; not a performance benchmark.",
+  "policy": "No production behavior, compiler flag or warning suppression change.",
+  "files_sha256": {
+    "evidence/controls/node-collection-enum-20261006/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-collection-enum-20261006/command.json": "def8d49503e91eeee37bf0c5c8e34ed81720bfad7e23e9033e3efb24be79b3b4",
+    "evidence/controls/node-collection-enum-20261006/control.cc": "5a90404ad8d6f4f463d713dd96685920b975eb41ed587456106989400ec52752",
+    "evidence/controls/node-collection-enum-20261006/debug-compile.log": "db37b5b47290e968833103ad60a5815b4c8fcaf54c33646e3ad1a34e588dceb7",
+    "evidence/controls/node-collection-enum-20261006/debug-memory.log": "50dbba3f30cd48ea67733f839250816afd8eebcf1c2d7bd3affb3b0050d6d72d",
+    "evidence/controls/node-collection-enum-20261006/debug-normal.log": "50dbba3f30cd48ea67733f839250816afd8eebcf1c2d7bd3affb3b0050d6d72d",
+    "evidence/controls/node-collection-enum-20261006/debug-valgrind.log": "91a611d2d2ac5b6821d693780090a01b9d300943c4d7e6fbb359771d1663bc14",
+    "evidence/controls/node-collection-enum-20261006/prepare.py": "8f45bbc64a416e3ae86bdc3674f3b430a95d6165ec5a44957801c91d315e23b2",
+    "evidence/controls/node-collection-enum-20261006/release-compile.log": "db37b5b47290e968833103ad60a5815b4c8fcaf54c33646e3ad1a34e588dceb7",
+    "evidence/controls/node-collection-enum-20261006/release-memory.log": "50dbba3f30cd48ea67733f839250816afd8eebcf1c2d7bd3affb3b0050d6d72d",
+    "evidence/controls/node-collection-enum-20261006/release-normal.log": "50dbba3f30cd48ea67733f839250816afd8eebcf1c2d7bd3affb3b0050d6d72d",
+    "evidence/controls/node-collection-enum-20261006/release-valgrind.log": "f4de6bdcd9d22a5b023dc9db599e83e3fa40c948420cfe49911adcd4b8f30b7e",
+    "evidence/controls/node-collection-enum-20261006/run.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-collection-enum-20261006/run.py": "2cbcf243b957b3b4c48c78f386bf34f74394e7faa60cf8f73befb3bf6b295104",
+    "evidence/controls/node-collection-enum-20261006/source-extracts.json": "48448fab2b59ec32f097746abdbf92bba85170e8a664d3cda7b3beaf13bb967f",
+    "evidence/controls/node-collection-enum-20261006/status.json": "d4498ee556a820ac1c3199b446ab3e7661b6f3442e8f90fd46e978fa6188fd23"
+  },
+  "approval": "Allow these four exact diagnostics"
+}

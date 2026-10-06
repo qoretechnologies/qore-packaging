@@ -1,0 +1,21 @@
+In member function ‘Node CodeStubAssembler::CallRuntime(Runtime::FunctionId, Node, Node, Node)’,
+    inlined from ‘Node CodeStubAssembler::Fallback(HasPropertyLookupMode, Node, Node, Node)’ at /work/control.cc:51:9:
+/work/control.cc:36:28: warning: ‘fallback_runtime_function_id’ may be used uninitialized [-Wmaybe-uninitialized]
+   36 |    return {context.context,static_cast<int>(id)};
+      |                            ^~~~~~~~~~~~~~~~~~~~
+/work/control.cc: In function ‘Node CodeStubAssembler::Fallback(HasPropertyLookupMode, Node, Node, Node)’:
+/work/control.cc:40:25: note: ‘fallback_runtime_function_id’ was declared here
+   40 |     Runtime::FunctionId fallback_runtime_function_id;
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/work/control.cc: In member function ‘TNode<JSFunction> BaseCollectionsAssembler::GetConstructor(Variant, TNode<Context>)’:
+/work/control.cc:57:7: warning: ‘index’ may be used uninitialized [-Wmaybe-uninitialized]
+   57 |   int index;
+      |       ^~~~~
+/work/control.cc: In member function ‘TNode<JSFunction> BaseCollectionsAssembler::GetInitialAddFunction(Variant, TNode<Context>)’:
+/work/control.cc:76:7: warning: ‘index’ may be used uninitialized [-Wmaybe-uninitialized]
+   76 |   int index;
+      |       ^~~~~
+/work/control.cc: In member function ‘TNode<Map> BaseCollectionsAssembler::GetInitialCollectionPrototype(Variant, TNode<Context>)’:
+/work/control.cc:95:7: warning: ‘initial_prototype_index’ may be used uninitialized [-Wmaybe-uninitialized]
+   95 |   int initial_prototype_index;
+      |       ^~~~~~~~~~~~~~~~~~~~~~~

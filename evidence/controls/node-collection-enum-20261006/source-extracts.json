@@ -1,0 +1,38 @@
+[
+  {
+    "file": "deps/v8/src/builtins/builtins-collections-gen.h",
+    "line": 34,
+    "body": "  enum Variant { kMap, kSet, kWeakMap, kWeakSet };",
+    "sha256": "ddb07446a42cb68ee569e245fa533a76f7f3574be7b8d55fd9e8ad46bee4ebc6"
+  },
+  {
+    "file": "deps/v8/src/codegen/code-stub-assembler.h",
+    "line": 4034,
+    "body": "  enum HasPropertyLookupMode { kHasProperty, kForInHasProperty };",
+    "sha256": "70db04b044d3fad610aa4b12d996cc78f668188239dfcb3e3222a82f99776764"
+  },
+  {
+    "file": "deps/v8/src/builtins/builtins-collections-gen.cc",
+    "line": 426,
+    "body": "TNode<JSFunction> BaseCollectionsAssembler::GetConstructor(\n    Variant variant, TNode<Context> native_context) {\n  int index;\n  switch (variant) {\n    case kMap:\n      index = Context::JS_MAP_FUN_INDEX;\n      break;\n    case kSet:\n      index = Context::JS_SET_FUN_INDEX;\n      break;\n    case kWeakMap:\n      index = Context::JS_WEAK_MAP_FUN_INDEX;\n      break;\n    case kWeakSet:\n      index = Context::JS_WEAK_SET_FUN_INDEX;\n      break;\n  }\n  return CAST(LoadContextElement(native_context, index));\n}",
+    "sha256": "6f0160597c8aa114ff743032ecec910842dfb0560266c82fde22927cd9158966"
+  },
+  {
+    "file": "deps/v8/src/builtins/builtins-collections-gen.cc",
+    "line": 446,
+    "body": "TNode<JSFunction> BaseCollectionsAssembler::GetInitialAddFunction(\n    Variant variant, TNode<Context> native_context) {\n  int index;\n  switch (variant) {\n    case kMap:\n      index = Context::MAP_SET_INDEX;\n      break;\n    case kSet:\n      index = Context::SET_ADD_INDEX;\n      break;\n    case kWeakMap:\n      index = Context::WEAKMAP_SET_INDEX;\n      break;\n    case kWeakSet:\n      index = Context::WEAKSET_ADD_INDEX;\n      break;\n  }\n  return CAST(LoadContextElement(native_context, index));\n}",
+    "sha256": "535d8aae8728851bb86741c9ba66238194e502c447544c52c8fda57daca3773f"
+  },
+  {
+    "file": "deps/v8/src/builtins/builtins-collections-gen.cc",
+    "line": 503,
+    "body": "TNode<Map> BaseCollectionsAssembler::GetInitialCollectionPrototype(\n    Variant variant, TNode<Context> native_context) {\n  int initial_prototype_index;\n  switch (variant) {\n    case kMap:\n      initial_prototype_index = Context::INITIAL_MAP_PROTOTYPE_MAP_INDEX;\n      break;\n    case kSet:\n      initial_prototype_index = Context::INITIAL_SET_PROTOTYPE_MAP_INDEX;\n      break;\n    case kWeakMap:\n      initial_prototype_index = Context::INITIAL_WEAKMAP_PROTOTYPE_MAP_INDEX;\n      break;\n    case kWeakSet:\n      initial_prototype_index = Context::INITIAL_WEAKSET_PROTOTYPE_MAP_INDEX;\n      break;\n  }\n  return CAST(LoadContextElement(native_context, initial_prototype_index));\n}",
+    "sha256": "dd2f67f36d719a294bf0a7924e73c4b55dcafc9b05757e70fb4bafd4e6436e08"
+  },
+  {
+    "file": "deps/v8/src/codegen/code-stub-assembler.cc",
+    "line": 16113,
+    "body": "    Runtime::FunctionId fallback_runtime_function_id;\n    switch (mode) {\n      case kHasProperty:\n        fallback_runtime_function_id = Runtime::kHasProperty;\n        break;\n      case kForInHasProperty:\n        fallback_runtime_function_id = Runtime::kForInHasProperty;\n        break;\n    }\n\n    result =\n        CAST(CallRuntime(fallback_runtime_function_id, context, object, key));",
+    "sha256": "81f8cb02bc19bdd6c1dc78f92673d6ccdf059828b77e09e87c613ec68764cd7d"
+  }
+]
