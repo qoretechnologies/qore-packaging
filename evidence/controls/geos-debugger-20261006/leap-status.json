@@ -1,0 +1,29 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "--user",
+    "1019:100",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/aot-debug-index-geos-20261006/leap:/fixture",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/aot-debug-index-geos-20261006/control.py:/control.py:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/leap-geos-metadata-candidate4-20261006/rpmbuild/RPMS:/rpms:ro",
+    "-w",
+    "/fixture",
+    "qore-rpm-keep:leap-pdfium-installed-8",
+    "sh",
+    "-ec",
+    "set -eu\nmkdir payload\ncd payload\nfor rpm in /rpms/*/*debug*.rpm; do rpm2cpio \"$rpm\" | cpio -idm --quiet; done\ncd ..\npython3 -B -W error /control.py\n"
+  ],
+  "inputs": {
+    "qore-geos-module-debuginfo-1.0.0-3.x86_64.rpm": "20ffdb17dd78d68c3ee9109ab2030693fbd6f13cac80213b77dff3330533eec7",
+    "qore-geos-module-debugsource-1.0.0-3.x86_64.rpm": "f81dc67012c328cd1401110332741a5dd10c61c374a8ac0147bfa63a320dcf3e"
+  }
+}

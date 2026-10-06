@@ -1,0 +1,366 @@
+{
+  "schema": 1,
+  "date": "2026-10-06",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "All three candidate RPM builds pass without diagnostics; source fixes and approved debugger configuration qualified. Actual SDK22 canonical/native checks remain pending.",
+  "source_base": "b8c93e6f23ef734cd00ae6d5fbd296569d04c773",
+  "root_causes": [
+    "Generated argument locals are intentionally unused when installed GEOS predates 3.14. Explicit void casts retain public signatures and version exceptions, without changing compiler flags.",
+    "The module uses current peer-aware documentation SDK helpers absent from core21. The spec requires the new module-doc-peers capability supplied by core22. Diagnostic images overlay those exact tested helpers; real SDK22 builds remain required.",
+    "Unrequested Java generation and unused CMake variables removed; current guides build cleanly.",
+    "LLVM optional name index is unsupported by distribution GDB/debugedit; user approved its removal while preserving all other DWARF sections and symbols."
+  ],
+  "validation": {
+    "reported_cases": 201,
+    "assertions": 2306,
+    "new_regression": "Three feature gates: supported GEOS3.14 operations, unsupported argument boundaries on 3.12/3.13 and object reuse after exceptions. Normal and Valgrind runs use -b --enable-debug.",
+    "metadata": "Each RPM check verifies retained QAMD trailer, separate .gnu_debuglink and absence of embedded debug sections. Final artifacts expose 108 AOT functions, source lines and resolved breakpoints on all targets.",
+    "memory_scope": "Candidate3 retained the identical affected C++ binary after an initial test syntax failure; the corrected test is the candidate5 test byte for byte. No C++ changes followed. Zero definite, indirect or possible losses and zero memory errors. Reachable distribution-library globals are retained in full logs.",
+    "debug_diagnostic": "Fedora reproduces the already approved GCC/Valgrind missing-DW_AT_abstract_origin family. DWARF entries and disassembly identify TLS initialization wrappers around geos_error_msg. Existing approval: evidence/core-close-rpm-qualification-20261002.json; no suppression."
+  },
+  "records": {
+    "fedora": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:a93d7de6836260dd18af56714c86d751331ee34b2f5d8b0a363c9537d97e4a02",
+        "source": {
+          "schema": 1,
+          "commit": "b8c93e6f23ef734cd00ae6d5fbd296569d04c773",
+          "source_date_epoch": 1791105071,
+          "name": "qore-geos-module",
+          "version": "1.0.0",
+          "exclusions": [],
+          "sources": {
+            "qore-geos-module-1.0.0.tar.xz": "efaeee8031f19bbc684a50b8dbfdcbb7c15b219b49e42803d1df29c8f1e0aacc",
+            "qore-geos-module.spec": "7d2c2abdb3b92f77d33cee391566daa45148720d385e8952b0544bddbd437f20",
+            "qore-geos-module.changes": "b63c8000e0090673df6ac712e8b7a62665c257fe2dc8a0179d5e476f1afb3653"
+          },
+          "candidate": true,
+          "packaging_overlay": {
+            "qore-geos-module.spec": "7d2c2abdb3b92f77d33cee391566daa45148720d385e8952b0544bddbd437f20"
+          },
+          "spec": "qore-geos-module.spec",
+          "qualification_source_overlay": {
+            "src/QC_GEOSPreparedGeometry.qpp": "af317c530932802676bd159f25d82fe501bcc6acf3c1f51f25e890e7f9608a72",
+            "src/ql_geos.qpp": "fdb26a1f7f692113f940296b54bfd556b921963a4038b437e6947b474490dc9b",
+            "src/QC_GEOSGeoJSONWriter.qpp": "64981ad112c20dfc92ecf55275ce17948319f4a3e3d46ce55875393b54df66d4",
+            "docs/guide-geosreleasenotes.dox.tmpl": "57930bb561f0843acd003ebc7689112735ff9206d493b16d9f48f88ec75a45fb",
+            "test/geos-version-gates.qtest": "ae46f725b10cb4ab8358d89038b381c00fc688c52978b2f85a29a4e82f42cd2e"
+          },
+          "qualification_limits": "Diagnostic SDK images overlay the tested core documentation helpers; candidate spec omits the new SDK capability requirement until core22 is installed. Canonical builds must use the committed spec and actual core22 RPMs."
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1791105071",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/geos-metadata-candidate5-20261006:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/fedora-geos-metadata-candidate5-20261006:/work",
+          "sha256:a93d7de6836260dd18af56714c86d751331ee34b2f5d8b0a363c9537d97e4a02",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-geos-module.spec"
+        ],
+        "source_only": false,
+        "tmpfs_mib": null,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-3.fc44.noarch.rpm": "96bb3573cac22e91132d96701b8f40a3f4f1e2425e7991b4772f78606f19a906",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.fc44.x86_64.rpm": "6246d3ae00094465a76ddfc63dd0e68e10121e7e531f2ce6dd6bb324fbf9dee8",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-3.fc44.x86_64.rpm": "2ac3d90974789b68bf00c5708a1314c0c4dec2affc47698c8f7fa9671fb34e46",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-3.fc44.x86_64.rpm": "ee13b6246659e0e2175a1b608ad468f4fe7a280e6f9d0fa3ece90655c22a5dcb",
+          "rpmbuild/SRPMS/qore-geos-module-1.0.0-3.fc44.src.rpm": "9ede5cc834de9836d79a333fc85faa50a93fb1e1df28416f854bf91c3365ec74"
+        }
+      },
+      "cases": [
+        [
+          20,
+          20,
+          144
+        ],
+        [
+          3,
+          3,
+          18
+        ],
+        [
+          44,
+          44,
+          614
+        ]
+      ],
+      "valgrind_zero_errors_and_lost_allocations": true,
+      "debugger": {
+        "aot_functions": 108,
+        "breakpoint": "/usr/src/debug/qore-geos-module-1.0.0-3.fc44.x86_64/qlib/GEOSDataProvider/GEOSDataProvider.qm:222",
+        "no_optional_name_index": true,
+        "full_dwarf": true,
+        "source_lookup": true
+      }
+    },
+    "leap": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:119da6c274dfa135acaeaba8fb5772ab1a4ff0b7f20f4d40f199a26c96dc015d",
+        "source": {
+          "schema": 1,
+          "commit": "b8c93e6f23ef734cd00ae6d5fbd296569d04c773",
+          "source_date_epoch": 1791105071,
+          "name": "qore-geos-module",
+          "version": "1.0.0",
+          "exclusions": [],
+          "sources": {
+            "qore-geos-module-1.0.0.tar.xz": "efaeee8031f19bbc684a50b8dbfdcbb7c15b219b49e42803d1df29c8f1e0aacc",
+            "qore-geos-module.spec": "7d2c2abdb3b92f77d33cee391566daa45148720d385e8952b0544bddbd437f20",
+            "qore-geos-module.changes": "b63c8000e0090673df6ac712e8b7a62665c257fe2dc8a0179d5e476f1afb3653"
+          },
+          "candidate": true,
+          "packaging_overlay": {
+            "qore-geos-module.spec": "7d2c2abdb3b92f77d33cee391566daa45148720d385e8952b0544bddbd437f20"
+          },
+          "spec": "qore-geos-module.spec",
+          "qualification_source_overlay": {
+            "src/QC_GEOSPreparedGeometry.qpp": "af317c530932802676bd159f25d82fe501bcc6acf3c1f51f25e890e7f9608a72",
+            "src/ql_geos.qpp": "fdb26a1f7f692113f940296b54bfd556b921963a4038b437e6947b474490dc9b",
+            "src/QC_GEOSGeoJSONWriter.qpp": "64981ad112c20dfc92ecf55275ce17948319f4a3e3d46ce55875393b54df66d4",
+            "docs/guide-geosreleasenotes.dox.tmpl": "57930bb561f0843acd003ebc7689112735ff9206d493b16d9f48f88ec75a45fb",
+            "test/geos-version-gates.qtest": "ae46f725b10cb4ab8358d89038b381c00fc688c52978b2f85a29a4e82f42cd2e"
+          },
+          "qualification_limits": "Diagnostic SDK images overlay the tested core documentation helpers; candidate spec omits the new SDK capability requirement until core22 is installed. Canonical builds must use the committed spec and actual core22 RPMs."
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1791105071",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/geos-metadata-candidate5-20261006:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/leap-geos-metadata-candidate5-20261006:/work",
+          "sha256:119da6c274dfa135acaeaba8fb5772ab1a4ff0b7f20f4d40f199a26c96dc015d",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-geos-module.spec"
+        ],
+        "source_only": false,
+        "tmpfs_mib": null,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-3.noarch.rpm": "a5483cc6fa70067124525f2223e38f7f356cc840729c2c34594b3d4fe9f915f4",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.x86_64.rpm": "e3aee9b2f2a4bcb368454c1a6ccf3a30af1db66ca35d50a3902d0c0e6c29da9f",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-3.x86_64.rpm": "46199b2fdbfe8e69e1ac19cf0b343f33f6597a6dcc4fc3a9feaafd85ae3896fb",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-3.x86_64.rpm": "507fcbe49ee06aa0304fb38488f8ea1f5eac0c0ba51466283941f36db86e5cab",
+          "rpmbuild/SRPMS/qore-geos-module-1.0.0-3.src.rpm": "e046779cc555db8e3a9847c207c8f72cd05f966d54b5ab9b1d2c0a2601aff01e"
+        }
+      },
+      "cases": [
+        [
+          20,
+          20,
+          144
+        ],
+        [
+          3,
+          3,
+          24
+        ],
+        [
+          44,
+          44,
+          597
+        ]
+      ],
+      "valgrind_zero_errors_and_lost_allocations": true,
+      "debugger": {
+        "aot_functions": 108,
+        "breakpoint": "/usr/src/debug/qore-geos-module-1.0.0/qlib/GEOSDataProvider/GEOSDataProvider.qm:222",
+        "no_optional_name_index": true,
+        "full_dwarf": true,
+        "source_lookup": true
+      }
+    },
+    "el10": {
+      "build": {
+        "schema": 1,
+        "image": "sha256:e7c7e1973fe1a8f6076e8cf5673f09d3ee4b01d9cab042a4530727bd09b0de16",
+        "source": {
+          "schema": 1,
+          "commit": "b8c93e6f23ef734cd00ae6d5fbd296569d04c773",
+          "source_date_epoch": 1791105071,
+          "name": "qore-geos-module",
+          "version": "1.0.0",
+          "exclusions": [],
+          "sources": {
+            "qore-geos-module-1.0.0.tar.xz": "efaeee8031f19bbc684a50b8dbfdcbb7c15b219b49e42803d1df29c8f1e0aacc",
+            "qore-geos-module.spec": "7d2c2abdb3b92f77d33cee391566daa45148720d385e8952b0544bddbd437f20",
+            "qore-geos-module.changes": "b63c8000e0090673df6ac712e8b7a62665c257fe2dc8a0179d5e476f1afb3653"
+          },
+          "candidate": true,
+          "packaging_overlay": {
+            "qore-geos-module.spec": "7d2c2abdb3b92f77d33cee391566daa45148720d385e8952b0544bddbd437f20"
+          },
+          "spec": "qore-geos-module.spec",
+          "qualification_source_overlay": {
+            "src/QC_GEOSPreparedGeometry.qpp": "af317c530932802676bd159f25d82fe501bcc6acf3c1f51f25e890e7f9608a72",
+            "src/ql_geos.qpp": "fdb26a1f7f692113f940296b54bfd556b921963a4038b437e6947b474490dc9b",
+            "src/QC_GEOSGeoJSONWriter.qpp": "64981ad112c20dfc92ecf55275ce17948319f4a3e3d46ce55875393b54df66d4",
+            "docs/guide-geosreleasenotes.dox.tmpl": "57930bb561f0843acd003ebc7689112735ff9206d493b16d9f48f88ec75a45fb",
+            "test/geos-version-gates.qtest": "ae46f725b10cb4ab8358d89038b381c00fc688c52978b2f85a29a4e82f42cd2e"
+          },
+          "qualification_limits": "Diagnostic SDK images overlay the tested core documentation helpers; candidate spec omits the new SDK capability requirement until core22 is installed. Canonical builds must use the committed spec and actual core22 RPMs."
+        },
+        "jobs": 2,
+        "network": "none",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--hostname",
+          "qore-rpm-builder",
+          "--user",
+          "1019:100",
+          "-e",
+          "HOME=/work/home",
+          "-e",
+          "SOURCE_DATE_EPOCH=1791105071",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/geos-metadata-candidate5-20261006:/sources:ro",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/results/el10-geos-metadata-candidate5-20261006:/work",
+          "sha256:e7c7e1973fe1a8f6076e8cf5673f09d3ee4b01d9cab042a4530727bd09b0de16",
+          "sh",
+          "-c",
+          "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+          "build-local",
+          "-ba",
+          "--define",
+          "_topdir /work/rpmbuild",
+          "--define",
+          "_sourcedir /sources",
+          "--define",
+          "_smp_build_ncpus 2",
+          "--define",
+          "_buildhost qore-rpm-builder",
+          "/sources/qore-geos-module.spec"
+        ],
+        "source_only": false,
+        "tmpfs_mib": null,
+        "exit_code": 0,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-3.el10.noarch.rpm": "194c18249d38d82f1bef1540edf1fa566537e15c8b9ae96371a81def26d308c7",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.el10.x86_64.rpm": "9b322121d5ff58d4425d0f068449a13df8f30f32d0c9fad9249b1af9439ea06a",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-3.el10.x86_64.rpm": "dbb820356b66ec39a42cb700ce44398b88332b59229f2e34db7236f78392245a",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-3.el10.x86_64.rpm": "6e89f493251be36607fdafd9415a0253fc4103445b667ebd0049f2d1645de079",
+          "rpmbuild/SRPMS/qore-geos-module-1.0.0-3.el10.src.rpm": "7c2bfe424e8fdf347fd4c22e9c6140ca159adaae2ac17ce2baf63dfa52bede08"
+        }
+      },
+      "cases": [
+        [
+          20,
+          20,
+          144
+        ],
+        [
+          3,
+          3,
+          24
+        ],
+        [
+          44,
+          44,
+          597
+        ]
+      ],
+      "valgrind_zero_errors_and_lost_allocations": true,
+      "debugger": {
+        "aot_functions": 108,
+        "breakpoint": "/usr/src/debug/qore-geos-module-1.0.0-3.el10.x86_64/qlib/GEOSDataProvider/GEOSDataProvider.qm:222",
+        "no_optional_name_index": true,
+        "full_dwarf": true,
+        "source_lookup": true
+      }
+    }
+  },
+  "files_sha256": {
+    "evidence/controls/geos-metadata-20261006/check-geos-approved-rpms-20261006.py": "e8827f89fdb4ff81aaa78a78359c0c6230eb72aaba3f0e6a4d4940fe6e66b8fb",
+    "evidence/controls/geos-metadata-20261006/el10-build.json": "a38264321d52c9b73271baabdc825cce7dd159b04aa041835e15830d24ebc471",
+    "evidence/controls/geos-metadata-20261006/el10-build.log.gz": "41428bf73eaeb4658595148fb7c8cc0b408e8f8e7f159ae598455175988c519a",
+    "evidence/controls/geos-metadata-20261006/el10-debugger-checks.json": "eb116e5bf39cf8f6deee62c38cc25e75a2040f5e0d872bb3f128df7612a663d4",
+    "evidence/controls/geos-metadata-20261006/el10-debugger-status.json": "717b3edc76fb5e4c41afa80a22f71360ccd11ef737042b02752982e590c28080",
+    "evidence/controls/geos-metadata-20261006/el10-gdb.log.gz": "2f1578d11ccae1ee98d49774788cfe13a0d8af69af85327a32a30ce2c5253109",
+    "evidence/controls/geos-metadata-20261006/el10-memory-status.json": "f705e4d29717a2a7b09f76aa0238d065631e7694856e0c7295b29ba02945f1cf",
+    "evidence/controls/geos-metadata-20261006/el10-memory.log.gz": "b539624a67954a6167f56cd832c5247dabba8beb417e1083535ab408e388a5dd",
+    "evidence/controls/geos-metadata-20261006/el10-valgrind.log.gz": "0b8c1184ba02d6638412b387a98333d4d6c9f3507132ba9248c650c1e09211ba",
+    "evidence/controls/geos-metadata-20261006/fedora-build.json": "adf639789335d888c21ba3438e8093e28ebab8af01cf181294aad3d2cf3eea62",
+    "evidence/controls/geos-metadata-20261006/fedora-build.log.gz": "c4602568f965783258df88a6a1851b8c54ce2ce563d688acf9c8b6985a70971c",
+    "evidence/controls/geos-metadata-20261006/fedora-debugger-checks.json": "4dd536459dfa0295f663b693506b661a5df016e8fbdd25f91b9efa18bf08ef93",
+    "evidence/controls/geos-metadata-20261006/fedora-debugger-status.json": "9ecb90ec8270ef6991cda1e6989222e3c8b7b47860a9ad4577e9715423baf8ce",
+    "evidence/controls/geos-metadata-20261006/fedora-gdb.log.gz": "e9812b82272e54a6a760786416b80e34b55090ae3334c38bb8bc925674cc224a",
+    "evidence/controls/geos-metadata-20261006/fedora-memory-status.json": "0799b6212c2e55ea9ee8c23c9d57aecd23647c3e4fa033232ff4b0ee5c566054",
+    "evidence/controls/geos-metadata-20261006/fedora-memory.log.gz": "c6af61e7f0706022c8ad007ca104aba5992a7de678926329554e056e90e758e4",
+    "evidence/controls/geos-metadata-20261006/fedora-valgrind.log.gz": "e47b0a7c8e497fcd832bfbd63436fa46a8253cc9c90f18e9bf00ff98b3a22eb1",
+    "evidence/controls/geos-metadata-20261006/geos-tls-dwarf-20261006.json": "f1903a93f0837bb5d00c4ee373be737e4ba04161cd6dd87e32e46d4f669a7754",
+    "evidence/controls/geos-metadata-20261006/inspect-geos-tls-dwarf-20261006.py": "34cffb2a951b7e1cae75df90dbec77eee4978aec7d3f8cac4ee92b4714f71b93",
+    "evidence/controls/geos-metadata-20261006/leap-build.json": "b352092eb363c6d3e94c10bb1315d31ba3b61020fca6844a0cb55d284ad6618e",
+    "evidence/controls/geos-metadata-20261006/leap-build.log.gz": "b1c57e7fedc885d6eb0343630170b48679bc902787583c80a9512ee33d9f1f04",
+    "evidence/controls/geos-metadata-20261006/leap-debugger-checks.json": "dd5321b8a2aa968ef6ce99a17d322400c18d324bc97b77f425c713d2563a6656",
+    "evidence/controls/geos-metadata-20261006/leap-debugger-status.json": "746619cd26398d3a0596fbad2fdd401c445cc7fe4551da409ad1e09942d5647d",
+    "evidence/controls/geos-metadata-20261006/leap-gdb.log.gz": "7cdac2fd33dbe6f2ebb2babc14abf137c82ba788ccf4b26cd277c8fb2cd8fa87",
+    "evidence/controls/geos-metadata-20261006/leap-memory-status.json": "a6a3ce647a3e02e44ea17085522c36bb6030ad5d57e84d0be44cd928499015cb",
+    "evidence/controls/geos-metadata-20261006/leap-memory.log.gz": "ba66244c1530d2135f0e5ba8c3c71f5c2a468abe9d1f4d4897de2b901b07fe2e",
+    "evidence/controls/geos-metadata-20261006/leap-valgrind.log.gz": "2770e091d4d23ed61e6c889057db2c6404ae4f4b149f698787f45f3ec35325b5",
+    "evidence/controls/geos-metadata-20261006/test-geos-version-gates2-20261006.py": "af673ae932f90360cdacf5391f74009c21a854efc92ada23abb16c04579c2f80"
+  },
+  "source_commit": "83010bac3320a28dbcbe2c326d58bfd9f5514ca7"
+}

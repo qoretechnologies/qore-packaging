@@ -1,0 +1,27 @@
+[
+  {
+    "mode": "memory",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "--user",
+      "1019:100",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/fedora-geos-metadata-candidate3-20261006/rpmbuild/BUILD/qore-geos-module-1.0.0-build/qore-geos-module-1.0.0/build:/module:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/module-geos-metadata-20261006/test:/tests:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/fedora-geos-version-gates2-20261006:/results",
+      "sha256:a93d7de6836260dd18af56714c86d751331ee34b2f5d8b0a363c9537d97e4a02",
+      "sh",
+      "-eu",
+      "-c",
+      ". /usr/lib/rpm/qore/module-env.sh\nexport QORE_MODULE_DIR=\"/module:$QORE_MODULE_DIR\"\npkg-config --modversion geos\nvalgrind --error-exitcode=99 --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=definite,indirect,possible --log-file=/results/valgrind.log qore -b --enable-debug -l /module/geos-api-2.0.qmod /tests/geos-version-gates.qtest -v\n"
+    ],
+    "exit_code": 0
+  }
+]

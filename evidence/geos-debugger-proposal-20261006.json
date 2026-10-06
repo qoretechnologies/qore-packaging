@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "date": "2026-10-06",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Approved debugger configuration passes all three candidate RPM builds and packaged debugger checks. Canonical builds against actual SDK22 and native qualification remain pending.",
+  "scope": "Only GEOSDataProvider AOT .debug_names in qore-geos-module.spec.",
+  "proposal": "Extend the approved Oracle/PDFium/SSH2/PROJ configuration to GEOS: remove the unsupported optional LLVM name index with Qore metadata-preserving helper before RPM debug extraction. Explicit binutils/Python and Leap debugedit >=5.1 requirements.",
+  "root_cause": "Distribution GDB rejects LLVM-generated .debug_names. The same section causes debugedit warnings. Full DWARF contains all needed symbols and line records.",
+  "validation": "All three GEOS RPMs pass 67 cases (776 Fedora assertions; 765 each Leap/AlmaLinux). Paired controls preserve every other DWARF section byte for byte and all symbols; GDB function/source lookup, breakpoints and debugedit pass without the index.",
+  "tradeoff": "Initial debugger loading may be slower; no runtime change or symbol/source loss. Canonical builds against actual core22 SDK and installed/native qualification remain pending.",
+  "records": {
+    "fedora": [
+      {
+        "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/GEOSDataProvider/GEOSDataProvider.qmod-1.0.0-3.fc44.x86_64.debug",
+        "original_sha256": "74c2db639631823d53ededdd7508c917482e5394f8e2e2c557de3837d21d13c2",
+        "all_dwarf_sections_preserved": {
+          ".debug_info": "51aec45dd62be3dadd6e762474bb5c5de599a0f0fc5471e6a031777f429a158e",
+          ".debug_abbrev": "4fa40c3a3569f9d29289d596385b90677f6708249cc6d1dd1119c7330b7a02b0",
+          ".debug_line": "9e65ed0cc5b57c6d9852784eae4a829c3ffff1507ca0ee5f170c9947209d1dac",
+          ".debug_str": "2b07cb72efbf1435c83da0e2b39523ad68ea68b57eea03de385a093ba438599c",
+          ".debug_addr": "74d9d2af78c7bb4b60e5762751b1769bf3b3f621114bfe9474360c65d898c759",
+          ".debug_line_str": "f361ed747f9a810673dd17ffa34da0e50abbeed686268f42b3ee9109a3fe31bc",
+          ".debug_rnglists": "d1c4bf015bd159692c048a7db08bb1b7d6022f23bc9383985dd8cc5c3e4b38ce",
+          ".debug_str_offsets": "f2902a957201cd96be16156cd2756f84b1c4815d07f01adfff4557954f117a86"
+        },
+        "symbols_unchanged": true,
+        "aot_functions": 108,
+        "breakpoint_source_location": "/usr/src/debug/qore-geos-module-1.0.0-3.fc44.x86_64/qlib/GEOSDataProvider/GEOSDataProvider.qm:222",
+        "gdb_warning_removed": true,
+        "debugedit_stderr": ""
+      }
+    ],
+    "leap": [
+      {
+        "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/GEOSDataProvider/GEOSDataProvider.qmod.debug",
+        "original_sha256": "1c0d1b3a5398aa2fea0967c44847b9db5a954406ed3524cf7cb9ad97414307be",
+        "all_dwarf_sections_preserved": {
+          ".debug_aranges": "408b17dab8d046a0d1dd340786047610f37fa8479a86412fbf9e11e296797412",
+          ".debug_info": "7ede8e693e5de5f77cd716f8f94ef1373fe50ce1e0c05b47c96b963eb0332434",
+          ".debug_abbrev": "9c030089bb71cb7086175a7dcf53d880a8cf3620dca2ecadb4bcaeb7d200cfe7",
+          ".debug_line": "fadfcf9050312ddd06038f22b3954c61a5aebbeea8f48e35d492cf53f6803843",
+          ".debug_str": "885748f5b32d351d9a7be1f24c924880fb3b40c1f7bbcb9288eccc3dd29557ad",
+          ".debug_addr": "f22be1981d01c37567dc9ed5fd8ca9926f4f10b780bc1668920861f5d1b3b301",
+          ".debug_line_str": "6bf00e0eb0e9694626065340160959fe44d3ff5d23560baf075637b3782a160d",
+          ".debug_rnglists": "e091f386c61cac02693bb110caac77e3553a211e1b27fa37e1f263bcb3efccd3",
+          ".debug_str_offsets": "962bdf3437b7951fda4b33bb87dbd0efb895e1e9107d55c6ceda2014de54db87"
+        },
+        "symbols_unchanged": true,
+        "aot_functions": 108,
+        "breakpoint_source_location": "/usr/src/debug/qore-geos-module-1.0.0/qlib/GEOSDataProvider/GEOSDataProvider.qm:222",
+        "gdb_warning_removed": true,
+        "debugedit_stderr": ""
+      }
+    ],
+    "el10": [
+      {
+        "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/GEOSDataProvider/GEOSDataProvider.qmod-1.0.0-3.el10.x86_64.debug",
+        "original_sha256": "bb917292e646dc2c8f788981db0b10173bfe9f890a694acb7da4960e2ad14a28",
+        "all_dwarf_sections_preserved": {
+          ".debug_info": "1e91b0daacf93a16151eda2b9a6dafa7e410dfd4373f9c686ac098fb672612bc",
+          ".debug_abbrev": "4fa40c3a3569f9d29289d596385b90677f6708249cc6d1dd1119c7330b7a02b0",
+          ".debug_line": "0cb3486beac659aba83b6b7b3267b64283c3c0ca291adfeaed13364365c74a67",
+          ".debug_str": "2b07cb72efbf1435c83da0e2b39523ad68ea68b57eea03de385a093ba438599c",
+          ".debug_addr": "02bd35352b33dd93043fd88986ea431c665152cbc81b528c7bbf889c4c75bb55",
+          ".debug_line_str": "26ad106b5e88d46c47999d0ac4d5ec84fc80d8fd64c0c3a7a10614d613938de1",
+          ".debug_rnglists": "52c8a51c25a75c3213bfa14ba1e602b01ba9d945cd52347ede90efd0209e3557",
+          ".debug_str_offsets": "f2902a957201cd96be16156cd2756f84b1c4815d07f01adfff4557954f117a86"
+        },
+        "symbols_unchanged": true,
+        "aot_functions": 108,
+        "breakpoint_source_location": "/usr/src/debug/qore-geos-module-1.0.0-3.el10.x86_64/qlib/GEOSDataProvider/GEOSDataProvider.qm:222",
+        "gdb_warning_removed": true,
+        "debugedit_stderr": ""
+      }
+    ]
+  },
+  "files_sha256": {
+    "evidence/controls/geos-debugger-20261006/control.py": "523cd9b594bbf22e2a598b0b01ed5105cb65e4cfb06e6debc0fb141a2e4523f3",
+    "evidence/controls/geos-debugger-20261006/el10-GEOSDataProvider.qmod-1.0.0-3.el10.x86_64.debug-debugedit.txt.gz": "c8ef870a288e3bedee731c9e3922ec4371181e91e8879b9a2cc152e8f5775917",
+    "evidence/controls/geos-debugger-20261006/el10-GEOSDataProvider.qmod-1.0.0-3.el10.x86_64.debug-no-index-gdb.txt.gz": "2f1578d11ccae1ee98d49774788cfe13a0d8af69af85327a32a30ce2c5253109",
+    "evidence/controls/geos-debugger-20261006/el10-GEOSDataProvider.qmod-1.0.0-3.el10.x86_64.debug-original-functions.txt.gz": "9ef3b3d2426d490debd9e09ef68ec96c3e5cf9ac037bf034adf82c2436a499f5",
+    "evidence/controls/geos-debugger-20261006/el10-GEOSDataProvider.qmod-1.0.0-3.el10.x86_64.debug-original-gdb.txt.gz": "343774681957a350914808dfac25a75d6ed9eedb75eee6c5b3a52ef7fa5b68c9",
+    "evidence/controls/geos-debugger-20261006/el10-checks.json": "998b4cfb6341cbdc4ec91fa1172a72ffb26d5854b56439c81a7d1863ea97e19c",
+    "evidence/controls/geos-debugger-20261006/el10-status.json": "1f72cce6e3f4a0e53abb07bde253bdb75a0a190c6f83498a789a4624ed638b93",
+    "evidence/controls/geos-debugger-20261006/el10-tests.log.gz": "5a1ef2b3d013b69ba0f033f48ecf1998c909f88c6bf3a434c812f96f093abce9",
+    "evidence/controls/geos-debugger-20261006/fedora-GEOSDataProvider.qmod-1.0.0-3.fc44.x86_64.debug-debugedit.txt.gz": "bb433a2c1b0cb282ec392284472d15660eb398627ac1cb9a8af4b8a95f67b0d7",
+    "evidence/controls/geos-debugger-20261006/fedora-GEOSDataProvider.qmod-1.0.0-3.fc44.x86_64.debug-no-index-gdb.txt.gz": "e9812b82272e54a6a760786416b80e34b55090ae3334c38bb8bc925674cc224a",
+    "evidence/controls/geos-debugger-20261006/fedora-GEOSDataProvider.qmod-1.0.0-3.fc44.x86_64.debug-original-functions.txt.gz": "674dc082bb79b8e939cb0ba13efea36bc1376c4f82d61d730cbca36e412962a1",
+    "evidence/controls/geos-debugger-20261006/fedora-GEOSDataProvider.qmod-1.0.0-3.fc44.x86_64.debug-original-gdb.txt.gz": "4ddc0d44adf240e300a7e080d77125e116ac5860439f4e85fd2666675e84480d",
+    "evidence/controls/geos-debugger-20261006/fedora-checks.json": "f7ecad4c22722622308371718429e9d8c558d5e516a530600a190fb4de880405",
+    "evidence/controls/geos-debugger-20261006/fedora-status.json": "49a9d2b06bb8df804914344059e3a1893af30b3cf2c6865f0a53f1668a96c4d7",
+    "evidence/controls/geos-debugger-20261006/fedora-tests.log.gz": "5a1ef2b3d013b69ba0f033f48ecf1998c909f88c6bf3a434c812f96f093abce9",
+    "evidence/controls/geos-debugger-20261006/leap-GEOSDataProvider.qmod.debug-debugedit.txt.gz": "6c83c37587154769112659b87373fca242e63da74cbab30040baae700b5bc2c3",
+    "evidence/controls/geos-debugger-20261006/leap-GEOSDataProvider.qmod.debug-no-index-gdb.txt.gz": "7cdac2fd33dbe6f2ebb2babc14abf137c82ba788ccf4b26cd277c8fb2cd8fa87",
+    "evidence/controls/geos-debugger-20261006/leap-GEOSDataProvider.qmod.debug-original-functions.txt.gz": "5f871d90d73ef393ec58580b85d81eca3db0e763911ae735f3dcea41dfa3f2cb",
+    "evidence/controls/geos-debugger-20261006/leap-GEOSDataProvider.qmod.debug-original-gdb.txt.gz": "2302bb1edf65ffbda3bd4f66dc984b3ec2adaee55647c6c54a5653bf50f2b0d3",
+    "evidence/controls/geos-debugger-20261006/leap-checks.json": "b456bc27b162a88112e87e9fc1716a3d25850a80688f51225275a952ac29e066",
+    "evidence/controls/geos-debugger-20261006/leap-status.json": "8e3dfbbe64f57d5f6fbd01d0a5d89845f70d4434d2dc20f50c0f04c72ecf1641",
+    "evidence/controls/geos-debugger-20261006/leap-tests.log.gz": "5a1ef2b3d013b69ba0f033f48ecf1998c909f88c6bf3a434c812f96f093abce9",
+    "evidence/controls/geos-debugger-20261006/qore-geos-module.spec.proposed": "d28b7e0655a8979ec893b780560a28a00db7fe8399b03af45c977adfeec970e6"
+  },
+  "approval": "Approve the same debugger configuration",
+  "qualified_candidate": "evidence/geos-metadata-qualification-20261006.json"
+}
