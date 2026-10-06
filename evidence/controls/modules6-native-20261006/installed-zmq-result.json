@@ -1,0 +1,58 @@
+[
+  {
+    "name": "runtime-zmq-tests",
+    "cwd": "/work/runtime-zmq",
+    "command": [
+      "env",
+      "QORE_RPM_TEST_TMP=/work/runtime-zmq/runtime-fixture",
+      "/work/runtime-zmq/rpm/tests-installed-runtime"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "runtime-zmq-sandbox-errors",
+    "cwd": "/work/runtime-zmq",
+    "command": [
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "/work/runtime-zmq/test/run-sandbox-errors.py",
+      "--module",
+      "/usr/lib64/qore-modules/zmq-api-2.0.qmod"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "sdk-zmq-tests",
+    "cwd": "/work/sdk-zmq",
+    "command": [
+      "env",
+      "QORE_RPM_TEST_TMP=/work/sdk-zmq/runtime-fixture",
+      "/work/sdk-zmq/rpm/tests-installed-runtime"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "sdk-zmq-sandbox-errors",
+    "cwd": "/work/sdk-zmq",
+    "command": [
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "/work/sdk-zmq/test/run-sandbox-errors.py",
+      "--module",
+      "/usr/lib64/qore-modules/zmq-api-2.0.qmod"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "sdk-zmq-compiler",
+    "cwd": "/work/sdk-zmq",
+    "command": [
+      "/work/sdk-zmq/debian/tests/compiler"
+    ],
+    "exit_code": 0
+  }
+]

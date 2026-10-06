@@ -1,0 +1,593 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "XML Security release 3 and ZeroMQ release 5 pass all twelve native source builds. Eighteen-suite signed installed ARM manifests and CI jobs are ready; installed native and lifecycle qualification remain gates. Publication disabled.",
+  "native_sources": {
+    "sources": {
+      "xmlsec": {
+        "commit": "3853a4fa0d2ea126742914ef8d3e458f0f23889c",
+        "srcmd5": "f3b568be7935e8303ee32cab5f5bbad9"
+      },
+      "zmq": {
+        "commit": "add9435ba62913458651bc04a4332c73a3ef3876",
+        "srcmd5": "066f43cddd341f49e92ed129329c2182"
+      }
+    },
+    "builds": [
+      {
+        "module": "xmlsec",
+        "target": "fedora",
+        "arch": "x86_64",
+        "history": {
+          "rev": "2",
+          "srcmd5": "f3b568be7935e8303ee32cab5f5bbad9",
+          "versrel": "1.0.1-3",
+          "bcnt": "1",
+          "time": "1791289188",
+          "duration": "72"
+        },
+        "directory": "results/xmlsec-zmq-final-native6-20261006/xmlsec-fedora-x86_64",
+        "log_sha256": "539f5b164e11a78b4fbea0b644960895810a3f325ab373082702f8916d244650",
+        "diagnostics": [
+          "[   58s] Warning: mkbaselibs missing in build root, skipping baselibs"
+        ],
+        "tests": [
+          "[    9s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   10s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   55s] Ran 3 tests in 0.001s",
+          "[   56s] Ran 13 test cases, 13 succeeded (65 assertions)"
+        ],
+        "sasl_dependencies": [
+          {
+            "name": "cyrus-sasl-lib",
+            "version": "2.1.28",
+            "release": "35.fc44",
+            "arch": "x86_64",
+            "hdrmd5": "561921d0a42a3f72552ecbef644b6d3c",
+            "project": "Fedora:44",
+            "repository": "standard"
+          }
+        ]
+      },
+      {
+        "module": "xmlsec",
+        "target": "fedora",
+        "arch": "aarch64",
+        "history": {
+          "rev": "2",
+          "srcmd5": "f3b568be7935e8303ee32cab5f5bbad9",
+          "versrel": "1.0.1-3",
+          "bcnt": "1",
+          "time": "1791289137",
+          "duration": "133"
+        },
+        "directory": "results/xmlsec-zmq-final-native6-20261006/xmlsec-fedora-aarch64",
+        "log_sha256": "a7c523a2bcf70962af01ffec84e5adf8425264334145b9dca5db84b3ae1b870d",
+        "diagnostics": [
+          "[  114s] Warning: mkbaselibs missing in build root, skipping baselibs"
+        ],
+        "tests": [
+          "[   17s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[  109s] Ran 3 tests in 0.016s",
+          "[  110s] Ran 13 test cases, 13 succeeded (65 assertions)"
+        ],
+        "sasl_dependencies": [
+          {
+            "name": "cyrus-sasl-lib",
+            "version": "2.1.28",
+            "release": "35.fc44",
+            "arch": "aarch64",
+            "hdrmd5": "f2c9d62e093bcf906197e2f78864d6ca",
+            "project": "Fedora:44",
+            "repository": "standard"
+          }
+        ]
+      },
+      {
+        "module": "xmlsec",
+        "target": "leap",
+        "arch": "x86_64",
+        "history": {
+          "rev": "2",
+          "srcmd5": "f3b568be7935e8303ee32cab5f5bbad9",
+          "versrel": "1.0.1-3",
+          "bcnt": "1",
+          "time": "1791289205",
+          "duration": "44"
+        },
+        "directory": "results/xmlsec-zmq-final-native6-20261006/xmlsec-leap-x86_64",
+        "log_sha256": "c1c275383055b99fa76af6d8af19417c504f972259c2f63d42a86e8208b9c3c1",
+        "diagnostics": [
+          "[   10s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2"
+        ],
+        "tests": [
+          "[    5s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[    6s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   28s] Ran 3 tests in 0.002s",
+          "[   28s] Ran 13 test cases, 13 succeeded (65 assertions)"
+        ],
+        "sasl_dependencies": [
+          {
+            "name": "libsasl2-3",
+            "version": "2.1.28",
+            "release": "160000.3.1",
+            "arch": "x86_64",
+            "hdrmd5": "56e8fb0a15435afe6f8c3b7e2d60ccc1",
+            "project": "SUSE:SLFO:1.2",
+            "repository": "standard"
+          }
+        ]
+      },
+      {
+        "module": "xmlsec",
+        "target": "leap",
+        "arch": "aarch64",
+        "history": {
+          "rev": "2",
+          "srcmd5": "f3b568be7935e8303ee32cab5f5bbad9",
+          "versrel": "1.0.1-3",
+          "bcnt": "1",
+          "time": "1791289087",
+          "duration": "81"
+        },
+        "directory": "results/xmlsec-zmq-final-native6-20261006/xmlsec-leap-aarch64",
+        "log_sha256": "befee7d70c33a9e8e84c3a2e21e6e3aa1190724b045c200eaa988ccb2a11fb44",
+        "diagnostics": [
+          "[   23s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2"
+        ],
+        "tests": [
+          "[   10s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   56s] Ran 3 tests in 0.012s",
+          "[   57s] Ran 13 test cases, 13 succeeded (65 assertions)"
+        ],
+        "sasl_dependencies": [
+          {
+            "name": "libsasl2-3",
+            "version": "2.1.28",
+            "release": "160000.3.1",
+            "arch": "aarch64",
+            "hdrmd5": "fafb183b6c4dc4220c42e92bba59e498",
+            "project": "SUSE:SLFO:1.2",
+            "repository": "standard"
+          }
+        ]
+      },
+      {
+        "module": "xmlsec",
+        "target": "el10",
+        "arch": "x86_64",
+        "history": {
+          "rev": "2",
+          "srcmd5": "f3b568be7935e8303ee32cab5f5bbad9",
+          "versrel": "1.0.1-3",
+          "bcnt": "1",
+          "time": "1791289232",
+          "duration": "65"
+        },
+        "directory": "results/xmlsec-zmq-final-native6-20261006/xmlsec-el10-x86_64",
+        "log_sha256": "28155f74b12497f135bd74a69092d7a38227ef36055e7f5d2671fefe7c739e88",
+        "diagnostics": [
+          "[   17s] useradd: Warning: missing or non-executable shell '/usr/sbin/nologin'",
+          "[   47s] Warning: mkbaselibs missing in build root, skipping baselibs"
+        ],
+        "tests": [
+          "[    8s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[    9s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   45s] Ran 3 tests in 0.001s",
+          "[   46s] Ran 13 test cases, 13 succeeded (65 assertions)"
+        ],
+        "sasl_dependencies": [
+          {
+            "name": "cyrus-sasl-lib",
+            "version": "2.1.28",
+            "release": "30.el10_2",
+            "arch": "x86_64",
+            "hdrmd5": "5c39a979e0999d6a1a959af8c1b53c65",
+            "project": "AlmaLinux:10",
+            "repository": "baseos"
+          }
+        ]
+      },
+      {
+        "module": "xmlsec",
+        "target": "el10",
+        "arch": "aarch64",
+        "history": {
+          "rev": "2",
+          "srcmd5": "f3b568be7935e8303ee32cab5f5bbad9",
+          "versrel": "1.0.1-3",
+          "bcnt": "1",
+          "time": "1791289160",
+          "duration": "150"
+        },
+        "directory": "results/xmlsec-zmq-final-native6-20261006/xmlsec-el10-aarch64",
+        "log_sha256": "6c7dbadf1477c9d229cdc08409fb44fd05078d3152f936ea937040528b7cd009",
+        "diagnostics": [
+          "[   63s] useradd: Warning: missing or non-executable shell '/usr/sbin/nologin'",
+          "[  137s] Warning: mkbaselibs missing in build root, skipping baselibs"
+        ],
+        "tests": [
+          "[   37s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   40s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[  132s] Ran 3 tests in 0.003s",
+          "[  133s] Ran 13 test cases, 13 succeeded (65 assertions)"
+        ],
+        "sasl_dependencies": [
+          {
+            "name": "cyrus-sasl-lib",
+            "version": "2.1.28",
+            "release": "30.el10_2",
+            "arch": "aarch64",
+            "hdrmd5": "3738cf117f9824c43b728375b49c440a",
+            "project": "AlmaLinux:10",
+            "repository": "baseos"
+          }
+        ]
+      },
+      {
+        "module": "zmq",
+        "target": "fedora",
+        "arch": "x86_64",
+        "history": {
+          "rev": "5",
+          "srcmd5": "066f43cddd341f49e92ed129329c2182",
+          "versrel": "1.2.0-5",
+          "bcnt": "1",
+          "time": "1791291557",
+          "duration": "122"
+        },
+        "directory": "results/xmlsec-zmq-final-native6-20261006/zmq-fedora-x86_64",
+        "log_sha256": "9e6788ba8049dc1271e5d4ddf75c79ce3e485872cddc1df2255f6f9a12bda96c",
+        "diagnostics": [
+          "[   55s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/ziflist.c:243:40: warning: pointer targets in passing argument 1 of \u2018snprintf\u2019 differ in signedness [-Wpointer-sign]",
+          "[   58s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:83:44: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   58s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:90:45: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   58s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:973:14: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   58s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:986:14: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   58s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_45\u2019 [-Wrestrict]",
+          "[   58s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_45\u2019 [-Wrestrict]",
+          "[   58s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_45\u2019 [-Wrestrict]",
+          "[   58s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_45\u2019 [-Wrestrict]",
+          "[   58s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_45\u2019 [-Wrestrict]",
+          "[   58s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_45\u2019 [-Wrestrict]",
+          "[   58s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_45\u2019 [-Wrestrict]",
+          "[   74s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/src/QC_ZSocket.qpp:1863:5: warning: \u2018rc\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+          "[  106s] Warning: mkbaselibs missing in build root, skipping baselibs"
+        ],
+        "tests": [
+          "[    8s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[    9s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   92s] Ran 2 tests in 0.295s",
+          "[   92s] Ran 7 test cases, 7 succeeded (1021 assertions)",
+          "[   95s] Ran 29 test cases, 29 succeeded (390 assertions)",
+          "[   98s] Ran 55 test cases, 55 succeeded (1176 assertions)",
+          "[   98s] Ran 7 test cases, 7 succeeded (1021 assertions)",
+          "[  101s] Ran 7 test cases, 7 succeeded (17 assertions)",
+          "[  102s] Ran 23 test cases, 23 succeeded (367 assertions)"
+        ],
+        "sasl_dependencies": [
+          {
+            "name": "cyrus-sasl-lib",
+            "version": "2.1.28",
+            "release": "35.fc44",
+            "arch": "x86_64",
+            "hdrmd5": "561921d0a42a3f72552ecbef644b6d3c",
+            "project": "Fedora:44",
+            "repository": "standard"
+          }
+        ]
+      },
+      {
+        "module": "zmq",
+        "target": "fedora",
+        "arch": "aarch64",
+        "history": {
+          "rev": "5",
+          "srcmd5": "066f43cddd341f49e92ed129329c2182",
+          "versrel": "1.2.0-5",
+          "bcnt": "1",
+          "time": "1791291594",
+          "duration": "141"
+        },
+        "directory": "results/xmlsec-zmq-final-native6-20261006/zmq-fedora-aarch64",
+        "log_sha256": "ef118af3021f7fc2e68aad80b79d38e45c6f522bb668219e61cafba4f2d00ace",
+        "diagnostics": [
+          "[   69s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/ziflist.c:243:40: warning: pointer targets in passing argument 1 of \u2018snprintf\u2019 differ in signedness [-Wpointer-sign]",
+          "[   70s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:83:44: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   70s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:90:45: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   70s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:973:14: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   70s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:986:14: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   71s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_45\u2019 [-Wrestrict]",
+          "[   71s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_45\u2019 [-Wrestrict]",
+          "[   71s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_45\u2019 [-Wrestrict]",
+          "[   71s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_45\u2019 [-Wrestrict]",
+          "[   71s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_45\u2019 [-Wrestrict]",
+          "[   71s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_45\u2019 [-Wrestrict]",
+          "[   71s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_45\u2019 [-Wrestrict]",
+          "[   83s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/src/QC_ZSocket.qpp:1863:5: warning: \u2018rc\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+          "[  120s] Warning: mkbaselibs missing in build root, skipping baselibs"
+        ],
+        "tests": [
+          "[    9s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   11s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[  104s] Ran 2 tests in 0.306s",
+          "[  104s] Ran 7 test cases, 7 succeeded (1021 assertions)",
+          "[  107s] Ran 29 test cases, 29 succeeded (390 assertions)",
+          "[  110s] Ran 55 test cases, 55 succeeded (1176 assertions)",
+          "[  110s] Ran 7 test cases, 7 succeeded (1021 assertions)",
+          "[  113s] Ran 7 test cases, 7 succeeded (17 assertions)",
+          "[  114s] Ran 23 test cases, 23 succeeded (367 assertions)"
+        ],
+        "sasl_dependencies": [
+          {
+            "name": "cyrus-sasl-lib",
+            "version": "2.1.28",
+            "release": "35.fc44",
+            "arch": "aarch64",
+            "hdrmd5": "f2c9d62e093bcf906197e2f78864d6ca",
+            "project": "Fedora:44",
+            "repository": "standard"
+          }
+        ]
+      },
+      {
+        "module": "zmq",
+        "target": "leap",
+        "arch": "x86_64",
+        "history": {
+          "rev": "5",
+          "srcmd5": "066f43cddd341f49e92ed129329c2182",
+          "versrel": "1.2.0-5",
+          "bcnt": "1",
+          "time": "1791291506",
+          "duration": "85"
+        },
+        "directory": "results/xmlsec-zmq-final-native6-20261006/zmq-leap-x86_64",
+        "log_sha256": "ca781662b1ca78a20ca19379bcf52c9e126e032267ad03ee85df656fee74ca06",
+        "diagnostics": [
+          "[    9s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2",
+          "[   30s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/ziflist.c:243:40: warning: pointer targets in passing argument 1 of \u2018snprintf\u2019 differ in signedness [-Wpointer-sign]",
+          "[   33s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:83:44: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   33s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:90:45: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   33s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:973:14: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   33s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:986:14: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]"
+        ],
+        "tests": [
+          "[    5s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[    6s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   58s] Ran 2 tests in 0.356s",
+          "[   58s] Ran 7 test cases, 7 succeeded (1021 assertions)",
+          "[   61s] Ran 29 test cases, 29 succeeded (390 assertions)",
+          "[   64s] Ran 55 test cases, 55 succeeded (1176 assertions)",
+          "[   64s] Ran 7 test cases, 7 succeeded (1021 assertions)",
+          "[   67s] Ran 7 test cases, 7 succeeded (17 assertions)",
+          "[   68s] Ran 23 test cases, 23 succeeded (367 assertions)"
+        ],
+        "sasl_dependencies": [
+          {
+            "name": "libsasl2-3",
+            "version": "2.1.28",
+            "release": "160000.3.1",
+            "arch": "x86_64",
+            "hdrmd5": "56e8fb0a15435afe6f8c3b7e2d60ccc1",
+            "project": "SUSE:SLFO:1.2",
+            "repository": "standard"
+          }
+        ]
+      },
+      {
+        "module": "zmq",
+        "target": "leap",
+        "arch": "aarch64",
+        "history": {
+          "rev": "5",
+          "srcmd5": "066f43cddd341f49e92ed129329c2182",
+          "versrel": "1.2.0-5",
+          "bcnt": "1",
+          "time": "1791291533",
+          "duration": "122"
+        },
+        "directory": "results/xmlsec-zmq-final-native6-20261006/zmq-leap-aarch64",
+        "log_sha256": "f494040b37448f197591ecdd6e2c1c410c70ae47721f27b522c2485317e1c1b6",
+        "diagnostics": [
+          "[   25s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2",
+          "[   66s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/ziflist.c:243:40: warning: pointer targets in passing argument 1 of \u2018snprintf\u2019 differ in signedness [-Wpointer-sign]",
+          "[   70s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:83:44: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   70s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:90:45: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   70s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:973:14: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   70s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0-build/qore-zmq-module-1.2.0/czmq/src/zosc.c:986:14: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]"
+        ],
+        "tests": [
+          "[   13s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   92s] Ran 2 tests in 0.306s",
+          "[   93s] Ran 7 test cases, 7 succeeded (1021 assertions)",
+          "[   96s] Ran 29 test cases, 29 succeeded (390 assertions)",
+          "[   99s] Ran 55 test cases, 55 succeeded (1176 assertions)",
+          "[  101s] Ran 7 test cases, 7 succeeded (1021 assertions)",
+          "[  104s] Ran 7 test cases, 7 succeeded (17 assertions)",
+          "[  106s] Ran 23 test cases, 23 succeeded (367 assertions)"
+        ],
+        "sasl_dependencies": [
+          {
+            "name": "libsasl2-3",
+            "version": "2.1.28",
+            "release": "160000.3.1",
+            "arch": "aarch64",
+            "hdrmd5": "fafb183b6c4dc4220c42e92bba59e498",
+            "project": "SUSE:SLFO:1.2",
+            "repository": "standard"
+          }
+        ]
+      },
+      {
+        "module": "zmq",
+        "target": "el10",
+        "arch": "x86_64",
+        "history": {
+          "rev": "5",
+          "srcmd5": "066f43cddd341f49e92ed129329c2182",
+          "versrel": "1.2.0-5",
+          "bcnt": "1",
+          "time": "1791291515",
+          "duration": "89"
+        },
+        "directory": "results/xmlsec-zmq-final-native6-20261006/zmq-el10-x86_64",
+        "log_sha256": "7f982e5b9e54c0db7e095b9d56a70f5015da2f2e69b668e7e8473fe971ec7f28",
+        "diagnostics": [
+          "[   16s] useradd: Warning: missing or non-executable shell '/usr/sbin/nologin'",
+          "[   46s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0/czmq/src/ziflist.c:243:40: warning: pointer targets in passing argument 1 of \u2018snprintf\u2019 differ in signedness [-Wpointer-sign]",
+          "[   46s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0/czmq/src/zosc.c:83:44: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   46s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0/czmq/src/zosc.c:90:45: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   46s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0/czmq/src/zosc.c:973:14: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   46s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0/czmq/src/zosc.c:986:14: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   47s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_46\u2019 [-Wrestrict]",
+          "[   47s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_46\u2019 [-Wrestrict]",
+          "[   47s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_46\u2019 [-Wrestrict]",
+          "[   47s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_46\u2019 [-Wrestrict]",
+          "[   47s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_46\u2019 [-Wrestrict]",
+          "[   47s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_46\u2019 [-Wrestrict]",
+          "[   47s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_46\u2019 [-Wrestrict]",
+          "[   54s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0/src/QC_ZSocket.qpp:1863:5: warning: \u2018rc\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+          "[   81s] Warning: mkbaselibs missing in build root, skipping baselibs"
+        ],
+        "tests": [
+          "[    7s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[    9s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   68s] Ran 2 tests in 0.350s",
+          "[   68s] Ran 7 test cases, 7 succeeded (1021 assertions)",
+          "[   71s] Ran 29 test cases, 29 succeeded (390 assertions)",
+          "[   74s] Ran 55 test cases, 55 succeeded (1176 assertions)",
+          "[   74s] Ran 7 test cases, 7 succeeded (1021 assertions)",
+          "[   77s] Ran 7 test cases, 7 succeeded (17 assertions)",
+          "[   78s] Ran 23 test cases, 23 succeeded (367 assertions)"
+        ],
+        "sasl_dependencies": [
+          {
+            "name": "cyrus-sasl-lib",
+            "version": "2.1.28",
+            "release": "30.el10_2",
+            "arch": "x86_64",
+            "hdrmd5": "5c39a979e0999d6a1a959af8c1b53c65",
+            "project": "AlmaLinux:10",
+            "repository": "baseos"
+          }
+        ]
+      },
+      {
+        "module": "zmq",
+        "target": "el10",
+        "arch": "aarch64",
+        "history": {
+          "rev": "5",
+          "srcmd5": "066f43cddd341f49e92ed129329c2182",
+          "versrel": "1.2.0-5",
+          "bcnt": "1",
+          "time": "1791291673",
+          "duration": "220"
+        },
+        "directory": "results/xmlsec-zmq-final-native6-20261006/zmq-el10-aarch64",
+        "log_sha256": "82db3855b28554feafe421943ef467bce9916f65431830926cf3432132d78076",
+        "diagnostics": [
+          "[   26s] useradd: Warning: missing or non-executable shell '/usr/sbin/nologin'",
+          "[   86s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0/czmq/src/ziflist.c:243:40: warning: pointer targets in passing argument 1 of \u2018snprintf\u2019 differ in signedness [-Wpointer-sign]",
+          "[   91s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0/czmq/src/zosc.c:83:44: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   91s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0/czmq/src/zosc.c:90:45: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   91s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0/czmq/src/zosc.c:973:14: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   91s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0/czmq/src/zosc.c:986:14: warning: dereferencing type-punned pointer will break strict-aliasing rules [-Wstrict-aliasing]",
+          "[   92s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_46\u2019 [-Wrestrict]",
+          "[   92s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_46\u2019 [-Wrestrict]",
+          "[   92s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_46\u2019 [-Wrestrict]",
+          "[   92s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_46\u2019 [-Wrestrict]",
+          "[   92s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_46\u2019 [-Wrestrict]",
+          "[   92s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_46\u2019 [-Wrestrict]",
+          "[   92s] /usr/include/bits/stdio2.h:30:10: warning: \u2018__sprintf_chk\u2019 argument 5 overlaps destination object \u2018out_46\u2019 [-Wrestrict]",
+          "[  121s] /home/abuild/rpmbuild/BUILD/qore-zmq-module-1.2.0/src/QC_ZSocket.qpp:1863:5: warning: \u2018rc\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+          "[  177s] Warning: mkbaselibs missing in build root, skipping baselibs"
+        ],
+        "tests": [
+          "[   11s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[   13s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+          "[  155s] Ran 2 tests in 0.466s",
+          "[  156s] Ran 7 test cases, 7 succeeded (1021 assertions)",
+          "[  160s] Ran 29 test cases, 29 succeeded (390 assertions)",
+          "[  163s] Ran 55 test cases, 55 succeeded (1176 assertions)",
+          "[  164s] Ran 7 test cases, 7 succeeded (1021 assertions)",
+          "[  168s] Ran 7 test cases, 7 succeeded (17 assertions)",
+          "[  169s] Ran 23 test cases, 23 succeeded (367 assertions)"
+        ],
+        "sasl_dependencies": [
+          {
+            "name": "cyrus-sasl-lib",
+            "version": "2.1.28",
+            "release": "30.el10_2",
+            "arch": "aarch64",
+            "hdrmd5": "3738cf117f9824c43b728375b49c440a",
+            "project": "AlmaLinux:10",
+            "repository": "baseos"
+          }
+        ]
+      }
+    ]
+  },
+  "accepted_diagnostics": [
+    "evidence/zmq-release-diagnostics-20261006.json",
+    "evidence/obs-polkit-bootstrap-diagnostic-20261006.json",
+    "evidence/xmlsec-parser-diagnostic-20261006.json"
+  ],
+  "service_setup_or_postbuild_messages": "Unchanged OBS virtual-console setup, AlmaLinux build-user nologin and missing optional mkbaselibs messages; no package test failures.",
+  "vendor_binary_scope": "All six signed debug RPMs contain required public/used-vendor symbols and no zosc_ or ziflist_ symbols; approved unlinked-vendor diagnostic scope verified natively.",
+  "tools_tests": 163,
+  "ci_lint": "valid, no errors or warnings",
+  "fixture_sources": {
+    "xml": {
+      "commit": "d32601505b85b07823f98cc006fe438baa6dd3bc",
+      "srcmd5": "d672a36fd359885da3559de45cb2482d"
+    },
+    "xmlsec": {
+      "commit": "3853a4fa0d2ea126742914ef8d3e458f0f23889c",
+      "srcmd5": "f3b568be7935e8303ee32cab5f5bbad9"
+    },
+    "zmq": {
+      "commit": "add9435ba62913458651bc04a4332c73a3ef3876",
+      "srcmd5": "066f43cddd341f49e92ed129329c2182"
+    }
+  },
+  "installed_xmlsec": "evidence/xmlsec-installed-tools-20261006.json",
+  "manifests": {
+    "qualification/modules6-el10-aarch64.json": "c3b9cabed113a7445ecf3035b0f8316bc59a5d6abeb5375c9c9bc08a09763ca3",
+    "qualification/modules6-fedora-aarch64.json": "12a3b3c8d73befb4a6b08540dcb66539d6f7963d0740156c64c1bed81d5c07f7",
+    "qualification/modules6-leap-aarch64.json": "565dcf931a52b3b70eae1077e9ac1fc266a529c16e3151f99de12b47f6684bf3"
+  },
+  "artifacts_sha256": {
+    "evidence/controls/modules6-native-20261006/ci-lint.json": "fa87153830489857c811a7ab90e94035ca578dec113fed33b52cb2bb8d73a4a9",
+    "evidence/controls/modules6-native-20261006/installed-zmq-result.json": "dc05119c4d140877da140043100ce65dfd9de18e43852af6e36e9aa8ce307cc1",
+    "evidence/controls/modules6-native-20261006/installed-zmq.log.gz": "f1c2b6811512bbb757bf3fd438f21a5be3aa93ececedcd2ac783707314564649",
+    "evidence/controls/modules6-native-20261006/native-symbols.json": "acb20bf8d9f8759b51674ea36b8f2876b8c4252422fa2b913c8e7d45288b1176",
+    "evidence/controls/modules6-native-20261006/tools-tests.log.gz": "d3485907c8e42fe7e32091ebf386d7eb4c45f0e9c47b2604f20e3f3ada3a8afc",
+    "evidence/controls/modules6-native-20261006/xmlsec-el10-aarch64-history.xml": "10e9a1c7ab990423c70bab75dbafabee126351a8b8bc48317936deee99c0dfad",
+    "evidence/controls/modules6-native-20261006/xmlsec-el10-aarch64.log.gz": "c154f06723435b5f5a4dfe244b1077309217574ae1f0d7c2cf31c4ebd78da17e",
+    "evidence/controls/modules6-native-20261006/xmlsec-el10-x86_64-history.xml": "6925889996067e0f221a71286ee142b367ddf35d349d82c3fd760ad8f14f8b7d",
+    "evidence/controls/modules6-native-20261006/xmlsec-el10-x86_64.log.gz": "6dd036ebf1e2b0cf9d6b4f9464b9e623d0b34df82a51f5bb7feed23ce0200416",
+    "evidence/controls/modules6-native-20261006/xmlsec-fedora-aarch64-history.xml": "13bd6224e2e269181371c8375bd909c5d372670a2e081f73af07bdd5951660ee",
+    "evidence/controls/modules6-native-20261006/xmlsec-fedora-aarch64.log.gz": "0f863bf7b0ae5ffc7f0de8533f81860cd1ea90cfa76ac9a877eb9c52ec6fcc24",
+    "evidence/controls/modules6-native-20261006/xmlsec-fedora-x86_64-history.xml": "f5f2a74f67eda29fd58d331188e3e60b3297bbde2f8264ad9a56435876409eae",
+    "evidence/controls/modules6-native-20261006/xmlsec-fedora-x86_64.log.gz": "e43fc0586567f7e54df1dd2bd111b1dd9670e202bb0db4b2418d645d49a602fa",
+    "evidence/controls/modules6-native-20261006/xmlsec-leap-aarch64-history.xml": "d3b3e071e1489bc2183dbf15f43f5f2b8b931a84bae3e72ee663c062472655f0",
+    "evidence/controls/modules6-native-20261006/xmlsec-leap-aarch64.log.gz": "252555919f7a78d6ac1456c482e3f1a44999702173ac7c5002e6afaaeeb839e0",
+    "evidence/controls/modules6-native-20261006/xmlsec-leap-x86_64-history.xml": "60a7152becb40ef1ed6bd249dcd860f80cbdafce65822542de04f4e7f81eb32d",
+    "evidence/controls/modules6-native-20261006/xmlsec-leap-x86_64.log.gz": "dfe26129179d127601c4836868fdf7991eda12113e9cc639bc74e369eb5028fa",
+    "evidence/controls/modules6-native-20261006/zmq-el10-aarch64-history.xml": "6117f049a01efbdc18eef2fed4b483d743f4d779ed47106f28022ca3528fe808",
+    "evidence/controls/modules6-native-20261006/zmq-el10-aarch64.log.gz": "0c536cc64b2320fae20ce94fb19b89532aee39c37448e39d086f5b21e01efa31",
+    "evidence/controls/modules6-native-20261006/zmq-el10-x86_64-history.xml": "cccaee617a5921b7b3846894568eb567786639c5e87b8d2f87e95fe2f11f8752",
+    "evidence/controls/modules6-native-20261006/zmq-el10-x86_64.log.gz": "65187ec710c097e08d0c491d09212961a56a9a3161f82b58f64edde32dad88f7",
+    "evidence/controls/modules6-native-20261006/zmq-fedora-aarch64-history.xml": "38d62628b35e18ad6f5ee78b13d44efa89c1578361b6f09b0d17abbf8efa0343",
+    "evidence/controls/modules6-native-20261006/zmq-fedora-aarch64.log.gz": "44f38d015d02f735c1141014b8b8d6eb3f1cbc879fccec4c7ef9f3d67601d510",
+    "evidence/controls/modules6-native-20261006/zmq-fedora-x86_64-history.xml": "63d3d5062256ec4dc7c6bc82bfe184619319ddb14e56d26862688135564d7f58",
+    "evidence/controls/modules6-native-20261006/zmq-fedora-x86_64.log.gz": "da7163e3c80efae2cd23ef3b5af08f9e4de9461b9ec8e1f42fc9e10e633e609e",
+    "evidence/controls/modules6-native-20261006/zmq-leap-aarch64-history.xml": "3266afa4a0b2647655a70fb164edd49a92977ba5a8d49a1bc08181eea78e34a9",
+    "evidence/controls/modules6-native-20261006/zmq-leap-aarch64.log.gz": "5de5d5ba78a9e2b88af486df344f50e5f48c9f2bff78add7ed0ae81cd7b3be5c",
+    "evidence/controls/modules6-native-20261006/zmq-leap-x86_64-history.xml": "9e94c4c183e6e6e7f31f882723abd66f949397bf370e642c35f7c2cf292433bd",
+    "evidence/controls/modules6-native-20261006/zmq-leap-x86_64.log.gz": "bd8c0ce3bf1211402034cb26b2c71d4b8ec98cda2b11520361678e48f6ac13d9"
+  }
+}

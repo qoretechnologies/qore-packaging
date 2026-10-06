@@ -194,3 +194,25 @@ rpm-modules5-el10-arm64:
     - if: '$RPM_NATIVE_QUALIFICATION == "modules5" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
   variables:
     RPM_MANIFEST: qualification/modules5-el10-aarch64.json
+
+# Add ZeroMQ socket protocols and XML Security encryption with pinned XML.
+rpm-modules6-fedora-arm64:
+  extends: rpm-fedora-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "modules6" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "fedora")'
+  variables:
+    RPM_MANIFEST: qualification/modules6-fedora-aarch64.json
+
+rpm-modules6-leap-arm64:
+  extends: rpm-leap-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "modules6" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "leap")'
+  variables:
+    RPM_MANIFEST: qualification/modules6-leap-aarch64.json
+
+rpm-modules6-el10-arm64:
+  extends: rpm-el10-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "modules6" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
+  variables:
+    RPM_MANIFEST: qualification/modules6-el10-aarch64.json

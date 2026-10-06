@@ -18,6 +18,15 @@ integration dependency fails rather than silently skipping encryption tests.
 Its certificate and private key are public test fixtures, isolated in a temporary
 directory. The approved wrong-key parser diagnostic remains visible.
 
-Signed ARM manifests and a dedicated pipeline selector will be added after
-ZeroMQ's socket-close fixture correction is rebuilt. These runner changes alone
-do not constitute ARM qualification or enable publication.
+The ``modules6-*-aarch64.json`` manifests extend the qualified sixteen-module
+set to eighteen suites. They pin XML Security release 3, ZeroMQ release 5 and
+the XML integration dependency to the native OBS RPMs and immutable fixture
+commits. Every source file is compared with its public Git revision before its
+hash is recorded. ZeroMQ release 5 joins monitor shutdown as well as listener
+close, with exception-path and subsequent-traffic regressions.
+
+Select these jobs explicitly with ``RPM_NATIVE_QUALIFICATION=modules6``.
+``RPM_NATIVE_TARGET`` optionally restricts the run to ``fedora``, ``leap`` or
+``el10``. Ordinary packaging commits do not launch the ARM qualification jobs.
+Native source builds pass on all six targets; signed installed qualification
+and repository lifecycle checks remain separate publication gates.
