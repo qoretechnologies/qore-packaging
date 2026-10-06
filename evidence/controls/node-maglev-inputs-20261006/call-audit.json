@@ -1,0 +1,704 @@
+{
+  "concrete_calls": {
+    "warning_types": [
+      "BuiltinStringFromCharCode",
+      "ChangeInt32ToFloat64",
+      "ChangeIntPtrToFloat64",
+      "ChangeUint32ToFloat64",
+      "CheckDerivedConstructResult",
+      "CheckInstanceType",
+      "CheckedHoleyFloat64ToFloat64",
+      "CheckedInt32ToUint32",
+      "CheckedIntPtrToInt32",
+      "CheckedIntPtrToUint32",
+      "CheckedInternalizedString",
+      "CheckedNumberOrOddballToFloat64",
+      "CheckedNumberToInt32",
+      "CheckedNumberToUint8Clamped",
+      "CheckedObjectToIndex",
+      "CheckedSmiDecrement",
+      "CheckedSmiIncrement",
+      "CheckedSmiTagFloat64",
+      "CheckedSmiTagInt32",
+      "CheckedSmiTagIntPtr",
+      "CheckedSmiTagUint32",
+      "CheckedSmiUntag",
+      "CheckedTruncateFloat64ToInt32",
+      "CheckedTruncateFloat64ToUint32",
+      "CheckedTruncateNumberOrOddballToInt32",
+      "CheckedUint32ToInt32",
+      "ConvertHoleToUndefined",
+      "Float64Abs",
+      "Float64Ieee754Unary",
+      "Float64Negate",
+      "Float64Round",
+      "Float64ToBoolean",
+      "Float64ToTagged",
+      "Float64ToUint8Clamped",
+      "HoleyFloat64IsHole",
+      "HoleyFloat64ToMaybeNanFloat64",
+      "HoleyFloat64ToTagged",
+      "Int32AbsWithOverflow",
+      "Int32BitwiseNot",
+      "Int32DecrementWithOverflow",
+      "Int32IncrementWithOverflow",
+      "Int32NegateWithOverflow",
+      "Int32ToBoolean",
+      "Int32ToNumber",
+      "Int32ToUint8Clamped",
+      "IntPtrToBoolean",
+      "IntPtrToNumber",
+      "LoadDoubleField",
+      "LoadEnumCacheLength",
+      "LoadFloat64",
+      "LoadHeapInt32",
+      "LoadInt32",
+      "LoadTaggedField",
+      "LoadTaggedFieldForContextSlot",
+      "LoadTaggedFieldForProperty",
+      "LoadTaggedFieldForScriptContextSlot",
+      "LoadTypedArrayLength",
+      "LogicalNot",
+      "NumberToString",
+      "StringLength",
+      "TestTypeOf",
+      "TestUndetectable",
+      "ToBoolean",
+      "ToBooleanLogicalNot",
+      "TruncateFloat64ToInt32",
+      "TruncateNumberOrOddballToInt32",
+      "Uint32ToNumber",
+      "Uint32ToUint8Clamped",
+      "UncheckedNumberOrOddballToFloat64",
+      "UnsafeInt32ToUint32",
+      "UnsafeSmiTagInt32",
+      "UnsafeSmiTagIntPtr",
+      "UnsafeSmiTagUint32",
+      "UnsafeSmiUntag",
+      "UnwrapStringWrapper",
+      "UnwrapThinString"
+    ],
+    "calls": [
+      {
+        "file": "maglev-graph-builder.h",
+        "line": 1728,
+        "type": "HoleyFloat64ToMaybeNanFloat64",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1525,
+        "type": "UnsafeSmiTagInt32",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1527,
+        "type": "Int32ToNumber",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1531,
+        "type": "UnsafeSmiTagUint32",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1533,
+        "type": "Uint32ToNumber",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1536,
+        "type": "Float64ToTagged",
+        "call": "\n          {value}, Float64ToTagged::ConversionMode::kCanonicalizeSmi"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1540,
+        "type": "HoleyFloat64ToTagged",
+        "call": "\n          {value}, HoleyFloat64ToTagged::ConversionMode::kForceHeapNumber"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1546,
+        "type": "UnsafeSmiTagIntPtr",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1548,
+        "type": "IntPtrToNumber",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1587,
+        "type": "UnsafeSmiTagInt32",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1589,
+        "type": "CheckedSmiTagInt32",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1593,
+        "type": "UnsafeSmiTagUint32",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1595,
+        "type": "CheckedSmiTagUint32",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1598,
+        "type": "CheckedSmiTagFloat64",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1601,
+        "type": "CheckedSmiTagFloat64",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1604,
+        "type": "CheckedSmiTagIntPtr",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1636,
+        "type": "CheckedInternalizedString",
+        "call": "{node}, GetCheckType(old_type)"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1712,
+        "type": "CheckedSmiUntag",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1716,
+        "type": "TruncateNumberOrOddballToInt32",
+        "call": "{value},\n                                                       conversion_type"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1720,
+        "type": "CheckedTruncateNumberOrOddballToInt32",
+        "call": "{value},\n                                                            conversion_type"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1730,
+        "type": "TruncateFloat64ToInt32",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1736,
+        "type": "IntPtrToNumber",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1738,
+        "type": "TruncateNumberOrOddballToInt32",
+        "call": "\n              {value_to_number}, TaggedToFloat64ConversionType::kOnlyNumber"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1836,
+        "type": "CheckedNumberToInt32",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1845,
+        "type": "CheckedUint32ToInt32",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1852,
+        "type": "CheckedTruncateFloat64ToInt32",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1856,
+        "type": "CheckedIntPtrToInt32",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1963,
+        "type": "ChangeInt32ToFloat64",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1966,
+        "type": "ChangeUint32ToFloat64",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1978,
+        "type": "CheckedHoleyFloat64ToFloat64",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1983,
+        "type": "HoleyFloat64ToMaybeNanFloat64",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 1990,
+        "type": "ChangeIntPtrToFloat64",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 2021,
+        "type": "CheckedNumberToUint8Clamped",
+        "call": "\n          {AddNewNode<IntPtrToNumber>({value})}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 2022,
+        "type": "IntPtrToNumber",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 2029,
+        "type": "Int32ToUint8Clamped",
+        "call": "{info->alternative().int32()}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 2031,
+        "type": "CheckedNumberToUint8Clamped",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 2041,
+        "type": "Float64ToUint8Clamped",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 2046,
+        "type": "Int32ToUint8Clamped",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 2048,
+        "type": "Uint32ToUint8Clamped",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 2244,
+        "type": "Int32BitwiseNot",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 2491,
+        "type": "Float64Negate",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 2803,
+        "type": "UnwrapThinString",
+        "call": "{input}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 2809,
+        "type": "UnwrapStringWrapper",
+        "call": "{input}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 3025,
+        "type": "LogicalNot",
+        "call": "{other}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 3076,
+        "type": "HoleyFloat64IsHole",
+        "call": "{holey_float}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 3432,
+        "type": "LoadInt32",
+        "call": "\n            {GetConstant(*mutable_heap_number)},\n            static_cast<int>(offsetof(HeapNumber, value_))"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 3438,
+        "type": "LoadHeapInt32",
+        "call": "{context_node}, offset"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 3448,
+        "type": "LoadFloat64",
+        "call": "\n            {GetConstant(*mutable_heap_number)},\n            static_cast<int>(offsetof(HeapNumber, value_))"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 3454,
+        "type": "LoadDoubleField",
+        "call": "{context_node}, offset"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 3865,
+        "type": "HoleyFloat64IsHole",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 3902,
+        "type": "TestUndetectable",
+        "call": "{value}, type"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 4017,
+        "type": "TestTypeOf",
+        "call": "{value}, literal"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 4832,
+        "type": "UnsafeSmiUntag",
+        "call": "{node}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 4834,
+        "type": "CheckedSmiUntag",
+        "call": "{node}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 4845,
+        "type": "ChangeInt32ToFloat64",
+        "call": "{untagged_smi}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 4847,
+        "type": "UncheckedNumberOrOddballToFloat64",
+        "call": "{node},\n                                                         conversion_type"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 4850,
+        "type": "CheckedNumberOrOddballToFloat64",
+        "call": "{node}, conversion_type"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 4915,
+        "type": "CheckInstanceType",
+        "call": "{object}, GetCheckType(known_type),\n                                FIRST_JS_RECEIVER_TYPE, LAST_JS_RECEIVER_TYPE"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 5518,
+        "type": "LoadTaggedField",
+        "call": "{elements},\n                                     FixedArray::OffsetOfElementAt(index)"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 5762,
+        "type": "LoadDoubleField",
+        "call": "{load_source}, field_index.offset()"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 6005,
+        "type": "StringLength",
+        "call": "{string}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 6214,
+        "type": "CheckedIntPtrToInt32",
+        "call": "{object}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 6226,
+        "type": "CheckedObjectToIndex",
+        "call": "{object},\n                                                GetCheckType(old_type)"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 6247,
+        "type": "CheckedIntPtrToUint32",
+        "call": "{object}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 6257,
+        "type": "CheckedInt32ToUint32",
+        "call": "{GetInt32ElementIndex(object)}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 6266,
+        "type": "CheckedInt32ToUint32",
+        "call": "{object}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 6283,
+        "type": "CheckedTruncateFloat64ToUint32",
+        "call": "{object}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 6307,
+        "type": "UnsafeInt32ToUint32",
+        "call": "{length}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 6454,
+        "type": "LoadTypedArrayLength",
+        "call": "{object}, elements_kind"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 6625,
+        "type": "UnsafeInt32ToUint32",
+        "call": "{length}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 7352,
+        "type": "StringLength",
+        "call": "{string}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 7990,
+        "type": "LogicalNot",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 8893,
+        "type": "Int32IncrementWithOverflow",
+        "call": "{index_int32}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 9218,
+        "type": "BuiltinStringFromCharCode",
+        "call": "{GetTruncatedInt32ForToNumber(\n      args[0], NodeType::kNumberOrOddball,\n      TaggedToFloat64ConversionType::kNumberOrOddball)}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 9380,
+        "type": "CheckInstanceType",
+        "call": "{receiver}, CheckType::kCheckHeapObject,\n                                JS_DATA_VIEW_TYPE, JS_DATA_VIEW_TYPE"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 9400,
+        "type": "CheckInstanceType",
+        "call": "{receiver}, CheckType::kCheckHeapObject,\n                                JS_DATA_VIEW_TYPE, JS_DATA_VIEW_TYPE"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 9825,
+        "type": "UnsafeSmiUntag",
+        "call": "{old_array_length_smi}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 9827,
+        "type": "CheckedSmiIncrement",
+        "call": "{old_array_length_smi}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 9981,
+        "type": "CheckedSmiDecrement",
+        "call": "{old_array_length_smi}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 9983,
+        "type": "UnsafeSmiUntag",
+        "call": "{new_array_length_smi}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 10015,
+        "type": "ConvertHoleToUndefined",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 10261,
+        "type": "Int32AbsWithOverflow",
+        "call": "{arg}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 10266,
+        "type": "Int32AbsWithOverflow",
+        "call": "{arg}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 10268,
+        "type": "Float64Abs",
+        "call": "{GetHoleyFloat64ForToNumber(\n              arg, NodeType::kNumberOrOddball,\n              TaggedToFloat64ConversionType::kNumberOrOddball)}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 10278,
+        "type": "Float64Abs",
+        "call": "{arg}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 10311,
+        "type": "Float64Round",
+        "call": "{arg}, kind"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 10315,
+        "type": "Float64Round",
+        "call": "\n        {GetHoleyFloat64ForToNumber(\n            arg, NodeType::kNumberOrOddball,\n            TaggedToFloat64ConversionType::kNumberOrOddball)},\n        kind"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 10325,
+        "type": "UncheckedNumberOrOddballToFloat64",
+        "call": "\n      {conversion}, TaggedToFloat64ConversionType::kOnlyNumber"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 10327,
+        "type": "Float64Round",
+        "call": "{float64_value}, kind"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 10390,
+        "type": "Float64Ieee754Unary",
+        "call": "                                   \\\n        {value}, Float64Ieee754Unary::Ieee754Function::k##EnumName"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 10877,
+        "type": "ConvertHoleToUndefined",
+        "call": "{node}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 11881,
+        "type": "CheckDerivedConstructResult",
+        "call": "{call_result}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 12380,
+        "type": "Float64ToBoolean",
+        "call": "{value}, flip"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 12388,
+        "type": "Int32ToBoolean",
+        "call": "{value}, flip"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 12391,
+        "type": "IntPtrToBoolean",
+        "call": "{value}, flip"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 12400,
+        "type": "Int32ToBoolean",
+        "call": "{as_int32}, flip"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 12403,
+        "type": "Float64ToBoolean",
+        "call": "{as_float64}, flip"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 12513,
+        "type": "NumberToString",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 12529,
+        "type": "HoleyFloat64ToMaybeNanFloat64",
+        "call": "{value}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 14625,
+        "type": "LoadEnumCacheLength",
+        "call": "{enumerator}"
+      },
+      {
+        "file": "maglev-graph-builder.cc",
+        "line": 14917,
+        "type": "UnsafeSmiUntag",
+        "call": "{state}"
+      }
+    ]
+  },
+  "generic_calls": {
+    "unary": "maglev-graph-builder.cc:2106, 2137, 2223: mapping and Int32NodeFor alias instantiate AddNewNode<OpNodeT>({value}).",
+    "tagged_load": "maglev-graph-builder.h:2405..2431: BuildLoadTaggedField<Instruction> passes {object}.",
+    "boolean": "maglev-graph-builder.cc:12434: conditional ToBooleanLogicalNot/ToBoolean receives {value}."
+  },
+  "wrapper": "maglev-graph-builder.h:1122..1127: sole AddNewNodeOrGetEquivalent caller forwards the initializer_list unchanged.",
+  "contract": "maglev-ir.h NodeBaseFixedInputNodeTMixin constructor asserts actual input count equals kInputCount. All 76 affected concrete types have kInputCount==1, compiled against the actual V8 headers.",
+  "limitation": "This is a closed-source-tree call-site audit, not a new runtime arity check. The reduced conversion function models pointer selection; it does not execute all Maglev conversions.",
+  "sources_sha256": {
+    "deps/v8/src/maglev/maglev-graph-builder.h": "31252332457928fb6be500c862cba7c5369d2a950f86f75097da8483be219481",
+    "deps/v8/src/maglev/maglev-graph-builder.cc": "a344f2db3f80cacdbb7521ee69fcb89fd8ebc4b7c14e2fecebd5fa42a546ca11",
+    "deps/v8/src/maglev/maglev-ir.h": "3b7a83fcb65a3ed0465dce362b8e3c1f9f86fe44533f5bf6aa3419aa80f91ff9",
+    "deps/v8/src/base/hashing.h": "a7f4091358808a434e96b5c3302094ecc27e8662505a89d121f4ad8e59a5ddaf"
+  }
+}

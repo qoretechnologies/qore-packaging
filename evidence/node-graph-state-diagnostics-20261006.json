@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "approval": "User approved both exact diagnostic families on 2026-10-06; no suppressions or runtime changes.",
+  "scope": "Only 22 Turboshaft IF-state diagnostics and five guarded hash-output diagnostics at the three recorded sites.",
+  "root_causes": {
+    "if_state": "The actual IF/IF_NOT macro executes iteration 0 before iteration 2. BindIf/BindIfNot always initialize else_block and end_block before branching or binding. The final iteration reads those initialized pointers. ELSE may null else_block deliberately; that state is checked. Nested macros have their own scoped state.",
+    "hash_output": "Find assigns the output hash whenever it returns an empty insertion slot. Existing-entry hits need not assign it, and AddOrFind reads the output only after confirming that the returned entry is empty. The graph optimizer is single-threaded, with no intervening mutation between return and this check."
+  },
+  "controls": {
+    "checks_per_run": 17728000,
+    "normal": 0,
+    "valgrind": 0,
+    "allocations_freed": 28002,
+    "lost_bytes": 0,
+    "errors": 0,
+    "coverage": "All 256 binding masks, eight conditional/nested/ELSE combinations and 1000 repetitions use the actual assembler macros and unchanged helper bodies. The unchanged Find body is exercised with zero hashes, collision chains wrapping the table boundary, repeated hits, reverse-order lookups and null output pointers. Missing-entry paths must produce a hash; existing-entry paths preserve the sentinel and never consume it.",
+    "limitations": "The small controls compile without warnings. They prove guarded state behavior; they do not reproduce the full optimizing-build diagnostics. Graph allocation and operation interfaces are observable test stubs; unchanged method bodies and source hashes are recorded."
+  },
+  "source": "https://github.com/nodejs/node/tree/v24.18.1/deps/v8/src/compiler/turboshaft",
+  "diagnostics": {
+    "assembler.h:1512:21": [
+      "../deps/v8/src/compiler/turboshaft/assembler.h:1512:21: warning: \u2018state.else_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/assembler.h:1512:21: warning: \u2018state.else_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/assembler.h:1512:21: warning: \u2018state.else_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/assembler.h:1512:21: warning: \u2018state.else_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/assembler.h:1512:21: warning: \u2018state.else_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/assembler.h:1512:21: warning: \u2018state.else_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/assembler.h:1512:21: warning: \u2018state.else_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/assembler.h:1512:21: warning: \u2018state.else_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/assembler.h:1512:21: warning: \u2018state.else_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/assembler.h:1512:21: warning: \u2018state.else_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/assembler.h:1512:21: warning: \u2018state.else_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]"
+    ],
+    "index.h:875:52": [
+      "../deps/v8/src/compiler/turboshaft/index.h:875:52: warning: \u2018state.end_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/index.h:875:52: warning: \u2018state.end_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/index.h:875:52: warning: \u2018state.end_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/index.h:875:52: warning: \u2018state.end_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/index.h:875:52: warning: \u2018state.end_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/index.h:875:52: warning: \u2018state.end_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/index.h:875:52: warning: \u2018state.end_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/index.h:875:52: warning: \u2018state.end_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/index.h:875:52: warning: \u2018state.end_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/index.h:875:52: warning: \u2018state.end_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/index.h:875:52: warning: \u2018state.end_block\u2019 may be used uninitialized [-Wmaybe-uninitialized]"
+    ],
+    "value-numbering-reducer.h:213:7": [
+      "../deps/v8/src/compiler/turboshaft/value-numbering-reducer.h:213:7: warning: \u2018hash\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/value-numbering-reducer.h:213:7: warning: \u2018hash\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/value-numbering-reducer.h:213:7: warning: \u2018hash\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/value-numbering-reducer.h:213:7: warning: \u2018hash\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "../deps/v8/src/compiler/turboshaft/value-numbering-reducer.h:213:7: warning: \u2018hash\u2019 may be used uninitialized [-Wmaybe-uninitialized]"
+    ]
+  },
+  "artifacts_sha256": {
+    "evidence/controls/node-graph-state-20261006/control.cc": "995dd24b1e7bcb189b27d699df98c974747e8c10e478f121978af65610cc36a2",
+    "evidence/controls/node-graph-state-20261006/run.py": "c1f9cdbc46b85e4aa2ad82b8344bf791a672b05b3a71065c49b514d1f60f8457",
+    "evidence/controls/node-graph-state-20261006/command.json": "83708474730535eff0a839bb04e5fd3655fbeefd81232a27c8507765632697f9",
+    "evidence/controls/node-graph-state-20261006/source-extracts.json": "a4308f2c28151cc653aeedd0cfa384657ca4a55c393af55ee12b49ed591b315f",
+    "evidence/controls/node-graph-state-20261006/status.json": "9c3c80b7359420013159ac8e91b1ebfc6b8d9dd898c3cbd91fa2b4a9735c1699",
+    "evidence/controls/node-graph-state-20261006/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-graph-state-20261006/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-graph-state-20261006/normal.log.gz": "38f9f6423bd0675aaaca04a7b847f4b9190d95c1650cc4d5a33cb0d6f97fde22",
+    "evidence/controls/node-graph-state-20261006/memory.log.gz": "38f9f6423bd0675aaaca04a7b847f4b9190d95c1650cc4d5a33cb0d6f97fde22",
+    "evidence/controls/node-graph-state-20261006/valgrind.log.gz": "9c32a19ee37e007e76f36dfdc11227172f622ce91e4657f83b4ab293ef39c87c"
+  },
+  "full_build": "evidence/node-obs-flags-candidate5-results-20261006.json",
+  "exclusions": "No compiler suppression, allocation workaround, changing initial values or runtime code changes. Other unclassified warnings remain release gates."
+}
