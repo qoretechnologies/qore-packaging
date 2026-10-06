@@ -27,3 +27,8 @@ OBS revision 3 adds changelog metadata generated from the unchanged release 2
 spec. Its Fedora and Leap native builds pass with the build-environment epoch
 warnings removed. The manifests pin the resulting signed RPMs for installed
 qualification; the earlier revision 2 results remain recorded separately.
+
+Pipeline 59632 passed the revision 3 installed runtime/SDK jobs on Fedora and
+Leap ARM: 32 cases per phase, with 382 Fedora or 336 Leap assertions. Signed
+RPM integrity, core SDK checks and the compiled PostgreSQL example also pass.
+AlmaLinux remains gated by native dependency rebuilds.

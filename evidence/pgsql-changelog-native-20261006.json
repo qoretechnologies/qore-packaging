@@ -170,7 +170,7 @@
   "result": "Native Fedora and Leap x86_64/aarch64 builds pass. Generated .changes is consumed by OBS, and all earlier missing SOURCE_DATE_EPOCH warnings are gone. All four database suites pass on every build.",
   "retained_diagnostics": "Only previously approved service/bootstrap diagnostics: Fedora optional mkbaselibs and Leap polkit-default-privs. No package compiler/test/rpmlint warnings.",
   "ci": "Packaging tools pipeline 59627 passed for 3e918e0a86e9e71a374cece75e1fc50547d4f02b.",
-  "pending": "AlmaLinux blocked by upstream rebuild dependencies; signed installed qualification of revision 3 follows with freshly pinned RPM hashes. Publication disabled.",
+  "pending": "AlmaLinux native/installed builds blocked on dependency rebuilds; whole-repository lifecycle remains a publication gate.",
   "files_sha256": {
     "evidence/controls/pgsql-changelog-native-20261006/fedora-aarch64-_history.txt.gz": "cf46df179762a7b9d3624a3a901bb1f506cd4446d6ef489eeebbfdf1538dfda8",
     "evidence/controls/pgsql-changelog-native-20261006/fedora-aarch64-_log.txt.gz": "367a44e0b0aa2da5f5845fd7cd060f2da31021d5e3ef44b024e9f18e44e26f51",
@@ -180,5 +180,106 @@
     "evidence/controls/pgsql-changelog-native-20261006/leap-aarch64-_log.txt.gz": "dd11116cb16b80763bf0ca437b537d81205a8f95ef32e745a0e40156a4b4ecc8",
     "evidence/controls/pgsql-changelog-native-20261006/leap-x86_64-_history.txt.gz": "2001c777a58652296cd431fe45147c4732d8afa89e3be6131be96420ea3c9f1d",
     "evidence/controls/pgsql-changelog-native-20261006/leap-x86_64-_log.txt.gz": "32957a8fdd783a7fde3a5ebf94ef01664f6078731636a3ec1333c70aa14de917"
+  },
+  "installed_arm": {
+    "fedora": {
+      "pipeline": 59632,
+      "job": 208957,
+      "all_steps_passed": true,
+      "phases": {
+        "runtime": {
+          "cases": 32,
+          "assertions": 382
+        },
+        "sdk": {
+          "cases": 32,
+          "assertions": 382
+        }
+      }
+    },
+    "leap": {
+      "pipeline": 59632,
+      "job": 208958,
+      "all_steps_passed": true,
+      "phases": {
+        "runtime": {
+          "cases": 32,
+          "assertions": 336
+        },
+        "sdk": {
+          "cases": 32,
+          "assertions": 336
+        }
+      }
+    }
+  },
+  "installed_artifacts_sha256": {
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-create-user.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-import-signing-key.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-qualification.json": "731ad919be940892c78701bb0faa9019df1c57dff9f6e42fa3297c55d5caec44",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-runtime-install.log.gz": "7694f94027acbd2a9a0c34054c23cc23ec60258f29f40f1bea0520886b67be80",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-runtime-inventory.log.gz": "e84bb57408ed3aa5e8bcfd1b8d226f9af769650865c79f807cbf4bf8ac79b14e",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-runtime-pgsql-tests.log.gz": "9e3f5950be3db11f73b3af4c20eff4acfb1eb027988fe1de18411798368926a2",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-runtime-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-runtime-runtime.log.gz": "6b011af3bf66cfa81d2e98df7af805f1036b1f25a10206ed71b935822ecab0ad",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-sdk-development.log.gz": "e664f10f2ceb8a35b2f299f86d37a8eaa11fc7d8539b0c586e15bf99901f0907",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-sdk-install.log.gz": "10aa4b251d7ecb75347d184427672e63bbfc203574aa71576d9f72755b6ecc01",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-sdk-inventory.log.gz": "0643e5b174976c269f6586480dbf5d4d4ca3ec2bae39c3dba128a84aff33584e",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-sdk-pgsql-compiled-tests.log.gz": "5d61dfb454adee7f7c2b462c2386124da55a282d11737187ecb0f82dda63334d",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-sdk-pgsql-compiler.log.gz": "ecdeb4ba279dd6b7c3045fd6c43535332697a869dcb673f0827291f3f8eadd9d",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-sdk-pgsql-tests.log.gz": "7c80e7fb1a1f9af8674ca01bbaab6b6fb7aa0349bc4fd8ddf07780f092a63455",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-sdk-remote-debuggers.log.gz": "081fb7a0dc26c5b95e1cbea20a8d73178d548186e1a3048b9e1a03c6250441b3",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-sdk-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-sdk-runtime.log.gz": "6b011af3bf66cfa81d2e98df7af805f1036b1f25a10206ed71b935822ecab0ad",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-sdk-tools.log.gz": "14ed071d3a78b76e9055a0d9e841f339d019d5538b3d8e89bb2167528d0bdb26",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-verify-signature-c-ares.log.gz": "cccc58830c65c5b11cd1c69384f1179fc695d4f9596f8365c4804e76d007aa3e",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-verify-signature-libnghttp2.log.gz": "22896ad1884792b632c6758eed113951e55b2e7732906fa506647ea4f40c4256",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-verify-signature-libqore.log.gz": "551d11892553d21aff429f66b972302f7d9482170b3e7edc90b89070080b12ce",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-verify-signature-ngtcp2-crypto-ossl.log.gz": "0eb5ea2b5358a3591d7e683d467d2649b4cfb1cffc8c9d8cf087661624428df2",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-verify-signature-ngtcp2.log.gz": "163566d5313ce286509bf3895051dcb61a86a8b90ab6b1d01d049c15fa6aa380",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-verify-signature-qore-debug-tools.log.gz": "fb1f272f9f0c4358fbb13005489481743769b52f767f08eb3676fc0da9380a91",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-verify-signature-qore-devel.log.gz": "ab55e279c6f9cd71010954eeb15d30e1fa2603e0d4a866cdf3f6c955e539b65e",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-verify-signature-qore-misc-tools.log.gz": "579a3635d73e1ee0395a237ecd23a6357f44d701ea6c300893c7b0d9aa6b7270",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-verify-signature-qore-pgsql-module.log.gz": "3ba4cce1d4f40e0e64c3b6c19ed1bc15aad5e5e25a64eb00197fa3f9875624e6",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-verify-signature-qore-rpm-macros.log.gz": "6861f46a5eab02a5810c66b73afb65fd560f17ff080556d93b1cbc9f6c73f506",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-verify-signature-qore-stdlib.log.gz": "595e8bd2da7b0fc50395e5dd638538fd2e69fbf3e367084c90081f710c225377",
+    "evidence/controls/pgsql-changelog-installed-20261006/fedora-verify-signature-qore.log.gz": "2c57747f0205094383e976c154a8fe1beece855e94ff44588ab321ebef8051ad",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-create-user.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-import-signing-key.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-qualification.json": "65245751e1fa9babcbd3bc586ccb1f141a94cbc55a559767e35af202150d967b",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-runtime-install.log.gz": "8eb4687ac8aaf878b8327a7f1d39a50d693b7acb1d54b5a96125a2fea75baff6",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-runtime-inventory.log.gz": "7b294e636460f68103baaf6b5ef399e2573db6a6f23dbe94d3ec47965493c55c",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-runtime-pgsql-tests.log.gz": "fac8169c2b718abdc46bef22f5b8fc1bf9f8df3d41821bc0800ba496739f32a6",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-runtime-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-runtime-runtime.log.gz": "b03d26a1db1a726c819744da05d932e7377450e732f8632ae70cd0131c2cfe9c",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-sdk-development.log.gz": "0d93c3f8ae3490275d6d5d38c29824744075a6b5e4c707f25b27a582bbd25851",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-sdk-install.log.gz": "f3ec73c46f44a1fe483acb2b71431c73ddb102f9455ed003332b93fef1dcebd3",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-sdk-inventory.log.gz": "4afbc4e35fa093ad33df0837996a505ffe07aa986055ebd705a9453d7dc41651",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-sdk-pgsql-compiled-tests.log.gz": "67723066557951adf21c63f0b403b70e819bde315a34a92313bb1eca20fa5dec",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-sdk-pgsql-compiler.log.gz": "abcbf13e7575b44f29a86163ad3b85896c1f92f6d4108144c727984c524d6b75",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-sdk-pgsql-tests.log.gz": "a66683951d638a8f993d1e2673f8bb02e1274848031b38c8050ef20de8aaf8fa",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-sdk-remote-debuggers.log.gz": "081fb7a0dc26c5b95e1cbea20a8d73178d548186e1a3048b9e1a03c6250441b3",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-sdk-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-sdk-runtime.log.gz": "b03d26a1db1a726c819744da05d932e7377450e732f8632ae70cd0131c2cfe9c",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-sdk-tools.log.gz": "14ed071d3a78b76e9055a0d9e841f339d019d5538b3d8e89bb2167528d0bdb26",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-libarrow2500.log.gz": "09ae083966b6b779a466c28e13d5d8e6fded1d05c33c9fe876e88ee4ca794450",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-libbson2.log.gz": "7062c62c985b55472aa872a17841e9bf65e9445f932baae8043e185c96304a09",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-libcares2.log.gz": "ade18e8b6ee53ca58b5f1d2bdfddeff0f2c4f11522d2d2bbcdb7528ae287e3a1",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-libmongoc2.log.gz": "1b6d70318ce8da47c2fdcdccf78cea69530b7f97b135ab5abd4201ec8f497595",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-libnghttp2-14.log.gz": "98d56cd1fb1cb790a48761b44e798c0a7cd312f9a8bd483649b24f07c4432987",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-libnghttp3-9.log.gz": "4c8be99ea1e306572493574d841aa2070389f1313e805dd1af08a9d716ec58cf",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-libngtcp2-16.log.gz": "8d8b5696f8a9cafb4885e2df85be90335283ee36213ec9016141b50d72223721",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-libngtcp2_crypto_ossl0.log.gz": "3dfb88a4cf8b22d3c6b2795de5b7b563677b7825a72af4befa0bb853592d0914",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-libonnxruntime1.log.gz": "6178292bda645cf93769035950288a59383c3c04a27cd024658b82049cbfc4b0",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-libparquet2500.log.gz": "476c40b0ee627e4142192aacfc050276d17af576f04200870d034c7f29127ffc",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-libqore20.log.gz": "c91c27a1d650cc076911f02a0a7e387ff38d6853597ca715368f1e67780b9583",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-libtree-sitter0_26.log.gz": "63d6ef26c52e79fc924567f9b002e1eb4691be0c89ae4065fad69a13aa5ead1d",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-qore-debug-tools.log.gz": "769262645eec902251e5a1fdfabe8115df508ce0a598a20ca36a72662a737460",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-qore-devel.log.gz": "cdc91db11f2c5bbe1c99ae077808afcd669ac831ffa75c4f7aac2c408e25e241",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-qore-misc-tools.log.gz": "12f860e62d9fa58aac5999dc2a918b32716f1818905d7d7dfc043ed082e2e579",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-qore-pgsql-module.log.gz": "27820fc57b1bfe1fbe75af3971e235c1db32317dc167a0d2b22e79b8885ef891",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-qore-rpm-macros.log.gz": "d6d165c1a3e69b9b3a8d7eb15cd0bc4b823e9d5e9ca3e3f558081f1575d2faa2",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-qore-stdlib.log.gz": "75776ac5ec63b94ea0528bc9fa4a40635dc2d71cae9b19a40bab1dd7f4ab3f19",
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-qore.log.gz": "1a70e8bc76a3a9c80745a1762c01b85168906219e14738f0b7b92def0b3acb6c"
   }
 }
