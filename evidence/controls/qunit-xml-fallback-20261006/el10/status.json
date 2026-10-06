@@ -1,0 +1,27 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/qunit-xml-fallback-20261006:/control:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/qunit-xml-fallback-20261006/el10:/output",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/el10-xml-final-build-2/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.el10.x86_64.rpm:/xml.rpm:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/el10-zmq-monitor-canonical-20261006/rpmbuild/RPMS/x86_64/qore-zmq-module-1.2.0-5.el10.x86_64.rpm:/zmq.rpm:ro",
+    "sha256:007667119804e39c3655bc45ee3a09c38ea4db0e2d724674353f9de5303c2bf4",
+    "python3",
+    "-B",
+    "-W",
+    "error",
+    "/control/run.py"
+  ],
+  "xml_rpm_sha256": "78dd32e1849a26c0fb1cb9e9db87f376c8a395932b73d0e767bf4a440e4e250d",
+  "zmq_rpm_sha256": "c5033c8c8d81b8c0e6aeaa87e9015891030d668edec49b6e3663a963e1c5b46f"
+}

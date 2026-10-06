@@ -209,7 +209,8 @@ def module_commands(name, phase, directory, binary=None, driver=None, installed_
             ('tests', ['env', 'QORE_RPM_TEST_TMP=' + str(directory / 'runtime-fixture'),
                        str(directory / 'rpm/tests-installed-runtime')]),
             ('sandbox-errors', ['python3', '-B', '-W', 'error',
-                                str(directory / 'test/run-sandbox-errors.py'), '--module', str(binary)]),
+                                str(directory / 'test/run-sandbox-errors.py'), '--module', str(binary),
+                                '--allow-qunit-xml-fallback']),
         ]
         if phase == 'sdk':
             commands.append(('compiler', [str(directory / 'debian/tests/compiler')]))

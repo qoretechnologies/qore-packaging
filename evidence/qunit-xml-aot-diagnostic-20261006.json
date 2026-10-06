@@ -1,0 +1,282 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "root_cause": "QUnit imports optional xml >= 1.3. Its core RPM AOT was compiled without XML; installed XML selects QUnit source to expose those optional features. The strict sandbox stderr checker previously treated this intentional loader selection as a sandbox diagnostic.",
+  "controls": {
+    "fedora": [
+      {
+        "name": "without-xml",
+        "command": [
+          "setpriv",
+          "--reuid=1019",
+          "--regid=100",
+          "--clear-groups",
+          "--reset-env",
+          "qore",
+          "-b",
+          "--enable-debug",
+          "/control/load.qr"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "without-xml-sandbox",
+        "command": [
+          "setpriv",
+          "--reuid=1019",
+          "--regid=100",
+          "--clear-groups",
+          "--reset-env",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/control/run-sandbox-errors.py",
+          "--module",
+          "/usr/lib64/qore-modules/zmq-api-2.0.qmod"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "with-xml",
+        "command": [
+          "setpriv",
+          "--reuid=1019",
+          "--regid=100",
+          "--clear-groups",
+          "--reset-env",
+          "qore",
+          "-b",
+          "--enable-debug",
+          "/control/load.qr"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "with-xml-sandbox-allowance",
+        "command": [
+          "setpriv",
+          "--reuid=1019",
+          "--regid=100",
+          "--clear-groups",
+          "--reset-env",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/control/run-sandbox-errors.py",
+          "--module",
+          "/usr/lib64/qore-modules/zmq-api-2.0.qmod",
+          "--allow-qunit-xml-fallback"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "leap": [
+      {
+        "name": "without-xml",
+        "command": [
+          "setpriv",
+          "--reuid=1019",
+          "--regid=100",
+          "--clear-groups",
+          "--reset-env",
+          "qore",
+          "-b",
+          "--enable-debug",
+          "/control/load.qr"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "without-xml-sandbox",
+        "command": [
+          "setpriv",
+          "--reuid=1019",
+          "--regid=100",
+          "--clear-groups",
+          "--reset-env",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/control/run-sandbox-errors.py",
+          "--module",
+          "/usr/lib64/qore-modules/zmq-api-2.0.qmod"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "with-xml",
+        "command": [
+          "setpriv",
+          "--reuid=1019",
+          "--regid=100",
+          "--clear-groups",
+          "--reset-env",
+          "qore",
+          "-b",
+          "--enable-debug",
+          "/control/load.qr"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "with-xml-sandbox-allowance",
+        "command": [
+          "setpriv",
+          "--reuid=1019",
+          "--regid=100",
+          "--clear-groups",
+          "--reset-env",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/control/run-sandbox-errors.py",
+          "--module",
+          "/usr/lib64/qore-modules/zmq-api-2.0.qmod",
+          "--allow-qunit-xml-fallback"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "el10": [
+      {
+        "name": "without-xml",
+        "command": [
+          "setpriv",
+          "--reuid=1019",
+          "--regid=100",
+          "--clear-groups",
+          "--reset-env",
+          "qore",
+          "-b",
+          "--enable-debug",
+          "/control/load.qr"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "without-xml-sandbox",
+        "command": [
+          "setpriv",
+          "--reuid=1019",
+          "--regid=100",
+          "--clear-groups",
+          "--reset-env",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/control/run-sandbox-errors.py",
+          "--module",
+          "/usr/lib64/qore-modules/zmq-api-2.0.qmod"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "with-xml",
+        "command": [
+          "setpriv",
+          "--reuid=1019",
+          "--regid=100",
+          "--clear-groups",
+          "--reset-env",
+          "qore",
+          "-b",
+          "--enable-debug",
+          "/control/load.qr"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "with-xml-sandbox-allowance",
+        "command": [
+          "setpriv",
+          "--reuid=1019",
+          "--regid=100",
+          "--clear-groups",
+          "--reset-env",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/control/run-sandbox-errors.py",
+          "--module",
+          "/usr/lib64/qore-modules/zmq-api-2.0.qmod",
+          "--allow-qunit-xml-fallback"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  "native_arm": {
+    "pipeline": 59584,
+    "jobs": {
+      "fedora": 208890,
+      "leap": 208891,
+      "el10": 208892
+    },
+    "result": "All eighteen runtime suites passed on all three distributions, including seven sandbox cases / 1021 assertions; the separate sandbox checker failed only on the exact QUnit/XML AOT-MODULE-STALE diagnostic. SDK phase not reached."
+  },
+  "proposal": {
+    "option": "--allow-qunit-xml-fallback",
+    "scope": "At most one complete exact QUnit warning with matching installed binary/source versions and the xml >= 1.3 optional-feature reason. The warning remains in stderr. Default remains strict. Nonzero Qore exit status, sandbox errors, repeated warnings, unrelated modules/reasons/paths and additional stderr all fail.",
+    "unit_tests": "Four methods cover both modes, retained output, failed Qore exit statuses and twelve negative diagnostic variants."
+  },
+  "approval": {
+    "status": "approved",
+    "date": "2026-10-06",
+    "user_response": "Allow this exact diagnostic and checker allowance",
+    "scope": "QUnit optional-XML AOT source fallback and opt-in exact allowance in the ZeroMQ sandbox fixture; no runtime loader change or stderr suppression."
+  },
+  "artifacts_sha256": {
+    "evidence/controls/qunit-xml-fallback-20261006/el10/checks.json": "c92c2995673864246be886732b087e1404d5838c2e4058f720b286d4728efbeb",
+    "evidence/controls/qunit-xml-fallback-20261006/el10/native-arm-original.log.gz": "2f2b716194f1122c4aa4f7499566d5abae29924b71c12ea283c368a57333ee7e",
+    "evidence/controls/qunit-xml-fallback-20261006/el10/run.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/qunit-xml-fallback-20261006/el10/status.json": "b1f91888c5d924eca69ef9d86897f42edefb93aa0e9efd6cbdb474b8ed0c2f0b",
+    "evidence/controls/qunit-xml-fallback-20261006/el10/with-xml-sandbox-allowance.stderr": "61c924c7634cfe8c90d4aebcf39833a0754ce767bb615726ecdd0edfeb945c15",
+    "evidence/controls/qunit-xml-fallback-20261006/el10/with-xml-sandbox-allowance.stdout": "cdda9323a4a13cd6ae9f48f9bd8de2de96f0e9fccb5f0d078583c076e33062c8",
+    "evidence/controls/qunit-xml-fallback-20261006/el10/with-xml.stderr": "61c924c7634cfe8c90d4aebcf39833a0754ce767bb615726ecdd0edfeb945c15",
+    "evidence/controls/qunit-xml-fallback-20261006/el10/with-xml.stdout": "a8e9122d33a9b09ddf6eb7853d253abaf5f681a7454ea59d880c51688590dfa5",
+    "evidence/controls/qunit-xml-fallback-20261006/el10/without-xml-sandbox.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/qunit-xml-fallback-20261006/el10/without-xml-sandbox.stdout": "cdda9323a4a13cd6ae9f48f9bd8de2de96f0e9fccb5f0d078583c076e33062c8",
+    "evidence/controls/qunit-xml-fallback-20261006/el10/without-xml.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/qunit-xml-fallback-20261006/el10/without-xml.stdout": "a8e9122d33a9b09ddf6eb7853d253abaf5f681a7454ea59d880c51688590dfa5",
+    "evidence/controls/qunit-xml-fallback-20261006/fedora/checks.json": "c92c2995673864246be886732b087e1404d5838c2e4058f720b286d4728efbeb",
+    "evidence/controls/qunit-xml-fallback-20261006/fedora/native-arm-original.log.gz": "8fa8f2a9cde03e94956bc1516fb116e072a8f0fc483c8befd8e3e33b93b053d1",
+    "evidence/controls/qunit-xml-fallback-20261006/fedora/run.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/qunit-xml-fallback-20261006/fedora/status.json": "9a9845990caa4e822a2676c44be7b19e459a0eb8820b044e3a6904061483e75b",
+    "evidence/controls/qunit-xml-fallback-20261006/fedora/with-xml-sandbox-allowance.stderr": "61c924c7634cfe8c90d4aebcf39833a0754ce767bb615726ecdd0edfeb945c15",
+    "evidence/controls/qunit-xml-fallback-20261006/fedora/with-xml-sandbox-allowance.stdout": "cdda9323a4a13cd6ae9f48f9bd8de2de96f0e9fccb5f0d078583c076e33062c8",
+    "evidence/controls/qunit-xml-fallback-20261006/fedora/with-xml.stderr": "61c924c7634cfe8c90d4aebcf39833a0754ce767bb615726ecdd0edfeb945c15",
+    "evidence/controls/qunit-xml-fallback-20261006/fedora/with-xml.stdout": "a8e9122d33a9b09ddf6eb7853d253abaf5f681a7454ea59d880c51688590dfa5",
+    "evidence/controls/qunit-xml-fallback-20261006/fedora/without-xml-sandbox.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/qunit-xml-fallback-20261006/fedora/without-xml-sandbox.stdout": "cdda9323a4a13cd6ae9f48f9bd8de2de96f0e9fccb5f0d078583c076e33062c8",
+    "evidence/controls/qunit-xml-fallback-20261006/fedora/without-xml.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/qunit-xml-fallback-20261006/fedora/without-xml.stdout": "a8e9122d33a9b09ddf6eb7853d253abaf5f681a7454ea59d880c51688590dfa5",
+    "evidence/controls/qunit-xml-fallback-20261006/leap/checks.json": "c92c2995673864246be886732b087e1404d5838c2e4058f720b286d4728efbeb",
+    "evidence/controls/qunit-xml-fallback-20261006/leap/native-arm-original.log.gz": "189467d85dd76a30111fa7f3968675310a7e8bedebbaad02474f352769eecc76",
+    "evidence/controls/qunit-xml-fallback-20261006/leap/run.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/qunit-xml-fallback-20261006/leap/status.json": "fd898969a6185e787ebd21a625f9639ed21ea40791c715f749cdb02dee8f7d37",
+    "evidence/controls/qunit-xml-fallback-20261006/leap/with-xml-sandbox-allowance.stderr": "61c924c7634cfe8c90d4aebcf39833a0754ce767bb615726ecdd0edfeb945c15",
+    "evidence/controls/qunit-xml-fallback-20261006/leap/with-xml-sandbox-allowance.stdout": "cdda9323a4a13cd6ae9f48f9bd8de2de96f0e9fccb5f0d078583c076e33062c8",
+    "evidence/controls/qunit-xml-fallback-20261006/leap/with-xml.stderr": "61c924c7634cfe8c90d4aebcf39833a0754ce767bb615726ecdd0edfeb945c15",
+    "evidence/controls/qunit-xml-fallback-20261006/leap/with-xml.stdout": "a8e9122d33a9b09ddf6eb7853d253abaf5f681a7454ea59d880c51688590dfa5",
+    "evidence/controls/qunit-xml-fallback-20261006/leap/without-xml-sandbox.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/qunit-xml-fallback-20261006/leap/without-xml-sandbox.stdout": "cdda9323a4a13cd6ae9f48f9bd8de2de96f0e9fccb5f0d078583c076e33062c8",
+    "evidence/controls/qunit-xml-fallback-20261006/leap/without-xml.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/qunit-xml-fallback-20261006/leap/without-xml.stdout": "a8e9122d33a9b09ddf6eb7853d253abaf5f681a7454ea59d880c51688590dfa5",
+    "evidence/controls/qunit-xml-fallback-20261006/load.qr": "5c4430f2ff1d7026111cba3f7f756d66c190ed528eecd3d22cffccf074c71e5f",
+    "evidence/controls/qunit-xml-fallback-20261006/run-sandbox-errors.py": "b5e0475ee2742f5f138e067c831f699ff6173b72d14bef984f8b5c893812a49c",
+    "evidence/controls/qunit-xml-fallback-20261006/run.py": "5d298a0a5ec89e0aeeff6e00f04f606dcd7415b6c9156c47a3d290fe46bd5d27",
+    "evidence/controls/qunit-xml-fallback-20261006/test_sandbox_error_runner.py": "6dd012bbc78d1311b263c23075136aeb0a0a459d24d17f4a90d3ce0119c0e60c",
+    "evidence/controls/qunit-xml-fallback-20261006/unit-tests.log": "e9e09af63912a6803caa1b65271b83e498ce0be76e8515a4bdd812f44fc1098f",
+    "evidence/controls/qunit-xml-fallback-20261006/zmq-sandbox-errors.qtest": "2cca912db04641c18cb3d86b3c6dca395342b9fe14fd37dbe54dfff2b5bb2ce8"
+  },
+  "fixture_commit": "93cfbdcf1471b77d137ac3428278a29c608155f7",
+  "rpm_source_commit": "add9435ba62913458651bc04a4332c73a3ef3876",
+  "implementation": "tools/qualify-installed.py enables the approved exact allowance in both runtime and SDK phases. The RPMs remain the qualified release 5 artifacts; only the independently pinned qualification fixtures change."
+}

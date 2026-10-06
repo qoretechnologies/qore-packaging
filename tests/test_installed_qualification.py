@@ -410,7 +410,8 @@ os.write(2, b'diagnostic\\n')
             ('tests', ['env', 'QORE_RPM_TEST_TMP=/tmp/ZeroMQ fixtures/runtime-fixture',
                        '/tmp/ZeroMQ fixtures/rpm/tests-installed-runtime']),
             ('sandbox-errors', ['python3', '-B', '-W', 'error',
-                '/tmp/ZeroMQ fixtures/test/run-sandbox-errors.py', '--module', str(binary)]),
+                '/tmp/ZeroMQ fixtures/test/run-sandbox-errors.py', '--module', str(binary),
+                '--allow-qunit-xml-fallback']),
         ])
         self.assertEqual(module.module_commands('zmq', 'sdk', directory, binary), runtime + [
             ('compiler', ['/tmp/ZeroMQ fixtures/debian/tests/compiler'])])

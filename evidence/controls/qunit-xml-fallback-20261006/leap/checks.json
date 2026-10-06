@@ -1,0 +1,69 @@
+[
+  {
+    "name": "without-xml",
+    "command": [
+      "setpriv",
+      "--reuid=1019",
+      "--regid=100",
+      "--clear-groups",
+      "--reset-env",
+      "qore",
+      "-b",
+      "--enable-debug",
+      "/control/load.qr"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "without-xml-sandbox",
+    "command": [
+      "setpriv",
+      "--reuid=1019",
+      "--regid=100",
+      "--clear-groups",
+      "--reset-env",
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "/control/run-sandbox-errors.py",
+      "--module",
+      "/usr/lib64/qore-modules/zmq-api-2.0.qmod"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "with-xml",
+    "command": [
+      "setpriv",
+      "--reuid=1019",
+      "--regid=100",
+      "--clear-groups",
+      "--reset-env",
+      "qore",
+      "-b",
+      "--enable-debug",
+      "/control/load.qr"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "with-xml-sandbox-allowance",
+    "command": [
+      "setpriv",
+      "--reuid=1019",
+      "--regid=100",
+      "--clear-groups",
+      "--reset-env",
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "/control/run-sandbox-errors.py",
+      "--module",
+      "/usr/lib64/qore-modules/zmq-api-2.0.qmod",
+      "--allow-qunit-xml-fallback"
+    ],
+    "exit_code": 0
+  }
+]

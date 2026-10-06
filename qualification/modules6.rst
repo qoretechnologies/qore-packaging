@@ -6,8 +6,10 @@ Copyright 2026 Qore Technologies, s.r.o.
 The installed runner supports ZeroMQ's complete five-suite test inventory in
 both runtime and SDK phases. Its feature check requires draft socket APIs,
 steerable proxies and CURVE key generation. A separate sandbox wrapper loads
-the exact installed native module and requires empty stderr after repeatedly
-catching denied operations. Missing or ambiguous installed modules fail before
+the exact installed native module and rejects unexpected stderr after repeatedly
+catching denied operations. It opts into the approved, exact QUnit/XML AOT source
+fallback diagnostic, retained in the logs. Additional stderr and failed Qore
+exit statuses remain errors. Missing or ambiguous installed modules fail before
 the wrapper runs. The SDK phase compiles and executes a binary/string multipart
 message round trip using the installed metadata.
 
@@ -30,3 +32,7 @@ Select these jobs explicitly with ``RPM_NATIVE_QUALIFICATION=modules6``.
 ``el10``. Ordinary packaging commits do not launch the ARM qualification jobs.
 Native source builds pass on all six targets; signed installed qualification
 and repository lifecycle checks remain separate publication gates.
+
+The sandbox checker fixtures include the tested diagnostic allowance in a later
+Git revision than the release 5 RPMs. These Python-only fixture changes do not
+alter the installed native artifacts; fixture and RPM hashes are pinned separately.
