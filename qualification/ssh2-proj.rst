@@ -22,8 +22,13 @@ inputs retain the three exact distribution-library messages approved on
 The local command controls exercise both phases outside the checkout on all
 three distributions. They use SDK images to validate the commands and fixtures;
 clean minimal-runtime separation and signed native ARM RPM verification remain
-separate CI gates. Native manifest jobs will be added once the updated OBS
-artifacts have completed and their bytes have been verified.
+separate CI gates. The Fedora and Leap ARM manifests pin the completed OBS
+artifacts, including GEOS, and the exact source fixtures. Set
+``RPM_NATIVE_QUALIFICATION=ssh2-proj`` to run both native installed-package jobs,
+or also set ``RPM_NATIVE_TARGET=fedora`` or ``leap`` to select one distribution.
+These jobs start from clean distribution images, verify signatures and hashes,
+and run runtime checks before installing development packages. AlmaLinux ARM
+qualification remains pending completion of its dependency rebuilds.
 
 Both packages retain full AOT DWARF, debug sources and compiler metadata while
 omitting the optional LLVM name indexes, as approved on 2026-10-06. Paired
