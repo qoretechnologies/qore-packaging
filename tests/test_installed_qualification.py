@@ -176,6 +176,9 @@ os.write(2, b'diagnostic\\n')
 
     def add_modules(self):
         self.manifest['modules'] = []
+        self.manifest['packages'].append({'name': 'qore-xml-module',
+            'filename': 'qore-xml-module-1-1.aarch64.rpm', 'phase': 'runtime',
+            'sha256': 'f' * 64, 'url': 'https://example.org/xml'})
         for name in module.MODULE_FIXTURES:
             commit = 'd' * 40
             self.manifest['modules'].append({'name': name, 'commit': commit,
@@ -189,6 +192,37 @@ os.write(2, b'diagnostic\\n')
     def test_complete_module_manifest(self):
         self.add_modules()
         self.assertEqual(module.validate(self.manifest), self.manifest)
+
+    def test_xmlsec_requires_pinned_xml_dependency_before_installation(self):
+        self.add_modules()
+        for mutation in ('missing', 'sdk', 'unhashed', 'insecure'):
+            manifest = copy.deepcopy(self.manifest)
+            dependency = next(p for p in manifest['packages'] if p['name'] == 'qore-xml-module')
+            if mutation == 'missing':
+                manifest['packages'].remove(dependency)
+            elif mutation == 'sdk':
+                dependency['phase'] = 'sdk'
+            elif mutation == 'unhashed':
+                dependency.pop('sha256')
+            else:
+                dependency['url'] = 'http://example.org/xml'
+            with self.subTest(mutation=mutation), patch.object(module.subprocess, 'run') as run:
+                with self.assertRaises(ValueError):
+                    module.qualify(manifest, 'not-created')
+                run.assert_not_called()
+
+    def test_xmlsec_uses_installed_runner_and_complete_key_fixtures(self):
+        directory = Path('/tmp/XML Security fixtures')
+        runtime = module.module_commands('xmlsec', 'runtime', directory)
+        self.assertEqual(runtime, [('tests', ['python3', '-B', '-W', 'error',
+            '/tmp/XML Security fixtures/rpm/run-tests.py', '--installed'])])
+        self.assertEqual(module.module_commands('xmlsec', 'sdk', directory),
+                         [('tests', runtime[0][1] + ['--compiler'])])
+        self.assertEqual(module.MODULE_FIXTURES['xmlsec'], {'rpm/run-tests.py',
+            'debian/tests/compiler', 'test/xmlsec.qtest', 'test/test-cert.pem', 'test/test-key.pem'})
+        for family in ('fedora', 'suse', 'el'):
+            self.assertEqual(module.module_dependencies('xmlsec', 'runtime', family), [])
+            self.assertEqual(module.module_dependencies('xmlsec', 'sdk', family), [])
 
     def test_module_fixtures_reject_unpinned_incomplete_or_crossed_sources(self):
         self.add_modules()

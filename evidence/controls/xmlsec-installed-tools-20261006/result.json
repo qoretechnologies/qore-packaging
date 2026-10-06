@@ -1,0 +1,29 @@
+[
+  {
+    "name": "runtime-xmlsec-tests",
+    "cwd": "/work/runtime-xmlsec",
+    "command": [
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "/work/runtime-xmlsec/rpm/run-tests.py",
+      "--installed"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "sdk-xmlsec-tests",
+    "cwd": "/work/sdk-xmlsec",
+    "command": [
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "/work/sdk-xmlsec/rpm/run-tests.py",
+      "--installed",
+      "--compiler"
+    ],
+    "exit_code": 0
+  }
+]

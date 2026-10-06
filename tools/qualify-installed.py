@@ -18,6 +18,8 @@ from packaging import fetch_source
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'xmlsec': {'rpm/run-tests.py', 'debian/tests/compiler', 'test/xmlsec.qtest',
+               'test/test-cert.pem', 'test/test-key.pem'},
     'zmq': {'rpm/tests-installed-runtime', 'rpm/features.qr', 'debian/tests/compiler',
             'test/run-sandbox-errors.py'}
         | {'test/' + name + '.qtest' for name in
@@ -120,6 +122,8 @@ def validate_modules(manifest):
             raise ValueError('Module fixture URLs must match their pinned repository revision')
         if packages.get('qore-' + name + '-module', {}).get('phase') != 'runtime':
             raise ValueError('Missing module runtime RPM')
+        if name == 'xmlsec' and packages.get('qore-xml-module', {}).get('phase') != 'runtime':
+            raise ValueError('XML Security requires a pinned XML runtime RPM')
         fixtures.extend(files)
     return fixtures
 
@@ -210,7 +214,7 @@ def module_commands(name, phase, directory, binary=None, driver=None, installed_
         if phase == 'sdk':
             commands.append(('compiler', [str(directory / 'debian/tests/compiler')]))
         return commands
-    if name == 'ssh':
+    if name in ('ssh', 'xmlsec'):
         command = ['python3', '-B', '-W', 'error', str(directory / 'rpm/run-tests.py'), '--installed']
         if phase == 'sdk':
             command.append('--compiler')

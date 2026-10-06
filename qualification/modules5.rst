@@ -3,6 +3,12 @@ SSH and VSS installed ARM qualification
 
 Copyright 2026 Qore Technologies, s.r.o.
 
+Pipeline 59562 passes on all three native ARM targets with the corrected SSH
+client dependency. Each runtime and SDK phase runs 1,483 Qore cases across the
+core and sixteen modules. Assertion totals are 10,522 on Fedora, 10,518 on Leap
+and 10,505 on AlmaLinux. The pinned results and complete log hashes are in
+``evidence/modules5-native-arm-results-20261006.json``.
+
 Run a pipeline on the committed packaging revision with
 ``RPM_NATIVE_QUALIFICATION=modules5``. Optionally set ``RPM_NATIVE_TARGET`` to
 ``fedora``, ``leap`` or ``el10``. The three ``modules5-*-aarch64.json`` manifests

@@ -1,0 +1,19 @@
+[
+  "docker",
+  "run",
+  "--rm",
+  "--init",
+  "--network",
+  "none",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/results:/results:ro",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/work/xmlsec-command-integration-20261006:/work",
+  "sha256:cdb9829a821bb1c3777bf0a118055676a20f3343089bfa4453634c3540f01d2e",
+  "sh",
+  "-eu",
+  "-c",
+  "rpm -U --replacepkgs \"$@\"\nexec setpriv --reuid=1019 --regid=100 --clear-groups --reset-env python3 -B -W error /work/run.py",
+  "install",
+  "/results/fedora-xmlsec-metadata-canonical-20261006/rpmbuild/RPMS/x86_64/qore-xmlsec-module-1.0.1-3.fc44.x86_64.rpm"
+]
