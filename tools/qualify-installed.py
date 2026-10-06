@@ -18,6 +18,10 @@ from packaging import fetch_source
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'zmq': {'rpm/tests-installed-runtime', 'rpm/features.qr', 'debian/tests/compiler',
+            'test/run-sandbox-errors.py'}
+        | {'test/' + name + '.qtest' for name in
+           ('zmq', 'zmq-client-server', 'zmq-comprehensive', 'zmq-stress', 'zmq-sandbox-errors')},
     'ssh': {'rpm/run-tests.py', 'debian/tests/compiler', 'test/TestLoggerInterface.qm',
             'test/data/ssh_client_ed25519_key', 'test/data/ssh_client_ed25519_key.pub',
             'test/data/ssh_host_ed25519_key'}
@@ -168,6 +172,8 @@ def module_dependencies(name, phase, family):
         raise ValueError('Unknown module suite or phase')
     if family not in ('fedora', 'suse', 'el'):
         raise ValueError('Unsupported fixture distribution')
+    if name == 'ssh' and phase == 'runtime':
+        return ['openssh-clients']
     if name == 'process':
         return ['procps' if family == 'suse' else 'procps-ng']
     if name == 'odbc':
@@ -192,6 +198,18 @@ def module_commands(name, phase, directory, binary=None, driver=None, installed_
     """Fixed commands only; manifests select reviewed suites, never shell text."""
     if name not in MODULE_FIXTURES or phase not in ('runtime', 'sdk'):
         raise ValueError('Unknown module suite or phase')
+    if name == 'zmq':
+        if binary is None or not binary.is_absolute() or binary.suffix != '.qmod':
+            raise ValueError('ZeroMQ checks require the installed module path')
+        commands = [
+            ('tests', ['env', 'QORE_RPM_TEST_TMP=' + str(directory / 'runtime-fixture'),
+                       str(directory / 'rpm/tests-installed-runtime')]),
+            ('sandbox-errors', ['python3', '-B', '-W', 'error',
+                                str(directory / 'test/run-sandbox-errors.py'), '--module', str(binary)]),
+        ]
+        if phase == 'sdk':
+            commands.append(('compiler', [str(directory / 'debian/tests/compiler')]))
+        return commands
     if name == 'ssh':
         command = ['python3', '-B', '-W', 'error', str(directory / 'rpm/run-tests.py'), '--installed']
         if phase == 'sdk':
@@ -434,7 +452,7 @@ def qualify(manifest, output):
                     files = ''
                     if name in MODULE_PRELOADS:
                         files = subprocess.check_output(['rpm', '-ql', 'qore-' + name + '-module'], text=True)
-                    if phase == 'sdk' and name in ('process', 'odbc'):
+                    if name == 'zmq' or (phase == 'sdk' and name in ('process', 'odbc')):
                         files = subprocess.check_output(['rpm', '-ql', 'qore-' + name + '-module'], text=True)
                         binary = installed_module_file(name, files, '.qmod')
                     if phase == 'sdk' and name == 'odbc':

@@ -14,7 +14,9 @@ manifest entries cannot supply arbitrary commands. Both modules run as an
 unprivileged user in the minimal runtime phase and again after SDK installation.
 
 SSH exercises fourteen installed-module suites and six examples using local
-SSH/SFTP services and public fixture keys. The fixture inventory also contains
+SSH/SFTP services and public fixture keys. The runtime fixture installs
+``openssh-clients`` for the real SSH/SFTP client commands, without pulling in a
+compiler or SDK. The fixture inventory also contains
 ``Scaffold.qtest`` because the module's runner verifies its complete source test
 inventory; that source-layout check applies only to source builds and is omitted
 by the runner's installed mode. All four packaged AOT modules are loaded

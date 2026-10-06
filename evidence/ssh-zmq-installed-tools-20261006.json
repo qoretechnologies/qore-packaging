@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "ssh_root_cause": "Signed minimal ARM runtime images omit openssh-clients. SshServer.qtest invokes absolute /usr/bin/ssh and /usr/bin/sftp; failed client startup leaves acceptSession with no peer, eventually reaching unchanged suite deadline. The RPM build spec already requires these clients for its source tests.",
+  "ssh_correction": "Add openssh-clients as a runtime fixture dependency on all three families. No compiler or SDK dependency and no timeout change. Existing five local SSH/VSS installed checks pass with this distribution package available. Native repeat required.",
+  "zmq_checks": [
+    {
+      "name": "runtime-zmq-tests",
+      "cwd": "/work/runtime-zmq",
+      "command": [
+        "env",
+        "QORE_RPM_TEST_TMP=/work/runtime-zmq/runtime-fixture",
+        "/work/runtime-zmq/rpm/tests-installed-runtime"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-zmq-sandbox-errors",
+      "cwd": "/work/runtime-zmq",
+      "command": [
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "/work/runtime-zmq/test/run-sandbox-errors.py",
+        "--module",
+        "/usr/lib64/qore-modules/zmq-api-2.0.qmod"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-zmq-tests",
+      "cwd": "/work/sdk-zmq",
+      "command": [
+        "env",
+        "QORE_RPM_TEST_TMP=/work/sdk-zmq/runtime-fixture",
+        "/work/sdk-zmq/rpm/tests-installed-runtime"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-zmq-sandbox-errors",
+      "cwd": "/work/sdk-zmq",
+      "command": [
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "/work/sdk-zmq/test/run-sandbox-errors.py",
+        "--module",
+        "/usr/lib64/qore-modules/zmq-api-2.0.qmod"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-zmq-compiler",
+      "cwd": "/work/sdk-zmq",
+      "command": [
+        "/work/sdk-zmq/debian/tests/compiler"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "zmq_log_sha256": "d53a1d8b597e79579ca94c84a22424db825e8ba63bc6301f39e84e0a5779cf27",
+  "tests": {
+    "unit": 161,
+    "all_pass": true,
+    "log": "results/ssh-runtime-dependency-tests-20261006.log"
+  },
+  "negative_controls": "Both ZeroMQ phases reject missing, relative and non-qmod module paths; complete pinned fixture inventories use existing negative validation tests. Initial misplaced command branch was caught by seven failures and corrected before this commit.",
+  "qualification_status": "Native SSH rerun and final ZeroMQ signed ARM manifest execution pending."
+}

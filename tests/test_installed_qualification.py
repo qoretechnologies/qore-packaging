@@ -338,6 +338,9 @@ os.write(2, b'diagnostic\\n')
         self.assertEqual({p for p in fixtures if p.startswith('test/data/')}, {
             'test/data/ssh_client_ed25519_key', 'test/data/ssh_client_ed25519_key.pub',
             'test/data/ssh_host_ed25519_key'})
+        for family in ('fedora', 'suse', 'el'):
+            self.assertEqual(module.module_dependencies('ssh', 'runtime', family), ['openssh-clients'])
+            self.assertEqual(module.module_dependencies('ssh', 'sdk', family), [])
 
     def test_vss_fixture_keeps_included_specs_and_runtime_dependency_checks(self):
         directory = Path('/tmp/VSS fixtures')
@@ -364,6 +367,27 @@ os.write(2, b'diagnostic\\n')
                 self.assertEqual(module.module_dependencies(name, 'runtime', family), [font, 'diffutils'])
                 self.assertEqual(module.module_dependencies(name, 'sdk', family), [])
 
+
+    def test_zmq_installed_checks_preserve_features_and_strict_sandbox_diagnostics(self):
+        directory = Path('/tmp/ZeroMQ fixtures')
+        binary = Path('/usr/lib64/qore-modules/zmq-api-2.0.qmod')
+        runtime = module.module_commands('zmq', 'runtime', directory, binary)
+        self.assertEqual(runtime, [
+            ('tests', ['env', 'QORE_RPM_TEST_TMP=/tmp/ZeroMQ fixtures/runtime-fixture',
+                       '/tmp/ZeroMQ fixtures/rpm/tests-installed-runtime']),
+            ('sandbox-errors', ['python3', '-B', '-W', 'error',
+                '/tmp/ZeroMQ fixtures/test/run-sandbox-errors.py', '--module', str(binary)]),
+        ])
+        self.assertEqual(module.module_commands('zmq', 'sdk', directory, binary), runtime + [
+            ('compiler', ['/tmp/ZeroMQ fixtures/debian/tests/compiler'])])
+        self.assertEqual(len([p for p in module.MODULE_FIXTURES['zmq'] if p.endswith('.qtest')]), 5)
+        self.assertIn('rpm/features.qr', module.MODULE_FIXTURES['zmq'])
+
+    def test_zmq_requires_installed_binary_in_both_phases(self):
+        for phase in ('runtime', 'sdk'):
+            for binary in (None, Path('relative.qmod'), Path('/tmp/library.so')):
+                with self.subTest(phase=phase, binary=binary), self.assertRaisesRegex(ValueError, 'module path'):
+                    module.module_commands('zmq', phase, Path('/tmp/fixtures'), binary)
 
     def test_odbc_runtime_and_sdk_cover_installed_arrays_and_native_failures(self):
         directory = Path('/tmp/ODBC fixtures')
