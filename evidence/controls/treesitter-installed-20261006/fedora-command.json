@@ -1,0 +1,19 @@
+[
+  "docker",
+  "run",
+  "--rm",
+  "--init",
+  "--network",
+  "none",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/work/treesitter-installed-commands-20261006/fedora:/work",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/work/treesitter-installed-commands-20261006/run.py:/run.py:ro",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/results/fedora-treesitter-final-build-4/rpmbuild/RPMS/x86_64/qore-treesitter-module-1.0.0-2.fc44.x86_64.rpm:/treesitter.rpm:ro",
+  "sha256:d908000fbfe9e7a5357bec4d102474ebaa6e58da96ddd380c5c64ea33fe3fbbb",
+  "sh",
+  "-eu",
+  "-c",
+  "rpm -U --replacepkgs /treesitter.rpm\nexec setpriv --reuid=1019 --regid=100 --clear-groups --reset-env python3 -B -W error /run.py"
+]

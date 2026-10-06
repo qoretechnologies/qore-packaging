@@ -1,0 +1,192 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "source_commit": "5092b7d7f9b11147a160eccacf0231a52972f32a",
+  "local_installed_commands": {
+    "fedora": {
+      "command_results": [
+        {
+          "name": "runtime-tests",
+          "command": [
+            "env",
+            "-u",
+            "QORE_TREESITTER_QUERY_DIR",
+            "qore",
+            "-b",
+            "--enable-debug",
+            "/work/runtime/test/treesitter.qtest",
+            "-v"
+          ],
+          "cwd": "/work/runtime",
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-tests",
+          "command": [
+            "env",
+            "-u",
+            "QORE_TREESITTER_QUERY_DIR",
+            "qore",
+            "-b",
+            "--enable-debug",
+            "/work/sdk/test/treesitter.qtest",
+            "-v"
+          ],
+          "cwd": "/work/sdk",
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-compiler",
+          "command": [
+            "/work/sdk/debian/tests/compiler"
+          ],
+          "cwd": "/work/sdk",
+          "exit_code": 0
+        }
+      ],
+      "cases_per_phase": 99,
+      "assertions_per_phase": 377
+    },
+    "leap": {
+      "command_results": [
+        {
+          "name": "runtime-tests",
+          "command": [
+            "env",
+            "-u",
+            "QORE_TREESITTER_QUERY_DIR",
+            "qore",
+            "-b",
+            "--enable-debug",
+            "/work/runtime/test/treesitter.qtest",
+            "-v"
+          ],
+          "cwd": "/work/runtime",
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-tests",
+          "command": [
+            "env",
+            "-u",
+            "QORE_TREESITTER_QUERY_DIR",
+            "qore",
+            "-b",
+            "--enable-debug",
+            "/work/sdk/test/treesitter.qtest",
+            "-v"
+          ],
+          "cwd": "/work/sdk",
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-compiler",
+          "command": [
+            "/work/sdk/debian/tests/compiler"
+          ],
+          "cwd": "/work/sdk",
+          "exit_code": 0
+        }
+      ],
+      "cases_per_phase": 99,
+      "assertions_per_phase": 377
+    },
+    "el10": {
+      "command_results": [
+        {
+          "name": "runtime-tests",
+          "command": [
+            "env",
+            "-u",
+            "QORE_TREESITTER_QUERY_DIR",
+            "qore",
+            "-b",
+            "--enable-debug",
+            "/work/runtime/test/treesitter.qtest",
+            "-v"
+          ],
+          "cwd": "/work/runtime",
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-tests",
+          "command": [
+            "env",
+            "-u",
+            "QORE_TREESITTER_QUERY_DIR",
+            "qore",
+            "-b",
+            "--enable-debug",
+            "/work/sdk/test/treesitter.qtest",
+            "-v"
+          ],
+          "cwd": "/work/sdk",
+          "exit_code": 0
+        },
+        {
+          "name": "sdk-compiler",
+          "command": [
+            "/work/sdk/debian/tests/compiler"
+          ],
+          "cwd": "/work/sdk",
+          "exit_code": 0
+        }
+      ],
+      "cases_per_phase": 99,
+      "assertions_per_phase": 377
+    }
+  },
+  "scope": "Complete installed 99-case parser/query/ownership suite in runtime and SDK modes, plus compiled named-argument parsing and installed highlight queries. All three x86_64 controls deliberately set an invalid inherited query directory, which the command and compiler fixture clear. Local command tests use SDK images; clean minimal runtime is enforced separately by native CI.",
+  "native_inputs": "All six OBS source builds pass at the exact source digest. ARM RPM SHA256 pins and immutable public fixture content were verified. Only the approved Leap polkit bootstrap diagnostic is present; no compiler or package lint diagnostics.",
+  "status": "Prepared clean signed native ARM qualification; result pending. Repository lifecycle remains a separate gate.",
+  "tool_tests": 164,
+  "artifacts_sha256": {
+    "evidence/controls/treesitter-installed-20261006/el10-aarch64-build.log.gz": "7bd4c5b22dd8c8d6ee47c91d692640c071978c68967d72bbe23ac38d2636b119",
+    "evidence/controls/treesitter-installed-20261006/el10-aarch64-history.xml.gz": "f5b0f898e5cd39bdd43fa66993c99d653fcc3dc4a2c49ef8f48b10ec3eaeb352",
+    "evidence/controls/treesitter-installed-20261006/el10-binaries.xml": "96c46b63efa83caf2c5dcfa982c30b5d845178ac660e2dd4b9fc9e45716f3689",
+    "evidence/controls/treesitter-installed-20261006/el10-checks.json": "cc97f051e35869b290ddc5e887014473d8ce4966ba53b0915890527ed9ed7d57",
+    "evidence/controls/treesitter-installed-20261006/el10-command.json": "9a97564f6314d5a9c34d33f8f3d186f591d31b216f694847d2b9d932132545d0",
+    "evidence/controls/treesitter-installed-20261006/el10-commands.json": "c65004e3e9afbe81eca5884d3920cab4c2deff866cffa2397540f4f4be551186",
+    "evidence/controls/treesitter-installed-20261006/el10-history.xml": "037da9a8501ff969e9e9e4ebf9c80447e7ce410e82b14507d85f5780489e2079",
+    "evidence/controls/treesitter-installed-20261006/el10-run.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/treesitter-installed-20261006/el10-runtime-tests.log.gz": "84fe7be9e649935591cfb9d8d9080ecd844d4aa3f009f8318610fa41a2a17aef",
+    "evidence/controls/treesitter-installed-20261006/el10-sdk-compiler.log.gz": "b685f607449c2b7406419472d370934e775ea006d9e799d870b2b35b97ce1cd4",
+    "evidence/controls/treesitter-installed-20261006/el10-sdk-tests.log.gz": "84fe7be9e649935591cfb9d8d9080ecd844d4aa3f009f8318610fa41a2a17aef",
+    "evidence/controls/treesitter-installed-20261006/el10-status.json": "81868a6e94ffc0178bf833deb1c9013d9fab4ee95ddb876a5e8ec4f1d26376d2",
+    "evidence/controls/treesitter-installed-20261006/el10-x86_64-build.log.gz": "d92c9d46eba0fe7aae904f77dc07004f07000c61b20ac84824c955d870487f38",
+    "evidence/controls/treesitter-installed-20261006/el10-x86_64-history.xml.gz": "d1f19d7d9b4d96316c26b50a89c18aa1bd9210f0d67743cc44a824067d45887a",
+    "evidence/controls/treesitter-installed-20261006/fedora-aarch64-build.log.gz": "60bcaf54d2571edaa3adc58c240d320376204aa8f88bd7e64c812b86f5963bd8",
+    "evidence/controls/treesitter-installed-20261006/fedora-aarch64-history.xml.gz": "2bf8235b0f4d6d54de9102f8a81b5286688971a39230da5adeacf87829c74833",
+    "evidence/controls/treesitter-installed-20261006/fedora-binaries.xml": "35f380e9df3ca862c1a3123ffdd6966b217cb8067952fd906eab62414617d4fb",
+    "evidence/controls/treesitter-installed-20261006/fedora-checks.json": "cc97f051e35869b290ddc5e887014473d8ce4966ba53b0915890527ed9ed7d57",
+    "evidence/controls/treesitter-installed-20261006/fedora-command.json": "377668ac5a383f13bad0bfe01f87c9ea78e2c42c924ea6ef01d607892963a947",
+    "evidence/controls/treesitter-installed-20261006/fedora-commands.json": "c65004e3e9afbe81eca5884d3920cab4c2deff866cffa2397540f4f4be551186",
+    "evidence/controls/treesitter-installed-20261006/fedora-history.xml": "8677d10108d5bc2482a420bb84aa6f7cb88ef256fb2c37eb1da95c81e4979a45",
+    "evidence/controls/treesitter-installed-20261006/fedora-run.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/treesitter-installed-20261006/fedora-runtime-tests.log.gz": "84fe7be9e649935591cfb9d8d9080ecd844d4aa3f009f8318610fa41a2a17aef",
+    "evidence/controls/treesitter-installed-20261006/fedora-sdk-compiler.log.gz": "9daddfeb7d7f361b72add6acb1a493e0cc23a266b290ff5c8159fa980b99c92d",
+    "evidence/controls/treesitter-installed-20261006/fedora-sdk-tests.log.gz": "84fe7be9e649935591cfb9d8d9080ecd844d4aa3f009f8318610fa41a2a17aef",
+    "evidence/controls/treesitter-installed-20261006/fedora-status.json": "81868a6e94ffc0178bf833deb1c9013d9fab4ee95ddb876a5e8ec4f1d26376d2",
+    "evidence/controls/treesitter-installed-20261006/fedora-x86_64-build.log.gz": "cda25ef29bc18f15286d334d02d92f5ca3ab1b7085fc2b718814dbb58ce30f2b",
+    "evidence/controls/treesitter-installed-20261006/fedora-x86_64-history.xml.gz": "7165c460891cbeab76979c70857798b376ed916b2e7adbc4523cf1e4c3893f2c",
+    "evidence/controls/treesitter-installed-20261006/leap-aarch64-build.log.gz": "d879e7481cd4990996477fe088afd9366df3aef20d0826e9555dab2852382e34",
+    "evidence/controls/treesitter-installed-20261006/leap-aarch64-history.xml.gz": "efd21e4e5a4dd98f5d4be35bdff446b78f9b77697048eabf11913dcb40ba02b2",
+    "evidence/controls/treesitter-installed-20261006/leap-binaries.xml": "9d53ee0aa53b6f8809e55b8948fab2451551f434b53d362ac94495b0d761694f",
+    "evidence/controls/treesitter-installed-20261006/leap-checks.json": "cc97f051e35869b290ddc5e887014473d8ce4966ba53b0915890527ed9ed7d57",
+    "evidence/controls/treesitter-installed-20261006/leap-command.json": "23e888197917bab2604ff454d66550ff7dbfd1528edafcd16266e1ec59f9c761",
+    "evidence/controls/treesitter-installed-20261006/leap-commands.json": "c65004e3e9afbe81eca5884d3920cab4c2deff866cffa2397540f4f4be551186",
+    "evidence/controls/treesitter-installed-20261006/leap-history.xml": "c2eeb586e71a734981a327b5e35a3c49e8406320f8fb7e6f0b627e848052a55d",
+    "evidence/controls/treesitter-installed-20261006/leap-run.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/treesitter-installed-20261006/leap-runtime-tests.log.gz": "84fe7be9e649935591cfb9d8d9080ecd844d4aa3f009f8318610fa41a2a17aef",
+    "evidence/controls/treesitter-installed-20261006/leap-sdk-compiler.log.gz": "3da2da8eb4248245925d6acc451933a196cd75ff9e2a48e0de4537566499032a",
+    "evidence/controls/treesitter-installed-20261006/leap-sdk-tests.log.gz": "84fe7be9e649935591cfb9d8d9080ecd844d4aa3f009f8318610fa41a2a17aef",
+    "evidence/controls/treesitter-installed-20261006/leap-status.json": "81868a6e94ffc0178bf833deb1c9013d9fab4ee95ddb876a5e8ec4f1d26376d2",
+    "evidence/controls/treesitter-installed-20261006/leap-x86_64-build.log.gz": "e782a4f8214f8853a531e55b4f79e52b25d2ef3e87ed240f3c642c6b4a37af27",
+    "evidence/controls/treesitter-installed-20261006/leap-x86_64-history.xml.gz": "92076b97d692716e797f90f7e1a1a84f6538f9c0e5129ca6231f92fed9694406",
+    "evidence/controls/treesitter-installed-20261006/source.json": "bddad406fda2e17f8a822202286f694884044d6eaebc4807b2e3826a9a425fe1",
+    "evidence/controls/treesitter-installed-20261006/source.xml": "cd3ed79043918b9f45c7a9a1b8731f4efdb15492a0b1197f82590f62169d09af",
+    "evidence/controls/treesitter-installed-20261006/treesitter-ci-lint-20261006.json": "07959b0f9941ab4f388c0d2259f8b001412022fd4e2265b8764d2d15f932802c",
+    "evidence/controls/treesitter-installed-20261006/treesitter-installed-tools-tests-20261006.log": "dc7f3c846cd2bf87fcb5b9c9f670bc87b436fe115fb6b082696306937871008a"
+  }
+}

@@ -1,0 +1,40 @@
+[
+  {
+    "name": "runtime-tests",
+    "command": [
+      "env",
+      "-u",
+      "QORE_TREESITTER_QUERY_DIR",
+      "qore",
+      "-b",
+      "--enable-debug",
+      "/work/runtime/test/treesitter.qtest",
+      "-v"
+    ],
+    "cwd": "/work/runtime",
+    "exit_code": 0
+  },
+  {
+    "name": "sdk-tests",
+    "command": [
+      "env",
+      "-u",
+      "QORE_TREESITTER_QUERY_DIR",
+      "qore",
+      "-b",
+      "--enable-debug",
+      "/work/sdk/test/treesitter.qtest",
+      "-v"
+    ],
+    "cwd": "/work/sdk",
+    "exit_code": 0
+  },
+  {
+    "name": "sdk-compiler",
+    "command": [
+      "/work/sdk/debian/tests/compiler"
+    ],
+    "cwd": "/work/sdk",
+    "exit_code": 0
+  }
+]

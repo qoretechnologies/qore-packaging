@@ -298,6 +298,18 @@ os.write(2, b'diagnostic\\n')
         sqlite = module.module_commands('sqlite3', 'runtime', directory)[0][1]
         self.assertEqual(sqlite[-2:], ['--db', str(directory / 'qualification.sqlite')])
 
+    def test_treesitter_checks_installed_queries_with_debugging_and_compiler(self):
+        directory = Path('/tmp/installed tree fixtures')
+        runtime = module.module_commands('treesitter', 'runtime', directory)
+        self.assertEqual(runtime, [('tests', ['env', '-u', 'QORE_TREESITTER_QUERY_DIR',
+            'qore', '-b', '--enable-debug', '/tmp/installed tree fixtures/test/treesitter.qtest', '-v'])])
+        self.assertEqual(module.module_commands('treesitter', 'sdk', directory), runtime + [
+            ('compiler', ['/tmp/installed tree fixtures/debian/tests/compiler'])])
+        self.assertEqual(module.MODULE_FIXTURES['treesitter'],
+                         {'test/treesitter.qtest', 'debian/tests/compiler'})
+        for family in ('fedora', 'suse', 'el'):
+            self.assertEqual(module.module_dependencies('treesitter', 'runtime', family), [])
+
     def test_every_added_suite_rejects_incomplete_fixtures(self):
         self.add_modules()
         for entry in self.manifest['modules']:

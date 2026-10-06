@@ -63,6 +63,28 @@ rpm-el10-arm64:
     - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils util-linux findutils dnf-plugins-core epel-release
     - dnf config-manager --set-enabled crb
 
+# Tree-sitter validates packaged grammars and queries before and after SDK installation.
+rpm-treesitter-fedora-arm64:
+  extends: rpm-fedora-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "treesitter" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "fedora")'
+  variables:
+    RPM_MANIFEST: qualification/treesitter-fedora-aarch64.json
+
+rpm-treesitter-leap-arm64:
+  extends: rpm-leap-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "treesitter" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "leap")'
+  variables:
+    RPM_MANIFEST: qualification/treesitter-leap-aarch64.json
+
+rpm-treesitter-el10-arm64:
+  extends: rpm-el10-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "treesitter" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
+  variables:
+    RPM_MANIFEST: qualification/treesitter-el10-aarch64.json
+
 # The first module wave uses the already qualified core plus UUID and process.
 rpm-modules-fedora-arm64:
   extends: rpm-fedora-arm64

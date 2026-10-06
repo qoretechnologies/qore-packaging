@@ -18,6 +18,7 @@ from packaging import fetch_source
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'treesitter': {'test/treesitter.qtest', 'debian/tests/compiler'},
     'xmlsec': {'rpm/run-tests.py', 'debian/tests/compiler', 'test/xmlsec.qtest',
                'test/test-cert.pem', 'test/test-key.pem'},
     'zmq': {'rpm/tests-installed-runtime', 'rpm/features.qr', 'debian/tests/compiler',
@@ -202,6 +203,13 @@ def module_commands(name, phase, directory, binary=None, driver=None, installed_
     """Fixed commands only; manifests select reviewed suites, never shell text."""
     if name not in MODULE_FIXTURES or phase not in ('runtime', 'sdk'):
         raise ValueError('Unknown module suite or phase')
+    if name == 'treesitter':
+        commands = [('tests', ['env', '-u', 'QORE_TREESITTER_QUERY_DIR',
+                              'qore', '-b', '--enable-debug',
+                              str(directory / 'test/treesitter.qtest'), '-v'])]
+        if phase == 'sdk':
+            commands.append(('compiler', [str(directory / 'debian/tests/compiler')]))
+        return commands
     if name == 'zmq':
         if binary is None or not binary.is_absolute() or binary.suffix != '.qmod':
             raise ValueError('ZeroMQ checks require the installed module path')
