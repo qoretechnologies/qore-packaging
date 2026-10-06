@@ -324,6 +324,33 @@ os.write(2, b'diagnostic\\n')
         self.assertEqual(len([p for p in module.MODULE_FIXTURES['ncurses'] if p.endswith('.qtest')]), 11)
         self.assertIn('test/TestHarness.qc', module.MODULE_FIXTURES['ncurses'])
 
+    def test_ssh_fixture_uses_installed_modules_and_compiles_only_in_sdk_phase(self):
+        directory = Path('/tmp/SSH fixtures')
+        runtime = module.module_commands('ssh', 'runtime', directory)
+        self.assertEqual(runtime, [('tests', ['python3', '-B', '-W', 'error',
+            '/tmp/SSH fixtures/rpm/run-tests.py', '--installed'])])
+        self.assertEqual(module.module_commands('ssh', 'sdk', directory),
+                         [('tests', runtime[0][1] + ['--compiler'])])
+        fixtures = module.MODULE_FIXTURES['ssh']
+        self.assertEqual(len([p for p in fixtures if p.startswith('test/') and p.endswith('.qtest')]), 15)
+        self.assertEqual(len([p for p in fixtures if p.startswith('examples/')]), 6)
+        self.assertIn('test/TestLoggerInterface.qm', fixtures)
+        self.assertEqual({p for p in fixtures if p.startswith('test/data/')}, {
+            'test/data/ssh_client_ed25519_key', 'test/data/ssh_client_ed25519_key.pub',
+            'test/data/ssh_host_ed25519_key'})
+
+    def test_vss_fixture_keeps_included_specs_and_runtime_dependency_checks(self):
+        directory = Path('/tmp/VSS fixtures')
+        runtime = module.module_commands('vss', 'runtime', directory)
+        self.assertEqual(runtime, [('tests', ['/tmp/VSS fixtures/rpm/tests-installed/runtime'])])
+        self.assertEqual(module.module_commands('vss', 'sdk', directory), runtime + [
+            ('compiler', ['/tmp/VSS fixtures/debian/tests/compiler'])])
+        fixtures = module.MODULE_FIXTURES['vss']
+        self.assertEqual(len([p for p in fixtures if p.endswith('.qtest')]), 7)
+        self.assertEqual(len([p for p in fixtures if p.startswith('test/data/')]), 13)
+        for path in ('main.vspec', 'Cabin/Cabin.vspec', 'Powertrain/Powertrain.vspec'):
+            self.assertIn('test/data/with_includes/' + path, fixtures)
+
     def test_graphics_cli_uses_installed_programs(self):
         directory = Path('/tmp/graphics and messaging')
         for name, variable, program in [('cairo', 'QORE_QSVG_BINARY', '/usr/bin/qsvg'),

@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "scope": [
+    "ssh",
+    "vss"
+  ],
+  "unit_tests": {
+    "count": 159,
+    "result": "pass",
+    "log": "results/modules5-tools-tests-20261006.log"
+  },
+  "ci_lint": {
+    "valid": true,
+    "errors": [],
+    "warnings": []
+  },
+  "local_installed_checks": {
+    "commands": [
+      {
+        "name": "runtime-ssh-tests",
+        "cwd": "/work/runtime-ssh",
+        "command": [
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/work/runtime-ssh/rpm/run-tests.py",
+          "--installed"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-ssh-tests",
+        "cwd": "/work/sdk-ssh",
+        "command": [
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/work/sdk-ssh/rpm/run-tests.py",
+          "--installed",
+          "--compiler"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-vss-tests",
+        "cwd": "/work/runtime-vss",
+        "command": [
+          "/work/runtime-vss/rpm/tests-installed/runtime"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-vss-tests",
+        "cwd": "/work/sdk-vss",
+        "command": [
+          "/work/sdk-vss/rpm/tests-installed/runtime"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-vss-compiler",
+        "cwd": "/work/sdk-vss",
+        "command": [
+          "/work/sdk-vss/debian/tests/compiler"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "result": "pass",
+    "diagnostics": 0,
+    "log": "results/modules5-command-integration-20261006.log",
+    "sha256": "e84f170662e678ae1aa8260dc6811ff5c1b32b352ac2431a1db178ed19ce263b",
+    "container_command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results:/results:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/modules5-command-integration-20261006:/work",
+      "sha256:3cc3ad6cf7428bf8676ae250be5faea9e8acb942d15620a8d1dc53c0230b6d7c",
+      "sh",
+      "-eu",
+      "-c",
+      "rpm -U --replacepkgs \"$@\"\nexec setpriv --reuid=1019 --regid=100 --clear-groups --reset-env python3 -B -W error /work/run.py",
+      "install",
+      "/results/fedora-ssh-rpm-docs2-20261006/rpmbuild/RPMS/x86_64/qore-ssh-module-1.0.0-1.fc44.x86_64.rpm",
+      "/results/fedora-vss-rpm-docs-20261006/rpmbuild/RPMS/x86_64/qore-vss-module-1.0.0-1.fc44.x86_64.rpm"
+    ]
+  },
+  "obs_source_md5": {
+    "ssh": "6b135a94a50e2cdee2808f24c3557cea",
+    "vss": "1cf9ecb83d41ebcac50d183b249a6828"
+  },
+  "public_rpm_availability": [
+    {
+      "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore-ssh-module/qore-ssh-module-1.0.0-3.1.aarch64.rpm",
+      "status": 200,
+      "bytes": "1182265"
+    },
+    {
+      "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore-vss-module/qore-vss-module-1.0.0-3.1.aarch64.rpm",
+      "status": 200,
+      "bytes": "291939"
+    },
+    {
+      "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore-ssh-module/qore-ssh-module-1.0.0-1.1.aarch64.rpm",
+      "status": 200,
+      "bytes": "1148689"
+    },
+    {
+      "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore-vss-module/qore-vss-module-1.0.0-1.1.aarch64.rpm",
+      "status": 200,
+      "bytes": "285095"
+    },
+    {
+      "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-ssh-module/qore-ssh-module-1.0.0-3.1.aarch64.rpm",
+      "status": 200,
+      "bytes": "1179192"
+    },
+    {
+      "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-vss-module/qore-vss-module-1.0.0-3.1.aarch64.rpm",
+      "status": 200,
+      "bytes": "292249"
+    }
+  ],
+  "reviewed_sha256": {
+    ".gitlab-ci.yml": "8120ff10ec708e4ae53ad833df3d4c0766d515f7a45865e7b837cc3a0430cc2d",
+    "tools/qualify-installed.py": "97612cd58dcf8ab40201770794491c7a7c7de6474cf9b3385c00509233273376",
+    "tests/test_installed_qualification.py": "1c242a0f26a326d81ae4d22203348ff81fe5c5842b71290328508ef701d462b4",
+    "qualification/modules5.rst": "ac35ecfb16e7729e09fedd9137bb07bf8c0276003b7e7a13803cf8fe6b4a9035",
+    "qualification/modules5-fedora-aarch64.json": "23710e8a813e2b2f9deaf5ab583dfb54c426553b026b2a388b8bafa65def5c0d",
+    "qualification/modules5-leap-aarch64.json": "913225d26f2a6d2d7270e917d37d7e8f2514afed007e7398616fffdad3f7ab9f",
+    "qualification/modules5-el10-aarch64.json": "4f694a8a5d06230e99672d69881d69d74934f43727eff543cbc988170ec03af6"
+  },
+  "native_status": "Signed native ARM runtime/SDK checks remain required. Source build and local command checks alone do not qualify native installation."
+}

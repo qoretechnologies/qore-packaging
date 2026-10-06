@@ -18,6 +18,28 @@ from packaging import fetch_source
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'ssh': {'rpm/run-tests.py', 'debian/tests/compiler', 'test/TestLoggerInterface.qm',
+            'test/data/ssh_client_ed25519_key', 'test/data/ssh_client_ed25519_key.pub',
+            'test/data/ssh_host_ed25519_key'}
+        | {'test/' + name + '.qtest' for name in
+           ('Sandbox', 'Scaffold', 'SftpServerDataProvider', 'SftpServerDataProviderDataProvider',
+            'SftpSession', 'SshCommandSession', 'SshKey', 'SshServer', 'SshServerAuthProvider',
+            'SshServerCommandProvider', 'SshServerConnections', 'SshServerHostKeyProvider',
+            'SshSession', 'VirtualSftpInboundPolicyServer', 'VirtualSftpServer')}
+        | {'examples/' + name for name in
+           ('VirtualSftpExchangeRecordStore.qtest', 'VirtualSftpFilesystem.qtest',
+            'VirtualSftpInboundPolicyServer.qr', 'VirtualSftpServer.qr',
+            'VirtualSshCommandLiveServer.qr', 'VirtualSshCommandServer.qr')},
+    'vss': {'rpm/tests-installed/runtime', 'debian/tests/compiler'}
+        | {'test/' + name + '.qtest' for name in
+           ('VssDataProvider', 'VssLoader', 'VssProcessors', 'VssReadDataProvider',
+            'VssRecordIterators', 'VssUnitConverter', 'VssValidator')}
+        | {'test/data/' + name for name in
+           ('basic.vspec', 'custom_units.yaml', 'instances.vspec', 'overlay_base.vspec',
+            'overlay_delete.vspec', 'overlay_extend.vspec', 'vss_telemetry.json',
+            'vss_telemetry.yaml', 'vss_v6_subset.json', 'vss_v6_subset.yaml',
+            'with_includes/Cabin/Cabin.vspec', 'with_includes/Powertrain/Powertrain.vspec',
+            'with_includes/main.vspec')},
     'cairo': {'test/cairo.qtest', 'test/CairoDataProvider.qtest',
               'debian/tests/cli', 'debian/tests/compiler'},
     'geos': {'test/geos.qtest', 'test/GEOSDataProvider.qtest', 'debian/tests/compiler'},
@@ -170,6 +192,16 @@ def module_commands(name, phase, directory, binary=None, driver=None, installed_
     """Fixed commands only; manifests select reviewed suites, never shell text."""
     if name not in MODULE_FIXTURES or phase not in ('runtime', 'sdk'):
         raise ValueError('Unknown module suite or phase')
+    if name == 'ssh':
+        command = ['python3', '-B', '-W', 'error', str(directory / 'rpm/run-tests.py'), '--installed']
+        if phase == 'sdk':
+            command.append('--compiler')
+        return [('tests', command)]
+    if name == 'vss':
+        commands = [('tests', [str(directory / 'rpm/tests-installed/runtime')])]
+        if phase == 'sdk':
+            commands.append(('compiler', [str(directory / 'debian/tests/compiler')]))
+        return commands
     if name == 'ncurses':
         commands = [('tests', ['env', 'QORE_RPM_TEST_TMP=' + str(directory / 'runtime-fixture'),
                                str(directory / 'rpm/tests-installed/runtime')])]
