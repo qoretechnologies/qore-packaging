@@ -18,8 +18,8 @@ compiler-test commit; that commit changes no driver or RPM payload. Every
 fixture and RPM is pinned by SHA256 and an immutable source revision.
 
 Select ``RPM_NATIVE_QUALIFICATION=pgsql`` and optionally
-``RPM_NATIVE_TARGET=fedora`` or ``leap``. AlmaLinux's local command controls pass;
-its native inputs remain pending while OBS rebuilds upstream dependencies.
+``RPM_NATIVE_TARGET=fedora``, ``leap`` or ``el10``. AlmaLinux's local command
+controls pass; its manifest now pins the completed native dependency rebuild.
 Native architecture qualification and repository lifecycle checks remain
 publication gates.
 
@@ -31,4 +31,4 @@ qualification; the earlier revision 2 results remain recorded separately.
 Pipeline 59632 passed the revision 3 installed runtime/SDK jobs on Fedora and
 Leap ARM: 32 cases per phase, with 382 Fedora or 336 Leap assertions. Signed
 RPM integrity, core SDK checks and the compiled PostgreSQL example also pass.
-AlmaLinux remains gated by native dependency rebuilds.
+AlmaLinux native inputs are ready; signed installed checks remain pending.

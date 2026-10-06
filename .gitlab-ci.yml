@@ -78,6 +78,13 @@ rpm-ssh2-proj-leap-arm64:
   variables:
     RPM_MANIFEST: qualification/ssh2-proj-leap-aarch64.json
 
+rpm-ssh2-proj-el10-arm64:
+  extends: rpm-el10-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "ssh2-proj" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
+  variables:
+    RPM_MANIFEST: qualification/ssh2-proj-el10-aarch64.json
+
 # PostgreSQL tests installed drivers using isolated Unix-socket database fixtures.
 rpm-pgsql-fedora-arm64:
   extends: rpm-fedora-arm64
@@ -92,6 +99,13 @@ rpm-pgsql-leap-arm64:
     - if: '$RPM_NATIVE_QUALIFICATION == "pgsql" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "leap")'
   variables:
     RPM_MANIFEST: qualification/pgsql-leap-aarch64.json
+
+rpm-pgsql-el10-arm64:
+  extends: rpm-el10-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "pgsql" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
+  variables:
+    RPM_MANIFEST: qualification/pgsql-el10-aarch64.json
 
 # Tree-sitter validates packaged grammars and queries before and after SDK installation.
 rpm-treesitter-fedora-arm64:
