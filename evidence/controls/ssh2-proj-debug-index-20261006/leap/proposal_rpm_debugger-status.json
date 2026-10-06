@@ -1,0 +1,33 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "--user",
+    "1019:100",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/aot-debug-index-proposal-installed-20261006/leap:/fixture",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/aot-debug-index-proposal-installed-20261006/control.py:/control.py:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/leap-ssh2-debug-index-proposal-20261006/rpmbuild/RPMS:/ssh2:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/leap-proj-debug-index-proposal-20261006/rpmbuild/RPMS:/proj:ro",
+    "-w",
+    "/fixture",
+    "qore-rpm-keep:leap-pdfium-installed-8",
+    "sh",
+    "-ec",
+    "set -eu\nmkdir payload\ncd payload\nfor rpm in /ssh2/*/*debug*.rpm /proj/*/*debug*.rpm; do rpm2cpio \"$rpm\" | cpio -idm --quiet; done\ncd ..\npython3 -B -W error /control.py\n"
+  ],
+  "inputs": {
+    "ssh2/qore-ssh2-module-debuginfo-2.0.0-4.x86_64.rpm": "5b0794b9f0089f9cd604ac46baff472d4bc7ce173042ad75545c6d025236141a",
+    "ssh2/qore-ssh2-module-debugsource-2.0.0-4.x86_64.rpm": "b77b9035389525927f1fe304a7e025e9485408e30b3c188761ad20cbf5c1bba3",
+    "proj/qore-proj-module-debuginfo-1.1.0-5.x86_64.rpm": "c5bf1f369bef27566802cd74c7d77c04bbfec30440cf1ea81080e52cb119563a",
+    "proj/qore-proj-module-debugsource-1.1.0-5.x86_64.rpm": "a1b9f255e86db1eb282dd37f34ea0ec494222a4da559b56726b6add2602518de"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "User approved these exact negative-test messages on 2026-10-06; warnings remain visible, with no filter or runtime change.",
+  "root_cause": "The distribution PROJ library logs invalid CRS identifiers to stderr before returning null/error status. Qore converts that result to PROJ-ERROR, as required by its four negative CRS tests. A Qore-free C control reproduces the same three messages from those exact four input pairs.",
+  "scope": [
+    "proj_create: Error 1027 (Invalid value for an argument): Unknown projection",
+    "proj_create: crs not found: EPSG:99999",
+    "proj_create: unrecognized format / unknown name"
+  ],
+  "inputs": [
+    [
+      "EPSG:99999",
+      "EPSG:25832"
+    ],
+    [
+      "+proj=not-a-real-projection",
+      "EPSG:4326"
+    ],
+    [
+      "",
+      "EPSG:4326"
+    ],
+    [
+      "EPSG:4326",
+      ""
+    ]
+  ],
+  "controls": {
+    "fedora": {
+      "negative_cases_normal": 40,
+      "negative_cases_valgrind": 40,
+      "valid_recovery_after_each_failure": true,
+      "valgrind_errors": 0,
+      "all_allocations_freed": 663681
+    },
+    "leap": {
+      "negative_cases_normal": 40,
+      "negative_cases_valgrind": 40,
+      "valid_recovery_after_each_failure": true,
+      "valgrind_errors": 0,
+      "all_allocations_freed": 1681600
+    },
+    "el10": {
+      "negative_cases_normal": 40,
+      "negative_cases_valgrind": 40,
+      "valid_recovery_after_each_failure": true,
+      "valgrind_errors": 0,
+      "all_allocations_freed": 645703
+    }
+  },
+  "functional_qualification": "All 27 Qore cases pass on each distribution; all four deliberately invalid inputs raise PROJ-ERROR.",
+  "limits": "Only these stderr lines from those deliberately invalid input cases; other errors remain failures. No suppression, timeout, or library behavior change.",
+  "files_sha256": {
+    "evidence/controls/proj-negative-diagnostic-20261006/el10-control.c": "5e666cbfe57a34eafae75b0dcfe26cc6a64da58a1870ed2eff1b005d413be190",
+    "evidence/controls/proj-negative-diagnostic-20261006/el10-normal.stderr": "0c23d906da8b24c51b4c92b25826acacd5e432b6127ae32760b08a53b94de6f5",
+    "evidence/controls/proj-negative-diagnostic-20261006/el10-normal.txt": "1cb2eb78fa90803fb78aa2dc971506c0340bddbfac3a45e5e6150bdfa191ee7c",
+    "evidence/controls/proj-negative-diagnostic-20261006/el10-status.json": "60f99d08f6ed1b965bbcefceffaf2e41f26584890e63b4906fa5bcf46889176b",
+    "evidence/controls/proj-negative-diagnostic-20261006/el10-tests.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/proj-negative-diagnostic-20261006/el10-valgrind.stderr": "0c23d906da8b24c51b4c92b25826acacd5e432b6127ae32760b08a53b94de6f5",
+    "evidence/controls/proj-negative-diagnostic-20261006/el10-valgrind.stdout": "1cb2eb78fa90803fb78aa2dc971506c0340bddbfac3a45e5e6150bdfa191ee7c",
+    "evidence/controls/proj-negative-diagnostic-20261006/el10-valgrind.txt": "6be2ce773d9763720ef042983741180c7397a73d6c817dfb1a78368245068a14",
+    "evidence/controls/proj-negative-diagnostic-20261006/fedora-control.c": "5e666cbfe57a34eafae75b0dcfe26cc6a64da58a1870ed2eff1b005d413be190",
+    "evidence/controls/proj-negative-diagnostic-20261006/fedora-normal.stderr": "0c23d906da8b24c51b4c92b25826acacd5e432b6127ae32760b08a53b94de6f5",
+    "evidence/controls/proj-negative-diagnostic-20261006/fedora-normal.txt": "1cb2eb78fa90803fb78aa2dc971506c0340bddbfac3a45e5e6150bdfa191ee7c",
+    "evidence/controls/proj-negative-diagnostic-20261006/fedora-status.json": "a0c4c6158cea76a20761b07b69a40f93bcb1d3bebbbd62d8dc3a5d6a680a50ff",
+    "evidence/controls/proj-negative-diagnostic-20261006/fedora-tests.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/proj-negative-diagnostic-20261006/fedora-valgrind.stderr": "0c23d906da8b24c51b4c92b25826acacd5e432b6127ae32760b08a53b94de6f5",
+    "evidence/controls/proj-negative-diagnostic-20261006/fedora-valgrind.stdout": "1cb2eb78fa90803fb78aa2dc971506c0340bddbfac3a45e5e6150bdfa191ee7c",
+    "evidence/controls/proj-negative-diagnostic-20261006/fedora-valgrind.txt": "355e73da4a952ea0a4869475d206051d9622291811744bf8ceed90587464b935",
+    "evidence/controls/proj-negative-diagnostic-20261006/leap-control.c": "5e666cbfe57a34eafae75b0dcfe26cc6a64da58a1870ed2eff1b005d413be190",
+    "evidence/controls/proj-negative-diagnostic-20261006/leap-normal.stderr": "0c23d906da8b24c51b4c92b25826acacd5e432b6127ae32760b08a53b94de6f5",
+    "evidence/controls/proj-negative-diagnostic-20261006/leap-normal.txt": "1cb2eb78fa90803fb78aa2dc971506c0340bddbfac3a45e5e6150bdfa191ee7c",
+    "evidence/controls/proj-negative-diagnostic-20261006/leap-status.json": "ea04b9d96a766f83baa19150f19567d13bb637ec7d1c08d0ee25f6f86e0dc930",
+    "evidence/controls/proj-negative-diagnostic-20261006/leap-tests.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/proj-negative-diagnostic-20261006/leap-valgrind.stderr": "0c23d906da8b24c51b4c92b25826acacd5e432b6127ae32760b08a53b94de6f5",
+    "evidence/controls/proj-negative-diagnostic-20261006/leap-valgrind.stdout": "1cb2eb78fa90803fb78aa2dc971506c0340bddbfac3a45e5e6150bdfa191ee7c",
+    "evidence/controls/proj-negative-diagnostic-20261006/leap-valgrind.txt": "89a2dbd28cb6e692924a0c017ef7a18e1a055806e3931ab80db418eaaf68c77c",
+    "evidence/controls/proj-negative-diagnostic-20261006/proj-invalid-control2-20261006.c": "5e666cbfe57a34eafae75b0dcfe26cc6a64da58a1870ed2eff1b005d413be190",
+    "evidence/controls/proj-negative-diagnostic-20261006/run-proj-invalid-control2-20261006.py": "4c5cd624056eeb2abf47dce83260a385827134e338312277af79e4bad4b14c48"
+  },
+  "approval": "Allow these exact negative-test diagnostics"
+}

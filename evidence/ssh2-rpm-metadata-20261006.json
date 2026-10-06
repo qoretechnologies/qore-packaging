@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "change": "Release 3 removes CMAKE_INSTALL_LIBDIR because the module installs to the Qore SDK ABI path and does not read this variable. No library placement or compiler flag changes.",
+  "candidate_builds": {
+    "fedora": {
+      "source_commit": "b72614a6a23be351c7d44a8c3334d883c0857564",
+      "candidate": true,
+      "image": "sha256:edff5db96808feb43f5bed724c5a9fdaecb00b9ff1724e4cf36f0924c16d5bac",
+      "exit_code": 0,
+      "cases": 69,
+      "assertions": 675,
+      "rpm_sha256": "8b2c17c4708fc4cce96d9e78c625a2a9e235bc9fca17795263b8669a7372cf04",
+      "catalog_records": [
+        "/usr/share/qore/i18n/.qore-catalog-manifests",
+        "/usr/share/qore/i18n/.qore-catalog-manifests/qore-ssh2-module.manifest"
+      ]
+    },
+    "leap": {
+      "source_commit": "b72614a6a23be351c7d44a8c3334d883c0857564",
+      "candidate": true,
+      "image": "sha256:abed51f548b579eb6d84269c448539c4a33aa8a419f1b22650f9a9b16e060725",
+      "exit_code": 0,
+      "cases": 69,
+      "assertions": 676,
+      "rpm_sha256": "5d10a37c3ee4964d8fb92e1db5387b30cdcdfd5f196e6e8c9f20928bacaf1111",
+      "catalog_records": [
+        "/usr/share/qore/i18n/.qore-catalog-manifests",
+        "/usr/share/qore/i18n/.qore-catalog-manifests/qore-ssh2-module.manifest"
+      ]
+    },
+    "el10": {
+      "source_commit": "b72614a6a23be351c7d44a8c3334d883c0857564",
+      "candidate": true,
+      "image": "sha256:8ce08de32e8c81cf95e4e76a462f3e796154eccd2a5bc3dab6a07e28c978821e",
+      "exit_code": 0,
+      "cases": 69,
+      "assertions": 676,
+      "rpm_sha256": "251fa631f2e0ae94cfd11e9427d17d16f6ee3f68d42136ac533ca4c192f5a685",
+      "catalog_records": [
+        "/usr/share/qore/i18n/.qore-catalog-manifests",
+        "/usr/share/qore/i18n/.qore-catalog-manifests/qore-ssh2-module.manifest"
+      ]
+    }
+  },
+  "existing_native_diagnostics": [
+    {
+      "arch": "x86_64",
+      "source_commit": "b72614a6a23be351c7d44a8c3334d883c0857564",
+      "log_sha256": "3d832357ad72e894142adf3ab32a22303f62e8ba1de550f6563187011cc9ec3d",
+      "exact_diagnostics": [
+        "qore-ssh2-module.x86_64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests"
+      ]
+    },
+    {
+      "arch": "aarch64",
+      "source_commit": "b72614a6a23be351c7d44a8c3334d883c0857564",
+      "log_sha256": "0be3a3909424a4c486005849b90e2cc943723b0a2e4afdd9a5812567987b4457",
+      "exact_diagnostics": [
+        "qore-ssh2-module.aarch64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests"
+      ]
+    }
+  ],
+  "catalog_exception": "User approved the exact SSH2 hidden catalog ownership directory warning on 2026-10-06. No filter or directory relocation; only /usr/share/qore/i18n/.qore-catalog-manifests is covered.",
+  "remaining": "Release 4 canonical builds and local installed command controls pass; uploaded to OBS testing. Native/signed installed qualification and publication remain pending; see ssh2-proj-canonical-20261006.json.",
+  "files_sha256": {
+    "evidence/controls/ssh2-metadata-20261006/el10-build.json": "3ba18f00ebce2d699231c28f57781fae893a96432f3d01106ffd2f4d697ca3c5",
+    "evidence/controls/ssh2-metadata-20261006/el10-build.log.gz": "43dccbd916bb00c7929cbabde1febb9aed45434204fa3adcfb8b22de6ac9372f",
+    "evidence/controls/ssh2-metadata-20261006/el10-files.txt": "59549aa8365ac036da5dac5eef9fd8c3eb1065ecebec0aa0345c1c8637144951",
+    "evidence/controls/ssh2-metadata-20261006/fedora-build.json": "5e8fde18d222b849f68077ac4b72f09a9bb85c8627175cf639424d4585265c03",
+    "evidence/controls/ssh2-metadata-20261006/fedora-build.log.gz": "419aab96392848543a41493c9d29756996320d0a923c1a8b3928154296c91621",
+    "evidence/controls/ssh2-metadata-20261006/fedora-files.txt": "6079d6b05a1ecf9a0252752c7cb2ced5985c3c8926a89bb24527ed91301170ef",
+    "evidence/controls/ssh2-metadata-20261006/leap-build.json": "98cd19f1d2b9872e5158526cfdea7458117b9ce0ceb28659adeaa5b86b1e0458",
+    "evidence/controls/ssh2-metadata-20261006/leap-build.log.gz": "2832a9a8516c312b98f9cfba583fd0e9fe322817176673879baef5b0134ebe7d",
+    "evidence/controls/ssh2-metadata-20261006/leap-files.txt": "555df98efaad72f1bdf5e5d3880fadee5ad49c5886f48396066f14b24b3532db"
+  },
+  "approval": "Allow this exact diagnostic",
+  "later_debugger_finding": "Release 3 builds passed functional tests but broad log inspection found unprefixed debugedit notices, including old debugedit 5.0 forms on Leap. Release 4 uses the approved exact debugger configuration and explicit 5.1 requirement; all canonical builds are free of those notices."
+}

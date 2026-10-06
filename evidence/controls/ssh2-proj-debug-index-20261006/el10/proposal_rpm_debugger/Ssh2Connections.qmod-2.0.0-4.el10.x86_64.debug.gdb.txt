@@ -1,0 +1,42 @@
+All functions matching regular expression "_qaot_":
+
+File ./<aot>:
+	void _qaot_Ssh2Connections_Ssh2Connections__AbstractSsh2Connection__constructor_hash_auto___hash_auto___h7be2bae3dbdded34(void);
+	void _qaot_Ssh2Connections_Ssh2Connections__AbstractSsh2Connection__constructor_string_string_string_hash_auto__hash_auto___hf156b2602d7c1fcd(void);
+	void _qaot_Ssh2Connections_Ssh2Connections__SftpConnection__constructor_hash_auto___hash_auto___h3bfb3d4799d8db7d(void);
+	void _qaot_Ssh2Connections_Ssh2Connections__SftpConnection__constructor_string_string_string_hash_auto__hash_auto___h307798c3d86dd087(void);
+	void _qaot_Ssh2Connections_Ssh2Connections__SftpConnection__hasDataProvider___h29f1d69e46ba96c5(void);
+	void _qaot_Ssh2Connections_Ssh2Connections__Ssh2ClientConnection__constructor_hash_auto___hash_auto___h86661b09c213ff4b(void);
+	void _qaot_Ssh2Connections_Ssh2Connections__Ssh2ClientConnection__constructor_string_string_string_hash_auto__hash_auto___h14d902095a09c905(void);
+
+File /usr/src/debug/qore-ssh2-module-2.0.0-4.el10.x86_64/qlib/Ssh2Connections.qm:
+599:	void _qaot_Ssh2Connections_Ssh2Connections__SftpConnection__checkSubtypeInfo___h7e7ab92f3733c9a1(void);
+686:	void _qaot_Ssh2Connections_Ssh2Connections__SftpConnection__getConnectionSchemeInfoImpl___h7d1077680dae3505(void);
+572:	void _qaot_Ssh2Connections_Ssh2Connections__SftpConnection__getDataProviderImpl_string__hash_auto___h7e1ef8c1d4e3a169(void);
+610:	void _qaot_Ssh2Connections_Ssh2Connections__SftpConnection__getDataProviderSubtypesImpl___hb254f0a3d1d75968(void);
+542:	void _qaot_Ssh2Connections_Ssh2Connections__SftpConnection__getDataProvider__hash_auto___h684e20ffd7918199(void);
+641:	void _qaot_Ssh2Connections_Ssh2Connections__SftpConnection__getImpl_bool__hash_auto___h8cdba34698d4ac88(void);
+526:	void _qaot_Ssh2Connections_Ssh2Connections__SftpConnection__getRuntimeOptions___hf09c3b673256c5bb(void);
+671:	void _qaot_Ssh2Connections_Ssh2Connections__SftpConnection__getRuntimePath__hash_auto___h6b3639e72afd6ffa(void);
+517:	void _qaot_Ssh2Connections_Ssh2Connections__SftpConnection__getType___h23cf3d32235786a7(void);
+619:	void _qaot_Ssh2Connections_Ssh2Connections__SftpConnection__loadSubtypeInfo___hdee1e26a69615583(void);
+592:	void _qaot_Ssh2Connections_Ssh2Connections__SftpConnection__setChildCapabilities___hfca0f8385201234e(void);
+378:	void _qaot_Ssh2Connections_Ssh2Connections__Ssh2ClientConnection__getConnectionSchemeInfoImpl___hfeecc56c54ce755c(void);
+347:	void _qaot_Ssh2Connections_Ssh2Connections__Ssh2ClientConnection__getImpl_bool__hash_auto___hfa9e3fa6350b8a21(void);
+337:	void _qaot_Ssh2Connections_Ssh2Connections__Ssh2ClientConnection__getType___h2e7d60296214d7f6(void);
+173:	void _qaot_Ssh2Connections_Ssh2Connections__getHostKeyPolicyFromOption_string__h4b48f31462d760cb(void);
+145:	void _qaot_Ssh2Connections_Ssh2Connections__getHostKeyPolicyOption_enum_Qore__SSH2__Ssh2HostKeyPolicy___hbb39fa9d7f94fb82(void);
+159:	void _qaot_Ssh2Connections_Ssh2Connections__getHostKeyPolicyOption_int__hd80003744bfb3bca(void);
+Breakpoint 1 at 0x7758: file /usr/src/debug/qore-ssh2-module-2.0.0-4.el10.x86_64/qlib/Ssh2Connections.qm, line 599.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000007758 in _qaot_Ssh2Connections_Ssh2Connections__SftpConnection__checkSubtypeInfo___h7e7ab92f3733c9a1 at /usr/src/debug/qore-ssh2-module-2.0.0-4.el10.x86_64/qlib/Ssh2Connections.qm:599
+594	
+595	    #! Verifies that subtype info has been loaded from external modules
+596	    /** @since ConnectionProvider 2.0
+597	    */
+598	    private checkSubtypeInfo() {
+599	        if (!subtype_info) {
+600	            loadSubtypeInfo();
+601	        }
+602	    }
+603	

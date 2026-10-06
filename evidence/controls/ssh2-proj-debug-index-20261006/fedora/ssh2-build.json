@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "image": "sha256:edff5db96808feb43f5bed724c5a9fdaecb00b9ff1724e4cf36f0924c16d5bac",
+  "source": {
+    "schema": 1,
+    "commit": "3f8cffe914a324378778c21818af9643ad3452cf",
+    "source_date_epoch": 1791299449,
+    "name": "qore-ssh2-module",
+    "version": "2.0.0",
+    "exclusions": [],
+    "sources": {
+      "qore-ssh2-module-2.0.0.tar.xz": "28621da830963e25c3cb170bca4bd8d6c56c212bde38c4a1fff247ee2d6848fd",
+      "qore-ssh2-module.spec": "739222292e59575ed18bbea9f97ee99eb2218e39b4cfd4f8c23e5143e962ee1f",
+      "qore-ssh2-module.changes": "efe17d64afcdeda7897f268a12990d31f76ba9e5dccf2ea24fd0cbe2ab5f644b"
+    },
+    "spec": "qore-ssh2-module.spec",
+    "candidate": true,
+    "proposal": "Unapproved SSH2/PROJ extension of the Oracle/PDFium debugger configuration; qualification only.",
+    "packaging_overlay": {
+      "qore-ssh2-module.spec": "739222292e59575ed18bbea9f97ee99eb2218e39b4cfd4f8c23e5143e962ee1f"
+    }
+  },
+  "jobs": 2,
+  "network": "none",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "--hostname",
+    "qore-rpm-builder",
+    "--user",
+    "1019:100",
+    "-e",
+    "HOME=/work/home",
+    "-e",
+    "SOURCE_DATE_EPOCH=1791299449",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/ssh2-debug-index-proposal-20261006:/sources:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/fedora-ssh2-debug-index-proposal-20261006:/work",
+    "sha256:edff5db96808feb43f5bed724c5a9fdaecb00b9ff1724e4cf36f0924c16d5bac",
+    "sh",
+    "-c",
+    "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+    "build-local",
+    "-ba",
+    "--define",
+    "_topdir /work/rpmbuild",
+    "--define",
+    "_sourcedir /sources",
+    "--define",
+    "_smp_build_ncpus 2",
+    "--define",
+    "_buildhost qore-rpm-builder",
+    "/sources/qore-ssh2-module.spec"
+  ],
+  "source_only": false,
+  "tmpfs_mib": null,
+  "exit_code": 0,
+  "artifacts": {
+    "rpmbuild/RPMS/noarch/qore-ssh2-module-doc-2.0.0-4.fc44.noarch.rpm": "e713e7fcd54a567c2e3cef123a779cdd5cf78c5c7a72940eaf7f55f0ae352535",
+    "rpmbuild/RPMS/x86_64/qore-ssh2-module-2.0.0-4.fc44.x86_64.rpm": "f0663681625dace449eec5932d0eb83121e321d23c19f7f485ad9fa2444741f4",
+    "rpmbuild/RPMS/x86_64/qore-ssh2-module-debuginfo-2.0.0-4.fc44.x86_64.rpm": "25755bd743fce33b1be9f9292a9511166146e05a61c6ae1f9f385e6a9d623912",
+    "rpmbuild/RPMS/x86_64/qore-ssh2-module-debugsource-2.0.0-4.fc44.x86_64.rpm": "3dd25fe16759a40919dc7c9b9c86353af2fc8781a70bf5535f7c26592242633a",
+    "rpmbuild/SRPMS/qore-ssh2-module-2.0.0-4.fc44.src.rpm": "f0d49c67ff877bd02a2126aece8ef7aef7f375322fb60a6125731f93fff70baf"
+  }
+}

@@ -1,0 +1,615 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "User-approved configuration applied to source commits 54223f78d9f70e657e2df7a582fb46f562ea62d2 and 11a25dddab26ce88dfd27d4a6d3b0e2762ee81fa; all six canonical builds and local installed commands pass; exact OBS uploads verified. Native/signed installed qualification remains pending.",
+  "scope": [
+    "ProjGeos/ProjGeos.qmod",
+    "SftpClientDataProvider/SftpClientDataProvider.qmod",
+    "SftpPoller.qmod",
+    "SftpPollerUtil.qmod",
+    "Ssh2Connections.qmod"
+  ],
+  "root_cause": "Distribution debugedit cannot process LLVM .debug_names, and GDB ignores the LLVM accelerator because its augmentation differs. Leap local fixtures also had debugedit 5.0, which lacks indexed DWARF form support; updated these images to the already-qualified 5.1 backport.",
+  "proposal": "Extend the Oracle/PDFium no-precomputed-index configuration to these five AOT modules. Remove only .debug_names using the Qore metadata-preserving helper, before RPM debug extraction. Explicitly require binutils/Python and Leap debugedit >= 5.1. Preserve full DWARF, symbols, debug source, metadata and normal runtime behavior. Initial debugger loading may be slower.",
+  "validation": "All six candidate RPMs pass 288 functional cases; each asserts separate debug links and intact QAMD trailers. Fifteen paired comparisons preserve every other DWARF section byte-for-byte and all symbols. All fifteen resulting RPM debug files support GDB source lookup and breakpoints without diagnostics.",
+  "other_diagnostics": "PROJ deliberately invalid CRS cases emit distribution-library diagnostics; tracked separately, not covered by this debugger proposal. The SSH2 hidden catalog directory exception is already approved.",
+  "records": {
+    "fedora": {
+      "paired_controls": [
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/ProjGeos/ProjGeos.qmod-1.1.0-3.fc44.x86_64.debug",
+          "original_sha256": "e0cdcc30d158612027fb4cbe1a1e474f236a7933111d7e759285cd20a12c2eeb",
+          "all_dwarf_sections_preserved": {
+            ".debug_info": "9e750b8dabbe4b4c67d765e3c73f120fa5d2d4aca2408dafbc36e95c3643474b",
+            ".debug_abbrev": "d9f06771b7c1df02233e6e855f92255d003e787e8c51de69735b44c0e0a5587a",
+            ".debug_line": "17f31582bc92aca0bc8e185da39e6adaf77b4168b59d369710078321b126c291",
+            ".debug_str": "695064f2561d634a68e6d268159aabb43bca27ce71cf5e3681400a55fccc905b",
+            ".debug_addr": "ca9fdfba73efb093ecf73abe7ca29d240dbb033a68d635038d9cd6c65917a590",
+            ".debug_line_str": "dee4f4d3a0eca5e36713fd337789b1bcf94259b7493083cc66060d1c27041166",
+            ".debug_str_offsets": "a23523534a4cf5e4e50e79174dcef883fb7c026b0c7283d550638e538c57175e"
+          },
+          "symbols_unchanged": true,
+          "aot_functions": 4,
+          "breakpoint_source_location": "/usr/src/debug/qore-proj-module-1.1.0-3.fc44.x86_64/qlib/ProjGeos/ProjGeos.qm:143",
+          "gdb_warning_removed": true,
+          "debugedit_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpClientDataProvider/SftpClientDataProvider.qmod-2.0.0-3.fc44.x86_64.debug",
+          "original_sha256": "a5299f684bc15d9831b879f2434e49c520661cd852fa12e042e43d45e5baee0f",
+          "all_dwarf_sections_preserved": {
+            ".debug_info": "d10602688e72055458c442eb1978c3d545270bd4bae103f3db7e234bcfc5ce6f",
+            ".debug_abbrev": "05d8ab7ac2af1111f3d138e609eebda635fc76fe1c366b9e749a91ade3148bb6",
+            ".debug_line": "dc156552e0addde9a4d04e25848f5688e81f31cb9375b71b85cb2870dbdc05bc",
+            ".debug_str": "351bdc9216fc553a3dd52c5963f6e7b32cf26ded009e2c35b3da86ad9b02661e",
+            ".debug_addr": "f3265d132add9d7a10e758bdb4c698d8dadab7ae89ab32044524c42d142ec7be",
+            ".debug_line_str": "199a887638d1046e21d5c2b0ed6a27f67cf189b1d52e67cc6d061ec1ecaae4d2",
+            ".debug_rnglists": "d1a8842c9db57acbb7476a4d7a59e966e932c0bb292e5b0a67ae49a8c888cd50",
+            ".debug_str_offsets": "1c0433dc3dbd3bee417990e23aafe16b81cb4dd3d3f963d16d066fa1fa57c823"
+          },
+          "symbols_unchanged": true,
+          "aot_functions": 146,
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-3.fc44.x86_64/qlib/SftpClientDataProvider/SftpClientChmodDataProvider.qc:56",
+          "gdb_warning_removed": true,
+          "debugedit_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpPoller.qmod-2.0.0-3.fc44.x86_64.debug",
+          "original_sha256": "6546243179af2bc51d1f79143393b7db26ae0ab46d70d4f7067a5c622a6a63fb",
+          "all_dwarf_sections_preserved": {
+            ".debug_info": "15c2caa4a325df5fd235e9650996178256d685bcdf6303a82122935c61dcd522",
+            ".debug_abbrev": "5bca80865035eaf5ceb2723cfbc251fbdf008083c1974e73f924eb82bb1ef86a",
+            ".debug_line": "9a592a0f1dd6c864cea0acb41c5e6d0863fb08705513f14f958e9745521f6e1b",
+            ".debug_str": "4fe70da101f20554532511e7b55f6cd74504786bb22fb278048567f5dbddbbae",
+            ".debug_addr": "534732784b0827ff6e5b756c4ee403d8ef76760fc4351a338b87a4cc955bd988",
+            ".debug_line_str": "3bde562ccce27a745704d73b122913b62affc0fe78ddf059aaba3511aa12797c",
+            ".debug_rnglists": "7a9ca89300e53dbe8df5ae4ed6abd51997beb09d205ce85f71533385d1e1755f",
+            ".debug_str_offsets": "69c23b2ff7fac482ce334851eb677a1cb8e2be0eb466ffd38662a8a6cc399899"
+          },
+          "symbols_unchanged": true,
+          "aot_functions": 50,
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-3.fc44.x86_64/qlib/SftpPoller.qm:1530",
+          "gdb_warning_removed": true,
+          "debugedit_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpPollerUtil.qmod-2.0.0-3.fc44.x86_64.debug",
+          "original_sha256": "16ee87c9175711a25fa92d956e0ade5738cb93f271b0248fed9a9720171950ab",
+          "all_dwarf_sections_preserved": {
+            ".debug_info": "cc597351e8f70fb3b641790cacc16e7c81ba5186c89b33ee3cfc68f2c55b90f6",
+            ".debug_abbrev": "dd2f6289104f51fb10aed9c617fac265e340ed40f52187dbbd435f0d4b82ad86",
+            ".debug_line": "ecf6c3162b32ef691fd7cf15d8f13fd4bb90eda1a82ae1b95cefd998d6506181",
+            ".debug_str": "51f16a2da97c21d72f560b1182a5f72ef066c9ec4e66510dc649b11847642f7c",
+            ".debug_addr": "5bc61f2d35d3a153bce73f09a1b0e6540256701eaa44014aa032a4c902a0ca98",
+            ".debug_line_str": "6c7db332e4ea71d6a1e2e45879435bf12c9170e8e36c7ac9c07d47ee730a4a5e",
+            ".debug_rnglists": "98addb13f2718fb1d2ee60b2497e173fe38509875d282439e69696e27d710e88",
+            ".debug_str_offsets": "4d1dcb800d4003964b0f9de28ab1893d82b552f19236a8d8919234c5b17bc5d9"
+          },
+          "symbols_unchanged": true,
+          "aot_functions": 1,
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-3.fc44.x86_64/qlib/SftpPollerUtil.qm:230",
+          "gdb_warning_removed": true,
+          "debugedit_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/Ssh2Connections.qmod-2.0.0-3.fc44.x86_64.debug",
+          "original_sha256": "602f9bcfdfc6db7540bef7eac73282ef7bf034e73703394bccb7889fa60c5d5c",
+          "all_dwarf_sections_preserved": {
+            ".debug_info": "d7114272b1c282aa221043a82caf951656d3deac8645e90cd42263170508c250",
+            ".debug_abbrev": "e6eb31fa9f972d854a185f95970b61a3d9a0d2fc8d451da58b38cec3a5627115",
+            ".debug_line": "61f8fc87b03aa9b7ec6ef56c04bf25e9033130d353129cd950478d380becac8f",
+            ".debug_str": "aa154211d6537b708a46f8790fe1e4aff9f8ee0a04e35a075e2c2d7e0bb4d3d3",
+            ".debug_addr": "f290d0af883c13930fd088b8b14f69a5f6f1e2e0a5f0cc4bae1b375639a15e46",
+            ".debug_line_str": "487adec7e629d5d8355f4cff0c25a0d7588bdc32f03145eada42c27e6d0261d1",
+            ".debug_rnglists": "16d345404374513eac0f2c69e40cb327a1150e5445821644d9242def5d4a066b",
+            ".debug_str_offsets": "9efecc519fbefebd124047af66c9ca73e297e35ba9e1fdd021b05336d6b2f0ea"
+          },
+          "symbols_unchanged": true,
+          "aot_functions": 17,
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-3.fc44.x86_64/qlib/Ssh2Connections.qm:599",
+          "gdb_warning_removed": true,
+          "debugedit_stderr": ""
+        }
+      ],
+      "proposal_rpm_debugger": [
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/ProjGeos/ProjGeos.qmod-1.1.0-5.fc44.x86_64.debug",
+          "breakpoint_source_location": "/usr/src/debug/qore-proj-module-1.1.0-5.fc44.x86_64/qlib/ProjGeos/ProjGeos.qm:143",
+          "full_dwarf": true,
+          "no_optional_name_index": true,
+          "gdb_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpClientDataProvider/SftpClientDataProvider.qmod-2.0.0-4.fc44.x86_64.debug",
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-4.fc44.x86_64/qlib/SftpClientDataProvider/SftpClientChmodDataProvider.qc:56",
+          "full_dwarf": true,
+          "no_optional_name_index": true,
+          "gdb_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpPoller.qmod-2.0.0-4.fc44.x86_64.debug",
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-4.fc44.x86_64/qlib/SftpPoller.qm:1530",
+          "full_dwarf": true,
+          "no_optional_name_index": true,
+          "gdb_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpPollerUtil.qmod-2.0.0-4.fc44.x86_64.debug",
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-4.fc44.x86_64/qlib/SftpPollerUtil.qm:230",
+          "full_dwarf": true,
+          "no_optional_name_index": true,
+          "gdb_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/Ssh2Connections.qmod-2.0.0-4.fc44.x86_64.debug",
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-4.fc44.x86_64/qlib/Ssh2Connections.qm:599",
+          "full_dwarf": true,
+          "no_optional_name_index": true,
+          "gdb_stderr": ""
+        }
+      ],
+      "ssh2_rpm": {
+        "exit_code": 0,
+        "candidate": true,
+        "cases": 69,
+        "assertions": 676,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-ssh2-module-doc-2.0.0-4.fc44.noarch.rpm": "e713e7fcd54a567c2e3cef123a779cdd5cf78c5c7a72940eaf7f55f0ae352535",
+          "rpmbuild/RPMS/x86_64/qore-ssh2-module-2.0.0-4.fc44.x86_64.rpm": "f0663681625dace449eec5932d0eb83121e321d23c19f7f485ad9fa2444741f4",
+          "rpmbuild/RPMS/x86_64/qore-ssh2-module-debuginfo-2.0.0-4.fc44.x86_64.rpm": "25755bd743fce33b1be9f9292a9511166146e05a61c6ae1f9f385e6a9d623912",
+          "rpmbuild/RPMS/x86_64/qore-ssh2-module-debugsource-2.0.0-4.fc44.x86_64.rpm": "3dd25fe16759a40919dc7c9b9c86353af2fc8781a70bf5535f7c26592242633a",
+          "rpmbuild/SRPMS/qore-ssh2-module-2.0.0-4.fc44.src.rpm": "f0d49c67ff877bd02a2126aece8ef7aef7f375322fb60a6125731f93fff70baf"
+        }
+      },
+      "proj_rpm": {
+        "exit_code": 0,
+        "candidate": true,
+        "cases": 27,
+        "assertions": 131,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-proj-module-doc-1.1.0-5.fc44.noarch.rpm": "94cb7544639605a236aa614638a9ae578a03259429b4266c90c4e7ce2d3d15f5",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-1.1.0-5.fc44.x86_64.rpm": "51e5725fb0d1f83c2333a227cf8baad4a6d159d353d32ab4173fb92d99c676f7",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-debuginfo-1.1.0-5.fc44.x86_64.rpm": "3fd11d3e5245e9b4ec26bb5441acad78139d5ed320f0330798af72ca996cd3c1",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-debugsource-1.1.0-5.fc44.x86_64.rpm": "185b5db9d6a5664bef24ce968d5212ad03246957dad09bd658f460913490681e",
+          "rpmbuild/SRPMS/qore-proj-module-1.1.0-5.fc44.src.rpm": "32adda532785073c0e95716577ed425e22ef67aba2bb9ef5b06cd4cda662eaa7"
+        }
+      }
+    },
+    "leap": {
+      "paired_controls": [
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/ProjGeos/ProjGeos.qmod.debug",
+          "original_sha256": "2d6df9ea2f451a18a89144e201dbe1e5dae3d0064d1e18e37313c0ce725475db",
+          "all_dwarf_sections_preserved": {
+            ".debug_aranges": "d916b7aa26b4b8106fe693ba73da66415a95102b129b963f12df77a8dd747f64",
+            ".debug_info": "972cc80934ff5de98b3085f3426c82ee76233e5222553996597e5936ae53d2e7",
+            ".debug_abbrev": "91168e0937667dbe510da013662bc9e61d2949c5daa13bceb9739bc809d3a0da",
+            ".debug_line": "f9e8c30fe054c841e1b55190677ab3d331b60fce777f2022048847a32c70fb34",
+            ".debug_str": "b0ec0a9b5307a38fd290c064dd97886dff7bb77e379ea9bdc79ebe20c4c58a4a",
+            ".debug_addr": "1ef09f023bd9532688ee54347b68fd34effad7363e5e78bf493b86290de289b1",
+            ".debug_line_str": "3e8c9f0542ad7976c319eb72a0da11b3ecf84d833fce96c5bdd91cbd812a9f00",
+            ".debug_rnglists": "afeb8d32cd2aaff0866321c5dab889dc785793a5f263b15f8b5dcca1cbca2698",
+            ".debug_str_offsets": "66061c38be5cce5b3c10aac394444495d18f7c2165c4cb082585e741c04c7aa7"
+          },
+          "symbols_unchanged": true,
+          "aot_functions": 4,
+          "breakpoint_source_location": "/usr/src/debug/qore-proj-module-1.1.0/qlib/ProjGeos/ProjGeos.qm:143",
+          "gdb_warning_removed": true,
+          "debugedit_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpClientDataProvider/SftpClientDataProvider.qmod.debug",
+          "original_sha256": "a51f521a951cc54cef7d2ba73744d92170e6407e69b36882e2388ccd776d7a51",
+          "all_dwarf_sections_preserved": {
+            ".debug_aranges": "5c212f8d1a0433c631fb33eb6fde8b3d6d43c6e8ff394fe1be82841065163d47",
+            ".debug_info": "bbcff5ea3a5f58f0149a1e7038876ef9353b61d57632b0ea2555cc4d6f1097e0",
+            ".debug_abbrev": "4973ed9d2f31a37710eaaa8a8befce8c93984fd12b8bc0bff36626c4f1468da9",
+            ".debug_line": "b43f93a8f2cd48cabb68ef5799b0cfa3d6bec81750142c6bfea2af9b556c226b",
+            ".debug_str": "3ac4966eef078b16e6dc8c640c3c88398d216bae1039aafcdd3777e28c508f4b",
+            ".debug_addr": "94499868025228e5d2052fb696d3d94cada091880e8e68579ecd5d9783d11261",
+            ".debug_line_str": "c69800592ae797ad8393e9bcf06723a664b3c41eb5d419b32a8050455ad17fd7",
+            ".debug_rnglists": "a4bfaf819e21f520fdb44bf434d6c73d40efbf35517e6c387439d562e9b1a0e2",
+            ".debug_str_offsets": "bef69c2a30d6c23f7d9caffa8e9d0298983f889a6e0f61a233c40b71bc244309"
+          },
+          "symbols_unchanged": true,
+          "aot_functions": 146,
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0/qlib/SftpClientDataProvider/SftpClientChmodDataProvider.qc:56",
+          "gdb_warning_removed": true,
+          "debugedit_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpPoller.qmod.debug",
+          "original_sha256": "a469522ffddd0c2fabd90bfc20fba480e2d47dd799f6259817a7ab2dee264a56",
+          "all_dwarf_sections_preserved": {
+            ".debug_aranges": "566c9a20265610e53a8d9b3df6bd469d9375053cdca9587dd78a668a3431a9b1",
+            ".debug_info": "26c696e3b4acc9186a2ffc1d84e90092e47af7b2ff445549a28b4fd5da9d7f39",
+            ".debug_abbrev": "f40d00607de2446e9acf6a7bcda6e32d81a957fe8c3699890b389b77220b0c85",
+            ".debug_line": "533062934f55167aceaaec435ca68c3a2f051931634aa93ed2dc059bd7cb4a3d",
+            ".debug_str": "b23d79cb733f342445fcc2a0058e88c87e40c310f1476a9d70f4958969d7528b",
+            ".debug_addr": "65ee9a11f89aedcda692ee41e2b0c64b5d57ec435f0d9c0ae2b0c03a1f63a47a",
+            ".debug_line_str": "e9075730f274cf10fa44dca2d86f2f98509a1d07e46b228e98d40fa518072c72",
+            ".debug_rnglists": "20bf05b3d495bb3071703c9eaa5c8f3bf81565e7be99cc44b8b8f9b8100c2e7e",
+            ".debug_str_offsets": "a731dcd61e2fda88238a37ec1fb2eef4bff86e84e16307d5c90b8786a2956554"
+          },
+          "symbols_unchanged": true,
+          "aot_functions": 50,
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0/qlib/SftpPoller.qm:1530",
+          "gdb_warning_removed": true,
+          "debugedit_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpPollerUtil.qmod.debug",
+          "original_sha256": "b1194707c354a17df231b3423c69d82471ad1e010dc456e34ce348acd0f69b39",
+          "all_dwarf_sections_preserved": {
+            ".debug_aranges": "a32a1a7b2aae5f05adfb34243acdb74a356a6ce337650f79c367108e41fabf22",
+            ".debug_info": "f93e8d8e00452052bd1dd2d8505e8272542cc603c69810b15098741975492d4c",
+            ".debug_abbrev": "78b348915cd0f383d0c992c3ec68c11eb6b015d5b2f446b26bc8204ed8a9fde8",
+            ".debug_line": "f64290d8e389b894d455fc14970c8c386f22c7917700d6c4933e312595fd6314",
+            ".debug_str": "485f271d8863c8a1b33c9e331d9d41019b4408c4b724916ea3732a0fbf7991ab",
+            ".debug_addr": "97bd96070848bfc07e5663c9592b2ec0fabdecbf3b542ea53a9fe70eb93b560c",
+            ".debug_line_str": "e69da295d476b738583d9460e76ca62a25e6c5e10b65d64dfe4c96e8696c9433",
+            ".debug_rnglists": "a7cf3e8f766e840ece2d172b6b88b640e7b8cd8d2cd4b956e9a8e301e0f96939",
+            ".debug_str_offsets": "920901bf0a8a9d4f13080e9e293f383b872c5072e17c4c4b7a00eae94b1b41df"
+          },
+          "symbols_unchanged": true,
+          "aot_functions": 1,
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0/qlib/SftpPollerUtil.qm:230",
+          "gdb_warning_removed": true,
+          "debugedit_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/Ssh2Connections.qmod.debug",
+          "original_sha256": "70597160bc2804d9499a11aee5191ae9355243dbd2a51bf183d5276db97c9101",
+          "all_dwarf_sections_preserved": {
+            ".debug_aranges": "555282435b2534dcc6ee8c2881e329c85a0c68d63824389344cd2a81af32e230",
+            ".debug_info": "a45fc73d5e695f3f7671abec41a54e09ae60e641f832599f5759fd28c37938c4",
+            ".debug_abbrev": "8e4bf836de06b3519971829202bc5043c2e8640bf80783abd116060d06b22458",
+            ".debug_line": "9ef4ea39154e1384197bc24de776c00d4900fc6f1fc9c569aecc6828b05ac8f5",
+            ".debug_str": "9477863a4fbf080d2ff7d3811f8738c091b82d6207cd2ecba5309b40ee789cb7",
+            ".debug_addr": "4d9ab4416a30c2b47ffe6bcfbb2a3a15e9f26c602babdc427d094d7e20a9fb33",
+            ".debug_line_str": "2fd23fe54c137f73bd7370267c1dd49ad3da376426b1cd8bcdf42391200f2b14",
+            ".debug_rnglists": "ef422c4e001df6c9ec0764b223fc8bc90a2bf89ae87dc26ef271b0772dd3456e",
+            ".debug_str_offsets": "4e407258b27307fa151df51a507b965728f9070c8c1c225b16358894cbcf7abe"
+          },
+          "symbols_unchanged": true,
+          "aot_functions": 17,
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0/qlib/Ssh2Connections.qm:599",
+          "gdb_warning_removed": true,
+          "debugedit_stderr": ""
+        }
+      ],
+      "proposal_rpm_debugger": [
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/ProjGeos/ProjGeos.qmod.debug",
+          "breakpoint_source_location": "/usr/src/debug/qore-proj-module-1.1.0/qlib/ProjGeos/ProjGeos.qm:143",
+          "full_dwarf": true,
+          "no_optional_name_index": true,
+          "gdb_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpClientDataProvider/SftpClientDataProvider.qmod.debug",
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0/qlib/SftpClientDataProvider/SftpClientChmodDataProvider.qc:56",
+          "full_dwarf": true,
+          "no_optional_name_index": true,
+          "gdb_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpPoller.qmod.debug",
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0/qlib/SftpPoller.qm:1530",
+          "full_dwarf": true,
+          "no_optional_name_index": true,
+          "gdb_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpPollerUtil.qmod.debug",
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0/qlib/SftpPollerUtil.qm:230",
+          "full_dwarf": true,
+          "no_optional_name_index": true,
+          "gdb_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/Ssh2Connections.qmod.debug",
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0/qlib/Ssh2Connections.qm:599",
+          "full_dwarf": true,
+          "no_optional_name_index": true,
+          "gdb_stderr": ""
+        }
+      ],
+      "ssh2_rpm": {
+        "exit_code": 0,
+        "candidate": true,
+        "cases": 69,
+        "assertions": 676,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-ssh2-module-doc-2.0.0-4.noarch.rpm": "0f8db3d4d612808cea3e46ae840927f5e97a33ee5ca96908afd1012cbc4048d7",
+          "rpmbuild/RPMS/x86_64/qore-ssh2-module-2.0.0-4.x86_64.rpm": "a1dbc5b007eabeeff9d129c80e579aaedad8c23edd30c7e33d5df1ca3f71d88c",
+          "rpmbuild/RPMS/x86_64/qore-ssh2-module-debuginfo-2.0.0-4.x86_64.rpm": "5b0794b9f0089f9cd604ac46baff472d4bc7ce173042ad75545c6d025236141a",
+          "rpmbuild/RPMS/x86_64/qore-ssh2-module-debugsource-2.0.0-4.x86_64.rpm": "b77b9035389525927f1fe304a7e025e9485408e30b3c188761ad20cbf5c1bba3",
+          "rpmbuild/SRPMS/qore-ssh2-module-2.0.0-4.src.rpm": "3d951df4dd3d3bfb8a630a12386350a88a5c76c78e9210401718e22194c4dcd7"
+        }
+      },
+      "proj_rpm": {
+        "exit_code": 0,
+        "candidate": true,
+        "cases": 27,
+        "assertions": 131,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-proj-module-doc-1.1.0-5.noarch.rpm": "caed849940348ed68eb5afed1044c6ff9270fac1a03f0b9dd0c4526ac8a15ef3",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-1.1.0-5.x86_64.rpm": "fa2216afd7e5daad9ec2d5ee8750072741daa6fa50129f579406792cc7d6fcfd",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-debuginfo-1.1.0-5.x86_64.rpm": "c5bf1f369bef27566802cd74c7d77c04bbfec30440cf1ea81080e52cb119563a",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-debugsource-1.1.0-5.x86_64.rpm": "a1b9f255e86db1eb282dd37f34ea0ec494222a4da559b56726b6add2602518de",
+          "rpmbuild/SRPMS/qore-proj-module-1.1.0-5.src.rpm": "5061d0d239a427440387bfcfcf3b476ba5b6f4032aa46866079174578fa924e7"
+        }
+      }
+    },
+    "el10": {
+      "paired_controls": [
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/ProjGeos/ProjGeos.qmod-1.1.0-3.el10.x86_64.debug",
+          "original_sha256": "51b140eb7fee9253697ab76ef6387b8eb3c76e37847ef915b4fe10ad44ed4e9d",
+          "all_dwarf_sections_preserved": {
+            ".debug_info": "9e750b8dabbe4b4c67d765e3c73f120fa5d2d4aca2408dafbc36e95c3643474b",
+            ".debug_abbrev": "d9f06771b7c1df02233e6e855f92255d003e787e8c51de69735b44c0e0a5587a",
+            ".debug_line": "fffb4db5199f14dd3136d0f2f0d28a3faaa28a96d7b218d2c04171e5366a868d",
+            ".debug_str": "695064f2561d634a68e6d268159aabb43bca27ce71cf5e3681400a55fccc905b",
+            ".debug_addr": "65d63d066fe6125dce0619ac182b2eb0c73d3b86dd669b24d6d498d0eecf1652",
+            ".debug_line_str": "6fd9b018c5782382d88d5651e5866e97a52b160949817ae923359e49ad2e8d5a",
+            ".debug_str_offsets": "a23523534a4cf5e4e50e79174dcef883fb7c026b0c7283d550638e538c57175e"
+          },
+          "symbols_unchanged": true,
+          "aot_functions": 4,
+          "breakpoint_source_location": "/usr/src/debug/qore-proj-module-1.1.0-3.el10.x86_64/qlib/ProjGeos/ProjGeos.qm:143",
+          "gdb_warning_removed": true,
+          "debugedit_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpClientDataProvider/SftpClientDataProvider.qmod-2.0.0-3.el10.x86_64.debug",
+          "original_sha256": "e950cc6123552739fdb11e0b853899da9ef852677164d36eaf88dcf77e645b26",
+          "all_dwarf_sections_preserved": {
+            ".debug_info": "d10602688e72055458c442eb1978c3d545270bd4bae103f3db7e234bcfc5ce6f",
+            ".debug_abbrev": "05d8ab7ac2af1111f3d138e609eebda635fc76fe1c366b9e749a91ade3148bb6",
+            ".debug_line": "a5598b7e9332239356ea1f3b0b855b2394e8e45fd3d77b5c11bf9e853e887ce9",
+            ".debug_str": "351bdc9216fc553a3dd52c5963f6e7b32cf26ded009e2c35b3da86ad9b02661e",
+            ".debug_addr": "3a3319c80d06e002ffc93dff27369d5b2e209c4112125468771f61bffaf61410",
+            ".debug_line_str": "3fe041b21ab194d9ecac5056f0d2a1fc26990e4af6b4cf6d05323683c89a5c03",
+            ".debug_rnglists": "d1a8842c9db57acbb7476a4d7a59e966e932c0bb292e5b0a67ae49a8c888cd50",
+            ".debug_str_offsets": "1c0433dc3dbd3bee417990e23aafe16b81cb4dd3d3f963d16d066fa1fa57c823"
+          },
+          "symbols_unchanged": true,
+          "aot_functions": 146,
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-3.el10.x86_64/qlib/SftpClientDataProvider/SftpClientChmodDataProvider.qc:56",
+          "gdb_warning_removed": true,
+          "debugedit_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpPoller.qmod-2.0.0-3.el10.x86_64.debug",
+          "original_sha256": "c104cf19ec61b8f886a30293c7ff44d2be8d05018a8f94d9fff5042e0cd2fa02",
+          "all_dwarf_sections_preserved": {
+            ".debug_info": "d4c5d44770c0306179b5990c4bb86e167325150a8c4cd3b58cd5e5ade6d42288",
+            ".debug_abbrev": "5bca80865035eaf5ceb2723cfbc251fbdf008083c1974e73f924eb82bb1ef86a",
+            ".debug_line": "678a6e4ca52b169a5259129fc8231d1ff0d9400c2059505de4b18bf6f780b6f3",
+            ".debug_str": "4fe70da101f20554532511e7b55f6cd74504786bb22fb278048567f5dbddbbae",
+            ".debug_addr": "348ac11ac20d6f4ec0a037e56e4cd180df52b46d5d7cccf4d73a494e407d4f70",
+            ".debug_line_str": "6682c374e7c7846db7a2258fda5fea58f2b1a14cd06349e4aad8161b2644c130",
+            ".debug_rnglists": "d02f0087219937ff7ef2fd953d4506f42b59a65d361a0c2e51ef4eadb2ba15b4",
+            ".debug_str_offsets": "69c23b2ff7fac482ce334851eb677a1cb8e2be0eb466ffd38662a8a6cc399899"
+          },
+          "symbols_unchanged": true,
+          "aot_functions": 50,
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-3.el10.x86_64/qlib/SftpPoller.qm:1530",
+          "gdb_warning_removed": true,
+          "debugedit_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpPollerUtil.qmod-2.0.0-3.el10.x86_64.debug",
+          "original_sha256": "953880f7526cc5e8f5a842bb139e6fbf7b872b907527eefe55de6618e9bd1e45",
+          "all_dwarf_sections_preserved": {
+            ".debug_info": "cc597351e8f70fb3b641790cacc16e7c81ba5186c89b33ee3cfc68f2c55b90f6",
+            ".debug_abbrev": "dd2f6289104f51fb10aed9c617fac265e340ed40f52187dbbd435f0d4b82ad86",
+            ".debug_line": "92577df5efa4b07ee6c07c8d2cf34ad5ed73464b7ce631a3e7f3d6ebfdae58ee",
+            ".debug_str": "51f16a2da97c21d72f560b1182a5f72ef066c9ec4e66510dc649b11847642f7c",
+            ".debug_addr": "556d07802ec029b1d145de56ab127033b715b393975af120840200cd386e0b9d",
+            ".debug_line_str": "3272764c1aaff6d2e0f41d9261c10f530d2077e08c4eeb23f436b218f335477c",
+            ".debug_rnglists": "98addb13f2718fb1d2ee60b2497e173fe38509875d282439e69696e27d710e88",
+            ".debug_str_offsets": "4d1dcb800d4003964b0f9de28ab1893d82b552f19236a8d8919234c5b17bc5d9"
+          },
+          "symbols_unchanged": true,
+          "aot_functions": 1,
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-3.el10.x86_64/qlib/SftpPollerUtil.qm:230",
+          "gdb_warning_removed": true,
+          "debugedit_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/Ssh2Connections.qmod-2.0.0-3.el10.x86_64.debug",
+          "original_sha256": "9c7f16e640f5cce66624093c81c5e2f2273d7ea354e6b95b29ffc1f49434c848",
+          "all_dwarf_sections_preserved": {
+            ".debug_info": "069432508205f855914ab8aabe4fab05c707b5f0eb5c4aa9ba8075624a2043fa",
+            ".debug_abbrev": "e6eb31fa9f972d854a185f95970b61a3d9a0d2fc8d451da58b38cec3a5627115",
+            ".debug_line": "14c8df5becf2f15f43c1e55dcdcaf7e8830852fdb163d41497d6c5fc4eb84edb",
+            ".debug_str": "aa154211d6537b708a46f8790fe1e4aff9f8ee0a04e35a075e2c2d7e0bb4d3d3",
+            ".debug_addr": "27576e5e7ec9ba0ef25a975ce96db4d89c8bad1ec928699f7566bb44aecb6a6d",
+            ".debug_line_str": "aaaf5acd3784bd9002a71c26219a8456f53bc28473dcffc25364245adb97223c",
+            ".debug_rnglists": "d4831263fe812f098a92485bb83f4c40738a13a5b566d4865984dab5f323c4ee",
+            ".debug_str_offsets": "9efecc519fbefebd124047af66c9ca73e297e35ba9e1fdd021b05336d6b2f0ea"
+          },
+          "symbols_unchanged": true,
+          "aot_functions": 17,
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-3.el10.x86_64/qlib/Ssh2Connections.qm:599",
+          "gdb_warning_removed": true,
+          "debugedit_stderr": ""
+        }
+      ],
+      "proposal_rpm_debugger": [
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/ProjGeos/ProjGeos.qmod-1.1.0-5.el10.x86_64.debug",
+          "breakpoint_source_location": "/usr/src/debug/qore-proj-module-1.1.0-5.el10.x86_64/qlib/ProjGeos/ProjGeos.qm:143",
+          "full_dwarf": true,
+          "no_optional_name_index": true,
+          "gdb_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpClientDataProvider/SftpClientDataProvider.qmod-2.0.0-4.el10.x86_64.debug",
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-4.el10.x86_64/qlib/SftpClientDataProvider/SftpClientChmodDataProvider.qc:56",
+          "full_dwarf": true,
+          "no_optional_name_index": true,
+          "gdb_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpPoller.qmod-2.0.0-4.el10.x86_64.debug",
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-4.el10.x86_64/qlib/SftpPoller.qm:1530",
+          "full_dwarf": true,
+          "no_optional_name_index": true,
+          "gdb_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/SftpPollerUtil.qmod-2.0.0-4.el10.x86_64.debug",
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-4.el10.x86_64/qlib/SftpPollerUtil.qm:230",
+          "full_dwarf": true,
+          "no_optional_name_index": true,
+          "gdb_stderr": ""
+        },
+        {
+          "binary": "payload/usr/lib/debug/usr/lib64/qore-modules/Ssh2Connections.qmod-2.0.0-4.el10.x86_64.debug",
+          "breakpoint_source_location": "/usr/src/debug/qore-ssh2-module-2.0.0-4.el10.x86_64/qlib/Ssh2Connections.qm:599",
+          "full_dwarf": true,
+          "no_optional_name_index": true,
+          "gdb_stderr": ""
+        }
+      ],
+      "ssh2_rpm": {
+        "exit_code": 0,
+        "candidate": true,
+        "cases": 69,
+        "assertions": 676,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-ssh2-module-doc-2.0.0-4.el10.noarch.rpm": "e18c64d8dc5586ab33135adcad4bfe6add81ab84ed2cf41fd8b669528fb8f909",
+          "rpmbuild/RPMS/x86_64/qore-ssh2-module-2.0.0-4.el10.x86_64.rpm": "3826a2886edb685ee5d9bed7e10cb46b3fa5b4fac587f099a429c2418d5fb1af",
+          "rpmbuild/RPMS/x86_64/qore-ssh2-module-debuginfo-2.0.0-4.el10.x86_64.rpm": "e2c9c213190565527de64530b30b3223597fb10d3c4377d13ff3bc924ba40063",
+          "rpmbuild/RPMS/x86_64/qore-ssh2-module-debugsource-2.0.0-4.el10.x86_64.rpm": "db3c8a11bc5f2712822d62f6f16f8571a97f2abd984b5a6a42bf4dbe3685d292",
+          "rpmbuild/SRPMS/qore-ssh2-module-2.0.0-4.el10.src.rpm": "b5c4f1b2ef3cede9fe2e8914183d150bfe60ac03cff2378f9ce46e2ae3bc064c"
+        }
+      },
+      "proj_rpm": {
+        "exit_code": 0,
+        "candidate": true,
+        "cases": 27,
+        "assertions": 131,
+        "artifacts": {
+          "rpmbuild/RPMS/noarch/qore-proj-module-doc-1.1.0-5.el10.noarch.rpm": "43f2c851ed5cd20940c2f122566bf6238f16ed00ee869010d2b856c83f914b22",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-1.1.0-5.el10.x86_64.rpm": "4ef1637c50520554e5db698bc64048c6c231f847ceb110422016dd06e36e20e4",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-debuginfo-1.1.0-5.el10.x86_64.rpm": "1e47da945af98e2a396f7bb53e9feb4288b8a6d45e9b5fccf136df784387d331",
+          "rpmbuild/RPMS/x86_64/qore-proj-module-debugsource-1.1.0-5.el10.x86_64.rpm": "4838a2682793721581dfc5af503a538772e0c8e80a6bae7e44e1b291002757da",
+          "rpmbuild/SRPMS/qore-proj-module-1.1.0-5.el10.src.rpm": "b4ce394cba324d4a8619e952825051fd0da07abea4447505f9e77a9f37e803b2"
+        }
+      }
+    }
+  },
+  "files_sha256": {
+    "evidence/controls/ssh2-proj-debug-index-20261006/build-aot-debug-proposals-20261006.py": "ffc9a24a0d0e169340d44b29199b69a794ee5c3ab9dc8c7a4931882fb7342d7f",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/ProjGeos.qmod-1.1.0-3.el10.x86_64.debug/debugedit.txt": "8a3a596dedb02b6b073fceb9f6dc5f6a3a7ff565d71244ca8813895b9b0099ca",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/ProjGeos.qmod-1.1.0-3.el10.x86_64.debug/no-index-gdb.txt": "a5706ecc9c6157578f796bdef56c4b4646f82cfa7b35d1a2b737791e96ae0dd3",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/ProjGeos.qmod-1.1.0-3.el10.x86_64.debug/original-functions.txt": "c16e9a10d9f3f91da0786236c195fffe34a93da8e6a2105b5cb21632581ea0b4",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/ProjGeos.qmod-1.1.0-3.el10.x86_64.debug/original-gdb.txt": "01499c79c652f2a5048d34f1362210a8ac91305b3dcdcace044cae7fd4c28f5d",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/SftpClientDataProvider.qmod-2.0.0-3.el10.x86_64.debug/debugedit.txt": "9ba1539b8554b2ca615836627cbfc3bb34695fb10007b6bc2642729f07dd13a3",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/SftpClientDataProvider.qmod-2.0.0-3.el10.x86_64.debug/no-index-gdb.txt.gz": "a9866c067ada93d9e8c94800d867acdc918458efe17b2cfa4e8184c56e83a9a0",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/SftpClientDataProvider.qmod-2.0.0-3.el10.x86_64.debug/original-functions.txt.gz": "040cf93fec0c51a1bb637927dab87703b5aada45a853c13e795b1d3dc0863528",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/SftpClientDataProvider.qmod-2.0.0-3.el10.x86_64.debug/original-gdb.txt.gz": "7a1ee4de1b627d05af2935f7830e641762c087fa692c9964880e3e244df48f8e",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/SftpPoller.qmod-2.0.0-3.el10.x86_64.debug/debugedit.txt": "f2d2100b411e9764a530ab8dc5bccb337a584d4677f59df69b5d244a6d84f63e",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/SftpPoller.qmod-2.0.0-3.el10.x86_64.debug/no-index-gdb.txt": "b3c2bf4af52d935ab78fd6d106b87615babd27fd23afd6c719363a19d0b80e8b",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/SftpPoller.qmod-2.0.0-3.el10.x86_64.debug/original-functions.txt": "489cee13f6f757c7ff1fd813e978ed3300995cded9fc01c8d2d59a336a81cb2f",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/SftpPoller.qmod-2.0.0-3.el10.x86_64.debug/original-gdb.txt": "733be30c253597c9fd1069335e4349be899f595b937604127df10ab0a32351b0",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/SftpPollerUtil.qmod-2.0.0-3.el10.x86_64.debug/debugedit.txt": "a3cd9d0c1ee2b6ba0b128fd57e00aa9f81837266b956effcbb9da877ea178708",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/SftpPollerUtil.qmod-2.0.0-3.el10.x86_64.debug/no-index-gdb.txt": "8a38693b16c45d9b2ae4841a9d71fe807fd5c9799b1177aa6f7e2b31f2729670",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/SftpPollerUtil.qmod-2.0.0-3.el10.x86_64.debug/original-functions.txt": "3c07385043e8ec6cdf7d0fb7ba822c3069c84a0b4a8f7c56c1b011a02f090913",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/SftpPollerUtil.qmod-2.0.0-3.el10.x86_64.debug/original-gdb.txt": "941f8a58f2774c74510779cfa1dee4f9709f37ee7e2d1bde74ae039db6a14c73",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/Ssh2Connections.qmod-2.0.0-3.el10.x86_64.debug/debugedit.txt": "ea518c9a4e160a1aa8567e0f1146c6455b76c4622adb7c4dfc005d8e8e58590d",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/Ssh2Connections.qmod-2.0.0-3.el10.x86_64.debug/no-index-gdb.txt": "86770ff6a8ac0b05b4ceb45ae0784da026f3d072bb4484c57ee5b91c85f01fa8",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/Ssh2Connections.qmod-2.0.0-3.el10.x86_64.debug/original-functions.txt": "b74b9160b05cc560ad0921282e200dbbde412d1fc4b010c49d4b35ee15e01c92",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls/Ssh2Connections.qmod-2.0.0-3.el10.x86_64.debug/original-gdb.txt": "98af82cb6b09bee58dd40c814a5f0d52b539ee053ecfab4fec8cc34833469d75",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls-checks.json": "47450ed1cda48e34fd26881929cfad3b525e35eef41cd1b91e4252f5c6d82802",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/paired_controls-status.json": "16aa5e152a6024f6d7f6e106699313b693490d038ad291711da2a2dbb89c5970",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/proj-build.json": "64851449c73c939b3344b70bf8baf9fd5f045417bcfedba6378e6c3fc64be47a",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/proj-build.log.gz": "ee3e50809763aaf8954eb68d9cbfb122adfad7fa1da03da15bd466efe52f3118",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/proposal_rpm_debugger/ProjGeos.qmod-1.1.0-5.el10.x86_64.debug.gdb.txt": "61d184a172f2ee4aadea56f80f9dfaee1571b9db08733008655c4d344d58e287",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/proposal_rpm_debugger/SftpClientDataProvider.qmod-2.0.0-4.el10.x86_64.debug.gdb.txt.gz": "a13f8b6851a694753fb222fadff198e3954c6d1344d6a755fe765d1eb4f2c661",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/proposal_rpm_debugger/SftpPoller.qmod-2.0.0-4.el10.x86_64.debug.gdb.txt": "0e3c5da61b01b5495614e934649a8485e339b75a64f3875206a1f56bc20e6d1f",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/proposal_rpm_debugger/SftpPollerUtil.qmod-2.0.0-4.el10.x86_64.debug.gdb.txt": "679fcefbd18f08e44d1aa0eef5eef7433b6a7180b3965f016033261ab2bc148e",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/proposal_rpm_debugger/Ssh2Connections.qmod-2.0.0-4.el10.x86_64.debug.gdb.txt": "fd4fe2b6bbb4aefaa3861ad215898a7478035db2d492a671b908784efa7d519d",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/proposal_rpm_debugger-checks.json": "78920c553676ccba05c450ab475627100a15da2184237b0bae1034669f426761",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/proposal_rpm_debugger-status.json": "363ca61eb56ee09977e28679107eab3fba01e6aa7b595dd43952f7521dc24e85",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/ssh2-build.json": "5145c3d3e32e9238a4765ebfdf8d10b3581e31c203592109ed40d258b81df0e4",
+    "evidence/controls/ssh2-proj-debug-index-20261006/el10/ssh2-build.log.gz": "5c51f8a8a211c6df6623ac6af9b014eb0a011dab1f9661b91a27979f34b428d9",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/ProjGeos.qmod-1.1.0-3.fc44.x86_64.debug/debugedit.txt": "69a4ed0d4516f07f5a89d81ca328d26e6984cbc201a5b1ccc8e72d75f1f36dc2",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/ProjGeos.qmod-1.1.0-3.fc44.x86_64.debug/no-index-gdb.txt": "6a544c63d0be5c893092a9025626c1c443f92a5947a9c78aae4c201f370749e6",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/ProjGeos.qmod-1.1.0-3.fc44.x86_64.debug/original-functions.txt": "83be10c00a242bd689008cac446b6fc9ce6ca5887ed17f4094a1bdfc3e71dfa5",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/ProjGeos.qmod-1.1.0-3.fc44.x86_64.debug/original-gdb.txt": "8a7274846f10017763c5c72b33bde0c7d32cae24562b3f4682525700faaef9d9",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/SftpClientDataProvider.qmod-2.0.0-3.fc44.x86_64.debug/debugedit.txt": "adec2bad10aa386685a04e853dc021fe1cb96407cdfdc9e1ba48ae0562112ad5",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/SftpClientDataProvider.qmod-2.0.0-3.fc44.x86_64.debug/no-index-gdb.txt.gz": "c51b8c368777473945aae795ad737ad2b58778bdd747461f472a94c5993228fa",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/SftpClientDataProvider.qmod-2.0.0-3.fc44.x86_64.debug/original-functions.txt.gz": "bb14ea7ed4c6ffb5382ba97a1fec7ccbf4c80bc4a892e1d368a6d153f3bcb682",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/SftpClientDataProvider.qmod-2.0.0-3.fc44.x86_64.debug/original-gdb.txt.gz": "06b0ccbf5596b0119f5195387bd034990ce6b3f836e2a2d362b92e962988fd00",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/SftpPoller.qmod-2.0.0-3.fc44.x86_64.debug/debugedit.txt": "93789a41e014a7b2a9531b3bd46c9c590fdc2cd5a1636914dd3164dc21726e87",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/SftpPoller.qmod-2.0.0-3.fc44.x86_64.debug/no-index-gdb.txt": "09668a6b2b06fc02868bbc67d4c3d8112da77def2ebf095f4b4625718465002b",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/SftpPoller.qmod-2.0.0-3.fc44.x86_64.debug/original-functions.txt": "c07c9b91efe16bb60ddc529b360abefb9fe040569761560e718731c07ccd382b",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/SftpPoller.qmod-2.0.0-3.fc44.x86_64.debug/original-gdb.txt": "df5121a8acf335dd2ff747de11eedcbab66409aee41afd27fca50a7938d410e5",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/SftpPollerUtil.qmod-2.0.0-3.fc44.x86_64.debug/debugedit.txt": "f77e582ecdf0f01263ead45bde4ec996e90ddbe4d02ef60cfbbe1d95c9e5f5d0",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/SftpPollerUtil.qmod-2.0.0-3.fc44.x86_64.debug/no-index-gdb.txt": "b54825e44752f226d894578e7b64d62f136c4d0257836df49bb48a26004995f1",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/SftpPollerUtil.qmod-2.0.0-3.fc44.x86_64.debug/original-functions.txt": "6f0fc6cffbff4e8b56e5562e947bc6326ad31ffb1868f1244783569c74b72754",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/SftpPollerUtil.qmod-2.0.0-3.fc44.x86_64.debug/original-gdb.txt": "e4234c238b288e6a76f9a5e2c2e3633098d1c2064e9f5e9361de9f350696e94d",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/Ssh2Connections.qmod-2.0.0-3.fc44.x86_64.debug/debugedit.txt": "9511840fcd54313505e94aa3e6a96b00db5aee9a96f6c4ef2c4b84c04af26ebf",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/Ssh2Connections.qmod-2.0.0-3.fc44.x86_64.debug/no-index-gdb.txt": "ff2a9067975c6e974c26d12d93c58cbc3661321688736b63365c71f054a25e97",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/Ssh2Connections.qmod-2.0.0-3.fc44.x86_64.debug/original-functions.txt": "7c1d04b4bda6c8b75a978596d8260877a908b35feb8f6e6dcc70c37945580c4e",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls/Ssh2Connections.qmod-2.0.0-3.fc44.x86_64.debug/original-gdb.txt": "842a32fbc16cfc557fa34925ea90b1c0fe512237bf4cde5da7570d13fac7f04f",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls-checks.json": "5355ce334965c78310032c74702ec76d7f0cc9f1bd099fe1eb55003f3c1f4dca",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/paired_controls-status.json": "08ef642e786483c33cfb9a7fc0864b78feeb01e4810264c7f0ce028d3de1ec5e",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/proj-build.json": "dad035a5800a75c8ca690f23284ce2b233a67dc39979d68204adaa3e4fd755da",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/proj-build.log.gz": "69c64945274f7bbccea88625a51bc514258f0019ad47b39841205f0240bcbc2a",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/proposal_rpm_debugger/ProjGeos.qmod-1.1.0-5.fc44.x86_64.debug.gdb.txt": "88c8c6936684c16ce450bfbc05cf647a8a5185fd17cbde93deb6289aa80c0d6b",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/proposal_rpm_debugger/SftpClientDataProvider.qmod-2.0.0-4.fc44.x86_64.debug.gdb.txt.gz": "7d288ba929f0652be2172326a2f1e94529cf3ca1f36ae20b37ebfafa93ea46a5",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/proposal_rpm_debugger/SftpPoller.qmod-2.0.0-4.fc44.x86_64.debug.gdb.txt": "dd2a869fc69c76aac1304ad24c011ffd94aaacd03b189e1add3bf16ce4c00ee8",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/proposal_rpm_debugger/SftpPollerUtil.qmod-2.0.0-4.fc44.x86_64.debug.gdb.txt": "101bae9ed6bb858cfd02af6a52ce06f747c2c3440abfabc0b80eb8e68124c759",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/proposal_rpm_debugger/Ssh2Connections.qmod-2.0.0-4.fc44.x86_64.debug.gdb.txt": "c77ea82f33452eaada804eb393976ae61f6342d8c6df71d72accc0410347cc92",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/proposal_rpm_debugger-checks.json": "13ae1c46140a48868b35c76f8b11760086c60273aee074e408def32521feb7ae",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/proposal_rpm_debugger-status.json": "862e19eda5bb4b2607f8d72aab57387010370bf19ea455571461d844ffb8d865",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/ssh2-build.json": "c1f20754cd966af0358103265755b61cd19b6720571fa35f53313d6fe0442cc9",
+    "evidence/controls/ssh2-proj-debug-index-20261006/fedora/ssh2-build.log.gz": "88d07a617f10c2045b0133af0fe4bf2b4fe8b291870b414c7109dea2fe40ac37",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/ProjGeos.qmod.debug/debugedit.txt": "e5cfbcb966b419933e56b484bb7dc6e44355a72b909c343dc428f0012ddafe41",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/ProjGeos.qmod.debug/no-index-gdb.txt": "051396842dfdbff6df4f7b5402963ad1ccab3fb536a00cf1ba8bcffcdea3fac5",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/ProjGeos.qmod.debug/original-functions.txt": "95ca05dc72f7f74bf5ddbdd6d457fa9b7c496d01bcd93b99e88e278d26a09cc2",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/ProjGeos.qmod.debug/original-gdb.txt": "3408a9b725120535306233bf3131e72d7651faa3bdf1d76e1d099d199980be4b",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/SftpClientDataProvider.qmod.debug/debugedit.txt": "33cc4397f7465606e209070314edba66bebd0278dabe3977365ee26087916014",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/SftpClientDataProvider.qmod.debug/no-index-gdb.txt.gz": "2b43d56ddf2cdb887c76aae3b93c5e257947ab7ce2602ac0c51d8af59caa6d01",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/SftpClientDataProvider.qmod.debug/original-functions.txt.gz": "41c4bc839b5104f0674b19e56de62d8b45ef26fe40392711e28329d3c340abbb",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/SftpClientDataProvider.qmod.debug/original-gdb.txt.gz": "44001712f3b22fcc91b0c39072cc74018b3e49bcdf9198d3f5e9f68dd900bf3b",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/SftpPoller.qmod.debug/debugedit.txt": "8a3eacbbe5247ecb2a94a4c4e02eaef342bcc0cbc992ec9a8239d9c2164a24dc",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/SftpPoller.qmod.debug/no-index-gdb.txt": "e8d663f44b547b7630d82b3f4b1a30d3414f499e1c03162fc7aeceb4a62afc8c",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/SftpPoller.qmod.debug/original-functions.txt": "5336845783653edd4fbe6648c40986ee0736e16e87b29ff72c41ff674a954a44",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/SftpPoller.qmod.debug/original-gdb.txt": "7ec8e3beb10f98cd3be7a99a9ad81fa9c8d17a18f915dae1483100665b71154a",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/SftpPollerUtil.qmod.debug/debugedit.txt": "6f734f8e5798354c65fdf5b778ec289841c0e1742fddb008ee434b5d2ca52ad7",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/SftpPollerUtil.qmod.debug/no-index-gdb.txt": "e7127e3b45051d09306b2065fabe4f734c1105ba4e259c6db4e229484668ef71",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/SftpPollerUtil.qmod.debug/original-functions.txt": "76bf0716a6a146c30ab788a312c83d239aac340b93583773a65864f299e42df1",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/SftpPollerUtil.qmod.debug/original-gdb.txt": "096e0510b6763c311d7c4eff7f65818b36aa323fb21d8b43ee7ef24c0faa8ef9",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/Ssh2Connections.qmod.debug/debugedit.txt": "81905a165c99b668579e130e4eaf6a9daa4ec019b249a1b8aacb6abd62057bbb",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/Ssh2Connections.qmod.debug/no-index-gdb.txt": "99dc7970af5ba99c5be2bdf6a428d85ef4c39c504fd592832ea1dd12fe076c68",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/Ssh2Connections.qmod.debug/original-functions.txt": "eaa014c3194aacafd6e156e4f04e17ef5a8ab21bd195a0d87f1988394142d8f7",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls/Ssh2Connections.qmod.debug/original-gdb.txt": "6ee1710415eedf719ab554ab47ee9374daa93847baf5b8da685d8b4122afa1f9",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls-checks.json": "79abd3db1b5b3da4e1c37ad1c70b26b42bb3942795b06ec6a3c4d76e9675aa33",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/paired_controls-status.json": "b47bbcd126194777744c84824489239d0643c448890c7a4f449436581117638a",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/proj-build.json": "0df1776a14ed9d79fc2ee801accb2debb3caa436fed0b56d51b38b86ec76c708",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/proj-build.log.gz": "c12f54f90b94f84954d112b0670d8f51376dc8aad84e9fe2f22720823c00d151",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/proposal_rpm_debugger/ProjGeos.qmod.debug.gdb.txt": "051396842dfdbff6df4f7b5402963ad1ccab3fb536a00cf1ba8bcffcdea3fac5",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/proposal_rpm_debugger/SftpClientDataProvider.qmod.debug.gdb.txt.gz": "2b43d56ddf2cdb887c76aae3b93c5e257947ab7ce2602ac0c51d8af59caa6d01",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/proposal_rpm_debugger/SftpPoller.qmod.debug.gdb.txt": "e8d663f44b547b7630d82b3f4b1a30d3414f499e1c03162fc7aeceb4a62afc8c",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/proposal_rpm_debugger/SftpPollerUtil.qmod.debug.gdb.txt": "e7127e3b45051d09306b2065fabe4f734c1105ba4e259c6db4e229484668ef71",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/proposal_rpm_debugger/Ssh2Connections.qmod.debug.gdb.txt": "99dc7970af5ba99c5be2bdf6a428d85ef4c39c504fd592832ea1dd12fe076c68",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/proposal_rpm_debugger-checks.json": "5c66fb29fb4d2e6019018d058b57ab59606d9b1dc26ec4dff31b86218880b7c6",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/proposal_rpm_debugger-status.json": "339425b4b8d7be5c2d604330343be748668d54cf1e6cc8b9f2aa0aba4c7e23c6",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/ssh2-build.json": "7a6c39f483838c95e2c22097d05e1f9785d88618f140b776eebc9689f39572b6",
+    "evidence/controls/ssh2-proj-debug-index-20261006/leap/ssh2-build.log.gz": "d6e8f89fe13c42f173a15fcbeca2bf2fa7eb622e8bcc936f0066e7c25b639b9d",
+    "evidence/controls/ssh2-proj-debug-index-20261006/proj-proposed.spec": "092d4a5b4c3cfd0b829b74a02b39364346d48ae2020894539c5b9ef5b8eac1bf",
+    "evidence/controls/ssh2-proj-debug-index-20261006/qualify-aot-debug-proposal-rpms-20261006.py": "b8b22ed9df83bdb7607114a372156eb69d782f2f63293ca051e715d71582cf28",
+    "evidence/controls/ssh2-proj-debug-index-20261006/qualify-ssh2-proj-debug-index-20261006.py": "148353d877d50572bfdb2a69a280144fc5a2995b3e47426fc05495eec799fc04",
+    "evidence/controls/ssh2-proj-debug-index-20261006/ssh2-proposed.spec": "739222292e59575ed18bbea9f97ee99eb2218e39b4cfd4f8c23e5143e962ee1f"
+  },
+  "approval": "Approve this debugger configuration"
+}

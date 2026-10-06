@@ -1,0 +1,33 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "--user",
+    "1019:100",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/aot-debug-index-ssh2-proj-20261006/fedora:/fixture",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/aot-debug-index-ssh2-proj-20261006/control.py:/control.py:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/fedora-ssh2-metadata-canonical-20261006/rpmbuild/RPMS:/ssh2:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/fedora-proj-file-dependency-candidate-1/rpmbuild/RPMS:/proj:ro",
+    "-w",
+    "/fixture",
+    "qore-rpm-keep:fedora-pdfium-installed-8",
+    "sh",
+    "-ec",
+    "set -eu\nmkdir payload\ncd payload\nfor rpm in /ssh2/*/*debug*.rpm /proj/*/*debug*.rpm; do rpm2cpio \"$rpm\" | cpio -idm --quiet; done\ncd ..\npython3 -B -W error /control.py\n"
+  ],
+  "inputs": {
+    "ssh2/qore-ssh2-module-debuginfo-2.0.0-3.fc44.x86_64.rpm": "ad026f00f229f950cb79e757028cec1c0b6b940dc51b9f50a5478a8845c55dfb",
+    "ssh2/qore-ssh2-module-debugsource-2.0.0-3.fc44.x86_64.rpm": "c5a148b0faac15ada7287cd2634e5c611a41c6fc049b17a853d9b78be651be93",
+    "proj/qore-proj-module-debuginfo-1.1.0-3.fc44.x86_64.rpm": "9061e9d1da9615da2b908e5a2ca54b3bf58d869a3c1bd13ec3df8ae9ee1377b6",
+    "proj/qore-proj-module-debugsource-1.1.0-3.fc44.x86_64.rpm": "b06bd483025f6de406e47f12be6aba2642a22c8c927207532eb460aaffd392c6"
+  }
+}

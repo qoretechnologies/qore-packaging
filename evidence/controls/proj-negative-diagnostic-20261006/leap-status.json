@@ -1,0 +1,20 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--user",
+    "1019:100",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/leap-proj-invalid-control2-20261006:/control",
+    "-w",
+    "/control",
+    "sha256:de3de47d09fac3f181f8fa2b60b9b429545fbfb43726eab0a1ecf7fa0f65fbaf",
+    "sh",
+    "-ec",
+    "set -eu\ncc -Wall -Wextra -Werror -O2 -g -UNDEBUG control.c $(pkg-config --cflags --libs proj) -o control\n./control > normal.txt 2> normal.stderr\nvalgrind --error-exitcode=91 --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all --log-file=valgrind.txt ./control > valgrind.stdout 2> valgrind.stderr\n"
+  ]
+}

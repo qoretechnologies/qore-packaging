@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "image": "sha256:1613c069eb53078096c760c1b979b5fe4b29e723e8470aa3d2d0bcbfa70a8e45",
+  "source": {
+    "schema": 1,
+    "commit": "b4fc5f15dbb23129b5c93a0d3127b406add4b225",
+    "source_date_epoch": 1790923528,
+    "name": "qore-proj-module",
+    "version": "1.1.0",
+    "exclusions": [],
+    "sources": {
+      "qore-proj-module-1.1.0.tar.xz": "48a04e2775f7b1569a9fad735c103d803efc073c512bbbd159769b5534649ee1",
+      "qore-proj-module.spec": "092d4a5b4c3cfd0b829b74a02b39364346d48ae2020894539c5b9ef5b8eac1bf",
+      "qore-proj-module.changes": "8c4c8cbf9ac1a6024fed5f72c5693489a36978e296013dd2b7f68a9335f65540"
+    },
+    "candidate": true,
+    "packaging_overlay": {
+      "qore-proj-module.spec": "092d4a5b4c3cfd0b829b74a02b39364346d48ae2020894539c5b9ef5b8eac1bf",
+      "rpm/README.rst": "82fae5bfd660b195bf7003956fbc65d2e73fb39f95dd9078f639dbb14fe7770e"
+    },
+    "spec": "qore-proj-module.spec",
+    "source_overlay": {
+      "CMakeLists.txt": "4b5a594fea4803907a6ef6d93d4629af885245fcfd14aac2bd5acb3e23561aef",
+      "cmake/cmake_uninstall.cmake.in": "525d1f5018597a4c173b00fe55e4a64b347ba0e3df8281fa88e5a2549100f8eb",
+      "test/test_uninstall.py": "58cea33d249d11869d31745535c71d14b557e152c207d244d50e3e353da7795e"
+    },
+    "proposal": "Unapproved SSH2/PROJ extension of the Oracle/PDFium debugger configuration; qualification only."
+  },
+  "jobs": 2,
+  "network": "none",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "--hostname",
+    "qore-rpm-builder",
+    "--user",
+    "1019:100",
+    "-e",
+    "HOME=/work/home",
+    "-e",
+    "SOURCE_DATE_EPOCH=1790923528",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/proj-debug-index-proposal-20261006:/sources:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/el10-proj-debug-index-proposal-20261006:/work",
+    "sha256:1613c069eb53078096c760c1b979b5fe4b29e723e8470aa3d2d0bcbfa70a8e45",
+    "sh",
+    "-c",
+    "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+    "build-local",
+    "-ba",
+    "--define",
+    "_topdir /work/rpmbuild",
+    "--define",
+    "_sourcedir /sources",
+    "--define",
+    "_smp_build_ncpus 2",
+    "--define",
+    "_buildhost qore-rpm-builder",
+    "/sources/qore-proj-module.spec"
+  ],
+  "source_only": false,
+  "tmpfs_mib": null,
+  "exit_code": 0,
+  "artifacts": {
+    "rpmbuild/RPMS/noarch/qore-proj-module-doc-1.1.0-5.el10.noarch.rpm": "43f2c851ed5cd20940c2f122566bf6238f16ed00ee869010d2b856c83f914b22",
+    "rpmbuild/RPMS/x86_64/qore-proj-module-1.1.0-5.el10.x86_64.rpm": "4ef1637c50520554e5db698bc64048c6c231f847ceb110422016dd06e36e20e4",
+    "rpmbuild/RPMS/x86_64/qore-proj-module-debuginfo-1.1.0-5.el10.x86_64.rpm": "1e47da945af98e2a396f7bb53e9feb4288b8a6d45e9b5fccf136df784387d331",
+    "rpmbuild/RPMS/x86_64/qore-proj-module-debugsource-1.1.0-5.el10.x86_64.rpm": "4838a2682793721581dfc5af503a538772e0c8e80a6bae7e44e1b291002757da",
+    "rpmbuild/SRPMS/qore-proj-module-1.1.0-5.el10.src.rpm": "b4ce394cba324d4a8619e952825051fd0da07abea4447505f9e77a9f37e803b2"
+  }
+}
