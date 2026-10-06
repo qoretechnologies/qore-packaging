@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "User approved the two exact compiler diagnostics on 2026-10-06. Normal compiler flags and warnings remain unchanged.",
+  "scope": [
+    {
+      "path": "deps/v8/src/objects/js-date-time-format.cc",
+      "line": 1792,
+      "variable": "replacement",
+      "function": "ReplaceHourCycleInPattern"
+    },
+    {
+      "path": "deps/v8/src/objects/js-date-time-format.cc",
+      "line": 2005,
+      "variable": "to",
+      "function": "ReplaceSkeleton"
+    }
+  ],
+  "root_cause": "GCC 13 analyzes an out-of-domain enum value beyond V8's exhaustive HourCycle enum switch. Both unchanged helper bodies reproduce the warnings with real ICU UnicodeString. Every valid HourCycle assigns the field or exits first.",
+  "source_invariants": [
+    "The exact HourCycle enum contains kUndefined, kH11, kH12, kH23 and kH24 only. String options are validated before conversion, and ICU hour-cycle values are mapped explicitly.",
+    "ReplaceHourCycleInPattern returns unchanged for kUndefined; each of the four concrete hour cycles assigns replacement before use.",
+    "ReplaceSkeleton assigns to in every concrete hour-cycle branch and makes kUndefined unreachable. The caller passes the selected/default time hour cycle; a date-only pattern has no hour and matches kUndefined, returning before ReplaceSkeleton.",
+    "No runtime code or compiler flags are changed by this proposed exception."
+  ],
+  "coverage": "13 pattern oracles and seven skeleton oracles across every valid enum; undefined-skeleton rejection, quoted/escaped hour letters, adjacent day/hour fields, Unicode, empty inputs and 10 string-size boundaries through 131072 UTF-16 units. 1000020 checks per release/debug run, normal and Valgrind: 4000080 checks, zero errors and all allocations freed.",
+  "limits": "Original helper bodies and enum are used with real distribution ICU 77.1. A throwing noreturn adapter represents UNREACHABLE for negative control coverage. These controls do not instantiate the entire V8 locale/options pipeline; caller invariants are established by source review.",
+  "files_sha256": {
+    "evidence/controls/node-hourcycle-20261006/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-hourcycle-20261006/command.json": "cc1f742aa50beddc342ac4c8f36717e7763500f334125918df621cab91437c6e",
+    "evidence/controls/node-hourcycle-20261006/control.cc": "a20f4641ba419b95389b183ecc0dc6c9a8b5b3ebbbc40f8c50aedc97e500fc5f",
+    "evidence/controls/node-hourcycle-20261006/debug-compile.log": "c844a6438760cef337f7c23fa03394d0fec4a96fcfee17440f14269e75997cf9",
+    "evidence/controls/node-hourcycle-20261006/debug-memory.log": "118d870c0979c7a4db1f6a987c52ae4f521d2fe2eaee056f1385105e14f28641",
+    "evidence/controls/node-hourcycle-20261006/debug-normal.log": "118d870c0979c7a4db1f6a987c52ae4f521d2fe2eaee056f1385105e14f28641",
+    "evidence/controls/node-hourcycle-20261006/debug-valgrind.log": "87f3f94f5c8cdbfa3ddc18716bd8f23b1897ebf77a6336646052723181b170be",
+    "evidence/controls/node-hourcycle-20261006/prepare.py": "648b1ddfec9a40693d67ebcfe71ea4b17d724375f0756011b684f2094c336bfb",
+    "evidence/controls/node-hourcycle-20261006/release-compile.log": "c844a6438760cef337f7c23fa03394d0fec4a96fcfee17440f14269e75997cf9",
+    "evidence/controls/node-hourcycle-20261006/release-memory.log": "118d870c0979c7a4db1f6a987c52ae4f521d2fe2eaee056f1385105e14f28641",
+    "evidence/controls/node-hourcycle-20261006/release-normal.log": "118d870c0979c7a4db1f6a987c52ae4f521d2fe2eaee056f1385105e14f28641",
+    "evidence/controls/node-hourcycle-20261006/release-valgrind.log": "c1021972a20836fa25ffc6854631b11842003f78d346d019a05bd43768b5e0f9",
+    "evidence/controls/node-hourcycle-20261006/run.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-hourcycle-20261006/run.py": "ed8a4cb56a0ddd47280e253b78861696b858fbbf5bd64ab68007a1064cd69e10",
+    "evidence/controls/node-hourcycle-20261006/source-extracts.json": "9e28ebb6d4c024ca42e11ead0124061a635b3c26196396ce735034fd3710f514",
+    "evidence/controls/node-hourcycle-20261006/status.json": "bdd049376b6d686c5416cfaaa2050e83541aa7324476722698df3a5715fda738"
+  },
+  "approval": "Allow these two exact diagnostics"
+}

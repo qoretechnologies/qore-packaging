@@ -1,0 +1,18 @@
+{
+  "enum": "enum class HourCycle { kUndefined, kH11, kH12, kH23, kH24 };",
+  "bodies": {
+    "ReplaceHourCycleInPattern": {
+      "path": "deps/v8/src/objects/js-date-time-format.cc",
+      "line": 1790,
+      "body": "icu::UnicodeString ReplaceHourCycleInPattern(icu::UnicodeString pattern,\n                                             JSDateTimeFormat::HourCycle hc) {\n  char16_t replacement;\n  switch (hc) {\n    case JSDateTimeFormat::HourCycle::kUndefined:\n      return pattern;\n    case JSDateTimeFormat::HourCycle::kH11:\n      replacement = 'K';\n      break;\n    case JSDateTimeFormat::HourCycle::kH12:\n      replacement = 'h';\n      break;\n    case JSDateTimeFormat::HourCycle::kH23:\n      replacement = 'H';\n      break;\n    case JSDateTimeFormat::HourCycle::kH24:\n      replacement = 'k';\n      break;\n  }\n  bool replace = true;\n  icu::UnicodeString result;\n  char16_t last = u'\\0';\n  for (int32_t i = 0; i < pattern.length(); i++) {\n    char16_t ch = pattern.charAt(i);\n    switch (ch) {\n      case '\\'':\n        replace = !replace;\n        result.append(ch);\n        break;\n      case 'H':\n        [[fallthrough]];\n      case 'h':\n        [[fallthrough]];\n      case 'K':\n        [[fallthrough]];\n      case 'k':\n        // If the previous field is a day, add a space before the hour.\n        if (replace && last == u'd') {\n          result.append(' ');\n        }\n        result.append(replace ? replacement : ch);\n        break;\n      default:\n        result.append(ch);\n        break;\n    }\n    last = ch;\n  }\n  return result;\n}",
+      "sha256": "d290ada33bee51f1ed55aa87d1f7e0aa1eff2ff03f78a10f45205130d3d1aa4f"
+    },
+    "ReplaceSkeleton": {
+      "path": "deps/v8/src/objects/js-date-time-format.cc",
+      "line": 2002,
+      "body": "icu::UnicodeString ReplaceSkeleton(const icu::UnicodeString input,\n                                   JSDateTimeFormat::HourCycle hc) {\n  icu::UnicodeString result;\n  char16_t to;\n  switch (hc) {\n    case JSDateTimeFormat::HourCycle::kH11:\n      to = 'K';\n      break;\n    case JSDateTimeFormat::HourCycle::kH12:\n      to = 'h';\n      break;\n    case JSDateTimeFormat::HourCycle::kH23:\n      to = 'H';\n      break;\n    case JSDateTimeFormat::HourCycle::kH24:\n      to = 'k';\n      break;\n    case JSDateTimeFormat::HourCycle::kUndefined:\n      UNREACHABLE();\n  }\n  for (int32_t i = 0; i < input.length(); i++) {\n    switch (input[i]) {\n      // We need to skip 'a', 'b', 'B' here due to\n      // https://unicode-org.atlassian.net/browse/ICU-20437\n      case 'a':\n        [[fallthrough]];\n      case 'b':\n        [[fallthrough]];\n      case 'B':\n        // ignore\n        break;\n      case 'h':\n        [[fallthrough]];\n      case 'H':\n        [[fallthrough]];\n      case 'K':\n        [[fallthrough]];\n      case 'k':\n        result += to;\n        break;\n      default:\n        result += input[i];\n        break;\n    }\n  }\n  return result;\n}",
+      "sha256": "501a2df75658b278d648c2059905d0a7117130d089f3d10643d21a6be1bb4b35"
+    }
+  },
+  "limitations": "Uses the exact helper bodies and real ICU 77.1 UnicodeString from the compiler image. The full V8 locale/option pipeline is reviewed separately; UNREACHABLE is represented by a throwing noreturn adapter to test its negative branch."
+}
