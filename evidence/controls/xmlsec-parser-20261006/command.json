@@ -1,0 +1,20 @@
+[
+  "docker",
+  "run",
+  "--rm",
+  "--init",
+  "--network",
+  "none",
+  "--user",
+  "1019:100",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/work/xmlsec-parser-diagnostic-20261006:/work",
+  "-w",
+  "/work",
+  "sha256:12fd547d0de6117f1ea253b49bb33a0e92ab73fd5444b7291e01b17705fbce12",
+  "python3",
+  "-B",
+  "-W",
+  "error",
+  "run.py"
+]

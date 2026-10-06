@@ -1,0 +1,19 @@
+[
+  "docker",
+  "run",
+  "--rm",
+  "--init",
+  "--network",
+  "none",
+  "--user",
+  "1019:100",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/work/node-memory2-control-20261006:/fixture",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/work/node-obs-diagnostic-20261006/node-v24.18.1:/work/rpmbuild/BUILD/nodejs24-libnode-24.18.1-build/node-v24.18.1:ro",
+  "-w",
+  "/work/rpmbuild/BUILD/nodejs24-libnode-24.18.1-build/node-v24.18.1/out",
+  "sha256:471fb347e0308caa05f79e41ca4813767c6a7a687f03cc823a78b2a8e81a3414",
+  "python3",
+  "/fixture/run.py"
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "name": "compile",
+    "command": [
+      "gcc",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "control.c",
+      "-D__XMLSEC_FUNCTION__=__func__",
+      "-DXMLSEC_NO_SIZE_T",
+      "-DXMLSEC_NO_FTP=1",
+      "-DXMLSEC_NO_MD5=1",
+      "-DXMLSEC_NO_GOST=1",
+      "-DXMLSEC_NO_GOST2012=1",
+      "-DXMLSEC_DL_LIBLTDL=1",
+      "-I/usr/include/xmlsec1",
+      "-DXMLSEC_CRYPTO_OPENSSL=1",
+      "-I/usr/include/libxml2",
+      "-DWITH_GZFILEOP",
+      "-lxmlsec1-openssl",
+      "-lxmlsec1",
+      "-lltdl",
+      "-lssl",
+      "-lcrypto",
+      "-lxslt",
+      "-lxml2",
+      "-o",
+      "control"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "normal",
+    "command": [
+      "./control"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "memory",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "--log-file=valgrind.log",
+      "./control"
+    ],
+    "exit_code": 0
+  }
+]

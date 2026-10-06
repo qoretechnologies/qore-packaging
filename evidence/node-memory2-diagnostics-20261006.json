@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "approval": "Approved by user on 2026-10-06: Allow these two exact diagnostics. Scope limited to BigInt digit initialization and Wasm tiering-budget loading; no compiler flag changes.",
+  "scope": [
+    "GCC 13 class-memaccess at MutableBigInt::InitializeDigits, bigint.cc:286",
+    "GCC 13 class-memaccess at NativeModuleDeserializer::ReadTieringBudget, wasm-serialization.cc:1055"
+  ],
+  "root_cause": {
+    "BigInt": "The real UnalignedValueMember<uint64_t> consists solely of protected byte storage. GCC warns about member access although the type is trivially copyable and memset initializes its complete representation. All 256 byte patterns represent valid unsigned digits.",
+    "Wasm_tiering": "The distribution std::atomic<uint32_t> is trivially copyable with the same size as uint32_t; copy assignment is deleted, which triggers the diagnostic. Deserialization fills the new module before exposing it to callers; this initializes its budget array from serialized uint32_t representations; running code cannot concurrently use this new module. The existing input-size check rejects incomplete budget data."
+  },
+  "tests": {
+    "per_run": 3345408,
+    "runs": [
+      "native",
+      "Valgrind"
+    ],
+    "scope": [
+      "Actual V8 UnalignedValueMember header and exact byte operations; static assertions check representation traits and sizes.",
+      "BigInt counts 0 through 65, all 256 fill values, every digit and untouched boundaries.",
+      "Budget counts 0 through 65, 32 single-bit/complement patterns, 8 source alignments, exact and one-byte-truncated input; every atomic load and untouched boundary checked."
+    ],
+    "compiler": "Exactly the two intended diagnostics; no others.",
+    "valgrind": "Zero errors and definite/indirect/possible losses. Same 9840 reachable bytes of libnode/OpenSSL startup registrations as earlier qualified controls."
+  },
+  "exclusions": [
+    "Other object types or byte-copy operations.",
+    "Concurrent writes, invalid accesses or any nontrivially-copyable implementation.",
+    "Warning suppression or changed compiler flags."
+  ],
+  "rpm_validation": "Candidate5 passes 192 native tests and all 5249 JavaScript results; additional maybe-uninitialized review and installed V8 tests remain separate gates.",
+  "source_sha256": {
+    "deps/v8/src/objects/tagged-field.h": "eba3047d8f7cd5cf67367a0560fa3c57e6f98013e59d53a8b68fd0db80464e68",
+    "deps/v8/src/objects/bigint.cc": "7ad0d18b2277f9dc8d31042722e08ce8367a3376451101e6b92fb42826c22d59",
+    "deps/v8/src/wasm/wasm-serialization.cc": "a76afe374b24d35447cb386b9a25534471f9073ea385e514d82c680871401e01"
+  },
+  "artifacts_sha256": {
+    "evidence/controls/node-memory2-20261006/control.cc": "656b611aaa63088ca5dabd5cfac0d063ccc94ddfd4568c8a125fd3fa48cfe015",
+    "evidence/controls/node-memory2-20261006/flags.json": "ee64ac35a7abd50badd281a46a86708afd194134f18f698383094c73e90971e5",
+    "evidence/controls/node-memory2-20261006/run.py": "51122331df3e83c2cfff1fe7bfc1bdafc10bc791ebfc35a5470e1851bcfba193",
+    "evidence/controls/node-memory2-20261006/command.json": "055aeed580362f402b09988cab255a64a67fcc68c11d4b3c690d1e11a724663c",
+    "evidence/controls/node-memory2-20261006/status.json": "81868a6e94ffc0178bf833deb1c9013d9fab4ee95ddb876a5e8ec4f1d26376d2",
+    "evidence/controls/node-memory2-20261006/compile.log.gz": "d1037df6011b9c959d05cc8faf9c75f2dd144d54dbb0feb6d4fd04c9ee8ea834",
+    "evidence/controls/node-memory2-20261006/valgrind.log.gz": "d31cfe70ec244fabfc4c8ab439b750bf309d08fb8c9575daba993e553f10b3ca",
+    "evidence/controls/node-memory2-20261006/run.log": "f3ee3f9ae4f87fad9f4253a5b4e4a92b9d1c433f544c6baddf7fa2896b8e40ce"
+  },
+  "ordering_review": "NativeModuleDeserializer::Read joins all relocation jobs at line 860 before ReadTieringBudget. DeserializeNativeModule creates a new native module at 1119, completes Read at 1132, then initializes compilation and updates the native-module cache at 1138-1140."
+}

@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "image": "sha256:70aa8d565f44e594fcf8326e517e8c3a12a3fa6e7b2b36a439dd50338c851706",
+  "source": {
+    "schema": 1,
+    "commit": "7fd7f9535eec634d3e0bdd5a076d0e0ca06de8fc",
+    "source_date_epoch": 1791286988,
+    "name": "qore-zmq-module",
+    "version": "1.2.0",
+    "exclusions": [],
+    "sources": {
+      "qore-zmq-module-1.2.0.tar.xz": "5204632eb4c407725e75a099bb5512707849078b099ba8db818bf1837db4c4eb",
+      "qore-zmq-module.spec": "9c4800c01c79b7c8d62c6d5769a3e8d3afbd91bf7098404abaf08b6c73d947fc",
+      "libzmq-4.3.5.tar.xz": "a4d1906f6d466e7d084b55ffaac97167cd78a2069aed14ae8685bb95d42f45fd",
+      "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017.tar.xz": "03e1b2f609d8d89afa44566c450501e285424f2071aef0ed9b803bd8daa7413e"
+    },
+    "candidate": true,
+    "packaging_overlay": {
+      "qore-zmq-module.spec": "9c4800c01c79b7c8d62c6d5769a3e8d3afbd91bf7098404abaf08b6c73d947fc",
+      "rpm/README.rst": "0805c1e2a445ec95b97426c7c1c194d802999c304587d3b0c714090b1c2ebcd3",
+      "rpm/features.qr": "33ceeddfa2eba8f64d73a07d03a94f619365de22ff994c140ea9255c8df0bac8",
+      "rpm/tests-installed-runtime": "e7dffe8f7ce37ad7ddb0445d7a6e9f1ff699de4fa112e2912a6e4caa2455d71c",
+      "rpm/vendor-sources.json": "dd44a79dfbc41ed74ae6d9ba3f97e85ca9d2692ef673bd52cb631057f92e1c83"
+    },
+    "spec": "qore-zmq-module.spec",
+    "vendor_manifest": "rpm/vendor-sources.json",
+    "components": [
+      {
+        "name": "libzmq",
+        "url": "https://codeload.github.com/zeromq/libzmq/tar.gz/v4.3.5",
+        "sha256": "6c972d1e6a91a0ecd79c3236f04cf0126f2f4dfbbad407d72b4606a7ba93f9c6",
+        "top": "libzmq-4.3.5",
+        "retained_paths": [
+          "CMakeLists.txt",
+          "LICENSE",
+          "AUTHORS",
+          "NEWS",
+          "README.md",
+          "src",
+          "include",
+          "builds/cmake",
+          "external/sha1",
+          "external/wepoll",
+          "version.sh"
+        ],
+        "archive": "libzmq-4.3.5.tar.xz",
+        "licenses": [
+          "LICENSE"
+        ],
+        "version": "v4.3.5"
+      },
+      {
+        "name": "czmq",
+        "url": "https://codeload.github.com/zeromq/czmq/tar.gz/b669c7eb60cb8f587071ac6ece7cd68d30ac4017",
+        "sha256": "1ef06cd24fbe91f094ff2b4ce54aaf9c6fa394bec0e12c9f5b4f491f7aaa03d0",
+        "top": "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017",
+        "retained_paths": [
+          "CMakeLists.txt",
+          "LICENSE",
+          "AUTHORS",
+          "NEWS",
+          "README.md",
+          "README.txt",
+          "src",
+          "include",
+          "Findlibcurl.cmake",
+          "Findlibmicrohttpd.cmake",
+          "Findlibsodium.cmake",
+          "Findlibzmq.cmake",
+          "Findlz4.cmake",
+          "Findnss.cmake",
+          "Findsystemd.cmake",
+          "Finduuid.cmake",
+          "builds/cmake"
+        ],
+        "archive": "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017.tar.xz",
+        "licenses": [
+          "LICENSE"
+        ],
+        "version": "b669c7eb60cb8f587071ac6ece7cd68d30ac4017"
+      }
+    ]
+  },
+  "jobs": 2,
+  "network": "none",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "--hostname",
+    "qore-rpm-builder",
+    "--user",
+    "1019:100",
+    "-e",
+    "HOME=/work/home",
+    "-e",
+    "SOURCE_DATE_EPOCH=1791286988",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/zmq-license-candidate-20261006:/sources:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/fedora-zmq-license-candidate-20261006:/work",
+    "sha256:70aa8d565f44e594fcf8326e517e8c3a12a3fa6e7b2b36a439dd50338c851706",
+    "sh",
+    "-c",
+    "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+    "build-local",
+    "-ba",
+    "--define",
+    "_topdir /work/rpmbuild",
+    "--define",
+    "_sourcedir /sources",
+    "--define",
+    "_smp_build_ncpus 2",
+    "--define",
+    "_buildhost qore-rpm-builder",
+    "/sources/qore-zmq-module.spec"
+  ],
+  "source_only": false,
+  "tmpfs_mib": null,
+  "exit_code": 0,
+  "artifacts": {
+    "rpmbuild/RPMS/noarch/qore-zmq-module-doc-1.2.0-3.fc44.noarch.rpm": "9924d1b4001d0fbda3e5c67f885dc78bd64551e973863cc58def4a33b61088fb",
+    "rpmbuild/RPMS/x86_64/qore-zmq-module-1.2.0-3.fc44.x86_64.rpm": "3664cc28917fb28b2765896af52b3904457483a71405550d77e4a84544d225db",
+    "rpmbuild/RPMS/x86_64/qore-zmq-module-debuginfo-1.2.0-3.fc44.x86_64.rpm": "106dac1bc4b80e86556e01d0768282e0f43a87adb26908adf147ed6207865517",
+    "rpmbuild/RPMS/x86_64/qore-zmq-module-debugsource-1.2.0-3.fc44.x86_64.rpm": "dcc22b48ed2dee4ed8fd2e5cf27670e03adc4e33a79ad261863a34b763c52d0f",
+    "rpmbuild/SRPMS/qore-zmq-module-1.2.0-3.fc44.src.rpm": "1acb56371fe3937f8debfce38bf134fa3adfdfa023d86d60a270aa0a58eef297"
+  }
+}

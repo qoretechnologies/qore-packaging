@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "image": "sha256:0e4269885876f7b4b30d3c271586381918043841526f470b1782e47e53a9ed49",
+  "source": {
+    "schema": 1,
+    "commit": "811e22c44a96bd6517d4d1e75e48c84cea04ba78",
+    "source_date_epoch": 1790918803,
+    "name": "qore-xmlsec-module",
+    "version": "1.0.1",
+    "exclusions": [],
+    "sources": {
+      "qore-xmlsec-module-1.0.1.tar.xz": "f0d5fa34e4eee99722df4badc9982007c86981ea3cbd30e05cd6d82dbf7243ff",
+      "qore-xmlsec-module.spec": "4984bdbda1a3f2a4ad02f49493d6043400f794a44e3fb7688c137306893c4cf4"
+    },
+    "candidate": true,
+    "packaging_overlay": {
+      "qore-xmlsec-module.spec": "4984bdbda1a3f2a4ad02f49493d6043400f794a44e3fb7688c137306893c4cf4",
+      "rpm/AUDIT.rst": "8520600092a4e6660a883ce4708d99ed9478653276ef97f36aa4f951d6dd5b72",
+      "rpm/README.rst": "305dab258eeb60c4f509b4b6b5af7d8388ecc9db24c720428ab9e9a0c6accacc",
+      "rpm/run-tests.py": "99bdc0c769ad64543fe65cf71cbc6bc16245e513de0ac071029701a4e167ae86",
+      "rpm/test_fixture.py": "46943f982d6cbbcfc84073a1d6eb22562585d0a3e1cd6b805810469fc55a21cd"
+    },
+    "spec": "qore-xmlsec-module.spec"
+  },
+  "jobs": 2,
+  "network": "none",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "--hostname",
+    "qore-rpm-builder",
+    "--user",
+    "1019:100",
+    "-e",
+    "HOME=/work/home",
+    "-e",
+    "SOURCE_DATE_EPOCH=1790918803",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/xmlsec-rpm-candidate-20261006:/sources:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/leap-xmlsec-rpm-candidate-20261006:/work",
+    "sha256:0e4269885876f7b4b30d3c271586381918043841526f470b1782e47e53a9ed49",
+    "sh",
+    "-c",
+    "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+    "build-local",
+    "-ba",
+    "--define",
+    "_topdir /work/rpmbuild",
+    "--define",
+    "_sourcedir /sources",
+    "--define",
+    "_smp_build_ncpus 2",
+    "--define",
+    "_buildhost qore-rpm-builder",
+    "/sources/qore-xmlsec-module.spec"
+  ],
+  "source_only": false,
+  "tmpfs_mib": null,
+  "exit_code": 0,
+  "artifacts": {
+    "rpmbuild/RPMS/noarch/qore-xmlsec-module-doc-1.0.1-3.noarch.rpm": "1a97d577d03c85e9eccf778367f34cf3ba0bdfd319c3e6fcc5fc8103ed95fd24",
+    "rpmbuild/RPMS/x86_64/qore-xmlsec-module-1.0.1-3.x86_64.rpm": "a09f980ddce826299d998d5adcfa031b14f79972ea208a705e603e1d66e30a05",
+    "rpmbuild/RPMS/x86_64/qore-xmlsec-module-debuginfo-1.0.1-3.x86_64.rpm": "141b74c96102beab2c9b52b86ee425d8d9f492539dee84035a4fb9147e747a9b",
+    "rpmbuild/RPMS/x86_64/qore-xmlsec-module-debugsource-1.0.1-3.x86_64.rpm": "9b010ff3e1687e1001e7ffb583136eebbb97a0f2baff3bac2cfbdcdd200c4742",
+    "rpmbuild/SRPMS/qore-xmlsec-module-1.0.1-3.src.rpm": "2a1abf73d0cfd2a353e852179965bc42fe08440155fc1903e6a810a833e5bfa8"
+  }
+}

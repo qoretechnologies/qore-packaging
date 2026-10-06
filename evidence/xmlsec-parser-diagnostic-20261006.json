@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "approval": "Approved by user 2026-10-06: Allow this exact negative-test diagnostic.",
+  "scope": "Only libxml2 malformed-decrypted-XML parser diagnostics during testNegativeDecryption with the intentionally wrong AES key. No other test, parse error or library warning is accepted.",
+  "root_cause": "xmlsec 1.2.39 decrypts CBC bytes and replaces the EncryptedData node with xmlSecReplaceNodeBuffer. This calls libxml2 xmlParseInNodeContext using a new internal context and default diagnostics, outside QoreXmlDoc's per-document callback. Wrong-key plaintext can pass XML Encryption padding and then fail XML parsing; Qore still raises XMLSEC-DECRYPT-ERROR.",
+  "control": "20 valid/malformed plaintext encryption/decryption checks using distribution xmlsec/libxml2 only. Negative cases check exact decrypted bytes, rejection status and unchanged replacement flag; positive cases check replacement content. No diagnostic handler or filter is installed.",
+  "results": {
+    "compile": "-Wall -Wextra -Werror passes",
+    "normal": 0,
+    "valgrind": 0,
+    "allocations": 8174,
+    "allocations_freed": 8174,
+    "lost_bytes": 0,
+    "errors": 0
+  },
+  "source_urls": {
+    "xmlenc.c": "https://raw.githubusercontent.com/lsh123/xmlsec/xmlsec-1_2_39/src/xmlenc.c",
+    "xmltree.c": "https://raw.githubusercontent.com/lsh123/xmlsec/xmlsec-1_2_39/src/xmltree.c",
+    "ciphers.c": "https://raw.githubusercontent.com/lsh123/xmlsec/xmlsec-1_2_39/src/openssl/ciphers.c"
+  },
+  "qore_native_results": {
+    "fedora": {
+      "totals": [
+        [
+          "13",
+          "13",
+          "65"
+        ]
+      ],
+      "log": "results/native-wave12-complete-20261006/xmlsec-fedora-x86_64/build.log",
+      "sha256": "e5ba0c5f4255a5e8d030c0ae719e1799cfd12f3751ebb9177b3dde08f713dd1b"
+    },
+    "leap": {
+      "totals": [
+        [
+          "13",
+          "13",
+          "65"
+        ]
+      ],
+      "log": "results/native-wave12-complete-20261006/xmlsec-leap-x86_64/build.log",
+      "sha256": "c92754f752e39901501040ee1d21900c3b5798326c22f7df9c198ce614e8dd58"
+    },
+    "el10": {
+      "totals": [
+        [
+          "13",
+          "13",
+          "65"
+        ]
+      ],
+      "log": "results/native-wave12-complete-20261006/xmlsec-el10-x86_64/build.log",
+      "sha256": "e37b6bc875936975fe0cd349b9cf4c48d12faf90789b6ae4faccb86933f37690"
+    }
+  },
+  "artifacts_sha256": {
+    "evidence/controls/xmlsec-parser-20261006/command.json": "9cf684b1f30284dc6bb250407f075ecd65cf048fdbf1068f40573273a65227a5",
+    "evidence/controls/xmlsec-parser-20261006/status.json": "086df1c5237c1fb7d749c792db21d891f9aa2e856d763dcf5b5e58d05984db18",
+    "evidence/controls/xmlsec-parser-20261006/xmlenc.c": "2b711827e97b13d91232c85973eb57cfac7d9f902d998015d6917bd46de3616a",
+    "evidence/controls/xmlsec-parser-20261006/xmltree.c": "4c5b66ae58ae14cd4df204246fc0ae370a8e49b15cc9fd390234b5225c7d627b",
+    "evidence/controls/xmlsec-parser-20261006/control.c": "f655854bb417a124c02f0910bc83faa0a6836c8481e204f62bce30f55d310cc0",
+    "evidence/controls/xmlsec-parser-20261006/normal.log.gz": "13d90701496010b7769e7ccc7f3d90a8f79fe04b28bb3ba1a7c858d60e622bc5",
+    "evidence/controls/xmlsec-parser-20261006/valgrind.log.gz": "3618a2c5840b24266c9086dd362f74aa424290c9667038ac3e9eb1808c4b2dda",
+    "evidence/controls/xmlsec-parser-20261006/memory.log.gz": "13d90701496010b7769e7ccc7f3d90a8f79fe04b28bb3ba1a7c858d60e622bc5",
+    "evidence/controls/xmlsec-parser-20261006/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/xmlsec-parser-20261006/run.py": "1a816ed1dc14b79a7306c67b4af3f19b45b96c09a38408b7bcf4075da70d4da3",
+    "evidence/controls/xmlsec-parser-20261006/ciphers.c": "312d793b3ff75b54ab3d2b36bacf8d59822e05fab612e6add7eca06a434be46b"
+  },
+  "limitations": "Standalone malformed XML control isolates the inner parser path without relying on random wrong-key bytes. All library shutdown APIs are called; no production behavior changes are proposed."
+}
