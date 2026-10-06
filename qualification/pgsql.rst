@@ -22,3 +22,8 @@ Select ``RPM_NATIVE_QUALIFICATION=pgsql`` and optionally
 its native inputs remain pending while OBS rebuilds upstream dependencies.
 Native architecture qualification and repository lifecycle checks remain
 publication gates.
+
+OBS revision 3 adds changelog metadata generated from the unchanged release 2
+spec. Its Fedora and Leap native builds pass with the build-environment epoch
+warnings removed. The manifests pin the resulting signed RPMs for installed
+qualification; the earlier revision 2 results remain recorded separately.

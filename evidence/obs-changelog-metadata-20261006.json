@@ -39,7 +39,7 @@
     }
   ],
   "canonical_bundle": "PostgreSQL source commit 5659782a695a4337f266a9895972b15f5fd9a9af re-prepared; spec and archive are byte-identical to the already qualified release 2. Only .changes and its manifest hash are added.",
-  "limits": "Existing OBS revisions do not change automatically. Native verification of the new metadata upload remains pending. No compiler or diagnostic suppression is added.",
+  "limits": "Existing OBS revisions do not change automatically. PostgreSQL revision 3 is verified on Fedora and Leap; AlmaLinux remains blocked by dependency rebuilds. No compiler or diagnostic suppression is added.",
   "upstream": {
     "url": "https://api.opensuse.org/source/SUSE:SLFO:1.2/post-build-checks/post-build-checks-84.87+git20250725.0c3a172.tar.xz",
     "sha256": "32215cab72f9355579c02be2f21c5a4b1b5e40bd362ff985ea66e0a14a632eab",
@@ -68,5 +68,6 @@
     "evidence/controls/obs-changelog-20261006/suse-buildsystem.sh": "03a850537a93bd61de023dcdd0d0ef4fbc1e65824065e2756f7c363ebf2dfd81",
     "evidence/controls/obs-changelog-20261006/tools-tests.log": "36683a35192b7eb1900e9439d783e8feddb20114c8210360ce0670972f69a91e",
     "evidence/controls/obs-changelog-20261006/upstream.json": "4db2bccc1f6c25ba97440bc79ba2a1e37594e5f248737e40637006d9656ca60a"
-  }
+  },
+  "native_verification": "Four native PostgreSQL OBS builds pass with all prior epoch warnings removed; see pgsql-changelog-native-20261006.json. Only already approved bootstrap diagnostics remain."
 }

@@ -1,0 +1,184 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "source": {
+    "commit": "5659782a695a4337f266a9895972b15f5fd9a9af",
+    "revision": "3",
+    "srcmd5": "d5187abe52cb59c644ffc727419ecd38",
+    "all_source_bytes_verified": true,
+    "publication": "disabled"
+  },
+  "builds": [
+    {
+      "target": "fedora",
+      "arch": "x86_64",
+      "history": {
+        "rev": "3",
+        "srcmd5": "d5187abe52cb59c644ffc727419ecd38",
+        "versrel": "3.5.0-3",
+        "bcnt": "1",
+        "time": "1791298035",
+        "duration": "76"
+      },
+      "tests": [
+        [
+          "2",
+          "2",
+          "5"
+        ],
+        [
+          "4",
+          "4",
+          "34"
+        ],
+        [
+          "7",
+          "7",
+          "27"
+        ],
+        [
+          "19",
+          "19",
+          "316"
+        ]
+      ],
+      "timestamp_warnings_removed": true,
+      "diagnostics": [
+        "[   64s] Warning: mkbaselibs missing in build root, skipping baselibs"
+      ],
+      "log_sha256": "5d775b8bebd49f9d8ef3a01986e8a99ee89d9dd315b624d5e9d5b0fe9187854b"
+    },
+    {
+      "target": "fedora",
+      "arch": "aarch64",
+      "history": {
+        "rev": "3",
+        "srcmd5": "d5187abe52cb59c644ffc727419ecd38",
+        "versrel": "3.5.0-3",
+        "bcnt": "1",
+        "time": "1791298136",
+        "duration": "192"
+      },
+      "tests": [
+        [
+          "2",
+          "2",
+          "5"
+        ],
+        [
+          "4",
+          "4",
+          "34"
+        ],
+        [
+          "7",
+          "7",
+          "27"
+        ],
+        [
+          "19",
+          "19",
+          "316"
+        ]
+      ],
+      "timestamp_warnings_removed": true,
+      "diagnostics": [
+        "[  171s] Warning: mkbaselibs missing in build root, skipping baselibs"
+      ],
+      "log_sha256": "6e5716067eb8f8efbf85a8aceba31d07bff9963f3ba13ba8c7edabd2f528f09e"
+    },
+    {
+      "target": "leap",
+      "arch": "x86_64",
+      "history": {
+        "rev": "3",
+        "srcmd5": "d5187abe52cb59c644ffc727419ecd38",
+        "versrel": "3.5.0-3",
+        "bcnt": "1",
+        "time": "1791298001",
+        "duration": "49"
+      },
+      "tests": [
+        [
+          "2",
+          "2",
+          "5"
+        ],
+        [
+          "4",
+          "4",
+          "34"
+        ],
+        [
+          "7",
+          "7",
+          "27"
+        ],
+        [
+          "19",
+          "19",
+          "270"
+        ]
+      ],
+      "timestamp_warnings_removed": true,
+      "diagnostics": [
+        "[   12s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2"
+      ],
+      "log_sha256": "a7f07324304de25941934d6e9341c66d361b2f07339fb767b0c8e2b8cdfc105e"
+    },
+    {
+      "target": "leap",
+      "arch": "aarch64",
+      "history": {
+        "rev": "3",
+        "srcmd5": "d5187abe52cb59c644ffc727419ecd38",
+        "versrel": "3.5.0-3",
+        "bcnt": "1",
+        "time": "1791298027",
+        "duration": "86"
+      },
+      "tests": [
+        [
+          "2",
+          "2",
+          "5"
+        ],
+        [
+          "4",
+          "4",
+          "34"
+        ],
+        [
+          "7",
+          "7",
+          "27"
+        ],
+        [
+          "19",
+          "19",
+          "270"
+        ]
+      ],
+      "timestamp_warnings_removed": true,
+      "diagnostics": [
+        "[   18s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2"
+      ],
+      "log_sha256": "b84890ef687a4ddb8a9e612082d4a5bd681e2e5367884e20a33ea8c1ad928018"
+    }
+  ],
+  "result": "Native Fedora and Leap x86_64/aarch64 builds pass. Generated .changes is consumed by OBS, and all earlier missing SOURCE_DATE_EPOCH warnings are gone. All four database suites pass on every build.",
+  "retained_diagnostics": "Only previously approved service/bootstrap diagnostics: Fedora optional mkbaselibs and Leap polkit-default-privs. No package compiler/test/rpmlint warnings.",
+  "ci": "Packaging tools pipeline 59627 passed for 3e918e0a86e9e71a374cece75e1fc50547d4f02b.",
+  "pending": "AlmaLinux blocked by upstream rebuild dependencies; signed installed qualification of revision 3 follows with freshly pinned RPM hashes. Publication disabled.",
+  "files_sha256": {
+    "evidence/controls/pgsql-changelog-native-20261006/fedora-aarch64-_history.txt.gz": "cf46df179762a7b9d3624a3a901bb1f506cd4446d6ef489eeebbfdf1538dfda8",
+    "evidence/controls/pgsql-changelog-native-20261006/fedora-aarch64-_log.txt.gz": "367a44e0b0aa2da5f5845fd7cd060f2da31021d5e3ef44b024e9f18e44e26f51",
+    "evidence/controls/pgsql-changelog-native-20261006/fedora-x86_64-_history.txt.gz": "23e61e40ba0f668945c8697220156257e18b4c0679775dcb6f0283b6f57167db",
+    "evidence/controls/pgsql-changelog-native-20261006/fedora-x86_64-_log.txt.gz": "bd29d5bc0c3024581de69e7ca9207675f65162f93331ef0a64dae3883ac4ecac",
+    "evidence/controls/pgsql-changelog-native-20261006/leap-aarch64-_history.txt.gz": "076a7359e3080719fad31ad89fef73ac6f8ac332498092b8e5f25ce8f1dd6ba4",
+    "evidence/controls/pgsql-changelog-native-20261006/leap-aarch64-_log.txt.gz": "dd11116cb16b80763bf0ca437b537d81205a8f95ef32e745a0e40156a4b4ecc8",
+    "evidence/controls/pgsql-changelog-native-20261006/leap-x86_64-_history.txt.gz": "2001c777a58652296cd431fe45147c4732d8afa89e3be6131be96420ea3c9f1d",
+    "evidence/controls/pgsql-changelog-native-20261006/leap-x86_64-_log.txt.gz": "32957a8fdd783a7fde3a5ebf94ef01664f6078731636a3ec1333c70aa14de917"
+  }
+}
