@@ -1,0 +1,61 @@
+warning: remote target does not support file transfer, attempting to access files from local filesystem.
+Loaded /usr/share/gdb/auto-load/valgrind-monitor.py
+Type "help valgrind" for more info.
+0x0000000011b4c6c2 in ?? ()
+#0  0x0000000011b4c6c2 in ?? ()
+#1  0x0000000000989681 in ?? ()
+#2  0x0000000000000000 in ?? ()
+0x0:	<error: Cannot access memory at address 0x0>
+0x12119156:	"qtest"
+0x12119156:	0x71	0x74	0x65	0x73	0x74	0x00	0x00	0x00
+0x1211915e:	0x00	0x00	0x00	0x00	0x00	0x00	0x00	0x00
+0x12119166:	0x00	0x00	0x00	0x00	0x00	0x00	0x00	0x00
+0x1211916e:	0x00	0x00	0x00	0x00	0x00	0x00	0x00	0x00
+0x12119176:	0x00	0x00	0x80	0x00	0x00	0x00	0x00	0x00
+0x1211917e:	0x00	0x00	0x70	0x00	0x00	0x00	0x00	0x00
+   0x11b4c6aa:	loope  0x11b4c6bb
+   0x11b4c6ac:	movdqa (%rsi),%xmm0
+   0x11b4c6b0:	pcmpeqb %xmm1,%xmm0
+   0x11b4c6b4:	pmovmskb %xmm0,%eax
+   0x11b4c6b8:	add    %rcx,%rsi
+   0x11b4c6bb:	shr    %cl,%rax
+   0x11b4c6be:	cmp    $0x0,%rax
+=> 0x11b4c6c2:	jne    0x11b4c6e6
+   0x11b4c6c4:	sub    %rcx,%rsi
+   0x11b4c6c7:	add    $0x10,%rsi
+   0x11b4c6cb:	cmp    %rbx,%rsi
+   0x11b4c6ce:	jae    0x11b4c7bd
+   0x11b4c6d4:	movdqa (%rsi),%xmm0
+   0x11b4c6d8:	pcmpeqb %xmm1,%xmm0
+   0x11b4c6dc:	pmovmskb %xmm0,%eax
+   0x11b4c6e0:	cmp    $0x0,%rax
+   0x11b4c6e4:	je     0x11b4c6c7
+   0x11b4c6e6:	bsf    %eax,%eax
+   0x11b4c6e9:	add    %rsi,%rax
+   0x11b4c6ec:	cmp    %rbx,%rax
+rax            0x0                 0
+rbx            0x1211915b          303141211
+rcx            0x6                 6
+rdx            0x6d6d6d6d          1835887981
+rsi            0x12119156          303141206
+rdi            0x12119155          303141205
+rbp            0x1ffeffd290        0x1ffeffd290
+rsp            0x1ffeffd200        0x1ffeffd200
+r8             0x0                 0
+r9             0x1                 1
+r10            0x0                 0
+r11            0x12120490          303170704
+r12            0x12119120          303141152
+r13            0x0                 0
+r14            0x124e9000          307138560
+r15            0x124f1000          307171328
+rip            0x11b4c6c2          0x11b4c6c2
+eflags         0x44                [ PF ZF ]
+cs             0x0                 0
+ss             0x0                 0
+ds             0x0                 0
+es             0x0                 0
+fs             0x0                 0
+gs             0x0                 0
+vgdb-error value changed from 1 to 999999
+[Inferior 1 (Remote target) detached]

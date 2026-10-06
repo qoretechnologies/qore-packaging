@@ -1,0 +1,61 @@
+==7== Memcheck, a memory error detector
+==7== Copyright (C) 2002-2026, and GNU GPL'd, by Julian Seward et al.
+==7== Using Valgrind-3.27.1 and LibVEX; rerun with -h for copyright info
+==7== Command: qore -b --enable-debug -l /work/qore-zmq-module-1.2.0/build-debug/zmq-api-2.0.qmod test/zmq-sandbox-errors.qtest
+==7== Parent PID: 1
+==7== 
+==7== Conditional jump or move depends on uninitialised value(s)
+==7==    at 0x11B4C6C2: ???
+==7==    by 0x12119E8F: ???
+==7==    by 0x12119E8F: ???
+==7==    by 0x12119EAC: ???
+==7==    by 0x121211FF: ???
+==7==    by 0x12119E8F: ???
+==7==  Uninitialised value was created by a heap allocation
+==7==    at 0x487DAE6: malloc (vg_replace_malloc.c:447)
+==7==    by 0x4CD3E22: QoreString::QoreString(char const*, QoreEncoding const*) (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4A9900D: QoreStringNode::QoreStringNode(char const*, QoreEncoding const*) (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4D2DE84: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4D2E491: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4D2E6D2: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4E1CB8D: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x49F6B12: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4B087EE: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x503C6F9: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x50612D8: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x11B5C2FE: ??? (in /usr/lib64/qore-modules/3.0.0/QUnit.qmod)
+==7==    by 0x4B13961: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4B16558: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4B9725B: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4B9D9E6: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x5046590: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x504C285: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x11B5B111: ??? (in /usr/lib64/qore-modules/3.0.0/QUnit.qmod)
+==7==    by 0x4B13961: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4B9CCAE: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4B96E0B: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4B8D875: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4B97595: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4B9CC3A: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4B96E0B: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4B8D875: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4B97595: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4B9CC3A: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7==    by 0x4B96E0B: ??? (in /usr/lib64/libqore.so.20.0.0)
+==7== 
+==7== 
+==7== HEAP SUMMARY:
+==7==     in use at exit: 516,396 bytes in 5,981 blocks
+==7==   total heap usage: 842,378 allocs, 836,397 frees, 58,040,613 bytes allocated
+==7== 
+==7== LEAK SUMMARY:
+==7==    definitely lost: 0 bytes in 0 blocks
+==7==    indirectly lost: 0 bytes in 0 blocks
+==7==      possibly lost: 0 bytes in 0 blocks
+==7==    still reachable: 516,396 bytes in 5,981 blocks
+==7==         suppressed: 0 bytes in 0 blocks
+==7== Reachable blocks (those to which a pointer was found) are not shown.
+==7== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==7== 
+==7== For lists of detected and suppressed errors, rerun with: -s
+==7== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "Root cause and paired control verified; exact bootstrap diagnostic accepted. No Qore package or OBS policy workaround applied.",
+  "root_cause": "Inherited SUSE build configuration explicitly ignores polkit-default-privs:polkit. The polkit-default-privs RPM Requires(pre): polkit, whose rules directory is therefore absent in the reduced build root. Its post script invokes chkstat-polkit, which opens /etc/polkit-1/rules.d/90-default-privs.rules.new without creating its parent and exits 2. This occurs while OBS installs distribution build inputs, before Qore compilation or tests.",
+  "scope": "Only the polkit-default-privs post script failure with the exact missing rules.d path in Leap OBS build-root bootstrap; no other scriptlet failures, no installed user environment failures.",
+  "source": {
+    "project": "SUSE:SLFO:1.2",
+    "package": "polkit-default-privs",
+    "srcmd5": "44ee41765752a083e6c1bd5dbb978b2c",
+    "version": "1550+20260709.b1b58aa",
+    "spec_sha256": "8369a48023633377a7609710033ba8da98621138479559c06661407f5158a48c",
+    "archive_sha256": "2532d2b1a161f55e33426539a48965f7efb4839ebb595dc0c247ccad6d7806c1",
+    "buildconfig_sha256": "75fe8633503dd3b3090b39c53c2859baf3a2894316898016d0628f5f64d3516b",
+    "ignore_rule": "Ignore: polkit-default-privs:polkit"
+  },
+  "control": {
+    "image": "sha256:3378c3e0bef72e721a03a5beed1ed5640d821ed8cb92fd34dcc52cdd513766a4",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/polkit-default-privs-control-20261006/polkit-default-privs-1550+20260709.b1b58aa:/source:ro",
+      "sha256:3378c3e0bef72e721a03a5beed1ed5640d821ed8cb92fd34dcc52cdd513766a4",
+      "sh",
+      "-eu",
+      "-c",
+      "set -eu\ntest ! -d /etc/polkit-1/rules.d\nset +e\nperl /source/src/chkstat-polkit -set /source/profiles/standard > /tmp/negative.log 2>&1\nstatus=$?\nset -e\ncat /tmp/negative.log\ntest \"$status\" = 2\ngrep -Fx \"can't open /etc/polkit-1/rules.d/90-default-privs.rules.new: No such file or directory\" /tmp/negative.log\n# Positive control supplies the directory owned by the omitted polkit dependency.\nmkdir -p /etc/polkit-1/rules.d\nperl /source/src/chkstat-polkit -set /source/profiles/standard\ntest -s /etc/polkit-1/rules.d/90-default-privs.rules\ngrep -q 'polkit.addRule' /etc/polkit-1/rules.d/90-default-privs.rules\nprintf 'negative exit=%s; positive exit=0; generated rules verified\\n' \"$status\"\n"
+    ],
+    "exit_code": 0,
+    "log": "results/polkit-bootstrap-control-20261006.log",
+    "sha256": "2f883cb66e4bc0ec5e2d0b41a5ae2e7b483d48cab47e83f9ec1c49e565ca533c"
+  },
+  "approval": "Approved by the user on 2026-10-06: Allow this exact bootstrap diagnostic."
+}

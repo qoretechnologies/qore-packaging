@@ -1,0 +1,5 @@
+# Copyright 2026 Qore Technologies, s.r.o.; SPDX-License-Identifier: MIT
+string filename = "/work/qore-zmq-module-1.2.0/test/zmq-sandbox-errors.qtest";
+for (int i = 0; i < 10000; ++i) {
+    @assert(!regex(filename, "\\.qm$"));
+}

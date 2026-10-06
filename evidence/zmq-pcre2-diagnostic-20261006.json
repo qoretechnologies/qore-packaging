@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "approval": "Approved by the user on 2026-10-06: Allow this exact Fedora diagnostic.",
+  "scope": "Fedora 44 PCRE2 10.47 x86_64 JIT vector suffix scan for QUnit script-name pattern \\.qm$; extension of the approved AlmaLinux 10 PCRE2 10.44 site.",
+  "root_cause": "GDB stops at exactly 0x11b4c6c2, the conditional reported by the ZeroMQ sandbox suite. Generated movdqa/pcmpeqb/pmovmskb scans spare string capacity; the first conditional examines candidate bytes before later logical-end validation. The instruction sequence matches the approved AlmaLinux control. Standalone PCRE2 and Qore-only controls reproduce it without ZeroMQ.",
+  "proof": {
+    "standalone_checks": 8192,
+    "dimensions": "16 alignments x 256 padding bytes x positive and negative suffixes",
+    "undefined_padding": "All match results correct and all allocations freed; only generated vector scan branches reported.",
+    "defined_padding": "All match results independent of every padding byte; zero Valgrind errors and all allocations freed.",
+    "qore_control": "10000 suffix checks reproduce one site without ZeroMQ.",
+    "sandbox": "7 cases/1021 assertions pass with the fix. No definite, indirect or possible lost allocations; only one conditional site in PCRE2 JIT.",
+    "all_distribution_functional": "Fedora, Leap and AlmaLinux candidate RPM tests pass; separate compiler-diagnostic review remains open."
+  },
+  "exclusions": [
+    "Other patterns or distribution/compiler versions without independent classification.",
+    "Any invalid access, incorrect result, lost allocation or growing diagnostic site."
+  ],
+  "policy": "No suppression, padding initialization, JIT disabling or library replacement proposed.",
+  "related": "evidence/odbc-pcre2-diagnostic-20261005.json",
+  "sha256": {
+    "evidence/controls/zmq-pcre2-20261006/pcre-control.c": "652df770e64dbb8619d1a9623dd96a9eaa4c5a0f0715d094c8cc1baa24944b3b",
+    "evidence/controls/zmq-pcre2-20261006/pcre-probe.qr": "e010be3d81b5a46fdccac299290f5a62ffbe8b9b04cc0ccad0101d26054b5f72",
+    "evidence/controls/zmq-pcre2-20261006/debug.py": "6b00c20271a5ee1292d930bca124aa2f423a6cfe617f6b986a61dd9b467389e2",
+    "evidence/controls/zmq-pcre2-20261006/defined.log": "95a9fb5a33a0d7b44cc1f432a616e6f1e9809dc5a40c08590c913a4520926c6b",
+    "evidence/controls/zmq-pcre2-20261006/undefined.log": "0f21a1dd85e1c5b9aa98f05ee75b1d415b47337e564e8d2a0b773b04e24503e8",
+    "evidence/controls/zmq-pcre2-20261006/qore.log": "efb35ef84ee3015cdc6bc9206b7d1ac786a7e6bacde8b575e1bf738d1a9bf84f",
+    "evidence/controls/zmq-pcre2-20261006/debug-gdb.log": "c8cb55de4a1db6aa7a47935bb83609cc8456a61721c4b29feb1e09492854f3c4",
+    "evidence/controls/zmq-pcre2-20261006/debug-program.log": "ce0cf71d0ca57c8a414dddc7f6c2341f10a70de5d355ca3ddfe06c44e377625d",
+    "evidence/controls/zmq-pcre2-20261006/run.log": "a540a1627b22059a246d31ebb20f80a65e429606eb6a37194879e3285806367e",
+    "evidence/controls/zmq-pcre2-20261006/status.json": "5b5b16210785dc15f3a95ceedeacb16ea7ce185f75e285d04aebdf04641f09f8",
+    "evidence/controls/zmq-pcre2-20261006/sandbox-valgrind.log": "fd0442a33a2bbb9a285dd0394071e3820d76ae6066da8783b998ba80362ad018"
+  }
+}

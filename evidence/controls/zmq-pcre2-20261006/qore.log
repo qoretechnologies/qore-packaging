@@ -1,0 +1,40 @@
+==15== Memcheck, a memory error detector
+==15== Copyright (C) 2002-2026, and GNU GPL'd, by Julian Seward et al.
+==15== Using Valgrind-3.27.1 and LibVEX; rerun with -h for copyright info
+==15== Command: qore -b --enable-debug pcre-probe.qr
+==15== Parent PID: 7
+==15== 
+==15== Conditional jump or move depends on uninitialised value(s)
+==15==    at 0x10A33E8A: ???
+==15==    by 0x1075093F: ???
+==15==    by 0x1075093F: ???
+==15==    by 0x10750978: ???
+==15==    by 0x1075396F: ???
+==15==    by 0x1075093F: ???
+==15==  Uninitialised value was created by a heap allocation
+==15==    at 0x487DAE6: malloc (vg_replace_malloc.c:447)
+==15==    by 0x4CD3FA2: QoreString::QoreString(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, QoreEncoding const*) (in /usr/lib64/libqore.so.20.0.0)
+==15==    by 0x4A991BD: QoreStringNode::QoreStringNode(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, QoreEncoding const*) (in /usr/lib64/libqore.so.20.0.0)
+==15==    by 0x509704C: QoreIRInterpreter::execute(QoreIRFunction const&, QoreValue&, ExceptionSink*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >*, std::vector<QoreValue, std::allocator<QoreValue> > const*, std::vector<QoreValue, std::allocator<QoreValue> > const*, std::unordered_set<LocalVar const*, std::hash<LocalVar const*>, std::equal_to<LocalVar const*>, std::allocator<LocalVar const*> > const*, LocalVar const*, StatementBlock const*, QoreProgram*, bool, IRDirectParams const*, std::vector<QoreValue, std::allocator<QoreValue> >*) (in /usr/lib64/libqore.so.20.0.0)
+==15==    by 0x4B20A94: ??? (in /usr/lib64/libqore.so.20.0.0)
+==15==    by 0x4B18BC5: ??? (in /usr/lib64/libqore.so.20.0.0)
+==15==    by 0x4BCFCB9: QoreProgram::runTopLevel(ExceptionSink*) (in /usr/lib64/libqore.so.20.0.0)
+==15==    by 0x4008E08: ??? (in /usr/bin/qore)
+==15==    by 0x5DB6680: (below main) (in /usr/lib64/libc.so.6)
+==15== 
+==15== 
+==15== HEAP SUMMARY:
+==15==     in use at exit: 484,927 bytes in 5,902 blocks
+==15==   total heap usage: 329,298 allocs, 323,396 frees, 102,381,414 bytes allocated
+==15== 
+==15== LEAK SUMMARY:
+==15==    definitely lost: 0 bytes in 0 blocks
+==15==    indirectly lost: 0 bytes in 0 blocks
+==15==      possibly lost: 0 bytes in 0 blocks
+==15==    still reachable: 484,927 bytes in 5,902 blocks
+==15==         suppressed: 0 bytes in 0 blocks
+==15== Reachable blocks (those to which a pointer was found) are not shown.
+==15== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==15== 
+==15== For lists of detected and suppressed errors, rerun with: -s
+==15== ERROR SUMMARY: 10000 errors from 1 contexts (suppressed: 0 from 0)

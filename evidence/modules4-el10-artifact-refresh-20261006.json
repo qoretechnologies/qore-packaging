@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "root_cause": "OBS completed the authorized ZIP ARM rebuild after the manifest was pinned, replacing its prior output filename. The failed job stopped at HTTP 404 before installation.",
+  "failed_job": 208786,
+  "old": {
+    "name": "qore-zip-module",
+    "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-zip-module/qore-zip-module-1.0.0-4.1.aarch64.rpm",
+    "filename": "qore-zip-module-1.0.0-4.1.aarch64.rpm",
+    "sha256": "2b286fb2347e748ca9e872cb55db0c2d2319bf4f207f04cbda88cee89f543e5a",
+    "phase": "runtime"
+  },
+  "new": {
+    "name": "qore-zip-module",
+    "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-zip-module/qore-zip-module-1.0.0-4.7.aarch64.rpm",
+    "filename": "qore-zip-module-1.0.0-4.7.aarch64.rpm",
+    "sha256": "063df26eca87a2167af41c4cf0658030e175779a6d418c518a8b481bae348da3",
+    "phase": "runtime"
+  },
+  "source_manifest": {
+    "schema": 1,
+    "commit": "92e22b844f931ad1744f6e525d2561473ff0ea44",
+    "source_date_epoch": 1790878652,
+    "name": "qore-zip-module",
+    "version": "1.0.0",
+    "exclusions": [],
+    "sources": {
+      "qore-zip-module-1.0.0.tar.xz": "2167604c3d260d57061879f34b432cf05218ee91e600dd3dfe013527d6381953",
+      "qore-zip-module.spec": "eede12a2b2d4b46e66b77f253476173722c848597ffd8de0783c404d968c8911",
+      "minizip-ng-4.2.2.tar.xz": "943f6a703ecf108f1bcdc14edb4c5a5a93d487843544f069a9aa89a05be9a4f8"
+    },
+    "spec": "qore-zip-module.spec",
+    "vendor_manifest": "rpm/vendor-sources.json",
+    "components": [
+      {
+        "name": "minizip-ng",
+        "archive": "minizip-ng-4.2.2.tar.xz",
+        "top": "minizip-ng-4.2.2",
+        "licenses": [
+          "LICENSE"
+        ],
+        "version": "4.2.2",
+        "url": "https://codeload.github.com/zlib-ng/minizip-ng/tar.gz/refs/tags/4.2.2",
+        "sha256": "71af7b9799856d8b03619df3949e9c1be9703f8de0795af71399ba283cb27aac",
+        "excluded": [
+          "doc",
+          "test",
+          ".github"
+        ]
+      }
+    ]
+  },
+  "history": {
+    "rev": "4",
+    "srcmd5": "5e05f83994e3b7d29f620828dc6bc5b9",
+    "versrel": "1.0.0-4",
+    "bcnt": "7",
+    "time": "1791281552",
+    "duration": "107"
+  },
+  "validation": {
+    "manifest": "pass",
+    "all_package_urls_available": [
+      "libqore",
+      "qore",
+      "qore-debug-tools",
+      "qore-devel",
+      "qore-misc-tools",
+      "qore-rpm-macros",
+      "qore-stdlib",
+      "c-ares",
+      "libnghttp2",
+      "libnghttp3",
+      "ngtcp2",
+      "ngtcp2-crypto-ossl",
+      "tree-sitter",
+      "onnxruntime",
+      "qore-markdown-module",
+      "qore-sysconf-module",
+      "qore-magic-module",
+      "qore-sqlite3-module",
+      "qore-kalman-module",
+      "qore-fsevent-module",
+      "qore-tar-module",
+      "qore-zip-module",
+      "qore-ncurses-module",
+      "qore-msgpack-module",
+      "qore-cairo-module",
+      "qore-geos-module",
+      "qore-git-module",
+      "qore-imagemagick-module"
+    ]
+  },
+  "native_status": "Repeat only AlmaLinux modules4 job; Fedora and Leap completed successfully."
+}
