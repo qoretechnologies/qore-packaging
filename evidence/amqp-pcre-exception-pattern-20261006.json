@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "approval": "Approved by the user on 2026-10-06 for this exact additional pattern; no suppression or JIT disabling.",
+  "scope": {
+    "pattern": "TEST-.*EXCEPTION",
+    "compile_options": 524288,
+    "traced_subject": "AMQP-DELIVERY-ERROR",
+    "test": "Leap amqp-integration.qtest exception-name matcher",
+    "architectures": [
+      "x86_64"
+    ],
+    "targets": [
+      "fedora",
+      "leap",
+      "el10"
+    ]
+  },
+  "root_cause": "The PCRE2 JIT scans undefined capacity padding in an intermediate conditional branch before confirming the logical subject boundary. The independently evaluated match and all captures remain independent of padding. The complete trace inventory discovered this tenth pattern after the nine-pattern request.",
+  "proof": {
+    "fedora": {
+      "runs": 3,
+      "checks_per_run": 40960,
+      "defined_padding": "zero errors, all allocations freed",
+      "undefined_padding": "only JIT conditional reports, all allocations freed"
+    },
+    "leap": {
+      "runs": 3,
+      "checks_per_run": 40960,
+      "defined_padding": "zero errors, all allocations freed",
+      "undefined_padding": "only JIT conditional reports, all allocations freed"
+    },
+    "el10": {
+      "runs": 3,
+      "checks_per_run": 40960,
+      "defined_padding": "zero errors, all allocations freed",
+      "undefined_padding": "only JIT conditional reports, all allocations freed"
+    }
+  },
+  "total_checks": 368640,
+  "boundaries": "Empty, truncated, matching, nonmatching, embedded newline, long prefix/suffix; each at 16 alignments with every padding byte. Interpreter oracle independently validates result/captures.",
+  "policy": "No suppression, JIT disabling, padding workaround or library replacement. This proposal extends only the recorded conditional-scan diagnostic.",
+  "limits": [
+    "Controls use distribution PCRE2 directly; they do not qualify a different architecture or unrelated report.",
+    "Native OBS and final installed SDK22 module tests remain release gates."
+  ],
+  "related": [
+    "evidence/amqp-pcre2-diagnostics-20261006.json"
+  ],
+  "sha256": {
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/cases.json": "ade35dd52ca1f669b0035cdea8787f5467566b1fbe1d452b00b1f5dac687ef73",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/control.c": "a379a95c747466407f4f095a939c3238451caf5d5213f79a3905eaa562f6ab0b",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/fedora-command.json": "837a6c3e0f448c018614ec5485ac3a6b823cfbb2304408411d1740c5b236689a",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/fedora-status.json": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/fedora-undefined-valgrind.log.gz": "5378a7d227d95507b36c196e51df7dd10aca3fb022aa4ee6debd60cdf3e0dabf",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/fedora-run.log.gz": "d7742eaa5bc65f648be6766244e4085393f43936237148e06b02dd77fb45cabb",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/fedora-defined-valgrind.log.gz": "ba12b58f3fc94481acf3f5e99947f9c406a5c960ecd26832a18a5fb54890dedb",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/leap-command.json": "b4257ce1c50e355ea53aebbc2c9719fc2efafbfccffc13dfe0452a48f5d5fc24",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/leap-status.json": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/leap-undefined-valgrind.log.gz": "1bf9d73b9fbcdfde0e1b1f9eefd36713bfcddd80525d2650d124d4e4b6457ddd",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/leap-run.log.gz": "d7742eaa5bc65f648be6766244e4085393f43936237148e06b02dd77fb45cabb",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/leap-defined-valgrind.log.gz": "c55b80fc011e98aeab89e78eb4b28b279c1d9ad7576679d78b8bb4ca7b71adc7",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/el10-command.json": "ce0e6f2f2abf61706680184564a06167a061b3ee9daff60b6574481c58fcd7f8",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/el10-status.json": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/el10-undefined-valgrind.log.gz": "9ff54162189a286377d1362426ec4db99c80a56bc4d8f01d5d3c2750ff7ed6b3",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/el10-run.log.gz": "d7742eaa5bc65f648be6766244e4085393f43936237148e06b02dd77fb45cabb",
+    "evidence/controls/amqp-pcre-exception-pattern-20261006/el10-defined-valgrind.log.gz": "dcb118d5e6490c0c4aab55d9295242472fbf1414f92258001a893ff1192a750d"
+  }
+}

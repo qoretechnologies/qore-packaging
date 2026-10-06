@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "approval": "Approved by the user on 2026-10-06 for the exact recorded scope; no blanket suppression or behavior change.",
+  "broker": "Apache ActiveMQ Artemis 2.38.0; immutable image sha256:11a83472ba8b2f7a3c838009328b56bb33fab869f3409f74d32aa682073b486f",
+  "scope": [
+    {
+      "message": "AMQ222149",
+      "cause": "The rejection tests deliberately reject deliveries; Artemis routes them to its dead-letter queue. Twenty native Proton cycles pass normally and under Valgrind."
+    },
+    {
+      "messages": [
+        "AMQ111007",
+        "AMQ119027"
+      ],
+      "cause": "The client closes its connection while an asynchronous receiver-link initialization is still pending. DefaultSenderController.validateConnectionState logs and rejects the already-closed endpoint. Twenty native Proton cycles reproduce the exact message independently of Qore, both normally and under Valgrind."
+    },
+    {
+      "message": "AMQ222208",
+      "cause": "Wrong CA/hostname controls cause the Java TLS server to report a short alert record as an AEAD BadPaddingException; missing mutual-TLS identity produces Empty client certificate chain. Python SSL reproduces both exact server messages while correctly rejecting clients. Trusted CA and mutual identities succeed."
+    },
+    {
+      "message": "AMQ212037 ... REMOTE_DISCONNECT",
+      "cause": "Standalone TLS controls intentionally close the underlying connection after the SASL protocol header; the broker reports abrupt AMQP transport termination. This additional scope is limited to that control, not Qore runtime qualification."
+    }
+  ],
+  "proof": {
+    "native_controls": 80,
+    "native_memory": "Zero memory errors and zero definite, indirect or possible lost allocations in both 20-cycle controls. Distribution process-lifetime reachable allocations remain visible.",
+    "tls_controls": 20,
+    "qore_functional_cases": 510,
+    "qore_functional_assertions": 1155,
+    "tls_evidence": "Passing controls6 run of the exact preserved tls-control.py; four passes for each of five trust/identity cases."
+  },
+  "sources": [
+    "https://raw.githubusercontent.com/apache/activemq-artemis/2.38.0/artemis-protocols/artemis-amqp-protocol/src/main/java/org/apache/activemq/artemis/protocol/amqp/proton/DefaultSenderController.java"
+  ],
+  "fixture_fixes": [
+    "Use an accessible working directory, eliminating the launch-script /home/jboss permission error.",
+    "Create/start the container before measuring its startup-event deadline; Docker API queue delay is not broker startup time. The readiness event and timeout remain unchanged."
+  ],
+  "policy": "Retain the diagnostic output. No filter, broker logging change, TLS policy relaxation or module behavior change is proposed.",
+  "limits": [
+    "Final SDK22 installed/native qualification remains required."
+  ],
+  "sha256": {
+    "evidence/controls/amqp-diagnostics-20261006/pcre-control.c": "a34a10c76cc5058286d7726fdc8eebfc681e5b0bdb5001abecc9fd1d1028a9fe",
+    "evidence/controls/amqp-diagnostics-20261006/pcre-cases.json": "d461ba28c31eaab0285d7d9d2189cc4072368af3cd4a39a19141c80e3e7e5cbd",
+    "evidence/controls/amqp-diagnostics-20261006/trace.c": "ce9106169b5ec39bdf7e5ef2a85dbf8ad1be67655dcf6fc4109e3f6b82e4f1e4",
+    "evidence/controls/amqp-diagnostics-20261006/debug-gdb.log.gz": "32f84b4e5f3edb877f4cbb3c18cdb046f4ff69e50163840fa56bbb7b8ddee175",
+    "evidence/controls/amqp-diagnostics-20261006/debug-program.log.gz": "f2ffdc2f6a3d2b78f15b50b0d1519cbed46525a1dd44fe1fddad862f983f3dc3",
+    "evidence/controls/amqp-diagnostics-20261006/debug.py": "2386668397c6f42d35113b1a38099c746b9553b7db030b6b2eb59d168c41fc3d",
+    "evidence/controls/amqp-diagnostics-20261006/parse-traces.py": "6778613203d350c1af49e437c79bd31451ec435536a73e7ee983c1f018108505",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-status.json": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-command.json": "1ddf15a7c44ff60c132406497467abc9bdeaa7e3dc47c22fc60d54173a17d8a6",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-run.log.gz": "9106b3316d5a7881dd35ad05cf4a98a6427251b6f24b9b7c6d2dd27d27a7b8f9",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-defined-valgrind.log.gz": "3ef0aa22a1064e24de9b4fde4ec000e76e4e3725a204fc895be89dd5d337b0ce",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-undefined-valgrind.log.gz": "4f6fc7fd6d50ec78b419aedb67a34da426d4a6fa8270eb1a4f06cfce84e41d04",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-functional-status.json": "8ded73de7c069eced6f0e6c62d7292028463b5f415a673ff8fdebc64cc5a19b7",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-normal-amqp-integration.log.gz": "35b1ca6a062d456b34ad626bd82efaf2f04800fa2bbccd9209e1388477a8579e",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-normal-AmqpUtil.log.gz": "48a959d21d251c6a9bbfacd77ff2f564adb520f2be7d1abf3ac47ab76c42c339",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-normal-amqp.log.gz": "0453dc83c829b7a312c9211c28eb482f1611d4631e76dfc9b9323c9a74b4f469",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-normal-broker.log.gz": "0b4be7c0ee6150fa0b2539c1e8fa5351d19c1ef67e9cbf646819526068932936",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-normal-amqp-tls.log.gz": "b13a871f06c4a55a52e1fe1bd7e9476524d7b979f53c7be0cdf0aa2d54cec3f0",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-normal-AmqpDataProvider.log.gz": "7ca6276914883df2475db2c42b8e6490be7ef179472d83b8c99f3b84340d8246",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-memory-amqp-integration-valgrind.log.gz": "81b438e47eebe676cc0e5e28d165d7a9971e464ab94db8cfcee0f48756def599",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-memory-AmqpUtil-valgrind.log.gz": "98d10e99f7c29279f274e0e9d6f8673d70ac44e6adbe966bc3f40cd58f63c91b",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-memory-amqp-tls-valgrind.log.gz": "880561db4d6e6057cdefa247ec624f4fb33313f6f2f8ec76b61f20672bdd4ea0",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-memory-amqp-valgrind.log.gz": "20900ab625864f3dde694fdf1259ebd78e4382bb04f5003953eeaab636479f38",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-memory-AmqpDataProvider-valgrind.log.gz": "fc56f1d56d8dbb2bb12566ac0c8707445270e9bf2309029994557f4ecb98e364",
+    "evidence/controls/amqp-diagnostics-20261006/fedora-memory-status.json": "0ae62c8817f2ef31ae90c4530efadbae09266436ff89a58383eba33dae469d3a",
+    "evidence/controls/amqp-diagnostics-20261006/leap-status.json": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17",
+    "evidence/controls/amqp-diagnostics-20261006/leap-command.json": "fd5064467ead12956f69a3e8ca5d62f5f27c0cd46d9a5e69e3c3e35edbb214b7",
+    "evidence/controls/amqp-diagnostics-20261006/leap-run.log.gz": "9106b3316d5a7881dd35ad05cf4a98a6427251b6f24b9b7c6d2dd27d27a7b8f9",
+    "evidence/controls/amqp-diagnostics-20261006/leap-defined-valgrind.log.gz": "12d46065f7e229f73248ff738fa05c238815a1f8326162d69b8db0307248aec0",
+    "evidence/controls/amqp-diagnostics-20261006/leap-undefined-valgrind.log.gz": "f4c6797692bbdb8a9f34bd465f4f99bfa62e8265c249f396e10484624589869a",
+    "evidence/controls/amqp-diagnostics-20261006/leap-functional-status.json": "0f081757d8f1ce73b024633a7f36234aa17448a7f18785c80cc2340007821001",
+    "evidence/controls/amqp-diagnostics-20261006/leap-normal-amqp-integration.log.gz": "6fe28b0febf479726a30a926bd0dbbed05b92d0b451551556a3db451b0d17cff",
+    "evidence/controls/amqp-diagnostics-20261006/leap-normal-AmqpUtil.log.gz": "3a90c864e69d6c6bda283ee82695e7ada03dd8438b46df1c0ceaaee7c52cfc10",
+    "evidence/controls/amqp-diagnostics-20261006/leap-normal-amqp.log.gz": "0453dc83c829b7a312c9211c28eb482f1611d4631e76dfc9b9323c9a74b4f469",
+    "evidence/controls/amqp-diagnostics-20261006/leap-normal-broker.log.gz": "8d499e5687498558b9c20dc27226964a0ff2f11971a56185734b6b4d3d40a871",
+    "evidence/controls/amqp-diagnostics-20261006/leap-normal-amqp-tls.log.gz": "b2d5f9ba97b8f34d4922f107525799cc1d61cfb55a5230d2efb29a516e43d5de",
+    "evidence/controls/amqp-diagnostics-20261006/leap-normal-AmqpDataProvider.log.gz": "7ca6276914883df2475db2c42b8e6490be7ef179472d83b8c99f3b84340d8246",
+    "evidence/controls/amqp-diagnostics-20261006/leap-memory-amqp-integration-valgrind.log.gz": "d5f0025e28d54f56509d0850217dee4ece68cb4d9ad8d4c1a607828729f59a42",
+    "evidence/controls/amqp-diagnostics-20261006/leap-memory-AmqpUtil-valgrind.log.gz": "286993dfa46128c75991c3d3428e38b75d29983037fa458c999a1213c8d19641",
+    "evidence/controls/amqp-diagnostics-20261006/leap-memory-amqp-tls-valgrind.log.gz": "f74ce03fc240d8f491fbf03b45b365b5b29bdf40e4d2f1acc635fc5d343732d2",
+    "evidence/controls/amqp-diagnostics-20261006/leap-memory-amqp-valgrind.log.gz": "a492d4c29eee03446ba6f270e28a72d3e9e2ff7af6a103635ac8ca8b136587c0",
+    "evidence/controls/amqp-diagnostics-20261006/leap-memory-AmqpDataProvider-valgrind.log.gz": "b94caa2b723c4e7ff4d2454f7f50399be6c0e70caccc6fa4e805e6ff4aa8ac1d",
+    "evidence/controls/amqp-diagnostics-20261006/leap-memory-status.json": "e2d3c7402804dccb85d801a7d74e56ae4e1c2ac63c3ad5bb40c5e05e60debab0",
+    "evidence/controls/amqp-diagnostics-20261006/el10-status.json": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17",
+    "evidence/controls/amqp-diagnostics-20261006/el10-command.json": "2b8dca5996ce9ba98eb61912b96f0411f11e680822105497e7d6529e711edebc",
+    "evidence/controls/amqp-diagnostics-20261006/el10-run.log.gz": "9106b3316d5a7881dd35ad05cf4a98a6427251b6f24b9b7c6d2dd27d27a7b8f9",
+    "evidence/controls/amqp-diagnostics-20261006/el10-defined-valgrind.log.gz": "5643930a773244b4b832f32cb11e438e4c8a8b28b526854e11d4686e89c1f232",
+    "evidence/controls/amqp-diagnostics-20261006/el10-undefined-valgrind.log.gz": "c3c2b9d22ff00a1f06196f2218957159c041a2c788df83ec4ade2af0a4178236",
+    "evidence/controls/amqp-diagnostics-20261006/el10-functional-status.json": "3a751e37fc3a59732a2a541eecf07a3c4b76697b51af8ad371a75d1545d6d3a5",
+    "evidence/controls/amqp-diagnostics-20261006/el10-normal-amqp-integration.log.gz": "6fe28b0febf479726a30a926bd0dbbed05b92d0b451551556a3db451b0d17cff",
+    "evidence/controls/amqp-diagnostics-20261006/el10-normal-AmqpUtil.log.gz": "3a90c864e69d6c6bda283ee82695e7ada03dd8438b46df1c0ceaaee7c52cfc10",
+    "evidence/controls/amqp-diagnostics-20261006/el10-normal-amqp.log.gz": "e41132cd4e254cb6af2320298fc901032f6cf219c4d2bd18d8ed0c39d01f7624",
+    "evidence/controls/amqp-diagnostics-20261006/el10-normal-broker.log.gz": "2a06e2b57059bf99e863b80cd95a70719ada04168e6607b0c7905a3c78c268b2",
+    "evidence/controls/amqp-diagnostics-20261006/el10-normal-amqp-tls.log.gz": "b569325129a6eeb9b6e202be71e0a3dd70369f8761a7e83d2427318a30a93457",
+    "evidence/controls/amqp-diagnostics-20261006/el10-normal-AmqpDataProvider.log.gz": "7ca6276914883df2475db2c42b8e6490be7ef179472d83b8c99f3b84340d8246",
+    "evidence/controls/amqp-diagnostics-20261006/el10-memory-amqp-integration-valgrind.log.gz": "80f2cb6a26706a927d76db8b92527a2fdfc75aca69c1c76cba1828b5436c9036",
+    "evidence/controls/amqp-diagnostics-20261006/el10-memory-AmqpUtil-valgrind.log.gz": "a9cdb3457f1bf7d32def1f5945d96ba49ab6809e0d9d8b069a204f7992651ca5",
+    "evidence/controls/amqp-diagnostics-20261006/el10-memory-amqp-tls-valgrind.log.gz": "08bc00618b1a6376018bce7e28648299bdcb017fa9109db1215581adb6b79b3c",
+    "evidence/controls/amqp-diagnostics-20261006/el10-memory-amqp-valgrind.log.gz": "39bf7e5cc154c291fa7109940a82969303754be52e1303dd87f7ecab01972443",
+    "evidence/controls/amqp-diagnostics-20261006/el10-memory-AmqpDataProvider-valgrind.log.gz": "80b1924ba0e6d38705c21e7d16af7c91422578f5ea3443d46832895e713485aa",
+    "evidence/controls/amqp-diagnostics-20261006/el10-memory-status.json": "220b8cc5a9488f18d3034e2baa9a6da78ab8a8bea4fa744e880fce7d744026bb",
+    "evidence/controls/amqp-diagnostics-20261006/broker-native-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/amqp-diagnostics-20261006/broker-native-reject.log.gz": "3be7bbd9b78d3ee3474b4276a5b7673cc7b6e4b0ae5138c36013c2a3e9b4b218",
+    "evidence/controls/amqp-diagnostics-20261006/broker-native-close.log.gz": "8c361b66ce6b4c39135e4117fc46cb5d85d38e901c71ba17bdc4ad114720ca35",
+    "evidence/controls/amqp-diagnostics-20261006/broker-native-reject-valgrind.log.gz": "98da761d9d79bf145eb393fd76f1fd7ce1d42a254b698be8816b3a84e03990a1",
+    "evidence/controls/amqp-diagnostics-20261006/broker-native-close-valgrind.log.gz": "6e3bd7d551eb150e2752a810a8440288d2cf31c3eab7e92776e7d2ff794c41d3",
+    "evidence/controls/amqp-diagnostics-20261006/broker-native-broker.log.gz": "d8d67467cbc979b5e44257887faa66388e0ff1e74e6216968a204012c21120ce",
+    "evidence/controls/amqp-diagnostics-20261006/broker-tls-tls.log.gz": "bc5e545ccf090a6ca4e10b60bda3af895801b01d5d3dd64524888613d184624a",
+    "evidence/controls/amqp-diagnostics-20261006/broker-tls-broker.log.gz": "8b2f6c45c9334a62df1fdd5abf215775025d6aa05d45ebf786d8a6e2e37b1000",
+    "evidence/controls/amqp-diagnostics-20261006/broker-tls-status.json": "1c9a6e8ae0dd7732c9ef71c7b0d590667f84f36fc20bbec09ec564283593eb39",
+    "evidence/controls/amqp-diagnostics-20261006/proton-control.cc": "e0b2270aac542953fdbaebcc257d144a4a696c32218357712540645c1175e4ca",
+    "evidence/controls/amqp-diagnostics-20261006/tls-control.py": "71c8c1f47f0cebfdedd8fb77b7171eb3d216205e5b926898990cff7019ef202c"
+  }
+}

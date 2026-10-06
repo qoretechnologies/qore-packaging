@@ -1,0 +1,19 @@
+[
+  "docker",
+  "run",
+  "--rm",
+  "--init",
+  "--network",
+  "none",
+  "--user",
+  "1019:100",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/work/amqp-pcre-exception-control-20261006:/source:ro",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/results/fedora-amqp-pcre-exception-control-20261006:/work",
+  "sha256:d3d38ad206a1bf3cc66dec809f7782fc3a1c9247b1be3ad0d6befc00e4db6e73",
+  "sh",
+  "-eu",
+  "-c",
+  "gcc -O2 -g -Wall -Wextra -Werror /source/control.c -lpcre2-8 -o /work/control\n/work/control defined\nvalgrind --error-exitcode=99 --leak-check=full --show-leak-kinds=all --log-file=/work/defined-valgrind.log /work/control defined\nvalgrind --error-limit=no --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file=/work/undefined-valgrind.log /work/control undefined\n"
+]
