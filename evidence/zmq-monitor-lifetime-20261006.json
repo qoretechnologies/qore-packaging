@@ -1,0 +1,316 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "root_cause": "Release 4 fixture teardown could destroy the monitor receiver before the rebound socket. libzmq monitor_event sends synchronously while holding _monitor_sync; an unconsumed close event can block its shared I/O thread. Leap ARM timed out in subsequent PUSH/PULL and POLLOUT checks.",
+  "correction": "Subscribe to MONITOR_STOPPED; delete the monitored socket and drain close/stop events before destroying the receiver. on_exit protects assertion and exception paths. Three new injected-failure states verify fresh traffic on the same context. No C++ or production changes.",
+  "previous_build_failure": "results/zmq-close-leap-arm-failure-20261006.log",
+  "targets": {
+    "fedora": {
+      "cases_executed": 578,
+      "assertions": 8643,
+      "full_suites": 2,
+      "focused_repetitions": 100,
+      "spec_parser": 0
+    },
+    "leap": {
+      "cases_executed": 578,
+      "assertions": 8643,
+      "full_suites": 2,
+      "focused_repetitions": 100,
+      "spec_parser": 0
+    },
+    "el10": {
+      "cases_executed": 578,
+      "assertions": 8643,
+      "full_suites": 2,
+      "focused_repetitions": 100,
+      "spec_parser": 0
+    }
+  },
+  "artifacts_sha256": {
+    "evidence/controls/zmq-monitor-lifetime-20261006/leap-spec-parse.log.gz": "c519b6a6d818e5541755670b880348c3bf933f9de12da6c4fc1fbb21bdfc04cf",
+    "evidence/controls/zmq-monitor-lifetime-20261006/el10-result.json": "eacceaa64726ba8dea8e6464b49fee775f3dc97b5c063a91125a0319aa93c687",
+    "evidence/controls/zmq-monitor-lifetime-20261006/leap-driver.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/zmq-monitor-lifetime-20261006/fedora-command.json": "48f29a407cbde16bffebd04351bc20331595da41ac74b0a56f03ef8c9870bd83",
+    "evidence/controls/zmq-monitor-lifetime-20261006/el10-command.json": "3649743eed6830990695e92e6cf9d36157188a15bdd31f3ffe541cb4422b8396",
+    "evidence/controls/zmq-monitor-lifetime-20261006/leap-zmq-comprehensive.log.gz": "4b6368ebd80ec05f94449b9e8f5ee3966c0d0b73162d1e73cc45bf046af5648e",
+    "evidence/controls/zmq-monitor-lifetime-20261006/leap-command.json": "1580ac20c4eee4403fa46b232155a3015c8e7f50bbfa5f6c6175c6c2b529e272",
+    "evidence/controls/zmq-monitor-lifetime-20261006/fedora-zmq-comprehensive-repeat.log.gz": "0bc2ca1840050191092c2b9c42fe90d71975b97b756d03380b7d6ab981f29df2",
+    "evidence/controls/zmq-monitor-lifetime-20261006/fedora-zmq-comprehensive.log.gz": "4b6368ebd80ec05f94449b9e8f5ee3966c0d0b73162d1e73cc45bf046af5648e",
+    "evidence/controls/zmq-monitor-lifetime-20261006/el10-spec-parse.log.gz": "8f286fbd82e6e8b43c5adebbb7baa2fbebdc4c1a660e4c7bd360fec6aa5dbf36",
+    "evidence/controls/zmq-monitor-lifetime-20261006/leap-result.json": "eacceaa64726ba8dea8e6464b49fee775f3dc97b5c063a91125a0319aa93c687",
+    "evidence/controls/zmq-monitor-lifetime-20261006/el10-zmq-comprehensive.log.gz": "4b6368ebd80ec05f94449b9e8f5ee3966c0d0b73162d1e73cc45bf046af5648e",
+    "evidence/controls/zmq-monitor-lifetime-20261006/el10-zmq-comprehensive-repeat.log.gz": "0bc2ca1840050191092c2b9c42fe90d71975b97b756d03380b7d6ab981f29df2",
+    "evidence/controls/zmq-monitor-lifetime-20261006/el10-driver.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/zmq-monitor-lifetime-20261006/leap-zmq-repeat.log.gz": "302a60c802824c677b35f08a3eacea1319d9e169e5ad2b580ae84eb9bc639d9b",
+    "evidence/controls/zmq-monitor-lifetime-20261006/fedora-driver.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/zmq-monitor-lifetime-20261006/el10-zmq-repeat.log.gz": "302a60c802824c677b35f08a3eacea1319d9e169e5ad2b580ae84eb9bc639d9b",
+    "evidence/controls/zmq-monitor-lifetime-20261006/fedora-result.json": "eacceaa64726ba8dea8e6464b49fee775f3dc97b5c063a91125a0319aa93c687",
+    "evidence/controls/zmq-monitor-lifetime-20261006/leap-zmq.log.gz": "c7b993d8a3c1e6cf15fdbc2dd407669e09311a1659cde26c789a8ae752d65e05",
+    "evidence/controls/zmq-monitor-lifetime-20261006/leap-zmq-comprehensive-repeat.log.gz": "0bc2ca1840050191092c2b9c42fe90d71975b97b756d03380b7d6ab981f29df2",
+    "evidence/controls/zmq-monitor-lifetime-20261006/fedora-zmq.log.gz": "e9b8be475f99d3d75087f822ca0acb5594d8754a5f634ec6b2f20febfab79d39",
+    "evidence/controls/zmq-monitor-lifetime-20261006/el10-zmq.log.gz": "e0092561b8c2981324759b4d251c295a390aeb09ec2f25509eaa18e08237ab51",
+    "evidence/controls/zmq-monitor-lifetime-20261006/fedora-zmq-repeat.log.gz": "302a60c802824c677b35f08a3eacea1319d9e169e5ad2b580ae84eb9bc639d9b",
+    "evidence/controls/zmq-monitor-lifetime-20261006/fedora-spec-parse.log.gz": "016ac1986d251d5bce2566a2b6457aee6718db245a5a2cd836a84fdc9bd6d0c2",
+    "evidence/controls/zmq-monitor-lifetime-20261006/fedora-final-zmq.log.gz": "118d4898756e56ae27723622b55b0c5592407478182c293f9132d28f00ecac2e",
+    "evidence/controls/zmq-monitor-lifetime-20261006/fedora-final-zmq-comprehensive.log.gz": "4b6368ebd80ec05f94449b9e8f5ee3966c0d0b73162d1e73cc45bf046af5648e",
+    "evidence/controls/zmq-monitor-lifetime-20261006/fedora-final-result.json": "233bded024d99887249217a5911867087e8f9c8345bdc072238ca170867f83c2",
+    "evidence/controls/zmq-monitor-lifetime-20261006/leap-final-zmq.log.gz": "ebf259c0390adafa331aa9ca345f6ea94fb45888ae37089ff5c0dc2cd10f9254",
+    "evidence/controls/zmq-monitor-lifetime-20261006/leap-final-zmq-comprehensive.log.gz": "4b6368ebd80ec05f94449b9e8f5ee3966c0d0b73162d1e73cc45bf046af5648e",
+    "evidence/controls/zmq-monitor-lifetime-20261006/leap-final-result.json": "233bded024d99887249217a5911867087e8f9c8345bdc072238ca170867f83c2",
+    "evidence/controls/zmq-monitor-lifetime-20261006/el10-final-zmq.log.gz": "faa1b1bd7721545698bd705c5397720665cb00f3fd3683ec016560008bea3fc8",
+    "evidence/controls/zmq-monitor-lifetime-20261006/el10-final-zmq-comprehensive.log.gz": "4b6368ebd80ec05f94449b9e8f5ee3966c0d0b73162d1e73cc45bf046af5648e",
+    "evidence/controls/zmq-monitor-lifetime-20261006/el10-final-result.json": "233bded024d99887249217a5911867087e8f9c8345bdc072238ca170867f83c2"
+  },
+  "final_brace_style_checks": "Both full suites and one repetition of each focused group pass on all three distributions after making on_exit blocks explicit.",
+  "canonical_builds": {
+    "fedora": {
+      "source": {
+        "schema": 1,
+        "commit": "add9435ba62913458651bc04a4332c73a3ef3876",
+        "source_date_epoch": 1791291212,
+        "name": "qore-zmq-module",
+        "version": "1.2.0",
+        "exclusions": [],
+        "sources": {
+          "qore-zmq-module-1.2.0.tar.xz": "87140f89c24117a73931c02efd1293cebedc9efbfd36544454b84faf22476dba",
+          "qore-zmq-module.spec": "49ca4e1f489f0138f6fdaaf0ad5b8eb818e45211561b7719bcb1b79d7fbd52fb",
+          "libzmq-4.3.5.tar.xz": "8b22975c2dd3c36bd79cecb866a4a2e205967e5bca8182a684edf8d5ac545397",
+          "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017.tar.xz": "779c681775402e07b4df31f681c2320dc6f7024b2faa29c053bb9ac01cd611fa"
+        },
+        "spec": "qore-zmq-module.spec",
+        "vendor_manifest": "rpm/vendor-sources.json",
+        "components": [
+          {
+            "name": "libzmq",
+            "url": "https://codeload.github.com/zeromq/libzmq/tar.gz/v4.3.5",
+            "sha256": "6c972d1e6a91a0ecd79c3236f04cf0126f2f4dfbbad407d72b4606a7ba93f9c6",
+            "top": "libzmq-4.3.5",
+            "retained_paths": [
+              "CMakeLists.txt",
+              "LICENSE",
+              "AUTHORS",
+              "NEWS",
+              "README.md",
+              "src",
+              "include",
+              "builds/cmake",
+              "external/sha1",
+              "external/wepoll",
+              "version.sh"
+            ],
+            "archive": "libzmq-4.3.5.tar.xz",
+            "licenses": [
+              "LICENSE"
+            ],
+            "version": "v4.3.5"
+          },
+          {
+            "name": "czmq",
+            "url": "https://codeload.github.com/zeromq/czmq/tar.gz/b669c7eb60cb8f587071ac6ece7cd68d30ac4017",
+            "sha256": "1ef06cd24fbe91f094ff2b4ce54aaf9c6fa394bec0e12c9f5b4f491f7aaa03d0",
+            "top": "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017",
+            "retained_paths": [
+              "CMakeLists.txt",
+              "LICENSE",
+              "AUTHORS",
+              "NEWS",
+              "README.md",
+              "README.txt",
+              "src",
+              "include",
+              "Findlibcurl.cmake",
+              "Findlibmicrohttpd.cmake",
+              "Findlibsodium.cmake",
+              "Findlibzmq.cmake",
+              "Findlz4.cmake",
+              "Findnss.cmake",
+              "Findsystemd.cmake",
+              "Finduuid.cmake",
+              "builds/cmake"
+            ],
+            "archive": "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017.tar.xz",
+            "licenses": [
+              "LICENSE"
+            ],
+            "version": "b669c7eb60cb8f587071ac6ece7cd68d30ac4017"
+          }
+        ]
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-zmq-module-doc-1.2.0-5.fc44.noarch.rpm": "028457ca0bf0838db4059f31fc2818f1889522a4d375c73d6265a86f6dfb3a58",
+        "rpmbuild/RPMS/x86_64/qore-zmq-module-1.2.0-5.fc44.x86_64.rpm": "4c76975ee26c61d26504e1f4128a2cca0260a1368b7acbcd7b69b4b7019b48fb",
+        "rpmbuild/RPMS/x86_64/qore-zmq-module-debuginfo-1.2.0-5.fc44.x86_64.rpm": "f960ad3fa2d94b4ea52645fbaafed9f85ba6af1f709770c5cc8968ba5f45fb1b",
+        "rpmbuild/RPMS/x86_64/qore-zmq-module-debugsource-1.2.0-5.fc44.x86_64.rpm": "1258702864593ec0b2c452419165d941843f1b9aa204f76e7647c1cdd69ddac3",
+        "rpmbuild/SRPMS/qore-zmq-module-1.2.0-5.fc44.src.rpm": "b44b9c9f3e827e7e5d3a802767312824cd169ca2f77dc0de23e356c775629209"
+      },
+      "log_sha256": "6356a866a71a2c52326686e2d8936617b9ba774cb9f892b2ac954ad6744ef058"
+    },
+    "leap": {
+      "source": {
+        "schema": 1,
+        "commit": "add9435ba62913458651bc04a4332c73a3ef3876",
+        "source_date_epoch": 1791291212,
+        "name": "qore-zmq-module",
+        "version": "1.2.0",
+        "exclusions": [],
+        "sources": {
+          "qore-zmq-module-1.2.0.tar.xz": "87140f89c24117a73931c02efd1293cebedc9efbfd36544454b84faf22476dba",
+          "qore-zmq-module.spec": "49ca4e1f489f0138f6fdaaf0ad5b8eb818e45211561b7719bcb1b79d7fbd52fb",
+          "libzmq-4.3.5.tar.xz": "8b22975c2dd3c36bd79cecb866a4a2e205967e5bca8182a684edf8d5ac545397",
+          "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017.tar.xz": "779c681775402e07b4df31f681c2320dc6f7024b2faa29c053bb9ac01cd611fa"
+        },
+        "spec": "qore-zmq-module.spec",
+        "vendor_manifest": "rpm/vendor-sources.json",
+        "components": [
+          {
+            "name": "libzmq",
+            "url": "https://codeload.github.com/zeromq/libzmq/tar.gz/v4.3.5",
+            "sha256": "6c972d1e6a91a0ecd79c3236f04cf0126f2f4dfbbad407d72b4606a7ba93f9c6",
+            "top": "libzmq-4.3.5",
+            "retained_paths": [
+              "CMakeLists.txt",
+              "LICENSE",
+              "AUTHORS",
+              "NEWS",
+              "README.md",
+              "src",
+              "include",
+              "builds/cmake",
+              "external/sha1",
+              "external/wepoll",
+              "version.sh"
+            ],
+            "archive": "libzmq-4.3.5.tar.xz",
+            "licenses": [
+              "LICENSE"
+            ],
+            "version": "v4.3.5"
+          },
+          {
+            "name": "czmq",
+            "url": "https://codeload.github.com/zeromq/czmq/tar.gz/b669c7eb60cb8f587071ac6ece7cd68d30ac4017",
+            "sha256": "1ef06cd24fbe91f094ff2b4ce54aaf9c6fa394bec0e12c9f5b4f491f7aaa03d0",
+            "top": "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017",
+            "retained_paths": [
+              "CMakeLists.txt",
+              "LICENSE",
+              "AUTHORS",
+              "NEWS",
+              "README.md",
+              "README.txt",
+              "src",
+              "include",
+              "Findlibcurl.cmake",
+              "Findlibmicrohttpd.cmake",
+              "Findlibsodium.cmake",
+              "Findlibzmq.cmake",
+              "Findlz4.cmake",
+              "Findnss.cmake",
+              "Findsystemd.cmake",
+              "Finduuid.cmake",
+              "builds/cmake"
+            ],
+            "archive": "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017.tar.xz",
+            "licenses": [
+              "LICENSE"
+            ],
+            "version": "b669c7eb60cb8f587071ac6ece7cd68d30ac4017"
+          }
+        ]
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-zmq-module-doc-1.2.0-5.noarch.rpm": "e2f7a7564218d1b4cfc62f7de53bf9595899b546ffbbcb8f968a67b269f73c87",
+        "rpmbuild/RPMS/x86_64/qore-zmq-module-1.2.0-5.x86_64.rpm": "c6ca4ae5eb7fd8f7c90d820bb78b2732cf5906ad6cf9d5dd0d93f0778b1b3e91",
+        "rpmbuild/RPMS/x86_64/qore-zmq-module-debuginfo-1.2.0-5.x86_64.rpm": "f92c14a737b84863d4819a38a5b2c9e38b68815354077a49bc4a36e2fee6ee56",
+        "rpmbuild/RPMS/x86_64/qore-zmq-module-debugsource-1.2.0-5.x86_64.rpm": "63aad31cce706ed596248237b35a01b6802622ac6a23334931e3058d54c85796",
+        "rpmbuild/SRPMS/qore-zmq-module-1.2.0-5.src.rpm": "da7b96e91ac973b54e0c3ed4d933d38ac05854878366064b7399a76284b54e6a"
+      },
+      "log_sha256": "a7530a8e08ae41baca67977d038ef83fd8cd3cd47972644f59fd6743dba7c4c2"
+    },
+    "el10": {
+      "source": {
+        "schema": 1,
+        "commit": "add9435ba62913458651bc04a4332c73a3ef3876",
+        "source_date_epoch": 1791291212,
+        "name": "qore-zmq-module",
+        "version": "1.2.0",
+        "exclusions": [],
+        "sources": {
+          "qore-zmq-module-1.2.0.tar.xz": "87140f89c24117a73931c02efd1293cebedc9efbfd36544454b84faf22476dba",
+          "qore-zmq-module.spec": "49ca4e1f489f0138f6fdaaf0ad5b8eb818e45211561b7719bcb1b79d7fbd52fb",
+          "libzmq-4.3.5.tar.xz": "8b22975c2dd3c36bd79cecb866a4a2e205967e5bca8182a684edf8d5ac545397",
+          "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017.tar.xz": "779c681775402e07b4df31f681c2320dc6f7024b2faa29c053bb9ac01cd611fa"
+        },
+        "spec": "qore-zmq-module.spec",
+        "vendor_manifest": "rpm/vendor-sources.json",
+        "components": [
+          {
+            "name": "libzmq",
+            "url": "https://codeload.github.com/zeromq/libzmq/tar.gz/v4.3.5",
+            "sha256": "6c972d1e6a91a0ecd79c3236f04cf0126f2f4dfbbad407d72b4606a7ba93f9c6",
+            "top": "libzmq-4.3.5",
+            "retained_paths": [
+              "CMakeLists.txt",
+              "LICENSE",
+              "AUTHORS",
+              "NEWS",
+              "README.md",
+              "src",
+              "include",
+              "builds/cmake",
+              "external/sha1",
+              "external/wepoll",
+              "version.sh"
+            ],
+            "archive": "libzmq-4.3.5.tar.xz",
+            "licenses": [
+              "LICENSE"
+            ],
+            "version": "v4.3.5"
+          },
+          {
+            "name": "czmq",
+            "url": "https://codeload.github.com/zeromq/czmq/tar.gz/b669c7eb60cb8f587071ac6ece7cd68d30ac4017",
+            "sha256": "1ef06cd24fbe91f094ff2b4ce54aaf9c6fa394bec0e12c9f5b4f491f7aaa03d0",
+            "top": "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017",
+            "retained_paths": [
+              "CMakeLists.txt",
+              "LICENSE",
+              "AUTHORS",
+              "NEWS",
+              "README.md",
+              "README.txt",
+              "src",
+              "include",
+              "Findlibcurl.cmake",
+              "Findlibmicrohttpd.cmake",
+              "Findlibsodium.cmake",
+              "Findlibzmq.cmake",
+              "Findlz4.cmake",
+              "Findnss.cmake",
+              "Findsystemd.cmake",
+              "Finduuid.cmake",
+              "builds/cmake"
+            ],
+            "archive": "czmq-b669c7eb60cb8f587071ac6ece7cd68d30ac4017.tar.xz",
+            "licenses": [
+              "LICENSE"
+            ],
+            "version": "b669c7eb60cb8f587071ac6ece7cd68d30ac4017"
+          }
+        ]
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-zmq-module-doc-1.2.0-5.el10.noarch.rpm": "1f9adbc92ead490e9c62ae9d4a48f38733eae3ede12d7b182dd31cdb265291b9",
+        "rpmbuild/RPMS/x86_64/qore-zmq-module-1.2.0-5.el10.x86_64.rpm": "c5033c8c8d81b8c0e6aeaa87e9015891030d668edec49b6e3663a963e1c5b46f",
+        "rpmbuild/RPMS/x86_64/qore-zmq-module-debuginfo-1.2.0-5.el10.x86_64.rpm": "e4db634a3f89534aa0fc763cae41e35c247f8d938d757eb16f17fd7534c070f2",
+        "rpmbuild/RPMS/x86_64/qore-zmq-module-debugsource-1.2.0-5.el10.x86_64.rpm": "8b8927190aba8095acfb34d792523a2c2c7ef3c717a4e4cfdb65d4e0363c4a94",
+        "rpmbuild/SRPMS/qore-zmq-module-1.2.0-5.el10.src.rpm": "a0dba5e76a95c70d04f424f6d1b82c466b163f974f02a4e3a06941a9036aa3f4"
+      },
+      "log_sha256": "e3cb8d0224a90c64960ee3eefef64597bf207c0b04e06a11e0c637720cf00133"
+    }
+  },
+  "status": "All three release 5 canonical RPMs pass; current native source and installed ARM checks remain required. No publication."
+}

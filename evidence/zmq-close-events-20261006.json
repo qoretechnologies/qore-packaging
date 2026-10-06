@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "root_cause": "unbind queues I/O-thread teardown, so immediately rebinding after deleting the socket races the listener close. The test retry seen on native Fedora ARM was this race. libzmq stream_listener_base_t::close calls the operating-system close before emitting event_closed.",
+  "fix": "Both same-port rebind fixtures consume and validate a CLOSED monitor event and endpoint before a single bind. Remove sleeps/retries; retain connect-before-bind message assertions.",
+  "targets": {
+    "fedora": {
+      "cases_executed": 277,
+      "assertions": 5316,
+      "full_suites": 2,
+      "focused_repetitions_per_case": 100,
+      "compiler_or_runtime_changes": false
+    },
+    "leap": {
+      "cases_executed": 277,
+      "assertions": 5316,
+      "full_suites": 2,
+      "focused_repetitions_per_case": 100,
+      "compiler_or_runtime_changes": false
+    },
+    "el10": {
+      "cases_executed": 277,
+      "assertions": 5316,
+      "full_suites": 2,
+      "focused_repetitions_per_case": 100,
+      "compiler_or_runtime_changes": false
+    }
+  },
+  "artifacts_sha256": {
+    "evidence/controls/zmq-close-events-20261006/el10-command.json": "5b22420be499ddb721d691e5fe029825393e9ff163fe5af5ed7e3f905c9777a5",
+    "evidence/controls/zmq-close-events-20261006/el10-driver.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/zmq-close-events-20261006/el10-result.json": "eacceaa64726ba8dea8e6464b49fee775f3dc97b5c063a91125a0319aa93c687",
+    "evidence/controls/zmq-close-events-20261006/el10-spec-parse.log.gz": "1819e77aba12812ad04810377796eafd67e97786007a6bc5bafb8ed88222fc47",
+    "evidence/controls/zmq-close-events-20261006/el10-zmq-comprehensive-repeat.log.gz": "71e4c52883f859adbbfa68256cee94cb048232669737d96ca3f4161ba0b5f1aa",
+    "evidence/controls/zmq-close-events-20261006/el10-zmq-comprehensive.log.gz": "4217f8ed7a9f64eb59167116a953e67641b10869a9042bd5fc617e9bcef6b7b4",
+    "evidence/controls/zmq-close-events-20261006/el10-zmq-repeat.log.gz": "57cf7128a57adb4556de0c47ab11a8ab3bcf09c478d75f6cf8b26ec8206613b6",
+    "evidence/controls/zmq-close-events-20261006/el10-zmq.log.gz": "274e37488f948e8b9b0c150f9c02f2990882c715fcfa587a2d08c5c136c6e831",
+    "evidence/controls/zmq-close-events-20261006/fedora-command.json": "b1af8058b51a5c6579b2e7fb636e52a528e84300392189462d6b9d90e0d19289",
+    "evidence/controls/zmq-close-events-20261006/fedora-driver.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/zmq-close-events-20261006/fedora-result.json": "eacceaa64726ba8dea8e6464b49fee775f3dc97b5c063a91125a0319aa93c687",
+    "evidence/controls/zmq-close-events-20261006/fedora-spec-parse.log.gz": "e8112b346adaab0e3a988e359e04044e62ab613b2968df6451a738deda57c5a6",
+    "evidence/controls/zmq-close-events-20261006/fedora-zmq-comprehensive-repeat.log.gz": "71e4c52883f859adbbfa68256cee94cb048232669737d96ca3f4161ba0b5f1aa",
+    "evidence/controls/zmq-close-events-20261006/fedora-zmq-comprehensive.log.gz": "4217f8ed7a9f64eb59167116a953e67641b10869a9042bd5fc617e9bcef6b7b4",
+    "evidence/controls/zmq-close-events-20261006/fedora-zmq-repeat.log.gz": "57cf7128a57adb4556de0c47ab11a8ab3bcf09c478d75f6cf8b26ec8206613b6",
+    "evidence/controls/zmq-close-events-20261006/fedora-zmq.log.gz": "0c7bb26197dd23a93c39b411ae2261bd8a7cc7edccb186c13f69c2c4260e27d1",
+    "evidence/controls/zmq-close-events-20261006/leap-command.json": "7adc0ff83e8a256fa4dfb139ad2d8d3429ad6e2443e163c4d93cbc2858b4df0b",
+    "evidence/controls/zmq-close-events-20261006/leap-driver.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/zmq-close-events-20261006/leap-result.json": "eacceaa64726ba8dea8e6464b49fee775f3dc97b5c063a91125a0319aa93c687",
+    "evidence/controls/zmq-close-events-20261006/leap-spec-parse.log.gz": "6b0a84fefbbe5114995027ebc3d8f5fd39fa87d65d935c2769215764fdfc2c13",
+    "evidence/controls/zmq-close-events-20261006/leap-zmq-comprehensive-repeat.log.gz": "71e4c52883f859adbbfa68256cee94cb048232669737d96ca3f4161ba0b5f1aa",
+    "evidence/controls/zmq-close-events-20261006/leap-zmq-comprehensive.log.gz": "4217f8ed7a9f64eb59167116a953e67641b10869a9042bd5fc617e9bcef6b7b4",
+    "evidence/controls/zmq-close-events-20261006/leap-zmq-repeat.log.gz": "57cf7128a57adb4556de0c47ab11a8ab3bcf09c478d75f6cf8b26ec8206613b6",
+    "evidence/controls/zmq-close-events-20261006/leap-zmq.log.gz": "c8ab2eb0ac15a9e955077e2743e01cb07081bf71e0e61c9891e55030bfed7ebc"
+  },
+  "upstream_close_source": {
+    "url": "https://github.com/zeromq/libzmq/blob/v4.3.5/src/stream_listener_base.cpp",
+    "sha256": "3d78710eed1aebe6ad787fb13db7a874a86033b05fd0e1661fe5e61335287a44",
+    "lines": "55-70"
+  },
+  "qualification_limit": "Release 4 local tests passed, but native ARM exposed monitor-receiver lifetime ordering; corrected and qualified separately in evidence/zmq-monitor-lifetime-20261006.json. Release 4 is superseded and not a publication candidate."
+}
