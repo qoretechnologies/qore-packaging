@@ -150,3 +150,25 @@ rpm-modules3-el10-arm64:
     - if: '$RPM_NATIVE_QUALIFICATION == "modules3" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
   variables:
     RPM_MANIFEST: qualification/modules3-el10-aarch64.json
+
+# Graphics, geometry and Git use the installed module APIs and CLIs.
+rpm-modules4-fedora-arm64:
+  extends: rpm-fedora-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "modules4" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "fedora")'
+  variables:
+    RPM_MANIFEST: qualification/modules4-fedora-aarch64.json
+
+rpm-modules4-leap-arm64:
+  extends: rpm-leap-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "modules4" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "leap")'
+  variables:
+    RPM_MANIFEST: qualification/modules4-leap-aarch64.json
+
+rpm-modules4-el10-arm64:
+  extends: rpm-el10-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "modules4" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
+  variables:
+    RPM_MANIFEST: qualification/modules4-el10-aarch64.json

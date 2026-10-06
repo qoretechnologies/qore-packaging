@@ -275,7 +275,8 @@ os.write(2, b'diagnostic\\n')
 
     def test_aot_module_suites_preload_only_installed_inventory_paths(self):
         directory = Path('/tmp/installed modules')
-        expected_counts = {'fsevent': 7, 'tar': 3, 'zip': 2}
+        expected_counts = {'fsevent': 7, 'tar': 3, 'zip': 2, 'cairo': 2, 'geos': 2,
+                           'git': 16, 'imagemagick': 2}
         for name, count in expected_counts.items():
             suffixes = module.MODULE_PRELOADS[name]
             files = '\n'.join('/usr/lib64/qore-modules/3.0.0' + suffix for suffix in suffixes)
@@ -322,6 +323,20 @@ os.write(2, b'diagnostic\\n')
             ('compiler', ['/tmp/ncurses fixtures/debian/tests/compiler'])])
         self.assertEqual(len([p for p in module.MODULE_FIXTURES['ncurses'] if p.endswith('.qtest')]), 11)
         self.assertIn('test/TestHarness.qc', module.MODULE_FIXTURES['ncurses'])
+
+    def test_graphics_cli_uses_installed_programs(self):
+        directory = Path('/tmp/graphics and messaging')
+        for name, variable, program in [('cairo', 'QORE_QSVG_BINARY', '/usr/bin/qsvg'),
+                                         ('imagemagick', 'QORE_QIMAGE_BINARY', '/usr/bin/qimage')]:
+            files = '/usr/lib64' + module.MODULE_PRELOADS[name][0]
+            commands = dict(module.module_commands(name, 'runtime', directory, installed_files=files))
+            self.assertEqual(commands['cli'], ['env', variable + '=' + program,
+                '/bin/sh', str(directory / 'debian/tests/cli')])
+            for family, font in [('suse', 'dejavu-fonts'), ('fedora', 'dejavu-sans-fonts'),
+                                  ('el', 'dejavu-sans-fonts')]:
+                self.assertEqual(module.module_dependencies(name, 'runtime', family), [font, 'diffutils'])
+                self.assertEqual(module.module_dependencies(name, 'sdk', family), [])
+
 
     def test_odbc_runtime_and_sdk_cover_installed_arrays_and_native_failures(self):
         directory = Path('/tmp/ODBC fixtures')

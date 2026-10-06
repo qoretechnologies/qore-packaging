@@ -18,6 +18,15 @@ from packaging import fetch_source
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'cairo': {'test/cairo.qtest', 'test/CairoDataProvider.qtest',
+              'debian/tests/cli', 'debian/tests/compiler'},
+    'geos': {'test/geos.qtest', 'test/GEOSDataProvider.qtest', 'debian/tests/compiler'},
+    'git': {'debian/tests/compiler'} | {'test/' + name + '.qtest' for name in
+        ('CornerCases', 'GitBlame', 'GitBranch', 'GitConfigManager', 'GitConnections',
+         'GitDataProvider', 'GitDiff', 'GitForgeHelper', 'GitMerge', 'GitMisc',
+         'GitRemote', 'GitSecurity', 'GitStash', 'GitVirtual', 'NegativeTests', 'git')},
+    'imagemagick': {'test/imagemagick.qtest', 'test/ImageMagickDataProvider.qtest',
+                    'debian/tests/cli', 'debian/tests/compiler'},
     'msgpack': {'test/msgpack.qtest', 'debian/tests/compiler'},
     'fsevent': {'debian/tests/compiler'} | {'test/' + name + '.qtest' for name in
         ('FsEventPoller-negative', 'FsEventPoller.qm', 'FsEventPollerUtil',
@@ -51,12 +60,17 @@ MODULE_FIXTURES = {
              'src/ODBCArraySize.h'},
 }
 MODULE_PRELOADS = {
+    'cairo': ('/CairoDataProvider/CairoDataProvider.qmod',),
+    'geos': ('/GEOSDataProvider/GEOSDataProvider.qmod',),
+    'git': ('/GitDataProvider/GitDataProvider.qmod', '/GitConfigManager/GitConfigManager.qmod',
+            '/GitForgeHelper/GitForgeHelper.qmod', '/GitConnections.qmod'),
+    'imagemagick': ('/ImageMagickDataProvider/ImageMagickDataProvider.qmod',),
     'fsevent': ('/FsEventPollerUtil.qmod', '/FsEventPoller.qmod'),
     'tar': ('/TarDataProvider/TarDataProvider.qmod',),
     'zip': ('/ZipDataProvider/ZipDataProvider.qmod',),
 }
 SIMPLE_MODULES = ('markdown', 'sysconf', 'magic', 'sqlite3', 'kalman', 'msgpack',
-                  'fsevent', 'tar', 'zip')
+                  'fsevent', 'tar', 'zip', 'cairo', 'geos', 'git', 'imagemagick')
 
 
 def validate_modules(manifest):
@@ -139,6 +153,8 @@ def module_dependencies(name, phase, family):
                 if phase == 'runtime' else ['unixODBC-devel'])
     if name == 'zip' and phase == 'runtime':
         return ['unzip', 'diffutils']
+    if name in ('cairo', 'imagemagick') and phase == 'runtime':
+        return ['dejavu-fonts' if family == 'suse' else 'dejavu-sans-fonts', 'diffutils']
     return []
 
 
@@ -180,6 +196,11 @@ def module_commands(name, phase, directory, binary=None, driver=None, installed_
                               str(directory / 'debian/tests/features'), '-v']),
                 ('cli', ['/bin/sh', str(directory / 'debian/tests/cli'), '/usr/bin/qzip']),
             ])
+        if name in ('cairo', 'imagemagick'):
+            variable, binary = ('QORE_QSVG_BINARY', '/usr/bin/qsvg') if name == 'cairo' else (
+                'QORE_QIMAGE_BINARY', '/usr/bin/qimage')
+            commands.append(('cli', ['env', variable + '=' + binary,
+                                     '/bin/sh', str(directory / 'debian/tests/cli')]))
         if phase == 'sdk':
             if name == 'markdown':
                 compiled = directory / 'markdown-compiled'

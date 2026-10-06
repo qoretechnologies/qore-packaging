@@ -1,0 +1,921 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "scope": [
+    "cairo",
+    "geos",
+    "git",
+    "imagemagick"
+  ],
+  "unit_tests": {
+    "count": 157,
+    "result": "pass",
+    "log": "results/modules4-packaging-tests4-20261006.log"
+  },
+  "local_installed_checks": {
+    "commands": 52,
+    "result": "pass",
+    "warnings": 0,
+    "log": "results/modules4-command-integration4-20261006.log",
+    "sha256": "99ccce84f1ab8b5059c0c1011767ce59398cac4b83d96d11d7c3044d985c043a",
+    "checks": [
+      {
+        "name": "runtime-cairo-CairoDataProvider",
+        "cwd": "/work/runtime-cairo",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/CairoDataProvider/CairoDataProvider.qmod",
+          "/work/runtime-cairo/test/CairoDataProvider.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-cairo-cairo",
+        "cwd": "/work/runtime-cairo",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/CairoDataProvider/CairoDataProvider.qmod",
+          "/work/runtime-cairo/test/cairo.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-cairo-cli",
+        "cwd": "/work/runtime-cairo",
+        "command": [
+          "env",
+          "QORE_QSVG_BINARY=/usr/bin/qsvg",
+          "/bin/sh",
+          "/work/runtime-cairo/debian/tests/cli"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-cairo-CairoDataProvider",
+        "cwd": "/work/sdk-cairo",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/CairoDataProvider/CairoDataProvider.qmod",
+          "/work/sdk-cairo/test/CairoDataProvider.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-cairo-cairo",
+        "cwd": "/work/sdk-cairo",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/CairoDataProvider/CairoDataProvider.qmod",
+          "/work/sdk-cairo/test/cairo.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-cairo-cli",
+        "cwd": "/work/sdk-cairo",
+        "command": [
+          "env",
+          "QORE_QSVG_BINARY=/usr/bin/qsvg",
+          "/bin/sh",
+          "/work/sdk-cairo/debian/tests/cli"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-cairo-compiler",
+        "cwd": "/work/sdk-cairo",
+        "command": [
+          "/work/sdk-cairo/debian/tests/compiler"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-geos-GEOSDataProvider",
+        "cwd": "/work/runtime-geos",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GEOSDataProvider/GEOSDataProvider.qmod",
+          "/work/runtime-geos/test/GEOSDataProvider.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-geos-geos",
+        "cwd": "/work/runtime-geos",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GEOSDataProvider/GEOSDataProvider.qmod",
+          "/work/runtime-geos/test/geos.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-geos-GEOSDataProvider",
+        "cwd": "/work/sdk-geos",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GEOSDataProvider/GEOSDataProvider.qmod",
+          "/work/sdk-geos/test/GEOSDataProvider.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-geos-geos",
+        "cwd": "/work/sdk-geos",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GEOSDataProvider/GEOSDataProvider.qmod",
+          "/work/sdk-geos/test/geos.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-geos-compiler",
+        "cwd": "/work/sdk-geos",
+        "command": [
+          "/work/sdk-geos/debian/tests/compiler"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-CornerCases",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/CornerCases.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-GitBlame",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/GitBlame.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-GitBranch",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/GitBranch.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-GitConfigManager",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/GitConfigManager.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-GitConnections",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/GitConnections.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-GitDataProvider",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/GitDataProvider.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-GitDiff",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/GitDiff.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-GitForgeHelper",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/GitForgeHelper.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-GitMerge",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/GitMerge.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-GitMisc",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/GitMisc.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-GitRemote",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/GitRemote.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-GitSecurity",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/GitSecurity.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-GitStash",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/GitStash.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-GitVirtual",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/GitVirtual.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-NegativeTests",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/NegativeTests.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-git-git",
+        "cwd": "/work/runtime-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/runtime-git/test/git.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-CornerCases",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/CornerCases.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-GitBlame",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/GitBlame.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-GitBranch",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/GitBranch.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-GitConfigManager",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/GitConfigManager.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-GitConnections",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/GitConnections.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-GitDataProvider",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/GitDataProvider.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-GitDiff",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/GitDiff.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-GitForgeHelper",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/GitForgeHelper.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-GitMerge",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/GitMerge.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-GitMisc",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/GitMisc.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-GitRemote",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/GitRemote.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-GitSecurity",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/GitSecurity.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-GitStash",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/GitStash.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-GitVirtual",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/GitVirtual.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-NegativeTests",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/NegativeTests.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-git",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/GitDataProvider/GitDataProvider.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConfigManager/GitConfigManager.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitForgeHelper/GitForgeHelper.qmod",
+          "-l",
+          "/usr/lib64/qore-modules/GitConnections.qmod",
+          "/work/sdk-git/test/git.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-git-compiler",
+        "cwd": "/work/sdk-git",
+        "command": [
+          "/work/sdk-git/debian/tests/compiler"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-imagemagick-ImageMagickDataProvider",
+        "cwd": "/work/runtime-imagemagick",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/ImageMagickDataProvider/ImageMagickDataProvider.qmod",
+          "/work/runtime-imagemagick/test/ImageMagickDataProvider.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-imagemagick-imagemagick",
+        "cwd": "/work/runtime-imagemagick",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/ImageMagickDataProvider/ImageMagickDataProvider.qmod",
+          "/work/runtime-imagemagick/test/imagemagick.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "runtime-imagemagick-cli",
+        "cwd": "/work/runtime-imagemagick",
+        "command": [
+          "env",
+          "QORE_QIMAGE_BINARY=/usr/bin/qimage",
+          "/bin/sh",
+          "/work/runtime-imagemagick/debian/tests/cli"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-imagemagick-ImageMagickDataProvider",
+        "cwd": "/work/sdk-imagemagick",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/ImageMagickDataProvider/ImageMagickDataProvider.qmod",
+          "/work/sdk-imagemagick/test/ImageMagickDataProvider.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-imagemagick-imagemagick",
+        "cwd": "/work/sdk-imagemagick",
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "-l",
+          "/usr/lib64/qore-modules/ImageMagickDataProvider/ImageMagickDataProvider.qmod",
+          "/work/sdk-imagemagick/test/imagemagick.qtest",
+          "-v"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-imagemagick-cli",
+        "cwd": "/work/sdk-imagemagick",
+        "command": [
+          "env",
+          "QORE_QIMAGE_BINARY=/usr/bin/qimage",
+          "/bin/sh",
+          "/work/sdk-imagemagick/debian/tests/cli"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "sdk-imagemagick-compiler",
+        "cwd": "/work/sdk-imagemagick",
+        "command": [
+          "/work/sdk-imagemagick/debian/tests/compiler"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "image": "sha256:06a3f6535f3ede6c8e1474bfc82e4dcb9b5139b78debbc2644a8164abc33bc3f"
+  },
+  "source_verification": {
+    "cairo": "377a53805a7abbf4e7981ee553943a65",
+    "geos": "eccec4182d954e0ac180cd2890d73be3",
+    "git": "b8d71f46581618f34ab1dc393b8c4a46",
+    "imagemagick": "6e243631be122aaa859db43ae64b33e4"
+  },
+  "preflight_findings": [
+    "Original local SDK lacked required graphics/font/sodium packages; installed actual distribution dependencies into a separate SDK image, then ran all checks offline.",
+    "Original local setpriv launcher retained root account environment. Using --reset-env restores the unprivileged account environment, matching native runuser. Git disk and virtual repository suites now all pass. No module test or library changes."
+  ],
+  "native_status": "Signed native ARM runtime/SDK execution remains required. Local tests alone do not qualify native packages."
+}

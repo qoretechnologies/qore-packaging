@@ -94,3 +94,10 @@ uses a virtual terminal, runs all eleven suites and verifies that its compiled
 magic dependency cannot be removed. Runtime phases do not invoke the compiler.
 The previously approved ProviderIndexUtil diagnostic is expected when
 MessagePack changes its optional-module availability; logs retain that message.
+
+``RPM_NATIVE_QUALIFICATION=modules4`` adds Cairo, GEOS, Git and ImageMagick.
+It covers installed AOT data providers, image rendering and conversion CLIs,
+geometry operations, and local and virtual Git repositories. Graphics fixtures
+declare their font dependencies explicitly. Every module repeats its runtime
+tests after SDK installation and compiles and executes a consumer. ZeroMQ
+qualification follows separately after its sandbox error-ownership fix.
