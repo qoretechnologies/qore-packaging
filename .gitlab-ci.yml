@@ -106,3 +106,25 @@ rpm-odbc-el10-arm64:
     - if: '$RPM_NATIVE_QUALIFICATION == "odbc" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
   variables:
     RPM_MANIFEST: qualification/odbc-el10-aarch64.json
+
+# Signed runtime and SDK checks for five independently qualified native modules.
+rpm-modules2-fedora-arm64:
+  extends: rpm-fedora-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "modules2" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "fedora")'
+  variables:
+    RPM_MANIFEST: qualification/modules2-fedora-aarch64.json
+
+rpm-modules2-leap-arm64:
+  extends: rpm-leap-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "modules2" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "leap")'
+  variables:
+    RPM_MANIFEST: qualification/modules2-leap-aarch64.json
+
+rpm-modules2-el10-arm64:
+  extends: rpm-el10-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "modules2" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
+  variables:
+    RPM_MANIFEST: qualification/modules2-el10-aarch64.json

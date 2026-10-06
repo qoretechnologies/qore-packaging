@@ -57,3 +57,26 @@ never a successful build. ``build.log`` contains RPM output, and the adjacent
 ``zip-build-driver.log`` captures driver errors. Reusing a build output or its
 driver log is rejected to prevent competing builds from overwriting evidence.
 Foreground operation remains available for CI and short commands.
+
+Signed native installed-package checks
+-------------------------------------
+
+``tools/qualify-installed.py`` consumes a reviewed manifest from
+``qualification/``. It checks every downloaded checksum and RPM signature before
+installation, tests a minimal runtime, then installs the SDK and tests compiler
+consumers. Module fixtures come from the exact source revision used by OBS;
+they run without checkout module paths or preloaded libraries.
+
+For example, run the five-module ARM qualification through an explicitly
+requested GitLab pipeline with ``RPM_NATIVE_QUALIFICATION=modules2``. This covers
+Markdown, sysconf, magic, SQLite and Kalman on Fedora, Leap and AlmaLinux.
+``RPM_NATIVE_TARGET=fedora`` optionally selects one distribution. Ordinary
+packaging commits do not start these native jobs.
+
+Each module runs its complete selected runtime suite again after SDK installation.
+The SDK phase compiles and executes a consumer for each module. SQLite tests use
+a private database; magic retains its image fixtures; Kalman runs all four suites.
+The manifest validator rejects missing fixtures, cross-repository URLs, mutable
+revisions, duplicate modules and incorrect package phases before installation.
+Native results and raw logs are retained as pipeline artifacts. A passing build
+or local command check alone does not qualify the native installed packages.

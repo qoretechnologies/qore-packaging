@@ -17,6 +17,13 @@ from packaging import fetch_source
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'markdown': {'test/markdown.qtest', 'test/test.md', 'test/test.html', 'rpm/compiler.qr'},
+    'sysconf': {'test/sysconf.qtest', 'debian/tests/compiler'},
+    'magic': {'test/magic.qtest', 'test/qore.png', 'test/qore.jpg', 'test/qore.txt',
+              'debian/tests/compiler'},
+    'sqlite3': {'test/basic.qtest', 'test/blob.png', 'debian/tests/compiler'},
+    'kalman': {'test/extended-filter.qtest', 'test/factories.qtest',
+               'test/linear-filter.qtest', 'test/matrix.qtest', 'debian/tests/compiler'},
     'uuid': {'test/uuid-test.qtest', 'debian/tests/compiler'},
     'process': {'test/process.qtest', 'test/process-state.qtest',
                 'test/process-state-fixture.c', 'test/run-process-state.py',
@@ -125,6 +132,25 @@ def module_commands(name, phase, directory, binary=None, driver=None):
     """Fixed commands only; manifests select reviewed suites, never shell text."""
     if name not in MODULE_FIXTURES or phase not in ('runtime', 'sdk'):
         raise ValueError('Unknown module suite or phase')
+    if name in ('markdown', 'sysconf', 'magic', 'sqlite3', 'kalman'):
+        commands = []
+        for path in sorted(MODULE_FIXTURES[name]):
+            if not path.endswith('.qtest'):
+                continue
+            command = ['qore', '-b', '--enable-debug', str(directory / path), '-v']
+            if name == 'sqlite3':
+                command.extend(['--db', str(directory / 'qualification.sqlite')])
+            commands.append((Path(path).stem, command))
+        if phase == 'sdk':
+            if name == 'markdown':
+                compiled = directory / 'markdown-compiled'
+                commands.extend([
+                    ('compiler', ['qcc', '-o', str(compiled), str(directory / 'rpm/compiler.qr')]),
+                    ('compiled-tests', [str(compiled)]),
+                ])
+            else:
+                commands.append(('compiler', [str(directory / 'debian/tests/compiler')]))
+        return commands
     if name == 'odbc':
         commands = [('tests', ['env', 'QORE_RPM_TEST_TMP=' + str(directory / 'runtime-fixture'),
                                str(directory / 'rpm/tests-installed-runtime')])]

@@ -1,0 +1,300 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "Qualification tooling passes 149 unit tests and 22 local installed-module commands; native ARM run remains required.",
+  "modules": [
+    "markdown",
+    "sysconf",
+    "magic",
+    "sqlite3",
+    "kalman"
+  ],
+  "source_md5": {
+    "markdown": "aed3b28665fcad496a038c0b5bcee908",
+    "sysconf": "6f1fbb51f5e07c0ec6c686fdf650b6b6",
+    "magic": "0f48ffc7976a5ea48e162635d0bf44af",
+    "sqlite3": "c6df353bca83d205a05cf9dab3a47835",
+    "kalman": "dbe99d70cd4287ca3c63a218e3beae68"
+  },
+  "local_commands": [
+    {
+      "name": "runtime-markdown-markdown",
+      "cwd": "/work/runtime-markdown",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/runtime-markdown/test/markdown.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-markdown-markdown",
+      "cwd": "/work/sdk-markdown",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/sdk-markdown/test/markdown.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-markdown-compiler",
+      "cwd": "/work/sdk-markdown",
+      "command": [
+        "qcc",
+        "-o",
+        "/work/sdk-markdown/markdown-compiled",
+        "/work/sdk-markdown/rpm/compiler.qr"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-markdown-compiled-tests",
+      "cwd": "/work/sdk-markdown",
+      "command": [
+        "/work/sdk-markdown/markdown-compiled"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-sysconf-sysconf",
+      "cwd": "/work/runtime-sysconf",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/runtime-sysconf/test/sysconf.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-sysconf-sysconf",
+      "cwd": "/work/sdk-sysconf",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/sdk-sysconf/test/sysconf.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-sysconf-compiler",
+      "cwd": "/work/sdk-sysconf",
+      "command": [
+        "/work/sdk-sysconf/debian/tests/compiler"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-magic-magic",
+      "cwd": "/work/runtime-magic",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/runtime-magic/test/magic.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-magic-magic",
+      "cwd": "/work/sdk-magic",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/sdk-magic/test/magic.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-magic-compiler",
+      "cwd": "/work/sdk-magic",
+      "command": [
+        "/work/sdk-magic/debian/tests/compiler"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-sqlite3-basic",
+      "cwd": "/work/runtime-sqlite3",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/runtime-sqlite3/test/basic.qtest",
+        "-v",
+        "--db",
+        "/work/runtime-sqlite3/qualification.sqlite"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-sqlite3-basic",
+      "cwd": "/work/sdk-sqlite3",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/sdk-sqlite3/test/basic.qtest",
+        "-v",
+        "--db",
+        "/work/sdk-sqlite3/qualification.sqlite"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-sqlite3-compiler",
+      "cwd": "/work/sdk-sqlite3",
+      "command": [
+        "/work/sdk-sqlite3/debian/tests/compiler"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-kalman-extended-filter",
+      "cwd": "/work/runtime-kalman",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/runtime-kalman/test/extended-filter.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-kalman-factories",
+      "cwd": "/work/runtime-kalman",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/runtime-kalman/test/factories.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-kalman-linear-filter",
+      "cwd": "/work/runtime-kalman",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/runtime-kalman/test/linear-filter.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-kalman-matrix",
+      "cwd": "/work/runtime-kalman",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/runtime-kalman/test/matrix.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-kalman-extended-filter",
+      "cwd": "/work/sdk-kalman",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/sdk-kalman/test/extended-filter.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-kalman-factories",
+      "cwd": "/work/sdk-kalman",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/sdk-kalman/test/factories.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-kalman-linear-filter",
+      "cwd": "/work/sdk-kalman",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/sdk-kalman/test/linear-filter.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-kalman-matrix",
+      "cwd": "/work/sdk-kalman",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/sdk-kalman/test/matrix.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-kalman-compiler",
+      "cwd": "/work/sdk-kalman",
+      "command": [
+        "/work/sdk-kalman/debian/tests/compiler"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "local_image": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results:/results:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/modules2-command-integration-20261006:/work",
+    "sha256:475f8d53919b1aee51d9e402158b861498a134473e3144632944e6f546ab6748",
+    "sh",
+    "-eu",
+    "-c",
+    "rpm -U --replacepkgs \"$@\"\nexec setpriv --reuid=1019 --regid=100 --clear-groups python3 -B -W error /work/run.py",
+    "install",
+    "/results/fedora-markdown-final-2/rpmbuild/RPMS/x86_64/qore-markdown-module-1.0.0-2.fc44.x86_64.rpm",
+    "/results/fedora-final-9-sysconf/rpmbuild/RPMS/x86_64/qore-sysconf-module-1.1.0-2.fc44.x86_64.rpm",
+    "/results/fedora-final-9-magic/rpmbuild/RPMS/x86_64/qore-magic-module-2.0.0-2.fc44.x86_64.rpm",
+    "/results/fedora-final-9-sqlite3/rpmbuild/RPMS/x86_64/qore-sqlite3-module-1.2.0-2.fc44.x86_64.rpm",
+    "/results/fedora-final-9-kalman/rpmbuild/RPMS/x86_64/qore-kalman-module-1.1.0-1.fc44.x86_64.rpm"
+  ],
+  "checksums": {
+    "results/modules2-packaging-tests-20261006.log": "d260186e041a52793d1125dc06c32c026c99cc1aabff44b45c8e812a313c982b",
+    "results/modules2-command-integration-core21-20261006.log": "d7a9a672c8f5c1af946ec65e117f2b0c1c62dcaf72c6bb372f73949c74f1ceb6",
+    "qualification/modules2-leap-aarch64.json": "0b154790f44146b128be73f615635cb85bfeae0abab60cafc6c47f9f9e9f6a2c",
+    "qualification/modules2-el10-aarch64.json": "287f2c2d04b3d7efec1d2d60a7f628b770f94049fd517a0e362d8fc6698cafaf",
+    "qualification/modules2-fedora-aarch64.json": "0390542c504839966ad5e369c0aa2571dabdeb4d270d84ded55dd09ec70a3c55"
+  },
+  "limitations": "Local command integration uses an existing Fedora SDK image, not a fresh runtime or a native ARM runner. Initial fixture image held core 15 and correctly rejected the Markdown RPM minimum core18; repeated with qualified core21. Native minimal-runtime, signatures, dependency resolution and SDK checks are separate pipeline gates."
+}

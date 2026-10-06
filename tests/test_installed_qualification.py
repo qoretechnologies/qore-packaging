@@ -125,7 +125,7 @@ class InstalledQualificationTest(unittest.TestCase):
 
     def add_modules(self):
         self.manifest['modules'] = []
-        for name in ('uuid', 'process', 'odbc'):
+        for name in module.MODULE_FIXTURES:
             commit = 'd' * 40
             self.manifest['modules'].append({'name': name, 'commit': commit,
                 'fixtures': [{'path': path, 'sha256': 'e' * 64,
@@ -182,6 +182,44 @@ class InstalledQualificationTest(unittest.TestCase):
         for binary in (None, Path('relative.qmod'), Path('/tmp/unexpected.so')):
             with self.subTest(binary=binary), self.assertRaises(ValueError):
                 module.module_commands('process', 'sdk', directory, binary)
+
+    def test_simple_module_suites_run_all_installed_tests_with_debugging(self):
+        directory = Path('/tmp/installed module fixtures')
+        expected = {
+            'markdown': ['markdown'], 'sysconf': ['sysconf'], 'magic': ['magic'],
+            'sqlite3': ['basic'],
+            'kalman': ['extended-filter', 'factories', 'linear-filter', 'matrix'],
+        }
+        for name, suites in expected.items():
+            with self.subTest(module=name):
+                commands = module.module_commands(name, 'runtime', directory)
+                self.assertEqual([suite for suite, _ in commands], suites)
+                for suite, command in commands:
+                    self.assertEqual(command[:3], ['qore', '-b', '--enable-debug'])
+                    self.assertEqual(command[3], str(directory / 'test' / (suite + '.qtest')))
+                    self.assertEqual(command[4], '-v')
+                self.assertEqual(module.module_dependencies(name, 'runtime', 'fedora'), [])
+                sdk = module.module_commands(name, 'sdk', directory)
+                self.assertEqual(sdk[:len(commands)], commands)
+                if name == 'markdown':
+                    self.assertEqual(sdk[-2:], [
+                        ('compiler', ['qcc', '-o', str(directory / 'markdown-compiled'),
+                                      str(directory / 'rpm/compiler.qr')]),
+                        ('compiled-tests', [str(directory / 'markdown-compiled')]),
+                    ])
+                else:
+                    self.assertEqual(sdk[-1], ('compiler', [str(directory / 'debian/tests/compiler')]))
+        sqlite = module.module_commands('sqlite3', 'runtime', directory)[0][1]
+        self.assertEqual(sqlite[-2:], ['--db', str(directory / 'qualification.sqlite')])
+
+    def test_every_added_suite_rejects_incomplete_fixtures(self):
+        self.add_modules()
+        for entry in self.manifest['modules']:
+            manifest = copy.deepcopy(self.manifest)
+            changed = next(item for item in manifest['modules'] if item['name'] == entry['name'])
+            changed['fixtures'].pop()
+            with self.subTest(module=entry['name']), self.assertRaisesRegex(ValueError, 'complete module fixture'):
+                module.validate(manifest)
 
     def test_odbc_runtime_and_sdk_cover_installed_arrays_and_native_failures(self):
         directory = Path('/tmp/ODBC fixtures')
