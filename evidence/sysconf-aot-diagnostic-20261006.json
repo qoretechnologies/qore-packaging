@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "root_cause": "Installing optional sysconf changes HttpServer feature availability after its AOT compilation. The Qore loader deliberately selects packaged source so the optional feature can be used. The same core image emits no diagnostic without sysconf and emits exactly the AOT-MODULE-STALE source-selection diagnostic with it; both imports and native remote-debugger suites pass.",
+  "controls": {
+    "absent": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/sysconf-aot-control-20261006:/work:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/fedora-final-9-sysconf/rpmbuild/RPMS/x86_64/qore-sysconf-module-1.1.0-2.fc44.x86_64.rpm:/module.rpm:ro",
+        "sha256:475f8d53919b1aee51d9e402158b861498a134473e3144632944e6f546ab6748",
+        "sh",
+        "-eu",
+        "-c",
+        "! rpm -q qore-sysconf-module\nqore -b --enable-debug /work/load.qr"
+      ],
+      "log": "results/sysconf-aot-absent-20261006.log",
+      "sha256": "e8ac16ca562b50e45caf1636012d912a72ce93bf459a1b7178cbc719cd197b16"
+    },
+    "present": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/sysconf-aot-control-20261006:/work:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/fedora-final-9-sysconf/rpmbuild/RPMS/x86_64/qore-sysconf-module-1.1.0-2.fc44.x86_64.rpm:/module.rpm:ro",
+        "sha256:475f8d53919b1aee51d9e402158b861498a134473e3144632944e6f546ab6748",
+        "sh",
+        "-eu",
+        "-c",
+        "rpm -U /module.rpm\nrpm -V qore-sysconf-module\nqore -b --enable-debug /work/load.qr"
+      ],
+      "log": "results/sysconf-aot-present-20261006.log",
+      "sha256": "2a84fc7bd28e16d35cf4909930b374d26bd80c9b88299d130f04b86fb76b09ec"
+    }
+  },
+  "native_evidence": {
+    "fedora_job": 208732,
+    "leap_job": 208733,
+    "pipeline": 59502,
+    "scope": "One warning in sdk-remote-debuggers.log for HttpServer/sysconf; every command passes.",
+    "el10_job": 208742
+  },
+  "approval": {
+    "status": "approved",
+    "date": "2026-10-06",
+    "user_response": "Allow this exact diagnostic",
+    "scope": "HttpServer AOT-MODULE-STALE source fallback after optional sysconf becomes available; no suppression or behavior change"
+  }
+}
