@@ -1,0 +1,9 @@
+In member function ‘void Assembler::Goto(Block*)’,
+    inlined from ‘VisitResult ImplementationVisitor::InlineMacro(Macro*)’ at /work/control.cc:98:21:
+/work/control.cc:28:360: warning: ‘macro_end’ may be used uninitialized [-Wmaybe-uninitialized]
+   28 | struct Assembler { Stack<const Type*> stack;std::unique_ptr<Block> block;unsigned gotos=0,binds=0;Stack<const Type*> CurrentStack() const { return stack; } Block* NewBlock(Stack<const Type*> s) { for(auto* t:s) { require(!t->IsTopType()); } block=std::make_unique<Block>(Block{std::move(s)});return block.get(); } void Goto(Block* p) { require(p==block.get() && p);++gotos; } void Bind(Block* p) { require(p==block.get() && p);++binds; } };
+      |                                                                                                                                                                                                                                                                                                                                                         ~~~~~~~~~~~~~~~^~~~
+/work/control.cc: In member function ‘VisitResult ImplementationVisitor::InlineMacro(Macro*)’:
+/work/control.cc:47:10: note: ‘macro_end’ was declared here
+   47 |   Block* macro_end;
+      |          ^~~~~~~~~

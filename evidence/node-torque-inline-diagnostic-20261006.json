@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "User approved the exact retained macro_end diagnostic on 2026-10-06; all scoped controls pass.",
+  "diagnostic": {
+    "file": "deps/v8/src/torque/implementation-visitor.cc",
+    "line": 393,
+    "variable": "macro_end",
+    "class": "-Wmaybe-uninitialized",
+    "compiler": "GCC 13, unchanged Leap OBS compiler policy"
+  },
+  "source_reasoning": [
+    "InlineMacro sets can_return from the declared return type and allocates macro_end exactly when can_return is true.",
+    "A body that falls through with declared never is rejected by noreturn ReportError before Goto. Non-void fallthrough is also rejected.",
+    "Visit(ReturnStatement) rejects a declared never before IncrementReturns; HasReturns therefore implies a returnable macro. Bind is guarded by HasReturns or fallthrough, both requiring initialization.",
+    "The type oracle resolves its canonical never builtin; Type::IsNever tests the abstract never name. The control models these valid compiler types, not arbitrary inconsistent objects."
+  ],
+  "control": {
+    "unchanged": "InlineMacro block from Block* macro_end through the return, with original setup condition. AST/stack/assembler operations use typed observable adapters. ReturnStatement precondition is modeled in the body visitor.",
+    "cases_per_run": 480000,
+    "expected_semantic_rejections_per_run": 280000,
+    "runs": [
+      "release",
+      "release under Valgrind",
+      "debug",
+      "debug under Valgrind"
+    ],
+    "total_cases": 1920000,
+    "matrix": "Four declared type modes, fallthrough/never body result, zero/one/three explicit returns, top/ordinary input stack; 10000 iterations. Goto/Bind require the allocated block, top-type lowering and cleanup are checked.",
+    "compiler_warning": "Exact macro_end warning reproduces in both modes.",
+    "memory": "Both Valgrind runs have zero errors and all 2840002 allocations freed.",
+    "limits": "This is a branch-flow control with adapters, not a second full Torque implementation. Existing complete Node candidate qualification remains separately recorded."
+  },
+  "proposed_scope": "Retain this one macro_end diagnostic without suppression, flag changes or runtime modification; no other diagnostics included.",
+  "files_sha256": {
+    "evidence/controls/node-torque-inline-20261006/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-torque-inline-20261006/command.json": "621b3bbd37106c6360e2ad2113522178ce20f49206c7e791915f7e7b59784425",
+    "evidence/controls/node-torque-inline-20261006/control.cc": "7a56d666ca139a609dc258a3ad1977c958387a975ab327b76c1eb88fb055f802",
+    "evidence/controls/node-torque-inline-20261006/debug-compile.log": "8f689a3b6bf9ca548950630fdf487fb213d31cdacae6dfe56818a12b0c1ea47e",
+    "evidence/controls/node-torque-inline-20261006/debug-memory.log": "9302a0008d90764546f2bd24da1c978689de3f7b7a5fc40968248b4457e845bb",
+    "evidence/controls/node-torque-inline-20261006/debug-normal.log": "9302a0008d90764546f2bd24da1c978689de3f7b7a5fc40968248b4457e845bb",
+    "evidence/controls/node-torque-inline-20261006/debug-valgrind.log": "67896844e469f4380c299bff07ba161ea4ee806774a20dfb69e83a5ea5f38761",
+    "evidence/controls/node-torque-inline-20261006/prepare.py": "bc6c00c5dcf3b230b3a43a1bfab85a86ab69ce2bf2057c52a1f402e13e636932",
+    "evidence/controls/node-torque-inline-20261006/release-compile.log": "8f689a3b6bf9ca548950630fdf487fb213d31cdacae6dfe56818a12b0c1ea47e",
+    "evidence/controls/node-torque-inline-20261006/release-memory.log": "9302a0008d90764546f2bd24da1c978689de3f7b7a5fc40968248b4457e845bb",
+    "evidence/controls/node-torque-inline-20261006/release-normal.log": "9302a0008d90764546f2bd24da1c978689de3f7b7a5fc40968248b4457e845bb",
+    "evidence/controls/node-torque-inline-20261006/release-valgrind.log": "b8ff5edb5ad05f0c9bc6b3ae18cb5ff623e51ecdeb74e6923d4e7fbae3c114f5",
+    "evidence/controls/node-torque-inline-20261006/run.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-torque-inline-20261006/run.py": "2cbcf243b957b3b4c48c78f386bf34f74394e7faa60cf8f73befb3bf6b295104",
+    "evidence/controls/node-torque-inline-20261006/source-extracts.json": "ba3d1491e377af7bd284b7033fea7acd7171e29d49a5a3fbc5174f1887751f0e",
+    "evidence/controls/node-torque-inline-20261006/status.json": "d4498ee556a820ac1c3199b446ab3e7661b6f3442e8f90fd46e978fa6188fd23"
+  },
+  "approval": "Allow this exact diagnostic"
+}
