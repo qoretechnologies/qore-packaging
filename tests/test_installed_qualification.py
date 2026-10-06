@@ -310,6 +310,56 @@ os.write(2, b'diagnostic\\n')
         for family in ('fedora', 'suse', 'el'):
             self.assertEqual(module.module_dependencies('treesitter', 'runtime', family), [])
 
+    def test_ssh2_uses_private_server_and_compiles_only_with_sdk(self):
+        directory = Path('/tmp/SSH2 installed fixtures')
+        runtime = module.module_commands('ssh2', 'runtime', directory)
+        self.assertEqual(runtime, [('tests', ['python3', '-B', '-W', 'error',
+            '/tmp/SSH2 installed fixtures/rpm/run-tests.py', '--installed'])])
+        self.assertEqual(module.module_commands('ssh2', 'sdk', directory), runtime + [
+            ('compiler', ['/tmp/SSH2 installed fixtures/debian/tests/compiler'])])
+        self.assertEqual(module.MODULE_FIXTURES['ssh2'], {
+            'rpm/run-tests.py', 'debian/tests/compiler', 'test/NegativeTests.qtest',
+            'test/SFTPClient.qtest', 'test/SftpClientDataProvider.qtest',
+            'test/SftpPollGetFile.qtest', 'test/SftpPoller.qtest',
+            'test/SftpPollerMultiDirs.qtest', 'test/Ssh2Client.qtest',
+            'test/Ssh2Connections.qtest'})
+        for family in ('fedora', 'suse', 'el'):
+            self.assertEqual(module.module_dependencies('ssh2', 'runtime', family),
+                             ['openssh-server', 'openssh-clients', 'nss_wrapper'])
+            self.assertEqual(module.module_dependencies('ssh2', 'sdk', family), [])
+
+    def test_proj_requires_pinned_geos_before_any_install(self):
+        self.add_modules()
+        for mutation in ('missing', 'sdk', 'unhashed', 'insecure'):
+            manifest = copy.deepcopy(self.manifest)
+            dependency = next(p for p in manifest['packages'] if p['name'] == 'qore-geos-module')
+            if mutation == 'missing':
+                manifest['packages'].remove(dependency)
+            elif mutation == 'sdk':
+                dependency['phase'] = 'sdk'
+            elif mutation == 'unhashed':
+                dependency.pop('sha256')
+            else:
+                dependency['url'] = 'http://example.org/geos'
+            with self.subTest(mutation=mutation), patch.object(module.subprocess, 'run') as run:
+                with self.assertRaises(ValueError):
+                    module.qualify(manifest, 'not-created')
+                run.assert_not_called()
+
+    def test_proj_keeps_optional_python_case_and_installed_aot_preload(self):
+        self.assertEqual(module.MODULE_FIXTURES['proj'], {
+            'test/proj.qtest', 'test/projgeos.qtest', 'test/proj-python.qtest',
+            'debian/tests/compiler'})
+        directory = Path('/tmp/PROJ installed fixtures')
+        files = '/usr/lib64/qore-modules/ProjGeos/ProjGeos.qmod'
+        commands = module.module_commands('proj', 'runtime', directory, installed_files=files)
+        self.assertEqual([name for name, command in commands], ['proj-python', 'proj', 'projgeos'])
+        for name, command in commands:
+            self.assertEqual(command, ['qore', '-b', '--enable-debug', '-l', files,
+                                      str(directory / 'test' / (name + '.qtest')), '-v'])
+        self.assertEqual(module.module_commands('proj', 'sdk', directory, installed_files=files),
+                         commands + [('compiler', [str(directory / 'debian/tests/compiler')])])
+
     def test_pgsql_uses_private_fixture_and_installed_compiler(self):
         directory = Path('/tmp/installed PostgreSQL fixtures')
         for family in ('fedora', 'suse', 'el'):
@@ -349,7 +399,7 @@ os.write(2, b'diagnostic\\n')
     def test_aot_module_suites_preload_only_installed_inventory_paths(self):
         directory = Path('/tmp/installed modules')
         expected_counts = {'fsevent': 7, 'tar': 3, 'zip': 2, 'cairo': 2, 'geos': 2,
-                           'git': 16, 'imagemagick': 2}
+                           'git': 16, 'imagemagick': 2, 'proj': 3}
         for name, count in expected_counts.items():
             suffixes = module.MODULE_PRELOADS[name]
             files = '\n'.join('/usr/lib64/qore-modules/3.0.0' + suffix for suffix in suffixes)

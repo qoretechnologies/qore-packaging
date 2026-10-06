@@ -1,0 +1,24 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/ssh2-proj-installed-commands-20261006/ssh2-leap:/work",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/ssh2-proj-installed-commands-20261006/run.py:/run.py:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/leap-ssh2-metadata-final-20261006/rpmbuild/RPMS/x86_64/qore-ssh2-module-2.0.0-4.x86_64.rpm:/module.rpm:ro",
+    "sha256:1712c9f5d5273808a2c26102f0147384b6add45625d0460da3184242d1212149",
+    "sh",
+    "-eu",
+    "-c",
+    "rpm -U --replacepkgs /module.rpm\nexec setpriv --reuid=1019 --regid=100 --clear-groups --reset-env python3 -B -W error /run.py"
+  ],
+  "source_commit": "54223f78d9f70e657e2df7a582fb46f562ea62d2",
+  "rpm_sha256": "ce88451bcd64c7c9ee885124116d8f140b74e21a4ba667532006c02213404b28"
+}

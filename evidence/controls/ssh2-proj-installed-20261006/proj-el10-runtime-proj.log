@@ -1,0 +1,44 @@
+QUnit Test "ProjTest" v1.1
+Running: version functions
+Success: version functions: 3 assertions
+Running: hashdecl
+Success: hashdecl: 2 assertions
+Running: transformer constructor
+Success: transformer constructor: 1 assertion
+Running: single-point transform
+Success: single-point transform: 3 assertions
+Running: inverse round-trip
+Success: inverse round-trip: 3 assertions
+Running: batch transform
+Success: batch transform: 3 assertions
+Running: batch inverse round-trip
+Success: batch inverse round-trip: 7 assertions
+Running: same-CRS transformer is an identity
+Success: same-CRS transformer is an identity: 6 assertions
+Running: great-circle distance (WGS84)
+Success: great-circle distance (WGS84): 3 assertions
+Running: forward / inverse azimuths
+Success: forward / inverse azimuths: 6 assertions
+Running: named argument calls
+Success: named argument calls: 11 assertions
+Running: batch edge cases (empty, singleton, large)
+Success: batch edge cases (empty, singleton, large): 8 assertions
+Running: geodesic edge cases (poles, antipodes, wrap)
+Success: geodesic edge cases (poles, antipodes, wrap): 4 assertions
+Running: negative: bad CRS codes
+proj_create: crs not found: EPSG:99999
+proj_create: Error 1027 (Invalid value for an argument): Unknown projection
+proj_create: unrecognized format / unknown name
+proj_create: unrecognized format / unknown name
+Success: negative: bad CRS codes: 4 assertions
+Running: negative: malformed batch inputs
+Success: negative: malformed batch inputs: 4 assertions
+Running: negative: NaN / Inf inputs are rejected or propagated as NaN
+Success: negative: NaN / Inf inputs are rejected or propagated as NaN: 2 assertions
+Running: multi-thread reuse (basic)
+Success: multi-thread reuse (basic): 1 assertion
+Running: multi-thread stress (8 threads × 50 transforms)
+Success: multi-thread stress (8 threads × 50 transforms): 1 assertion
+Running: business scenario: logistics distance matrix in UTM
+Success: business scenario: logistics distance matrix in UTM: 21 assertions
+Ran 19 test cases, 19 succeeded (93 assertions)

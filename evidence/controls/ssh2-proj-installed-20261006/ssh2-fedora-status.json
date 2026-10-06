@@ -1,0 +1,24 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/ssh2-proj-installed-commands-20261006/ssh2-fedora:/work",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/ssh2-proj-installed-commands-20261006/run.py:/run.py:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/fedora-ssh2-metadata-final-20261006/rpmbuild/RPMS/x86_64/qore-ssh2-module-2.0.0-4.fc44.x86_64.rpm:/module.rpm:ro",
+    "sha256:edff5db96808feb43f5bed724c5a9fdaecb00b9ff1724e4cf36f0924c16d5bac",
+    "sh",
+    "-eu",
+    "-c",
+    "rpm -U --replacepkgs /module.rpm\nexec setpriv --reuid=1019 --regid=100 --clear-groups --reset-env python3 -B -W error /run.py"
+  ],
+  "source_commit": "54223f78d9f70e657e2df7a582fb46f562ea62d2",
+  "rpm_sha256": "44443749e567dbdbf667496d9cd4b24a867803466a9c9f3f43bee322ca62a1fe"
+}

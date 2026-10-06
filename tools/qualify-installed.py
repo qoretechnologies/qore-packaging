@@ -18,6 +18,12 @@ from packaging import fetch_source
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'ssh2': {'rpm/run-tests.py', 'debian/tests/compiler'}
+        | {'test/' + name + '.qtest' for name in
+           ('NegativeTests', 'SFTPClient', 'SftpClientDataProvider', 'SftpPollGetFile',
+            'SftpPoller', 'SftpPollerMultiDirs', 'Ssh2Client', 'Ssh2Connections')},
+    'proj': {'test/proj.qtest', 'test/projgeos.qtest', 'test/proj-python.qtest',
+             'debian/tests/compiler'},
     'pgsql': {'rpm/tests-installed-runtime', 'rpm/run-suites', 'rpm/with-postgres.py', 'rpm/compiler.qr'}
         | {'test/' + name + '.qtest' for name in
            ('pgsql', 'pgsql-native-bulk-load', 'pgsql-cancel-callback', 'pgsql-mutation-observer')},
@@ -92,6 +98,7 @@ MODULE_FIXTURES = {
              'src/ODBCArraySize.h'},
 }
 MODULE_PRELOADS = {
+    'proj': ('/ProjGeos/ProjGeos.qmod',),
     'cairo': ('/CairoDataProvider/CairoDataProvider.qmod',),
     'geos': ('/GEOSDataProvider/GEOSDataProvider.qmod',),
     'git': ('/GitDataProvider/GitDataProvider.qmod', '/GitConfigManager/GitConfigManager.qmod',
@@ -102,7 +109,7 @@ MODULE_PRELOADS = {
     'zip': ('/ZipDataProvider/ZipDataProvider.qmod',),
 }
 SIMPLE_MODULES = ('markdown', 'sysconf', 'magic', 'sqlite3', 'kalman', 'msgpack',
-                  'fsevent', 'tar', 'zip', 'cairo', 'geos', 'git', 'imagemagick')
+                  'fsevent', 'tar', 'zip', 'cairo', 'geos', 'git', 'imagemagick', 'proj')
 
 
 def validate_modules(manifest):
@@ -128,6 +135,8 @@ def validate_modules(manifest):
             raise ValueError('Missing module runtime RPM')
         if name == 'xmlsec' and packages.get('qore-xml-module', {}).get('phase') != 'runtime':
             raise ValueError('XML Security requires a pinned XML runtime RPM')
+        if name == 'proj' and packages.get('qore-geos-module', {}).get('phase') != 'runtime':
+            raise ValueError('PROJ requires a pinned GEOS runtime RPM')
         fixtures.extend(files)
     return fixtures
 
@@ -182,6 +191,8 @@ def module_dependencies(name, phase, family):
         raise ValueError('Unsupported fixture distribution')
     if name == 'ssh' and phase == 'runtime':
         return ['openssh-clients']
+    if name == 'ssh2' and phase == 'runtime':
+        return ['openssh-server', 'openssh-clients', 'nss_wrapper']
     if name == 'process':
         return ['procps' if family == 'suse' else 'procps-ng']
     if name == 'odbc':
@@ -208,6 +219,12 @@ def module_commands(name, phase, directory, binary=None, driver=None, installed_
     """Fixed commands only; manifests select reviewed suites, never shell text."""
     if name not in MODULE_FIXTURES or phase not in ('runtime', 'sdk'):
         raise ValueError('Unknown module suite or phase')
+    if name == 'ssh2':
+        commands = [('tests', ['python3', '-B', '-W', 'error',
+                              str(directory / 'rpm/run-tests.py'), '--installed'])]
+        if phase == 'sdk':
+            commands.append(('compiler', [str(directory / 'debian/tests/compiler')]))
+        return commands
     if name == 'pgsql':
         if family not in ('fedora', 'suse', 'el'):
             raise ValueError('PostgreSQL checks require a supported distribution')

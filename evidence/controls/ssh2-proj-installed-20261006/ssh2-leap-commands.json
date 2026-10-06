@@ -1,0 +1,33 @@
+[
+  {
+    "name": "runtime-tests",
+    "command": [
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "/work/runtime/rpm/run-tests.py",
+      "--installed"
+    ],
+    "cwd": "/work/runtime"
+  },
+  {
+    "name": "sdk-tests",
+    "command": [
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "/work/sdk/rpm/run-tests.py",
+      "--installed"
+    ],
+    "cwd": "/work/sdk"
+  },
+  {
+    "name": "sdk-compiler",
+    "command": [
+      "/work/sdk/debian/tests/compiler"
+    ],
+    "cwd": "/work/sdk"
+  }
+]
