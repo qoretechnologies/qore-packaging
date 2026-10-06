@@ -1,0 +1,44 @@
+{
+  "enum class PageInitializationMode": {
+    "file": "deps/v8/src/base/bounded-page-allocator.h",
+    "line": 16,
+    "body": "enum class PageInitializationMode {\n  // The contents of allocated pages must be zero initialized. This causes any\n  // committed pages to be decommitted during FreePages and ReleasePages.\n  kAllocatedPagesMustBeZeroInitialized,\n  // Allocated pages do not have to be be zero initialized and can contain old\n  // data. This is slightly faster as comitted pages are not decommitted\n  // during FreePages and ReleasePages, but only made inaccessible.\n  kAllocatedPagesCanBeUninitialized,\n  // Assume pages are in discarded state and already have the right page\n  // permissions. Using this mode requires PageFreeingMode::kDiscard.\n  kRecommitOnly,\n};\n\n// Defines how BoundedPageAllocator frees pages when FreePages or ReleasePages\n// is requested.\nenum class PageFreeingMode {\n  // Pages are freed/released by setting permissions to kNoAccess. This is the\n  // preferred mode when current platform/configuration allows any page\n  // permissions reconfiguration.\n  kMakeInaccessible,\n\n  // Pages are freed/released by using DiscardSystemPages of the underlying\n  // page allocator. This mode should be used for the cases when page permission\n  // reconfiguration is not allowed. In particular, on MacOS on ARM64 (\"Apple\n  // M1\"/Apple Silicon) it's not allowed to reconfigure RWX pages to anything\n  // else.\n  // This mode is not compatible with kAllocatedPagesMustBeZeroInitialized\n  // page initialization mode.\n  kDiscard,\n};\n\n// This is a v8::PageAllocator implementation that allocates pages within the\n// pre-reserved region of virtual space. This class requires the virtual space\n// to be kept reserved during the lifetime of this object.\n// The main application of bounded page allocator are\n//  - V8 heap pointer compression which requires the whole V8 heap to be\n//    allocated within a contiguous range of virtual address space,\n//  - executable page allocation, which allows to use PC-relative 32-bit code\n//    displacement on certain 64-bit platforms.\n// Bounded page allocator uses other page allocator instance for doing actual\n// page allocations.\n// The implementation is thread-safe.\n",
+    "sha256": "0ad0ff6a03f740e4aeea2b05185d01d93140a317b965fd5a0a502e58c4c4de8b"
+  },
+  "bool BoundedPageAllocator::FreePages(": {
+    "file": "deps/v8/src/base/bounded-page-allocator.cc",
+    "line": 144,
+    "body": "bool BoundedPageAllocator::FreePages(void* raw_address, size_t size) {\n  // Careful: we are not locked here, do not touch BoundedPageAllocator\n  // metadata.\n  bool success;\n  Address address = reinterpret_cast<Address>(raw_address);\n\n  // The operations below can be expensive, don't hold the lock while they\n  // happen. There is still potentially contention in the kernel, but at least\n  // we don't need to hold the V8-side lock.\n  if (page_initialization_mode_ ==\n      PageInitializationMode::kAllocatedPagesMustBeZeroInitialized) {\n    DCHECK_NE(page_freeing_mode_, PageFreeingMode::kDiscard);\n    // When we are required to return zero-initialized pages, we decommit the\n    // pages here, which will cause any wired pages to be removed by the OS.\n    success = page_allocator_->DecommitPages(raw_address, size);\n  } else {\n    switch (page_freeing_mode_) {\n      case PageFreeingMode::kMakeInaccessible:\n        DCHECK_EQ(page_initialization_mode_,\n                  PageInitializationMode::kAllocatedPagesCanBeUninitialized);\n        success = page_allocator_->SetPermissions(raw_address, size,\n                                                  PageAllocator::kNoAccess);\n        break;\n\n      case PageFreeingMode::kDiscard:\n        success = page_allocator_->DiscardSystemPages(raw_address, size);\n        break;\n    }\n  }\n\n  MutexGuard guard(&mutex_);\n  CHECK_EQ(size, region_allocator_.FreeRegion(address));\n\n  return success;\n}\n",
+    "sha256": "5ec6afda0cda2d12043f1785a410200233884f9f61d9ed4f75c7a33cb95bd73d"
+  },
+  "enum class FieldSynchronization": {
+    "file": "deps/v8/src/torque/constants.h",
+    "line": 190,
+    "body": "enum class FieldSynchronization {\n  kNone,\n  kRelaxed,\n  kAcquireRelease,",
+    "sha256": "c65c8b9289e4caf263c69cd7f9985403cb2b356a1ff8974879e2a69a0b9269be"
+  },
+  "load_plain": {
+    "file": "deps/v8/src/torque/implementation-visitor.cc",
+    "line": 4680,
+    "body": "const char* load;\n    switch (class_field.synchronization) {\n      case FieldSynchronization::kNone:\n        load = \"ReadField\";\n        break;\n      case FieldSynchronization::kRelaxed:\n        load = \"Relaxed_ReadField\";\n        break;\n      case FieldSynchronization::kAcquireRelease:\n        ReportError(\"Torque doesn't support @cppAcquireLoad on untagged data\");\n    }",
+    "sha256": "44b74e8b0833f458b5ccc57b8cf8adf775261e0986aa664b3eea600d43785234"
+  },
+  "load_tagged": {
+    "file": "deps/v8/src/torque/implementation-visitor.cc",
+    "line": 4694,
+    "body": "const char* load;\n    switch (class_field.synchronization) {\n      case FieldSynchronization::kNone:\n        load = \"load\";\n        break;\n      case FieldSynchronization::kRelaxed:\n        load = \"Relaxed_Load\";\n        break;\n      case FieldSynchronization::kAcquireRelease:\n        load = \"Acquire_Load\";\n        break;\n    }",
+    "sha256": "acc5f95bb07802e5daa131109d7a26359bc718c5c2d6d0920b31622291d3cfff"
+  },
+  "store_plain": {
+    "file": "deps/v8/src/torque/implementation-visitor.cc",
+    "line": 4750,
+    "body": "const char* store;\n    switch (class_field.synchronization) {\n      case FieldSynchronization::kNone:\n        store = \"WriteField\";\n        break;\n      case FieldSynchronization::kRelaxed:\n        store = \"Relaxed_WriteField\";\n        break;\n      case FieldSynchronization::kAcquireRelease:\n        ReportError(\"Torque doesn't support @cppReleaseStore on untagged data\");\n    }",
+    "sha256": "63bddb0921532021ea8b8474e2090dd4418f07ff9d206d9ddfc92d5d682835c5"
+  },
+  "write_macro": {
+    "file": "deps/v8/src/torque/implementation-visitor.cc",
+    "line": 4766,
+    "body": "    const char* write_macro;\n    if (!strong_pointer) {\n      if (class_field.synchronization ==\n          FieldSynchronization::kAcquireRelease) {\n        ReportError(\"Torque doesn't support @cppReleaseStore on weak fields\");\n      }\n      write_macro = \"RELAXED_WRITE_WEAK_FIELD\";\n    } else {\n      switch (class_field.synchronization) {\n        case FieldSynchronization::kNone:\n          write_macro = \"WRITE_FIELD\";\n          break;\n        case FieldSynchronization::kRelaxed:\n          write_macro = \"RELAXED_WRITE_FIELD\";\n          break;\n        case FieldSynchronization::kAcquireRelease:\n          write_macro = \"RELEASE_WRITE_FIELD\";\n          break;\n      }\n    }\n",
+    "sha256": "f028993a0b11dddb6da220adfba4abc34881f11347622d9dded717597a3131fe"
+  }
+}

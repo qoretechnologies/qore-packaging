@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "approval": {
+    "status": "approved",
+    "date": "2026-10-06",
+    "user_response": "Allow these exact diagnostic families",
+    "scope": "Only five recorded maybe-uninitialized diagnostics: BoundedPageAllocator FreePages and Torque field synchronization load/store selection."
+  },
+  "scope": "Only five recorded maybe-uninitialized diagnostics: BoundedPageAllocator FreePages and Torque field synchronization load/store selection.",
+  "root_causes": {
+    "allocator": "Both named PageFreeingMode cases assign success; the zero-initialized path assigns it via DecommitPages. The four valid initialization/freeing combinations always initialize success before return. GCC additionally considers unnamed enum representations.",
+    "torque": "All three FieldSynchronization values assign the selected load/store name or invoke noreturn ReportError for unsupported plain/weak acquire-release modes. The weak-store branch assigns its constant directly. No accepted path consumes an uninitialized name."
+  },
+  "controls": {
+    "checks_per_run": 230000,
+    "normal_exit_code": 0,
+    "valgrind_exit_code": 0,
+    "valgrind_errors": 0,
+    "lost_bytes": 0,
+    "all_allocations_freed": 30002,
+    "exact_warning_patterns_reproduced": 5,
+    "coverage": "Four valid allocator mode pairs, success and injected failure from underlying allocator, exact operation/address/length/free-region accounting; all three synchronization modes for plain/tagged load, plain store and strong/weak tagged store; unsupported operations must throw. 10000 iterations.",
+    "limitations": "Unchanged method/branch bodies and enum declarations are copied with source hashes. Allocator and error reporting dependencies are observable adapters; this does not replace full Node tests or exercise operating-system page allocation. Invalid private enum representations are outside the constructor/caller contract."
+  },
+  "diagnostics": [
+    "../deps/v8/src/base/bounded-page-allocator.cc:177:10: warning: \u2018success\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+    "../deps/v8/src/torque/implementation-visitor.cc:4805:33: warning: \u2018write_macro\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+    "../deps/v8/src/torque/implementation-visitor.cc:4762:15: warning: \u2018store\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+    "../deps/v8/src/torque/implementation-visitor.cc:4713:15: warning: \u2018load\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+    "../deps/v8/src/torque/implementation-visitor.cc:4692:15: warning: \u2018load\u2019 may be used uninitialized [-Wmaybe-uninitialized]"
+  ],
+  "full_build": "evidence/node-obs-flags-candidate5-results-20261006.json",
+  "exclusions": "No compiler suppression, default initialization or runtime behavior changes. Other enum and guarded-state diagnostics are excluded.",
+  "artifacts_sha256": {
+    "evidence/controls/node-allocator-field-enums-20261006/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-allocator-field-enums-20261006/command.json": "cc17dcb2dc0ff22f68229a8bc9892e4717966e07e5594b3e757bcb33346028bd",
+    "evidence/controls/node-allocator-field-enums-20261006/compile.log.gz": "9cc61b8b17db12f512159b8902ae4b4b1dec1827f2fa3bc864634eabec3a2d5a",
+    "evidence/controls/node-allocator-field-enums-20261006/control.cc": "e4bc886182a7e8849d9453f10c730cc271ff2adbcdf4acf62b98330f71804729",
+    "evidence/controls/node-allocator-field-enums-20261006/memory.log.gz": "78ce96b78c38e6935b424a5400af11df88115a11788706a369f83a7ddb1e2c01",
+    "evidence/controls/node-allocator-field-enums-20261006/normal.log.gz": "78ce96b78c38e6935b424a5400af11df88115a11788706a369f83a7ddb1e2c01",
+    "evidence/controls/node-allocator-field-enums-20261006/run.py": "d1e464392ca4f7c6a5156e113a4b9351ac18ca5a39da73191f4e1110e18d4ec2",
+    "evidence/controls/node-allocator-field-enums-20261006/source-extracts.json": "3a2ff23706ce70c6e40a846661ef6d4d8a35a09b82c65d2e159cb2f39125ab72",
+    "evidence/controls/node-allocator-field-enums-20261006/status.json": "0126124236a77165164ce9ae1caeefe6df1eb419c2a9900463d105547de87e73",
+    "evidence/controls/node-allocator-field-enums-20261006/valgrind.log.gz": "5dc994d2e42bcb38841a85586abcbe3477220d269ace093af667155fe49e2683"
+  }
+}
