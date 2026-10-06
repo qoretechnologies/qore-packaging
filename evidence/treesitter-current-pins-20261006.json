@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "root_cause": "The Tree-sitter AlmaLinux manifest inherited core21 initial build filenames that OBS had replaced with dependency rebuilds. Pipeline 59603 job208933 failed with HTTP404 before any installation/test step. Fedora and Leap jobs passed.",
+  "change": "Reuse exact names, payload hashes and URLs from the qualified modules6 AlmaLinux manifest (pipeline59591/job208902), preserving the Tree-sitter RPM and fixture pins.",
+  "validation": {
+    "manifest": "qualification/treesitter-el10-aarch64.json",
+    "checked_packages": [
+      "libqore",
+      "qore",
+      "qore-debug-tools",
+      "qore-devel",
+      "qore-misc-tools",
+      "qore-rpm-macros",
+      "qore-stdlib",
+      "c-ares",
+      "libnghttp2",
+      "libnghttp3",
+      "ngtcp2",
+      "ngtcp2-crypto-ossl",
+      "tree-sitter",
+      "onnxruntime",
+      "qore-treesitter-module"
+    ],
+    "result": "Every public RPM payload matches its pinned SHA256"
+  },
+  "unit_tests": [
+    "Ran 36 tests in 0.087s",
+    "",
+    "OK"
+  ],
+  "unit_log_sha256": "c76c56f733f04f9a4a51df028c6acbc23696f1e8c83d70e4a01738679a92d204",
+  "status": "Ready for the corrected AlmaLinux native run."
+}

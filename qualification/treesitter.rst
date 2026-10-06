@@ -18,3 +18,8 @@ Select these jobs with ``RPM_NATIVE_QUALIFICATION=treesitter``; optionally set
 ``RPM_NATIVE_TARGET`` to ``fedora``, ``leap`` or ``el10``. The manifests start with
 the qualified core and this module so unrelated module suites do not need to
 run again. Whole-repository lifecycle checks remain a separate publication gate.
+
+The AlmaLinux manifest uses the dependency rebuilds already qualified by the
+18-module runtime/SDK pipeline 59591. OBS replaced the older filenames; every
+current public payload was checked against its pinned SHA256 before rerunning
+the Tree-sitter job.
