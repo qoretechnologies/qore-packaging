@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "version": "Node24.18.1/V8 bundled source",
+  "diagnostics": [
+    {
+      "file": "deps/v8/src/torque/implementation-visitor.cc",
+      "line": 1237,
+      "variable": "return_type"
+    },
+    {
+      "file": "deps/v8/src/torque/instructions.h",
+      "line": 738,
+      "variable": "kind"
+    }
+  ],
+  "root_cause": "GCC13 does not prove that DebugStatement::Kind can only be kUnreachable or kDebug. Both branches assign the return type and abort instruction kind before use. The only construction site in the Torque parser selects exactly these two enumerators; no casts or alternate construction sites exist in the Torque source.",
+  "control": "The unchanged visitor body and AbortInstruction are compiled with observable AST/type/assembler adapters. Both enumerators and empty/nonempty source positions are tested in release and DEBUG configurations: 400000 cases normally and the same 400000 under Valgrind. Both warnings reproduce in both configurations; all allocations are freed and no memory errors occur.",
+  "limits": "Adapters observe emitted instruction and type identity; this does not replace the full Torque compiler. The complete Node candidate5 RPM already passed 192 native tests and 5249 JavaScript results. No test constructs an invalid enum outside the parser invariant.",
+  "approval": {
+    "status": "approved",
+    "date": "2026-10-06",
+    "source": "Explicit user reply in this session",
+    "scope": "Only GCC13 DebugStatement return_type and AbortInstruction kind warnings; no suppression or runtime changes."
+  },
+  "checks": [
+    {
+      "name": "release-compile",
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-O2",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "/work/control.cc",
+        "-o",
+        "/work/control-release"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "release-normal",
+      "command": [
+        "/work/control-release"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "release-memory",
+      "command": [
+        "valgrind",
+        "--error-exitcode=99",
+        "--leak-check=full",
+        "--errors-for-leak-kinds=all",
+        "--log-file=/work/release-valgrind.log",
+        "/work/control-release"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "debug-compile",
+      "command": [
+        "g++",
+        "-std=c++20",
+        "-O2",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-DDEBUG",
+        "/work/control.cc",
+        "-o",
+        "/work/control-debug"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "debug-normal",
+      "command": [
+        "/work/control-debug"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "debug-memory",
+      "command": [
+        "valgrind",
+        "--error-exitcode=99",
+        "--leak-check=full",
+        "--errors-for-leak-kinds=all",
+        "--log-file=/work/debug-valgrind.log",
+        "/work/control-debug"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "artifacts_sha256": {
+    "evidence/controls/node-torque-debug-20261006/release-valgrind.log.gz": "1fb8aa344e410657b136232f59bb81bef4c9cc7a765d8bc764c172f88e63bea7",
+    "evidence/controls/node-torque-debug-20261006/command.json": "8f18c1f497de3736ee8d773aa74e6668c4e076c15c65d07d513732d75b872320",
+    "evidence/controls/node-torque-debug-20261006/status.json": "d4498ee556a820ac1c3199b446ab3e7661b6f3442e8f90fd46e978fa6188fd23",
+    "evidence/controls/node-torque-debug-20261006/debug-valgrind.log.gz": "ac0c03d93a798b506073752bc5c2f9f4f213c6c0b4879eb948793860599ab9bf",
+    "evidence/controls/node-torque-debug-20261006/release-compile.log.gz": "be30b81c712e19f780b25c6c0e7803a0441a1772116b4589df085ed2cfc58118",
+    "evidence/controls/node-torque-debug-20261006/debug-compile.log.gz": "be30b81c712e19f780b25c6c0e7803a0441a1772116b4589df085ed2cfc58118",
+    "evidence/controls/node-torque-debug-20261006/debug-normal.log.gz": "1eb2f8b4008c4bd30ba91779f3b3ec4baf37c9b5b3f808a10a4d4e6e49f8cffe",
+    "evidence/controls/node-torque-debug-20261006/control.cc": "1d6eb1823afe9a2ef91c5901f3715e88aa4a97a4cbb5311a43655199bc5c34ca",
+    "evidence/controls/node-torque-debug-20261006/source-extracts.json": "6785326a3e430ef42368ecfc562df92261cc7c0dd9c83c5d23ca6d2e2f68b42f",
+    "evidence/controls/node-torque-debug-20261006/debug-memory.log.gz": "1eb2f8b4008c4bd30ba91779f3b3ec4baf37c9b5b3f808a10a4d4e6e49f8cffe",
+    "evidence/controls/node-torque-debug-20261006/run.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-torque-debug-20261006/release-normal.log.gz": "1eb2f8b4008c4bd30ba91779f3b3ec4baf37c9b5b3f808a10a4d4e6e49f8cffe",
+    "evidence/controls/node-torque-debug-20261006/release-memory.log.gz": "1eb2f8b4008c4bd30ba91779f3b3ec4baf37c9b5b3f808a10a4d4e6e49f8cffe",
+    "evidence/controls/node-torque-debug-20261006/run.py": "2cbcf243b957b3b4c48c78f386bf34f74394e7faa60cf8f73befb3bf6b295104",
+    "evidence/controls/node-torque-debug-20261006/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "const Type* ImplementationVisitor::Visit(DebugStatement* stmt)": {
+    "file": "deps/v8/src/torque/implementation-visitor.cc",
+    "line": 1215,
+    "body": "const Type* ImplementationVisitor::Visit(DebugStatement* stmt) {\n  std::string reason;\n  const Type* return_type;\n  AbortInstruction::Kind kind;\n  switch (stmt->kind) {\n    case DebugStatement::Kind::kUnreachable:\n      // Use the same string as in C++ to simplify fuzzer pattern-matching.\n      reason = base::kUnreachableCodeMessage;\n      return_type = TypeOracle::GetNeverType();\n      kind = AbortInstruction::Kind::kUnreachable;\n      break;\n    case DebugStatement::Kind::kDebug:\n      reason = \"debug break\";\n      return_type = TypeOracle::GetVoidType();\n      kind = AbortInstruction::Kind::kDebugBreak;\n      break;\n  }\n#if defined(DEBUG)\n  assembler().Emit(PrintErrorInstruction{\"halting because of \" + reason +\n                                         \" at \" + PositionAsString(stmt->pos)});\n#endif\n  assembler().Emit(AbortInstruction{kind});\n  return return_type;\n}\n",
+    "sha256": "b3ca94b816fc69316542fad5d228b26500b08d3f78be9dbcc95fad05f5bced18"
+  },
+  "struct AbortInstruction : InstructionBase {": {
+    "file": "deps/v8/src/torque/instructions.h",
+    "line": 733,
+    "body": "struct AbortInstruction : InstructionBase {\n  TORQUE_INSTRUCTION_BOILERPLATE()\n  enum class Kind { kDebugBreak, kUnreachable, kAssertionFailure };\n  bool IsBlockTerminator() const override { return kind != Kind::kDebugBreak; }\n  explicit AbortInstruction(Kind kind, std::string message = \"\")\n      : kind(kind), message(std::move(message)) {}\n  static const char* KindToString(Kind kind) {\n    switch (kind) {\n      case Kind::kDebugBreak:\n        return \"kDebugBreak\";\n      case Kind::kUnreachable:\n        return \"kUnreachable\";\n      case Kind::kAssertionFailure:\n        return \"kAssertionFailure\";\n    }\n    UNREACHABLE();\n  }\n\n  Kind kind;\n  std::string message;\n};\n",
+    "sha256": "c138b802224a4fbc1e2fb18c4b257865ac2b11ecbabbcc5f6258da4a941cc0c1"
+  },
+  "struct DebugStatement : Statement {": {
+    "file": "deps/v8/src/torque/ast.h",
+    "line": 732,
+    "body": "struct DebugStatement : Statement {\n  DEFINE_AST_NODE_LEAF_BOILERPLATE(DebugStatement)\n  enum class Kind { kUnreachable, kDebug };\n  DebugStatement(SourcePosition pos, Kind kind)\n      : Statement(kKind, pos), kind(kind) {}\n  Kind kind;\n};\n",
+    "sha256": "2dc55ec3b9d59f84d95008aee46064a7a1f477d966167ebf5b014bb978492906"
+  },
+  "std::optional<ParseResult> MakeDebugStatement(": {
+    "file": "deps/v8/src/torque/torque-parser.cc",
+    "line": 583,
+    "body": "std::optional<ParseResult> MakeDebugStatement(\n    ParseResultIterator* child_results) {\n  auto kind = child_results->NextAs<Identifier*>()->value;\n  DCHECK(kind == \"unreachable\" || kind == \"debug\");\n  Statement* result = MakeNode<DebugStatement>(\n      kind == \"unreachable\" ? DebugStatement::Kind::kUnreachable\n                            : DebugStatement::Kind::kDebug);\n  return ParseResult{result};\n}\n",
+    "sha256": "cc8c4008edd8ad3dc5854019670396ec1515f2775f371e849df6832d0b9d0b72"
+  },
+  "constexpr const char* kUnreachableCodeMessage": {
+    "file": "deps/v8/src/base/logging.h",
+    "line": 63,
+    "body": "constexpr const char* kUnreachableCodeMessage = \"unreachable code\";",
+    "sha256": "56521909c790573d33cb094ca77d8127f2c44edc3d48619d7507c552a225335f"
+  }
+}
