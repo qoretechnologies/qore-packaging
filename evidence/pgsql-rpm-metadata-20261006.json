@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "change": "Release 2 disables supported optional Java generation because the package ships no Java artifact. Native driver, metadata, strict docs and private database tests remain enabled.",
+  "qualification": {
+    "fedora": {
+      "cases": 32,
+      "assertions": 382,
+      "python_tests": 11,
+      "exit_code": 0,
+      "image": "sha256:d908000fbfe9e7a5357bec4d102474ebaa6e58da96ddd380c5c64ea33fe3fbbb",
+      "source_commit": "5659782a695a4337f266a9895972b15f5fd9a9af"
+    },
+    "leap": {
+      "cases": 32,
+      "assertions": 336,
+      "python_tests": 11,
+      "exit_code": 0,
+      "image": "sha256:07641c22fbda09abe2181ea10609ecf7bb4f0ec6ba52613de05152d4066cc882",
+      "source_commit": "5659782a695a4337f266a9895972b15f5fd9a9af"
+    },
+    "el10": {
+      "cases": 32,
+      "assertions": 336,
+      "python_tests": 11,
+      "exit_code": 0,
+      "image": "sha256:6ba1b7fc853435191c6fb2bce10c1552157ac4d97c831c58858ff98bac137437",
+      "source_commit": "5659782a695a4337f266a9895972b15f5fd9a9af"
+    }
+  },
+  "obs": {
+    "commit": "5659782a695a4337f266a9895972b15f5fd9a9af",
+    "revision": "2",
+    "srcmd5": "9813ceec03d09e3dee781bbb1c437534",
+    "all_source_bytes_verified": true,
+    "publication": "disabled"
+  },
+  "limits": "Native OBS rebuilds and signed installed ARM qualification remain separate gates; publication disabled.",
+  "initial_sdk_mismatch": "The first candidate reused core9 SDK images, predating the supported QORE_GENERATE_JAVA_BINDINGS option. Those runs reported an unused option and still generated Java. All installed Qore packages were refreshed from hash-verified core21 artifacts; both candidate and committed canonical builds then passed without warnings.",
+  "artifacts_sha256": {
+    "evidence/controls/pgsql-metadata-20261006/el10-build.json": "7d6b94cec8cdab01fcc1a3896169299771b89e62385312730a6900f40d2c72cc",
+    "evidence/controls/pgsql-metadata-20261006/el10-build.log.gz": "b507ef429aaaad4ca6c815254ace9493e0f1a6466b3ccbc1b924f9a3e4cef3f5",
+    "evidence/controls/pgsql-metadata-20261006/el10-sdk-refresh.json": "967094928c70f16cbfb664768726f90109f12f210bd193db98f37d87f49a3c2f",
+    "evidence/controls/pgsql-metadata-20261006/el10-sdk-refresh.log.gz": "6bad135dd266e83590048002fc6beb30e5f1fe568d8877c7323ba54206c84b24",
+    "evidence/controls/pgsql-metadata-20261006/fedora-build.json": "d9059168345390045b40d10923b92b7ea7d0c59f0528020ae0ebf6f5916ea30f",
+    "evidence/controls/pgsql-metadata-20261006/fedora-build.log.gz": "b32c5f661038fbf34ea619ed98ddedec38152a42aa2f75fa694f9bc2481dfe45",
+    "evidence/controls/pgsql-metadata-20261006/fedora-sdk-refresh.json": "b3d0b5759d1380060bf1a4a1fd5a4c257b6e2bf50be36fd40a2d1150e5f606cf",
+    "evidence/controls/pgsql-metadata-20261006/fedora-sdk-refresh.log.gz": "c11ca15c83cb69ea97b566aeb07b2ff11a4250f3f6148fa988ca2fce571034f2",
+    "evidence/controls/pgsql-metadata-20261006/leap-build.json": "3f894da8933033a1219de70dd779ac00829ee3317ed8d66861f96233f2fc39b3",
+    "evidence/controls/pgsql-metadata-20261006/leap-build.log.gz": "b420f7c09b819408ba0ab6e6f81bfecd0e6c7538b413a123c4d03877170c1387",
+    "evidence/controls/pgsql-metadata-20261006/leap-sdk-refresh.json": "0c35a7cae53ba6ed42ada200b280847c0661115ce9d3f90795b4d28ce216d7a9",
+    "evidence/controls/pgsql-metadata-20261006/leap-sdk-refresh.log.gz": "d7aead44f47a0d14765be4867d83ba028c77dc730f46a66d75451d82c7061658"
+  }
+}

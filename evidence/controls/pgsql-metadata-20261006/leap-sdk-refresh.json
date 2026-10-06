@@ -1,0 +1,38 @@
+{
+  "base_image": "sha256:05a23bb6c2ba0d0479dc1be1c4afff9731c784b608947c4c8718b3e97e62e362",
+  "image": "sha256:07641c22fbda09abe2181ea10609ecf7bb4f0ec6ba52613de05152d4066cc882",
+  "packages": [
+    "/qualified/rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261003.21-21.noarch.rpm",
+    "/qualified/rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261003.21-21.noarch.rpm",
+    "/qualified/rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261003.21-21.noarch.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/libqore20-3.0.0~git20261003.21-21.x86_64.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/qore-3.0.0~git20261003.21-21.x86_64.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261003.21-21.x86_64.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261003.21-21.x86_64.rpm"
+  ],
+  "command": [
+    "docker",
+    "create",
+    "--name",
+    "qore-pgsql-sdk21-leap-20261006",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-21:/qualified:ro",
+    "sha256:05a23bb6c2ba0d0479dc1be1c4afff9731c784b608947c4c8718b3e97e62e362",
+    "sh",
+    "-eu",
+    "-c",
+    "rpm -Uvh \"$@\"\npython3 -c 'from pathlib import Path; assert \"option(QORE_GENERATE_JAVA_BINDINGS\" in Path(\"/usr/lib64/cmake/Qore/QoreMacros.cmake\").read_text()'\n/usr/bin/qore --version",
+    "refresh-sdk",
+    "/qualified/rpmbuild/RPMS/noarch/qore-debug-tools-3.0.0~git20261003.21-21.noarch.rpm",
+    "/qualified/rpmbuild/RPMS/noarch/qore-misc-tools-3.0.0~git20261003.21-21.noarch.rpm",
+    "/qualified/rpmbuild/RPMS/noarch/qore-rpm-macros-3.0.0~git20261003.21-21.noarch.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/libqore20-3.0.0~git20261003.21-21.x86_64.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/qore-3.0.0~git20261003.21-21.x86_64.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/qore-devel-3.0.0~git20261003.21-21.x86_64.rpm",
+    "/qualified/rpmbuild/RPMS/x86_64/qore-stdlib-3.0.0~git20261003.21-21.x86_64.rpm"
+  ],
+  "exit_code": 0,
+  "log_sha256": "757bcbb10d5fdbf0605a8ed869cea2f7655ec5b1b01ff9f349b5edb8c1f411af"
+}
