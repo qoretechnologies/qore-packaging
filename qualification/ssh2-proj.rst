@@ -27,8 +27,7 @@ artifacts, including GEOS, and the exact source fixtures. Set
 ``RPM_NATIVE_QUALIFICATION=ssh2-proj`` to run the native installed-package jobs,
 or also set ``RPM_NATIVE_TARGET=fedora`` ``leap`` or ``el10`` to select one distribution.
 These jobs start from clean distribution images, verify signatures and hashes,
-and run runtime checks before installing development packages. AlmaLinux ARM inputs include the completed dependency rebuild; its signed
-installed qualification is now ready to run.
+and run runtime checks before installing development packages. AlmaLinux ARM inputs include the completed dependency rebuild.
 
 Both packages retain full AOT DWARF, debug sources and compiler metadata while
 omitting the optional LLVM name indexes, as approved on 2026-10-06. Paired
@@ -41,3 +40,10 @@ each runtime and SDK phase on each distribution (384 total), plus compiled
 examples and core runtime/SDK checks. Each phase explicitly skips the optional
 PROJ/Python namespace case until the Python module is included in the combined
 installation. All package signatures, hashes and RPM payload checks pass.
+
+AlmaLinux ARM pipeline 59680 passed all 40 signed installed
+qualification steps. Runtime and SDK phases each report 96 cases, with
+809 runtime and 808 SDK assertions. Optional PROJ/Python
+coverage remains pending because Python is absent.
+See ``evidence/el10-final-module-results-20261006.json``. Whole-repository
+installation, upgrade and removal remain publication gates.

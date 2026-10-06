@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "date": "2026-10-06",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "AlmaLinux ARM signed RPM runtime and SDK installation qualification passed for PostgreSQL, SSH2 and PROJ.",
+  "records": {
+    "pgsql": {
+      "pipeline": 59679,
+      "job": 209095,
+      "all_steps_passed": true,
+      "steps": 32,
+      "phases": {
+        "runtime": {
+          "reported_cases": 32,
+          "assertions": 336,
+          "optional_skip": "pgvector extension unavailable"
+        },
+        "sdk": {
+          "reported_cases": 32,
+          "assertions": 336,
+          "optional_skip": "pgvector extension unavailable"
+        }
+      }
+    },
+    "ssh2-proj": {
+      "pipeline": 59680,
+      "job": 209097,
+      "all_steps_passed": true,
+      "steps": 40,
+      "phases": {
+        "runtime": {
+          "reported_cases": 96,
+          "assertions": 809,
+          "optional_skip": "PROJ/Python namespace test: Python module unavailable"
+        },
+        "sdk": {
+          "reported_cases": 96,
+          "assertions": 808,
+          "optional_skip": "PROJ/Python namespace test: Python module unavailable"
+        }
+      }
+    }
+  },
+  "verified": "Signatures, SHA-256 hashes, RPM payload integrity, clean runtime separation, installed core/ONNX tools, debugger checks and compiled module examples.",
+  "diagnostics": "PROJ retains only the three previously approved negative-input messages. PostgreSQL pgvector and PROJ/Python optional cases explicitly skip because their optional dependencies are absent.",
+  "limits": [
+    "This completes the three-distribution native ARM installed matrix for these package revisions; whole-repository installation/upgrade/removal remains a publication gate.",
+    "Optional combined pgvector/Python tests remain pending.",
+    "GEOS source-build diagnostics and OBS bootstrap diagnostics remain tracked separately; this runtime qualification does not approve them."
+  ],
+  "files_sha256": {
+    "evidence/controls/el10-final-modules-20261006/pgsql-create-user.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/el10-final-modules-20261006/pgsql-import-signing-key.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/el10-final-modules-20261006/pgsql-qualification.json": "533518a6a95c4eaa2cc390ee9c473d31d7f0a6e03adc4ad4a3c4695e2bf753d0",
+    "evidence/controls/el10-final-modules-20261006/pgsql-runtime-install.log.gz": "90a6a8c1b251128fff66d9320140a8b1214e44bb745a2c626832f1e8f7ccd046",
+    "evidence/controls/el10-final-modules-20261006/pgsql-runtime-inventory.log.gz": "514fef61e39720207eb45d60c6a5f245dae562fe63b9435af334c82653c007f1",
+    "evidence/controls/el10-final-modules-20261006/pgsql-runtime-pgsql-tests.log.gz": "7dd7aaf7f803ad1d929b5c8826b3f852b84e4dbd45a50011cc5fb377014d1da9",
+    "evidence/controls/el10-final-modules-20261006/pgsql-runtime-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/el10-final-modules-20261006/pgsql-runtime-runtime.log.gz": "1217bd6f3d527723719158fc27c5a9eec58ec999ee72a4247b448cc299f7abcf",
+    "evidence/controls/el10-final-modules-20261006/pgsql-sdk-development.log.gz": "0fea12c0e8b95a838fec09eba363ad69a60a5de05e8957ff52a1373eb3808046",
+    "evidence/controls/el10-final-modules-20261006/pgsql-sdk-install.log.gz": "8c9cd7df01ff8f3f570a290f9794332d33dbdb5b4098cd54d4ca336ce4fa2e74",
+    "evidence/controls/el10-final-modules-20261006/pgsql-sdk-inventory.log.gz": "14c28573c2f02127b4b99062cf6af4f5912a82384d8b075a5d37dd040d5e417d",
+    "evidence/controls/el10-final-modules-20261006/pgsql-sdk-pgsql-compiled-tests.log.gz": "c41261767afc0a4306efed3f06b4ba5fba60f5acdabec1d0d99357e9a4e81296",
+    "evidence/controls/el10-final-modules-20261006/pgsql-sdk-pgsql-compiler.log.gz": "82fb2ea9497be27e4779a5161370ed0751acf70c3c60107a4018603c6e7b3801",
+    "evidence/controls/el10-final-modules-20261006/pgsql-sdk-pgsql-tests.log.gz": "ef45a1f430da09881e9e0fea726550725cafa069e8758479c3a968c179a92973",
+    "evidence/controls/el10-final-modules-20261006/pgsql-sdk-remote-debuggers.log.gz": "081fb7a0dc26c5b95e1cbea20a8d73178d548186e1a3048b9e1a03c6250441b3",
+    "evidence/controls/el10-final-modules-20261006/pgsql-sdk-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/el10-final-modules-20261006/pgsql-sdk-runtime.log.gz": "1217bd6f3d527723719158fc27c5a9eec58ec999ee72a4247b448cc299f7abcf",
+    "evidence/controls/el10-final-modules-20261006/pgsql-sdk-tools.log.gz": "14ed071d3a78b76e9055a0d9e841f339d019d5538b3d8e89bb2167528d0bdb26",
+    "evidence/controls/el10-final-modules-20261006/pgsql-verify-signature-c-ares.log.gz": "b9265b63f1c6d4c9bdafc82ea800abea400870cc0100613e8fa1321e51cee0f2",
+    "evidence/controls/el10-final-modules-20261006/pgsql-verify-signature-libnghttp2.log.gz": "0df2b2f472f3fdb6ab394664e03c7373bb1b0c33cc6ed59f6b3fe1d122dac33d",
+    "evidence/controls/el10-final-modules-20261006/pgsql-verify-signature-libnghttp3.log.gz": "4b319d56d537b435437c9b8d60891633aec304d7c6c85899a6e687989b21456f",
+    "evidence/controls/el10-final-modules-20261006/pgsql-verify-signature-libqore.log.gz": "b52bdf4345c554afb457be50a3b3a0faf6f0c5b48ee86cd32d0b2dd72b460463",
+    "evidence/controls/el10-final-modules-20261006/pgsql-verify-signature-ngtcp2-crypto-ossl.log.gz": "7fd41113c332eefcddcd8d6705b3ed3493ceec3aee7b4cb2371033bc0d5603f7",
+    "evidence/controls/el10-final-modules-20261006/pgsql-verify-signature-ngtcp2.log.gz": "42f758e274c0f0195215bb902b619c3732e48d24cc0b5f3b513d3393695fbf61",
+    "evidence/controls/el10-final-modules-20261006/pgsql-verify-signature-onnxruntime.log.gz": "2deb4ed84b1d5329c8ca1d1c7efe6ea46e452d8ac907103a1d7cf69d397dac69",
+    "evidence/controls/el10-final-modules-20261006/pgsql-verify-signature-qore-debug-tools.log.gz": "ad453cc775b1e9aa787f258847a1c1eef2b88d7d593690ce4a0bd39b034f67ed",
+    "evidence/controls/el10-final-modules-20261006/pgsql-verify-signature-qore-devel.log.gz": "1a1f73ac3fbe2702ae206377b453b5cddec1887f9a80610b7017bc182d7d69aa",
+    "evidence/controls/el10-final-modules-20261006/pgsql-verify-signature-qore-misc-tools.log.gz": "9c0d16cfad87af317a0abe51bbe4eb574a5d6aca3eac98e8385e9cf3d1729c08",
+    "evidence/controls/el10-final-modules-20261006/pgsql-verify-signature-qore-pgsql-module.log.gz": "20bccd070fb864f8bd907d4734b3be7c05a4ba8efb8065c974e01555232a79b6",
+    "evidence/controls/el10-final-modules-20261006/pgsql-verify-signature-qore-rpm-macros.log.gz": "7905e9a0022f034ce2d56b14be1f8d78938f886e3626433a3572d4e5db4d8668",
+    "evidence/controls/el10-final-modules-20261006/pgsql-verify-signature-qore-stdlib.log.gz": "80a8a1056c1b933cd5665f9d205fa5d378033cafcbef1da5fcca7b23f414c93c",
+    "evidence/controls/el10-final-modules-20261006/pgsql-verify-signature-qore.log.gz": "b806c10a97626d7e7f9450993812da26624d90e38496ba21e69fbcb257e289e7",
+    "evidence/controls/el10-final-modules-20261006/pgsql-verify-signature-tree-sitter.log.gz": "2849faffe31f2f8a09b247ace063febd757e3ed81bc7666197e67d7f9b72953c",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-create-user.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-import-signing-key.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-qualification.json": "dc59ead548616d3179e50d4be386a54c194d775603e0c7d39b2e30bb12a1b170",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-runtime-install.log.gz": "15f27b0d355692f7596c7cb9541b1f028f2ac5c9ae39706797327dea20818f9e",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-runtime-inventory.log.gz": "71b2f4d2dc0b27fce464e37e8c3da59c31f6852341458684b2a1224b7ffd55ec",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-runtime-proj-proj-python.log.gz": "4ea34a376b99e7e534ccdeb4b7e723e9ea127837d475ea1c4d6e5e7df6d672cd",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-runtime-proj-proj.log.gz": "9ac309a2c281c0a819af444600cc4b50194a777421c518293f2ab1972d109620",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-runtime-proj-projgeos.log.gz": "b148988f07905f360c8a3cf01c9363675c47359140d5e03a00f239954a1c992a",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-runtime-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-runtime-runtime.log.gz": "1217bd6f3d527723719158fc27c5a9eec58ec999ee72a4247b448cc299f7abcf",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-runtime-ssh2-tests.log.gz": "5b69836a7d8e049839dc2511ce315a98a0d46099ecd8f33803559b38c2ec0b3f",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-sdk-development.log.gz": "3a380c11cd386fa58d0ce6af4773c1d71ac3e7db9e95e13cef5c87704c93940a",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-sdk-install.log.gz": "b4cf0da138fff1cb9896fe565f459fca83fe429c3a33474d6d984f5872471639",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-sdk-inventory.log.gz": "a8e3d4d4f0074b26e072bfc3e12b6d75f199f1387260232074918572db860f00",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-sdk-proj-compiler.log.gz": "938fbc33bd0587d3dbc17c1751ef6982db5b0179e283ccdc140254bd45d1b256",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-sdk-proj-proj-python.log.gz": "931b0eb03f6a25976f8d052363b846c77503d83b9dce227246b5d033ab7a8189",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-sdk-proj-proj.log.gz": "9ac309a2c281c0a819af444600cc4b50194a777421c518293f2ab1972d109620",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-sdk-proj-projgeos.log.gz": "b148988f07905f360c8a3cf01c9363675c47359140d5e03a00f239954a1c992a",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-sdk-remote-debuggers.log.gz": "081fb7a0dc26c5b95e1cbea20a8d73178d548186e1a3048b9e1a03c6250441b3",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-sdk-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-sdk-runtime.log.gz": "1217bd6f3d527723719158fc27c5a9eec58ec999ee72a4247b448cc299f7abcf",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-sdk-ssh2-compiler.log.gz": "7faf09536a4dd7f59f7934995e957a1e47b64d64751170c63d54c9655c62f9d7",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-sdk-ssh2-tests.log.gz": "692ae1c3b90f7f279367aeebb74198d9f12c1b4577e6abf34bb8ff36d44d13eb",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-sdk-tools.log.gz": "14ed071d3a78b76e9055a0d9e841f339d019d5538b3d8e89bb2167528d0bdb26",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-c-ares.log.gz": "c9f7bb0a6a0a8cb7774cc9d3ba3f732869755f396fb598d7485098863e4ccfd4",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-libnghttp2.log.gz": "eec44832c70faa7ee1ddb7346c3ef7558894753e68aedcc99685c47b3654b474",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-libnghttp3.log.gz": "d9240e50d9cdea3005e13e0526eb26f2c85bdaba9bb32aa4165e6bf1bfa6d43e",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-libqore.log.gz": "c8b37e20cb982f06c7ca476b7f023ebcd4e89818b8166deb361ca64cadeaa48c",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-ngtcp2-crypto-ossl.log.gz": "eaaf3194812976144229c597a1f006a0214efbccc99b5caeb7be972d20c3a892",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-ngtcp2.log.gz": "e3f22c35f2739873c692d9d683994f088b660f382eb2f7f03320a8034fcaf72e",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-onnxruntime.log.gz": "77c7083b8ee3b585344dcc2abf7d4ac7ba7f465bbc0786d37a5324edffc222e1",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-qore-debug-tools.log.gz": "ff3d6b47e7090163d0f13b250251f16b197efb0fc27217eac2dfb744674fe86d",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-qore-devel.log.gz": "c5e6e8064c3abdb5c44ad54896a66bde84c452c0ca8a31d64f0d34937a4e2136",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-qore-geos-module.log.gz": "a26af31c21c045c5b746b21100377d97fdea07369063433978e6a748e206a3e4",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-qore-misc-tools.log.gz": "3c15527429ce5f6b8ef15b1a46210087cfa0d17346d8d009a5628eb73a3e9921",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-qore-proj-module.log.gz": "1f75419cedf1b96a41f4f2a0f5c1183935754019a9e873c309e0823f03f02a25",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-qore-rpm-macros.log.gz": "20f05700e8084d193cb4c13cb8014701b7a74cb61d5ce0fdf3a49a7fc3d0da23",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-qore-ssh2-module.log.gz": "a56374bfe79803f41e481a38a115740a2c27f409a1b2d8948b67ef89808b40e2",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-qore-stdlib.log.gz": "35afccc35ba42094bffd25bcfe453856a9fbead3164538a4c9ab6a547efeae4b",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-qore.log.gz": "4c11d7935a6aa543e0384b177c8a29a0b45edc1169eaec94628ed75903eb8924",
+    "evidence/controls/el10-final-modules-20261006/ssh2-proj-verify-signature-tree-sitter.log.gz": "2514a635be6014b5521ef5c6a7a40070a5778e06f2850be90719ef3c0b1cc45a"
+  }
+}
