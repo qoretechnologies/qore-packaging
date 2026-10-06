@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "date": "2026-10-06",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User accepted these three exact compiler diagnostics on 2026-10-06. Compiler flags remain unchanged; full Node build/native qualification is separate.",
+  "diagnostics": [
+    {
+      "file": "deps/v8/src/heap/array-buffer-sweeper.cc",
+      "line": 457,
+      "diagnostic": "../deps/v8/src/heap/array-buffer-sweeper.cc:457:3: warning: \u2018is_finished\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "447:   CHECK(!state_.IsDone());\n448:   bool is_finished;\n449:   switch (type_) {\n450:     case SweepingType::kYoung:\n451:       is_finished = SweepYoung(delegate);\n452:       break;\n453:     case SweepingType::kFull:\n454:       is_finished = SweepFull(delegate);\n455:       break;\n456:   }\n457:   if (is_finished) {\n458:     state_.SetDone();\n459:   } else {\n460:     TRACE_GC_NOTE(\"ArrayBufferSweeper Preempted\");\n461:   }\n462: }\n463: \n464: bool ArrayBufferSweeper::SweepingState::SweepingJob::SweepFull(\n465:     JobDelegate* delegate) {\n466:   DCHECK_EQ(SweepingType::kFull, type_);\n467:   if (!SweepListFull(delegate, young_, ArrayBufferExtension::Age::kYoung))"
+    },
+    {
+      "file": "deps/v8/src/heap/gc-tracer.cc",
+      "line": 274,
+      "diagnostic": "../deps/v8/src/heap/gc-tracer.cc:274:12: warning: \u2018type\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "264:                  ? Event::Type::INCREMENTAL_MARK_COMPACTOR\n265:                  : Event::Type::MARK_COMPACTOR;\n266:       break;\n267:   }\n268: \n269:   DCHECK_IMPLIES(!young_gc_while_full_gc_,\n270:                  current_.state == Event::State::NOT_RUNNING);\n271:   DCHECK_EQ(Event::State::NOT_RUNNING, previous_.state);\n272: \n273:   previous_ = current_;\n274:   current_ = Event(type, Event::State::MARKING, gc_reason, collector_reason,\n275:                    heap_->isolate()->priority());\n276: \n277:   switch (marking) {\n278:     case MarkingType::kAtomic:\n279:       DCHECK(IsInObservablePause());\n280:       // TODO(chromium:1154636): The start_time of the current event contains\n281:       // currently the start time of the observable pause. This should be\n282:       // reconsidered.\n283:       current_.start_time = start_of_observable_pause_.value();\n284:       current_.reduce_memory = heap_->ShouldReduceMemory();"
+    },
+    {
+      "file": "deps/v8/src/objects/intl-objects.cc",
+      "line": 3161,
+      "diagnostic": "../deps/v8/src/objects/intl-objects.cc:3161:3: warning: \u2018has_transition\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "3151:           ApproximateMillisecondEpoch(isolate, nanosecond_epoch), false,\n3152:           icu_transition);\n3153:       break;\n3154:     case Intl::Transition::kPrevious:\n3155:       has_transition = basic_time_zone->getPreviousTransition(\n3156:           ApproximateMillisecondEpoch(isolate, nanosecond_epoch,\n3157:                                       Direction::kFuture),\n3158:           false, icu_transition);\n3159:       break;\n3160:   }\n3161: \n3162:   if (!has_transition) {\n3163:     return isolate->factory()->null_value();\n3164:   }\n3165:   // #sec-temporal-getianatimezonenexttransition and\n3166:   // #sec-temporal-getianatimezoneprevioustransition states:\n3167:   // \"The operation returns null if no such transition exists for which t \u2264\n3168:   // \u2124(nsMaxInstant).\" and \"The operation returns null if no such transition\n3169:   // exists for which t \u2265 \u2124(nsMinInstant).\"\n3170:   //\n3171:   // nsMinInstant = -nsMaxInstant = -8.64 \u00d7 10^21 => msMinInstant = -8.64 x"
+    }
+  ],
+  "root_cause": "GCC analyzes unnamed values of closed internal enums even though each declared value assigns the local result. The original unmodified dispatch branches and enum declarations reproduce all three warnings with GCC13.",
+  "source_review": [
+    "SweepingType contains kYoung and kFull only. RequestSweep supplies that typed value to SweepingState and SweepingJob; both cases assign is_finished before its read.",
+    "GarbageCollector contains SCAVENGER, MARK_COMPACTOR and MINOR_MARK_SWEEPER only. StartCycle handles all three and both MarkingType values assign a valid Event::Type.",
+    "Intl::Transition contains kNext and kPrevious only. Temporal next/previous entry points pass the corresponding literal enum through GetIANATimeZoneTransition; both ICU calls assign has_transition."
+  ],
+  "coverage": {
+    "checks": 1027200,
+    "modes": "Release and Debug controls, normally and under Valgrind. Same optimized GCC13 flags; DEBUG macro changes the configuration only, all test invariants remain active.",
+    "sweeper": "Both modes, young/old counts 0/1/255/256/257/1024 and zero/partial/full budgets; completion/preemption, conservation and resuming to completion.",
+    "gc": "All three collector types and both marking types; exact event classification.",
+    "icu": "Real ICU77 BasicTimeZone across six zones (DST, fractional shift, historical offsets, UTC), nine signed/boundary epochs and both directions. Transition existence/time, strict direction, exact transition exclusion and one-nanosecond adjacent inclusion.",
+    "memory": "Zero errors and all 64,034 allocations freed in each Valgrind run. Standalone program calls ICU public u_cleanup only after destroying all ICU objects."
+  },
+  "limits": "The unchanged dispatch branches are tested, not a complete V8 GC implementation. Typed sweeper/state adapters make completion and preemption observable; ICU methods are real, while BigInt/handle plumbing is replaced by signed int64 nanoseconds and explicit floor/ceil conversion. Invalid cast enum values are not accepted inputs and are not exercised. Full Node package tests and native ARM qualification remain separate gates.",
+  "files_sha256": {
+    "evidence/controls/node-gc-transition-20261006/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-gc-transition-20261006/command.json": "d4452779e5ea5df2c80654d852f2e9841beec8f5f002d3bd4305861e05505b04",
+    "evidence/controls/node-gc-transition-20261006/control.cc": "b73681fb6a197308eac20651cfe078c4ffef5342c891c9138dce975b2022eb1c",
+    "evidence/controls/node-gc-transition-20261006/debug-compile.log.gz": "149d5fb15d93577173d0594812e58da470c8abe3047d9d52b910f9a7d1097756",
+    "evidence/controls/node-gc-transition-20261006/debug-memory.log.gz": "d123b1936b7a1c73e95d2b397e86b2b66d9d404dd357bf97d4fe4cba7fdf15a6",
+    "evidence/controls/node-gc-transition-20261006/debug-normal.log.gz": "d123b1936b7a1c73e95d2b397e86b2b66d9d404dd357bf97d4fe4cba7fdf15a6",
+    "evidence/controls/node-gc-transition-20261006/debug-valgrind.log.gz": "302b984b521b52a00a23d7b81b8550b5978b04b96ba69b66ef3b6c995950861d",
+    "evidence/controls/node-gc-transition-20261006/prepare.py": "40a7ac2f035b186cc52a4ca191914a49c52abe978d87c235ba47ab9e4034cd36",
+    "evidence/controls/node-gc-transition-20261006/release-compile.log.gz": "149d5fb15d93577173d0594812e58da470c8abe3047d9d52b910f9a7d1097756",
+    "evidence/controls/node-gc-transition-20261006/release-memory.log.gz": "d123b1936b7a1c73e95d2b397e86b2b66d9d404dd357bf97d4fe4cba7fdf15a6",
+    "evidence/controls/node-gc-transition-20261006/release-normal.log.gz": "d123b1936b7a1c73e95d2b397e86b2b66d9d404dd357bf97d4fe4cba7fdf15a6",
+    "evidence/controls/node-gc-transition-20261006/release-valgrind.log.gz": "14507fa57b7f3170ed8d9b99ca6bd2120beb7b8d5c45d06ce30d64e5c01c54ee",
+    "evidence/controls/node-gc-transition-20261006/run.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-gc-transition-20261006/run.py": "1058ac152d16063d7d94a58b0c349ba491d795d46f0db34416edd74b6f27c380",
+    "evidence/controls/node-gc-transition-20261006/source-extracts.json": "8e3a1374ce185ccd50471bfa4bbc3ea08e84ea2232aa46c8a877bee75a8514c9",
+    "evidence/controls/node-gc-transition-20261006/status.json": "c0cc6e2f7f6bfc7e789c169bbbd8c8092da0bf37e36cbb362c6cb806aa8cc82f"
+  },
+  "approval": "Allow these three exact diagnostics"
+}

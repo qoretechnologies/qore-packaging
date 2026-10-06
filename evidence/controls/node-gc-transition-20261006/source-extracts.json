@@ -1,0 +1,50 @@
+[
+  {
+    "file": "deps/v8/src/heap/array-buffer-sweeper.h",
+    "line": 56,
+    "body": "  enum class SweepingType { kYoung, kFull }",
+    "sha256": "2b40eb1b9206dcb833e3f514cf25626074e537fe351ddc7730b5fa935dec5c3a"
+  },
+  {
+    "file": "deps/v8/src/heap/array-buffer-sweeper.cc",
+    "line": 447,
+    "body": "  CHECK(!state_.IsDone());\n  bool is_finished;\n  switch (type_) {\n    case SweepingType::kYoung:\n      is_finished = SweepYoung(delegate);\n      break;\n    case SweepingType::kFull:\n      is_finished = SweepFull(delegate);\n      break;\n  }\n  if (is_finished) {\n    state_.SetDone();\n  } else {\n    TRACE_GC_NOTE(\"ArrayBufferSweeper Preempted\");\n  }",
+    "sha256": "5e1177def4fa423adeb1f4c572d9375a06ac89212e12576b708f6a9ee776f3de"
+  },
+  {
+    "file": "deps/v8/src/common/globals.h",
+    "line": 1569,
+    "body": "enum class GarbageCollector { SCAVENGER, MARK_COMPACTOR, MINOR_MARK_SWEEPER }",
+    "sha256": "82942157a45ea3afd87ef853ed265cdbfb977a53427900e2732d20f4b0d0401b"
+  },
+  {
+    "file": "deps/v8/src/heap/gc-tracer.h",
+    "line": 301,
+    "body": "  enum class MarkingType { kAtomic, kIncremental }",
+    "sha256": "022ba0bc5f857780a7ff04c40c39091a12a54ae8049a7ad9fd0ba88dcea9d715"
+  },
+  {
+    "file": "deps/v8/src/heap/gc-tracer.h",
+    "line": 161,
+    "body": "    enum class Type {\n      SCAVENGER = 0,\n      MARK_COMPACTOR = 1,\n      INCREMENTAL_MARK_COMPACTOR = 2,\n      MINOR_MARK_SWEEPER = 3,\n      INCREMENTAL_MINOR_MARK_SWEEPER = 4,\n      START = 5,\n    }",
+    "sha256": "f83c8403c332886c54bd0005ce2a85a5ee9fddecaa4e3666ed79547f83771152"
+  },
+  {
+    "file": "deps/v8/src/heap/gc-tracer.cc",
+    "line": 252,
+    "body": "  Event::Type type;\n  switch (collector) {\n    case GarbageCollector::SCAVENGER:\n      type = Event::Type::SCAVENGER;\n      break;\n    case GarbageCollector::MINOR_MARK_SWEEPER:\n      type = marking == MarkingType::kIncremental\n                 ? Event::Type::INCREMENTAL_MINOR_MARK_SWEEPER\n                 : Event::Type::MINOR_MARK_SWEEPER;\n      break;\n    case GarbageCollector::MARK_COMPACTOR:\n      type = marking == MarkingType::kIncremental\n                 ? Event::Type::INCREMENTAL_MARK_COMPACTOR\n                 : Event::Type::MARK_COMPACTOR;\n      break;\n  }",
+    "sha256": "6916b82927453ea5fa1ee1faa6f95f99f4131a3538493eb76d931fbb59dca6bf"
+  },
+  {
+    "file": "deps/v8/src/objects/intl-objects.h",
+    "line": 426,
+    "body": "  enum class Transition { kNext, kPrevious }",
+    "sha256": "85713ae3ebbdbf2612699af99a289619d1f6874e017d2f8dc1caa2abcb5e979f"
+  },
+  {
+    "file": "deps/v8/src/objects/intl-objects.cc",
+    "line": 3146,
+    "body": "  icu::TimeZoneTransition icu_transition;\n  UBool has_transition;\n  switch (transition) {\n    case Intl::Transition::kNext:\n      has_transition = basic_time_zone->getNextTransition(\n          ApproximateMillisecondEpoch(isolate, nanosecond_epoch), false,\n          icu_transition);\n      break;\n    case Intl::Transition::kPrevious:\n      has_transition = basic_time_zone->getPreviousTransition(\n          ApproximateMillisecondEpoch(isolate, nanosecond_epoch,\n                                      Direction::kFuture),\n          false, icu_transition);\n      break;\n  }",
+    "sha256": "9ffd3bdf6b703392623017be425578548774a17a192c1e175fc32e8eeea4d054"
+  }
+]
