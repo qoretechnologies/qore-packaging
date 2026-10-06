@@ -27,7 +27,8 @@ artifacts, including GEOS, and the exact source fixtures. Set
 ``RPM_NATIVE_QUALIFICATION=ssh2-proj`` to run the native installed-package jobs,
 or also set ``RPM_NATIVE_TARGET=fedora`` ``leap`` or ``el10`` to select one distribution.
 These jobs start from clean distribution images, verify signatures and hashes,
-and run runtime checks before installing development packages. AlmaLinux ARM inputs include the completed dependency rebuild.
+and run runtime checks before installing development packages. AlmaLinux ARM
+inputs include the completed dependency rebuild.
 
 Both packages retain full AOT DWARF, debug sources and compiler metadata while
 omitting the optional LLVM name indexes, as approved on 2026-10-06. Paired

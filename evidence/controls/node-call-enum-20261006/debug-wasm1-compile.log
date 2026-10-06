@@ -1,0 +1,48 @@
+/work/control.cc: In function ‘void Compare(const ComparisonOp*, ComparisonOutput&)’:
+/work/control.cc:101:8: warning: ‘is_signed’ may be used uninitialized [-Wmaybe-uninitialized]
+  101 | output = {true, is_signed, is_less_than};
+      | ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/work/control.cc:79:10: note: ‘is_signed’ was declared here
+   79 |     bool is_signed, is_less_than;
+      |          ^~~~~~~~~
+/work/control.cc:101:8: warning: ‘is_less_than’ may be used uninitialized [-Wmaybe-uninitialized]
+  101 | output = {true, is_signed, is_less_than};
+      | ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/work/control.cc:79:21: note: ‘is_less_than’ was declared here
+   79 |     bool is_signed, is_less_than;
+      |                     ^~~~~~~~~~~~
+/work/control.cc: In function ‘std::pair<CallDescriptor::Kind, MachineType> Stub(StubCallMode)’:
+/work/control.cc:122:25: warning: ‘kind’ may be used uninitialized [-Wmaybe-uninitialized]
+  122 | return {kind,target_type};
+      |                         ^
+/work/control.cc:104:24: note: ‘kind’ was declared here
+  104 |   CallDescriptor::Kind kind;
+      |                        ^~~~
+/work/control.cc: In function ‘std::pair<CallDescriptor::Kind, long unsigned int> Wasm(WasmCallKind, const Signature*)’:
+/work/control.cc:144:39: warning: ‘descriptor_kind’ may be used uninitialized [-Wmaybe-uninitialized]
+  144 | return {descriptor_kind,signature_hash};
+      |                                       ^
+/work/control.cc:126:24: note: ‘descriptor_kind’ was declared here
+  126 |   CallDescriptor::Kind descriptor_kind;
+      |                        ^~~~~~~~~~~~~~~
+/work/control.cc: In function ‘Builtin Forward(ForwardNode*)’:
+/work/control.cc:157:8: warning: ‘builtin’ may be used uninitialized [-Wmaybe-uninitialized]
+  157 | return builtin;
+      |        ^~~~~~~
+/work/control.cc:148:13: note: ‘builtin’ was declared here
+  148 |     Builtin builtin;
+      |             ^~~~~~~
+/work/control.cc: In function ‘Builtin Global(GlobalNode*)’:
+/work/control.cc:169:8: warning: ‘builtin’ may be used uninitialized [-Wmaybe-uninitialized]
+  169 | return builtin;
+      |        ^~~~~~~
+/work/control.cc:160:13: note: ‘builtin’ was declared here
+  160 |     Builtin builtin;
+      |             ^~~~~~~
+/work/control.cc: In function ‘auto Convert(ConversionNode*)’:
+/work/control.cc:186:8: warning: ‘kind’ may be used uninitialized [-Wmaybe-uninitialized]
+  186 | return kind;
+      |        ^~~~
+/work/control.cc:172:60: note: ‘kind’ was declared here
+  172 |     ConvertJSPrimitiveToUntaggedOrDeoptOp::JSPrimitiveKind kind;
+      |                                                            ^~~~

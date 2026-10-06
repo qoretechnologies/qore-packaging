@@ -31,10 +31,11 @@ qualification; the earlier revision 2 results remain recorded separately.
 Pipeline 59632 passed the revision 3 installed runtime/SDK jobs on Fedora and
 Leap ARM: 32 cases per phase, with 382 Fedora or 336 Leap assertions. Signed
 RPM integrity, core SDK checks and the compiled PostgreSQL example also pass.
-AlmaLinux native inputs are ready; signed installed checks remain pending.
+The completed AlmaLinux checks are recorded below.
 
 AlmaLinux ARM pipeline 59679 passed all 32 signed installed
 qualification steps. Runtime and SDK phases each report 32 cases, with
-336 runtime and 336 SDK assertions. Optional pgvector coverage remains pending because the extension is absent.
+336 runtime and 336 SDK assertions. Optional pgvector coverage remains pending
+because the extension is absent.
 See ``evidence/el10-final-module-results-20261006.json``. Whole-repository
 installation, upgrade and removal remain publication gates.

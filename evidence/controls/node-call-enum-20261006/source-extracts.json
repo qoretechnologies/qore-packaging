@@ -1,0 +1,86 @@
+[
+  {
+    "file": "deps/v8/src/common/globals.h",
+    "line": 2754,
+    "body": "enum class StubCallMode {\n  kCallCodeObject,\n#if V8_ENABLE_WEBASSEMBLY\n  kCallWasmRuntimeStub,\n#endif  // V8_ENABLE_WEBASSEMBLY\n  kCallBuiltinPointer,\n}",
+    "sha256": "3b959a98af7f1ceee8f888b96f0152b87f1fbab529a25d6014fd8edec456ccc1"
+  },
+  {
+    "file": "deps/v8/src/common/globals.h",
+    "line": 801,
+    "body": "enum class TypeofMode { kInside, kNotInside }",
+    "sha256": "69311e3e10e3d527b565b7cf31f468ea170e6b2c0d9cc2df21fbcc92dff0fa5b"
+  },
+  {
+    "file": "deps/v8/src/compiler/linkage.h",
+    "line": 47,
+    "body": "  enum Kind {\n    kCallCodeObject,         // target is a Code object\n    kCallJSFunction,         // target is a JSFunction object\n    kCallAddress,            // target is a machine pointer\n#if V8_ENABLE_WEBASSEMBLY    // \u2193 WebAssembly only\n    kCallWasmCapiFunction,   // target is a Wasm C API function\n    kCallWasmFunction,       // target is a wasm function\n    kCallWasmFunctionIndirect,  // target is a wasm function that will be called\n                                // indirectly\n    kCallWasmImportWrapper,     // target is a wasm import wrapper\n#endif                       // \u2191 WebAssembly only\n    kCallBuiltinPointer,     // target is a builtin pointer\n  }",
+    "sha256": "8a0253c8d7fae5ca34da1aba6110210d8cb4355b5772bdf2df7f2d45fcf44a7b"
+  },
+  {
+    "file": "deps/v8/src/compiler/wasm-compiler-definitions.h",
+    "line": 95,
+    "body": "enum WasmCallKind {\n  kWasmFunction,\n  kWasmIndirectFunction,\n  kWasmImportWrapper,\n  kWasmCapiFunction\n}",
+    "sha256": "b8bc1959e52fe2611f5bfaffc4620fe777833d33b4fb311ff5433f1052e5fc93"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 2078,
+    "body": "  enum class Kind : uint8_t {\n    kEqual,\n    kSignedLessThan,\n    kSignedLessThanOrEqual,\n    kUnsignedLessThan,\n    kUnsignedLessThanOrEqual\n  }",
+    "sha256": "240d36f483da57851d472ff77ebc0a963554448fa248e42b3d79623d3843a935"
+  },
+  {
+    "file": "deps/v8/src/maglev/maglev-ir.h",
+    "line": 9607,
+    "body": "  enum class TargetType { kJSFunction, kAny }",
+    "sha256": "2c3f33c9d3233221ccf3081d606376b63554825b226b40c7c6e45bf620dd4938"
+  },
+  {
+    "file": "deps/v8/src/maglev/maglev-ir.h",
+    "line": 853,
+    "body": "enum class TaggedToFloat64ConversionType : uint8_t {\n  kOnlyNumber,\n  kNumberOrBoolean,\n  kNumberOrOddball,\n}",
+    "sha256": "06496db114e38e089c9e2d2ad3bd896308a2726eeefcedbd708d96da788a2567"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 4966,
+    "body": "  enum class JSPrimitiveKind : uint8_t {\n    kAdditiveSafeInteger,\n    kNumber,\n    kNumberOrBoolean,\n    kNumberOrOddball,\n    kNumberOrString,\n    kSmi,\n  }",
+    "sha256": "26d70a7b205c559e2ca7487b98210c3d6bd6e49e34012f16c701dcc34160ca34"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/typer.cc",
+    "line": 15,
+    "body": "    bool is_signed, is_less_than;\n    switch (comparison->kind) {\n      case ComparisonOp::Kind::kEqual:\n        // TODO(nicohartmann@): Add support for equality.\n        return;\n      case ComparisonOp::Kind::kSignedLessThan:\n        is_signed = true;\n        is_less_than = true;\n        break;\n      case ComparisonOp::Kind::kSignedLessThanOrEqual:\n        is_signed = true;\n        is_less_than = false;\n        break;\n      case ComparisonOp::Kind::kUnsignedLessThan:\n        is_signed = false;\n        is_less_than = true;\n        break;\n      case ComparisonOp::Kind::kUnsignedLessThanOrEqual:\n        is_signed = false;\n        is_less_than = false;\n        break;\n    }",
+    "sha256": "a0b37e23fcf95ae73d7b1918596b19c598edc1e8cd78dfcc1a1f4c5c252c85b8"
+  },
+  {
+    "file": "deps/v8/src/compiler/linkage.cc",
+    "line": 643,
+    "body": "  CallDescriptor::Kind kind;\n  MachineType target_type;\n  switch (stub_mode) {\n    case StubCallMode::kCallCodeObject:\n      kind = CallDescriptor::kCallCodeObject;\n      target_type = MachineType::AnyTagged();\n      break;\n#if V8_ENABLE_WEBASSEMBLY\n    case StubCallMode::kCallWasmRuntimeStub:\n      kind = CallDescriptor::kCallWasmFunction;\n      target_type = MachineType::Pointer();\n      break;\n#endif  // V8_ENABLE_WEBASSEMBLY\n    case StubCallMode::kCallBuiltinPointer:\n      kind = CallDescriptor::kCallBuiltinPointer;\n      target_type = MachineType::AnyTagged();\n      break;\n  }",
+    "sha256": "53c8f214b9697281cc368ede1891c2895860e9327628ae95e6f1be7d10783fb0"
+  },
+  {
+    "file": "deps/v8/src/compiler/wasm-compiler-definitions.cc",
+    "line": 73,
+    "body": "  CallDescriptor::Kind descriptor_kind;\n  uint64_t signature_hash = kInvalidWasmSignatureHash;\n\n  switch (call_kind) {\n    case kWasmFunction:\n      descriptor_kind = CallDescriptor::kCallWasmFunction;\n      break;\n    case kWasmIndirectFunction:\n      descriptor_kind = CallDescriptor::kCallWasmFunctionIndirect;\n      signature_hash = wasm::SignatureHasher::Hash(fsig);\n      break;\n    case kWasmImportWrapper:\n      descriptor_kind = CallDescriptor::kCallWasmImportWrapper;\n      break;\n    case kWasmCapiFunction:\n      descriptor_kind = CallDescriptor::kCallWasmCapiFunction;\n      break;\n  }",
+    "sha256": "685773ae3a6fed34587265ff75aed42f024f82e45898afdda1545c150b54c47c"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+    "line": 1764,
+    "body": "    Builtin builtin;\n    switch (node->target_type()) {\n      case maglev::Call::TargetType::kJSFunction:\n        builtin = Builtin::kCallFunctionForwardVarargs;\n        break;\n      case maglev::Call::TargetType::kAny:\n        builtin = Builtin::kCallForwardVarargs;\n        break;\n    }",
+    "sha256": "f510bb681aff4c5517ba7273985a1f56071a7b3c1014f91d74fcdf5f8c017176"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+    "line": 1947,
+    "body": "    Builtin builtin;\n    switch (node->typeof_mode()) {\n      case TypeofMode::kInside:\n        builtin = Builtin::kLoadGlobalICInsideTypeof;\n        break;\n      case TypeofMode::kNotInside:\n        builtin = Builtin::kLoadGlobalIC;\n        break;\n    }",
+    "sha256": "9783f9cccac3d2890258f817ea625f7a36842f1aa8abf5f2664fe2c93e58e114"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+    "line": 4174,
+    "body": "    ConvertJSPrimitiveToUntaggedOrDeoptOp::JSPrimitiveKind kind;\n    switch (node->conversion_type()) {\n      case maglev::TaggedToFloat64ConversionType::kOnlyNumber:\n        kind = ConvertJSPrimitiveToUntaggedOrDeoptOp::JSPrimitiveKind::kNumber;\n        break;\n      case maglev::TaggedToFloat64ConversionType::kNumberOrBoolean:\n        kind = ConvertJSPrimitiveToUntaggedOrDeoptOp::JSPrimitiveKind::\n            kNumberOrBoolean;\n        break;\n      case maglev::TaggedToFloat64ConversionType::kNumberOrOddball:\n        kind = ConvertJSPrimitiveToUntaggedOrDeoptOp::JSPrimitiveKind::\n            kNumberOrOddball;\n        break;\n    }",
+    "sha256": "19166b3103850a93ea7e7ffa6f1c109cb72dfaac29af22b5cc094abdeda7229e"
+  }
+]

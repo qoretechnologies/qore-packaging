@@ -1,0 +1,104 @@
+[
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 8217,
+    "body": "#define FOREACH_SIMD_128_LOAD_TRANSFORM_OPCODE(V) \\\n  V(8x8S)                                         \\\n  V(8x8U)                                         \\\n  V(16x4S)                                        \\\n  V(16x4U)                                        \\\n  V(32x2S)                                        \\\n  V(32x2U)                                        \\\n  V(8Splat)                                       \\\n  V(16Splat)                                      \\\n  V(32Splat)                                      \\\n  V(64Splat)                                      \\\n  V(32Zero)                                       \\\n  V(64Zero)",
+    "sha256": "7f2e3c93a0309b06599581b456811cf750fd67f89c863d0f7528bcde545f6d3a"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 8481,
+    "body": "#define FOREACH_SIMD_256_LOAD_TRANSFORM_OPCODE(V) \\\n  V(8x16S)                                        \\\n  V(8x16U)                                        \\\n  V(8x8U)                                         \\\n  V(16x8S)                                        \\\n  V(16x8U)                                        \\\n  V(32x4S)                                        \\\n  V(32x4U)                                        \\\n  V(8Splat)                                       \\\n  V(16Splat)                                      \\\n  V(32Splat)                                      \\\n  V(64Splat)",
+    "sha256": "5173d12612ece6d12515f11ea10052b113fc223fde5ecb60af974b8ec397ea2f"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 8244,
+    "body": "  enum class TransformKind : uint8_t {\n#define DEFINE_KIND(kind) k##kind,\n    FOREACH_SIMD_128_LOAD_TRANSFORM_OPCODE(DEFINE_KIND)\n#undef DEFINE_KIND\n  }",
+    "sha256": "c25e9d0bfdf67563492bbeab0f70a48c08c752b46ba0d49e46870919b77793f5"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 8497,
+    "body": "  enum class TransformKind : uint8_t {\n#define DEFINE_KIND(kind) k##kind,\n    FOREACH_SIMD_256_LOAD_TRANSFORM_OPCODE(DEFINE_KIND)\n#undef DEFINE_KIND\n  }",
+    "sha256": "8afd1e52fad03ae6de0e1772b2753c2cd4c99fb2a51bdc3d47598a20af24d860"
+  },
+  {
+    "file": "deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc",
+    "line": 1135,
+    "body": "  ArchOpcode opcode;\n  switch (op.transform_kind) {\n    case Simd128LoadTransformOp::TransformKind::k8x8S:\n      opcode = kX64S128Load8x8S;\n      break;\n    case Simd128LoadTransformOp::TransformKind::k8x8U:\n      opcode = kX64S128Load8x8U;\n      break;\n    case Simd128LoadTransformOp::TransformKind::k16x4S:\n      opcode = kX64S128Load16x4S;\n      break;\n    case Simd128LoadTransformOp::TransformKind::k16x4U:\n      opcode = kX64S128Load16x4U;\n      break;\n    case Simd128LoadTransformOp::TransformKind::k32x2S:\n      opcode = kX64S128Load32x2S;\n      break;\n    case Simd128LoadTransformOp::TransformKind::k32x2U:\n      opcode = kX64S128Load32x2U;\n      break;\n    case Simd128LoadTransformOp::TransformKind::k8Splat:\n      opcode = kX64S128Load8Splat;\n      break;\n    case Simd128LoadTransformOp::TransformKind::k16Splat:\n      opcode = kX64S128Load16Splat;\n      break;\n    case Simd128LoadTransformOp::TransformKind::k32Splat:\n      opcode = kX64S128Load32Splat;\n      break;\n    case Simd128LoadTransformOp::TransformKind::k64Splat:\n      opcode = kX64S128Load64Splat;\n      break;\n    case Simd128LoadTransformOp::TransformKind::k32Zero:\n      opcode = kX64Movss;\n      break;\n    case Simd128LoadTransformOp::TransformKind::k64Zero:\n      opcode = kX64Movsd;\n      break;\n  }",
+    "sha256": "ea4f61dadcbb80132aefa8eb7ac03c935e9e36e5b6001dba96b8fa501d02dd3d"
+  },
+  {
+    "file": "deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc",
+    "line": 1221,
+    "body": "  ArchOpcode opcode;\n  switch (op.transform_kind) {\n    case Simd256LoadTransformOp::TransformKind::k8x16S:\n      opcode = kX64S256Load8x16S;\n      break;\n    case Simd256LoadTransformOp::TransformKind::k8x16U:\n      opcode = kX64S256Load8x16U;\n      break;\n    case Simd256LoadTransformOp::TransformKind::k8x8U:\n      opcode = kX64S256Load8x8U;\n      break;\n    case Simd256LoadTransformOp::TransformKind::k16x8S:\n      opcode = kX64S256Load16x8S;\n      break;\n    case Simd256LoadTransformOp::TransformKind::k16x8U:\n      opcode = kX64S256Load16x8U;\n      break;\n    case Simd256LoadTransformOp::TransformKind::k32x4S:\n      opcode = kX64S256Load32x4S;\n      break;\n    case Simd256LoadTransformOp::TransformKind::k32x4U:\n      opcode = kX64S256Load32x4U;\n      break;\n    case Simd256LoadTransformOp::TransformKind::k8Splat:\n      opcode = kX64S256Load8Splat;\n      break;\n    case Simd256LoadTransformOp::TransformKind::k16Splat:\n      opcode = kX64S256Load16Splat;\n      break;\n    case Simd256LoadTransformOp::TransformKind::k32Splat:\n      opcode = kX64S256Load32Splat;\n      break;\n    case Simd256LoadTransformOp::TransformKind::k64Splat:\n      opcode = kX64S256Load64Splat;\n      break;\n  }",
+    "sha256": "a7a41a07d81a7df87e08001b8ab25e822cf24585fa065eb8f9d3bf66cb785d27"
+  },
+  {
+    "file": "deps/v8/src/maglev/maglev-ir.h",
+    "line": 6455,
+    "body": "#define ASSERT_CONDITION(V) \\\n  V(Equal)                  \\\n  V(NotEqual)               \\\n  V(LessThan)               \\\n  V(LessThanEqual)          \\\n  V(GreaterThan)            \\\n  V(GreaterThanEqual)       \\\n  V(UnsignedLessThan)       \\\n  V(UnsignedLessThanEqual)  \\\n  V(UnsignedGreaterThan)    \\\n  V(UnsignedGreaterThanEqual)",
+    "sha256": "9cdfb4377f1b075eb7c2a4ae616c97539b914df193acdf97870f22e3caaca778"
+  },
+  {
+    "file": "deps/v8/src/maglev/maglev-ir.h",
+    "line": 6467,
+    "body": "enum class AssertCondition {\n#define D(Name) k##Name,\n  ASSERT_CONDITION(D)\n#undef D\n}",
+    "sha256": "c565f791c37b308906bcae6ce7d5e585cd2b280655d1f3ff25c2d9b0b092d24c"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 2078,
+    "body": "  enum class Kind : uint8_t {\n    kEqual,\n    kSignedLessThan,\n    kSignedLessThanOrEqual,\n    kUnsignedLessThan,\n    kUnsignedLessThanOrEqual\n  }",
+    "sha256": "240d36f483da57851d472ff77ebc0a963554448fa248e42b3d79623d3843a935"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+    "line": 5400,
+    "body": "    ComparisonOp::Kind kind;\n    bool swap_inputs = false;\n    switch (condition) {\n      case maglev::AssertCondition::kEqual:\n        kind = ComparisonOp::Kind::kEqual;\n        break;\n      case maglev::AssertCondition::kNotEqual:\n        kind = ComparisonOp::Kind::kEqual;\n        *negate_result = true;\n        break;\n      case maglev::AssertCondition::kLessThan:\n        kind = ComparisonOp::Kind::kSignedLessThan;\n        break;\n      case maglev::AssertCondition::kLessThanEqual:\n        kind = ComparisonOp::Kind::kSignedLessThanOrEqual;\n        break;\n      case maglev::AssertCondition::kGreaterThan:\n        kind = ComparisonOp::Kind::kSignedLessThan;\n        swap_inputs = true;\n        break;\n      case maglev::AssertCondition::kGreaterThanEqual:\n        kind = ComparisonOp::Kind::kSignedLessThanOrEqual;\n        swap_inputs = true;\n        break;\n      case maglev::AssertCondition::kUnsignedLessThan:\n        kind = ComparisonOp::Kind::kUnsignedLessThan;\n        break;\n      case maglev::AssertCondition::kUnsignedLessThanEqual:\n        kind = ComparisonOp::Kind::kUnsignedLessThanOrEqual;\n        break;\n      case maglev::AssertCondition::kUnsignedGreaterThan:\n        kind = ComparisonOp::Kind::kUnsignedLessThan;\n        swap_inputs = true;\n        break;\n      case maglev::AssertCondition::kUnsignedGreaterThanEqual:\n        kind = ComparisonOp::Kind::kUnsignedLessThanOrEqual;\n        swap_inputs = true;\n        break;\n    }",
+    "sha256": "8f6933323ad20dcbe95c65a4dd7593d248fc056703f09e459c124bfd20eafa30"
+  },
+  {
+    "file": "deps/v8/src/maglev/maglev-ir.h",
+    "line": 3409,
+    "body": "#define IEEE_754_UNARY_LIST(V) \\\n  V(MathAcos, acos, Acos)      \\\n  V(MathAcosh, acosh, Acosh)   \\\n  V(MathAsin, asin, Asin)      \\\n  V(MathAsinh, asinh, Asinh)   \\\n  V(MathAtan, atan, Atan)      \\\n  V(MathAtanh, atanh, Atanh)   \\\n  V(MathCbrt, cbrt, Cbrt)      \\\n  V(MathCos, cos, Cos)         \\\n  V(MathCosh, cosh, Cosh)      \\\n  V(MathExp, exp, Exp)         \\\n  V(MathExpm1, expm1, Expm1)   \\\n  V(MathLog, log, Log)         \\\n  V(MathLog1p, log1p, Log1p)   \\\n  V(MathLog10, log10, Log10)   \\\n  V(MathLog2, log2, Log2)      \\\n  V(MathSin, sin, Sin)         \\\n  V(MathSinh, sinh, Sinh)      \\\n  V(MathTan, tan, Tan)         \\\n  V(MathTanh, tanh, Tanh)",
+    "sha256": "3046434b1c803de0ffd2bcd88469488e5b18d5d6187a1c490d4c4fb2e1a7dd19"
+  },
+  {
+    "file": "deps/v8/src/maglev/maglev-ir.h",
+    "line": 3434,
+    "body": "  enum class Ieee754Function : uint8_t {\n#define DECL_ENUM(MathName, ExtName, EnumName) k##EnumName,\n    IEEE_754_UNARY_LIST(DECL_ENUM)\n#undef DECL_ENUM\n  }",
+    "sha256": "c2aaab26e6593d0f2b7eb20f927cd98defde43915bf2327d2f38506625917c5b"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 1953,
+    "body": "  enum class Kind : uint8_t {\n    kAbs,\n    kNegate,\n    kSilenceNaN,\n    kRoundDown,      // round towards -infinity\n    kRoundUp,        // round towards +infinity\n    kRoundToZero,    // round towards 0\n    kRoundTiesEven,  // break ties by rounding towards the next even number\n    kLog,\n    kLog2,\n    kLog10,\n    kLog1p,\n    kSqrt,\n    kCbrt,\n    kExp,\n    kExpm1,\n    kSin,\n    kCos,\n    kSinh,\n    kCosh,\n    kAcos,\n    kAsin,\n    kAsinh,\n    kAcosh,\n    kTan,\n    kTanh,\n    kAtan,\n    kAtanh,\n  }",
+    "sha256": "ddf26a4b196c7bf8c9e6a34fa4cdd4da64c8da665ae14c32fb42b65651dd85ff"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+    "line": 3971,
+    "body": "    FloatUnaryOp::Kind kind;\n    switch (node->ieee_function()) {\n#define CASE(MathName, ExpName, EnumName)                         \\\n  case maglev::Float64Ieee754Unary::Ieee754Function::k##EnumName: \\\n    kind = FloatUnaryOp::Kind::k##EnumName;                       \\\n    break;\n      IEEE_754_UNARY_LIST(CASE)\n#undef CASE\n    }",
+    "sha256": "460b50ede20be08b019bafa635e658ee2571420814d88bb46ef6807ee97ce0a5"
+  },
+  {
+    "file": "deps/v8/src/compiler/machine-operator.h",
+    "line": 359,
+    "body": "enum class ShiftKind { kNormal, kShiftOutZeros }",
+    "sha256": "b3c1a4911331c0a8d77e1e75305b780f3422b231dc857ced6a74c162537960c5"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 2009,
+    "body": "  enum class Kind : uint8_t {\n    kShiftRightArithmeticShiftOutZeros,\n    kShiftRightArithmetic,\n    kShiftRightLogical,\n    kShiftLeft,\n    kRotateRight,\n    kRotateLeft\n  }",
+    "sha256": "ae2a92fa47a7d754566dad57d96cc80c4749e2a0a6883f13364d2f0ed0638a5a"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/graph-builder.cc",
+    "line": 582,
+    "body": "      ShiftOp::Kind kind;\n      switch (ShiftKindOf(op)) {\n        case ShiftKind::kShiftOutZeros:\n          kind = ShiftOp::Kind::kShiftRightArithmeticShiftOutZeros;\n          break;\n        case ShiftKind::kNormal:\n          kind = ShiftOp::Kind::kShiftRightArithmetic;\n          break;\n      }",
+    "sha256": "af990be277f8d7a1a763ba536e97962ef88c3980d73cf194219ac6c7e829edec"
+  }
+]

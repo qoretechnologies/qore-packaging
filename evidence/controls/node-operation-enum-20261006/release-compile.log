@@ -1,0 +1,35 @@
+/work/control.cc: In function ‘ArchOpcode Simd128(Simd128LoadTransformOp)’:
+/work/control.cc:215:8: warning: ‘opcode’ may be used uninitialized [-Wmaybe-uninitialized]
+  215 | return opcode;
+      |        ^~~~~~
+/work/control.cc:176:14: note: ‘opcode’ was declared here
+  176 |   ArchOpcode opcode;
+      |              ^~~~~~
+/work/control.cc: In function ‘ArchOpcode Simd256(Simd256LoadTransformOp)’:
+/work/control.cc:254:8: warning: ‘opcode’ may be used uninitialized [-Wmaybe-uninitialized]
+  254 | return opcode;
+      |        ^~~~~~
+/work/control.cc:218:14: note: ‘opcode’ was declared here
+  218 |   ArchOpcode opcode;
+      |              ^~~~~~
+/work/control.cc: In function ‘auto Compare(maglev::AssertCondition, bool*)’:
+/work/control.cc:296:34: warning: ‘kind’ may be used uninitialized [-Wmaybe-uninitialized]
+  296 | return std::pair{kind,swap_inputs};
+      |                                  ^
+/work/control.cc:257:24: note: ‘kind’ was declared here
+  257 |     ComparisonOp::Kind kind;
+      |                        ^~~~
+/work/control.cc: In function ‘auto Unary(maglev::Float64Ieee754Unary*)’:
+/work/control.cc:308:8: warning: ‘kind’ may be used uninitialized [-Wmaybe-uninitialized]
+  308 | return kind;
+      |        ^~~~
+/work/control.cc:299:24: note: ‘kind’ was declared here
+  299 |     FloatUnaryOp::Kind kind;
+      |                        ^~~~
+/work/control.cc: In function ‘auto Shift(const ShiftKind*)’:
+/work/control.cc:320:8: warning: ‘kind’ may be used uninitialized [-Wmaybe-uninitialized]
+  320 | return kind;
+      |        ^~~~
+/work/control.cc:311:21: note: ‘kind’ was declared here
+  311 |       ShiftOp::Kind kind;
+      |                     ^~~~

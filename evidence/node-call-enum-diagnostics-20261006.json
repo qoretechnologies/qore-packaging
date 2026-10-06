@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "date": "2026-10-06",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User approved these 7 exact compiler diagnostics on 2026-10-06. Normal flags and warnings remain unchanged.",
+  "scope": [
+    {
+      "path": "deps/v8/src/compiler/turboshaft/typer.cc",
+      "lines": [
+        52,
+        60
+      ],
+      "variables": [
+        "is_signed",
+        "is_less_than"
+      ],
+      "declaration_line": 15
+    },
+    {
+      "path": "deps/v8/src/compiler/linkage.h",
+      "line": 117,
+      "variable": "kind",
+      "origin": "deps/v8/src/compiler/linkage.cc:643"
+    },
+    {
+      "path": "deps/v8/src/compiler/linkage.h",
+      "line": 133,
+      "variable": "descriptor_kind",
+      "origin": "deps/v8/src/compiler/wasm-compiler-definitions.cc:73"
+    },
+    {
+      "path": "deps/v8/src/compiler/turboshaft/assembler.h",
+      "line": 3801,
+      "variable": "builtin",
+      "origin": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc:1764"
+    },
+    {
+      "path": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+      "line": 442,
+      "variable": "builtin",
+      "origin": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc:1947"
+    },
+    {
+      "path": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+      "line": 4188,
+      "variable": "kind",
+      "declaration_line": 4174
+    }
+  ],
+  "root_cause": "GCC 13 considers enum values outside the declared dispatch domain and reports uninitialized results after exhaustive switches. Exact unchanged branch bodies reproduce all seven warnings with the original enum declarations.",
+  "source_invariants": [
+    "ComparisonOp::Kind has five declared values. Equality returns before either boolean is used; each relational mode assigns both booleans. Comparison nodes take Kind through typed IR constructors.",
+    "StubCallMode contains code-object and builtin-pointer modes, plus a WASM runtime-stub mode only when WebAssembly is enabled. The same conditional guards its handling; every mode sets both kind and target type.",
+    "WasmCallKind contains four modes. Each initializes descriptor_kind; only indirect calls replace the initialized invalid signature hash. The control tests signature hashing invocation and forwarding, using a typed sentinel hash adapter.",
+    "CallForwardVarargs stores Call::TargetType from its constructor. Its two declared modes both initialize the builtin. LoadGlobal stores a const TypeofMode from construction; both modes initialize its builtin.",
+    "CheckedNumberOrOddballToFloat64OrHoleyFloat64 stores a typed TaggedToFloat64ConversionType in its bitfield. All three declared values map to the corresponding primitive requirement before use."
+  ],
+  "coverage": "All declared comparison/call/conversion modes; equality returns without changing output; signature boundaries 0, 1, high bit and UINT64_MAX-1. WebAssembly enabled and disabled, optimized DEBUG and release controls, each normal and Valgrind: 1,800,000 checks; zero Valgrind errors and all allocations freed.",
+  "limits": "Tests copy unchanged branch bodies and enums. Typed output adapters replace V8 IR nodes and downstream compiler operations; MachineType and Builtin adapters are distinct sentinels, not ABI values. Signature hashing is an invocation/forwarding adapter, not the real hashing algorithm. Tests verify dispatch initialization and mapping, not end-to-end type refinement, compilation or Wasm execution. No invalid enum values are introduced. DEBUG uses optimization to reproduce warnings, not as a performance benchmark.",
+  "policy": "Keep production flags and warnings enabled. No production source changes for these diagnostics.",
+  "files_sha256": {
+    "evidence/controls/node-call-enum-20261006/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-call-enum-20261006/command.json": "4d334511bb94894e933854e5076f183aae1c6977340ed6931c733264b24e6d5d",
+    "evidence/controls/node-call-enum-20261006/control.cc": "6b5ba3794978eb9caa48f7be13bd3df622bce64437a2d705b361fa8ec7742b9a",
+    "evidence/controls/node-call-enum-20261006/debug-wasm0-compile.log": "1affcb31a616d34bf35a69e920f29f12506cae2113fc289de540dfc7aec9877a",
+    "evidence/controls/node-call-enum-20261006/debug-wasm0-memory.log": "65c7b2eb5d0ee28a5157d0eb9f50b619e20848dc53344f1490c9029e17260efa",
+    "evidence/controls/node-call-enum-20261006/debug-wasm0-normal.log": "65c7b2eb5d0ee28a5157d0eb9f50b619e20848dc53344f1490c9029e17260efa",
+    "evidence/controls/node-call-enum-20261006/debug-wasm0-valgrind.log": "32b18a8548ab2f19d891429c9602bbfcbdceaf517327d41c3db94674fea506fb",
+    "evidence/controls/node-call-enum-20261006/debug-wasm1-compile.log": "bdaa99fc743021b6335b1ed65557c25c95cf64c7173dfc8c600f9a57b17d29d6",
+    "evidence/controls/node-call-enum-20261006/debug-wasm1-memory.log": "a7a8784ae5623bfb5b2559d18a82863ea0cfd7aae4e14b94b7869cc03770741c",
+    "evidence/controls/node-call-enum-20261006/debug-wasm1-normal.log": "a7a8784ae5623bfb5b2559d18a82863ea0cfd7aae4e14b94b7869cc03770741c",
+    "evidence/controls/node-call-enum-20261006/debug-wasm1-valgrind.log": "9a5297fe740e89fbc91f364e2f6f902a29666621358aefb6fa3519ec4cf801f7",
+    "evidence/controls/node-call-enum-20261006/prepare.py": "a34434ca2a6d68f770c8482090ad14f994f65453896bee760c407569f02e48bf",
+    "evidence/controls/node-call-enum-20261006/release-wasm0-compile.log": "1affcb31a616d34bf35a69e920f29f12506cae2113fc289de540dfc7aec9877a",
+    "evidence/controls/node-call-enum-20261006/release-wasm0-memory.log": "65c7b2eb5d0ee28a5157d0eb9f50b619e20848dc53344f1490c9029e17260efa",
+    "evidence/controls/node-call-enum-20261006/release-wasm0-normal.log": "65c7b2eb5d0ee28a5157d0eb9f50b619e20848dc53344f1490c9029e17260efa",
+    "evidence/controls/node-call-enum-20261006/release-wasm0-valgrind.log": "247604f64ef35dbe774887b3fea5313bad66bac34c2a2824931ef5b4b627abb5",
+    "evidence/controls/node-call-enum-20261006/release-wasm1-compile.log": "bdaa99fc743021b6335b1ed65557c25c95cf64c7173dfc8c600f9a57b17d29d6",
+    "evidence/controls/node-call-enum-20261006/release-wasm1-memory.log": "a7a8784ae5623bfb5b2559d18a82863ea0cfd7aae4e14b94b7869cc03770741c",
+    "evidence/controls/node-call-enum-20261006/release-wasm1-normal.log": "a7a8784ae5623bfb5b2559d18a82863ea0cfd7aae4e14b94b7869cc03770741c",
+    "evidence/controls/node-call-enum-20261006/release-wasm1-valgrind.log": "bbda03dbc6028c5b5a986855c6a129881565b69c95626198ce29dbf390f1cfa2",
+    "evidence/controls/node-call-enum-20261006/run.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-call-enum-20261006/run.py": "5b1f6b44677ae6d978b8b75e5145bc0be291cbd36301d71687da9a821fb7bca4",
+    "evidence/controls/node-call-enum-20261006/source-extracts.json": "3a34e635a7905f532f3f077fd4526aead4f6e32aa0ccce46eef372b6fa1f5fc5",
+    "evidence/controls/node-call-enum-20261006/status.json": "9859e163c19dcbde1d30f2dee861d54c5a6488a218965e8875c667a87e51edb9"
+  },
+  "approval": "Allow these seven exact diagnostics"
+}

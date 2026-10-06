@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "date": "2026-10-06",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User approved these 5 exact compiler diagnostics on 2026-10-06. Normal flags and warnings remain unchanged.",
+  "scope": [
+    {
+      "path": "deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc",
+      "line": 1178,
+      "variable": "opcode",
+      "declaration": 1135
+    },
+    {
+      "path": "deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc",
+      "line": 1261,
+      "variable": "opcode",
+      "declaration": 1221
+    },
+    {
+      "path": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+      "line": 5442,
+      "variable": "kind",
+      "declaration": 5400
+    },
+    {
+      "path": "deps/v8/src/compiler/turboshaft/assembler.h",
+      "line": 5196,
+      "variable": "kind",
+      "origin": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc:3971"
+    },
+    {
+      "path": "deps/v8/src/compiler/turboshaft/uniform-reducer-adapter.h",
+      "line": 144,
+      "variable": "kind",
+      "origin": "deps/v8/src/compiler/turboshaft/graph-builder.cc:582"
+    }
+  ],
+  "root_cause": "GCC 13 models values outside the declared enum dispatch domain, producing uninitialized-result warnings after exhaustive switches. Unchanged enum declarations/macros and dispatch branches reproduce all five warnings.",
+  "source_invariants": [
+    "SIMD 128/256 load-transform nodes store their typed TransformKind constructor arguments. Their defining macros declare 12 and 11 modes respectively; the selectors initialize opcode for each mode.",
+    "AssertCondition declares ten conditions. Every branch initializes comparison kind; swap starts false and negate is set only for not-equal. Both production callers initialize negate_result=false before invoking the helper.",
+    "Float64Ieee754Unary stores the typed Ieee754Function constructor parameter. The identical IEEE_754_UNARY_LIST macro defines all 19 function enum values and all 19 dispatch cases, assigning a FloatUnaryOp kind.",
+    "ShiftKind contains Normal and ShiftOutZeros. Both cached Word32/Word64 machine operators explicitly initialize one of these values; the graph builder handles both."
+  ],
+  "coverage": "All 23 SIMD load modes, all 19 unary modes and both shift modes. Ten signed/unsigned comparison conditions run across every pair of seven boundary values (INT32_MIN, -65536, -1, 0, 1, 65536, INT32_MAX), verifying swap/negation and semantic comparison results. Optimized release/DEBUG controls, each normally and under Valgrind: 2,136,000 checks; zero errors and all allocations freed.",
+  "limits": "Original enum declarations/macros and branch bodies are copied unchanged. Small typed node adapters and distinct ArchOpcode sentinels replace graph construction and real machine-code emission; the test does not claim end-to-end SIMD execution, IEEE math accuracy or backend compilation coverage. No invalid enum values are introduced. DEBUG controls retain optimization to reproduce warnings, not for benchmarking.",
+  "policy": "Retain production warnings and normal compiler flags; exact sites only, no blanket suppression.",
+  "files_sha256": {
+    "evidence/controls/node-operation-enum-20261006/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-operation-enum-20261006/command.json": "789891c8102ed5887c7aac4a2ce6ee58851c4afbc23c5e57a2e232f9a0e8ccb4",
+    "evidence/controls/node-operation-enum-20261006/control.cc": "413a040cc5ee73fe55dc269ce5cabb799ea65c7591e1190ad12273e648b9b77c",
+    "evidence/controls/node-operation-enum-20261006/debug-compile.log": "1c0a29170d0926d6d763c39618b8e650fd50440669d1f2f442b1c79650dd2508",
+    "evidence/controls/node-operation-enum-20261006/debug-memory.log": "319316601503e5d4de183db4184883e76cf664af4ad3bf7fb272ea278ac053c3",
+    "evidence/controls/node-operation-enum-20261006/debug-normal.log": "319316601503e5d4de183db4184883e76cf664af4ad3bf7fb272ea278ac053c3",
+    "evidence/controls/node-operation-enum-20261006/debug-valgrind.log": "91a611d2d2ac5b6821d693780090a01b9d300943c4d7e6fbb359771d1663bc14",
+    "evidence/controls/node-operation-enum-20261006/prepare.py": "d8c0576306c7aee56ab928c74ab95ab4ae665b5b6d5d5abd1bfadf11918626a6",
+    "evidence/controls/node-operation-enum-20261006/release-compile.log": "1c0a29170d0926d6d763c39618b8e650fd50440669d1f2f442b1c79650dd2508",
+    "evidence/controls/node-operation-enum-20261006/release-memory.log": "319316601503e5d4de183db4184883e76cf664af4ad3bf7fb272ea278ac053c3",
+    "evidence/controls/node-operation-enum-20261006/release-normal.log": "319316601503e5d4de183db4184883e76cf664af4ad3bf7fb272ea278ac053c3",
+    "evidence/controls/node-operation-enum-20261006/release-valgrind.log": "f4de6bdcd9d22a5b023dc9db599e83e3fa40c948420cfe49911adcd4b8f30b7e",
+    "evidence/controls/node-operation-enum-20261006/run.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-operation-enum-20261006/run.py": "2cbcf243b957b3b4c48c78f386bf34f74394e7faa60cf8f73befb3bf6b295104",
+    "evidence/controls/node-operation-enum-20261006/source-extracts.json": "0e789b35cd8aa3be17c5d543ffd79c75e374956d548c7c36c351ea5b3a867fa1",
+    "evidence/controls/node-operation-enum-20261006/status.json": "d4498ee556a820ac1c3199b446ab3e7661b6f3442e8f90fd46e978fa6188fd23"
+  },
+  "approval": "Allow these five exact diagnostics"
+}

@@ -1,0 +1,144 @@
+[
+  {
+    "name": "release-wasm0-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-DV8_ENABLE_WEBASSEMBLY=0",
+      "/work/control.cc",
+      "-o",
+      "/work/control-release-wasm0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "release-wasm0-normal",
+    "command": [
+      "/work/control-release-wasm0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "release-wasm0-memory",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/work/release-wasm0-valgrind.log",
+      "/work/control-release-wasm0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-wasm0-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-DV8_ENABLE_WEBASSEMBLY=0",
+      "-DDEBUG",
+      "/work/control.cc",
+      "-o",
+      "/work/control-debug-wasm0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-wasm0-normal",
+    "command": [
+      "/work/control-debug-wasm0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-wasm0-memory",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/work/debug-wasm0-valgrind.log",
+      "/work/control-debug-wasm0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "release-wasm1-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-DV8_ENABLE_WEBASSEMBLY=1",
+      "/work/control.cc",
+      "-o",
+      "/work/control-release-wasm1"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "release-wasm1-normal",
+    "command": [
+      "/work/control-release-wasm1"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "release-wasm1-memory",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/work/release-wasm1-valgrind.log",
+      "/work/control-release-wasm1"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-wasm1-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-DV8_ENABLE_WEBASSEMBLY=1",
+      "-DDEBUG",
+      "/work/control.cc",
+      "-o",
+      "/work/control-debug-wasm1"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-wasm1-normal",
+    "command": [
+      "/work/control-debug-wasm1"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-wasm1-memory",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/work/debug-wasm1-valgrind.log",
+      "/work/control-debug-wasm1"
+    ],
+    "exit_code": 0
+  }
+]
