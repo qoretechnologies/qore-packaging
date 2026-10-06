@@ -188,6 +188,7 @@ class InstalledQualificationTest(unittest.TestCase):
         expected = {
             'markdown': ['markdown'], 'sysconf': ['sysconf'], 'magic': ['magic'],
             'sqlite3': ['basic'],
+            'msgpack': ['msgpack'],
             'kalman': ['extended-filter', 'factories', 'linear-filter', 'matrix'],
         }
         for name, suites in expected.items():
@@ -220,6 +221,56 @@ class InstalledQualificationTest(unittest.TestCase):
             changed['fixtures'].pop()
             with self.subTest(module=entry['name']), self.assertRaisesRegex(ValueError, 'complete module fixture'):
                 module.validate(manifest)
+
+    def test_aot_module_suites_preload_only_installed_inventory_paths(self):
+        directory = Path('/tmp/installed modules')
+        expected_counts = {'fsevent': 7, 'tar': 3, 'zip': 2}
+        for name, count in expected_counts.items():
+            suffixes = module.MODULE_PRELOADS[name]
+            files = '\n'.join('/usr/lib64/qore-modules/3.0.0' + suffix for suffix in suffixes)
+            with self.subTest(module=name):
+                commands = module.module_commands(name, 'runtime', directory, installed_files=files)
+                qtests = [command for _, command in commands if any(arg.endswith('.qtest') for arg in command)]
+                self.assertEqual(len(qtests), count)
+                for command in qtests:
+                    self.assertIn('--enable-debug', command)
+                    self.assertIn('-b', command)
+                    for suffix in suffixes:
+                        index = command.index('/usr/lib64/qore-modules/3.0.0' + suffix)
+                        self.assertEqual(command[index - 1], '-l')
+                self.assertFalse(any('qcc' in command for _, command in commands))
+                sdk = module.module_commands(name, 'sdk', directory, installed_files=files)
+                self.assertEqual(sdk[:-1], commands)
+                self.assertEqual(sdk[-1][0], 'compiler')
+                for invalid in ('', files + '\n' + files, files.replace('/usr/', 'relative/')):
+                    with self.subTest(invalid=invalid), self.assertRaises(ValueError):
+                        module.module_commands(name, 'runtime', directory, installed_files=invalid)
+
+    def test_archive_cli_and_all_codec_checks_use_installed_commands(self):
+        directory = Path('/tmp/archive fixtures')
+        files = '/usr/lib64/qore-modules/3.0.0/TarDataProvider/TarDataProvider.qmod'
+        tar = dict(module.module_commands('tar', 'runtime', directory, installed_files=files))
+        self.assertEqual(tar['qtar'][:3], ['env', 'QORE_QTAR_BINARY=/usr/bin/qtar', 'QORE_MODULE_DIR='])
+        files = '/usr/lib64/qore-modules/3.0.0/ZipDataProvider/ZipDataProvider.qmod'
+        zip_commands = dict(module.module_commands('zip', 'runtime', directory, installed_files=files))
+        self.assertEqual(zip_commands['features'], ['qore', '-b', '--enable-debug',
+                         '/tmp/archive fixtures/debian/tests/features', '-v'])
+        self.assertEqual(zip_commands['cli'], ['/bin/sh',
+                         '/tmp/archive fixtures/debian/tests/cli', '/usr/bin/qzip'])
+        for family in ('fedora', 'suse', 'el'):
+            self.assertEqual(module.module_dependencies('zip', 'runtime', family), ['unzip', 'diffutils'])
+            self.assertEqual(module.module_dependencies('zip', 'sdk', family), [])
+
+    def test_ncurses_installed_suite_retains_terminal_and_dependency_checks(self):
+        directory = Path('/tmp/ncurses fixtures')
+        commands = module.module_commands('ncurses', 'runtime', directory)
+        self.assertEqual(commands, [('tests', ['env',
+            'QORE_RPM_TEST_TMP=/tmp/ncurses fixtures/runtime-fixture',
+            '/tmp/ncurses fixtures/rpm/tests-installed/runtime'])])
+        self.assertEqual(module.module_commands('ncurses', 'sdk', directory), commands + [
+            ('compiler', ['/tmp/ncurses fixtures/debian/tests/compiler'])])
+        self.assertEqual(len([p for p in module.MODULE_FIXTURES['ncurses'] if p.endswith('.qtest')]), 11)
+        self.assertIn('test/TestHarness.qc', module.MODULE_FIXTURES['ncurses'])
 
     def test_odbc_runtime_and_sdk_cover_installed_arrays_and_native_failures(self):
         directory = Path('/tmp/ODBC fixtures')

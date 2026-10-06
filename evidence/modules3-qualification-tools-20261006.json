@@ -1,0 +1,586 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "Qualification tool unit, local command integration and CI configuration checks pass; new signed native ARM execution remains required.",
+  "added_modules": [
+    "fsevent",
+    "tar",
+    "zip",
+    "ncurses",
+    "msgpack"
+  ],
+  "unit_tests": 152,
+  "local_commands": [
+    {
+      "name": "runtime-magic-magic",
+      "cwd": "/work/runtime-magic",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/runtime-magic/test/magic.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-magic-magic",
+      "cwd": "/work/sdk-magic",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/sdk-magic/test/magic.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-magic-compiler",
+      "cwd": "/work/sdk-magic",
+      "command": [
+        "/work/sdk-magic/debian/tests/compiler"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-msgpack-msgpack",
+      "cwd": "/work/runtime-msgpack",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/runtime-msgpack/test/msgpack.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-msgpack-msgpack",
+      "cwd": "/work/sdk-msgpack",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/sdk-msgpack/test/msgpack.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-msgpack-compiler",
+      "cwd": "/work/sdk-msgpack",
+      "command": [
+        "/work/sdk-msgpack/debian/tests/compiler"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-fsevent-FsEventPoller-negative",
+      "cwd": "/work/runtime-fsevent",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPollerUtil.qmod",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPoller.qmod",
+        "/work/runtime-fsevent/test/FsEventPoller-negative.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-fsevent-FsEventPoller.qm",
+      "cwd": "/work/runtime-fsevent",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPollerUtil.qmod",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPoller.qmod",
+        "/work/runtime-fsevent/test/FsEventPoller.qm.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-fsevent-FsEventPollerUtil",
+      "cwd": "/work/runtime-fsevent",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPollerUtil.qmod",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPoller.qmod",
+        "/work/runtime-fsevent/test/FsEventPollerUtil.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-fsevent-fsevent-corner-cases",
+      "cwd": "/work/runtime-fsevent",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPollerUtil.qmod",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPoller.qmod",
+        "/work/runtime-fsevent/test/fsevent-corner-cases.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-fsevent-fsevent-destroy-in-callback",
+      "cwd": "/work/runtime-fsevent",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPollerUtil.qmod",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPoller.qmod",
+        "/work/runtime-fsevent/test/fsevent-destroy-in-callback.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-fsevent-fsevent-negative",
+      "cwd": "/work/runtime-fsevent",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPollerUtil.qmod",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPoller.qmod",
+        "/work/runtime-fsevent/test/fsevent-negative.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-fsevent-fsevent",
+      "cwd": "/work/runtime-fsevent",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPollerUtil.qmod",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPoller.qmod",
+        "/work/runtime-fsevent/test/fsevent.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-fsevent-FsEventPoller-negative",
+      "cwd": "/work/sdk-fsevent",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPollerUtil.qmod",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPoller.qmod",
+        "/work/sdk-fsevent/test/FsEventPoller-negative.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-fsevent-FsEventPoller.qm",
+      "cwd": "/work/sdk-fsevent",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPollerUtil.qmod",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPoller.qmod",
+        "/work/sdk-fsevent/test/FsEventPoller.qm.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-fsevent-FsEventPollerUtil",
+      "cwd": "/work/sdk-fsevent",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPollerUtil.qmod",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPoller.qmod",
+        "/work/sdk-fsevent/test/FsEventPollerUtil.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-fsevent-fsevent-corner-cases",
+      "cwd": "/work/sdk-fsevent",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPollerUtil.qmod",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPoller.qmod",
+        "/work/sdk-fsevent/test/fsevent-corner-cases.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-fsevent-fsevent-destroy-in-callback",
+      "cwd": "/work/sdk-fsevent",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPollerUtil.qmod",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPoller.qmod",
+        "/work/sdk-fsevent/test/fsevent-destroy-in-callback.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-fsevent-fsevent-negative",
+      "cwd": "/work/sdk-fsevent",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPollerUtil.qmod",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPoller.qmod",
+        "/work/sdk-fsevent/test/fsevent-negative.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-fsevent-fsevent",
+      "cwd": "/work/sdk-fsevent",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPollerUtil.qmod",
+        "-l",
+        "/usr/lib64/qore-modules/FsEventPoller.qmod",
+        "/work/sdk-fsevent/test/fsevent.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-fsevent-compiler",
+      "cwd": "/work/sdk-fsevent",
+      "command": [
+        "/work/sdk-fsevent/debian/tests/compiler"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-tar-TarDataProvider",
+      "cwd": "/work/runtime-tar",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/TarDataProvider/TarDataProvider.qmod",
+        "/work/runtime-tar/test/TarDataProvider.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-tar-qtar",
+      "cwd": "/work/runtime-tar",
+      "command": [
+        "env",
+        "QORE_QTAR_BINARY=/usr/bin/qtar",
+        "QORE_MODULE_DIR=",
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/TarDataProvider/TarDataProvider.qmod",
+        "/work/runtime-tar/test/qtar.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-tar-tar",
+      "cwd": "/work/runtime-tar",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/TarDataProvider/TarDataProvider.qmod",
+        "/work/runtime-tar/test/tar.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-tar-TarDataProvider",
+      "cwd": "/work/sdk-tar",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/TarDataProvider/TarDataProvider.qmod",
+        "/work/sdk-tar/test/TarDataProvider.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-tar-qtar",
+      "cwd": "/work/sdk-tar",
+      "command": [
+        "env",
+        "QORE_QTAR_BINARY=/usr/bin/qtar",
+        "QORE_MODULE_DIR=",
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/TarDataProvider/TarDataProvider.qmod",
+        "/work/sdk-tar/test/qtar.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-tar-tar",
+      "cwd": "/work/sdk-tar",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/TarDataProvider/TarDataProvider.qmod",
+        "/work/sdk-tar/test/tar.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-tar-compiler",
+      "cwd": "/work/sdk-tar",
+      "command": [
+        "/work/sdk-tar/debian/tests/compiler"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-zip-ZipDataProvider",
+      "cwd": "/work/runtime-zip",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/ZipDataProvider/ZipDataProvider.qmod",
+        "/work/runtime-zip/test/ZipDataProvider.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-zip-zip",
+      "cwd": "/work/runtime-zip",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/ZipDataProvider/ZipDataProvider.qmod",
+        "/work/runtime-zip/test/zip.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-zip-features",
+      "cwd": "/work/runtime-zip",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/runtime-zip/debian/tests/features",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-zip-cli",
+      "cwd": "/work/runtime-zip",
+      "command": [
+        "/bin/sh",
+        "/work/runtime-zip/debian/tests/cli",
+        "/usr/bin/qzip"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-zip-ZipDataProvider",
+      "cwd": "/work/sdk-zip",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/ZipDataProvider/ZipDataProvider.qmod",
+        "/work/sdk-zip/test/ZipDataProvider.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-zip-zip",
+      "cwd": "/work/sdk-zip",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "-l",
+        "/usr/lib64/qore-modules/ZipDataProvider/ZipDataProvider.qmod",
+        "/work/sdk-zip/test/zip.qtest",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-zip-features",
+      "cwd": "/work/sdk-zip",
+      "command": [
+        "qore",
+        "-b",
+        "--enable-debug",
+        "/work/sdk-zip/debian/tests/features",
+        "-v"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-zip-cli",
+      "cwd": "/work/sdk-zip",
+      "command": [
+        "/bin/sh",
+        "/work/sdk-zip/debian/tests/cli",
+        "/usr/bin/qzip"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-zip-compiler",
+      "cwd": "/work/sdk-zip",
+      "command": [
+        "/work/sdk-zip/debian/tests/compiler"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime-ncurses-tests",
+      "cwd": "/work/runtime-ncurses",
+      "command": [
+        "env",
+        "QORE_RPM_TEST_TMP=/work/runtime-ncurses/runtime-fixture",
+        "/work/runtime-ncurses/rpm/tests-installed/runtime"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-ncurses-tests",
+      "cwd": "/work/sdk-ncurses",
+      "command": [
+        "env",
+        "QORE_RPM_TEST_TMP=/work/sdk-ncurses/runtime-fixture",
+        "/work/sdk-ncurses/rpm/tests-installed/runtime"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "sdk-ncurses-compiler",
+      "cwd": "/work/sdk-ncurses",
+      "command": [
+        "/work/sdk-ncurses/debian/tests/compiler"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "local_command_json": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results:/results:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/modules3-command-integration-20261006:/work",
+    "sha256:475f8d53919b1aee51d9e402158b861498a134473e3144632944e6f546ab6748",
+    "sh",
+    "-eu",
+    "-c",
+    "rpm -U --replacepkgs \"$@\"\nexec setpriv --reuid=1019 --regid=100 --clear-groups python3 -B -W error /work/run.py",
+    "install",
+    "/results/fedora-final-9-magic/rpmbuild/RPMS/x86_64/qore-magic-module-2.0.0-2.fc44.x86_64.rpm",
+    "/results/fedora-final-9-msgpack/rpmbuild/RPMS/x86_64/qore-msgpack-module-1.0.1-2.fc44.x86_64.rpm",
+    "/results/fedora-final-9-fsevent/rpmbuild/RPMS/x86_64/qore-fsevent-module-2.0.0-1.fc44.x86_64.rpm",
+    "/results/fedora-final-9-tar/rpmbuild/RPMS/x86_64/qore-tar-module-1.0.0-1.fc44.x86_64.rpm",
+    "/results/fedora-zip-matrix-final/rpmbuild/RPMS/x86_64/qore-zip-module-1.0.0-1.fc44.x86_64.rpm",
+    "/results/fedora-final-9-ncurses/rpmbuild/RPMS/x86_64/qore-ncurses-module-2.0.0-1.fc44.x86_64.rpm"
+  ],
+  "approved_diagnostic": "34 occurrences of the same ProviderIndexUtil/msgpack optional-module source fallback approved 2026-10-01; no suppression.",
+  "source_md5": {
+    "fsevent": "7a62c770172fca992549202aa29f04a4",
+    "tar": "0e1745fab81e7f4272d8b501a4c4205c",
+    "zip": "5e05f83994e3b7d29f620828dc6bc5b9",
+    "ncurses": "e77d639bfb4182dfaf14cc98c17ae801",
+    "msgpack": "36e42e8e9fc9ccb708ca3244aba21aa8"
+  },
+  "checksums": {
+    "results/modules3-packaging-tests-20261006.log": "389a2081263405680937ea084008e22b2f6fbb23d2262bd2594465769f321034",
+    "results/modules3-command-integration-20261006.log": "2f105382ee34a7acb1111d0ab8a33aaa8054416c12f3021ed402b55fa7f76d54",
+    "qualification/modules3-fedora-aarch64.json": "8408085fef46e717ba71a56fe57e0d5e0ccbd2d71355497734c3e1c9bde910cd",
+    "qualification/modules3-el10-aarch64.json": "c0c5fd36dc5c9b45cef06d52012e187133afe7c653b952b8d387848b4d05760f",
+    "qualification/modules3-leap-aarch64.json": "4b1e8161c806af593cd8d453baddefff151d7c98831f8d9faa8b2065c34a3753"
+  },
+  "limitations": "Local integration uses a Fedora core21 SDK image and canonical x86_64 RPMs, not a fresh minimal runtime or native ARM. ZIP native builds now exist on all six targets; Leap catalog lint and OBS bootstrap diagnostics remain separately recorded, not accepted here."
+}

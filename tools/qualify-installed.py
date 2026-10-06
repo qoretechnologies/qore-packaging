@@ -17,6 +17,18 @@ from packaging import fetch_source
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'msgpack': {'test/msgpack.qtest', 'debian/tests/compiler'},
+    'fsevent': {'debian/tests/compiler'} | {'test/' + name + '.qtest' for name in
+        ('FsEventPoller-negative', 'FsEventPoller.qm', 'FsEventPollerUtil',
+         'fsevent-corner-cases', 'fsevent-destroy-in-callback', 'fsevent-negative', 'fsevent')},
+    'tar': {'test/TarDataProvider.qtest', 'test/qtar.qtest', 'test/tar.qtest',
+            'debian/tests/compiler'},
+    'zip': {'test/ZipDataProvider.qtest', 'test/zip.qtest', 'debian/tests/compiler',
+            'debian/tests/features', 'debian/tests/cli'},
+    'ncurses': {'rpm/tests-installed/runtime', 'test/TestHarness.qc', 'debian/tests/compiler'}
+        | {'test/ncurses' + suffix + '.qtest' for suffix in
+           ('', '-app', '-base', '-components', '-integration', '-layout', '-qrepl',
+            '-scroll', '-terminal-text', '-widget', '-wrap')},
     'markdown': {'test/markdown.qtest', 'test/test.md', 'test/test.html', 'rpm/compiler.qr'},
     'sysconf': {'test/sysconf.qtest', 'debian/tests/compiler'},
     'magic': {'test/magic.qtest', 'test/qore.png', 'test/qore.jpg', 'test/qore.txt',
@@ -37,6 +49,13 @@ MODULE_FIXTURES = {
              'test/native/bind-failure.qtest', 'test/native/array-size.cpp',
              'src/ODBCArraySize.h'},
 }
+MODULE_PRELOADS = {
+    'fsevent': ('/FsEventPollerUtil.qmod', '/FsEventPoller.qmod'),
+    'tar': ('/TarDataProvider/TarDataProvider.qmod',),
+    'zip': ('/ZipDataProvider/ZipDataProvider.qmod',),
+}
+SIMPLE_MODULES = ('markdown', 'sysconf', 'magic', 'sqlite3', 'kalman', 'msgpack',
+                  'fsevent', 'tar', 'zip')
 
 
 def validate_modules(manifest):
@@ -117,6 +136,8 @@ def module_dependencies(name, phase, family):
     if name == 'odbc':
         return (['postgresql-server', 'psqlODBC' if family == 'suse' else 'postgresql-odbc']
                 if phase == 'runtime' else ['unixODBC-devel'])
+    if name == 'zip' and phase == 'runtime':
+        return ['unzip', 'diffutils']
     return []
 
 
@@ -128,19 +149,36 @@ def installed_module_file(name, files, suffix):
     return candidates[0]
 
 
-def module_commands(name, phase, directory, binary=None, driver=None):
+def module_commands(name, phase, directory, binary=None, driver=None, installed_files=''):
     """Fixed commands only; manifests select reviewed suites, never shell text."""
     if name not in MODULE_FIXTURES or phase not in ('runtime', 'sdk'):
         raise ValueError('Unknown module suite or phase')
-    if name in ('markdown', 'sysconf', 'magic', 'sqlite3', 'kalman'):
+    if name == 'ncurses':
+        commands = [('tests', ['env', 'QORE_RPM_TEST_TMP=' + str(directory / 'runtime-fixture'),
+                               str(directory / 'rpm/tests-installed/runtime')])]
+        if phase == 'sdk':
+            commands.append(('compiler', [str(directory / 'debian/tests/compiler')]))
+        return commands
+    if name in SIMPLE_MODULES:
         commands = []
+        preloads = []
+        for suffix in MODULE_PRELOADS.get(name, ()):
+            preloads.extend(['-l', str(installed_module_file(name, installed_files, suffix))])
         for path in sorted(MODULE_FIXTURES[name]):
             if not path.endswith('.qtest'):
                 continue
-            command = ['qore', '-b', '--enable-debug', str(directory / path), '-v']
+            command = ['qore', '-b', '--enable-debug', *preloads, str(directory / path), '-v']
             if name == 'sqlite3':
                 command.extend(['--db', str(directory / 'qualification.sqlite')])
+            if name == 'tar' and path == 'test/qtar.qtest':
+                command = ['env', 'QORE_QTAR_BINARY=/usr/bin/qtar', 'QORE_MODULE_DIR=', *command]
             commands.append((Path(path).stem, command))
+        if name == 'zip':
+            commands.extend([
+                ('features', ['qore', '-b', '--enable-debug',
+                              str(directory / 'debian/tests/features'), '-v']),
+                ('cli', ['/bin/sh', str(directory / 'debian/tests/cli'), '/usr/bin/qzip']),
+            ])
         if phase == 'sdk':
             if name == 'markdown':
                 compiled = directory / 'markdown-compiled'
@@ -302,6 +340,9 @@ def qualify(manifest, output):
                     subprocess.run(['chown', '-R', 'qoretester:qoretester', str(directory)], check=True)
                     binary = None
                     driver = None
+                    files = ''
+                    if name in MODULE_PRELOADS:
+                        files = subprocess.check_output(['rpm', '-ql', 'qore-' + name + '-module'], text=True)
                     if phase == 'sdk' and name in ('process', 'odbc'):
                         files = subprocess.check_output(['rpm', '-ql', 'qore-' + name + '-module'], text=True)
                         binary = installed_module_file(name, files, '.qmod')
@@ -314,7 +355,7 @@ def qualify(manifest, output):
                                      'LD_LIBRARY_PATH', 'LD_PRELOAD'):
                         environment.extend(['-u', variable])
                     environment.append('AUTOPKGTEST_TMP=' + str(directory))
-                    for suite, command in module_commands(name, phase, directory, binary, driver):
+                    for suite, command in module_commands(name, phase, directory, binary, driver, files):
                         run(phase + '-' + name + '-' + suite, environment + command, cwd=directory)
         result['exit_code'] = 0
     except BaseException as error:

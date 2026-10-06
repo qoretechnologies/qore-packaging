@@ -80,3 +80,14 @@ The manifest validator rejects missing fixtures, cross-repository URLs, mutable
 revisions, duplicate modules and incorrect package phases before installation.
 Native results and raw logs are retained as pipeline artifacts. A passing build
 or local command check alone does not qualify the native installed packages.
+
+``RPM_NATIVE_QUALIFICATION=modules3`` retains those five modules and adds
+filesystem events, TAR, ZIP, ncurses and MessagePack. AOT providers are resolved
+from each installed RPM's file inventory and loaded explicitly; missing or
+ambiguous providers fail qualification. The archive checks use installed CLI
+programs, exercise every advertised ZIP compression/encryption combination,
+and check interoperability with distribution ``unzip``. The ncurses fixture
+uses a virtual terminal, runs all eleven suites and verifies that its compiled
+magic dependency cannot be removed. Runtime phases do not invoke the compiler.
+The previously approved ProviderIndexUtil diagnostic is expected when
+MessagePack changes its optional-module availability; logs retain that message.
