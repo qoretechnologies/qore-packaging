@@ -35,3 +35,9 @@ omitting the optional LLVM name indexes, as approved on 2026-10-06. Paired
 controls and all resulting debug RPMs support source lookup and breakpoints.
 See ``evidence/ssh2-proj-debugger-proposal-20261006.json`` and
 ``evidence/proj-negative-diagnostic-20261006.json`` for exact scope and limits.
+
+Pipeline 59662 passed both signed native ARM jobs: 96 functional cases in
+each runtime and SDK phase on each distribution (384 total), plus compiled
+examples and core runtime/SDK checks. Each phase explicitly skips the optional
+PROJ/Python namespace case until the Python module is included in the combined
+installation. All package signatures, hashes and RPM payload checks pass.
