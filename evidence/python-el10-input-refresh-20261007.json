@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "status": "AlmaLinux input pins corrected; native rerun required.",
+  "root_cause": "The Python manifest inherited core21 inputs written before the AlmaLinux OBS dependency-triggered rebuild. OBS replaced those binary filenames; qualification correctly failed before installation with HTTP 404.",
+  "changes": 14,
+  "verification": "All sixteen RPMs downloaded and SHA-256 verified. Package versions unchanged; core and both module source hashes match the qualified inputs. Current build history is recorded. Manifest validation passes.",
+  "limits": "Updated binaries must pass signed native installed qualification; no retry, checksum, signature or diagnostic check is relaxed.",
+  "manifest_sha256": "3fb68f49991eaad7e0b200e87ce873d0669db81dad17123d47e9961c0ba23689",
+  "files_sha256": {
+    "evidence/controls/python-el10-input-refresh-20261007/refresh.py": "84dfe926aebe3a020d7fe13832adce90b6ea7da7a7c0c811bfc0dc52b62e05fa",
+    "evidence/controls/python-el10-input-refresh-20261007/review.json": "10670a76c3ba283488655511b8278bbb77653cc3a2d2718b033c2e2d6c90bc4c",
+    "evidence/controls/python-el10-input-refresh-20261007/verification.log": "01ffb515c8476f32ac684aa5d2067a2c2a4de6e2a4e2f322478f7c95e147a00b"
+  }
+}
