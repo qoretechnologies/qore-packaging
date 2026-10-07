@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "date": "2026-10-06",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Local SDK22 repository installation, runtime and SDK tests pass on all three distributions. Native signed OBS qualification remains required.",
+  "root_cause": "AmqpUtil captures XML during AOT compilation. The original RPM carried only a BuildRequires on XML; the Qore RPM generator provides core ABI/version requirements, not external module dependencies. A minimal installation therefore could not load AmqpUtil.",
+  "fix": "Declare native qore-xml-module >= 1.0 in Requires and BuildRequires. Preserve optional source-module behavior. The repository solver installs XML when only AMQP and GEOS are requested.",
+  "runner": "The signed installed-package runner accepts AMQP fixtures, requires XML in the runtime phase, runs the installed offline fixture and adds the qcc consumer after SDK installation.",
+  "proof": {
+    "fedora": {
+      "runtime_image": "sha256:fb839d5d4c523ddcdf0fb952f8b98f359d1b252bfa0db38eee39b70bf1b65218",
+      "sdk_image": "sha256:1b15257a1cfec2ecb788bd7425a97142e411fb6d6069052f5562c71f76dcc95e",
+      "steps": {
+        "runtime-install": 0,
+        "runtime-tests": 0,
+        "sdk-install": 0,
+        "sdk-tests": 0
+      },
+      "checks": {
+        "runtime": {
+          "reported_cases": 139,
+          "assertions": 971,
+          "approved_diagnostics": [
+            "DataProvider",
+            "QUnit"
+          ]
+        },
+        "sdk": {
+          "reported_cases": 139,
+          "assertions": 971,
+          "approved_diagnostics": [
+            "DataProvider",
+            "QUnit"
+          ]
+        }
+      },
+      "artifacts": {
+        "amqp": {
+          "rpmbuild/RPMS/noarch/qore-amqp-module-doc-1.0.0-3.fc44.noarch.rpm": "e2d73ba2e5345683a96b4c2ecebc091b70ee325dfec9a74db7d4191e1b8b362f",
+          "rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-3.fc44.x86_64.rpm": "385c077a4fd1441be8875528e6509dba7fd5d2786fa5f6bd4f0c5a2e2e2cc3f1",
+          "rpmbuild/RPMS/x86_64/qore-amqp-module-debuginfo-1.0.0-3.fc44.x86_64.rpm": "6af0adb1b38380e17a3ad081fde2cae24af22ae9102abf4b0dfd2160d819fbbe",
+          "rpmbuild/RPMS/x86_64/qore-amqp-module-debugsource-1.0.0-3.fc44.x86_64.rpm": "405ca55c713ca35e6352546435596c22b594937f5e6a5d172eafafb0e820bba6"
+        },
+        "geos": {
+          "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-3.fc44.noarch.rpm": "c84b9386c39959772ec1bb518f8c37a3644ab5c3f0669d343343c788d203c51c",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.fc44.x86_64.rpm": "d6f07970a7bbaaa4880c54cb78297dfbbded196e423de8489c36a4987542421a",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-3.fc44.x86_64.rpm": "323cf67245dfc119bdf0febfce5fb3e3bcde61574502bd37ce27eaf0d06f894a",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-3.fc44.x86_64.rpm": "df3b31cf0cbc0dc5494b6278cec1bbb7d11eb14e4c880aaaeee7e87aefc69dcc"
+        }
+      }
+    },
+    "leap": {
+      "runtime_image": "sha256:22d080a626be89061dd78e95476ea56e2df6a398782cffeb7574fee000fe7aa3",
+      "sdk_image": "sha256:6753d84b2f710d2af58f08944812d522766992b8c43e0b58d61c0d9e8deb6758",
+      "steps": {
+        "runtime-install": 0,
+        "runtime-tests": 0,
+        "sdk-install": 0,
+        "sdk-tests": 0
+      },
+      "checks": {
+        "runtime": {
+          "reported_cases": 139,
+          "assertions": 960,
+          "approved_diagnostics": [
+            "DataProvider",
+            "QUnit"
+          ]
+        },
+        "sdk": {
+          "reported_cases": 139,
+          "assertions": 960,
+          "approved_diagnostics": [
+            "DataProvider",
+            "QUnit"
+          ]
+        }
+      },
+      "artifacts": {
+        "amqp": {
+          "rpmbuild/RPMS/noarch/qore-amqp-module-doc-1.0.0-3.noarch.rpm": "2cf3e3a6971af1881d216b1b074d0451bbaddf20bd0a0f0d3447a08b0ea89b99",
+          "rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-3.x86_64.rpm": "42c486e6f7ecd83d616ddcd72bd466ccef8e48db66e1dd381cb176c30774e312",
+          "rpmbuild/RPMS/x86_64/qore-amqp-module-debuginfo-1.0.0-3.x86_64.rpm": "38b425682d5783c16b6bbfb97eff85fc9c002b6196584f51aafec6a78cdfddd4",
+          "rpmbuild/RPMS/x86_64/qore-amqp-module-debugsource-1.0.0-3.x86_64.rpm": "21091d7cb62ba37e17a8938f4faf6731b8dd06e9109a6e6cb265bd60b3e621ae"
+        },
+        "geos": {
+          "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-3.noarch.rpm": "570f6a31ee639a0f6c099f20749d43e3e0976f1d4a6e5f869cf975a5e9f7b600",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.x86_64.rpm": "8e2948f8ea5bafbd7b55a852a463bfdbf27e20d67f8573f964c264e052c0c772",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-3.x86_64.rpm": "92a22b07298e21ca4116e297246506493ad79e403c78a6569e059f47f59d4309",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-3.x86_64.rpm": "606f7ad786e87cb6dd9c4bbaa003e8a3149da6c787c81614d65ab7b815061469"
+        }
+      }
+    },
+    "el10": {
+      "runtime_image": "sha256:e79f8d6b27c3c59c4354a816004553a6621c676065e19b34a98f72d77f5ad601",
+      "sdk_image": "sha256:6e89b39017a5c95aec870283a2a9727edadf566e5478699be81d1ad9a95e7ac8",
+      "steps": {
+        "runtime-install": 0,
+        "runtime-tests": 0,
+        "sdk-install": 0,
+        "sdk-tests": 0
+      },
+      "checks": {
+        "runtime": {
+          "reported_cases": 139,
+          "assertions": 960,
+          "approved_diagnostics": [
+            "DataProvider",
+            "QUnit"
+          ]
+        },
+        "sdk": {
+          "reported_cases": 139,
+          "assertions": 960,
+          "approved_diagnostics": [
+            "DataProvider",
+            "QUnit"
+          ]
+        }
+      },
+      "artifacts": {
+        "amqp": {
+          "rpmbuild/RPMS/noarch/qore-amqp-module-doc-1.0.0-3.el10.noarch.rpm": "3cb270baafed763f62f0f92b98e2b5392e40da66e981699bc51458b6f7ded249",
+          "rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-3.el10.x86_64.rpm": "17743497269dac91d38705d1a60c761bc24da7c2ee2fff2bbb55cf20c666f824",
+          "rpmbuild/RPMS/x86_64/qore-amqp-module-debuginfo-1.0.0-3.el10.x86_64.rpm": "1e7393a4461fbc732799229da28c10cbaec5acf2ce29cf1e7b39efa0b6c247e4",
+          "rpmbuild/RPMS/x86_64/qore-amqp-module-debugsource-1.0.0-3.el10.x86_64.rpm": "1814d0f05fa411ee51323d5c5f328b15570491f631720ae96b3b70f847417985"
+        },
+        "geos": {
+          "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-3.el10.noarch.rpm": "c310cc48c90e7ca6a5532a6bf80816364596548e10c9a0f400a350344e781ca8",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.el10.x86_64.rpm": "a33af136c01a4fae4649d8857af33bc953363a5101c1ec69f2d846b2f7ada4c2",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-3.el10.x86_64.rpm": "e662822b987289589461ff29402447b9caa1164383dd913e860bd7c1c96ab638",
+          "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-3.el10.x86_64.rpm": "0d2ad7d3d338c0360121f18b982271e80174a81a7f22e6379b4b08d883e8f7c3"
+        }
+      }
+    }
+  },
+  "tests": {
+    "unit_cases": 42,
+    "existing_manifests_validated": 39
+  },
+  "approved_diagnostics": [
+    "evidence/qunit-xml-aot-diagnostic-20261006.json",
+    "evidence/xml-library-aot-diagnostics-20261006.json"
+  ],
+  "limits": [
+    "Offline RPM/runtime tests deliberately omit unavailable broker/TLS cases; connected qualification is separate.",
+    "Source/body fixes were committed previously; this change adds packaging dependency and runner registration.",
+    "Native aarch64 and signed current OBS artifacts remain release gates."
+  ],
+  "sha256": {
+    "evidence/controls/amqp-sdk22-installed-20261006/fedora-status.json": "1d96595bf0908e0fec25447a23fbb34917a951a61d0f6fb2887652e70824a7b3",
+    "evidence/controls/amqp-sdk22-installed-20261006/fedora-sdk-install.log.gz": "e37baa7ebd7d1d54657e677ee866dadf1715393bd88503f418c1d618d6cfe231",
+    "evidence/controls/amqp-sdk22-installed-20261006/fedora-sdk-tests.log.gz": "3ec33c3deb88c0aad41badf2eb031ec95abd7c15cde24e9862406f29b79f9199",
+    "evidence/controls/amqp-sdk22-installed-20261006/fedora-runtime-install.log.gz": "d21a8b3c31e3406b86695cfe6904f1ba2054001a8c5d81ee61f5bac723aa8e31",
+    "evidence/controls/amqp-sdk22-installed-20261006/fedora-runtime-tests.log.gz": "d6c034ae985b80164fe9dc54164281f6996cb6ea86a7fd8c0cae47bc3e25b0a0",
+    "evidence/controls/amqp-sdk22-installed-20261006/leap-status.json": "49fbf9fda392dd722421caf463825f24ac03168f820820b1590d5dc86bf83c1e",
+    "evidence/controls/amqp-sdk22-installed-20261006/leap-sdk-install.log.gz": "ddabc3ee240f5d481fa4e0d58a9e41c1b0a87659269095ae6dbb934b5342207e",
+    "evidence/controls/amqp-sdk22-installed-20261006/leap-sdk-tests.log.gz": "70410208dd7e88c7715b2e6ac2cbad415f2273f09dea58b042910cca0198d6bf",
+    "evidence/controls/amqp-sdk22-installed-20261006/leap-runtime-install.log.gz": "0696516d2953c6310bbfc940992d7997aa7b1a7700d11c9827aef9a3d080ff24",
+    "evidence/controls/amqp-sdk22-installed-20261006/leap-runtime-tests.log.gz": "ad5eb549b90d6b3f2b3e3868969b818f3a7f5f723e638bc6ea0786d155c9a094",
+    "evidence/controls/amqp-sdk22-installed-20261006/el10-status.json": "6cc92ae2be58574033abb9ed6f480ed0ccd5e9c270d925ce3f9261bbc9be67e0",
+    "evidence/controls/amqp-sdk22-installed-20261006/el10-sdk-install.log.gz": "b745efe0739d017e75bcf22fac955ff84fe9ccf2f07f0e6440bc8c643954abcd",
+    "evidence/controls/amqp-sdk22-installed-20261006/el10-sdk-tests.log.gz": "9866df40cc1da434060e83bf9b9f2b10ea909f3c36eef3ffaf45ca7dbf8ff386",
+    "evidence/controls/amqp-sdk22-installed-20261006/el10-runtime-install.log.gz": "1f2f9a1390abd87a55ec039b8e1253bf8300a9be870c1a6229687aceabe363b6",
+    "evidence/controls/amqp-sdk22-installed-20261006/el10-runtime-tests.log.gz": "0cc5db300150a91ae6b2cbce5e0b115af1bacdf4bd6ab0eaae29140435a81808",
+    "evidence/controls/amqp-sdk22-installed-20261006/runner-tests.log.gz": "3c31653a236267cae15c71eaf15d8a0082d40f1295f574e3427cf7320f4ae766"
+  }
+}

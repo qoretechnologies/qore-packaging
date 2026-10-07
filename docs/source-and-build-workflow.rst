@@ -123,3 +123,14 @@ geometry operations, and local and virtual Git repositories. Graphics fixtures
 declare their font dependencies explicitly. Every module repeats its runtime
 tests after SDK installation and compiles and executes a consumer. ZeroMQ
 qualification follows separately after its sandbox error-ownership fix.
+
+The installed-package runner also accepts ``amqp`` module entries. Pin the
+AMQP runtime RPM and its XML dependency in the runtime phase: the compiled
+helpers require XML even though source-module loading supports optional XML.
+The runner rejects manifests that omit XML or defer it to SDK installation.
+Pin all five Qore test suites, ``rpm/tests-installed-runtime`` and
+``debian/tests/compiler`` from the same AMQP source commit. The offline runner
+copies tests outside the checkout, clears broker settings and development
+paths, and explicitly loads the installed AOT helpers. The SDK phase also
+compiles and runs the message-conversion and provider-registration consumer.
+These offline checks do not replace connected broker and TLS/mTLS qualification.

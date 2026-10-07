@@ -18,6 +18,9 @@ from packaging import fetch_source
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'amqp': {'rpm/tests-installed-runtime', 'debian/tests/compiler'}
+        | {'test/' + name + '.qtest' for name in
+           ('amqp', 'amqp-integration', 'amqp-tls', 'AmqpUtil', 'AmqpDataProvider')},
     'ssh2': {'rpm/run-tests.py', 'debian/tests/compiler'}
         | {'test/' + name + '.qtest' for name in
            ('NegativeTests', 'SFTPClient', 'SftpClientDataProvider', 'SftpPollGetFile',
@@ -135,6 +138,8 @@ def validate_modules(manifest):
             raise ValueError('Missing module runtime RPM')
         if name == 'xmlsec' and packages.get('qore-xml-module', {}).get('phase') != 'runtime':
             raise ValueError('XML Security requires a pinned XML runtime RPM')
+        if name == 'amqp' and packages.get('qore-xml-module', {}).get('phase') != 'runtime':
+            raise ValueError('AMQP AOT helpers require a pinned XML runtime RPM')
         if name == 'proj' and packages.get('qore-geos-module', {}).get('phase') != 'runtime':
             raise ValueError('PROJ requires a pinned GEOS runtime RPM')
         fixtures.extend(files)
@@ -219,6 +224,12 @@ def module_commands(name, phase, directory, binary=None, driver=None, installed_
     """Fixed commands only; manifests select reviewed suites, never shell text."""
     if name not in MODULE_FIXTURES or phase not in ('runtime', 'sdk'):
         raise ValueError('Unknown module suite or phase')
+    if name == 'amqp':
+        commands = [('tests', ['env', 'QORE_RPM_TEST_TMP=' + str(directory / 'runtime-fixture'),
+                              str(directory / 'rpm/tests-installed-runtime')])]
+        if phase == 'sdk':
+            commands.append(('compiler', [str(directory / 'debian/tests/compiler')]))
+        return commands
     if name == 'ssh2':
         commands = [('tests', ['python3', '-B', '-W', 'error',
                               str(directory / 'rpm/run-tests.py'), '--installed'])]

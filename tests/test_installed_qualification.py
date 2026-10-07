@@ -193,6 +193,34 @@ os.write(2, b'diagnostic\\n')
         self.add_modules()
         self.assertEqual(module.validate(self.manifest), self.manifest)
 
+    def test_amqp_rejects_missing_or_sdk_only_xml_before_installation(self):
+        self.add_modules()
+        self.manifest['modules'] = [entry for entry in self.manifest['modules']
+                                    if entry['name'] == 'amqp']
+        for phase in ('missing', 'sdk'):
+            manifest = copy.deepcopy(self.manifest)
+            dependency = next(p for p in manifest['packages'] if p['name'] == 'qore-xml-module')
+            if phase == 'missing':
+                manifest['packages'].remove(dependency)
+            else:
+                dependency['phase'] = phase
+            with self.subTest(phase=phase), self.assertRaisesRegex(ValueError, 'AMQP AOT helpers'):
+                module.validate(manifest)
+
+    def test_amqp_offline_runtime_and_sdk_commands(self):
+        directory = Path('/tmp/AMQP installed fixtures')
+        runtime = module.module_commands('amqp', 'runtime', directory)
+        self.assertEqual(runtime, [('tests', ['env',
+            'QORE_RPM_TEST_TMP=/tmp/AMQP installed fixtures/runtime-fixture',
+            '/tmp/AMQP installed fixtures/rpm/tests-installed-runtime'])])
+        self.assertEqual(module.module_commands('amqp', 'sdk', directory), runtime + [
+            ('compiler', ['/tmp/AMQP installed fixtures/debian/tests/compiler'])])
+        self.assertEqual(module.MODULE_FIXTURES['amqp'], {'rpm/tests-installed-runtime',
+            'debian/tests/compiler', 'test/amqp.qtest', 'test/amqp-integration.qtest',
+            'test/amqp-tls.qtest', 'test/AmqpUtil.qtest', 'test/AmqpDataProvider.qtest'})
+        for family in ('fedora', 'suse', 'el'):
+            self.assertEqual(module.module_dependencies('amqp', 'runtime', family), [])
+
     def test_xmlsec_requires_pinned_xml_dependency_before_installation(self):
         self.add_modules()
         for mutation in ('missing', 'sdk', 'unhashed', 'insecure'):

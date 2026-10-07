@@ -1,0 +1,179 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Final SDK22/AMQP release3 connected tests and memory classification pass on local x86_64 for all three distributions.",
+  "proof": {
+    "fedora": {
+      "sdk22-normal": {
+        "cases": 170,
+        "assertions": 385,
+        "raw_suite_status": 0,
+        "classification": "All cases pass."
+      },
+      "sdk22-final-memory": {
+        "cases": 170,
+        "assertions": 385,
+        "raw_suite_status": 99,
+        "classification": "All cases pass; exact approved PCRE2 conditional reports remain visible."
+      },
+      "sdk22-trace": {
+        "cases": 170,
+        "assertions": 385,
+        "raw_suite_status": 99,
+        "classification": "All cases pass; exact approved PCRE2 conditional reports remain visible."
+      }
+    },
+    "leap": {
+      "sdk22-normal": {
+        "cases": 170,
+        "assertions": 385,
+        "raw_suite_status": 0,
+        "classification": "All cases pass."
+      },
+      "sdk22-final-memory": {
+        "cases": 170,
+        "assertions": 385,
+        "raw_suite_status": 99,
+        "classification": "All cases pass; exact approved PCRE2 conditional reports remain visible."
+      },
+      "sdk22-trace": {
+        "cases": 170,
+        "assertions": 385,
+        "raw_suite_status": 99,
+        "classification": "All cases pass; exact approved PCRE2 conditional reports remain visible."
+      }
+    },
+    "el10": {
+      "sdk22-normal": {
+        "cases": 170,
+        "assertions": 385,
+        "raw_suite_status": 0,
+        "classification": "All cases pass."
+      },
+      "sdk22-final-memory": {
+        "cases": 170,
+        "assertions": 385,
+        "raw_suite_status": 99,
+        "classification": "All cases pass; exact approved PCRE2 conditional reports remain visible."
+      },
+      "sdk22-trace": {
+        "cases": 170,
+        "assertions": 385,
+        "raw_suite_status": 99,
+        "classification": "All cases pass; exact approved PCRE2 conditional reports remain visible."
+      }
+    }
+  },
+  "memory": "All 15 uninstrumented suites have zero definite, indirect or possible lost allocations and no invalid accesses. Full trace runs associate every conditional report with nine already approved PCRE2 patterns. Raw Valgrind exit99 is preserved, not described as zero errors.",
+  "trace": {
+    "distinct_inputs": 117,
+    "patterns": [
+      "(^|[[:space:]])_([^_]+)_(?=[[:space:][:punct:]]|$)",
+      "//",
+      "[-_]",
+      "[\\n\\r]+$",
+      "\\*\\*([^*]+)\\*\\*",
+      "\\.qm$",
+      "\\{([^\\}]*)}",
+      "^.?soft",
+      "`"
+    ],
+    "unknown_report_families": 0
+  },
+  "broker_diagnostics": [
+    "AMQ222149: deliberately rejected delivery",
+    "AMQ222208: deliberately failed trust/identity checks"
+  ],
+  "approved_diagnostics": [
+    "evidence/amqp-pcre2-diagnostics-20261006.json",
+    "evidence/amqp-pcre-exception-pattern-20261006.json",
+    "evidence/amqp-broker-diagnostics-20261006.json"
+  ],
+  "limits": [
+    "Earlier memory attempt used an SDK image without Valgrind and returned 127; it is excluded. Final runs use the installed exact current RPMs and matching debuginfo.",
+    "Canonical committed-source bundles, native OBS and signed install/upgrade/removal qualification remain required."
+  ],
+  "sha256": {
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-normal-status.json": "f183a83c6a038930ed3ef844f02e8e5018eb171d9174912fa7c8eb7227694cef",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-normal-amqp-integration.log.gz": "378abb5d8365a1b4ff642fa3a0cd88d5c3f62fcfb10a77bbd233c2dd3364b566",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-normal-AmqpUtil.log.gz": "7eb4b604876f7bb29a64b1a30e87a184770d019169abe8ccb072c06041167cb3",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-normal-amqp.log.gz": "17c95fc09c616f343c82f20a0af9cc2693015a7aa8632cd235b622e1d7b262f0",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-normal-broker.log.gz": "1d08e87e9ad5b19ea21f851562d0a59609d01f738d42d0f6f7bd7c453cf2f788",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-normal-amqp-tls.log.gz": "ce48f626008fb0cfdf561c748e83bd6eea25585d260054c81a850bbe135fd838",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-normal-AmqpDataProvider.log.gz": "21118b7bb3d493137ef68d0114f2ff10b52ae26182ab220b764a4e3b49e50c10",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-final-memory-status.json": "15aece25809eca7872a356ea4b7524bd7b8b6d2ea6576282408b2aa4360e7286",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-final-memory-amqp-integration-valgrind.log.gz": "6658d5802c108cb1d4facc322fc651b06d1b66d22db9296a93227105b0cfa125",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-final-memory-amqp-integration.log.gz": "6fe28b0febf479726a30a926bd0dbbed05b92d0b451551556a3db451b0d17cff",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-final-memory-AmqpUtil.log.gz": "3a90c864e69d6c6bda283ee82695e7ada03dd8438b46df1c0ceaaee7c52cfc10",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-final-memory-AmqpUtil-valgrind.log.gz": "40c5a2b7486e4ab632d8c346e9d1cd1c6f1ee2b73e84fb3da021a58946d11ae7",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-final-memory-amqp.log.gz": "0453dc83c829b7a312c9211c28eb482f1611d4631e76dfc9b9323c9a74b4f469",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-final-memory-broker.log.gz": "e2267eae3c98edc0df87fac9505f6ae619ba70982013c867bf251c6421da7b71",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-final-memory-amqp-tls-valgrind.log.gz": "607cd4be15f5d573371854d15cba453a02f0f5aad3e24e65c1fb97943cbb991d",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-final-memory-amqp-valgrind.log.gz": "f5dec9bcc9760c3040375b281ae7e4ec91714492fa7e57df89c9e722516f3e7a",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-final-memory-AmqpDataProvider-valgrind.log.gz": "966f76585669e8a6b01a6a549191a02e61bb63904f5286d9c614ba963944bd6e",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-final-memory-amqp-tls.log.gz": "b13a871f06c4a55a52e1fe1bd7e9476524d7b979f53c7be0cdf0aa2d54cec3f0",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-final-memory-AmqpDataProvider.log.gz": "7ca6276914883df2475db2c42b8e6490be7ef179472d83b8c99f3b84340d8246",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-trace-status.json": "adf35997303819eb8bf3ad634f6992ce013a94f54af533aa54f09910f8183647",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-trace-amqp-integration.log.gz": "1f2e1fe316bcdb0b2925c28e95782a604fb6f12d5f1075e7d17c6e5bc6be0a63",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-trace-AmqpUtil.log.gz": "5f44784c81d800b238d477bfee52c0377b5d8911c37e8d9a0facb23b4c8aaab0",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-trace-amqp.log.gz": "01c2d05e8594a1bc34ee06214e61ad02f7c0f343f19b24722c329a1e7c92a3c0",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-trace-broker.log.gz": "1d53d76bf5b9b7233fb13bb670cfa57110d5aef050a85268d193938f8f8f93c5",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-trace-amqp-tls.log.gz": "ae1627976f13ccbdb286a8618c7e89125e36cc0d0956fa0d2e8cb4d45da2626c",
+    "evidence/controls/amqp-sdk22-connected-20261007/fedora-sdk22-trace-AmqpDataProvider.log.gz": "e7207800ec75aea639c7e76d8a54819c09729c242714bf9e4c23c1f908c8c9b5",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-normal-status.json": "2b81ecb324141afcb04cc3fe0b4187972c5ab299767f6b4a917e1b1c146d079a",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-normal-amqp-integration.log.gz": "84aae771322fbee0ce758595482e16256f02c05e6061de38674a0ee2466ccff3",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-normal-AmqpUtil.log.gz": "935d829583c217f22ffb3bb3c2386265edf9e20b174d0ac7606b8bf23a63ed46",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-normal-amqp.log.gz": "24ae244f1d39be5865565b36767734af40c177af874ce6ad8b667876cb3b8c47",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-normal-broker.log.gz": "8b76d0156f8c1681c6b304d628a556c5a60b942b67e1c985981893c316f4c895",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-normal-amqp-tls.log.gz": "8b501bfbe8265fa054ee449fc2583c3ad36209fd7b35160b4f8d911435ac7aba",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-normal-AmqpDataProvider.log.gz": "4fa1151aaa608d935b5dc1cec7aeed14fddee0c69d7166efe13c71120ef4653d",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-final-memory-status.json": "2b1d3dd0b4847687bd586500ca0504bdecc83921fb897489f905b808de835147",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-final-memory-amqp-integration-valgrind.log.gz": "074772067fd010a3435a99939171f2aa9554b16decb36a382d2ae5a0bda9c036",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-final-memory-amqp-integration.log.gz": "6fe28b0febf479726a30a926bd0dbbed05b92d0b451551556a3db451b0d17cff",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-final-memory-AmqpUtil.log.gz": "3a90c864e69d6c6bda283ee82695e7ada03dd8438b46df1c0ceaaee7c52cfc10",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-final-memory-AmqpUtil-valgrind.log.gz": "4dd7f2056ce4adce1257de724289c16469e97a1c2daaab87d9774551dd6f2d7e",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-final-memory-amqp.log.gz": "0453dc83c829b7a312c9211c28eb482f1611d4631e76dfc9b9323c9a74b4f469",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-final-memory-broker.log.gz": "b6f237559036e8b7444992050fc6e53f5a17f4ca442b86896826b47786d326be",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-final-memory-amqp-tls-valgrind.log.gz": "00f25d258e66dd1840340d187e23a5941fbbd5aba9607d843eff53389ab93489",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-final-memory-amqp-valgrind.log.gz": "b2b39085696dab0d32ccb10ef377c86ae678b2a4fb6936774b86463c3122ab09",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-final-memory-AmqpDataProvider-valgrind.log.gz": "9e0e7ab4f61dde283dac95905f0b57677a049a651503552f278395ff7a06fc01",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-final-memory-amqp-tls.log.gz": "b13a871f06c4a55a52e1fe1bd7e9476524d7b979f53c7be0cdf0aa2d54cec3f0",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-final-memory-AmqpDataProvider.log.gz": "7ca6276914883df2475db2c42b8e6490be7ef179472d83b8c99f3b84340d8246",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-trace-status.json": "5f3f88a441760822c925d616f52caaedea298c133c86468b6b892ee9ba2a3502",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-trace-amqp-integration.log.gz": "4965c0ef412dfcfbcce455423431f53826baf253c7218ea7777949fe5d37558c",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-trace-AmqpUtil.log.gz": "55c628721ca26fac346b976a483520db8aec47de49c7813bbd98ae903d80dc4d",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-trace-amqp.log.gz": "e7e2d37582da1d1ff503e0be2f368d3e39b658c4ded14f43ee7d4b795ae7b1da",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-trace-broker.log.gz": "52b383f7a1838ba7ddbf018229262f6ee6a603dfa54885cf12739d13b60ec75d",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-trace-amqp-tls.log.gz": "5a39e9604be0ace0b3ca471ffb8eed7eb7678b7a7b6636ca35bfe18d2ece1048",
+    "evidence/controls/amqp-sdk22-connected-20261007/leap-sdk22-trace-AmqpDataProvider.log.gz": "39f11c28d48066b098f4ee960874f177c1aaf6c2864b305ac5749bdb359161b6",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-normal-status.json": "07fef1ffe1edb850f4e1723d0f28a7337bf9b57cc9bb48b575b79716b476e863",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-normal-amqp-integration.log.gz": "87c877fb3b17222d2317a0d8e46616cb2517445a097b3afe6f72184a19cefcc2",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-normal-AmqpUtil.log.gz": "7d2deb45a7839e4c9f9db473ed526e2d9407a2b2bad93657124fd46e0bd9053f",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-normal-amqp.log.gz": "495ff12c3a3bed3cffc5c9861282f46bcd16d23609ec34d27950dd3396da731f",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-normal-broker.log.gz": "2ae7dc0c984429ae3708c547debc8fe4b708416b0452bda8c6db34f43f6d61bb",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-normal-amqp-tls.log.gz": "b40574e324e2131da1ed8cba591cbdeffbca10a24565666d7cc1738ba722d1a7",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-normal-AmqpDataProvider.log.gz": "041ae82831b2bd2d125c186442bf0d3513269727fbdc288d4228aafd3aafe83d",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-final-memory-status.json": "bb0f9d4716fabefe9c9b4d318c387a6137aa4b80b2c891adbead4ee66ad3b811",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-final-memory-amqp-integration-valgrind.log.gz": "4d76eb8e94921a63bc59aa65d39b65174b59d4e3e8aeef522fada6ad0e8aee1f",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-final-memory-amqp-integration.log.gz": "6fe28b0febf479726a30a926bd0dbbed05b92d0b451551556a3db451b0d17cff",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-final-memory-AmqpUtil.log.gz": "3a90c864e69d6c6bda283ee82695e7ada03dd8438b46df1c0ceaaee7c52cfc10",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-final-memory-AmqpUtil-valgrind.log.gz": "3529a9d015d3a0253fc4a453d64bed5f1f3f76d8d32001e166d1b51f42d6d8b8",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-final-memory-amqp.log.gz": "0453dc83c829b7a312c9211c28eb482f1611d4631e76dfc9b9323c9a74b4f469",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-final-memory-broker.log.gz": "4f527f7a3de9faff49941f64e5fa6b30a50e4345ae4e3892f7c34432fa019020",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-final-memory-amqp-tls-valgrind.log.gz": "90947bf4529d46439323009610394154f6fc45e5a20cd7d4b5ea593dc961d739",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-final-memory-amqp-valgrind.log.gz": "5e0317a9503341d7fc17fb7b45fcf154c4aeffca19abc55710df488d1e0803c9",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-final-memory-AmqpDataProvider-valgrind.log.gz": "c161f6c979b12fb8fae46c6aaeef2b688286dda1e49dcdaf10f3453775a06a6d",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-final-memory-amqp-tls.log.gz": "b13a871f06c4a55a52e1fe1bd7e9476524d7b979f53c7be0cdf0aa2d54cec3f0",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-final-memory-AmqpDataProvider.log.gz": "7ca6276914883df2475db2c42b8e6490be7ef179472d83b8c99f3b84340d8246",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-trace-status.json": "869962df3d2a1a96846bbedf4ff027d0569ccc60685b4f307bbf6f227467b775",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-trace-amqp-integration.log.gz": "b9b84cbf981f7cb0b4605ce98ba40748109c194b32abfd5b35bbd1e2392b412f",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-trace-AmqpUtil.log.gz": "f432ab8b5116b6cccf4bef027b8db3c1f924824809328b4df28f19cc840d55f6",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-trace-amqp.log.gz": "fcb9b1c8311c2884507d39c0e8c4a74b7a55fbdf8709405f428ceabc7b7980ac",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-trace-broker.log.gz": "6b25fbaabe3c8b6c3e343103c0b944a0a01c0c118b761117a118f646a0d17f08",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-trace-amqp-tls.log.gz": "190ba5b30ddaaf33b0d1c4bae047ccb5a3b52485aebbd71f649134092220ce09",
+    "evidence/controls/amqp-sdk22-connected-20261007/el10-sdk22-trace-AmqpDataProvider.log.gz": "39a3eceb22f5191ace72b751ab333e7febe31ce0ae45953013698326fe69e15f",
+    "evidence/controls/amqp-sdk22-connected-20261007/inventory.json": "a5486abb79817d920d9ce04cdabd1ae77c3c474ea3482469276ba0945d1aa58e",
+    "evidence/controls/amqp-sdk22-connected-20261007/all-cases.json": "757ea21c21479f3b6651d6858eccbc1cda3454e3d457d87b8429035f9e990b61"
+  }
+}

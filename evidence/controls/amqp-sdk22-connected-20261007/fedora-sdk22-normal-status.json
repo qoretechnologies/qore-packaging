@@ -1,0 +1,303 @@
+{
+  "target": "fedora",
+  "mode": "sdk22-normal",
+  "image": {
+    "image": "sha256:1b15257a1cfec2ecb788bd7425a97142e411fb6d6069052f5562c71f76dcc95e",
+    "artifacts": {
+      "amqp": {
+        "rpmbuild/RPMS/noarch/qore-amqp-module-doc-1.0.0-3.fc44.noarch.rpm": "e2d73ba2e5345683a96b4c2ecebc091b70ee325dfec9a74db7d4191e1b8b362f",
+        "rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-3.fc44.x86_64.rpm": "385c077a4fd1441be8875528e6509dba7fd5d2786fa5f6bd4f0c5a2e2e2cc3f1",
+        "rpmbuild/RPMS/x86_64/qore-amqp-module-debuginfo-1.0.0-3.fc44.x86_64.rpm": "6af0adb1b38380e17a3ad081fde2cae24af22ae9102abf4b0dfd2160d819fbbe",
+        "rpmbuild/RPMS/x86_64/qore-amqp-module-debugsource-1.0.0-3.fc44.x86_64.rpm": "405ca55c713ca35e6352546435596c22b594937f5e6a5d172eafafb0e820bba6"
+      },
+      "geos": {
+        "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-3.fc44.noarch.rpm": "c84b9386c39959772ec1bb518f8c37a3644ab5c3f0669d343343c788d203c51c",
+        "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.fc44.x86_64.rpm": "d6f07970a7bbaaa4880c54cb78297dfbbded196e423de8489c36a4987542421a",
+        "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-3.fc44.x86_64.rpm": "323cf67245dfc119bdf0febfce5fb3e3bcde61574502bd37ce27eaf0d06f894a",
+        "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-3.fc44.x86_64.rpm": "df3b31cf0cbc0dc5494b6278cec1bbb7d11eb14e4c880aaaeee7e87aefc69dcc"
+      }
+    },
+    "local_repository": {
+      "qore-amqp-module-1.0.0-3.fc44.x86_64.rpm": {
+        "sha256": "385c077a4fd1441be8875528e6509dba7fd5d2786fa5f6bd4f0c5a2e2e2cc3f1",
+        "source": "/home/david/src/qore/git/qore-packaging/results/fedora-amqp-sdk22-runtime-dependency-20261006/rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-3.fc44.x86_64.rpm"
+      },
+      "qore-geos-module-1.0.0-3.fc44.x86_64.rpm": {
+        "sha256": "d6f07970a7bbaaa4880c54cb78297dfbbded196e423de8489c36a4987542421a",
+        "source": "/home/david/src/qore/git/qore-packaging/results/fedora-geos-sdk22-candidate-20261006/rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.fc44.x86_64.rpm"
+      },
+      "qore-xml-module-2.3.0-1.fc44.x86_64.rpm": {
+        "sha256": "e0883c042984614e2907bee093959bc39d0d84863354ab13eadf3053e606cbb3",
+        "source": "/home/david/src/qore/git/qore-packaging/results/fedora-xml-final-build-2/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.fc44.x86_64.rpm"
+      }
+    }
+  },
+  "broker_image": "sha256:11a83472ba8b2f7a3c838009328b56bb33fab869f3409f74d32aa682073b486f",
+  "tests": [
+    {
+      "suite": "AmqpDataProvider.qtest",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "782b9cb5b06b017dd62abdfc87172c7ccd1c826742a2e43014e4777a76376e42",
+        "--user",
+        "1019:100",
+        "-e",
+        "AMQP_TEST_URL=amqp://guest:guest@amqp-broker:5672",
+        "-e",
+        "AMQP_TLS_TEST_URL=amqps://guest:guest@amqp-broker:5671",
+        "-e",
+        "AMQP_TLS_MTLS_URL=amqps://guest:guest@amqp-broker:5673",
+        "-e",
+        "AMQP_TLS_CA=/certs/ca.pem",
+        "-e",
+        "AMQP_TLS_WRONG_CA=/certs/wrong-ca.pem",
+        "-e",
+        "AMQP_TLS_CLIENT_CERT=/certs/client.pem",
+        "-e",
+        "AMQP_TLS_CLIENT_KEY=/certs/client.key",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/amqp-broker-fixture-20261006/certs:/certs:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/fedora-amqp-broker-sdk22-normal-20261006:/results",
+        "-w",
+        "/results",
+        "sha256:1b15257a1cfec2ecb788bd7425a97142e411fb6d6069052f5562c71f76dcc95e",
+        "sh",
+        "-eu",
+        "-c",
+        ". /usr/lib/rpm/qore/module-env.sh\nqore -b --enable-debug -l /usr/lib64/qore-modules/AmqpUtil/AmqpUtil.qmod -l /usr/lib64/qore-modules/AmqpDataProvider/AmqpDataProvider.qmod /results/test/AmqpDataProvider.qtest -v\n"
+      ],
+      "exit_code": 0
+    },
+    {
+      "suite": "AmqpUtil.qtest",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "782b9cb5b06b017dd62abdfc87172c7ccd1c826742a2e43014e4777a76376e42",
+        "--user",
+        "1019:100",
+        "-e",
+        "AMQP_TEST_URL=amqp://guest:guest@amqp-broker:5672",
+        "-e",
+        "AMQP_TLS_TEST_URL=amqps://guest:guest@amqp-broker:5671",
+        "-e",
+        "AMQP_TLS_MTLS_URL=amqps://guest:guest@amqp-broker:5673",
+        "-e",
+        "AMQP_TLS_CA=/certs/ca.pem",
+        "-e",
+        "AMQP_TLS_WRONG_CA=/certs/wrong-ca.pem",
+        "-e",
+        "AMQP_TLS_CLIENT_CERT=/certs/client.pem",
+        "-e",
+        "AMQP_TLS_CLIENT_KEY=/certs/client.key",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/amqp-broker-fixture-20261006/certs:/certs:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/fedora-amqp-broker-sdk22-normal-20261006:/results",
+        "-w",
+        "/results",
+        "sha256:1b15257a1cfec2ecb788bd7425a97142e411fb6d6069052f5562c71f76dcc95e",
+        "sh",
+        "-eu",
+        "-c",
+        ". /usr/lib/rpm/qore/module-env.sh\nqore -b --enable-debug -l /usr/lib64/qore-modules/AmqpUtil/AmqpUtil.qmod -l /usr/lib64/qore-modules/AmqpDataProvider/AmqpDataProvider.qmod /results/test/AmqpUtil.qtest -v\n"
+      ],
+      "exit_code": 0
+    },
+    {
+      "suite": "amqp-integration.qtest",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "782b9cb5b06b017dd62abdfc87172c7ccd1c826742a2e43014e4777a76376e42",
+        "--user",
+        "1019:100",
+        "-e",
+        "AMQP_TEST_URL=amqp://guest:guest@amqp-broker:5672",
+        "-e",
+        "AMQP_TLS_TEST_URL=amqps://guest:guest@amqp-broker:5671",
+        "-e",
+        "AMQP_TLS_MTLS_URL=amqps://guest:guest@amqp-broker:5673",
+        "-e",
+        "AMQP_TLS_CA=/certs/ca.pem",
+        "-e",
+        "AMQP_TLS_WRONG_CA=/certs/wrong-ca.pem",
+        "-e",
+        "AMQP_TLS_CLIENT_CERT=/certs/client.pem",
+        "-e",
+        "AMQP_TLS_CLIENT_KEY=/certs/client.key",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/amqp-broker-fixture-20261006/certs:/certs:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/fedora-amqp-broker-sdk22-normal-20261006:/results",
+        "-w",
+        "/results",
+        "sha256:1b15257a1cfec2ecb788bd7425a97142e411fb6d6069052f5562c71f76dcc95e",
+        "sh",
+        "-eu",
+        "-c",
+        ". /usr/lib/rpm/qore/module-env.sh\nqore -b --enable-debug -l /usr/lib64/qore-modules/AmqpUtil/AmqpUtil.qmod -l /usr/lib64/qore-modules/AmqpDataProvider/AmqpDataProvider.qmod /results/test/amqp-integration.qtest -v\n"
+      ],
+      "exit_code": 0
+    },
+    {
+      "suite": "amqp-tls.qtest",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "782b9cb5b06b017dd62abdfc87172c7ccd1c826742a2e43014e4777a76376e42",
+        "--user",
+        "1019:100",
+        "-e",
+        "AMQP_TEST_URL=amqp://guest:guest@amqp-broker:5672",
+        "-e",
+        "AMQP_TLS_TEST_URL=amqps://guest:guest@amqp-broker:5671",
+        "-e",
+        "AMQP_TLS_MTLS_URL=amqps://guest:guest@amqp-broker:5673",
+        "-e",
+        "AMQP_TLS_CA=/certs/ca.pem",
+        "-e",
+        "AMQP_TLS_WRONG_CA=/certs/wrong-ca.pem",
+        "-e",
+        "AMQP_TLS_CLIENT_CERT=/certs/client.pem",
+        "-e",
+        "AMQP_TLS_CLIENT_KEY=/certs/client.key",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/amqp-broker-fixture-20261006/certs:/certs:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/fedora-amqp-broker-sdk22-normal-20261006:/results",
+        "-w",
+        "/results",
+        "sha256:1b15257a1cfec2ecb788bd7425a97142e411fb6d6069052f5562c71f76dcc95e",
+        "sh",
+        "-eu",
+        "-c",
+        ". /usr/lib/rpm/qore/module-env.sh\nqore -b --enable-debug -l /usr/lib64/qore-modules/AmqpUtil/AmqpUtil.qmod -l /usr/lib64/qore-modules/AmqpDataProvider/AmqpDataProvider.qmod /results/test/amqp-tls.qtest -v\n"
+      ],
+      "exit_code": 0
+    },
+    {
+      "suite": "amqp.qtest",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "782b9cb5b06b017dd62abdfc87172c7ccd1c826742a2e43014e4777a76376e42",
+        "--user",
+        "1019:100",
+        "-e",
+        "AMQP_TEST_URL=amqp://guest:guest@amqp-broker:5672",
+        "-e",
+        "AMQP_TLS_TEST_URL=amqps://guest:guest@amqp-broker:5671",
+        "-e",
+        "AMQP_TLS_MTLS_URL=amqps://guest:guest@amqp-broker:5673",
+        "-e",
+        "AMQP_TLS_CA=/certs/ca.pem",
+        "-e",
+        "AMQP_TLS_WRONG_CA=/certs/wrong-ca.pem",
+        "-e",
+        "AMQP_TLS_CLIENT_CERT=/certs/client.pem",
+        "-e",
+        "AMQP_TLS_CLIENT_KEY=/certs/client.key",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/amqp-broker-fixture-20261006/certs:/certs:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/fedora-amqp-broker-sdk22-normal-20261006:/results",
+        "-w",
+        "/results",
+        "sha256:1b15257a1cfec2ecb788bd7425a97142e411fb6d6069052f5562c71f76dcc95e",
+        "sh",
+        "-eu",
+        "-c",
+        ". /usr/lib/rpm/qore/module-env.sh\nqore -b --enable-debug -l /usr/lib64/qore-modules/AmqpUtil/AmqpUtil.qmod -l /usr/lib64/qore-modules/AmqpDataProvider/AmqpDataProvider.qmod /results/test/amqp.qtest -v\n"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "network": {
+    "Name": "qore-rpm-isolated-4d5ff4fb4b8c4e4a89f82b338e6a5157",
+    "Id": "782b9cb5b06b017dd62abdfc87172c7ccd1c826742a2e43014e4777a76376e42",
+    "Created": "2026-10-06T21:10:28.677244794+02:00",
+    "Scope": "local",
+    "Driver": "bridge",
+    "EnableIPv4": true,
+    "EnableIPv6": false,
+    "IPAM": {
+      "Driver": "default",
+      "Options": {},
+      "Config": [
+        {
+          "Subnet": "192.168.80.0/20"
+        }
+      ]
+    },
+    "Internal": true,
+    "Attachable": false,
+    "Ingress": false,
+    "ConfigFrom": {
+      "Network": ""
+    },
+    "ConfigOnly": false,
+    "Options": {
+      "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+      "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+    },
+    "Labels": {},
+    "Containers": {},
+    "Status": {
+      "IPAM": {
+        "Subnets": {
+          "192.168.80.0/20": {
+            "IPsInUse": 2,
+            "DynamicIPsAvailable": 4094
+          }
+        }
+      }
+    }
+  },
+  "broker_command": [
+    "docker",
+    "create",
+    "--init",
+    "--name",
+    "qore-amqp-broker-fedora-sdk22-normal-20261006",
+    "--network",
+    "782b9cb5b06b017dd62abdfc87172c7ccd1c826742a2e43014e4777a76376e42",
+    "--network-alias",
+    "amqp-broker",
+    "--user",
+    "1019:100",
+    "--workdir",
+    "/broker/template",
+    "-e",
+    "HOME=/broker/home",
+    "--tmpfs",
+    "/broker/template/data:rw,exec,size=512m,mode=1777",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/fedora-amqp-broker-sdk22-normal-20261006:/broker",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/amqp-broker-fixture-20261006/certs:/certs:ro",
+    "sha256:11a83472ba8b2f7a3c838009328b56bb33fab869f3409f74d32aa682073b486f",
+    "/broker/template/bin/artemis",
+    "run"
+  ],
+  "ready_event": "2026-10-06 19:10:36,234 INFO  [org.apache.activemq.artemis.core.server] AMQ221001: Apache ActiveMQ Artemis Message Broker version 2.38.0 [0.0.0.0, nodeID=9b854990-c1b9-11f1-ae38-a2248f19b044]",
+  "exit_code": 0,
+  "broker_exit_code": 0
+}
