@@ -1,0 +1,2571 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-07",
+  "status": "Signed native ARM Python bridge runtime and SDK qualification passes on all three distributions. JNI integration, core22 rollout and repository lifecycle remain separate gates. Publication disabled.",
+  "accepted_diagnostics": "Only exact XML-triggered core AOT source-fallback messages already recorded and approved in modules6-native-arm-results-20261006.json; bridge tests emit no warnings.",
+  "targets": {
+    "fedora": {
+      "pipeline": 59831,
+      "job": "https://git.qoretechnologies.com/mirror/qore-packaging/-/jobs/209488",
+      "runner_commit": "f8ff1f48fa28bfdec2a5560f470a39802b3be75c",
+      "steps": 28,
+      "totals": {
+        "runtime": {
+          "cases": 30,
+          "assertions": 270
+        },
+        "sdk": {
+          "cases": 30,
+          "assertions": 270
+        }
+      },
+      "result": {
+        "manifest": {
+          "schema": 1,
+          "family": "fedora",
+          "arch": "aarch64",
+          "core_commit": "d58eec0b2ab721ef5da0e2136c4cddb3579874e2",
+          "obs_srcmd5": "ba3b6bc9ac8055ee991e334102e7ad16",
+          "packages": [
+            {
+              "name": "libqore",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore/libqore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "filename": "libqore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "sha256": "a362fa2d79eb85e6886c7e87703f758a5db9e4d742a0789ca4b56a0e7be14f3a",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore/qore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "filename": "qore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "sha256": "d957761b8990c179dfc60d859d542af80d5a1fd38b7d93115f7d695d4bdf44d2",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-debug-tools",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore/qore-debug-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "filename": "qore-debug-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "sha256": "101b5f02f3d762f108cfdcfc88f6f16a70a21a411b70f8443a1b8dfd974dccfc",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-devel",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore/qore-devel-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "filename": "qore-devel-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "sha256": "835bca60b04f3857daea5f9816694121e4c8c6aca3f7c9de2d62a6754d2a14c9",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-misc-tools",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore/qore-misc-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "filename": "qore-misc-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "sha256": "9404fb2ae53b75093d73e128ad1d58c23a0a9d68ec1b29bb022e80f1064f52ad",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-rpm-macros",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore/qore-rpm-macros-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "filename": "qore-rpm-macros-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "sha256": "a6d2b84d8d3c0088fabb5eed8b846915860f12d3651e3f128b3732f9560235fe",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-stdlib",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore/qore-stdlib-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "filename": "qore-stdlib-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "sha256": "fececc79f3b7b93a0571572320906b4809c7a91a04daad313e77ffe6f3932f11",
+              "phase": "runtime"
+            },
+            {
+              "name": "libnghttp2",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/nghttp2/libnghttp2-1.70.0-3.2.aarch64.rpm",
+              "filename": "libnghttp2-1.70.0-3.2.aarch64.rpm",
+              "sha256": "c9a51fdead6bc0dcc70c9e0f203e9de190dcec24cf550d63b6f636379b4ca836",
+              "phase": "runtime"
+            },
+            {
+              "name": "ngtcp2",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/ngtcp2/ngtcp2-1.25.0-1.2.aarch64.rpm",
+              "filename": "ngtcp2-1.25.0-1.2.aarch64.rpm",
+              "sha256": "eebbaa557aeb9aaeb427dd70aee3f5e6e42882cdb6f93731e33eaff642de6af1",
+              "phase": "runtime"
+            },
+            {
+              "name": "ngtcp2-crypto-ossl",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/ngtcp2/ngtcp2-crypto-ossl-1.25.0-1.2.aarch64.rpm",
+              "filename": "ngtcp2-crypto-ossl-1.25.0-1.2.aarch64.rpm",
+              "sha256": "6846730a56f186a660fe29f77549631767b8421b3e9f066efd76976777e951af",
+              "phase": "runtime"
+            },
+            {
+              "name": "c-ares",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/c-ares/c-ares-1.34.8-3.2.aarch64.rpm",
+              "filename": "c-ares-1.34.8-3.2.aarch64.rpm",
+              "sha256": "6d5aa87b19623e76f2c9ad8e06b052352b0db0d1f01a3b92a841ee0f4660bdc9",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-xml-module",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore-xml-module/qore-xml-module-2.3.0-1.8.aarch64.rpm",
+              "filename": "qore-xml-module-2.3.0-1.8.aarch64.rpm",
+              "sha256": "44061e766500fee420fd4c032c119cafca29152491e58627838264aae6033104",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-python-module",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/Fedora_44/aarch64/qore-python-module/qore-python-module-1.3.0-2.5.aarch64.rpm",
+              "filename": "qore-python-module-1.3.0-2.5.aarch64.rpm",
+              "sha256": "2e9346d5b164c768b25ef7cea13dad24dab1932a80263c3af6a0cf1aaf2fdca7",
+              "phase": "runtime"
+            }
+          ],
+          "fixtures": [
+            {
+              "path": "rpm/tests-installed/runtime",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/runtime",
+              "sha256": "b1006e4391f2ba6f2a8bc050a7ac413901be1c454893a6579e65b2d41d8c015a"
+            },
+            {
+              "path": "rpm/tests-installed/development",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/development",
+              "sha256": "6fe87c237458790f18c2e549a4bff03b627a3a214f8d320ef1d4814bc835162e"
+            },
+            {
+              "path": "rpm/tests-installed/tools",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/tools",
+              "sha256": "45a7faec3a57d42fc6b136ee9fc471ecf4d516403adea14067bdb4e0b287debe"
+            },
+            {
+              "path": "rpm/tests-installed/remote-debuggers",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/remote-debuggers",
+              "sha256": "5d37b1cce6e6776c87467c64220d8df0b43fc3d843d1181d6b3f2b349d4afe91"
+            },
+            {
+              "path": "modules/ml/test/data/test_linear.onnx",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/modules/ml/test/data/test_linear.onnx",
+              "sha256": "e01940baadc56a46bb58f173e9066a7a821a5887aedab250ddb90f6754cee024"
+            }
+          ],
+          "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+          "signing_key": {
+            "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/_pubkey",
+            "sha256": "7c37a9e90d46d97bb01578a0ed8629828f291ba3757b84765a0c12a38b345e6a"
+          },
+          "modules": [
+            {
+              "name": "python",
+              "commit": "d6bbb32f2d83944d84ea76e2098bc0f76c7983f5",
+              "fixtures": [
+                {
+                  "path": "debian/tests/compiler",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/debian/tests/compiler",
+                  "sha256": "2a309138a29952da6b52422a20cea7e17284862597089005efd399e7575342f2"
+                },
+                {
+                  "path": "debian/tests/standalone.py",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/debian/tests/standalone.py",
+                  "sha256": "dfb634cb792a1015fae0e8de678eda4505e46504c03226d6e91511bfb13c111b"
+                },
+                {
+                  "path": "rpm/run-tests.py",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/rpm/run-tests.py",
+                  "sha256": "8554481471ead2a077b0334fda2602b5238b88751cf797f32a0630aeeae450d5"
+                },
+                {
+                  "path": "test/fib.py",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/test/fib.py",
+                  "sha256": "d9f92b20c9d3d0ef2e074caf683a607cc534ea2997261c7c23855122831adeef"
+                },
+                {
+                  "path": "test/python.qtest",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/test/python.qtest",
+                  "sha256": "6fb851c6b4a2cb470059262f450dd6dd99b9728b413126db4c15f72b04a61c32"
+                },
+                {
+                  "path": "test/standalone-lifecycle.py",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/test/standalone-lifecycle.py",
+                  "sha256": "fa338e9bbc6dda19090ad0007d533b58e99ee1dd6c8dba6193d41efed1a8ebad"
+                }
+              ]
+            }
+          ]
+        },
+        "machine": "aarch64",
+        "runner_arch": "linux/arm64",
+        "steps": [
+          {
+            "name": "import-signing-key",
+            "command": [
+              "rpm",
+              "--import",
+              "/tmp/qore-rpm-native-whwrjar3/rpm-signing-key.asc"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libqore",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/libqore-3.0.0~git20261003.21-21.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-3.0.0~git20261003.21-21.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-debug-tools",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-debug-tools-3.0.0~git20261003.21-21.1.noarch.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-devel",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-devel-3.0.0~git20261003.21-21.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-misc-tools",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-misc-tools-3.0.0~git20261003.21-21.1.noarch.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-rpm-macros",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-rpm-macros-3.0.0~git20261003.21-21.1.noarch.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-stdlib",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-stdlib-3.0.0~git20261003.21-21.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libnghttp2",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/libnghttp2-1.70.0-3.2.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-ngtcp2",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/ngtcp2-1.25.0-1.2.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-ngtcp2-crypto-ossl",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/ngtcp2-crypto-ossl-1.25.0-1.2.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-c-ares",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/c-ares-1.34.8-3.2.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-xml-module",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-xml-module-2.3.0-1.8.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-python-module",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-python-module-1.3.0-2.5.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "create-user",
+            "command": [
+              "useradd",
+              "-M",
+              "-U",
+              "qoretester"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-install",
+            "command": [
+              "dnf",
+              "-y",
+              "--setopt=gpgcheck=True",
+              "--setopt=localpkg_gpgcheck=True",
+              "--setopt=install_weak_deps=False",
+              "install",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/libqore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-stdlib-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/libnghttp2-1.70.0-3.2.aarch64.rpm",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/ngtcp2-1.25.0-1.2.aarch64.rpm",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/ngtcp2-crypto-ossl-1.25.0-1.2.aarch64.rpm",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/c-ares-1.34.8-3.2.aarch64.rpm",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-xml-module-2.3.0-1.8.aarch64.rpm",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-python-module-1.3.0-2.5.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-rpm-verify",
+            "command": [
+              "rpm",
+              "-V",
+              "libqore",
+              "qore",
+              "qore-stdlib",
+              "libnghttp2",
+              "ngtcp2",
+              "ngtcp2-crypto-ossl",
+              "c-ares",
+              "qore-xml-module",
+              "qore-python-module"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-inventory",
+            "command": [
+              "rpm",
+              "-qa",
+              "--qf",
+              "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-runtime",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-whwrjar3/runtime-runtime",
+              "/tmp/qore-rpm-native-whwrjar3/source/rpm/tests-installed/runtime"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-python-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-whwrjar3/runtime-python",
+              "python3",
+              "-B",
+              "-W",
+              "error",
+              "/tmp/qore-rpm-native-whwrjar3/runtime-python/rpm/run-tests.py",
+              "--installed"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-install",
+            "command": [
+              "dnf",
+              "-y",
+              "--setopt=gpgcheck=True",
+              "--setopt=localpkg_gpgcheck=True",
+              "--setopt=install_weak_deps=False",
+              "install",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-debug-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-devel-3.0.0~git20261003.21-21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-misc-tools-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "/tmp/qore-rpm-native-whwrjar3/rpms/qore-rpm-macros-3.0.0~git20261003.21-21.1.noarch.rpm",
+              "cmake"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-rpm-verify",
+            "command": [
+              "rpm",
+              "-V",
+              "qore-debug-tools",
+              "qore-devel",
+              "qore-misc-tools",
+              "qore-rpm-macros"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-inventory",
+            "command": [
+              "rpm",
+              "-qa",
+              "--qf",
+              "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-runtime",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-whwrjar3/sdk-runtime",
+              "/tmp/qore-rpm-native-whwrjar3/source/rpm/tests-installed/runtime"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-development",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-whwrjar3/sdk-development",
+              "/tmp/qore-rpm-native-whwrjar3/source/rpm/tests-installed/development"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-tools",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-whwrjar3/sdk-tools",
+              "/tmp/qore-rpm-native-whwrjar3/source/rpm/tests-installed/tools"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-remote-debuggers",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-whwrjar3/sdk-remote-debuggers",
+              "/tmp/qore-rpm-native-whwrjar3/source/rpm/tests-installed/remote-debuggers"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-python-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-whwrjar3/sdk-python",
+              "python3",
+              "-B",
+              "-W",
+              "error",
+              "/tmp/qore-rpm-native-whwrjar3/sdk-python/rpm/run-tests.py",
+              "--installed",
+              "--compiler"
+            ],
+            "exit_code": 0
+          }
+        ],
+        "exit_code": 0
+      },
+      "diagnostics": [
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' for feature 'Swagger' failed to load; loading source module '/usr/share/qore-modules/3.0.0/Swagger.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' for feature 'OpenApi3' failed to load; loading source module '/usr/share/qore-modules/3.0.0/OpenApi3.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' for feature 'RestClient' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClient.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' for feature 'Swagger' failed to load; loading source module '/usr/share/qore-modules/3.0.0/Swagger.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' for feature 'OpenApi3' failed to load; loading source module '/usr/share/qore-modules/3.0.0/OpenApi3.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' for feature 'RestClient' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClient.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClientIo.qmod' for feature 'RestClientIo' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClientIo.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClientIo.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' for feature 'Swagger' failed to load; loading source module '/usr/share/qore-modules/3.0.0/Swagger.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' for feature 'OpenApi3' failed to load; loading source module '/usr/share/qore-modules/3.0.0/OpenApi3.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' for feature 'RestClient' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClient.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' for feature 'Swagger' failed to load; loading source module '/usr/share/qore-modules/3.0.0/Swagger.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' for feature 'OpenApi3' failed to load; loading source module '/usr/share/qore-modules/3.0.0/OpenApi3.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' for feature 'RestClient' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClient.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClientIo.qmod' for feature 'RestClientIo' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClientIo.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClientIo.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-tools",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        }
+      ],
+      "logs_sha256": {
+        "import-signing-key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verify-signature-libqore": "d1fbb2935f3b82382ae88da1ca89a3021a8a01ac6f8e640a3155d72409a2a8c1",
+        "verify-signature-qore": "3c9b458537b5af79f8ad5f9e79a0b86428679f32e27d78c4b7c483a451d892fd",
+        "verify-signature-qore-debug-tools": "3d66d242c2cbc86d7babc6760928f934f3ed3ba273520e5a5292ad85b0cf2c79",
+        "verify-signature-qore-devel": "e02940991fa904c42d1874400c8f8d76f9b6cd2e1da89ea3a321a93841ba5c28",
+        "verify-signature-qore-misc-tools": "d2d111fa07378e11e3e5dee344778a0edba2f6b4cf6510404b20e8e65c6ce73b",
+        "verify-signature-qore-rpm-macros": "87631c812a2e22dc4362088c65dd9890fbc9920cdacb326fff2093a0339e5fa1",
+        "verify-signature-qore-stdlib": "67cda90a803b354146f0b5475bc8da08f9a174b3f003b47efb889c7e6423c9e0",
+        "verify-signature-libnghttp2": "bbef22c47b6f1e14bb210c9c0e68628bc62ea7d979c0811a7ffaeffa9aa8e02b",
+        "verify-signature-ngtcp2": "8e486ba87dcc2ed408af39396bd7774932b5b1098415ad98be10132ce03f1bcd",
+        "verify-signature-ngtcp2-crypto-ossl": "4f890efa6f019432fc4199d53e8ddf645d8fa87d7a957b152ba54ce309ea2251",
+        "verify-signature-c-ares": "4b023482930f5bc77f9a57a0047fa88ddc9637f796b191e263ebd461c8a5da7f",
+        "verify-signature-qore-xml-module": "0c33131a2d84b6ae29e58f582e2d56ea97d662843a97f52c745b9095e904be4a",
+        "verify-signature-qore-python-module": "44ccbe85133d938771c054c8eba9412c7f9c78765529b3d8ac139a09bf61b242",
+        "create-user": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runtime-install": "6110125ca62c8be4841988649cb61da53cfb112280ebd392761e6d1407ad93db",
+        "runtime-rpm-verify": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runtime-inventory": "0e995b7bb5bc7762ca37c5b11ef540d3ba43620c7b80b27b7cbb028ff680a573",
+        "runtime-runtime": "869b051461a05f65bba623fb555311148b1b1324d0982d45c5d8f1f20c24f419",
+        "runtime-python-tests": "583aaff59a577bbe7cebe2f8d0d32040a9910d2a85166afcb08809ca31f69154",
+        "sdk-install": "df7aef6e74d514d23203a245d5d74de641b34c7e8c83c0f78d0da49c307bbc91",
+        "sdk-rpm-verify": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sdk-inventory": "7e2efda037e6fe458501daa57de76eea88cd0d3d8ec3c27dd038b7b0ac9815d9",
+        "sdk-runtime": "869b051461a05f65bba623fb555311148b1b1324d0982d45c5d8f1f20c24f419",
+        "sdk-development": "c2ac35bcb8ef815d300a3a47cef04d19251f2a9655508f9ac259492d5316897e",
+        "sdk-tools": "1e343c7159adf3b2a62d28f9a0773e0d6772400b2e3c5638b75ef621456f14d1",
+        "sdk-remote-debuggers": "fa6e0d920d7dbfe86c6258338212b7778efc3230a583aeda061adc8ab117bfe5",
+        "sdk-python-tests": "52245b78208c5673f45f759601ed2495779b4e0b8b80f50c3de0710b8742fd4f"
+      }
+    },
+    "leap": {
+      "pipeline": 59831,
+      "job": "https://git.qoretechnologies.com/mirror/qore-packaging/-/jobs/209489",
+      "runner_commit": "f8ff1f48fa28bfdec2a5560f470a39802b3be75c",
+      "steps": 35,
+      "totals": {
+        "runtime": {
+          "cases": 30,
+          "assertions": 270
+        },
+        "sdk": {
+          "cases": 30,
+          "assertions": 270
+        }
+      },
+      "result": {
+        "manifest": {
+          "schema": 1,
+          "family": "suse",
+          "arch": "aarch64",
+          "core_commit": "d58eec0b2ab721ef5da0e2136c4cddb3579874e2",
+          "obs_srcmd5": "ba3b6bc9ac8055ee991e334102e7ad16",
+          "packages": [
+            {
+              "name": "libqore20",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore/libqore20-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "filename": "libqore20-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "sha256": "38550915ec0682af5a64c2dff059c5915412010597857e38215e47eaf0cf3fcb",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore/qore-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "filename": "qore-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "sha256": "c29ef35c9b4073288a5368e567972a48b4df54eb26a49a4ff3e8f0c05abb1fbc",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-debug-tools",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore/qore-debug-tools-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "filename": "qore-debug-tools-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "sha256": "20700af79ed9871def1d70d4fd254449a1721edcb6c027dbcc6402f1f80f5d7c",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-devel",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore/qore-devel-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "filename": "qore-devel-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "sha256": "9bf60bc354d186d25aef0430123c732397c201dedff5aacf82228869eee71fe8",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-misc-tools",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore/qore-misc-tools-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "filename": "qore-misc-tools-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "sha256": "1d6190e2e06771d8bdf91e1953e0aba42dd18bb2cffd7cd0e26c8465f798c229",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-rpm-macros",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore/qore-rpm-macros-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "filename": "qore-rpm-macros-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "sha256": "95870247c2a75c0c42608e95e8eed9722e86d5476d31529b46c947aed8c4dbb6",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-stdlib",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore/qore-stdlib-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "filename": "qore-stdlib-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "sha256": "5cd99bd1eff94ffda9b4b0162bce703ef18d4bc2c9a9b43100b93f411adc8f42",
+              "phase": "runtime"
+            },
+            {
+              "name": "libcares2",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/c-ares/libcares2-1.34.8-lp160.3.1.aarch64.rpm",
+              "filename": "libcares2-1.34.8-lp160.3.1.aarch64.rpm",
+              "sha256": "33cceb88e2ef80d47d9b410ad6b4d346746d6caa3f2e47c4bcba47d99f9e2130",
+              "phase": "runtime"
+            },
+            {
+              "name": "libnghttp2-14",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/nghttp2/libnghttp2-14-1.70.0-lp160.3.1.aarch64.rpm",
+              "filename": "libnghttp2-14-1.70.0-lp160.3.1.aarch64.rpm",
+              "sha256": "0ea9e63d042a374894ba68b26b8e0f5553bba0e81909f9b25665e64ef1c2f792",
+              "phase": "runtime"
+            },
+            {
+              "name": "libnghttp3-9",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/nghttp3/libnghttp3-9-1.18.0-lp160.1.1.aarch64.rpm",
+              "filename": "libnghttp3-9-1.18.0-lp160.1.1.aarch64.rpm",
+              "sha256": "8a410450fb8e98282886a88a947154624ef0d48a9865ae228f1028786979209e",
+              "phase": "runtime"
+            },
+            {
+              "name": "libngtcp2-16",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/ngtcp2/libngtcp2-16-1.25.0-lp160.1.1.aarch64.rpm",
+              "filename": "libngtcp2-16-1.25.0-lp160.1.1.aarch64.rpm",
+              "sha256": "b266d76b334e407204a2e57c73a1982024beb21e4b6cd157d8c79955ef9e9532",
+              "phase": "runtime"
+            },
+            {
+              "name": "libngtcp2_crypto_ossl0",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/ngtcp2/libngtcp2_crypto_ossl0-1.25.0-lp160.1.1.aarch64.rpm",
+              "filename": "libngtcp2_crypto_ossl0-1.25.0-lp160.1.1.aarch64.rpm",
+              "sha256": "e2cb4ed8157eac3836129bc782a5014731126df6226e41a6e4ee048de1eac9a7",
+              "phase": "runtime"
+            },
+            {
+              "name": "libonnxruntime1",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/onnxruntime/libonnxruntime1-1.22.2-lp160.2.1.aarch64.rpm",
+              "filename": "libonnxruntime1-1.22.2-lp160.2.1.aarch64.rpm",
+              "sha256": "787d4ced8fd28af25c07fc7667d1405c1b8436c686f8ae7761a12f885ed30229",
+              "phase": "runtime"
+            },
+            {
+              "name": "libtree-sitter0_26",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/tree-sitter/libtree-sitter0_26-0.26.13-lp160.1.1.aarch64.rpm",
+              "filename": "libtree-sitter0_26-0.26.13-lp160.1.1.aarch64.rpm",
+              "sha256": "5fff990daf0af4b87786723fc2ad184dbe1e693abf334a31ebc7a7c19646c77f",
+              "phase": "runtime"
+            },
+            {
+              "name": "libarrow2500",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/apache-arrow/libarrow2500-25.0.1-lp160.2.1.aarch64.rpm",
+              "filename": "libarrow2500-25.0.1-lp160.2.1.aarch64.rpm",
+              "sha256": "658c053a6008173b67423af7881a26c32402fcf9d8afd9442547f2a1cff8a0f9",
+              "phase": "runtime"
+            },
+            {
+              "name": "libparquet2500",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/apache-arrow/libparquet2500-25.0.1-lp160.2.1.aarch64.rpm",
+              "filename": "libparquet2500-25.0.1-lp160.2.1.aarch64.rpm",
+              "sha256": "11405081abb19d6c00373cda1ec61acc22ee24674da99dbfde8c853c866ea7d6",
+              "phase": "runtime"
+            },
+            {
+              "name": "libbson2",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/mongo-c-driver/libbson2-2.5.5-lp160.2.1.aarch64.rpm",
+              "filename": "libbson2-2.5.5-lp160.2.1.aarch64.rpm",
+              "sha256": "50aa54b18fa08c6f0a7049a8bae14b13461aa6e7e3ac9ffb24f5baf8fb788859",
+              "phase": "runtime"
+            },
+            {
+              "name": "libmongoc2",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/mongo-c-driver/libmongoc2-2.5.5-lp160.2.1.aarch64.rpm",
+              "filename": "libmongoc2-2.5.5-lp160.2.1.aarch64.rpm",
+              "sha256": "9df0b810dfa1d44844a8b757eab456ddf737a6af891f5f7237c6d710a033b2e3",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-xml-module",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore-xml-module/qore-xml-module-2.3.0-1.5.aarch64.rpm",
+              "filename": "qore-xml-module-2.3.0-1.5.aarch64.rpm",
+              "sha256": "c8ccfef1f80e7dd9a7fef2ee5dfad9ef0473df4ce689a2c9ec6270d01f76be20",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-python-module",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/openSUSE_Leap_16.0/aarch64/qore-python-module/qore-python-module-1.3.0-2.3.aarch64.rpm",
+              "filename": "qore-python-module-1.3.0-2.3.aarch64.rpm",
+              "sha256": "744787abf074ef1bd30578f05f2532717c96f6ff2b4b837efb43e87898b38550",
+              "phase": "runtime"
+            }
+          ],
+          "fixtures": [
+            {
+              "path": "rpm/tests-installed/runtime",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/runtime",
+              "sha256": "b1006e4391f2ba6f2a8bc050a7ac413901be1c454893a6579e65b2d41d8c015a"
+            },
+            {
+              "path": "rpm/tests-installed/development",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/development",
+              "sha256": "6fe87c237458790f18c2e549a4bff03b627a3a214f8d320ef1d4814bc835162e"
+            },
+            {
+              "path": "rpm/tests-installed/tools",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/tools",
+              "sha256": "45a7faec3a57d42fc6b136ee9fc471ecf4d516403adea14067bdb4e0b287debe"
+            },
+            {
+              "path": "rpm/tests-installed/remote-debuggers",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/remote-debuggers",
+              "sha256": "5d37b1cce6e6776c87467c64220d8df0b43fc3d843d1181d6b3f2b349d4afe91"
+            },
+            {
+              "path": "modules/ml/test/data/test_linear.onnx",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/modules/ml/test/data/test_linear.onnx",
+              "sha256": "e01940baadc56a46bb58f173e9066a7a821a5887aedab250ddb90f6754cee024"
+            }
+          ],
+          "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+          "signing_key": {
+            "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/_pubkey",
+            "sha256": "7c37a9e90d46d97bb01578a0ed8629828f291ba3757b84765a0c12a38b345e6a"
+          },
+          "modules": [
+            {
+              "name": "python",
+              "commit": "d6bbb32f2d83944d84ea76e2098bc0f76c7983f5",
+              "fixtures": [
+                {
+                  "path": "debian/tests/compiler",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/debian/tests/compiler",
+                  "sha256": "2a309138a29952da6b52422a20cea7e17284862597089005efd399e7575342f2"
+                },
+                {
+                  "path": "debian/tests/standalone.py",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/debian/tests/standalone.py",
+                  "sha256": "dfb634cb792a1015fae0e8de678eda4505e46504c03226d6e91511bfb13c111b"
+                },
+                {
+                  "path": "rpm/run-tests.py",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/rpm/run-tests.py",
+                  "sha256": "8554481471ead2a077b0334fda2602b5238b88751cf797f32a0630aeeae450d5"
+                },
+                {
+                  "path": "test/fib.py",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/test/fib.py",
+                  "sha256": "d9f92b20c9d3d0ef2e074caf683a607cc534ea2997261c7c23855122831adeef"
+                },
+                {
+                  "path": "test/python.qtest",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/test/python.qtest",
+                  "sha256": "6fb851c6b4a2cb470059262f450dd6dd99b9728b413126db4c15f72b04a61c32"
+                },
+                {
+                  "path": "test/standalone-lifecycle.py",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/test/standalone-lifecycle.py",
+                  "sha256": "fa338e9bbc6dda19090ad0007d533b58e99ee1dd6c8dba6193d41efed1a8ebad"
+                }
+              ]
+            }
+          ]
+        },
+        "machine": "aarch64",
+        "runner_arch": "linux/arm64",
+        "steps": [
+          {
+            "name": "import-signing-key",
+            "command": [
+              "rpm",
+              "--import",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpm-signing-key.asc"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libqore20",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libqore20-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-debug-tools",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-debug-tools-3.0.0~git20261003.21-lp160.21.1.noarch.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-devel",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-devel-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-misc-tools",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-misc-tools-3.0.0~git20261003.21-lp160.21.1.noarch.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-rpm-macros",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-rpm-macros-3.0.0~git20261003.21-lp160.21.1.noarch.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-stdlib",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-stdlib-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libcares2",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libcares2-1.34.8-lp160.3.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libnghttp2-14",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libnghttp2-14-1.70.0-lp160.3.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libnghttp3-9",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libnghttp3-9-1.18.0-lp160.1.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libngtcp2-16",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libngtcp2-16-1.25.0-lp160.1.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libngtcp2_crypto_ossl0",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libngtcp2_crypto_ossl0-1.25.0-lp160.1.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libonnxruntime1",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libonnxruntime1-1.22.2-lp160.2.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libtree-sitter0_26",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libtree-sitter0_26-0.26.13-lp160.1.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libarrow2500",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libarrow2500-25.0.1-lp160.2.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libparquet2500",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libparquet2500-25.0.1-lp160.2.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libbson2",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libbson2-2.5.5-lp160.2.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libmongoc2",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libmongoc2-2.5.5-lp160.2.1.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-xml-module",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-xml-module-2.3.0-1.5.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-python-module",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-python-module-1.3.0-2.3.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "create-user",
+            "command": [
+              "useradd",
+              "-M",
+              "-U",
+              "qoretester"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-install",
+            "command": [
+              "zypper",
+              "--non-interactive",
+              "install",
+              "--no-recommends",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libqore20-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-stdlib-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libcares2-1.34.8-lp160.3.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libnghttp2-14-1.70.0-lp160.3.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libnghttp3-9-1.18.0-lp160.1.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libngtcp2-16-1.25.0-lp160.1.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libngtcp2_crypto_ossl0-1.25.0-lp160.1.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libonnxruntime1-1.22.2-lp160.2.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libtree-sitter0_26-0.26.13-lp160.1.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libarrow2500-25.0.1-lp160.2.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libparquet2500-25.0.1-lp160.2.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libbson2-2.5.5-lp160.2.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/libmongoc2-2.5.5-lp160.2.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-xml-module-2.3.0-1.5.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-python-module-1.3.0-2.3.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-rpm-verify",
+            "command": [
+              "rpm",
+              "-V",
+              "libqore20",
+              "qore",
+              "qore-stdlib",
+              "libcares2",
+              "libnghttp2-14",
+              "libnghttp3-9",
+              "libngtcp2-16",
+              "libngtcp2_crypto_ossl0",
+              "libonnxruntime1",
+              "libtree-sitter0_26",
+              "libarrow2500",
+              "libparquet2500",
+              "libbson2",
+              "libmongoc2",
+              "qore-xml-module",
+              "qore-python-module"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-inventory",
+            "command": [
+              "rpm",
+              "-qa",
+              "--qf",
+              "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-runtime",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-2tyrwl3f/runtime-runtime",
+              "/tmp/qore-rpm-native-2tyrwl3f/source/rpm/tests-installed/runtime"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-python-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-2tyrwl3f/runtime-python",
+              "python3",
+              "-B",
+              "-W",
+              "error",
+              "/tmp/qore-rpm-native-2tyrwl3f/runtime-python/rpm/run-tests.py",
+              "--installed"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-install",
+            "command": [
+              "zypper",
+              "--non-interactive",
+              "install",
+              "--no-recommends",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-debug-tools-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-devel-3.0.0~git20261003.21-lp160.21.1.aarch64.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-misc-tools-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "/tmp/qore-rpm-native-2tyrwl3f/rpms/qore-rpm-macros-3.0.0~git20261003.21-lp160.21.1.noarch.rpm",
+              "cmake"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-rpm-verify",
+            "command": [
+              "rpm",
+              "-V",
+              "qore-debug-tools",
+              "qore-devel",
+              "qore-misc-tools",
+              "qore-rpm-macros"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-inventory",
+            "command": [
+              "rpm",
+              "-qa",
+              "--qf",
+              "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-runtime",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-2tyrwl3f/sdk-runtime",
+              "/tmp/qore-rpm-native-2tyrwl3f/source/rpm/tests-installed/runtime"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-development",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-2tyrwl3f/sdk-development",
+              "/tmp/qore-rpm-native-2tyrwl3f/source/rpm/tests-installed/development"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-tools",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-2tyrwl3f/sdk-tools",
+              "/tmp/qore-rpm-native-2tyrwl3f/source/rpm/tests-installed/tools"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-remote-debuggers",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-2tyrwl3f/sdk-remote-debuggers",
+              "/tmp/qore-rpm-native-2tyrwl3f/source/rpm/tests-installed/remote-debuggers"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-python-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-2tyrwl3f/sdk-python",
+              "python3",
+              "-B",
+              "-W",
+              "error",
+              "/tmp/qore-rpm-native-2tyrwl3f/sdk-python/rpm/run-tests.py",
+              "--installed",
+              "--compiler"
+            ],
+            "exit_code": 0
+          }
+        ],
+        "exit_code": 0
+      },
+      "diagnostics": [
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' for feature 'Swagger' failed to load; loading source module '/usr/share/qore-modules/3.0.0/Swagger.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' for feature 'OpenApi3' failed to load; loading source module '/usr/share/qore-modules/3.0.0/OpenApi3.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' for feature 'RestClient' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClient.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' for feature 'Swagger' failed to load; loading source module '/usr/share/qore-modules/3.0.0/Swagger.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' for feature 'OpenApi3' failed to load; loading source module '/usr/share/qore-modules/3.0.0/OpenApi3.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' for feature 'RestClient' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClient.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClientIo.qmod' for feature 'RestClientIo' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClientIo.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClientIo.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' for feature 'Swagger' failed to load; loading source module '/usr/share/qore-modules/3.0.0/Swagger.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' for feature 'OpenApi3' failed to load; loading source module '/usr/share/qore-modules/3.0.0/OpenApi3.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' for feature 'RestClient' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClient.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' for feature 'Swagger' failed to load; loading source module '/usr/share/qore-modules/3.0.0/Swagger.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' for feature 'OpenApi3' failed to load; loading source module '/usr/share/qore-modules/3.0.0/OpenApi3.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' for feature 'RestClient' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClient.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClientIo.qmod' for feature 'RestClientIo' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClientIo.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClientIo.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-tools",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        }
+      ],
+      "logs_sha256": {
+        "import-signing-key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verify-signature-libqore20": "f236340865cfd1903866798996042b118d70c3c8713d7727fe2b981c024a27c0",
+        "verify-signature-qore": "ebb1fbf0775576dee1749bf1e54610185ce5213c3f1be3a80c97989372af3019",
+        "verify-signature-qore-debug-tools": "79555ff883d251202e713d73f364c8545908c100e1eb0fc7fa17f877e3fa9964",
+        "verify-signature-qore-devel": "fc1deb57ea9846e46870d27c42253fa09e6dcab61ec7994e43633e96d8c8a0b7",
+        "verify-signature-qore-misc-tools": "18a13f5197225c67064419c54dc46e00734f924e45178de5bb096727da6ebef6",
+        "verify-signature-qore-rpm-macros": "cb74e4a9aea485de0ea4ad4d8165ad41bc3e18eb16dd91fee66811ab631fb73e",
+        "verify-signature-qore-stdlib": "aa642d571d36dda2e116d90a8565739d3c1e2c12cf82c463688b34cec2197741",
+        "verify-signature-libcares2": "849fe67b8c20452a7983c598d0037d4a1b11af3a3db2166b802f072c192ce2e0",
+        "verify-signature-libnghttp2-14": "79196aaa264f4b16e4d0447b4354644a1b29df1a5a1099a3aa6876ed1b4cf78a",
+        "verify-signature-libnghttp3-9": "ec73059c57bbbf0e4a3c64713d81105803d6b2adff34a66d98fa1ad37922f947",
+        "verify-signature-libngtcp2-16": "5df1b4389d7a23d9c7a3226a0098159c537865e603c5d354da8aff88871e0771",
+        "verify-signature-libngtcp2_crypto_ossl0": "066db84aa8c184238920029b66c2d1480deb5b9ddf66d99688fdcb03238b399a",
+        "verify-signature-libonnxruntime1": "21cef62a189120a6a5a69787d5aec80e46b488d4c0e1be7534fa62472f1ca96d",
+        "verify-signature-libtree-sitter0_26": "fa86b079fc78b537df2b7d653387de1f6c219e33dc60055509ddf179fbb34293",
+        "verify-signature-libarrow2500": "89c9ee6f2bdfae86d56f04e40b68b8ab75d08d5204def68410d8e43e35f510df",
+        "verify-signature-libparquet2500": "86ad70320bb0448630d5544819d4a37484ab5e19b565630c3497bf17bffa1344",
+        "verify-signature-libbson2": "c19249030ca6de17abe2bd3ad5e2b50910685fcb761c71c8e0520f76e7e9cb01",
+        "verify-signature-libmongoc2": "f30770b58b263ce676a0b61edee1393bf4151da8c5a1474aa4140e9ba26bcd62",
+        "verify-signature-qore-xml-module": "e875dd5090a597766c74694333e64ac358e04172c619894e96573548305930bf",
+        "verify-signature-qore-python-module": "6f36aaba30df8de2ccd8ee5474e501ff861a45ab81c41c3897b75b7484428bdf",
+        "create-user": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runtime-install": "267ed15a7620a143d377cdf5c308bbc9e476fed9532cb9858080cdc4a2f1c78f",
+        "runtime-rpm-verify": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runtime-inventory": "31104bb4369671080f01a30fc9253175027639937c81cf129e6cd26fbb6110f1",
+        "runtime-runtime": "4583e94ef62b29e44edb444d0df56c2e672dc0222a4d994e721593d011d2a7c4",
+        "runtime-python-tests": "c90a4dd74b321f7337d8c6c16a317f992bdd37280905e1c9ffafe4153c832527",
+        "sdk-install": "79197e9d0cef34f98bcb7c605bf3bf4a95178ab9b37098c1365c0863ed1f54bb",
+        "sdk-rpm-verify": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sdk-inventory": "1b29c567b5ebe681113849140cdcabfc0ba72ebb1f2c0749bb1d9a3b5ee73f73",
+        "sdk-runtime": "4583e94ef62b29e44edb444d0df56c2e672dc0222a4d994e721593d011d2a7c4",
+        "sdk-development": "2741fe2b97e423c72b0d57e9f5c4bb2b794fc15f264d1c61c6c2491ef01845f4",
+        "sdk-tools": "1e343c7159adf3b2a62d28f9a0773e0d6772400b2e3c5638b75ef621456f14d1",
+        "sdk-remote-debuggers": "fa6e0d920d7dbfe86c6258338212b7778efc3230a583aeda061adc8ab117bfe5",
+        "sdk-python-tests": "76a2564cfd2e992051858a71349a162258dbdb7ffa38387b6f5de4e91a8087f6"
+      }
+    },
+    "el10": {
+      "pipeline": 59836,
+      "job": "https://git.qoretechnologies.com/mirror/qore-packaging/-/jobs/209494",
+      "runner_commit": "08ddb041f19bd96204beba4b7bfaf018e787efe5",
+      "steps": 31,
+      "totals": {
+        "runtime": {
+          "cases": 30,
+          "assertions": 270
+        },
+        "sdk": {
+          "cases": 30,
+          "assertions": 270
+        }
+      },
+      "result": {
+        "manifest": {
+          "schema": 1,
+          "family": "el",
+          "arch": "aarch64",
+          "core_commit": "d58eec0b2ab721ef5da0e2136c4cddb3579874e2",
+          "obs_srcmd5": "ba3b6bc9ac8055ee991e334102e7ad16",
+          "packages": [
+            {
+              "name": "libqore",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/libqore-3.0.0~git20261003.21-21.3.aarch64.rpm",
+              "filename": "libqore-3.0.0~git20261003.21-21.3.aarch64.rpm",
+              "sha256": "b7df46d02f59ee9c8a443c0ca53aa6915b3d28df383206efeaa16b990da6481d",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-3.0.0~git20261003.21-21.3.aarch64.rpm",
+              "filename": "qore-3.0.0~git20261003.21-21.3.aarch64.rpm",
+              "sha256": "ae46b994498e2c0f15a1ec207739cee5e52773a1616cf2da34811f6fb1763fe5",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-debug-tools",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-debug-tools-3.0.0~git20261003.21-21.3.noarch.rpm",
+              "filename": "qore-debug-tools-3.0.0~git20261003.21-21.3.noarch.rpm",
+              "sha256": "261609e1db8526d2da2e0cdcbe7cd4ffdf528a8f2ea483ce231b2e13b4e81e61",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-devel",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-devel-3.0.0~git20261003.21-21.3.aarch64.rpm",
+              "filename": "qore-devel-3.0.0~git20261003.21-21.3.aarch64.rpm",
+              "sha256": "3ed2d6876ecf7cd485c11ac5bbfbae4e8edc683299fddccb86d1fc7cf269019a",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-misc-tools",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-misc-tools-3.0.0~git20261003.21-21.3.noarch.rpm",
+              "filename": "qore-misc-tools-3.0.0~git20261003.21-21.3.noarch.rpm",
+              "sha256": "6534b180b383c6fdc4954ac59dc2f081798211ad2febd54867231416c5926e7d",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-rpm-macros",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-rpm-macros-3.0.0~git20261003.21-21.3.noarch.rpm",
+              "filename": "qore-rpm-macros-3.0.0~git20261003.21-21.3.noarch.rpm",
+              "sha256": "4316ca8cd487ff18ee4e30f989097f0a4dc92c42abe4380bfdb18d7599bb58cf",
+              "phase": "sdk"
+            },
+            {
+              "name": "qore-stdlib",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-stdlib-3.0.0~git20261003.21-21.3.aarch64.rpm",
+              "filename": "qore-stdlib-3.0.0~git20261003.21-21.3.aarch64.rpm",
+              "sha256": "c59576847c53a3f68e7b06286b5a88a8f1c044ded0ff16c2e4c36c63a6fd5d6f",
+              "phase": "runtime"
+            },
+            {
+              "name": "c-ares",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/c-ares/c-ares-1.34.8-3.4.aarch64.rpm",
+              "filename": "c-ares-1.34.8-3.4.aarch64.rpm",
+              "sha256": "120a157f423f20ffb9f935c9864308fc8c8a93fe1d6ece1b299da0351ef3ab46",
+              "phase": "runtime"
+            },
+            {
+              "name": "libnghttp2",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/nghttp2/libnghttp2-1.70.0-3.3.aarch64.rpm",
+              "filename": "libnghttp2-1.70.0-3.3.aarch64.rpm",
+              "sha256": "14b9d02b1f00aa1bdc155f7a7117b7338f9f8ddb6557ad9855ef06deb64485dd",
+              "phase": "runtime"
+            },
+            {
+              "name": "libnghttp3",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/nghttp3/libnghttp3-1.18.0-1.4.aarch64.rpm",
+              "filename": "libnghttp3-1.18.0-1.4.aarch64.rpm",
+              "sha256": "a69477b34fca34ec80093b84930d1cc9764ac23afcc4d36b62af7e79294744b1",
+              "phase": "runtime"
+            },
+            {
+              "name": "ngtcp2",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/ngtcp2/ngtcp2-1.25.0-1.4.aarch64.rpm",
+              "filename": "ngtcp2-1.25.0-1.4.aarch64.rpm",
+              "sha256": "daff0d8fc374a2d5f0d089927a14a5336afcb424baf9d6375bffb8a0e519b172",
+              "phase": "runtime"
+            },
+            {
+              "name": "ngtcp2-crypto-ossl",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/ngtcp2/ngtcp2-crypto-ossl-1.25.0-1.4.aarch64.rpm",
+              "filename": "ngtcp2-crypto-ossl-1.25.0-1.4.aarch64.rpm",
+              "sha256": "1ac29551d19464e5b1b335d1677a0a2b861e471d00714ec872f4a1d69ca15e96",
+              "phase": "runtime"
+            },
+            {
+              "name": "tree-sitter",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/tree-sitter/tree-sitter-0.26.13-1.4.aarch64.rpm",
+              "filename": "tree-sitter-0.26.13-1.4.aarch64.rpm",
+              "sha256": "c039b81ca0a4e97e68c4c5e317bfa7c2883aa3304de6915ddaa1092b02d13fac",
+              "phase": "runtime"
+            },
+            {
+              "name": "onnxruntime",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/onnxruntime/onnxruntime-1.22.2-2.4.aarch64.rpm",
+              "filename": "onnxruntime-1.22.2-2.4.aarch64.rpm",
+              "sha256": "d84126085bf102af866250e7557f346aad11380f3b8b5acac83034a076736901",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-xml-module",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-xml-module/qore-xml-module-2.3.0-1.9.aarch64.rpm",
+              "filename": "qore-xml-module-2.3.0-1.9.aarch64.rpm",
+              "sha256": "e6f7995c9dcb4e12f0223bfcf03db3f89b6073a6cf3d16589fe6d5f6238c5f06",
+              "phase": "runtime"
+            },
+            {
+              "name": "qore-python-module",
+              "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-python-module/qore-python-module-1.3.0-2.7.aarch64.rpm",
+              "filename": "qore-python-module-1.3.0-2.7.aarch64.rpm",
+              "sha256": "35bc3559b8c5bdf271c5a6fdc22f895e058e2c18e31fc9d02a8b2d995b8e9768",
+              "phase": "runtime"
+            }
+          ],
+          "fixtures": [
+            {
+              "path": "rpm/tests-installed/runtime",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/runtime",
+              "sha256": "b1006e4391f2ba6f2a8bc050a7ac413901be1c454893a6579e65b2d41d8c015a"
+            },
+            {
+              "path": "rpm/tests-installed/development",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/development",
+              "sha256": "6fe87c237458790f18c2e549a4bff03b627a3a214f8d320ef1d4814bc835162e"
+            },
+            {
+              "path": "rpm/tests-installed/tools",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/tools",
+              "sha256": "45a7faec3a57d42fc6b136ee9fc471ecf4d516403adea14067bdb4e0b287debe"
+            },
+            {
+              "path": "rpm/tests-installed/remote-debuggers",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/rpm/tests-installed/remote-debuggers",
+              "sha256": "5d37b1cce6e6776c87467c64220d8df0b43fc3d843d1181d6b3f2b349d4afe91"
+            },
+            {
+              "path": "modules/ml/test/data/test_linear.onnx",
+              "url": "https://raw.githubusercontent.com/qoretechnologies/qore/d58eec0b2ab721ef5da0e2136c4cddb3579874e2/modules/ml/test/data/test_linear.onnx",
+              "sha256": "e01940baadc56a46bb58f173e9066a7a821a5887aedab250ddb90f6754cee024"
+            }
+          ],
+          "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+          "signing_key": {
+            "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/_pubkey",
+            "sha256": "7c37a9e90d46d97bb01578a0ed8629828f291ba3757b84765a0c12a38b345e6a"
+          },
+          "modules": [
+            {
+              "name": "python",
+              "commit": "d6bbb32f2d83944d84ea76e2098bc0f76c7983f5",
+              "fixtures": [
+                {
+                  "path": "debian/tests/compiler",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/debian/tests/compiler",
+                  "sha256": "2a309138a29952da6b52422a20cea7e17284862597089005efd399e7575342f2"
+                },
+                {
+                  "path": "debian/tests/standalone.py",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/debian/tests/standalone.py",
+                  "sha256": "dfb634cb792a1015fae0e8de678eda4505e46504c03226d6e91511bfb13c111b"
+                },
+                {
+                  "path": "rpm/run-tests.py",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/rpm/run-tests.py",
+                  "sha256": "8554481471ead2a077b0334fda2602b5238b88751cf797f32a0630aeeae450d5"
+                },
+                {
+                  "path": "test/fib.py",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/test/fib.py",
+                  "sha256": "d9f92b20c9d3d0ef2e074caf683a607cc534ea2997261c7c23855122831adeef"
+                },
+                {
+                  "path": "test/python.qtest",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/test/python.qtest",
+                  "sha256": "6fb851c6b4a2cb470059262f450dd6dd99b9728b413126db4c15f72b04a61c32"
+                },
+                {
+                  "path": "test/standalone-lifecycle.py",
+                  "url": "https://raw.githubusercontent.com/qoretechnologies/module-python/d6bbb32f2d83944d84ea76e2098bc0f76c7983f5/test/standalone-lifecycle.py",
+                  "sha256": "fa338e9bbc6dda19090ad0007d533b58e99ee1dd6c8dba6193d41efed1a8ebad"
+                }
+              ]
+            }
+          ]
+        },
+        "machine": "aarch64",
+        "runner_arch": "linux/arm64",
+        "steps": [
+          {
+            "name": "import-signing-key",
+            "command": [
+              "rpm",
+              "--import",
+              "/tmp/qore-rpm-native-h3atf2zt/rpm-signing-key.asc"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libqore",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/libqore-3.0.0~git20261003.21-21.3.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-3.0.0~git20261003.21-21.3.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-debug-tools",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-debug-tools-3.0.0~git20261003.21-21.3.noarch.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-devel",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-devel-3.0.0~git20261003.21-21.3.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-misc-tools",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-misc-tools-3.0.0~git20261003.21-21.3.noarch.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-rpm-macros",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-rpm-macros-3.0.0~git20261003.21-21.3.noarch.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-stdlib",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-stdlib-3.0.0~git20261003.21-21.3.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-c-ares",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/c-ares-1.34.8-3.4.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libnghttp2",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/libnghttp2-1.70.0-3.3.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-libnghttp3",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/libnghttp3-1.18.0-1.4.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-ngtcp2",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/ngtcp2-1.25.0-1.4.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-ngtcp2-crypto-ossl",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/ngtcp2-crypto-ossl-1.25.0-1.4.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-tree-sitter",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/tree-sitter-0.26.13-1.4.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-onnxruntime",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/onnxruntime-1.22.2-2.4.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-xml-module",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-xml-module-2.3.0-1.9.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "verify-signature-qore-python-module",
+            "command": [
+              "rpmkeys",
+              "--checksig",
+              "--verbose",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-python-module-1.3.0-2.7.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "create-user",
+            "command": [
+              "useradd",
+              "-M",
+              "-U",
+              "qoretester"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-install",
+            "command": [
+              "dnf",
+              "-y",
+              "--setopt=gpgcheck=True",
+              "--setopt=localpkg_gpgcheck=True",
+              "--setopt=install_weak_deps=False",
+              "install",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/libqore-3.0.0~git20261003.21-21.3.aarch64.rpm",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-3.0.0~git20261003.21-21.3.aarch64.rpm",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-stdlib-3.0.0~git20261003.21-21.3.aarch64.rpm",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/c-ares-1.34.8-3.4.aarch64.rpm",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/libnghttp2-1.70.0-3.3.aarch64.rpm",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/libnghttp3-1.18.0-1.4.aarch64.rpm",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/ngtcp2-1.25.0-1.4.aarch64.rpm",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/ngtcp2-crypto-ossl-1.25.0-1.4.aarch64.rpm",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/tree-sitter-0.26.13-1.4.aarch64.rpm",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/onnxruntime-1.22.2-2.4.aarch64.rpm",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-xml-module-2.3.0-1.9.aarch64.rpm",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-python-module-1.3.0-2.7.aarch64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-rpm-verify",
+            "command": [
+              "rpm",
+              "-V",
+              "libqore",
+              "qore",
+              "qore-stdlib",
+              "c-ares",
+              "libnghttp2",
+              "libnghttp3",
+              "ngtcp2",
+              "ngtcp2-crypto-ossl",
+              "tree-sitter",
+              "onnxruntime",
+              "qore-xml-module",
+              "qore-python-module"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-inventory",
+            "command": [
+              "rpm",
+              "-qa",
+              "--qf",
+              "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-runtime",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-h3atf2zt/runtime-runtime",
+              "/tmp/qore-rpm-native-h3atf2zt/source/rpm/tests-installed/runtime"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "runtime-python-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-h3atf2zt/runtime-python",
+              "python3",
+              "-B",
+              "-W",
+              "error",
+              "/tmp/qore-rpm-native-h3atf2zt/runtime-python/rpm/run-tests.py",
+              "--installed"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-install",
+            "command": [
+              "dnf",
+              "-y",
+              "--setopt=gpgcheck=True",
+              "--setopt=localpkg_gpgcheck=True",
+              "--setopt=install_weak_deps=False",
+              "install",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-debug-tools-3.0.0~git20261003.21-21.3.noarch.rpm",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-devel-3.0.0~git20261003.21-21.3.aarch64.rpm",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-misc-tools-3.0.0~git20261003.21-21.3.noarch.rpm",
+              "/tmp/qore-rpm-native-h3atf2zt/rpms/qore-rpm-macros-3.0.0~git20261003.21-21.3.noarch.rpm",
+              "cmake"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-rpm-verify",
+            "command": [
+              "rpm",
+              "-V",
+              "qore-debug-tools",
+              "qore-devel",
+              "qore-misc-tools",
+              "qore-rpm-macros"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-inventory",
+            "command": [
+              "rpm",
+              "-qa",
+              "--qf",
+              "%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-runtime",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-h3atf2zt/sdk-runtime",
+              "/tmp/qore-rpm-native-h3atf2zt/source/rpm/tests-installed/runtime"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-development",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-h3atf2zt/sdk-development",
+              "/tmp/qore-rpm-native-h3atf2zt/source/rpm/tests-installed/development"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-tools",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-h3atf2zt/sdk-tools",
+              "/tmp/qore-rpm-native-h3atf2zt/source/rpm/tests-installed/tools"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-remote-debuggers",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "QORE_RPM_TEST_TMP=/tmp/qore-rpm-native-h3atf2zt/sdk-remote-debuggers",
+              "/tmp/qore-rpm-native-h3atf2zt/source/rpm/tests-installed/remote-debuggers"
+            ],
+            "exit_code": 0
+          },
+          {
+            "name": "sdk-python-tests",
+            "command": [
+              "runuser",
+              "-u",
+              "qoretester",
+              "--",
+              "env",
+              "-u",
+              "QORE_MODULE_DIR",
+              "-u",
+              "QORE_MODULE_DIR_ONLY",
+              "-u",
+              "QORE_INCLUDE_DIR",
+              "-u",
+              "LD_LIBRARY_PATH",
+              "-u",
+              "LD_PRELOAD",
+              "AUTOPKGTEST_TMP=/tmp/qore-rpm-native-h3atf2zt/sdk-python",
+              "python3",
+              "-B",
+              "-W",
+              "error",
+              "/tmp/qore-rpm-native-h3atf2zt/sdk-python/rpm/run-tests.py",
+              "--installed",
+              "--compiler"
+            ],
+            "exit_code": 0
+          }
+        ],
+        "exit_code": 0
+      },
+      "diagnostics": [
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' for feature 'Swagger' failed to load; loading source module '/usr/share/qore-modules/3.0.0/Swagger.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' for feature 'OpenApi3' failed to load; loading source module '/usr/share/qore-modules/3.0.0/OpenApi3.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' for feature 'RestClient' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClient.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' for feature 'Swagger' failed to load; loading source module '/usr/share/qore-modules/3.0.0/Swagger.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' for feature 'OpenApi3' failed to load; loading source module '/usr/share/qore-modules/3.0.0/OpenApi3.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' for feature 'RestClient' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClient.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClientIo.qmod' for feature 'RestClientIo' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClientIo.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClientIo.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "runtime-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' for feature 'Swagger' failed to load; loading source module '/usr/share/qore-modules/3.0.0/Swagger.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' for feature 'OpenApi3' failed to load; loading source module '/usr/share/qore-modules/3.0.0/OpenApi3.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' for feature 'RestClient' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClient.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' for feature 'Swagger' failed to load; loading source module '/usr/share/qore-modules/3.0.0/Swagger.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/Swagger.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' for feature 'OpenApi3' failed to load; loading source module '/usr/share/qore-modules/3.0.0/OpenApi3.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/OpenApi3.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' for feature 'RestClient' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClient.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClient.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestClientIo.qmod' for feature 'RestClientIo' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestClientIo.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestClientIo.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' for feature 'DataStreamUtil' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataStreamUtil.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataStreamUtil.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-runtime",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-tools",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' for feature 'DataProvider' failed to load; loading source module '/usr/share/qore-modules/3.0.0/DataProvider/DataProvider.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/DataProvider/DataProvider.qmod' was compiled when optional module 'xml' was not available, but it is available now; rebuild the binary module"
+        },
+        {
+          "suite": "sdk-remote-debuggers",
+          "text": "warning: binary module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' for feature 'RestSchemaValidator' failed to load; loading source module '/usr/share/qore-modules/3.0.0/RestSchemaValidator.qm' instead: AOT-MODULE-STALE: AOT module '/usr/lib64/qore-modules/3.0.0/RestSchemaValidator.qmod' was compiled when optional module 'xml >= 1.3' was not available, but it is available now; rebuild the binary module"
+        }
+      ],
+      "logs_sha256": {
+        "import-signing-key": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "verify-signature-libqore": "522b978c0bbf388055937d701d6cc47218947330262ebeffc481b563c7ef65e7",
+        "verify-signature-qore": "384bc8711354fcde5dab23c616cecf5e28fd42f45fb5e8185c2bc56488a1eca6",
+        "verify-signature-qore-debug-tools": "d4092255c09ca66c2eed72a5547e79bd51315cf021de213132a738e04bac3b13",
+        "verify-signature-qore-devel": "eaa23b482a4d66ea7301f98b37166b9a3ed10dd75781dff62c8939b8de8877d0",
+        "verify-signature-qore-misc-tools": "02e84143974248d5723fe03c926aa91016b603c223b1155202f9b2798e1072d5",
+        "verify-signature-qore-rpm-macros": "9f4def7c39cbaba46ed4a96ade4e73e3e1603624b9896789602c4aec6780fab8",
+        "verify-signature-qore-stdlib": "f68b11be1fe92886cea5b75a360194caddcd17c6e75bbbd411abe51d1ca82c61",
+        "verify-signature-c-ares": "cad528dd740c97c9f6b77b599d45f868aed541297fd1b338dc5e0bd57cf87757",
+        "verify-signature-libnghttp2": "ab62bd94c23358f492d6ba176965c56a9764839fb655dce388cb5df46d80a15b",
+        "verify-signature-libnghttp3": "00e3ecf3619bdc414b02ca7a0ab7665f4b45246d3c2b3c14138fae56b0f68b9a",
+        "verify-signature-ngtcp2": "167e374634ffac21d99103f459235424075aa5fffff879301196836d3bcdbef3",
+        "verify-signature-ngtcp2-crypto-ossl": "c95c9bc8a88535712326d628833dc4ca21263031de6740988e3adef9b143faf4",
+        "verify-signature-tree-sitter": "8fcb953a78dc297e294517b507551eb3ab8fecd942e2a50d8470e9bb53bddf6d",
+        "verify-signature-onnxruntime": "6404e40263ad8dfc63292bee387a5da865f936e3520de8baa3ade20c40ab38da",
+        "verify-signature-qore-xml-module": "2465875c25f07fa41f9dc3c510dbb0722398503b7317b1212ef627b107e27fd4",
+        "verify-signature-qore-python-module": "2b076140cf5ba0bec767d1870ce4b3b7e51baa9c97fb6d8a4133816d9fcdc961",
+        "create-user": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runtime-install": "d1d5c97bd9bdc8cdcfe5a65b56bfc3d278bfab0f3110aec765ecdb755b5776da",
+        "runtime-rpm-verify": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "runtime-inventory": "5e4fb41e0f831118e6348ad5786ed5fdd1a1f999a0b5393cf462355bbeb1dbd5",
+        "runtime-runtime": "0d2725812de67c80d4b7a898b6daf1600e36c7b98078d80ac1aa8cc444f8e6fd",
+        "runtime-python-tests": "bc47c5a193d85683750aa1628e8983f66957329f20afe42ccc59dc6a2bc70aca",
+        "sdk-install": "b8a3cdf70e9dd2e6a0a25b617fd395fadcc816b9464a9910e94520fba5628551",
+        "sdk-rpm-verify": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sdk-inventory": "b2f19720a70be353aaa2fad0521e21233252b3887e91186a8a3f7727b2faa897",
+        "sdk-runtime": "0d2725812de67c80d4b7a898b6daf1600e36c7b98078d80ac1aa8cc444f8e6fd",
+        "sdk-development": "abe76a23e9ee2bbec30d6fc92325dca62439849c3530090d0065fc1b0dee1892",
+        "sdk-tools": "1e343c7159adf3b2a62d28f9a0773e0d6772400b2e3c5638b75ef621456f14d1",
+        "sdk-remote-debuggers": "fa6e0d920d7dbfe86c6258338212b7778efc3230a583aeda061adc8ab117bfe5",
+        "sdk-python-tests": "c8d9ef061fcb468b65358c02484a90352f89ca7c0c25ff3e4f9160eb4df2efad"
+      }
+    }
+  },
+  "files_sha256": {
+    "evidence/controls/python-native-results-20261007/el10.zip": "9fa1280ab8f93fa9e7acc9ffe7ff3bd1b89638925b43c5bf8af8091790945d21",
+    "evidence/controls/python-native-results-20261007/fedora.zip": "b1213e34ae6643e9ea445eff7ed1b1776377b1cc7bf24b4e7828a0f73707dc3e",
+    "evidence/controls/python-native-results-20261007/leap.zip": "d94c93c8a8e87806c73e0e10ef2170a7cf1949f942a83ffc47c9a1eab06fc21d"
+  }
+}
