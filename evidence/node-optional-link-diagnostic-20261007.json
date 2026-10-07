@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User accepted the 1 exact diagnostic sites on 2026-10-07. Focused qualification and its recorded limits are unchanged. Full RPM and native architecture qualification remain separate gates.",
+  "diagnostics": [
+    {
+      "file": "deps/v8/src/parsing/parser-base.h",
+      "line": 3921,
+      "diagnostic": "../deps/v8/src/parsing/parser-base.h:3921:7: warning: \u2018optional_link_begin\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "3911:     result = factory()->NewCall(result, args, pos, has_spread);\n3912: \n3913:     maybe_arrow.ValidateExpression();\n3914: \n3915:     fni_.RemoveLastFunction();\n3916:     if (!Token::IsPropertyOrCall(peek())) return result;\n3917:   }\n3918: \n3919:   bool optional_chaining = false;\n3920:   bool is_optional = false;\n3921:   int optional_link_begin;\n3922:   do {\n3923:     switch (peek()) {\n3924:       case Token::kQuestionPeriod: {\n3925:         if (is_optional) {\n3926:           ReportUnexpectedToken(peek());\n3927:           return impl()->FailureExpression();\n3928:         }\n3929:         // Include the ?. in the source range position.\n3930:         optional_link_begin = scanner()->peek_location().beg_pos;\n3931:         Consume(Token::kQuestionPeriod);"
+    }
+  ],
+  "root_cause": "GCC loses the relation between is_optional and optional_link_begin across the property/call parsing loop. The only assignment of true to is_optional is preceded by initialization of optional_link_begin; the only read of that position is guarded by is_optional.",
+  "source_review": [
+    "is_optional begins false. The question-period branch sets optional_link_begin before setting is_optional=true, including paths that continue to bracket/call parsing.",
+    "The source-range recording block executes only if is_optional, then resets it false. Ordinary properties/calls therefore do not read an old or uninitialized position.",
+    "Repeated question-period, question-period followed by period, and templates inside an optional chain return a failure before recording a source range."
+  ],
+  "coverage": {
+    "native_checks": 374520,
+    "checks_per_run": 93630,
+    "matrix": "All combinations of 1\u20134 links drawn from ordinary property/bracket/call/spread-call, optional property/bracket/call and tagged template; both identifier/function-literal roots and varied source offsets. Independently generated expected ranges, optional flags, call/property/spread counts and invalid chain exits.",
+    "compiler": "Neither smaller compiler mode reproduces the full-build warning; both compile without diagnostics.",
+    "memory": "Both native memory runs have zero errors and all allocations freed.",
+    "actual_node_checks": 46000,
+    "actual_node": "Lazy/eager parsing checks nullish and falsy roots, missing properties, optional calls, argument/key/getter side effects, receiver binding, Unicode keys, private fields, parenthesized chain boundaries and invalid optional-chain syntax."
+  },
+  "limits": [
+    "The complete loop from optional_chaining initialization through its return is verbatim. Scanner, AST factory and source-range recorder use typed adapters.",
+    "The full-build warning is supported by the source invariant and execution controls, not reproduced by the smaller control.",
+    "Native property-name adapters accept private names without scope resolution; actual class tests separately check private-field success, nullish access and wrong-receiver rejection.",
+    "General scanner recovery, eval scope tracking and full argument/expression parsing are outside the adapter; actual JavaScript checks exercise language-level parsing.",
+    "No runtime patch, suppression or compiler-flag change is proposed."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-optional-link-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-optional-link-20261007/control.cc": "75b9d355f26719365f15f094837ec32ba43f3f32c96ca5f1ef12e2d96e1b6575",
+    "evidence/controls/node-optional-link-20261007/control.h": "c59737a9d910dfe0c593c741fd0b29f678be1dd84cde9200258c1e681004dbc6",
+    "evidence/controls/node-optional-link-20261007/control.js": "22a6e92d4b28624a5497a0437cc62f63d3f41de4c6dae534f6326f01f89c7abf",
+    "evidence/controls/node-optional-link-20261007/debug-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-optional-link-20261007/debug-memory.log.gz": "28491298ced3febff5fd7f121f337f5f46625d1b4f537a264434ec02fd434c70",
+    "evidence/controls/node-optional-link-20261007/debug-normal.log.gz": "28491298ced3febff5fd7f121f337f5f46625d1b4f537a264434ec02fd434c70",
+    "evidence/controls/node-optional-link-20261007/debug-valgrind.log.gz": "d201f518190c661114ff969050ab18e6c731ed03fc838a6f9e93fd40447e0e8c",
+    "evidence/controls/node-optional-link-20261007/helper.cc": "648424d0fbd74ddf4212883315427110694b980473a791197e4d4413f3e574e5",
+    "evidence/controls/node-optional-link-20261007/javascript-lazy.log.gz": "5ef028c9e85e90805df129f7d67383d2f43a98e6b3cc859a28b7a6e7ea80d5e2",
+    "evidence/controls/node-optional-link-20261007/javascript-no-lazy.log.gz": "5ef028c9e85e90805df129f7d67383d2f43a98e6b3cc859a28b7a6e7ea80d5e2",
+    "evidence/controls/node-optional-link-20261007/javascript-status.json": "c69ed710170022ae1743448abda18d01bde40a93b4a0a2ebc6c3e0f58e76a76f",
+    "evidence/controls/node-optional-link-20261007/prepare.py": "4c2e2aaf14bad95ccd5fb70f3f53384c5e8731ccf56f794d941e6228396619ed",
+    "evidence/controls/node-optional-link-20261007/release-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-optional-link-20261007/release-memory.log.gz": "28491298ced3febff5fd7f121f337f5f46625d1b4f537a264434ec02fd434c70",
+    "evidence/controls/node-optional-link-20261007/release-normal.log.gz": "28491298ced3febff5fd7f121f337f5f46625d1b4f537a264434ec02fd434c70",
+    "evidence/controls/node-optional-link-20261007/release-valgrind.log.gz": "e5e07fd8d95f119e89428ad99d055baad527a66406d939b4ca3905b9f9facb67",
+    "evidence/controls/node-optional-link-20261007/run-javascript.py": "3155d712c47c1aad56cadb68c76988e4a8735dde0105c3cfa08c1d60e0392d82",
+    "evidence/controls/node-optional-link-20261007/run.py": "e6c627b2e1968459375e8884a7c94c5e587cc003f311d3ce17ff4992a440950b",
+    "evidence/controls/node-optional-link-20261007/source-extracts.json": "f061fc412dc62ad2409a42d1edd1db29ff2e2eb0d23b8a6d1e3800b6cc5ba1b4",
+    "evidence/controls/node-optional-link-20261007/status.json": "ee53c57998ffb08c31d3721ace46255b3c8166b571ec871a4054dbffc25d485a"
+  },
+  "approval": "Allow this exact diagnostic",
+  "approval_date": "2026-10-07"
+}
