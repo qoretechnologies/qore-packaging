@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "status": "Python native qualification runner and pinned ARM inputs verified; ARM jobs remain to run.",
+  "tests": {
+    "tooling": 191,
+    "embedded_cases": 60,
+    "embedded_assertions": 540,
+    "standalone_conversion_and_callbacks": 2,
+    "standalone_retained_callable_shutdown": 2,
+    "compiled_consumer": 1,
+    "ci_lint_errors": 0,
+    "ci_lint_warnings": 0
+  },
+  "scope": [
+    "Use the committed Python RPM fixture unchanged, preserving strict coverage, diagnostic and optional-JNI skip checks.",
+    "Require XML as a pinned runtime dependency; run embedded and standalone suites before and after SDK installation.",
+    "Verify signed RPMs and their hashes in disposable native containers; no development tools in runtime."
+  ],
+  "limits": [
+    "The local command integration uses an existing Fedora SDK image; it verifies command and fixture behavior, not minimal runtime isolation or ARM execution. Those remain native CI requirements.",
+    "The first local image lacked XML and failed its mandatory import. The corrected fixture installs the pinned XML RPM and passes without diagnostics.",
+    "JNI integration and full repository lifecycle remain separate gates."
+  ],
+  "source_sha256": {
+    "tools/qualify-installed.py": "94cbefd873fa75dc7901bbd11613862d26ef47f01bbe5278a34fe471e51f2608",
+    "tests/test_installed_qualification.py": "6ed3f5d86a7929acc6bd1a0aeca2842d6e27e7031fe6ff3c4a63845fe9d166b0",
+    ".gitlab-ci.yml": "0bfa579a07b40e8ba535582922ae78d831b22a71657eaac3775b671eb1fc408c",
+    "qualification/python.rst": "d2ba6937acc6d6dd5a7297bce7d5222199db937760aca7ac21b0f709a5887299",
+    "qualification/python-fedora-aarch64.json": "18d710bdba640283a6e2a1abb1c22fefaf5f62d40d5eef28f4b3b8db671efaf9",
+    "qualification/python-leap-aarch64.json": "ac1bad4523bb3b06ba6dd796de689d640c969ec5bf5fe6bab87a3d8e0056512e",
+    "qualification/python-el10-aarch64.json": "f4b2be316c7de30268f1d373ee24c7e2f7bcee1be07b7cfa448c91e0915bc980"
+  },
+  "files_sha256": {
+    "evidence/controls/python-native-runner-20261007/ci-lint.json": "4bb227bfa70bc04e0d449e4853db3e3e9fab45445e4698bec33ca7f8e171baab",
+    "evidence/controls/python-native-runner-20261007/integration-commands.json": "f8ba53a0c0f7165a4a6e8bf461977d9e02a4082b101e5cd9719a3565e7fd9a86",
+    "evidence/controls/python-native-runner-20261007/integration-result.json": "ca22cd2f3bdf02233888041d3d407448378f146a8690e7b0ded623e0866a69d6",
+    "evidence/controls/python-native-runner-20261007/integration-status.json": "81868a6e94ffc0178bf833deb1c9013d9fab4ee95ddb876a5e8ec4f1d26376d2",
+    "evidence/controls/python-native-runner-20261007/integration.log": "a9e8aac06d00e4c8db66b4e0fbc4407cf1cd6fda374eb7aa3a96534eaf24cebd",
+    "evidence/controls/python-native-runner-20261007/integration.py": "0c6e9519f9a2df0de265f87a60ce65b2496c88a01437d21925ab325b762abe35",
+    "evidence/controls/python-native-runner-20261007/prepare.py": "59e633bcc33a4d761156a00cb62e122a8b9310666c2d393147c409e5384391ce",
+    "evidence/controls/python-native-runner-20261007/sources.json": "e4f0d958a137ff3bbcd592100301eb41635dc8d1bf42f76658b556bcb851acf9",
+    "evidence/controls/python-native-runner-20261007/unit.log": "b3b9af44befa67d4e9c0c26249b8d4ee5ceb46ac84d6354951ad41701b2ed2e5"
+  }
+}

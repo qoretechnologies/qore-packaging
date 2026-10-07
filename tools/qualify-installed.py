@@ -18,6 +18,8 @@ from packaging import fetch_source
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'python': {'rpm/run-tests.py', 'debian/tests/compiler', 'debian/tests/standalone.py',
+               'test/python.qtest', 'test/fib.py', 'test/standalone-lifecycle.py'},
     'amqp': {'rpm/tests-installed-runtime', 'debian/tests/compiler'}
         | {'test/' + name + '.qtest' for name in
            ('amqp', 'amqp-integration', 'amqp-tls', 'AmqpUtil', 'AmqpDataProvider')},
@@ -138,6 +140,8 @@ def validate_modules(manifest):
             raise ValueError('Missing module runtime RPM')
         if name == 'xmlsec' and packages.get('qore-xml-module', {}).get('phase') != 'runtime':
             raise ValueError('XML Security requires a pinned XML runtime RPM')
+        if name == 'python' and packages.get('qore-xml-module', {}).get('phase') != 'runtime':
+            raise ValueError('Python bridge qualification requires a pinned XML runtime RPM')
         if name == 'amqp' and packages.get('qore-xml-module', {}).get('phase') != 'runtime':
             raise ValueError('AMQP AOT helpers require a pinned XML runtime RPM')
         if name == 'proj' and packages.get('qore-geos-module', {}).get('phase') != 'runtime':
@@ -270,7 +274,7 @@ def module_commands(name, phase, directory, binary=None, driver=None, installed_
         if phase == 'sdk':
             commands.append(('compiler', [str(directory / 'debian/tests/compiler')]))
         return commands
-    if name in ('ssh', 'xmlsec'):
+    if name in ('ssh', 'xmlsec', 'python'):
         command = ['python3', '-B', '-W', 'error', str(directory / 'rpm/run-tests.py'), '--installed']
         if phase == 'sdk':
             command.append('--compiler')

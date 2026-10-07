@@ -1,0 +1,29 @@
+[
+  {
+    "name": "runtime-python-tests",
+    "cwd": "/work/runtime-python",
+    "command": [
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "/work/runtime-python/rpm/run-tests.py",
+      "--installed"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "sdk-python-tests",
+    "cwd": "/work/sdk-python",
+    "command": [
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "/work/sdk-python/rpm/run-tests.py",
+      "--installed",
+      "--compiler"
+    ],
+    "exit_code": 0
+  }
+]

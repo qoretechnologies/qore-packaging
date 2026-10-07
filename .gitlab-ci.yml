@@ -282,3 +282,25 @@ rpm-modules6-el10-arm64:
     - if: '$RPM_NATIVE_QUALIFICATION == "modules6" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
   variables:
     RPM_MANIFEST: qualification/modules6-el10-aarch64.json
+
+# Embedded Python, standalone qoreloader and compiled consumers use pinned XML.
+rpm-python-fedora-arm64:
+  extends: rpm-fedora-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "python" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "fedora")'
+  variables:
+    RPM_MANIFEST: qualification/python-fedora-aarch64.json
+
+rpm-python-leap-arm64:
+  extends: rpm-leap-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "python" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "leap")'
+  variables:
+    RPM_MANIFEST: qualification/python-leap-aarch64.json
+
+rpm-python-el10-arm64:
+  extends: rpm-el10-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "python" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
+  variables:
+    RPM_MANIFEST: qualification/python-el10-aarch64.json

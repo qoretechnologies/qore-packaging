@@ -193,6 +193,34 @@ os.write(2, b'diagnostic\\n')
         self.add_modules()
         self.assertEqual(module.validate(self.manifest), self.manifest)
 
+    def test_python_requires_xml_in_minimal_runtime(self):
+        self.add_modules()
+        self.manifest['modules'] = [entry for entry in self.manifest['modules']
+                                    if entry['name'] == 'python']
+        for phase in ('missing', 'sdk'):
+            manifest = copy.deepcopy(self.manifest)
+            dependency = next(p for p in manifest['packages'] if p['name'] == 'qore-xml-module')
+            if phase == 'missing':
+                manifest['packages'].remove(dependency)
+            else:
+                dependency['phase'] = phase
+            with self.subTest(phase=phase), self.assertRaisesRegex(ValueError, 'Python bridge'):
+                module.validate(manifest)
+
+    def test_python_runs_embedded_standalone_and_compiled_checks(self):
+        directory = Path('/tmp/Python installed fixtures')
+        runtime = module.module_commands('python', 'runtime', directory)
+        self.assertEqual(runtime, [('tests', ['python3', '-B', '-W', 'error',
+            str(directory / 'rpm/run-tests.py'), '--installed'])])
+        self.assertEqual(module.module_commands('python', 'sdk', directory),
+                         [('tests', runtime[0][1] + ['--compiler'])])
+        self.assertEqual(module.MODULE_FIXTURES['python'], {
+            'rpm/run-tests.py', 'debian/tests/compiler', 'debian/tests/standalone.py',
+            'test/python.qtest', 'test/fib.py', 'test/standalone-lifecycle.py'})
+        for family in ('fedora', 'suse', 'el'):
+            self.assertEqual(module.module_dependencies('python', 'runtime', family), [])
+            self.assertEqual(module.module_dependencies('python', 'sdk', family), [])
+
     def test_amqp_rejects_missing_or_sdk_only_xml_before_installation(self):
         self.add_modules()
         self.manifest['modules'] = [entry for entry in self.manifest['modules']
