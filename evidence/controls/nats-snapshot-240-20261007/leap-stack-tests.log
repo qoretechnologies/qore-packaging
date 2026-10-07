@@ -1,0 +1,58 @@
+=== RUN   TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot
+    norace_1_test.go:5077: SNAPSHOT-TRACE mismatch: [TEST] Leader S-3 has 12910 messages, Follower S-1 has 5001 messages
+        [TEST] Leader S-3 LastSeq is 12910, Follower S-1 is at 5001
+    norace_1_test.go:5084: SNAPSHOT-STACK: goroutine 984 [select]:
+        github.com/nats-io/nats-server/v2/server.(*stream).processSnapshot(0x1167745e4488, 0x11677481ebe0, 0x326f)
+        	/source/server/jetstream_cluster.go:13145 +0xcb6
+        github.com/nats-io/nats-server/v2/server.(*jetStream).applyStreamEntries(0x11677443f4a0, 0x1167745e4488, {0x1b210c8, 0x11677554e388}, 0x116774617de0, 0x0, 0x11677496fd00)
+        	/source/server/jetstream_cluster.go:5462 +0x545
+        github.com/nats-io/nats-server/v2/server.(*jetStream).monitorStream(0x11677443f4a0, 0x1167745e4488, 0x1167742dc4d0, 0x0)
+        	/source/server/jetstream_cluster.go:4294 +0x3566
+        github.com/nats-io/nats-server/v2/server.(*jetStream).processClusterCreateStream.func1()
+        	/source/server/jetstream_cluster.go:6668 +0x25
+        github.com/nats-io/nats-server/v2/server.(*Server).startGoRoutine.func1()
+        	/source/server/server.go:4117 +0x32
+        created by github.com/nats-io/nats-server/v2/server.(*Server).startGoRoutine in goroutine 587
+        	/source/server/server.go:4115 +0x129
+    norace_1_test.go:5096: SNAPSHOT-TRACE server=S-1 msgs=5001 last=5001 committed=12911 applied=5002 proposed=12912 paused=true catchingUp=false highestCommit=12912
+    norace_1_test.go:5096: SNAPSHOT-TRACE server=S-2 msgs=12910 last=12910 committed=12912 applied=12912 proposed=12912 paused=false catchingUp=false highestCommit=0
+    norace_1_test.go:5096: SNAPSHOT-TRACE server=S-3 msgs=12910 last=12910 committed=12912 applied=12912 proposed=12912 paused=false catchingUp=false highestCommit=0
+    norace_1_test.go:5077: SNAPSHOT-TRACE mismatch: [TEST] Leader S-3 has 12910 messages, Follower S-1 has 5001 messages
+        [TEST] Leader S-3 LastSeq is 12910, Follower S-1 is at 5001
+    norace_1_test.go:5096: SNAPSHOT-TRACE server=S-1 msgs=5001 last=5001 committed=12911 applied=5002 proposed=12912 paused=true catchingUp=false highestCommit=12912
+    norace_1_test.go:5096: SNAPSHOT-TRACE server=S-2 msgs=12910 last=12910 committed=12912 applied=12912 proposed=12912 paused=false catchingUp=false highestCommit=0
+    norace_1_test.go:5096: SNAPSHOT-TRACE server=S-3 msgs=12910 last=12910 committed=12912 applied=12912 proposed=12912 paused=false catchingUp=false highestCommit=0
+    norace_1_test.go:5077: SNAPSHOT-TRACE mismatch: [TEST] Leader S-3 has 12910 messages, Follower S-1 has 5001 messages
+        [TEST] Leader S-3 LastSeq is 12910, Follower S-1 is at 5001
+    norace_1_test.go:5096: SNAPSHOT-TRACE server=S-1 msgs=5001 last=5001 committed=12911 applied=5002 proposed=12912 paused=true catchingUp=false highestCommit=12912
+    norace_1_test.go:5096: SNAPSHOT-TRACE server=S-2 msgs=12910 last=12910 committed=12912 applied=12912 proposed=12912 paused=false catchingUp=false highestCommit=0
+    norace_1_test.go:5096: SNAPSHOT-TRACE server=S-3 msgs=12910 last=12910 committed=12912 applied=12912 proposed=12912 paused=false catchingUp=false highestCommit=0
+    norace_1_test.go:5077: SNAPSHOT-TRACE mismatch: [TEST] Leader S-3 has 12910 messages, Follower S-1 has 5001 messages
+        [TEST] Leader S-3 LastSeq is 12910, Follower S-1 is at 5001
+    norace_1_test.go:5096: SNAPSHOT-TRACE server=S-1 msgs=5001 last=5001 committed=12911 applied=5002 proposed=12912 paused=true catchingUp=false highestCommit=12912
+    norace_1_test.go:5096: SNAPSHOT-TRACE server=S-2 msgs=12910 last=12910 committed=12912 applied=12912 proposed=12912 paused=false catchingUp=false highestCommit=0
+    norace_1_test.go:5096: SNAPSHOT-TRACE server=S-3 msgs=12910 last=12910 committed=12912 applied=12912 proposed=12912 paused=false catchingUp=false highestCommit=0
+    norace_1_test.go:5074: [TEST] Leader S-3 has 12910 messages, Follower S-1 has 5001 messages
+        [TEST] Leader S-3 LastSeq is 12910, Follower S-1 is at 5001
+--- FAIL: TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot (11.75s)
+=== RUN   TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot
+--- PASS: TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot (6.43s)
+=== RUN   TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot
+--- PASS: TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot (7.09s)
+=== RUN   TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot
+--- PASS: TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot (6.71s)
+=== RUN   TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot
+--- PASS: TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot (6.31s)
+=== RUN   TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot
+--- PASS: TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot (6.26s)
+=== RUN   TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot
+--- PASS: TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot (6.12s)
+=== RUN   TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot
+--- PASS: TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot (6.21s)
+=== RUN   TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot
+--- PASS: TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot (6.42s)
+=== RUN   TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot
+--- PASS: TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot (6.17s)
+FAIL
+FAIL	github.com/nats-io/nats-server/v2/server	69.508s
+FAIL

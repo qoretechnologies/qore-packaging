@@ -1,0 +1,42 @@
+{
+  "source": "work/nats-prepared-44/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-snapshot-240-trace",
+      "target": "fedora",
+      "count": 10,
+      "race": false,
+      "pattern": "^TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot$",
+      "sublist": "work/nats-prepared-44/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-snapshot-240-20261007/norace_1_test.go": "server/norace_1_test.go",
+        "work/nats-snapshot-240-20261007/trace_jetstream_cluster.go": "server/jetstream_cluster.go"
+      }
+    },
+    {
+      "name": "leap-nats-snapshot-240-trace",
+      "target": "leap",
+      "count": 10,
+      "race": false,
+      "pattern": "^TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot$",
+      "sublist": "work/nats-prepared-44/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-snapshot-240-20261007/norace_1_test.go": "server/norace_1_test.go",
+        "work/nats-snapshot-240-20261007/trace_jetstream_cluster.go": "server/jetstream_cluster.go"
+      }
+    },
+    {
+      "name": "el10-nats-snapshot-240-trace",
+      "target": "el10",
+      "count": 10,
+      "race": false,
+      "pattern": "^TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot$",
+      "sublist": "work/nats-prepared-44/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-snapshot-240-20261007/norace_1_test.go": "server/norace_1_test.go",
+        "work/nats-snapshot-240-20261007/trace_jetstream_cluster.go": "server/jetstream_cluster.go"
+      }
+    }
+  ]
+}

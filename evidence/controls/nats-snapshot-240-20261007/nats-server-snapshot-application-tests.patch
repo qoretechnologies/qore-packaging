@@ -1,0 +1,30 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Finish snapshot application before comparing restored replica contents.
+--- a/server/norace_1_test.go
++++ b/server/norace_1_test.go
+@@ -5070,6 +5070,25 @@
+ 	c.waitOnLeader()
+ 	c.waitOnStreamLeader("$JS", "TEST")
+ 
++	// A leader election does not finish the restarted follower's snapshot
++	// transfer. Join that applied index before comparing replica contents.
++	leader := c.streamLeader("$JS", "TEST")
++	account, err := leader.lookupAccount("$JS")
++	require_NoError(t, err)
++	stream, err := account.lookupStream("TEST")
++	require_NoError(t, err)
++	node := stream.raftNode().(*raft)
++	node.RLock()
++	committed := node.commit
++	node.RUnlock()
++	for _, server := range c.servers {
++		account, err := server.lookupAccount("$JS")
++		require_NoError(t, err)
++		stream, err := account.lookupStream("TEST")
++		require_NoError(t, err)
++		awaitRaftProgress(t, stream.raftNode().(*raft), committed, 0, false)
++	}
++
+ 	checkFor(t, 2*time.Second, 500*time.Millisecond, func() error {
+ 		return checkState(t, c, "$JS", "TEST")
+ 	})

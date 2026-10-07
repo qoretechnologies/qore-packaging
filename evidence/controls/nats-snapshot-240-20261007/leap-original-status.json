@@ -1,0 +1,92 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "8dad543b4a21c6a8d026490a7d1333c3d0517c9ff6904af9f8ceaabe5ffcf116",
+    "--tmpfs",
+    "/tmp:rw,exec,size=4g,mode=1777",
+    "--user",
+    "1019:100",
+    "-e",
+    "GOMAXPROCS=2",
+    "-e",
+    "GOTOOLCHAIN=local",
+    "-e",
+    "GOPROXY=off",
+    "-e",
+    "GOSUMDB=off",
+    "-e",
+    "GOFLAGS=-mod=vendor",
+    "-e",
+    "GOCACHE=/cache",
+    "-e",
+    "GOPATH=/gopath",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-prepared-44/nats-server-2.15.0:/source:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-go-cache:/cache",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-go-path:/gopath",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-prepared-44/nats-server-2.15.0/server/sublist.go:/source/server/sublist.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-restart-trace-238-20261007/norace_1_test.go:/source/server/norace_1_test.go:ro",
+    "-w",
+    "/source",
+    "sha256:2b44d9f9636b4e454c93b06c95cd9ff9f23136b159e80ac2ded68b32d7f1190b",
+    "go",
+    "test",
+    "-v",
+    "-short",
+    "-count=20",
+    "-timeout=20m",
+    "-run",
+    "^TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot$",
+    "./server"
+  ],
+  "network": {
+    "Name": "qore-rpm-isolated-70c6ece9bb024e64aae651bf4e82ee52",
+    "Id": "8dad543b4a21c6a8d026490a7d1333c3d0517c9ff6904af9f8ceaabe5ffcf116",
+    "Created": "2026-10-07T19:42:42.771878553+02:00",
+    "Scope": "local",
+    "Driver": "bridge",
+    "EnableIPv4": true,
+    "EnableIPv6": false,
+    "IPAM": {
+      "Driver": "default",
+      "Options": {},
+      "Config": [
+        {
+          "Subnet": "192.168.0.0/20"
+        }
+      ]
+    },
+    "Internal": true,
+    "Attachable": false,
+    "Ingress": false,
+    "ConfigFrom": {
+      "Network": ""
+    },
+    "ConfigOnly": false,
+    "Options": {
+      "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+      "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+    },
+    "Labels": {},
+    "Containers": {},
+    "Status": {
+      "IPAM": {
+        "Subnets": {
+          "192.168.0.0/20": {
+            "IPsInUse": 2,
+            "DynamicIPsAvailable": 4094
+          }
+        }
+      }
+    }
+  }
+}

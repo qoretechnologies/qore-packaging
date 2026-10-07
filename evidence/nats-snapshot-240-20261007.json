@@ -1,0 +1,145 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "status": "Snapshot fixture qualified; one candidate44 failure and historical gates remain open before complete NATS qualification.",
+  "root_cause": "The fixture compares replica contents for two seconds immediately after election, before its later stream-current checks. A restarted follower can still be applying its snapshot. The real trace shows the first sync request with no subscriber, followed by the existing five-second inactivity retry; state converges after that retry.",
+  "proof": "Three original failures leave a follower at sequence 5001 while peers exceed 12800; goroutine stacks locate the paused follower inside processSnapshot. Corrected traced runs capture the missing subscription and five-second retry on Fedora and AlmaLinux, then pass every original content/resource assertion.",
+  "fix": "Capture the elected leader commit index and join the existing Raft application event on each replica before the original two-second content comparison. Preserve the later stream-current checks and all message/resource assertions.",
+  "tests": {
+    "fedora": {
+      "original": {
+        "exit_code": 0,
+        "passes": 20,
+        "failures": 0
+      },
+      "stack": {
+        "exit_code": 1,
+        "passes": 9,
+        "failures": 1
+      },
+      "trace": {
+        "exit_code": 0,
+        "passes": 10,
+        "failures": 0,
+        "no_subscriber_recovery": [
+          {
+            "server": "S-1",
+            "request_ms": 1791395547407,
+            "inactivity_retry_ms": 1791395552407,
+            "elapsed_ms": 5000
+          }
+        ]
+      },
+      "fixed": {
+        "exit_code": 0,
+        "passes": 10,
+        "failures": 0
+      }
+    },
+    "leap": {
+      "original": {
+        "exit_code": 0,
+        "passes": 20,
+        "failures": 0
+      },
+      "stack": {
+        "exit_code": 1,
+        "passes": 9,
+        "failures": 1
+      },
+      "trace": {
+        "exit_code": 0,
+        "passes": 10,
+        "failures": 0,
+        "no_subscriber_recovery": []
+      },
+      "fixed": {
+        "exit_code": 0,
+        "passes": 10,
+        "failures": 0
+      }
+    },
+    "el10": {
+      "original": {
+        "exit_code": 1,
+        "passes": 19,
+        "failures": 1
+      },
+      "stack": {
+        "exit_code": 0,
+        "passes": 10,
+        "failures": 0
+      },
+      "trace": {
+        "exit_code": 0,
+        "passes": 10,
+        "failures": 0,
+        "no_subscriber_recovery": [
+          {
+            "server": "S-1",
+            "request_ms": 1791395547562,
+            "inactivity_retry_ms": 1791395552562,
+            "elapsed_ms": 5000
+          }
+        ]
+      },
+      "fixed": {
+        "exit_code": 0,
+        "passes": 10,
+        "failures": 0
+      }
+    }
+  },
+  "counts": {
+    "original_runs": 90,
+    "original_failures": 3,
+    "corrected_traced_runs": 30,
+    "corrected_uninstrumented_runs": 30
+  },
+  "limits": [
+    "The test is in the upstream norace source group and is run without the race detector.",
+    "Diagnostic production instrumentation is excluded from the patch; no production retry, timeout, flags or message assertion changes.",
+    "The existing event helper has a ten-second safety deadline; no new sleep or polling is introduced.",
+    "TestJetStreamClusterDeleteAndRestoreAndRestart and the separately recorded historical failures remain unresolved."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-snapshot-240-20261007/el10-fixed-status.json": "c852c054381aed505f58746861d779355f4a252bdbbf7b976cf2d116e34b15c2",
+    "evidence/controls/nats-snapshot-240-20261007/el10-fixed-tests.log": "ed9efd1cfa04a7633c20fd25a4b02247448697b251a3abcc8ceac6b66a1b79e4",
+    "evidence/controls/nats-snapshot-240-20261007/el10-original-status.json": "8f49c79698302a9ad436b3f1f8e43f49bf001d4a39314126480ca689001bc341",
+    "evidence/controls/nats-snapshot-240-20261007/el10-original-tests.log": "47391c6ced95b8e9ef751bf78d1ca97146f5c3762f060ddb77ca12b90c16c6cc",
+    "evidence/controls/nats-snapshot-240-20261007/el10-stack-status.json": "9eb01721bf1781188e8f02c46c1653a93865565dff85dd71c61638be4199bf79",
+    "evidence/controls/nats-snapshot-240-20261007/el10-stack-tests.log": "e41e4704f7a7cd317c13c969680b0d8fdcf1402bb2d774441d038e639978d0b2",
+    "evidence/controls/nats-snapshot-240-20261007/el10-trace-status.json": "c7c4ebe6c20167aff284a395867c348d51234d66ebc6b0d21e64c4ed83923936",
+    "evidence/controls/nats-snapshot-240-20261007/el10-trace-tests.log": "5b5500a6b2516eff41db466016fde4b8a6d842976dc4476368e78bb0275323c4",
+    "evidence/controls/nats-snapshot-240-20261007/fedora-fixed-status.json": "dad5aeb91010a1ca015ca7917ccd9a04ff1ff7552fb59fcd144c840460ae2800",
+    "evidence/controls/nats-snapshot-240-20261007/fedora-fixed-tests.log": "ead8d29cc1dca43e074c62d67a1359fec9dfcb7fb24b345c6fa691946e7f0aed",
+    "evidence/controls/nats-snapshot-240-20261007/fedora-original-status.json": "880cc166493ffa194091fb7a026b031aac81cf8a41e97f3b4c7d75050e98dd38",
+    "evidence/controls/nats-snapshot-240-20261007/fedora-original-tests.log": "dce4ef44b016ae23996620d08888c64b9face326e1e381ea02e1873f387a908e",
+    "evidence/controls/nats-snapshot-240-20261007/fedora-stack-status.json": "dc944c2d0beab5543cd83bc0865b414297018b76d12f4648c684da4130ade7a3",
+    "evidence/controls/nats-snapshot-240-20261007/fedora-stack-tests.log": "61c2fe9ec3c0415f31147a756bf2c17a173520460c24055d1d38d3248fdaab54",
+    "evidence/controls/nats-snapshot-240-20261007/fedora-trace-status.json": "10bf56e5ef0b6a97ada6dd023851a70b8950cd8726199a079aab4c4ad89c740f",
+    "evidence/controls/nats-snapshot-240-20261007/fedora-trace-tests.log": "642c77665a371bad69c0912377d7797e895c357fc83ece5843407b3268ce6506",
+    "evidence/controls/nats-snapshot-240-20261007/leap-fixed-status.json": "1b718e831b8039e650c8dc81d6688b441f36dd87eee381e07c5184337cfc5526",
+    "evidence/controls/nats-snapshot-240-20261007/leap-fixed-tests.log": "bd9e7d4871acf3742c6f9bcfe6051a4827e97f1f9fd6d9caf30e5ab21ed4b76b",
+    "evidence/controls/nats-snapshot-240-20261007/leap-original-status.json": "26ddad7d2297d150e523dfb64d2a3e007f397c998c2b2e721a5b2881c8e07e15",
+    "evidence/controls/nats-snapshot-240-20261007/leap-original-tests.log": "d713614ffcc726f9699f4a0576b2487b8db67990b00f7aceb124d71196723a9b",
+    "evidence/controls/nats-snapshot-240-20261007/leap-stack-status.json": "7f9356be526ef25d47e3587709cb7afa1c55fc77b790ee2373df8f6067c34039",
+    "evidence/controls/nats-snapshot-240-20261007/leap-stack-tests.log": "bad42a6deebd941eb99cc84a8cd18d2b9bc8761b72797f3f117ddd0c64864068",
+    "evidence/controls/nats-snapshot-240-20261007/leap-trace-status.json": "439818068ef0a72adba4bc6c4a806d4a1fc98fd683b7626d4f6d7f8e0f31495c",
+    "evidence/controls/nats-snapshot-240-20261007/leap-trace-tests.log": "fcd8bca42d2d2d602f26b5380d6ab451dd5089ca528cb5e52e003a9180973901",
+    "evidence/controls/nats-snapshot-240-20261007/nats-restart-trace-238.json": "d54a7bf7277bfb546d238172a5fbb90ada903af2bd60a21c4c3033aa0273100a",
+    "evidence/controls/nats-snapshot-240-20261007/nats-server-snapshot-application-tests.patch": "5ed2f0c8db52a53681993596c8d484a77e7b917b36f37dc12ba78d68aa033513",
+    "evidence/controls/nats-snapshot-240-20261007/nats-snapshot-240-fixed.json": "d4357b443722de701104e281f9bc50258b60965c2d327fad33c47dbd2cd2ea07",
+    "evidence/controls/nats-snapshot-240-20261007/nats-snapshot-240-trace.json": "ccf77af8fbbff3e9a2338c385e32376312be8fb19ba331a51a4b7998ef011201",
+    "evidence/controls/nats-snapshot-240-20261007/nats-snapshot-stack-239.json": "337353ab53974ac17dc17cadfa0472500d8f00e5c8a38828b143998444c39ae4",
+    "evidence/controls/nats-snapshot-240-20261007/norace_1_test.go": "7fe37174ae1889c39dd81f013739fb099c6f0b3b04bcf7c99eea3a729acb2818",
+    "evidence/controls/nats-snapshot-240-20261007/original-norace_1_test.go": "d18c7bdf31e35675fcaffda36e189ef9f1dd1fe6a0b64883298b9e5875331923",
+    "evidence/controls/nats-snapshot-240-20261007/prepare-nats-snapshot-240-20261007.py": "9940b2e101e8ebb7f2f20c4bbfdd71debdb707eda002b8ebc10964e9f2634c18",
+    "evidence/controls/nats-snapshot-240-20261007/run-nats-focused-38.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a",
+    "evidence/controls/nats-snapshot-240-20261007/stack-norace_1_test.go": "886ca8dfa316a72c82d715bb4a54b4602c9ee686482c94e3bfdf2c0297e43e23",
+    "evidence/controls/nats-snapshot-240-20261007/trace_jetstream_cluster.go": "fe623c912785844f24d55c136d43c49e0fe2acc5a78d5d874cd4b8fd0750fcfa",
+    "evidence/controls/nats-snapshot-240-20261007/metadata-tests.log": "4906898a06261e286b9b67597ed0f4883f3d930352af0e3727375fc9ea3a6746"
+  },
+  "metadata_tests": 17,
+  "zero_fuzz_patch_dry_run": "passed"
+}
