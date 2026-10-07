@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User accepted 1 exact diagnostic sites on 2026-10-07. Focused qualification and its limits are unchanged; full RPM/native ARM gates remain open.",
+  "diagnostics": [
+    {
+      "file": "deps/v8/src/wasm/wasm-objects.cc",
+      "line": 1240,
+      "diagnostic": "../deps/v8/src/wasm/wasm-objects.cc:1240:55: warning: \u2018*(long unsigned int*)((char*)&result_inplace + offsetof(std::optional<long unsigned int>,std::optional<long unsigned int>::<unnamed>.std::_Optional_base<long unsigned int, true, true>::<unnamed>))\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "1230:     size_t new_byte_length = new_pages * wasm::kWasmPageSize;\n1231:     // This is a less than check, as it is not guaranteed that the SAB\n1232:     // length here will be equal to the stashed length above as calls to\n1233:     // grow the same memory object can come in from different workers.\n1234:     // It is also possible that a call to Grow was in progress when\n1235:     // handling this call.\n1236:     CHECK_LE(new_byte_length, memory_object->array_buffer()->GetByteLength());\n1237:     // As {old_pages} was read racefully, we return here the synchronized\n1238:     // value provided by {GrowWasmMemoryInPlace}, to provide the atomic\n1239:     // read-modify-write behavior required by the spec.\n1240:     return static_cast<int32_t>(result_inplace.value());  // success\n1241:   }\n1242: \n1243:   size_t new_pages = old_pages + pages;\n1244:   // Check for overflow (should be excluded via {max_pages} above).\n1245:   DCHECK_LE(old_pages, new_pages);\n1246: \n1247:   // Check if the non-shared memory could grow in-place.\n1248:   if (result_inplace.has_value()) {\n1249:     if (memory_object->array_buffer()->is_resizable_by_js()) {\n1250:       memory_object->array_buffer()->set_byte_length(new_pages *"
+    }
+  ],
+  "root_cause": "GCC does not preserve the relationship between the repeated shared-buffer query, must_grow_in_place and the early return when the optional result is empty.",
+  "source_review": [
+    "JSArrayBuffer::Setup initializes the shared flag. It does not change while this existing buffer is read by Grow.",
+    "A shared buffer makes must_grow_in_place true. An empty result returns -1 (or terminates in correctness-fuzzer mode) before the shared branch reads the optional.",
+    "BackingStore::GrowWasmMemoryInPlace returns the successful compare-exchange\u2019s previous length, not the earlier unsynchronized length. The shared branch correctly returns that value and permits subsequent worker growth before the broadcast-length check."
+  ],
+  "coverage": {
+    "native_checks": 212480,
+    "checks_per_run": 53120,
+    "matrix": "Memory32/64, explicit/implicit maxima, zero and boundary sizes, shared/guarded/resizable modes, moving stress, injected growth failure and modeled concurrent growth before/after the atomic result. Release/debug normally and under Valgrind.",
+    "memory": "Both qualified runs have zero errors and all allocations freed.",
+    "compiler": "Release and debug controls both reproduce the optional payload warning.",
+    "actual_checks": 640,
+    "actual": "One, two and four workers grow the same Wasm memory. Positive growth returns each prior page count exactly once; zero growth, maximum rejection and data preservation pass. Unshared growth detaches the old buffer and rejects excess growth."
+  },
+  "limits": [
+    "The original Grow prefix through the shared return is verbatim. Typed handles, buffers and backing stores model allocation results and interleavings; they do not allocate virtual memory or implement V8\u2019s atomic primitive.",
+    "The native control marks continuation into the unshared tail with -2; it makes no claim that this is a real Grow result. Actual Node separately tests the unshared path.",
+    "Concurrent increments in the native model are deterministic injected states. Actual JavaScript worker tests exercise real concurrent growth without sleeps or polling.",
+    "The correctness-fuzzer fatal branch is retained and reviewed but not executed by this control. Native fault injection also includes an empty result for zero-page growth to test the guard, although real zero-page growth succeeds.",
+    "No runtime patch, suppression or compiler-flag change is proposed."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-wasm-grow-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-wasm-grow-20261007/control.cc": "d2d0dc7ed1de338be9799263101de77538a769567a4e44fa6db87555cbdb4594",
+    "evidence/controls/node-wasm-grow-20261007/control.h": "53f8579c2f790c6f64cfba83f6f6275e29ded2833c9f9fedab424e6364406926",
+    "evidence/controls/node-wasm-grow-20261007/control.js": "5a7c1d947381bf85e8cd910be6353038f2071aa386039e41900c331134a5c5b1",
+    "evidence/controls/node-wasm-grow-20261007/debug-compile.log.gz": "0e52a4122f4402bd9119f75748c7f5b2a7806109cda1172994cdec0dfa090c3b",
+    "evidence/controls/node-wasm-grow-20261007/debug-memory.log.gz": "c5f7b0b776b0552f53d5b441b0b973fe0e782089e5286653c9246c1249674ac4",
+    "evidence/controls/node-wasm-grow-20261007/debug-normal.log.gz": "c5f7b0b776b0552f53d5b441b0b973fe0e782089e5286653c9246c1249674ac4",
+    "evidence/controls/node-wasm-grow-20261007/debug-valgrind.log.gz": "224d11a100902f7f6895af98af3894e1ee133d6b452e24b1c4b88d071f9ad17f",
+    "evidence/controls/node-wasm-grow-20261007/helper.cc": "181e5bb2266cb7f1042d6069ef6f7e13f586f0a987533145d6e3a239315eeeb0",
+    "evidence/controls/node-wasm-grow-20261007/javascript-status.json": "2c53d853cee8d39f176ec0fcb8813750e74034cac917126d35d619a308674bd2",
+    "evidence/controls/node-wasm-grow-20261007/javascript.log.gz": "f98507eda8bd0498bac28996eac336c40b84b9cd495e3023d2258d704bf5d41f",
+    "evidence/controls/node-wasm-grow-20261007/prepare.py": "4438e85722b5f6d34b1719ceaa3f0525f9b8a1cd09453021b1ea2efd0cd544a5",
+    "evidence/controls/node-wasm-grow-20261007/release-compile.log.gz": "0e52a4122f4402bd9119f75748c7f5b2a7806109cda1172994cdec0dfa090c3b",
+    "evidence/controls/node-wasm-grow-20261007/release-memory.log.gz": "c5f7b0b776b0552f53d5b441b0b973fe0e782089e5286653c9246c1249674ac4",
+    "evidence/controls/node-wasm-grow-20261007/release-normal.log.gz": "c5f7b0b776b0552f53d5b441b0b973fe0e782089e5286653c9246c1249674ac4",
+    "evidence/controls/node-wasm-grow-20261007/release-valgrind.log.gz": "67aee2ef5621be6748e1635eaf7e4fba1d40d293352e89ba7d870a50555c618e",
+    "evidence/controls/node-wasm-grow-20261007/run.py": "e6c627b2e1968459375e8884a7c94c5e587cc003f311d3ce17ff4992a440950b",
+    "evidence/controls/node-wasm-grow-20261007/source-extracts.json": "16b7cf58df1f4ce27e1236e57cc6195599499686865615d44f9daa65ee5724ee",
+    "evidence/controls/node-wasm-grow-20261007/status.json": "ee53c57998ffb08c31d3721ace46255b3c8166b571ec871a4054dbffc25d485a"
+  },
+  "approval": "Allow this exact diagnostic",
+  "approval_date": "2026-10-07"
+}

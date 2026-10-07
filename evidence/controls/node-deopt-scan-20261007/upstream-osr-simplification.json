@@ -1,0 +1,65 @@
+{
+  "commit": "dc8880d4cbe01ff7cdd4828d7648aee904b6a2b8",
+  "tree": "98bc937dc98766ce03cb58f0681924b16adbbf91",
+  "parents": [
+    "b355a3d343930a2919a280d1af70f953a7d28124"
+  ],
+  "author": {
+    "name": "Olivier Fl\u00fcckiger",
+    "email": "olivf@chromium.org",
+    "time": "Tue May 06 14:09:57 2025"
+  },
+  "committer": {
+    "name": "V8 LUCI CQ",
+    "email": "v8-scoped@luci-project-accounts.iam.gserviceaccount.com",
+    "time": "Thu May 08 11:17:10 2025"
+  },
+  "message": "[osr] Only deopt osr code if deopt exits are inside the loop\n\nDeoptAllOsrLoopsContainingDeoptExit was written with the intention of\ncapturing all osr codes which can reach the deopt exit. However, (a)\nmaglev osr never jumps up over the osr entry and (b) even turbofan osr\ncode might still be useful to clear a loop as long as the deopt is not\ninside the loop itself.\n\nAlso, ensure that when we clear osr code we correctly reset the flags\non the feedback vector.\n\nBug: 416431775\n\nChange-Id: Ife433a2ef233291d534db9bf6ae321ba19727321\nReviewed-on: https://chromium-review.googlesource.com/c/v8/v8/+/6516174\nReviewed-by: Toon Verwaest <verwaest@chromium.org>\nCommit-Queue: Toon Verwaest <verwaest@chromium.org>\nAuto-Submit: Olivier Fl\u00fcckiger <olivf@chromium.org>\nCr-Commit-Position: refs/heads/main@{#100152}\n",
+  "tree_diff": [
+    {
+      "type": "modify",
+      "old_id": "c5b54906aba44c405c9d721a7165acbfdaa5b4a5",
+      "old_mode": 33188,
+      "old_path": "src/codegen/compiler.cc",
+      "new_id": "3f0086904c9effddf86b3782f63b706b6a4e2d18",
+      "new_mode": 33188,
+      "new_path": "src/codegen/compiler.cc"
+    },
+    {
+      "type": "modify",
+      "old_id": "5b4f677e5aad3d8ab1f74fa8f9bced499a6517a8",
+      "old_mode": 33188,
+      "old_path": "src/objects/feedback-vector-inl.h",
+      "new_id": "b07aa8b4f0245215af6354448c8d87b3fd71525e",
+      "new_mode": 33188,
+      "new_path": "src/objects/feedback-vector-inl.h"
+    },
+    {
+      "type": "modify",
+      "old_id": "8b1b5326ef76c6f4f0cefa9be90ca45be3a20686",
+      "old_mode": 33188,
+      "old_path": "src/objects/feedback-vector.cc",
+      "new_id": "b39a1f69ceb0e60fffbaf5a57c9b7c8a6c1ad9e9",
+      "new_mode": 33188,
+      "new_path": "src/objects/feedback-vector.cc"
+    },
+    {
+      "type": "modify",
+      "old_id": "267348873011ed941b22556801fbf72e8376039b",
+      "old_mode": 33188,
+      "old_path": "src/objects/feedback-vector.h",
+      "new_id": "4403863207c5930cc0294d90be1dba5542a723db",
+      "new_mode": 33188,
+      "new_path": "src/objects/feedback-vector.h"
+    },
+    {
+      "type": "modify",
+      "old_id": "4f48da99afe1ca0259a6999bde10489badd65af0",
+      "old_mode": 33188,
+      "old_path": "src/runtime/runtime-compiler.cc",
+      "new_id": "1fe52e3bfdf4665c2b871025e251f921104fed75",
+      "new_mode": 33188,
+      "new_path": "src/runtime/runtime-compiler.cc"
+    }
+  ]
+}

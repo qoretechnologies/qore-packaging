@@ -1,0 +1,20 @@
+[
+  {
+    "file": "deps/v8/src/regexp/experimental/experimental-bytecode.h",
+    "line": 100,
+    "body": "  enum Opcode : int32_t {\n    ACCEPT,\n    ASSERTION,\n    CLEAR_REGISTER,\n    CONSUME_RANGE,\n    RANGE_COUNT,\n    FORK,\n    JMP,\n    SET_REGISTER_TO_CP,\n    SET_QUANTIFIER_TO_CLOCK,\n    FILTER_QUANTIFIER,\n    FILTER_GROUP,\n    FILTER_LOOKAROUND,\n    FILTER_CHILD,\n    BEGIN_LOOP,\n    END_LOOP,\n    START_LOOKAROUND,\n    END_LOOKAROUND,\n    WRITE_LOOKAROUND_TABLE,\n    READ_LOOKAROUND_TABLE,\n  };",
+    "sha256": "c9b31d01088dfab6d7664bfb6ebaa7e091bed7104434fabcf9d9232d88f2d681"
+  },
+  {
+    "file": "deps/v8/src/regexp/experimental/experimental-bytecode.h",
+    "line": 294,
+    "body": "  static bool IsFilter(const RegExpInstruction& instruction) {\n    return instruction.opcode == RegExpInstruction::Opcode::FILTER_GROUP ||\n           instruction.opcode == RegExpInstruction::Opcode::FILTER_QUANTIFIER ||\n           instruction.opcode == RegExpInstruction::Opcode::FILTER_CHILD;\n  }",
+    "sha256": "f154927822cf8635ed52ee8dc820d322a8669ff7fad810cffd369844ac89235b"
+  },
+  {
+    "file": "deps/v8/src/regexp/experimental/experimental-interpreter.cc",
+    "line": 375,
+    "body": "    std::optional<struct Lookaround> lookaround;\n    bool in_lookaround = false;\n    int lookaround_index;\n    for (int i = 0; i < bytecode_.length() - 1; ++i) {\n      auto& inst = bytecode_[i];\n\n      if (inst.opcode == RegExpInstruction::START_LOOKAROUND) {\n        DCHECK(!lookaround.has_value());\n        in_lookaround = true;\n\n        // Stores the partial information for a lookaround. The rest will be\n        // determined upon reaching a `WRITE_LOOKAROUND_TABLE` instruction.\n        lookaround_index = inst.payload.lookaround.index();\n        lookaround = Lookaround{.match_pc = i,\n                                .capture_pc = -1,\n                                .type = inst.payload.lookaround.type()};\n\n        if (inst.payload.lookaround.type() ==\n            RegExpLookaround::Type::LOOKAHEAD) {\n          only_captureless_lookbehinds_ = false;\n        }\n      }\n\n      if (inst.opcode == RegExpInstruction::SET_REGISTER_TO_CP &&\n          in_lookaround) {\n        only_captureless_lookbehinds_ = false;\n      }\n\n      if (inst.opcode == RegExpInstruction::WRITE_LOOKAROUND_TABLE) {\n        DCHECK(lookaround.has_value());\n\n        // Fills the current lookaround data.\n        lookaround->capture_pc = i + 1;\n\n        // Since the lookarounds are not in order in the `lookarounds_` array,\n        // we first fill it until it has the correct size.\n        while (lookarounds_.length() <= lookaround_index) {\n          lookarounds_.Add({-1, -1, RegExpLookaround::Type::LOOKBEHIND}, zone_);\n        }\n        lookarounds_.Set(lookaround_index, *lookaround);\n        lookaround = {};\n      }\n\n      if (inst.opcode == RegExpInstruction::END_LOOKAROUND) {\n        in_lookaround = false;\n      }\n\n      // The first `FILTER_*` instruction encountered is the start of the\n      // `FILTER_*` section.\n      if (!filter_groups_pc_.has_value() && RegExpInstruction::IsFilter(inst)) {\n        DCHECK(v8_flags.experimental_regexp_engine_capture_group_opt);\n        filter_groups_pc_ = i;\n      }\n\n      if (inst.opcode == RegExpInstruction::SET_QUANTIFIER_TO_CLOCK) {\n        DCHECK(v8_flags.experimental_regexp_engine_capture_group_opt);\n        quantifier_count_ =\n            std::max(quantifier_count_, inst.payload.quantifier_id + 1);\n      }\n    }",
+    "sha256": "c60aeeef88cb9097b82a906082615763169c0a951648cd8f57d98650fec5a121"
+  }
+]
