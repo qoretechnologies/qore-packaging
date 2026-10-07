@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Combined candidate48 prepared and source-verified; full builds have not started. Candidate46 continues to collect complete results.",
+  "patches": 111,
+  "fuzz": 0,
+  "new_patch_offsets": 0,
+  "changed_go_files_from_candidate46": [
+    "server/jetstream_cluster_1_test.go",
+    "server/jetstream_cluster_3_test.go"
+  ],
+  "exact_qualified_files": {
+    "server/jetstream_cluster_1_test.go": "work/nats-extended-interest-254-20261008/clean.go",
+    "server/jetstream_cluster_3_test.go": "work/nats-failtracking-clean-252-20261008/jetstream_cluster_3_test.go"
+  },
+  "focused_qualification": [
+    "evidence/nats-failtracking-meta-20261008.json",
+    "evidence/nats-extended-interest-20261008.json"
+  ],
+  "changes": [
+    "Patch109 joins metadata API readiness before the intentional-restart replica update.",
+    "Patch110 joins the consumer pull-request subscription before the extended-info fixture first fetch."
+  ],
+  "remaining": [
+    "Finish and review all candidate46 results before launching the combined full candidate48 matrix.",
+    "Resolve historical sparse-consumer performance, atomic-batch creation and workqueue recreation gates.",
+    "Finish upstream skip review, client/module, native OBS and repository lifecycle qualification."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-candidate48-preparation-20261008/nats-candidate47-patch-verification-20261008.json": "3393a527fd417c6029fad8bad0c9e349e78d55498e7110916a0029a168d3b4e6",
+    "evidence/controls/nats-candidate48-preparation-20261008/nats-candidate47-patches-20261008.log.gz": "9295b90f84a37dda9ac7711d17239829a04342ad204bf706b18b47b37b8cfbc4",
+    "evidence/controls/nats-candidate48-preparation-20261008/nats-candidate47-prepare-20261008.log.gz": "24aae287ca87949ab1c9132782c7d3781385083f5b805a65afd8b01aef37900b",
+    "evidence/controls/nats-candidate48-preparation-20261008/nats-candidate48-patch-verification-20261008.json": "254f4b9247c28230f75d996f28b67fc9dc4e5b09fb5514cbceebfb9eb42c8dc0",
+    "evidence/controls/nats-candidate48-preparation-20261008/nats-candidate48-patches-20261008.log.gz": "9b5c142bd14b7513d98a69d75f5668669ff0d6b060ddfa465a05d2899d340360",
+    "evidence/controls/nats-candidate48-preparation-20261008/nats-candidate48-prepare-20261008.log.gz": "d576b003625c07ffc1d0196ae6dcf14bb479a7f9400b5fe2fec70da6eae6ff8b",
+    "evidence/controls/nats-candidate48-preparation-20261008/prepare-nats-candidate47-20261008.py": "6c66cf1c8f9c8dd4ec0cdb5f7b1e3d774f609271013255370bdaf7f324848776",
+    "evidence/controls/nats-candidate48-preparation-20261008/prepare-nats-candidate48-20261008.py": "3221f0186973a6994b552c3016e15119db02548ebae3174c9c79a9dd62c627c1"
+  }
+}
