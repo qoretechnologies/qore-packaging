@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "status": "Focused peer-removal fixture qualification passes; complete NATS packaging and other failures remain open.",
+  "root_cause": "Raft adds a proposed member to its visible peer map before committing it. The existing cluster-ready helper checks this speculative peer count and Current(), which reports a live leader as current. It can return with membership index 5 pending while commit/applied remain at 4. A removal request then correctly receives error 10202.",
+  "fix": "Capture the final pending startup membership index under the Raft lock and join its existing applied-progress event before the first removal request.",
+  "tests": {
+    "fedora": {
+      "original": {
+        "exit_code": 1,
+        "top_level_passes": 119,
+        "top_level_failures": 1,
+        "pending_startup_membership_observations": 3
+      },
+      "fixed": {
+        "exit_code": 0,
+        "top_level_passes": 120,
+        "top_level_failures": 0,
+        "pending_startup_membership_observations": 0
+      }
+    },
+    "leap": {
+      "original": {
+        "exit_code": 1,
+        "top_level_passes": 119,
+        "top_level_failures": 1,
+        "pending_startup_membership_observations": 10
+      },
+      "fixed": {
+        "exit_code": 0,
+        "top_level_passes": 120,
+        "top_level_failures": 0,
+        "pending_startup_membership_observations": 0
+      }
+    },
+    "el10": {
+      "original": {
+        "exit_code": 1,
+        "top_level_passes": 119,
+        "top_level_failures": 1,
+        "pending_startup_membership_observations": 5
+      },
+      "fixed": {
+        "exit_code": 0,
+        "top_level_passes": 120,
+        "top_level_failures": 0,
+        "pending_startup_membership_observations": 0
+      }
+    }
+  },
+  "qualification": "180 corrected API fixture runs and 180 unchanged uncommitted-membership rejection controls pass with the Go race detector across three distributions.",
+  "limits": [
+    "The first observation harness used a nonexistent accessor and failed compilation before tests. The corrected harness uses getJetStream().getMetaGroup() and reproduces the real API failure on all three distributions.",
+    "No production behavior, rejection policy, timeout, retry or sleep changes.",
+    "Original traced purge tests passed; those passes do not by themselves resolve the separate purge race."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-peer-236-20261007/el10-fixed-status.json": "efc21d016af4662dd1e32ccc221e05edc79b0c5674362c3daab1bcaf83e2b186",
+    "evidence/controls/nats-peer-236-20261007/el10-fixed-tests.log": "5239728ad4591f9980047b575468e80b50b6a22c4cffae26454bd06c9fc62ea2",
+    "evidence/controls/nats-peer-236-20261007/el10-original-status.json": "7ccfbd9a70260062cde0a6456f0c74625cf012efefa56d8d3ba761e1839ade4f",
+    "evidence/controls/nats-peer-236-20261007/el10-original-tests.log": "4c23cbebfed97443f36ba57d2953de58a5cec6d4a4515ae006a6df9e515c09b7",
+    "evidence/controls/nats-peer-236-20261007/fedora-fixed-status.json": "fcbdbc3ba0112c75ce736e579a4d57ea8a614d178d69ef5a1c0e5ea64dadfcb7",
+    "evidence/controls/nats-peer-236-20261007/fedora-fixed-tests.log": "b5c247154ef3c73533104fd88d3a1dc36504ac6ad34d7eaf84c9b024232b072c",
+    "evidence/controls/nats-peer-236-20261007/fedora-original-status.json": "9c092e8330b9dd947624c95dff59d70f50ae643c11cfcf0e254d0736a973a781",
+    "evidence/controls/nats-peer-236-20261007/fedora-original-tests.log": "bcfe0c2eccdf4898f48c619726ee8bf2b3bb4f1edadaa7485dc4792ccefbeead",
+    "evidence/controls/nats-peer-236-20261007/leap-fixed-status.json": "5ae6e1d3b5a3a827fc5e85baad337e69af93216c5a0d8f32bb40b90135c5ed4b",
+    "evidence/controls/nats-peer-236-20261007/leap-fixed-tests.log": "2534c2f2f4f0aba70c26a47bd60398d478d904a28fea0aa8a8cdfc5d25004660",
+    "evidence/controls/nats-peer-236-20261007/leap-original-status.json": "7c52529199de5fcb337f0d47541b6d0388b03dd6c573c354be9fff0f18beb996",
+    "evidence/controls/nats-peer-236-20261007/leap-original-tests.log": "0f8864f659af48085604d34e8503484cc9ef6faac0fc575fb08f65c805fb04b1",
+    "evidence/controls/nats-peer-236-20261007/nats-peer-236-fixed.json": "e3af527c55e7a6797dd72b144da40ddc4a1f30c44d97e2e76dc16fe1e7c9b07f",
+    "evidence/controls/nats-peer-236-20261007/nats-peer-236-patch-check-20261007.log": "50cb2eb05b7c8a8c06c43fa8085f376f30611b06afc017dc76271cbd8acbd7cf",
+    "evidence/controls/nats-peer-236-20261007/nats-peer-purge-237-dependency-tests-20261007.log": "c794b1fe0236bb76d19f82c9db76d650ec411a4c8e224e9a314dca0d69f8e4d2",
+    "evidence/controls/nats-peer-236-20261007/nats-server-peer-removal-startup-tests.patch": "d69251d67c81c4f2d2b139189c454c20f4dc68e2584fb6bef0d783a21cd15089",
+    "evidence/controls/nats-peer-236-20261007/nats-triage-234.json": "35fcf0e2de5c753dd3e931ee74ce760e96059746da548974eaac75931626df04",
+    "evidence/controls/nats-peer-236-20261007/prepare-nats-peer-236-20261007.py": "779c00688febc25f886d71ec57c67591f4a3017e4252940c6c0eca70152acf92",
+    "evidence/controls/nats-peer-236-20261007/prepare-nats-triage-234-20261007.py": "5b8e16b76a133a03e9ea56a51e2b61f170df8d2d3a9b4fa9ce839fb5089ecbf2",
+    "evidence/controls/nats-peer-236-20261007/run-nats-focused-38.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a"
+  },
+  "metadata_validation": {
+    "dependency_tests": 17,
+    "patch_dry_run": "passed with fuzz=0"
+  }
+}

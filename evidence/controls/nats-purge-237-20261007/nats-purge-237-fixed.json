@@ -1,0 +1,39 @@
+{
+  "source": "work/nats-prepared-44/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-purge-237-fixed",
+      "target": "fedora",
+      "count": 20,
+      "race": true,
+      "pattern": "^(TestJetStreamClusterPurgeBySequence|TestRPMPurgeReplicaApplyBoundary)$",
+      "sublist": "work/nats-prepared-44/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-purge-237-20261007/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-purge-237-fixed",
+      "target": "leap",
+      "count": 20,
+      "race": true,
+      "pattern": "^(TestJetStreamClusterPurgeBySequence|TestRPMPurgeReplicaApplyBoundary)$",
+      "sublist": "work/nats-prepared-44/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-purge-237-20261007/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-purge-237-fixed",
+      "target": "el10",
+      "count": 20,
+      "race": true,
+      "pattern": "^(TestJetStreamClusterPurgeBySequence|TestRPMPurgeReplicaApplyBoundary)$",
+      "sublist": "work/nats-prepared-44/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-purge-237-20261007/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go"
+      }
+    }
+  ]
+}

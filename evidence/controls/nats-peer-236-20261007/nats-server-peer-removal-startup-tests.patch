@@ -1,0 +1,24 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Join the last startup membership commit before peer-removal qualification.
+--- a/server/jetstream_cluster_1_test.go
++++ b/server/jetstream_cluster_1_test.go
+@@ -3509,6 +3509,19 @@
+ func TestJetStreamClusterPeerRemovalAPI(t *testing.T) {
+ 	c := createJetStreamClusterExplicit(t, "R5S", 5)
+ 	defer c.shutdown()
++
++	// Cluster readiness counts speculative peers. Finish the last startup
++	// membership commit before submitting the first removal request.
++	meta := c.leader().getJetStream().getMetaGroup().(*raft)
++	meta.RLock()
++	var membershipIndex uint64
++	if meta.membChange != nil {
++		membershipIndex = meta.membChange.index
++	}
++	meta.RUnlock()
++	if membershipIndex != 0 {
++		awaitRaftProgress(t, meta, membershipIndex, 0, false)
++	}
+ 
+ 	// Client based API
+ 	ml := c.leader()

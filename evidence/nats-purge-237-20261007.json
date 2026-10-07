@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "status": "Focused purge fixture qualification passes; two other candidate44 failures, historical gates and complete package builds remain open.",
+  "root_cause": "The leader acknowledges a committed purge after applying it locally. An ephemeral R1 consumer may be placed on a stream follower that has not yet applied that commit. It can therefore deliver the old sequence 16 where the fixture expects sequence 18.",
+  "proof": "The real follower apply queue is paused after all 40 setup messages. The purge API succeeds and reports two deletions; the leader starts at 18 with eight messages, while the paused follower remains at 16 with ten messages. Resuming and joining the existing applied-progress event makes the follower agree. The check covers File/Memory with two and three replicas.",
+  "fix": [
+    "Validate raw create/purge responses and join existing stream route interest before publication.",
+    "Capture the leader commit index after the purge reply, then join that index on both stream replicas before creating the original ephemeral consumer. Preserve every original delivery assertion."
+  ],
+  "tests": {
+    "fedora": {
+      "control": {
+        "exit_code": 0,
+        "top_level_passes": 5,
+        "storage_replication_failures": 0
+      },
+      "fixed": {
+        "exit_code": 0,
+        "top_level_passes": 40,
+        "storage_replication_failures": 0
+      },
+      "negative": {
+        "exit_code": 1,
+        "top_level_passes": 0,
+        "storage_replication_failures": 4
+      }
+    },
+    "leap": {
+      "control": {
+        "exit_code": 0,
+        "top_level_passes": 5,
+        "storage_replication_failures": 0
+      },
+      "fixed": {
+        "exit_code": 0,
+        "top_level_passes": 40,
+        "storage_replication_failures": 0
+      },
+      "negative": {
+        "exit_code": 1,
+        "top_level_passes": 0,
+        "storage_replication_failures": 4
+      }
+    },
+    "el10": {
+      "control": {
+        "exit_code": 0,
+        "top_level_passes": 5,
+        "storage_replication_failures": 0
+      },
+      "fixed": {
+        "exit_code": 0,
+        "top_level_passes": 40,
+        "storage_replication_failures": 0
+      },
+      "negative": {
+        "exit_code": 1,
+        "top_level_passes": 0,
+        "storage_replication_failures": 4
+      }
+    }
+  },
+  "counts": {
+    "corrected_integration_runs": 60,
+    "control_storage_replication_cases": 300,
+    "negative_storage_replication_cases": 12
+  },
+  "limits": [
+    "The traced original purge workload did not reproduce the stale read; deterministic paused-follower controls establish the missing completion guarantee.",
+    "No production changes, sleep, retries, warning suppression or relaxed message/sequence assertions.",
+    "The two remaining candidate44 tests are TestJetStreamClusterDeleteAndRestoreAndRestart and TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot; historical timeout/performance failures remain separate gates."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-purge-237-20261007/el10-control-status.json": "42aa4e3445ada1c477688341adde7561efb0d5026af657bdeada8b4bc7bce377",
+    "evidence/controls/nats-purge-237-20261007/el10-control-tests.log": "856995fd532c57712fea6b9d07026f2e6b22bfc375fd672dcd33d8a606e3a8b4",
+    "evidence/controls/nats-purge-237-20261007/el10-fixed-status.json": "375d25b7d978f4375c80112f2bba3f718fcc52e868442b5c8a9537f5bb76ad26",
+    "evidence/controls/nats-purge-237-20261007/el10-fixed-tests.log": "c5f26a44a68d1a506e6de2a3353b8f4922423fdd0079f2c7d6268d9ebb58ae6d",
+    "evidence/controls/nats-purge-237-20261007/el10-negative-status.json": "cb33f45ef3e881ee115823c11dc5ec56ed87f363892421983d2d308b1326a4bf",
+    "evidence/controls/nats-purge-237-20261007/el10-negative-tests.log": "850813cad1ef8c06c34d281a986ace763ef39798c6af17fe09a4cba4b1e428ef",
+    "evidence/controls/nats-purge-237-20261007/fedora-control-status.json": "d5fd59cd21d58fdaa894ea68612cba9b880a76c2c57cf4b06855ea39ba8b73e9",
+    "evidence/controls/nats-purge-237-20261007/fedora-control-tests.log": "66114d88c930063a83c309b432f2fbe6ba57f9600a9958ebd14e3b78b70134f3",
+    "evidence/controls/nats-purge-237-20261007/fedora-fixed-status.json": "cc47c60ed048cd9900d41227dda86e54c2b11c0c4a77873bcbba21276d684872",
+    "evidence/controls/nats-purge-237-20261007/fedora-fixed-tests.log": "220851a5f2d3f87136370adfc572d6b273629db51f23efab8a1af732d1d71392",
+    "evidence/controls/nats-purge-237-20261007/fedora-negative-status.json": "9e5262fc4c764600e6c244b71ac03913c9b6463b469b88478e32cbcbafa598de",
+    "evidence/controls/nats-purge-237-20261007/fedora-negative-tests.log": "48d123200d27961eb68ba3c9bcd58bc9273026914e1495379b9d4dfd425803c5",
+    "evidence/controls/nats-purge-237-20261007/leap-control-status.json": "be08b9f312f413888a238810dba4211127a7ca06fe1d4317900a5787af2b0d62",
+    "evidence/controls/nats-purge-237-20261007/leap-control-tests.log": "ed50518fbae8dc3c44fc6f6808008fec134ee088ec7a03746f5b0482cd468c51",
+    "evidence/controls/nats-purge-237-20261007/leap-fixed-status.json": "65e31e55cd20388fd29dae4bdb2a60576a99c52cc55f729b512c3f6f2a01dc3f",
+    "evidence/controls/nats-purge-237-20261007/leap-fixed-tests.log": "f1cb396c3365bde8e9e74f2cdbb5fa776c9a998d4cec470ef73669c653a1e6f7",
+    "evidence/controls/nats-purge-237-20261007/leap-negative-status.json": "1b58a7e6eb3378f6ae48d83535c19481260a1dd6bf9809b7f4d56fa0aa4a84cb",
+    "evidence/controls/nats-purge-237-20261007/leap-negative-tests.log": "f0fea446e78b77eff9ab472f977f307b7a1d2965f5f42d9054d366cfb99f40bd",
+    "evidence/controls/nats-purge-237-20261007/nats-peer-purge-237-dependency-tests-20261007.log": "c794b1fe0236bb76d19f82c9db76d650ec411a4c8e224e9a314dca0d69f8e4d2",
+    "evidence/controls/nats-purge-237-20261007/nats-purge-237-fixed.json": "9def70c66ce19bdd38df8d07941c8b7276ac28344714ac2fc6bca81026386942",
+    "evidence/controls/nats-purge-237-20261007/nats-purge-237-negative.json": "f4ea324a4c8268bc000dfd660f19299a4edba776ecda48b7d95a32dd271d5b77",
+    "evidence/controls/nats-purge-237-20261007/nats-purge-237-patch-check-20261007.log": "67bf8e2060bbdccb85ad4af377b952ed6a4909e862ac05e22b24e866dd77105d",
+    "evidence/controls/nats-purge-237-20261007/nats-purge-replica-235-control.go.txt": "88a26b825a023f43d0dad51d3a5df0a7d372beaf16dd96348164f36bf31b1aab",
+    "evidence/controls/nats-purge-237-20261007/nats-purge-replica-235.json": "264a13f5039158ab496a52fa44bc44319b52f47bb8c8b080abba1d00b5770ca7",
+    "evidence/controls/nats-purge-237-20261007/nats-server-purge-replica-completion-tests.patch": "9943817bc4059f0d22771a3eb13b68bb02c8845793cc2be677042b7342d10464",
+    "evidence/controls/nats-purge-237-20261007/prepare-nats-purge-237-20261007.py": "2c26805ae480590a5c1e7c098b4f9a2319f31f408829d191932b18dac8f44061",
+    "evidence/controls/nats-purge-237-20261007/run-nats-focused-38.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a"
+  },
+  "metadata_validation": {
+    "dependency_tests": 17,
+    "patch_dry_run": "passed with fuzz=0"
+  }
+}

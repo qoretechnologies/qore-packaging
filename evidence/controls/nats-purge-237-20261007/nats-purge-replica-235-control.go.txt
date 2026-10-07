@@ -1,0 +1,71 @@
+// Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+func TestRPMPurgeReplicaApplyBoundary(t *testing.T) {
+	for _, storage := range []nats.StorageType{nats.MemoryStorage, nats.FileStorage} {
+		for _, replicas := range []int{2, 3} {
+			t.Run(fmt.Sprintf("%s/R%d", storage, replicas), func(t *testing.T) {
+				c := createJetStreamClusterExplicit(t, "PURGE", 3)
+				defer c.shutdown()
+				nc, js := jsClientConnect(t, c.randomServer())
+				defer nc.Close()
+				_, err := js.AddStream(&nats.StreamConfig{Name: "KV", Subjects: []string{"kv.*.*"},
+					Storage: storage, Replicas: replicas, MaxMsgsPerSubject: 5})
+				require_NoError(t, err)
+				awaitStreamRouteInterest(t, c, nc, "KV")
+				for _, subject := range []string{"kv.myapp.username", "kv.myapp.password"} {
+					for i := 0; i < 20; i++ {
+						_, err := js.Publish(subject, []byte(fmt.Sprintf("value %d", i)))
+						require_NoError(t, err)
+					}
+				}
+				leader := c.streamLeader(globalAccountName, "KV")
+				var follower *stream
+				for _, server := range c.servers {
+					if server != leader {
+						if stream, err := server.GlobalAccount().lookupStream("KV"); err == nil {
+							follower = stream
+							break
+						}
+					}
+				}
+				require_NotNil(t, follower)
+				observeStoredSequence(t, follower, 40)()
+				node := follower.raftNode().(*raft)
+				require_NoError(t, node.PauseApply())
+				defer node.ResumeApply()
+				request, err := json.Marshal(&JSApiStreamPurgeRequest{Subject: "kv.myapp.username", Sequence: 18})
+				require_NoError(t, err)
+				message, err := nc.Request(fmt.Sprintf(JSApiStreamPurgeT, "KV"), request, time.Second)
+				require_NoError(t, err)
+				var response JSApiStreamPurgeResponse
+				require_NoError(t, json.Unmarshal(message.Data, &response))
+				if response.Error != nil {
+					t.Fatalf("purge response: %s", message.Data)
+				}
+				require_True(t, response.Success)
+				require_Equal(t, response.Purged, uint64(2))
+				// A successful leader reply does not complete follower application.
+				var before StreamState
+				follower.store.FastState(&before)
+				require_Equal(t, before.FirstSeq, uint64(16))
+				require_Equal(t, before.Msgs, uint64(10))
+				stream, err := leader.GlobalAccount().lookupStream("KV")
+				require_NoError(t, err)
+				var current StreamState
+				stream.store.FastState(&current)
+				require_Equal(t, current.FirstSeq, uint64(18))
+				require_Equal(t, current.Msgs, uint64(8))
+				leaderNode := stream.raftNode().(*raft)
+				leaderNode.RLock()
+				applied := leaderNode.commit
+				leaderNode.RUnlock()
+				node.ResumeApply()
+				awaitRaftProgress(t, node, applied, 0, false)
+				follower.store.FastState(&current)
+				require_Equal(t, current.FirstSeq, uint64(18))
+				require_Equal(t, current.Msgs, uint64(8))
+				// Already-completed registration must not need another write.
+				awaitRaftProgress(t, node, applied, 0, false)
+			})
+		}
+	}
+}
