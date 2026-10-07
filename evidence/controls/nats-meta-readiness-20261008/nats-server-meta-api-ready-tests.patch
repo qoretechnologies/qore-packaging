@@ -1,0 +1,124 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Join application-level metadata leadership before creating a stream after restart.
+--- a/server/jetstream_cluster_2_test.go
++++ b/server/jetstream_cluster_2_test.go
+@@ -5812,6 +5812,9 @@
+ 
+ 	// Now delete and make sure consumer does not come back.
+ 	// First add a delete something else.
++	ready, cancelReady := context.WithTimeout(context.Background(), 10*time.Second)
++	defer cancelReady()
++	require_NoError(t, awaitMetadataAPILeader(ready, c))
+ 	_, err = js.AddStream(&nats.StreamConfig{Name: "TEST2"})
+ 	require_NoError(t, err)
+ 	require_NoError(t, js.DeleteStream("TEST2"))
+@@ -10041,3 +10044,109 @@
+ 		}
+ 	}
+ }
++
++// Metadata requests require the application-level leader, not merely a
++// recovered stream/consumer or an elected Raft leader. Observe real metadata
++// traffic until the leader publication is complete; do not poll or retry APIs.
++func awaitMetadataAPILeader(ctx context.Context, c *cluster) error {
++	if err := ctx.Err(); err != nil {
++		return err
++	}
++	if len(c.servers) == 0 {
++		return errors.New("cluster has no servers")
++	}
++	type observer struct {
++		node *raft
++		sub  *subscription
++	}
++	var observers []observer
++	defer func() {
++		for _, observed := range observers {
++			observed.node.Lock()
++			observed.node.unsubscribe(observed.sub)
++			observed.node.Unlock()
++		}
++	}()
++	progress := make(chan struct{}, 1)
++	notify := func(_ *subscription, _ *client, _ *Account, _, _ string, _ []byte) {
++		select {
++		case progress <- struct{}{}:
++		default:
++		}
++	}
++	for _, server := range c.servers {
++		js := server.getJetStream()
++		if js == nil {
++			return errors.New("JetStream is unavailable")
++		}
++		node, ok := js.getMetaGroup().(*raft)
++		if !ok {
++			return errors.New("metadata Raft group is unavailable")
++		}
++		node.Lock()
++		for _, subject := range []string{node.asubj, node.areply} {
++			sub, err := node.subscribe(subject, notify)
++			if err != nil {
++				node.Unlock()
++				return err
++			}
++			observers = append(observers, observer{node, sub})
++		}
++		node.Unlock()
++	}
++	for {
++		if err := ctx.Err(); err != nil {
++			return err
++		}
++		for _, server := range c.servers {
++			js := server.getJetStream()
++			js.mu.RLock()
++			ready := server.JetStreamIsLeader()
++			js.mu.RUnlock()
++			if ready {
++				return nil
++			}
++		}
++		select {
++		case <-progress:
++			// The observer may precede metadata application. A later real
++			// heartbeat supplies another event without a polling timer.
++		case <-ctx.Done():
++			return ctx.Err()
++		}
++	}
++}
++
++func TestMetadataAPILeaderReadinessInputs(t *testing.T) {
++	ctx, cancel := context.WithCancel(context.Background())
++	cancel()
++	require_Error(t, awaitMetadataAPILeader(ctx, &cluster{}), context.Canceled)
++	require_Error(t, awaitMetadataAPILeader(context.Background(), &cluster{}))
++	s := RunServer(&Options{Port: -1})
++	defer s.Shutdown()
++	require_Error(t, awaitMetadataAPILeader(context.Background(), &cluster{servers: []*Server{s}}))
++	standalone := RunServer(&Options{Port: -1, JetStream: true, StoreDir: t.TempDir()})
++	defer standalone.Shutdown()
++	require_Error(t, awaitMetadataAPILeader(context.Background(), &cluster{servers: []*Server{standalone}}))
++	c := createJetStreamClusterExplicit(t, "META-INPUTS", 3)
++	defer c.shutdown()
++	ready, stop := context.WithTimeout(context.Background(), 10*time.Second)
++	defer stop()
++	require_NoError(t, awaitMetadataAPILeader(ready, c))
++	// Register on one real metadata peer, then fail on a non-JetStream server.
++	// Every temporary subscription must be removed on this partial failure.
++	node := c.servers[0].getJetStream().getMetaGroup().(*raft)
++	node.Lock()
++	transport := node.t.(*defaultTransport)
++	transport.c.mu.Lock()
++	before := len(transport.c.subs)
++	transport.c.mu.Unlock()
++	node.Unlock()
++	require_Error(t, awaitMetadataAPILeader(context.Background(), &cluster{servers: []*Server{c.servers[0], s}}))
++	node.Lock()
++	transport.c.mu.Lock()
++	after := len(transport.c.subs)
++	transport.c.mu.Unlock()
++	node.Unlock()
++	require_Equal(t, before, after)
++}

@@ -1,0 +1,93 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "b583ec0d545959e23757afb1b1bc0134309486c2ed2f3dbce2977db7c1513020",
+    "--tmpfs",
+    "/tmp:rw,exec,size=4g,mode=1777",
+    "--user",
+    "1019:100",
+    "-e",
+    "GOMAXPROCS=2",
+    "-e",
+    "GOTOOLCHAIN=local",
+    "-e",
+    "GOPROXY=off",
+    "-e",
+    "GOSUMDB=off",
+    "-e",
+    "GOFLAGS=-mod=vendor",
+    "-e",
+    "GOCACHE=/cache",
+    "-e",
+    "GOPATH=/gopath",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-prepared-45/nats-server-2.15.0:/source:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-go-cache:/cache",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-go-path:/gopath",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-prepared-45/nats-server-2.15.0/server/sublist.go:/source/server/sublist.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-meta-readiness-clean-246-20261008/jetstream_cluster_2_test.go:/source/server/jetstream_cluster_2_test.go:ro",
+    "-w",
+    "/source",
+    "sha256:2b44d9f9636b4e454c93b06c95cd9ff9f23136b159e80ac2ded68b32d7f1190b",
+    "go",
+    "test",
+    "-race",
+    "-v",
+    "-short",
+    "-count=1",
+    "-timeout=20m",
+    "-run",
+    "^Test(MetadataAPILeaderReadinessInputs|JetStreamClusterDeleteAndRestoreAndRestart)$",
+    "./server"
+  ],
+  "network": {
+    "Name": "qore-rpm-isolated-79ce76f501fd4370a7ce966a11e60925",
+    "Id": "b583ec0d545959e23757afb1b1bc0134309486c2ed2f3dbce2977db7c1513020",
+    "Created": "2026-10-08T00:20:06.034546858+02:00",
+    "Scope": "local",
+    "Driver": "bridge",
+    "EnableIPv4": true,
+    "EnableIPv6": false,
+    "IPAM": {
+      "Driver": "default",
+      "Options": {},
+      "Config": [
+        {
+          "Subnet": "172.31.0.0/16"
+        }
+      ]
+    },
+    "Internal": true,
+    "Attachable": false,
+    "Ingress": false,
+    "ConfigFrom": {
+      "Network": ""
+    },
+    "ConfigOnly": false,
+    "Options": {
+      "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+      "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+    },
+    "Labels": {},
+    "Containers": {},
+    "Status": {
+      "IPAM": {
+        "Subnets": {
+          "172.31.0.0/16": {
+            "IPsInUse": 2,
+            "DynamicIPsAvailable": 65534
+          }
+        }
+      }
+    }
+  }
+}

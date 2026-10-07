@@ -1,0 +1,45 @@
+{
+  "source": "work/nats-prepared-45/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-meta-readiness-243",
+      "target": "fedora",
+      "count": 1,
+      "race": true,
+      "pattern": "^TestPackagingMetaReadinessAfterRestart$",
+      "sublist": "work/nats-prepared-45/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-meta-readiness-243-20261008/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go",
+        "work/nats-meta-readiness-243-20261008/jetstream_api.go": "server/jetstream_api.go",
+        "work/nats-meta-readiness-243-20261008/jetstream_cluster.go": "server/jetstream_cluster.go"
+      }
+    },
+    {
+      "name": "leap-nats-meta-readiness-243",
+      "target": "leap",
+      "count": 1,
+      "race": true,
+      "pattern": "^TestPackagingMetaReadinessAfterRestart$",
+      "sublist": "work/nats-prepared-45/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-meta-readiness-243-20261008/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go",
+        "work/nats-meta-readiness-243-20261008/jetstream_api.go": "server/jetstream_api.go",
+        "work/nats-meta-readiness-243-20261008/jetstream_cluster.go": "server/jetstream_cluster.go"
+      }
+    },
+    {
+      "name": "el10-nats-meta-readiness-243",
+      "target": "el10",
+      "count": 1,
+      "race": true,
+      "pattern": "^TestPackagingMetaReadinessAfterRestart$",
+      "sublist": "work/nats-prepared-45/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-meta-readiness-243-20261008/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go",
+        "work/nats-meta-readiness-243-20261008/jetstream_api.go": "server/jetstream_api.go",
+        "work/nats-meta-readiness-243-20261008/jetstream_cluster.go": "server/jetstream_cluster.go"
+      }
+    }
+  ]
+}

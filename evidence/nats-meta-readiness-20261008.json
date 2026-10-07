@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "The missing metadata API readiness precondition is reproduced and its test-only correction passes focused qualification. RPM integration and a full candidate rebuild remain required.",
+  "root_cause": "The restart fixture waits for R1 stream/consumer leadership and reads their state, but those conditions can precede publication of the new application-level metadata leader. Every stream-create handler then takes its normal non-leader return. Electing/publishing a leader later cannot recover the already discarded request, which ends with context deadline exceeded.",
+  "controlled_schedule": "Use the original create/delete/recreate history, 22 restored messages and five acknowledged deliveries. Public placement tags select the same server for the stream, consumer and metadata leader before restart. Pause the real processLeaderChange callback before API leadership publication; verify all three real API handlers decline TEST2. Release the callback immediately after those events. The original ten-second request still expires; the next ready request succeeds.",
+  "fix": "Before AddStream(TEST2), await an application-level metadata leader under the JetStream state lock. Observe real Raft appends/replies for progress, remove all temporary subscriptions on every exit, and retain the original client request deadline.",
+  "validation": {
+    "final_race_enabled_cases": 18,
+    "results": {
+      "fedora-nats-meta-readiness-245": {
+        "exit_code": 0,
+        "race_enabled_cases": 3
+      },
+      "leap-nats-meta-readiness-245": {
+        "exit_code": 0,
+        "race_enabled_cases": 3
+      },
+      "el10-nats-meta-readiness-245": {
+        "exit_code": 0,
+        "race_enabled_cases": 3
+      },
+      "fedora-nats-meta-readiness-clean-246": {
+        "exit_code": 0,
+        "race_enabled_cases": 2
+      },
+      "leap-nats-meta-readiness-clean-246": {
+        "exit_code": 0,
+        "race_enabled_cases": 2
+      },
+      "el10-nats-meta-readiness-clean-246": {
+        "exit_code": 0,
+        "race_enabled_cases": 2
+      },
+      "fedora-nats-meta-readiness-247": {
+        "exit_code": 0,
+        "race_enabled_cases": 1
+      },
+      "leap-nats-meta-readiness-247": {
+        "exit_code": 0,
+        "race_enabled_cases": 1
+      },
+      "el10-nats-meta-readiness-247": {
+        "exit_code": 0,
+        "race_enabled_cases": 1
+      }
+    },
+    "clean_patch_files": [
+      "server/jetstream_cluster_2_test.go"
+    ],
+    "patch_applies_without_fuzz_or_offsets": true,
+    "no_production_Go_source_changes": true
+  },
+  "source_sha256": {
+    "jetstream_cluster.go": "82e1b3fd100f728034d699b747567eb3756c0792847b1ea5b5188bcd04e94d14",
+    "jetstream_api.go": "9d69769662ec59557adecd187ba744c1347c3514ac7c3ed1834dd278d3804071",
+    "jetstream_cluster_2_test.go": "0344d02343d3b999b2bfa75b755d5ea76500b856a8d36d801be32a8a4afa4d6d"
+  },
+  "limits": [
+    "The historical failed RPM did not contain request tracing. This proves a real reachable fixture defect with the same failed operation and timeout; it does not claim a captured trace of that historical execution.",
+    "Diagnostic scheduler gates and Context observation are excluded from the proposed RPM patch. The clean patch is separately compiled and tested on all three distributions.",
+    "The first diagnostic run expected nats.ErrTimeout, but this JetStream API returns context.DeadlineExceeded. That harness assertion was corrected and the failure logs are retained.",
+    "The registration-error cleanup test uses a valid first metadata peer followed by a server without JetStream; an internal transport Subscribe failure is handled but not independently fault-injected.",
+    "Historical sparse-consumer performance, atomic-batch, workqueue and fail-tracking gates remain separate. Full builds, skip review, client/module, native OBS and repository lifecycle qualification are still required."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-meta-readiness-20261008/243-jetstream_api.go.gz": "0a44d6ed385285925ecdc01a4ec61ca283dc21d3ade28640f3b2df5417b9c4c2",
+    "evidence/controls/nats-meta-readiness-20261008/243-jetstream_cluster.go.gz": "1bc0afdca7b99a2a8ff5b3dba5e2f91c6a4904e6198cedcc86c64a33c496bfcc",
+    "evidence/controls/nats-meta-readiness-20261008/243-jetstream_cluster_2_test.go.gz": "936a7c53e011c8c8a7e747c05f8d6abf00a87e45943830ce44fc4575bd8a19d1",
+    "evidence/controls/nats-meta-readiness-20261008/244-jetstream_api.go.gz": "0a44d6ed385285925ecdc01a4ec61ca283dc21d3ade28640f3b2df5417b9c4c2",
+    "evidence/controls/nats-meta-readiness-20261008/244-jetstream_cluster.go.gz": "1bc0afdca7b99a2a8ff5b3dba5e2f91c6a4904e6198cedcc86c64a33c496bfcc",
+    "evidence/controls/nats-meta-readiness-20261008/244-jetstream_cluster_2_test.go.gz": "f2b3e9e6ffef8472f4e9ea6060ccbfd92cd2d79668e3b6f1d405fdc8f7db7abc",
+    "evidence/controls/nats-meta-readiness-20261008/245-jetstream_api.go.gz": "0a44d6ed385285925ecdc01a4ec61ca283dc21d3ade28640f3b2df5417b9c4c2",
+    "evidence/controls/nats-meta-readiness-20261008/245-jetstream_cluster.go.gz": "1bc0afdca7b99a2a8ff5b3dba5e2f91c6a4904e6198cedcc86c64a33c496bfcc",
+    "evidence/controls/nats-meta-readiness-20261008/245-jetstream_cluster_2_test.go.gz": "6eb71b4ff82124514af00b6b65639f67d520c8ff3e51814a8467a490b4beb19d",
+    "evidence/controls/nats-meta-readiness-20261008/247-jetstream_api.go.gz": "0a44d6ed385285925ecdc01a4ec61ca283dc21d3ade28640f3b2df5417b9c4c2",
+    "evidence/controls/nats-meta-readiness-20261008/247-jetstream_cluster.go.gz": "1bc0afdca7b99a2a8ff5b3dba5e2f91c6a4904e6198cedcc86c64a33c496bfcc",
+    "evidence/controls/nats-meta-readiness-20261008/247-jetstream_cluster_2_test.go.gz": "830b37cdc4578f3259f652429033d31dd882264291d8cc6d2c16fd8bdde7e905",
+    "evidence/controls/nats-meta-readiness-20261008/audit.rst": "068165cd93edeacba97606bac24094f746d8f2a52c9f0fc5e82ce29d722df49f",
+    "evidence/controls/nats-meta-readiness-20261008/clean-246-config.json": "65fec661aa7b1b27ec62bcc0ed1c86d5b858b4d3a34d77ec9f853d0953677999",
+    "evidence/controls/nats-meta-readiness-20261008/el10-initial-harness-status.json": "f4b633668990badc1f9cbbcd2ba46a58bc091bbe5177bee690dce5a41d60ec0a",
+    "evidence/controls/nats-meta-readiness-20261008/el10-initial-harness.log.gz": "128a451d5456b4feb811c4252328f7697c4d43ed9676fc55a97cfa8e2e269d57",
+    "evidence/controls/nats-meta-readiness-20261008/el10-nats-meta-readiness-245-status.json": "47e2be6762b413058f69ef766017d092b42f5c2f8caffbebd4ec0e51297235ee",
+    "evidence/controls/nats-meta-readiness-20261008/el10-nats-meta-readiness-245.log.gz": "5cf84bd94c77f53a80a733bdb81eafb23998a0814469cade1686443b5ada25fb",
+    "evidence/controls/nats-meta-readiness-20261008/el10-nats-meta-readiness-247-status.json": "49d97cd9aeeb3d47818559d67aff526e27ba517802e1549018cb8dae8e329904",
+    "evidence/controls/nats-meta-readiness-20261008/el10-nats-meta-readiness-247.log.gz": "a2a61af0acd0f440e5d30f8ed40bac2f741985a8cfacd4a8def95aa5f205ab04",
+    "evidence/controls/nats-meta-readiness-20261008/el10-nats-meta-readiness-clean-246-status.json": "3eda2d74883394e3e134617002d57397184a0c0dc458702aa840d911b47411fc",
+    "evidence/controls/nats-meta-readiness-20261008/el10-nats-meta-readiness-clean-246.log.gz": "63a899fbd54518641a457942ab03e457640e262fbe22924450ca7f7ce7c82a74",
+    "evidence/controls/nats-meta-readiness-20261008/fedora-initial-harness-status.json": "5ce28b5a6fca13e8ec6d7ac103331adf84c125fcc22758bf7eb2f9c876faa40f",
+    "evidence/controls/nats-meta-readiness-20261008/fedora-initial-harness.log.gz": "e309804a18874db5209b2a5aae12095ba3fe8cea8370b8b88d2208bf9716ae9c",
+    "evidence/controls/nats-meta-readiness-20261008/fedora-nats-meta-readiness-245-status.json": "a19bfa19074873725063b2805d492248443ffab0fb1166add9218e19a1c83161",
+    "evidence/controls/nats-meta-readiness-20261008/fedora-nats-meta-readiness-245.log.gz": "69183308c64caee28616e7252f6ebca56f4c5a5d655587fa8b0754f3199a78ec",
+    "evidence/controls/nats-meta-readiness-20261008/fedora-nats-meta-readiness-247-status.json": "72f002adde1192a7eba9ffc90030481723cb1f604277a7c2dd8b697d38ac692a",
+    "evidence/controls/nats-meta-readiness-20261008/fedora-nats-meta-readiness-247.log.gz": "28456213e41180e7e68d623bda04b1efac67e755b0e08f9c65871b59412bbc72",
+    "evidence/controls/nats-meta-readiness-20261008/fedora-nats-meta-readiness-clean-246-status.json": "7685437bcba16aeef2858aea16a6601c3fcd31a06a0fc983de561409f4518571",
+    "evidence/controls/nats-meta-readiness-20261008/fedora-nats-meta-readiness-clean-246.log.gz": "4455fe2ab8b68fca3ef93d41e0daa451034bd7554563cb548d0553cf7ad7a761",
+    "evidence/controls/nats-meta-readiness-20261008/jetstream_cluster_2_test.go.gz": "c3ba2540e50c39a361003cdfaf6fa18bc97d9568b0b770ccbce4633a39e104ce",
+    "evidence/controls/nats-meta-readiness-20261008/leap-initial-harness-status.json": "940416ad80a9d91d46f834a622176dee0c9a9c18e5af501789878d088a30e266",
+    "evidence/controls/nats-meta-readiness-20261008/leap-initial-harness.log.gz": "76819319915a5a8e927fe4db78525c88988c973d08cf9742a9f6897eff4e8e67",
+    "evidence/controls/nats-meta-readiness-20261008/leap-nats-meta-readiness-245-status.json": "8c306c9b66d4022fc06f0cf72e01b731120cf933f61c2cae20f5405c5fa4bfaf",
+    "evidence/controls/nats-meta-readiness-20261008/leap-nats-meta-readiness-245.log.gz": "217cd065a492d48b7525a79c5e1d3381adf97605b444035db4f0c0ca20de4501",
+    "evidence/controls/nats-meta-readiness-20261008/leap-nats-meta-readiness-247-status.json": "0c3398fff6e019620f2ef1037dcd0eb830d2c0b7473c2dff9f2801f32be3a472",
+    "evidence/controls/nats-meta-readiness-20261008/leap-nats-meta-readiness-247.log.gz": "c30ed417765c4737026d9c2db29033bd785bc0b73b562a46fc5f1d6cb303b9b4",
+    "evidence/controls/nats-meta-readiness-20261008/leap-nats-meta-readiness-clean-246-status.json": "0574420ac53309f237487a627aa2e34ab51da81e6fc26eda7f20a08b0e268a3c",
+    "evidence/controls/nats-meta-readiness-20261008/leap-nats-meta-readiness-clean-246.log.gz": "ad67b364fada293d9729f66d6b94c96dbd086ad848c6531213571a44ce449602",
+    "evidence/controls/nats-meta-readiness-20261008/nats-meta-readiness-243.json": "21bd309519e3cda9d8b026f39f8c672c0c3cab9688b64f64f29ad746bf9ee947",
+    "evidence/controls/nats-meta-readiness-20261008/nats-meta-readiness-244.json": "5c90d4279f4cb0779620424a1365ae7756224a2027c90e5d4da6cddf48c5f6c6",
+    "evidence/controls/nats-meta-readiness-20261008/nats-meta-readiness-245.json": "95bd392ba8dcc6081e18d3fb57eb3dbb6b221bbe8a571660d7efc360b9b60168",
+    "evidence/controls/nats-meta-readiness-20261008/nats-meta-readiness-247.json": "1d27e9b0edd96d341b3bb9ca5c9e3d43286577b57bd3255281bd2bfed7defaf4",
+    "evidence/controls/nats-meta-readiness-20261008/nats-server-meta-api-ready-tests.patch": "41922dd01c5598c2722ffbe55b6e57e67845b31624d11d53f594553cd502783a",
+    "evidence/controls/nats-meta-readiness-20261008/prepare-nats-meta-readiness-243-20261008.py": "fd514a7223840a28fb1c0bed46c72980c5a50ed9e953f0e4346a452bb5792433",
+    "evidence/controls/nats-meta-readiness-20261008/prepare-nats-meta-readiness-244-20261008.py": "9b479985ac6fe7cadf8542ac2642614bd30f5d9f864264048121e251562c5a8a",
+    "evidence/controls/nats-meta-readiness-20261008/prepare-nats-meta-readiness-245-20261008.py": "ca44ff5fad5d1ff0fdddae344a36c513d5d98826b0208c6e6ce9185591d67f95",
+    "evidence/controls/nats-meta-readiness-20261008/prepare-nats-meta-readiness-247-20261008.py": "fd7ae22168766574f83c725328254bb4282143ede99e5d2462001c1464c15779",
+    "evidence/controls/nats-meta-readiness-20261008/record.py": "e2742de0d968bc0047ab60c8dbe835b8bca317acf9c0a6ce756bea66ad2822c4",
+    "evidence/controls/nats-meta-readiness-20261008/run.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a"
+  }
+}
