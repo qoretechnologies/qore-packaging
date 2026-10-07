@@ -131,3 +131,15 @@ controls retain only the six previously approved process-lifetime records
 unique compiler diagnostics match their reviewed, approved scope. Raw logs,
 including the two expected Valgrind exit codes of 99, remain in
 ``evidence/node-candidate10-final-20261007.json`` and its control directory.
+
+Native control link inputs
+--------------------------
+
+Node produces ``out/Release/libnode.so.137`` without an unversioned development
+symlink. Every shared-library control links that exact file. This makes the
+controls independent of an installed ``libnode-devel`` package and rejects a
+missing build output instead of selecting a library from the build host.
+``tests/test_node_link_inputs.py`` exercises each recipe link input with a
+versioned-only library, a competing installed library, and a missing build
+output. The regression also demonstrates how the original ``-lnode`` input
+could select the installed development library.

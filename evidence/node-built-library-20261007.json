@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-07",
+  "status": "Local complete RPM check and package-tool regressions pass. Corrected canonical OBS upload and native qualification remain required.",
+  "root_cause": "Node creates out/Release/libnode.so.137 without libnode.so. Eight -lnode controls therefore failed in clean OBS. The local builder had libnode-devel installed, which satisfied those link operands; runtime rpath still selected the freshly built versioned library.",
+  "fix": "All nine native shared-library controls link out/Release/libnode.so.%{soname} directly, including the inspector control formerly using -l:libnode.so.%{soname}. Missing output cannot fall back to a host library.",
+  "validation": {
+    "tool_tests_local": 214,
+    "tool_tests_pinned_ci_image": 214,
+    "native_link_operands_covered": 9,
+    "native_tests": 192,
+    "javascript_reported_results_including_upstream_skips": 5249,
+    "wasm_scripts": 31,
+    "installed_development_library_removed": true,
+    "production_library_sha256": "89175cfe67a566878c44e09f57b873417d2f58e7426ce5ebbcb0460a2d7411b5",
+    "reviewed_deprecations": [
+      "../deps/ncrypto/ncrypto.h:306:45: warning: 'void RSA_free(RSA*)' is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+      "../deps/ncrypto/ncrypto.h:1131:26: warning: 'void DH_free(DH*)' is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+      "../deps/ncrypto/ncrypto.h:1475:34: warning: 'void EC_KEY_free(EC_KEY*)' is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+      "../deps/ncrypto/ncrypto.h:1555:38: warning: 'void HMAC_CTX_free(HMAC_CTX*)' is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]"
+    ],
+    "approval": "evidence/node-api-deprecations-20261003.json"
+  },
+  "limits": [
+    "This reuses the qualified canonical compiled library and reruns the entire modified check phase without an installed Node development package.",
+    "Native OBS x86_64 and aarch64 builds still must pass; no native OBS success is inferred from this local result.",
+    "No C++ source changed, so no new Valgrind run is required for the link-recipe correction. Canonical implementation memory evidence remains in node-canonical-final-20261007.json.",
+    "The four compiler messages differ from the recorded approved messages only in locale-dependent quotation marks."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-built-library-20261007/audit.rst": "a625ee45eded5d64472d62317d042296b4df45c2570e670a010bdf0ff9d1ad98",
+    "evidence/controls/node-built-library-20261007/check.log.gz": "f8b9b1cc7ce5e4a90f17a71cd6c106eef966eaea8ad75511d05a094065b23973",
+    "evidence/controls/node-built-library-20261007/check.py": "2f5fe9e3f191ea6c1cec5bac2783a22f54c1b8750ecf4962f6a1f9d5b2d51692",
+    "evidence/controls/node-built-library-20261007/check.sh": "63eac541cc30ef4c09e98885e081624374208df637a37df0431f9c5b4c5ee33f",
+    "evidence/controls/node-built-library-20261007/node-built-library-ci-tests-20261007.log": "20147dd70baa2cdc69b63d0346e4b3c8d3917ee6dc729e2fa3d6b0ff123bb5f3",
+    "evidence/controls/node-built-library-20261007/node-built-library-obs-before-20261007.xml": "1a0f864c36428d1bf5eaf7024cd49146c51aaa70465c90449b5f1a5d7794d728",
+    "evidence/controls/node-built-library-20261007/node-built-library-tools-tests-20261007.log": "aefbc90c19ae41298bb4171c30eab86f30d4d2507d6b4cd8a12c04baa8c39114",
+    "evidence/controls/node-built-library-20261007/nodejs24-libnode.spec": "4cf2ed672b843fa7576f10cf24f50b6e2c0681332e307c2b17f47c639a9b2241",
+    "evidence/controls/node-built-library-20261007/obs-rev3-failure.log.gz": "124dc5ad01e141e3d06301388ce1dc4d3e2c8497ce414b6559cc53c863d9278d",
+    "evidence/controls/node-built-library-20261007/record.py": "cac3346cd5276b44a7f738200b2d266d09adede45bfca4a8503cdad1e01456dd",
+    "evidence/controls/node-built-library-20261007/status.json": "052a3325a8620fb2b2f211d7f66fec0550887197c31fdc96a3627017a391aec8",
+    "evidence/controls/node-built-library-20261007/test_node_link_inputs.py": "2dbe2127c777b29b1ebf0954dc262b3677bdcc7598c3332ca78e39bf60f91f89"
+  }
+}
