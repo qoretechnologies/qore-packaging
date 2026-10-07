@@ -1,0 +1,15 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Join the extended-info fixture consumer pull-handler interest before its first fetch.
+--- a/server/jetstream_cluster_1_test.go
++++ b/server/jetstream_cluster_1_test.go
+@@ -2021,6 +2021,10 @@
+ 		t.Fatalf("Unexpected error: %v", err)
+ 	}
+ 	defer sub.Unsubscribe()
++	// Consumer creation replies and pull-request route interest arrive independently.
++	ingress := c.serverByName(nc.ConnectedServerName())
++	require_NotNil(t, ingress)
++	awaitExactSubjectInterest(t, ingress.GlobalAccount().sl, fmt.Sprintf(JSApiRequestNextT, "TEST", "dlc"))
+ 	fetchMsgs(t, sub, 10, 5*time.Second)
+ 
+ 	leader = c.consumerLeader("$G", "TEST", "dlc").Name()

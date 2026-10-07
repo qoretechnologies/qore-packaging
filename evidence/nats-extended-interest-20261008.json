@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "The candidate46 first-fetch failure is corrected and focused qualification passed; combined RPM integration remains required.",
+  "failure": "Fedora candidate46 TestJetStreamClusterExtendedStreamInfo returns nats.ErrNoResponders at jetstream_cluster_1_test.go:2024, its first fetchMsgs call after successful PullSubscribe.",
+  "root_cause": "Consumer creation replies travel over the API route independently from consumer pull-handler interest on the account route. The fixture can send its first fetch before that interest reaches its randomly chosen ingress.",
+  "fix": "Join the exact TEST/dlc pull-request subject through the existing Sublist notification helper before the first fetch. All original request deadlines, message assertions and replica checks remain unchanged.",
+  "qualification": {
+    "race_enabled_cases": 90,
+    "results": [
+      {
+        "target": "fedora",
+        "variant": "clean",
+        "race_enabled_cases": 20,
+        "exit_code": 0
+      },
+      {
+        "target": "leap",
+        "variant": "clean",
+        "race_enabled_cases": 20,
+        "exit_code": 0
+      },
+      {
+        "target": "el10",
+        "variant": "clean",
+        "race_enabled_cases": 20,
+        "exit_code": 0
+      },
+      {
+        "target": "fedora",
+        "variant": "control",
+        "race_enabled_cases": 10,
+        "exit_code": 0
+      },
+      {
+        "target": "leap",
+        "variant": "control",
+        "race_enabled_cases": 10,
+        "exit_code": 0
+      },
+      {
+        "target": "el10",
+        "variant": "control",
+        "race_enabled_cases": 10,
+        "exit_code": 0
+      }
+    ],
+    "clean_patch_only_adds_readiness_precondition": true,
+    "patch_fuzz_and_offsets": 0
+  },
+  "source_sha256": "25cafd172c794b432a979dee722619624724762712c63ad9da9744cfb989c63e",
+  "prior_mechanism_evidence": [
+    "evidence/nats-candidate37-focused-20261007.json",
+    "evidence/nats-mirror-pull-interest-20261007.json"
+  ],
+  "limits": [
+    "The diagnostic control temporarily removes existing interest on a nonleader ingress, reproduces the exact no-responder result, and restores it before completing this fixture. It models the propagation boundary; it is not a trace of the historical failed scheduling.",
+    "Subscription manipulation, the second bound client and the control function are excluded from the package patch.",
+    "Candidate46 full builds were still running when the failure was isolated. Other failures, historical gates, native OBS and repository lifecycle checks remain independent requirements."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-extended-interest-20261008/audit.rst": "3ea10c43274b08ab1862034a4785b607ff1edd400a64669b2eedb515090922aa",
+    "evidence/controls/nats-extended-interest-20261008/candidate46-failed-test.json": "ff8b20d44eacc83a07932d15d85aa46a74801b9959c8d7ac50d1a6fad742663d",
+    "evidence/controls/nats-extended-interest-20261008/clean.go.gz": "9f979c64d46cbd5ac445158d3210f16e66abfb9920690880400e9b57773aef5e",
+    "evidence/controls/nats-extended-interest-20261008/control.go.gz": "1871831b63436107d03a5c9d86df18c31694250bc0def6d799e01e9081954f56",
+    "evidence/controls/nats-extended-interest-20261008/el10-nats-extended-interest-254-clean-status.json": "da96eeed9989582d98a7a9a48c70251d8e080c40de0dd05591e9640d40a921d5",
+    "evidence/controls/nats-extended-interest-20261008/el10-nats-extended-interest-254-clean.log.gz": "2191822ad2836002d4ce4d52dd90e0785610fa5b3f94c6446cbe463ff144405c",
+    "evidence/controls/nats-extended-interest-20261008/el10-nats-extended-interest-254-control-status.json": "8a0785f3d616223f901e3904ee6791ceeab3bae3c4e9bd84484cf17163388bbb",
+    "evidence/controls/nats-extended-interest-20261008/el10-nats-extended-interest-254-control.log.gz": "737f2ad3ea6725794aae57f43951284ee69ca46b8a7b469f00883bfa542092b9",
+    "evidence/controls/nats-extended-interest-20261008/fedora-nats-extended-interest-254-clean-status.json": "f3d3c571eeb0f158ae2647391deb8478667f113965d7ed82b61d6b81abf0a2dd",
+    "evidence/controls/nats-extended-interest-20261008/fedora-nats-extended-interest-254-clean.log.gz": "caf6d582c3d7d2516c5d67bf7fab5fb5459047278fc79bcf64dfb3ed7c0140a5",
+    "evidence/controls/nats-extended-interest-20261008/fedora-nats-extended-interest-254-control-status.json": "0c433a713c04b364077db34d2ffcd9182d83ea9b418dc5a844ca025c5d630fd8",
+    "evidence/controls/nats-extended-interest-20261008/fedora-nats-extended-interest-254-control.log.gz": "63e0f66291f057ab3a6edf2a96a968b7f98c49438c1eddf3aff04f5808f8ce57",
+    "evidence/controls/nats-extended-interest-20261008/leap-nats-extended-interest-254-clean-status.json": "8167b7fcaf99faf6e4252d1672f3956eeb1f6d7373a053cc51814023b1c78975",
+    "evidence/controls/nats-extended-interest-20261008/leap-nats-extended-interest-254-clean.log.gz": "1805375820e322d938619cead684980b068dfc392946c9ad97cfa5b720c7607d",
+    "evidence/controls/nats-extended-interest-20261008/leap-nats-extended-interest-254-control-status.json": "8d6743b69a26be5811048b83ca1287d9564fa30a614ce6add89f16c4a161040e",
+    "evidence/controls/nats-extended-interest-20261008/leap-nats-extended-interest-254-control.log.gz": "e58cdbeeb6781e24dd8cd6722755176da1c1c220b7baae5e70d5b7eb337da091",
+    "evidence/controls/nats-extended-interest-20261008/nats-extended-interest-254.json": "093685fdb3b2f53787d486e9f326e7636474b082dcbcaf28b3d8c4a387134a8c",
+    "evidence/controls/nats-extended-interest-20261008/nats-server-extended-info-interest-tests.patch": "42667ec3197f26181d29c38fb3d4882e6e259a66a9360dbcb31accf45b633b7b",
+    "evidence/controls/nats-extended-interest-20261008/patch-check.txt": "50cb2eb05b7c8a8c06c43fa8085f376f30611b06afc017dc76271cbd8acbd7cf",
+    "evidence/controls/nats-extended-interest-20261008/prepare-nats-extended-interest-254-20261008.py": "256052854960d66c2733786ab6cfce6737e5360bb0a48be8298ec837f35203bd",
+    "evidence/controls/nats-extended-interest-20261008/record.py": "41ffdd934b1cd622a7806667bb8b6ee2d0b0442d1fe6a598d4ebfafc075593bf",
+    "evidence/controls/nats-extended-interest-20261008/run-nats-focused-38.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a"
+  }
+}
