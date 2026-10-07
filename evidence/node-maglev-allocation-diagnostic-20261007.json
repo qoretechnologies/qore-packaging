@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User accepted the 1 exact diagnostic sites on 2026-10-07. Focused qualification and its recorded limits are unchanged. Full RPM and native architecture qualification remain separate gates.",
+  "diagnostics": [
+    {
+      "file": "deps/v8/src/maglev/maglev-graph-builder.cc",
+      "line": 13328,
+      "diagnostic": "../deps/v8/src/maglev/maglev-graph-builder.cc:13328:10: warning: \u2018allocation\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "13318:       }\n13319:       if (is_loop_effect_tracking()) {\n13320:         loop_effects_->allocations.insert(allocation);\n13321:       }\n13322:       break;\n13323:     }\n13324:   }\n13325:   if (v8_flags.maglev_allocation_folding < 2) {\n13326:     ClearCurrentAllocationBlock();\n13327:   }\n13328:   return allocation;\n13329: }\n13330: \n13331: ValueNode* MaglevGraphBuilder::BuildInlinedArgumentsElements(int start_index,\n13332:                                                              int length) {\n13333:   DCHECK(is_inline());\n13334:   if (length == 0) {\n13335:     return GetRootConstant(RootIndex::kEmptyFixedArray);\n13336:   }\n13337:   VirtualObject* elements =\n13338:       CreateFixedArray(broker()->fixed_array_map(), length);"
+    }
+  ],
+  "root_cause": "GCC considers an enum value outside the four declared VirtualObject types possible. Each actual constructor initializes one declared type, and the dispatch assigns allocation on every such case before the common return.",
+  "source_review": [
+    "All four VirtualObject constructors initialize type_ directly to kDefault, kHeapNumber, kFixedDoubleArray or kConsString; no constructor accepts an unchecked numeric type.",
+    "BuildInlinedAllocation handles every declared Type, including kLast, an alias of kConsString. Every case assigns allocation before reaching the return.",
+    "The default branch first materializes nested virtual objects and boxes float constants, then allocates the containing object and emits map/field stores. The control retains this complete branch unchanged."
+  ],
+  "coverage": {
+    "native_checks": 599040,
+    "checks_per_run": 149760,
+    "injected_failure_checks_per_run": 26640,
+    "matrix": "All four types, 0/1/8/12 fields, tagged values, nested virtual objects, float constants, young/old generation tags, map and loop bookkeeping, folding levels 0/1/2, and failure at each of the first twelve allocation calls. Both modes run normally and under Valgrind.",
+    "compiler": "Both modes reproduce only the exact allocation warning.",
+    "memory": "Both native memory runs have zero errors; all 2560682 allocations are freed per run.",
+    "actual_node_checks": 48480,
+    "actual_node": "Four allocation functions exercise nested objects, boxed doubles, double arrays and string concatenation with folding levels 0/1/2. Intrinsics verify all functions execute in Maglev before and after the cases. Retained objects are checked again after explicit garbage collections."
+  },
+  "limits": [
+    "The dispatcher and enum are verbatim. The arena, graph nodes, specialized allocation helpers, frame, map stores and loop effects are typed adapters; this is a branch/ownership control, not the real V8 allocator.",
+    "Native failure injection throws std::bad_alloc in the adapter arena. It proves control ownership during exception unwinding; V8 itself handles fatal allocation failures differently.",
+    "The native adapter also tests a default object without a static map, broader than actual VirtualObject constructors permit. That additional path is not claimed reachable in V8.",
+    "Both compiler modes use the same dispatch, which has no debug conditional. Real JavaScript checks verify the optimization tier but do not inspect each generated graph node.",
+    "No runtime patch, suppression or compiler-flag change is proposed."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-maglev-allocation-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-maglev-allocation-20261007/control.cc": "2e40fb7a617c05484cb0d9b55a9bb906afbf9b50cc9ec212b86a283bd5865b2f",
+    "evidence/controls/node-maglev-allocation-20261007/control.h": "49673ff3eb96c5d1a746e91b5afb77d7196eac3a18854bed27dbf9a0e143aae7",
+    "evidence/controls/node-maglev-allocation-20261007/control.js": "b020059f8bea9c612452176da096429621019ea7310dab83fa410b9adfeb90cd",
+    "evidence/controls/node-maglev-allocation-20261007/debug-compile.log.gz": "6e2f144086c0ad536f0d0e2cb949bf533f66aec81d97831ed2cd9a748e274e07",
+    "evidence/controls/node-maglev-allocation-20261007/debug-memory.log.gz": "c736d38cbf91a61a94b60947a9609c55b6d1ea6c69a66b10d9448b74c5d1d65b",
+    "evidence/controls/node-maglev-allocation-20261007/debug-normal.log.gz": "c736d38cbf91a61a94b60947a9609c55b6d1ea6c69a66b10d9448b74c5d1d65b",
+    "evidence/controls/node-maglev-allocation-20261007/debug-valgrind.log.gz": "4562b6cf91386dacb34181c4cb0f068948b52af901cc0fa2d4f3525ef9ad822e",
+    "evidence/controls/node-maglev-allocation-20261007/helper.cc": "457663f17c09e2ca65f36aa59e3221a67936d50d2e72d2fd3e5be3d26a173f19",
+    "evidence/controls/node-maglev-allocation-20261007/javascript-0.log.gz": "79d33be6325f867b6f3f32c419e36a2aaf327b1bb54bcf9ffd508720dc0069e3",
+    "evidence/controls/node-maglev-allocation-20261007/javascript-1.log.gz": "79d33be6325f867b6f3f32c419e36a2aaf327b1bb54bcf9ffd508720dc0069e3",
+    "evidence/controls/node-maglev-allocation-20261007/javascript-2.log.gz": "79d33be6325f867b6f3f32c419e36a2aaf327b1bb54bcf9ffd508720dc0069e3",
+    "evidence/controls/node-maglev-allocation-20261007/javascript-status.json": "11a2aa22cecb66bbd989c7962359347aa92a4e66b8a03f922220424b4cec6b1b",
+    "evidence/controls/node-maglev-allocation-20261007/prepare.py": "331a1f1c42354d0d2ced86bd6fbb920e970599b9aeb31d8acd10904d7b7af4ab",
+    "evidence/controls/node-maglev-allocation-20261007/release-compile.log.gz": "6e2f144086c0ad536f0d0e2cb949bf533f66aec81d97831ed2cd9a748e274e07",
+    "evidence/controls/node-maglev-allocation-20261007/release-memory.log.gz": "c736d38cbf91a61a94b60947a9609c55b6d1ea6c69a66b10d9448b74c5d1d65b",
+    "evidence/controls/node-maglev-allocation-20261007/release-normal.log.gz": "c736d38cbf91a61a94b60947a9609c55b6d1ea6c69a66b10d9448b74c5d1d65b",
+    "evidence/controls/node-maglev-allocation-20261007/release-valgrind.log.gz": "5508f8899a0e66b048002de27b488e53aa526f2b285cc45fd85e0c9046c838fb",
+    "evidence/controls/node-maglev-allocation-20261007/run-javascript.py": "7da15ac8b163c63815d9080e3bdaa697cd5d6973c31c989a2f3fbf949d48466c",
+    "evidence/controls/node-maglev-allocation-20261007/run.py": "e6c627b2e1968459375e8884a7c94c5e587cc003f311d3ce17ff4992a440950b",
+    "evidence/controls/node-maglev-allocation-20261007/source-extracts.json": "2d5793878c8d11818e08d707c4ff0912711315fa8bde25ca30a592327fa8aa3c",
+    "evidence/controls/node-maglev-allocation-20261007/status.json": "ee53c57998ffb08c31d3721ace46255b3c8166b571ec871a4054dbffc25d485a"
+  },
+  "approval": "Allow this exact diagnostic",
+  "approval_date": "2026-10-07"
+}

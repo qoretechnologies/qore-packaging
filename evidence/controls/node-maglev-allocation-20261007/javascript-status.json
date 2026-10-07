@@ -1,0 +1,74 @@
+[
+  {
+    "folding_level": 0,
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--user",
+      "1019:100",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/node-maglev-allocation-controls-20261007:/work:ro",
+      "qore-rpm-keep:leap-node-compaction-baseline2-20261006",
+      "node",
+      "--maglev",
+      "--no-turbofan",
+      "--allow-natives-syntax",
+      "--no-concurrent-recompilation",
+      "--expose-gc",
+      "--maglev-allocation-folding=0",
+      "/work/control.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "folding_level": 1,
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--user",
+      "1019:100",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/node-maglev-allocation-controls-20261007:/work:ro",
+      "qore-rpm-keep:leap-node-compaction-baseline2-20261006",
+      "node",
+      "--maglev",
+      "--no-turbofan",
+      "--allow-natives-syntax",
+      "--no-concurrent-recompilation",
+      "--expose-gc",
+      "--maglev-allocation-folding=1",
+      "/work/control.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "folding_level": 2,
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--user",
+      "1019:100",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/node-maglev-allocation-controls-20261007:/work:ro",
+      "qore-rpm-keep:leap-node-compaction-baseline2-20261006",
+      "node",
+      "--maglev",
+      "--no-turbofan",
+      "--allow-natives-syntax",
+      "--no-concurrent-recompilation",
+      "--expose-gc",
+      "--maglev-allocation-folding=2",
+      "/work/control.js"
+    ],
+    "exit_code": 0
+  }
+]

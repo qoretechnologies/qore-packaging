@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User accepted the 1 exact diagnostic sites on 2026-10-07. Focused qualification and its recorded limits are unchanged. Full RPM and native architecture qualification remain separate gates.",
+  "diagnostics": [
+    {
+      "file": "deps/v8/src/heap/main-allocator.cc",
+      "line": 239,
+      "diagnostic": "../deps/v8/src/heap/main-allocator.cc:239:28: warning: \u2018aligned_size_in_bytes\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "229:   }\n230: \n231:   int max_aligned_size = size_in_bytes + Heap::GetMaximumFillToAlign(alignment);\n232:   int aligned_size_in_bytes;\n233: \n234:   AllocationResult result = AllocateFastAligned(\n235:       size_in_bytes, &aligned_size_in_bytes, alignment, origin);\n236:   DCHECK_GE(max_aligned_size, aligned_size_in_bytes);\n237:   DCHECK(!result.IsFailure());\n238: \n239:   InvokeAllocationObservers(result.ToAddress(), size_in_bytes,\n240:                             aligned_size_in_bytes, max_aligned_size);\n241: \n242:   return result;\n243: }\n244: \n245: void MainAllocator::MakeLinearAllocationAreaIterable() {\n246:   if (!IsLabValid()) return;\n247: \n248: #if DEBUG\n249:   Verify();"
+    }
+  ],
+  "root_cause": "The compiler diagnoses a possible failed fast allocation following EnsureAllocation in the aligned slow helper. This helper is not selected by production allocation: upstream defines USE_ALLOCATION_ALIGNMENT_BOOL false, and the only caller chooses AllocateRawSlowUnaligned. The exact candidate-7 object disassembly confirms the unaligned target.",
+  "source_review": [
+    "Upstream disables allocation alignment explicitly in globals.h, citing its known alignment inconsistency. This packaging adds no disabling flag or source change.",
+    "The only source call to AllocateRawSlowAligned is the false compile-time branch in AllocateRawSlow. AllocateRaw similarly selects its unaligned fast path.",
+    "For directly exercised aligned controls, semispace reserves actual filler plus object size; paged space reserves maximum filler. ComputeLimit preserves the minimum request even with observers. No intervening allocation occurs before AllocateFastAligned.",
+    "This capacity proof is not generalized to PagedNewSpace fallback paths: those pass the raw size to TryAllocatePage/WaitForSweepingForAllocation. Upstream explicitly leaves aligned allocation inactive. Qualification does not enable or certify a changed upstream alignment policy."
+  ],
+  "coverage": {
+    "native_checks": 1872000,
+    "matrix": "4/8-byte tagged sizes, all three alignment modes, five object sizes, eight/four aligned starting offsets, runtime/GC origin tags, modeled semispace/paged capacity contracts, observer limits, reservation failure, direct fast-path failure and null output pointer. Debug/release normally and under Valgrind.",
+    "memory": "All four native memory runs have zero errors and all allocations freed.",
+    "actual_node_checks": 60060,
+    "actual_node": "Inspector allocation sampling verifies emitted positive samples while arrays, doubles, strings and objects survive garbage collection. Tests run with semispace, forced slow allocation/stress marking, and paged minor collection.",
+    "production_object": "Candidate-7 main-allocator.o: AllocateRawSlow dispatches to AllocateRawSlowUnaligned; full disassembly excerpt retained."
+  },
+  "limits": [
+    "The 8-byte-tag release control reproduces the exact warning twice (the helper and its inlined copy). Other modes emit no warning. Exact aligned fast/slow bodies and alignment helpers use typed heap/area adapters.",
+    "Actual JavaScript checks exercise production allocation and observers. They do not exercise the inactive aligned helper; this distinction is central to the qualification.",
+    "The initial adapter made ToAddress always check failure. It was corrected to match upstream debug-only checking before final qualification; final 8-byte-tag release controls then reproduce the diagnostic.",
+    "Native EnsureAllocation models the reviewed semispace/paged minimum-capacity contracts; it does not implement the complete heap policies or certify inactive paged-new-space fallback behavior.",
+    "Unused origin parameters in unchanged helper bodies use the same unused-parameter flag as the production build; no uninitialized-warning suppression is applied.",
+    "No runtime patch, suppression, allocation policy or compiler-flag change is proposed."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-aligned-allocation-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-aligned-allocation-20261007/control.cc": "988b390661fd1a28249a03e35fff2302e68e4e1960ccf8040a8f439ecaea3f02",
+    "evidence/controls/node-aligned-allocation-20261007/control.h": "13c06aec8ec8afba0766cd95d715e68e6ffb20b9e07c6c2e5a69333ab9a28014",
+    "evidence/controls/node-aligned-allocation-20261007/control.js": "fd37b5c751e95073fed93b77511ea5939f72e7b75f8908ff2f72217219f6e20d",
+    "evidence/controls/node-aligned-allocation-20261007/debug-4-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-aligned-allocation-20261007/debug-4-memory.log.gz": "3f45715172ba3d629ce94b8682d91feb0dd32f17415d5ae0dc90b5e726bb8c15",
+    "evidence/controls/node-aligned-allocation-20261007/debug-4-normal.log.gz": "3f45715172ba3d629ce94b8682d91feb0dd32f17415d5ae0dc90b5e726bb8c15",
+    "evidence/controls/node-aligned-allocation-20261007/debug-4-valgrind.log.gz": "fa740b37be909301a96312b43c92b6834d5258b21d1e082c35f39f92df18dce9",
+    "evidence/controls/node-aligned-allocation-20261007/debug-8-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-aligned-allocation-20261007/debug-8-memory.log.gz": "bc0d63fdde2e4c9bd9f82b045289f78931140b4091ea6fad0bbd4771c0dabe8d",
+    "evidence/controls/node-aligned-allocation-20261007/debug-8-normal.log.gz": "bc0d63fdde2e4c9bd9f82b045289f78931140b4091ea6fad0bbd4771c0dabe8d",
+    "evidence/controls/node-aligned-allocation-20261007/debug-8-valgrind.log.gz": "f30d876fb8a00ea2a3d7719c941c5a44963c4b0011a5098c302f866cda60f44e",
+    "evidence/controls/node-aligned-allocation-20261007/helper.cc": "338a05f3113587db3f40658aa14f31393140f3f9c14755554259823ed06384f9",
+    "evidence/controls/node-aligned-allocation-20261007/javascript-paged.log.gz": "687b3da4e93c5f01cf34e2d078d02eb508e131b736cf0c0048dce4641e115c4d",
+    "evidence/controls/node-aligned-allocation-20261007/javascript-semispace.log.gz": "687b3da4e93c5f01cf34e2d078d02eb508e131b736cf0c0048dce4641e115c4d",
+    "evidence/controls/node-aligned-allocation-20261007/javascript-slow-stress.log.gz": "687b3da4e93c5f01cf34e2d078d02eb508e131b736cf0c0048dce4641e115c4d",
+    "evidence/controls/node-aligned-allocation-20261007/javascript-status.json": "a9d3ec8a4fdcf60b6bcbfe078d12fb5df2043592b6b358fe1d985568d74a16c3",
+    "evidence/controls/node-aligned-allocation-20261007/prepare.py": "cd6691ff7fe86d9bc942d5347b67518400e548104ff7055a23acc3f50227e995",
+    "evidence/controls/node-aligned-allocation-20261007/production-disassembly.log.gz": "342f4b8b846b240353136015cdc916207a0ed49207d905f0065de0ce4f4009e9",
+    "evidence/controls/node-aligned-allocation-20261007/release-4-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-aligned-allocation-20261007/release-4-memory.log.gz": "3f45715172ba3d629ce94b8682d91feb0dd32f17415d5ae0dc90b5e726bb8c15",
+    "evidence/controls/node-aligned-allocation-20261007/release-4-normal.log.gz": "3f45715172ba3d629ce94b8682d91feb0dd32f17415d5ae0dc90b5e726bb8c15",
+    "evidence/controls/node-aligned-allocation-20261007/release-4-valgrind.log.gz": "ec5dc91e74c0598a75561d381a1f3848a84ea4e51ff283af872b928b9e6220b9",
+    "evidence/controls/node-aligned-allocation-20261007/release-8-compile.log.gz": "811eee76186cad3f42c8cc67c6395e54a84389600f1d5df1e14a024d3f9c5d77",
+    "evidence/controls/node-aligned-allocation-20261007/release-8-memory.log.gz": "bc0d63fdde2e4c9bd9f82b045289f78931140b4091ea6fad0bbd4771c0dabe8d",
+    "evidence/controls/node-aligned-allocation-20261007/release-8-normal.log.gz": "bc0d63fdde2e4c9bd9f82b045289f78931140b4091ea6fad0bbd4771c0dabe8d",
+    "evidence/controls/node-aligned-allocation-20261007/release-8-valgrind.log.gz": "becc94353d4bca6bc213fc6df4c9a2029a27bec996c4eb9118ac5df3bc117453",
+    "evidence/controls/node-aligned-allocation-20261007/run-javascript.py": "675cab234e014bc4e936827c4c3a3cde541a02dbc315fa1514021ca444544427",
+    "evidence/controls/node-aligned-allocation-20261007/run.py": "5e41a95465e09ebd7273448bd61eb0e12402f1a46ab75302143efadd52151b2b",
+    "evidence/controls/node-aligned-allocation-20261007/source-extracts.json": "ec7ea38ca5a8976c15c046613d34af0aefa2d10a04919dd53abc9c9dc65708a1",
+    "evidence/controls/node-aligned-allocation-20261007/status.json": "3dfc254453afb459f20c969f933513f35935efc40b11ab6ac7148d0fc3814a58"
+  },
+  "approval": "Allow this exact diagnostic",
+  "approval_date": "2026-10-07"
+}
