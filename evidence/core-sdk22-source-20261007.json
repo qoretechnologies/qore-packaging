@@ -1,0 +1,2722 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "status": "Audited source committed; complete canonical RPM qualification started. Remote push failed with GitHub Internal Server Error and must be completed before rollout.",
+  "source": {
+    "branch": "rpm/documentation-sdk-20261006",
+    "base": "a2e56c1e9bbf52436f6b3cb98fa9b84bc9152734",
+    "files": {
+      "CMakeLists.txt": {
+        "sha256": "f1bc8de8fecb32fae8a03c4d5170b1019bde379b95616b6057236124b9cc97c3",
+        "mode": "0o644"
+      },
+      "design/qore-module-structure.md": {
+        "sha256": "e8bc5093647fc93d77086cbbbde4e6f60d73570b708639f8091ce4d8de0a0279",
+        "mode": "0o644"
+      },
+      "doxygen/check-guide-refs.py": {
+        "sha256": "7b8f6c011031a6d0a9b7669fa01426760a390fc2112ca2824ad95ae226e530f0",
+        "mode": "0o755"
+      },
+      "doxygen/check-rendered-refs.py": {
+        "sha256": "62936581a2651efafae4071a45a4c5873228c9522428175ca2f8d7453a769cb5",
+        "mode": "0o755"
+      },
+      "doxygen/lang/110_environment_variables.dox.tmpl": {
+        "sha256": "fbd38115ed99f605a374eaf4b677e7e55b0e104a83aa448b17bf301df51386e7",
+        "mode": "0o644"
+      },
+      "doxygen/lang/120_modules.dox.tmpl": {
+        "sha256": "2ef1b878ab36095c58d4714328d170f57150e8c9dcd829f3c18795e1219accbd",
+        "mode": "0o644"
+      },
+      "doxygen/lang/147_fast_text_processing.dox.tmpl": {
+        "sha256": "15bfceff328e7590a5e53727c04119652098b4944ea56129326a925f360494b0",
+        "mode": "0o644"
+      },
+      "doxygen/lang/150_container_data_types.dox.tmpl": {
+        "sha256": "6fa19709c0b4dea56db730b915fc409e1b422945374740d985796c48c2e8eb26",
+        "mode": "0o644"
+      },
+      "doxygen/lang/155_data_type_declarations.dox.tmpl": {
+        "sha256": "4a8be8ea212617b0a22242af11140ea16e446e9caf7b6fe06b1e85d3bc84a6dc",
+        "mode": "0o644"
+      },
+      "doxygen/lang/180_operators.dox.tmpl": {
+        "sha256": "7220fd27e5b4a3d248e8c0e47cbd48ffb9765b531bbd22979104e75fd0b0ce80",
+        "mode": "0o644"
+      },
+      "doxygen/lang/185_qore_regex.dox.tmpl": {
+        "sha256": "1d3111bc22e62d2f8e8acf5da40751ff904057679323f6a8620bb029d08014f0",
+        "mode": "0o644"
+      },
+      "doxygen/lang/202_code_flags.dox.tmpl": {
+        "sha256": "f0c707110531cfe5f885c8241b5377c8e1ee86dbd2ea1b4b53a77aa73a66255e",
+        "mode": "0o644"
+      },
+      "doxygen/lang/205_namespaces.dox.tmpl": {
+        "sha256": "13c97d1d5507fe4855499b58d41162e49dcd08c61db572476f05f1318998d418",
+        "mode": "0o644"
+      },
+      "doxygen/lang/215_classes.dox.tmpl": {
+        "sha256": "f52d2c172632819770f4c42748b66a69e21ddb2491c40d2650e41d55f17fb7d7",
+        "mode": "0o644"
+      },
+      "doxygen/lang/222_sandboxing.dox.tmpl": {
+        "sha256": "21a38918b814163ee3efa7d62123315a864b1d9478436190828cc5f8dfeadb31",
+        "mode": "0o644"
+      },
+      "doxygen/lang/245_parse_directives.dox.tmpl": {
+        "sha256": "f3a20ffc2657446586818b88593bce20bd9634b30e68aa0fcb6d85e87cee10d8",
+        "mode": "0o644"
+      },
+      "doxygen/lang/900_release_notes.dox.tmpl": {
+        "sha256": "ed5f4ee5bb39ee3fabd6e816b5c8352feeefac1955c87e00ad7611991cda11d0",
+        "mode": "0o644"
+      },
+      "doxygen/lib/70_qore_modules.doxygen": {
+        "sha256": "314ac9111a3a3fe6729cdd04e04e8babef4911340afe91716fa9bafc0de441a4",
+        "mode": "0o644"
+      },
+      "examples/test/cmake/audits/module-doc-markup.rst": {
+        "sha256": "24814f16259c2bb62ee8eef9883b2df0dc84520979df80482414c0a233b27f66",
+        "mode": "0o644"
+      },
+      "examples/test/cmake/audits/module-doc-navigation.rst": {
+        "sha256": "6e7c3b0fb4a695ff25f7fd97e2c2bb8932a0e943d406b8b720d74e38d1cd1b50",
+        "mode": "0o644"
+      },
+      "examples/test/cmake/test_doc_literal_escaping.py": {
+        "sha256": "e015ee6d4a3605588beec17205e360fe33b1137923e9dc95a1f5faf745c200fe",
+        "mode": "0o644"
+      },
+      "examples/test/cmake/test_guide_refs.py": {
+        "sha256": "4e01e3751b2451d96ebd92fc84261eae62599eeb2d91821969419a5345f9fe9b",
+        "mode": "0o755"
+      },
+      "examples/test/cmake/test_rendered_doc_refs.py": {
+        "sha256": "0dda7310a2c5fc6469fb9361ee415a8e16695210808a31c353938a453f6259a4",
+        "mode": "0o755"
+      },
+      "examples/test/qlib/Qdx/AstProcessor.qtest": {
+        "sha256": "93b3c2d98ed373551abda37270efc48ef118b0befe7f848354772c18e57dd68d",
+        "mode": "0o755"
+      },
+      "include/qore/AbstractHttpPollConnection.h": {
+        "sha256": "99670bf1cb88b4975f3b1e2ee0d25dad5392d0da8553a39a105982cc7e8f91d6",
+        "mode": "0o644"
+      },
+      "include/qore/AsyncCompletionAction.h": {
+        "sha256": "cc62900409c977e205c04a944e25d5314eabeb3882d3d1e6bc3e8ece7799bf6d",
+        "mode": "0o644"
+      },
+      "include/qore/HttpClientConnection.h": {
+        "sha256": "4d3991d3d85fe6dbd2e2d40772ad0ab6e50907973a8c76e753fb3d0fa405deb1",
+        "mode": "0o644"
+      },
+      "include/qore/HttpClientConnectionManager.h": {
+        "sha256": "533fd54008664f1696327f227e0dd5bcadc71c2bdcabfcf06015ba9eecfcc24c",
+        "mode": "0o644"
+      },
+      "include/qore/InputStream.h": {
+        "sha256": "4c1813157e4322f3d7859c726c556ac7304b10589a302f59c0e42fdee7a05f6a",
+        "mode": "0o644"
+      },
+      "include/qore/ModuleManager.h": {
+        "sha256": "c9c734a54bf058afa200e144d1cda87f6727e24c5d0293f642d3f62089340975",
+        "mode": "0o644"
+      },
+      "include/qore/QoreAOT.h": {
+        "sha256": "b19e9b39caf06bea0cdba4230368267c201117b9fd777761cb8c7ca45ad38fcf",
+        "mode": "0o644"
+      },
+      "include/qore/QoreBuiltinSrcLoc.h": {
+        "sha256": "1e32fa00deaf9c650185a26af619ec4a29da05ded64146ad9821c53fcc54b583",
+        "mode": "0o644"
+      },
+      "include/qore/QoreNamespace.h": {
+        "sha256": "468e778847550b19690c51c2719ac463820242e636fdd361b5c85563280f886b",
+        "mode": "0o644"
+      },
+      "include/qore/QoreSandboxManager.h": {
+        "sha256": "6cdf675957a27dfbd941eb0695f37f4d9fb4984c8b1a1034fa43d5f1a70f912d",
+        "mode": "0o644"
+      },
+      "include/qore/QoreString.h": {
+        "sha256": "974ecbd2faf39fc9e280ab59397170634813ea764b4c34e01e7f3ec496fd519f",
+        "mode": "0o644"
+      },
+      "include/qore/QoreStringNode.h": {
+        "sha256": "1f0069c3695e85da31507dfa416e5719598cc2bd25d563a41ba67a41e5c641a6",
+        "mode": "0o644"
+      },
+      "lib/Pseudo_QC_String.qpp": {
+        "sha256": "8a0cac65f7c7defc0e25398e28c0345348a1be1fe4ad93d168e2532490fb2652",
+        "mode": "0o644"
+      },
+      "lib/QC_AsyncIoController.qpp": {
+        "sha256": "db23142ee976a9a2ac74f67f841c1639430b0a5fa30f8495475727c9db8ea7e7",
+        "mode": "0o644"
+      },
+      "lib/QC_BinaryInputStream.qpp": {
+        "sha256": "1adeabb3a708c9d52d2529648319e6fa26cc9cca40405763f20465995efa459b",
+        "mode": "0o644"
+      },
+      "lib/QC_EncodingConversionInputStream.qpp": {
+        "sha256": "49686b34e4d13dfeebf0d6b40a01b2bb0074d5d364dc78de385227942662726a",
+        "mode": "0o644"
+      },
+      "lib/QC_FileInputStream.qpp": {
+        "sha256": "869bf81070f3c135001622df178a85a3c0c63d43a52501a06ca23d388b7e2b02",
+        "mode": "0o644"
+      },
+      "lib/QC_FtpControlPollOperation.qpp": {
+        "sha256": "5a41a8b36cfa31b2d3d133e72cba82ede20b0d2d4eaf52b2e74193cd8ac388cb",
+        "mode": "0o644"
+      },
+      "lib/QC_HTTPClient.qpp": {
+        "sha256": "c3e473f0d5b67586ec75cefb0736fe94468a9b91a64dd3c04ee63ec0ef384dfd",
+        "mode": "0o644"
+      },
+      "lib/QC_Http2PollOperationBase.qpp": {
+        "sha256": "35c4a92f656cdaff1307e69f0b3dd0ff6dfe8a35b4a4c0cfdb2c9eae0d2c8c5d",
+        "mode": "0o644"
+      },
+      "lib/QC_HttpClientConnection.qpp": {
+        "sha256": "884378ec0a10357654b91ae61ec3c064778eb6ee89aaf66ee1d11466ff4aba64",
+        "mode": "0o644"
+      },
+      "lib/QC_InputStream.qpp": {
+        "sha256": "0b8f192150ccad7e0f07afc12ac5cffdd46e1c026fa6c18c2ffb210470636076",
+        "mode": "0o644"
+      },
+      "lib/QC_Socket.qpp": {
+        "sha256": "92c922468e9706ecc3ef9d81f36c1ad5f8810752694c895f066727336e37fb4d",
+        "mode": "0o644"
+      },
+      "lib/QC_StringCharIterator.qpp": {
+        "sha256": "59a92e92fb8bf484e650b2d52838e188bf972bcb3c99139944043580697b8af3",
+        "mode": "0o644"
+      },
+      "lib/QC_StringInputStream.qpp": {
+        "sha256": "440320c1a314a12c05be6fc473c8b3734a56407eec8ce46b768ce75ff1779868",
+        "mode": "0o644"
+      },
+      "lib/QC_StringSplitIterator.qpp": {
+        "sha256": "fb1a3dfe448a83a902c843363efd4694cb62a37126b11e5e1a508f4297659ca0",
+        "mode": "0o644"
+      },
+      "lib/QC_TransformInputStream.qpp": {
+        "sha256": "edef482abf9900f6a043379a55606d1db0106790ac4d6d7b32a96ceb14c40a36",
+        "mode": "0o644"
+      },
+      "lib/QC_WebSocketClientPollOperationBase.qpp": {
+        "sha256": "bc952a2fbcaab6e2ba1aa8ad45c665318a5fd3c0319cc8e8150c4d91d0b62c96",
+        "mode": "0o644"
+      },
+      "modules/astparser/CMakeLists.txt": {
+        "sha256": "b87760271266c277255861a19d15d512f7d1aff26b03a10373411b270da2bf7a",
+        "mode": "0o644"
+      },
+      "modules/astparser/docs/mainpage.dox.tmpl": {
+        "sha256": "80b9721c4555eb40d9e7b06f2be13fb4d3e2c2995b39ed5064fa7e53d7f6867d",
+        "mode": "0o644"
+      },
+      "modules/astparser/docs/release-notes.dox.tmpl": {
+        "sha256": "8e53528fa081e75e99aea8284560a69ec6473b42aaca4579e0a7f4ede6530dae",
+        "mode": "0o644"
+      },
+      "modules/avro/docs/cookbook.dox.tmpl": {
+        "sha256": "90c77f8718f645e373531d0beffada133428bd9266fe1adc41f1300e02d79f6b",
+        "mode": "0o644"
+      },
+      "modules/avro/docs/mainpage.dox.tmpl": {
+        "sha256": "cdde9306faa4c3e1de49311836a75ddc29364984377e64b63a92378b068d1cc4",
+        "mode": "0o644"
+      },
+      "modules/avro/docs/release-notes.dox.tmpl": {
+        "sha256": "eb7268a0ccdc402ec85028f6951401bc9f804c5e8777da9c097b212b81e8274a",
+        "mode": "0o644"
+      },
+      "modules/dataframe/CMakeLists.txt": {
+        "sha256": "a9a594c739ad4f51e81c1115e4a37dc14ce3089239fe99602042172942fe3083",
+        "mode": "0o644"
+      },
+      "modules/dataframe/docs/guide-dataframe_arrow_copy_behavior.dox.tmpl": {
+        "sha256": "d168499f3e7b9e855c3b3127861d72ecdb070554fdd45479dcc1e0fb0416241e",
+        "mode": "0o644"
+      },
+      "modules/dataframe/docs/guide-dataframe_dataprovider_pipelines.dox.tmpl": {
+        "sha256": "9b640cf59e766cbb98ac949d8c702a636d18daec67ffbcc903bfff145ea05eef",
+        "mode": "0o644"
+      },
+      "modules/dataframe/docs/guide-dataframe_dense_columnar.dox.tmpl": {
+        "sha256": "74cc0e269232387448ae76cd0930916b0431433dede0098915c75de8f0b62984",
+        "mode": "0o644"
+      },
+      "modules/dataframe/docs/guide-dataframe_performance_positioning.dox.tmpl": {
+        "sha256": "6f69ea45cdbf7aecc26a20938c1e2eeb2ed6d4297f06d788a2dca60864446fbd",
+        "mode": "0o644"
+      },
+      "modules/dataframe/docs/guide-dataframe_typed_examples.dox.tmpl": {
+        "sha256": "f19335a8864e025be0a74e3b525c3371723dcfbc36af85146de49ee022318425",
+        "mode": "0o644"
+      },
+      "modules/dataframe/docs/guide-dataframeapi.dox.tmpl": {
+        "sha256": "9bba6e5f09cf08064f2e81f8444c53ed9b276a89be5ccaa39a89a85a2f042a25",
+        "mode": "0o644"
+      },
+      "modules/dataframe/docs/mainpage.dox.tmpl": {
+        "sha256": "4f705200c0e518758987edf40219daa64865232e6de00cff2cae7e80c09b2690",
+        "mode": "0o644"
+      },
+      "modules/dataframe/docs/release-notes.dox.tmpl": {
+        "sha256": "62f079aae4c304711dc85def3d896d03a3b4e664b33bd146376d046a2513070a",
+        "mode": "0o644"
+      },
+      "modules/i18n/docs/mainpage.dox.tmpl": {
+        "sha256": "d9acff94603e010db98565df725d5382dce4fc10185598703ce36547e3e068bc",
+        "mode": "0o644"
+      },
+      "modules/json/CMakeLists.txt": {
+        "sha256": "4be02b5056759259b28ddde535c893ad6ec9e567a69de4aeb361f1639e22915d",
+        "mode": "0o644"
+      },
+      "modules/json/docs/guide-jsoncppapisec.dox.tmpl": {
+        "sha256": "dd1f824218be1496a3339523898d63f0a5c0c218a0fe0949fa501083c3cec225",
+        "mode": "0o644"
+      },
+      "modules/json/docs/guide-jsonrpc.dox.tmpl": {
+        "sha256": "4c5d9c09017e7d3ae944188eaa760c633ac54f1a369467ec502fae33f46f28e0",
+        "mode": "0o644"
+      },
+      "modules/json/docs/guide-jsonserialization.dox.tmpl": {
+        "sha256": "1273916dbc25af813414938cc3ad0900b6542b9cbb0719f96cd2e1aff518d1df",
+        "mode": "0o644"
+      },
+      "modules/json/docs/guide-toonserialization.dox.tmpl": {
+        "sha256": "d91d58c41c18483f7696b5142318bf3f3be90ed655127e1612c86648b9b6c6fb",
+        "mode": "0o644"
+      },
+      "modules/json/docs/mainpage.dox.tmpl": {
+        "sha256": "9dd43a069d262713457b1df9c8fafb5d7070559a6d544ef40b5c125d30a71fc6",
+        "mode": "0o644"
+      },
+      "modules/json/docs/release-notes.dox.tmpl": {
+        "sha256": "be631a6d375d63fd2cc0cc0c491e5eecc3133a514137654c7d7d5f57a2644052",
+        "mode": "0o644"
+      },
+      "modules/json/src/QC_JsonRpcClient.qpp": {
+        "sha256": "46220db022ae7a820f3b6fbeedd2ee45809d9b1a7b38badd2978f87027194e33",
+        "mode": "0o644"
+      },
+      "modules/json/src/ql_json.qpp": {
+        "sha256": "4b5f08d0b2a0427aea55b3571667f8ca118b003f6a4281cae328a177048ef72d",
+        "mode": "0o644"
+      },
+      "modules/krb5/docs/mainpage.doxygen.tmpl": {
+        "sha256": "c1497225ecfa4795db5032a920c1b091ae2cdc86458d77b510e773c74d69f6f8",
+        "mode": "0o644"
+      },
+      "modules/krb5/docs/release-notes.doxygen.tmpl": {
+        "sha256": "ae4e5e334d88acd065aad392e6c97a342d46424284ac1b8fe33b0d58029cea32",
+        "mode": "0o644"
+      },
+      "modules/krb5/docs/usecases.doxygen.tmpl": {
+        "sha256": "7970250f55da2e97d4c413bc8ebced98ef16876292d071a4c5aa07da2673fd9d",
+        "mode": "0o644"
+      },
+      "modules/linenoise/CMakeLists.txt": {
+        "sha256": "916af4dc95c69246cd1b4e0bc898c5fb4db677b2a1b20216b612f2bd1fab84a2",
+        "mode": "0o644"
+      },
+      "modules/linenoise/docs/mainpage.dox.tmpl": {
+        "sha256": "2748c47e44608c961b01ab4257c50e00bc8e4849515b1b9a802aefadfa5f795d",
+        "mode": "0o644"
+      },
+      "modules/linenoise/docs/release-notes.dox.tmpl": {
+        "sha256": "605940f2e0661746804068da1a910753274a3b310028289431857f6f90209aeb",
+        "mode": "0o644"
+      },
+      "modules/linenoise/src/ql_linenoise.qpp": {
+        "sha256": "099fd9ccba0f987e470e6819bec8c1ac0eb94852dec200b526d26fea556319b0",
+        "mode": "0o644"
+      },
+      "modules/logger_bin/CMakeLists.txt": {
+        "sha256": "923348be3ffc13d63be65c12bde7cc4ba4a3a3d5c0385009038de67b6e74c3aa",
+        "mode": "0o644"
+      },
+      "modules/logger_bin/docs/mainpage.dox.tmpl": {
+        "sha256": "8ace01a92abd67b87fcb555ea31150703ae5c55fcbb0007157d15f03b0e87cca",
+        "mode": "0o644"
+      },
+      "modules/logger_bin/docs/release-notes.dox.tmpl": {
+        "sha256": "5deb45842dd1ec5289c9c1851dec335817334236f40c9d72f3ae7f5a2055565e",
+        "mode": "0o644"
+      },
+      "modules/ml/CMakeLists.txt": {
+        "sha256": "0d89e2c4116e3798d3c9ef3fb6a781938ae1e3f78d03583e4930b07c795d23c7",
+        "mode": "0o644"
+      },
+      "modules/ml/docs/guide-mlalgorithms.dox.tmpl": {
+        "sha256": "5ad77a0740d929ab7c4298575e3e08a820a3d00235173e376b97754d0423ecd9",
+        "mode": "0o644"
+      },
+      "modules/ml/docs/guide-mlchoosing.dox.tmpl": {
+        "sha256": "c9870330d722b47c5bfc7406512a241a6e4e45a70dba2a4aeda485b2d7e32ad0",
+        "mode": "0o644"
+      },
+      "modules/ml/docs/guide-mldata.dox.tmpl": {
+        "sha256": "e2960872f48fa83af1645509e9ab4f9220e972e94ccbc53fb9de17f14444bc8a",
+        "mode": "0o644"
+      },
+      "modules/ml/docs/guide-mlexamples.dox.tmpl": {
+        "sha256": "e00eab60f08aa1fbfd032f282d9f0b81909ce1f547a7f572618b450e2275f81c",
+        "mode": "0o644"
+      },
+      "modules/ml/docs/guide-mlpersistence.dox.tmpl": {
+        "sha256": "e15f918e6e5f3f3a9ad733240c55a0fa97de472a57b27aa75e7ae149d6f2ef36",
+        "mode": "0o644"
+      },
+      "modules/ml/docs/guide-mlthread.dox.tmpl": {
+        "sha256": "dfcc8721cda9fd83d8f1e8c2a478e62d306c1a797b13964896c3109e287b6396",
+        "mode": "0o644"
+      },
+      "modules/ml/docs/mainpage.dox.tmpl": {
+        "sha256": "bfe8dbbe91e643c642e3bbdad575378ad3e8d3c6d9dc143ce2bf2a008748819a",
+        "mode": "0o644"
+      },
+      "modules/ml/docs/release-notes.dox.tmpl": {
+        "sha256": "960dc991d284cbb3786cbc40f25b4e6ee80f142ebeb04df24a3db8d2cab735fd",
+        "mode": "0o644"
+      },
+      "modules/ml/src/QC_LogisticRegression.qpp": {
+        "sha256": "66619644992748a3004e1b05e559a4ef86eee72b9d49a4732a8b8fa501fb9e8d",
+        "mode": "0o644"
+      },
+      "modules/ml/src/QC_SparseMatrix.qpp": {
+        "sha256": "32d0648df012e7682802d49116913113138afa855b5c9445dc90fab0323c386f",
+        "mode": "0o644"
+      },
+      "modules/ml/src/ql_ml.qpp": {
+        "sha256": "3b6735c83fe60188c60f6eea8abfa7cc97cfc44c35423e1b10adbca72e97009b",
+        "mode": "0o644"
+      },
+      "modules/mongodb/CMakeLists.txt": {
+        "sha256": "aa316263e2dee83d399eabec7d4276d55c37fce57331dc749486cf1a4293cd8b",
+        "mode": "0o644"
+      },
+      "modules/mongodb/docs/mainpage.dox.tmpl": {
+        "sha256": "42786b5b4bb2d68c97b5bb7c391cb2116a298a24fa3c61f98409c7610394d96b",
+        "mode": "0o644"
+      },
+      "modules/mongodb/docs/release-notes.dox.tmpl": {
+        "sha256": "e4cde596536ed950e3cb79f557069636eadbc4e3cd8f0deefac4cc56d1ee797f",
+        "mode": "0o644"
+      },
+      "modules/ocr/CMakeLists.txt": {
+        "sha256": "f9cfe327860743d0a6b7e3583c520fcfde559139b5de085452940e60c4b505b1",
+        "mode": "0o644"
+      },
+      "modules/ocr/docs/mainpage.dox.tmpl": {
+        "sha256": "71ada35765e3869ed31e455ae840f534e5d79d30cf153a1f4318e9e5381478a8",
+        "mode": "0o644"
+      },
+      "modules/ocr/docs/release-notes.dox.tmpl": {
+        "sha256": "74ca3e75133c756f099c99f8bba564a2899a4dc0f9f0818f640313afb9b14bf7",
+        "mode": "0o644"
+      },
+      "modules/protobuf/CMakeLists.txt": {
+        "sha256": "728701cfca529de7a4c6ce9ca5e407f23ac3cd55632bc077fc74610fd8250239",
+        "mode": "0o644"
+      },
+      "modules/protobuf/docs/guide-protobuferrors.dox.tmpl": {
+        "sha256": "9e0d071a9f0f4887a588915c4e9289c61dd972204e2774f214c8cb691a918a3e",
+        "mode": "0o644"
+      },
+      "modules/protobuf/docs/guide-protobufexamples.dox.tmpl": {
+        "sha256": "2e8c2a2723306c281c30eee683c2aeb63526561ae36c8ea52f8276446b08d928",
+        "mode": "0o644"
+      },
+      "modules/protobuf/docs/guide-protobuftype.dox.tmpl": {
+        "sha256": "d851abd2244f7ae74523cfb07e1adbf1ffbe7f60147ca238dfba7a99802541a0",
+        "mode": "0o644"
+      },
+      "modules/protobuf/docs/mainpage.dox.tmpl": {
+        "sha256": "42c1d5fcae70b4c0987f90a915912aea5943f02ba08be7eab08bb0408c4de9d5",
+        "mode": "0o644"
+      },
+      "modules/protobuf/docs/release-notes.dox.tmpl": {
+        "sha256": "bb5e3492d9d6b73f73907cc150953a5900a7c46ab8c4bcaada4f6665b3269168",
+        "mode": "0o644"
+      },
+      "modules/reflection/CMakeLists.txt": {
+        "sha256": "90e3c330ff798942fd9a33097aed25a8327241f915331caa5bfe85e8b288440d",
+        "mode": "0o644"
+      },
+      "modules/reflection/docs/guide-reflection_examples.dox.tmpl": {
+        "sha256": "bd1c1524f6fa43abbb4b67e269937de9df24b004d87404da494e3d3a5798d54f",
+        "mode": "0o644"
+      },
+      "modules/reflection/docs/mainpage.dox.tmpl": {
+        "sha256": "73671206aa7c8e2afdcc0fd6afeb7466cea1485de03130c191ad3c0b311e3c60",
+        "mode": "0o644"
+      },
+      "modules/reflection/docs/release-notes.dox.tmpl": {
+        "sha256": "032092f1346dc43c1a2215da780bd260cee553aa3dfac01dd406516238460975",
+        "mode": "0o644"
+      },
+      "modules/sshutil/CMakeLists.txt": {
+        "sha256": "1e199b0e2ec25903d33615ff0f2d854e21fd1d8c87fd5da4427cafff88652fc9",
+        "mode": "0o644"
+      },
+      "modules/sshutil/docs/mainpage.dox.tmpl": {
+        "sha256": "6a7ba8f329da50ca3c3609fddab7d6bbba9bd57e514867b965ee508c6d8373fd",
+        "mode": "0o644"
+      },
+      "modules/sshutil/docs/release-notes.dox.tmpl": {
+        "sha256": "8a2a47566222147ba6b87cc5d85fc85204edc2d43c600e936f6c6d7c9fbe1127",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/CMakeLists.txt": {
+        "sha256": "7fd8458979f505c80d3a2ead0170993797aa75e4439fd4322d44cf50ae98391f",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/docs/guide-tokenizer_advanced.dox.tmpl": {
+        "sha256": "74d20260f34e93d5cfcf4d4a9645df5962fd50f3a7be48afae59fc9cbb0b1fdc",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/docs/guide-tokenizer_api_summary.dox.tmpl": {
+        "sha256": "606dcc9b5131fb6c5797d59bb0394ddc5d5a65d61b1f126fd45f49a3bf27f8f1",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/docs/guide-tokenizer_basic.dox.tmpl": {
+        "sha256": "f9355d45603c84a4982e61577ac1824ad2938101ff157af8bd5f842248f3f16a",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/docs/guide-tokenizer_batch.dox.tmpl": {
+        "sha256": "7b152054341f803d97e33ba6ededae35d0aa31c7239d52e2817857e761073b9f",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/docs/guide-tokenizer_decode.dox.tmpl": {
+        "sha256": "f485e82f23e3f59e838700bc9087472c3bf18f9d7648f5d325a19ba69cd2d08b",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/docs/guide-tokenizer_encoding_result.dox.tmpl": {
+        "sha256": "4876f5cd5889d9ad12de10d5fa30666c6a59b91cf3478844e97a0269ae76c01e",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/docs/guide-tokenizer_model_input_result.dox.tmpl": {
+        "sha256": "ef62f522bf5056f47275d89f8bc1e5040d7b18d1a9ab4a0b001af8a036004e61",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/docs/guide-tokenizer_model_inputs.dox.tmpl": {
+        "sha256": "915ace215d89a09eeec6ff6327d031ad746a593c2bcc6e3f4deb28c16a149886",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/docs/guide-tokenizer_models.dox.tmpl": {
+        "sha256": "365d465685bda4d3ee70f4b9d6de57363e1e619bfdcec5bd07b334b164ff3608",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/docs/guide-tokenizer_offsets.dox.tmpl": {
+        "sha256": "a398ee1f2b795a7e64bbf35f7327c122fecb92cc69e3c0bb0765d0be7622c824",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/docs/guide-tokenizer_sentence_pairs.dox.tmpl": {
+        "sha256": "dfc7c063aceb5ea28e7f94610553bd12b8e425e1e84b2584ca8169793aba7c8f",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/docs/guide-tokenizer_vocab.dox.tmpl": {
+        "sha256": "4400dfb3a8b4cf53b75efa0a2fe5cc5a6a76583329efc2eac7a9370a91845e6a",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/docs/mainpage.dox.tmpl": {
+        "sha256": "3e69079e8c16cb82e73b145764d403018707cefcbd38f1bf7f05b38217ab9217",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/docs/release-notes.dox.tmpl": {
+        "sha256": "1e8315467f866d3830269f2d5b0355cf8fc050356e04f17ee34e5c75df179d34",
+        "mode": "0o644"
+      },
+      "modules/tokenizer/src/QC_HFTokenizer.qpp": {
+        "sha256": "2732ef1fd7a1f3ccf0053fc31f08c584f04b90a5fa62e0ccd878bdfc8c98012c",
+        "mode": "0o644"
+      },
+      "modules/yaml/CMakeLists.txt": {
+        "sha256": "287ae924b81ef9433dd25116068acaa171151b4e68f2ddda28c5462b0e459aa8",
+        "mode": "0o644"
+      },
+      "modules/yaml/docs/mainpage.dox.tmpl": {
+        "sha256": "3eda48205a4d56c151af78b71ef8028d80488c5f3bdbcc32395e90026a3912cb",
+        "mode": "0o644"
+      },
+      "modules/yaml/docs/release-notes.dox.tmpl": {
+        "sha256": "62b05fefa9bb6367ef1d4b526def673eb16a73f57ce72f7ceea7ac7342bc62ed",
+        "mode": "0o644"
+      },
+      "modules/yaml/src/QC_YamlDocumentIterator.qpp": {
+        "sha256": "0f1c0f75455b7447e37694875424dcaec8679f5a1e34459e91a4ec50565b2f22",
+        "mode": "0o644"
+      },
+      "modules/yaml/src/QC_YamlSaxParser.qpp": {
+        "sha256": "1a349b089fc219755db7f91185d34aa76e7e834d6add80b5472fae123420c8b6",
+        "mode": "0o644"
+      },
+      "modules/yaml/src/QC_YamlStreamWriter.qpp": {
+        "sha256": "9072f5e354ef84d4077076c2048ebf81eae662ba281bf6ecfd8b15266b3558dd",
+        "mode": "0o644"
+      },
+      "modules/yaml/src/ql_yaml.qpp": {
+        "sha256": "9452af0703e0bdd17551882c12c6deb90661591f3516ace62af116df483d85f2",
+        "mode": "0o644"
+      },
+      "qlib/A2aClient/A2aClient.qc": {
+        "sha256": "7cbefa97c3595f437888672350b53c6a7a33bf592f332573d56f447ecc111805",
+        "mode": "0o644"
+      },
+      "qlib/A2aServerHandler/A2aServerHandler.qc": {
+        "sha256": "801bc4c06df68cfb9736fcd2b800690324c99aff62d91ef2ec585f3c4e77431b",
+        "mode": "0o644"
+      },
+      "qlib/AgUi/AgUi.qm": {
+        "sha256": "9ccf1c710aa42a5a3228bfa19575fec836f69496db93d7ad068dfe38e01a3c25",
+        "mode": "0o644"
+      },
+      "qlib/AnthropicDataProvider/AnthropicDataProviderCommon.qc": {
+        "sha256": "0668aad6696d3838998d4df3bd358795c5295a05e79a6c89060833d9127ab91a",
+        "mode": "0o644"
+      },
+      "qlib/AnthropicDataProvider/AnthropicStreamEventDataType.qc": {
+        "sha256": "2f159ab7d8ec1913462b7bdb14528d74aede12389c883e743b316c47fbb8b3eb",
+        "mode": "0o644"
+      },
+      "qlib/ApolloDataProvider/ApolloDataProviderBase.qc": {
+        "sha256": "606a0e844265bc861582e46a4a55db7d3cfd6bf2d455991c56d71c30cb0480be",
+        "mode": "0o644"
+      },
+      "qlib/AssemblyAiRestClient.qm": {
+        "sha256": "e764cd7f2e0791ab83120ffc5246afdb81987d4af7e7aee32f3e85a8576821db",
+        "mode": "0o644"
+      },
+      "qlib/AsyncSocketIo/AbstractStreamContext.qc": {
+        "sha256": "8114889468de5fc54630108802c051878d780ffd8b1c1ff4fb06a20bcbb58692",
+        "mode": "0o644"
+      },
+      "qlib/AwsEventStream.qm": {
+        "sha256": "0fb0582acb359886f49cf5b4978e2fadb0b704236f2598f93a07181ccd4fd75e",
+        "mode": "0o644"
+      },
+      "qlib/AwsRestClient.qm": {
+        "sha256": "b8a2f3696cad5f6078fd76a8326185900e0f54a12891cd9763887a004b9243ff",
+        "mode": "0o644"
+      },
+      "qlib/AwsRestClientDataProvider/AwsRestClientDataProvider.qm": {
+        "sha256": "4b5bee6998da8181227d6409c2c4edffc35bddcd5aa7cddf339c0a2ebcd348ca",
+        "mode": "0o644"
+      },
+      "qlib/AwsS3DataProvider/AwsS3DataProviderBase.qc": {
+        "sha256": "20127524a7d6abee17a1355605b7f71ad6c0bbffcaa439efdec79c4d57c82926",
+        "mode": "0o644"
+      },
+      "qlib/AwsS3DataProvider/AwsS3DataProviderDefs.qc": {
+        "sha256": "4c8c0b142cd2e6c02c0e17b391f46a8f28de42385ef122b1248ea691920f5585",
+        "mode": "0o644"
+      },
+      "qlib/AwsS3DataProvider/AwsS3FileLocationHandler.qc": {
+        "sha256": "37d8bde528ec12500c010611f3f4b4a3ab1b9ed0f4e9f515e49ff8a85a72cce0",
+        "mode": "0o644"
+      },
+      "qlib/AwsTextractDataProvider/AwsTextractDataProvider.qm": {
+        "sha256": "5057d057ff92e2ed2732c028304fe7d871c385bbfe8b84acc8f2d427716227df",
+        "mode": "0o644"
+      },
+      "qlib/AwsTextractDataProvider/AwsTextractDataTypes.qc": {
+        "sha256": "e4fa104b8868cbef132a05b86d8dc5464cc937d53ff07eabeba570ada1c8f7c9",
+        "mode": "0o644"
+      },
+      "qlib/AwsTextractRestClient.qm": {
+        "sha256": "45d830ea7362a155eacfcef8f951bcfc77b3ce9488c4a5448a876ebafdeda757",
+        "mode": "0o644"
+      },
+      "qlib/AzureAuth.qm": {
+        "sha256": "20c622bf660a3bace11d331e40e8de0b824562686d658240c958b6742f41a59d",
+        "mode": "0o644"
+      },
+      "qlib/AzureDocumentIntelligenceDataProvider/AzureDocumentIntelligenceDataProvider.qm": {
+        "sha256": "4b6b28d7b10a9b93bfd68b2f3fe807c4722114e9fc989d89ecb5cc5188b79957",
+        "mode": "0o644"
+      },
+      "qlib/AzureDocumentIntelligenceDataProvider/AzureDocumentIntelligenceDataTypes.qc": {
+        "sha256": "7db358d2354f82fe2359cea87f17e481ef0a44ddb9944264ceea1dd21d70ceee",
+        "mode": "0o644"
+      },
+      "qlib/AzureDocumentIntelligenceRestClient.qm": {
+        "sha256": "aad6a9826b7fe18be75c2b32743880d1f57ca8cf126e95607c98b0368fbf45b3",
+        "mode": "0o644"
+      },
+      "qlib/AzureOpenAiDataProvider/AzureOpenAiDataProvider.qm": {
+        "sha256": "7e82aeb0975c3d488a95edc5e4cef8d67af1ee0cdf3b7bea9ffc80c74b863e71",
+        "mode": "0o644"
+      },
+      "qlib/AzureOpenAiDataProvider/AzureOpenAiManifest.qc": {
+        "sha256": "b2c541af08e815f1ac25196cf0a147df6429b72964244f2dac14fc90d2e4dc64",
+        "mode": "0o644"
+      },
+      "qlib/AzureOpenAiDataProvider/AzureOpenAiSchema.qc": {
+        "sha256": "82b1c26ae6f707b585127c3e76b5607b10f7178b10c87b2bc3fd5d6e15d5ac5b",
+        "mode": "0o644"
+      },
+      "qlib/AzureOpenAiRestClient.qm": {
+        "sha256": "3080deb880e16501e95f1c704d2a5f1b24e6cc826edadeade1819b9e0660bfda",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerAddInventoryProductDataProvider.qc": {
+        "sha256": "d78a4a5e4098ff43bc5e43bc2406a21727b600d630e0ab06049fb584d6b704e7",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerAddInventoryProductRequestDataType.qc": {
+        "sha256": "d580f6f6d94f73b8e3a3236b996789055239f1b41442994335c7226c5f0ced56",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerAddOrderDataProvider.qc": {
+        "sha256": "d549bf901a77347ee1ea9ae4bf5297b0abeb857f0b4e2bc417c879d84b9140b8",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerAddOrderProductDataProvider.qc": {
+        "sha256": "c608a76185d848e340a59d531cd3e0b09be0853a5767a8bba21496730a480d2f",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerAddOrderProductRequestDataType.qc": {
+        "sha256": "ebd1a29ae450353ba0b991f9cc6826e9a617fcbce599a5b9ad56046e6be54896",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerAddOrderRequestDataType.qc": {
+        "sha256": "5a5b7a83d63600b89494ea56a4a1e4bebd74837035da2242757d9ac840ab4f44",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerAddOrderReturnDataProvider.qc": {
+        "sha256": "27b812995ce47b1c9c9c13a89843e689e160c4aa243f7d373ec286c00ccbc878",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerAddOrderReturnRequestDataType.qc": {
+        "sha256": "e6ee81c02fbacb3950b3fef5e90f7902762612db94bd1ebe36e2b92ec9b7318e",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerCourierAccountsDataProvider.qc": {
+        "sha256": "42441af6f03a000c85547e7f3d5858f09996026fa12efe3a5b5b2f3bd07f4c2d",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerCourierFieldDefinitionDataType.qc": {
+        "sha256": "aec236bdedd6aebae849c6ebf8579e09a975c90b2695e19948cb9cd1f979b5ff",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerCourierFieldsDataProvider.qc": {
+        "sha256": "75ecf65977fc31fb75a194a4872a2ad73f7dc0cdbdd1840011e4774e7bcaafb3",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerCourierLabelDataType.qc": {
+        "sha256": "f00da0e904c083d8cf8fa8c77e2dd033e78a89052929d14bc7a330c1a1c02fc7",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerCourierPackagesDataProvider.qc": {
+        "sha256": "0f44f9ad55c86609c8f21bf0410456d1851b9e33fa92e2ca08de1e4555e5dd8a",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerCourierServiceDataType.qc": {
+        "sha256": "117c5446f3fbb9623790fbeecce913b8b05fa1f74552974b3d25aec9fed81ae4",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerCourierServicesDataProvider.qc": {
+        "sha256": "25f118d2b6ad4cf817a7cc2c9ba2e8c8439a233d079e8e871cf2cb25aaf565bc",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerCouriersDataProvider.qc": {
+        "sha256": "51d95a14cdee5afce0ec12ae2dc9c97576e7d20f329b21e0b5819ff7f30c1e45",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerCreatePackageDataProvider.qc": {
+        "sha256": "95c7612c9f6e4aa5cc0101acc1b9e7f9e9ea0f15107aa39480b7ffe1617f1dae",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerCreatePackageRequestDataType.qc": {
+        "sha256": "a15bff8218ea0fcfa24c65d7b5d30db36a2d8c125e1e8e58dd94105c20460fe8",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerDataProvider.qm": {
+        "sha256": "cf80e73f189623c0b924aa2baf58ea99032f53d2541e40b556bb7f4b98370c6c",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerDataProviderBase.qc": {
+        "sha256": "95bde7e1ea6a1e70adcdee4ff2ab53f214790733d7c1e2e98cc8800d98b62148",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerDeleteCourierPackageDataProvider.qc": {
+        "sha256": "0944bb602f3d57006a4474b69bce9cf53667375330921c336013071e81bdc99b",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerDeleteCourierPackageRequestDataType.qc": {
+        "sha256": "66a5e6a04d1900d37e5d799bd3b4eb9551d528fbfb184be9e0fbbcc50485fb72",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerDeleteInventoryProductDataProvider.qc": {
+        "sha256": "cea1745b9aa867ff45d01936bd82363f08ed55b3f4339005b40d19a7d66c5fea",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerDeleteInventoryProductRequestDataType.qc": {
+        "sha256": "c628c276a62eee2df925556d84d7720b038ddaf86b8023579ed16c319d849ec2",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerDeleteOrderProductDataProvider.qc": {
+        "sha256": "efbbe54183853f93a485b17d5460deeed0d2be526669e96e4a348bcaea658ea6",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerDeleteOrderProductRequestDataType.qc": {
+        "sha256": "3fbe23b584cbccec73d1e3964ed9bf3aa28b082d5f8d16e71a59e1bfdf250bf6",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerDeleteOrdersDataProvider.qc": {
+        "sha256": "692c92879fc8e78f39256c2001ff5b72eacac6fc97adcc7022dd2c3ac2b107e6",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerEanAdditionalDataType.qc": {
+        "sha256": "599400188f891f34dd79bf00a014444385115facf62757fb2acd33ea60c0aaad",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerEventsDataProvider.qc": {
+        "sha256": "5ee9c47c04cca41fd074257ef15c86f986ffd830e5ab566fd3fde96ec311cbe7",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerGetLabelDataProvider.qc": {
+        "sha256": "8f92cb8f326796c385174c7f90ba299a35db604b4426897c76119ad89a404537",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerGetLabelRequestDataType.qc": {
+        "sha256": "871f512d598fd315f9b351c4b52da02036a26ce8bbeca496bd0442180fdb900b",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerInventoriesDataProvider.qc": {
+        "sha256": "105233591aa0babe748c1e9f69d4bf44480d2af352f0fb90d3731bdbd0ffb954",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerInventoryCategoriesDataProvider.qc": {
+        "sha256": "e52c65508ff60ddecec25b33ab3e06f4225a015daa666bc11b24c0e1964d8ffe",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerInventoryCategoryDataType.qc": {
+        "sha256": "9de09d69a7c13a2189566fe00a8cbebab1fabd6529a16a554521b6d23c7bee27",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerInventoryManufacturerDataType.qc": {
+        "sha256": "4e4a245b68336dc655f58c2790ba4018962f90d3150d915344d9f4ce775b56dd",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerInventoryManufacturersDataProvider.qc": {
+        "sha256": "8ffb59842b051e4b2c93640b28a3b00830d90b8cd425105fc4a20eaacfb61a21",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerInventoryPricesDataProvider.qc": {
+        "sha256": "e786ed777fef297e4351be7165de9ddbf2f71d90d82cfe40e2908ca545dbe7f3",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerInventoryProductsDataProvider.qc": {
+        "sha256": "84748e5cddb5e7384775e27b3d839351281705b11262ebff35f0d1c8f5a3f324",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerInventoryStockDataProvider.qc": {
+        "sha256": "27641384350fc6d2af0a2c282ba4263e7720a82c0834e2357eeefe5ce6059891",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerOrderReturnsDataProvider.qc": {
+        "sha256": "d2f12a872da7273ddd052cc684d23538757b73154b163979986abd89bdd66e21",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerOrderSourceDataType.qc": {
+        "sha256": "e7bdd6a81e13accb0bfcd944714863fe367dbfde7572088618aa13ed15d99654",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerOrderSourcesDataProvider.qc": {
+        "sha256": "547d7743b36241c7108dd3154c9335529d1f677dc25db80f0714e2d49261a267",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerOrderStatusesDataProvider.qc": {
+        "sha256": "5c949fea02e60ff28f6ad2213cdaba61d1bb38a05151a188babb8dac8ee0cde0",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerOrdersDataProvider.qc": {
+        "sha256": "d296ed1e7a8395d9097f5db55724d743c6b74c8e4d4e410c3abdd0aa646f3934",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerSetOrderFieldsDataProvider.qc": {
+        "sha256": "81a2aeeba888342e4f10da36fab821578063ed1f1590ca377a2ae03d943b6761",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerSetOrderFieldsRequestDataType.qc": {
+        "sha256": "d912ffef3f3cf197dceb3a9b7fea9630aef7499ed1ec261d030f898cd751aad7",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerSetOrderPaymentDataProvider.qc": {
+        "sha256": "b12aa288201d39fd060a5c5dc33377677ba59b46df74a0217f4fb8c685d056b7",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerSetOrderPaymentRequestDataType.qc": {
+        "sha256": "168441410d7146f1f0f99847101081db6597e67a330f417ba187479a72f44299",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerSetOrderProductFieldsDataProvider.qc": {
+        "sha256": "b419dc1e0f63b3e1a3db195ae17fcd790e88307fc62cb2ee70ae6616c9d81106",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerSetOrderProductFieldsRequestDataType.qc": {
+        "sha256": "bfa887b6ecfdbfe598719ecc028579012abb8f375338723f60db187507e82708",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerSetOrderReturnFieldsDataProvider.qc": {
+        "sha256": "6f978b37ef1bbd7a251ed478fd96897b229aa4cea91574206694eb6b2b460cc8",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerSetOrderReturnFieldsRequestDataType.qc": {
+        "sha256": "e67f8428e1e4d38fc5723d1aa117143d513d26670aeb2577d02fa9a595ccfc66",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerSetOrderReturnRefundDataProvider.qc": {
+        "sha256": "50b28073b5f0acda7081e692e41177439ac9c78d3634ca3318c22a737323877b",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerSetOrderReturnRefundRequestDataType.qc": {
+        "sha256": "50347c7123850bd37a3128f55ee1dfe0e0b4a9639ae614b8418da07d140e13ee",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerSetOrderReturnStatusDataProvider.qc": {
+        "sha256": "6581e3307003f1664f7ac964cb53a93f80a3346254ec3f2c02841fc73952d588",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerSetOrderReturnStatusRequestDataType.qc": {
+        "sha256": "4b3b6132577eecbddcd0fe5e880392993172fdfb703717624e94553f1b62cb88",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerSetOrderStatusDataProvider.qc": {
+        "sha256": "5f2506bff9d2be763140251531da8f80fea2d0d7f7f86e0235a3c14ec1a51b39",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerSetOrderStatusRequestDataType.qc": {
+        "sha256": "33958d77d3ce8471244ec5cf0652d1f69772c04ab7777608db3df0fccee80d85",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerSuccessIdResponseDataType.qc": {
+        "sha256": "6b2dfddb6eb4aeaab7728b32b063a72ce1440610ba6c26e161710b58f357b718",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerUpdateInventoryProductsPricesDataProvider.qc": {
+        "sha256": "7179cbbecec51ea142c6f93120fd98c7702d1f6dbe7049ed2624f40d8e0c3d5a",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerUpdateInventoryProductsPricesRequestDataType.qc": {
+        "sha256": "7954ed1a924cab093dccb7f6f9fee48a7f226396c1072647a3a5d4dfd68621c5",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerUpdateInventoryProductsStockDataProvider.qc": {
+        "sha256": "3c9a8bf48e66f69bbc944a19a8b8f2f7b1e6439de1182e333bbfabe6106eecbe",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerUpdateInventoryProductsStockRequestDataType.qc": {
+        "sha256": "a2f97b0fbdae4e979061c2869527ce6af88de5fa7cc301cb44b3d3ac3574dc09",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchBlacklistAddedDataProvider.qc": {
+        "sha256": "869c6ff2e1c67c9c4dc3f64ce6a9accb82a386db716d707406403f6c9704135f",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchDataProviderBase.qc": {
+        "sha256": "44599e33d7d2f86d4a3f3c2a31caccc48076b76079ec80af6f104535c8e25ebf",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchDeliveryDataEditedDataProvider.qc": {
+        "sha256": "51d5706664fd630fe6fd41afc5917d65b587db7c269a81a1741676a39bdc4fe2",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchInvoiceDeletedDataProvider.qc": {
+        "sha256": "fdfd2f8307a762efe5f8d50b2c848aaa8d1cb78388e65c8e0975a379e08f81d8",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchInvoiceEditedDataProvider.qc": {
+        "sha256": "60a27540116900a2905fd60b8174d0d22d99624d6c33be707f15e62b7def5d6e",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchInvoiceIssuedDataProvider.qc": {
+        "sha256": "837a9980a58154dc7805c0481049abe5f169e6910b1a42c069501ac2fa4dee06",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchOrderCopiedDataProvider.qc": {
+        "sha256": "9fbb52c23bd6f7a2aada68ddeb4eae2e893daf19263f0a70536cd99c99bf5abd",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchOrderCreatedDataProvider.qc": {
+        "sha256": "1e23b7370c8c4d9d72602a10f277d0524cc7b0b9753b652dcbd0faa08d2b3b1a",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchOrderDataEditedDataProvider.qc": {
+        "sha256": "c2805ad62b5f621d27f31f3bf0bd79891f54586697c90afced1a054e42a04202",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchOrderDownloadedDataProvider.qc": {
+        "sha256": "dfe4bdfcf6b6d195138df18908a69aa0ce5d40467aa80889dd07d438b45f5127",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchOrderPaidDataProvider.qc": {
+        "sha256": "9d32e49ab509f6ed267fdab2fac345de960f38d7ffd04ff635183eb76bfedf95",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchOrderProductAddedDataProvider.qc": {
+        "sha256": "d92d8092772b135d3bd482239e30828b64111b548ca203a84a8112412bc37443",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchOrderProductEditedDataProvider.qc": {
+        "sha256": "ed408d88b6e04a048f4b0a57cae9a5072ba78b6c091e623c98e09c6923c5d8f6",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchOrderProductRemovedDataProvider.qc": {
+        "sha256": "18a74b6354f440bc461dd78ef253824b09d4ba73f33936459ef8f73e5cb94385",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchOrderRemovedDataProvider.qc": {
+        "sha256": "9d1a81338bbcbfc6e373e4ea82ffe4cdef7b2752f2197f0a9db5d1976566501d",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchOrderSplitDataProvider.qc": {
+        "sha256": "c287db0a978cf620d90891a1904b7b760063c5876affa6495dee3cd4d0d233e1",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchOrderStatusChangedDataProvider.qc": {
+        "sha256": "7d9ea7f3333ff17f6d14ce60f4d3df084383eec2fcddf7e4ee37c4c71d7a579c",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchOrdersMergedDataProvider.qc": {
+        "sha256": "2d6284f1480a429a2f523c1a3db9e1d8630d3259c168b52e3d562d904e152959",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchPackageCreatedDataProvider.qc": {
+        "sha256": "d9f1515650fa7105015d2245a43c7260094d622a90bed5f97490416841617ec8",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchPackageDeletedDataProvider.qc": {
+        "sha256": "3a94051d2b2c63f29f892674b4b9a186d401b46ba8dd13184a7b1ccda4f1ec28",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchPackageStatusChangedDataProvider.qc": {
+        "sha256": "4f01754eae31bb2a8154a667c38a24e0ff4b27444c86b2d8c85b97175625ebb7",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchReceiptDeletedDataProvider.qc": {
+        "sha256": "7524fb3310d37151be4556f17826d7e1def147ae698e9065f08978fdb56080af",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerDataProvider/BaseLinkerWatchReceiptIssuedDataProvider.qc": {
+        "sha256": "c862838d6ffacf0bf27344c219a58452733429bf8149532f9ec115292e01e6d0",
+        "mode": "0o644"
+      },
+      "qlib/BaseLinkerRestClient.qm": {
+        "sha256": "9c5be781f8bccce0064bb815b648571a99bc4fc533630d4c01a5a6347be56148",
+        "mode": "0o644"
+      },
+      "qlib/BedrockDataProvider/BedrockDataProvider.qc": {
+        "sha256": "fd42d098413d849744163300f20e1af528d00ca525ecf40ddf561b79cc816cd3",
+        "mode": "0o644"
+      },
+      "qlib/BedrockDataProvider/BedrockDataProvider.qm": {
+        "sha256": "23a02707667349e9d1c20d8fadae7dd98cb1cabc0e2dae887fac9d6ea230df9e",
+        "mode": "0o644"
+      },
+      "qlib/BedrockDataProvider/BedrockDataProviderCommon.qc": {
+        "sha256": "a5cb3abe3e1aa009007625f4dd5a6db81066eeffcb4b086cd53d54c1d78ddd23",
+        "mode": "0o644"
+      },
+      "qlib/BedrockDataProvider/BedrockSchema.qc": {
+        "sha256": "f5221aeeda2b1fed678d9344987b18501c97ba03d77703e4591dd0cd24d6f52a",
+        "mode": "0o644"
+      },
+      "qlib/BedrockRestClient.qm": {
+        "sha256": "ab32f8ef88cbf6f7006e4c73ce222c31ffe3296272365326dbd036d0105b40df",
+        "mode": "0o644"
+      },
+      "qlib/BflDataProvider/BflDataProvider.qm": {
+        "sha256": "c680529e6f748e910007e48ba36df84a14a27e7ada1cbdbfcf869e475f2cd440",
+        "mode": "0o644"
+      },
+      "qlib/BflRestClient/BflRestClient.qm": {
+        "sha256": "ad11998139e2002261cc9d6fdd38f6821777804f5ab23530de7dc2026778097d",
+        "mode": "0o644"
+      },
+      "qlib/BgeM3FastApiDataProvider/BgeM3FastApiDataProvider.qm": {
+        "sha256": "fe40849f9583d1c805bba0469e773898172ed63f5e1fb104f011ad05d70bafd8",
+        "mode": "0o644"
+      },
+      "qlib/BgeM3RestClient.qm": {
+        "sha256": "ba879fc8071148bdc91c447e010638fcf8d2e1da1946a967c8d3b5294ee54b8f",
+        "mode": "0o644"
+      },
+      "qlib/BigCommerceRestClient.qm": {
+        "sha256": "85c3e0d31e4e9305dcb50c89c55a1714cfe374bea79baff59a9cc5cb36aa0512",
+        "mode": "0o644"
+      },
+      "qlib/BitbucketDataProvider/BitbucketCodecs.qc": {
+        "sha256": "5465cc68758261c55935649b6f001bbaa8e34828adc7dae50d78d6502913b88e",
+        "mode": "0o644"
+      },
+      "qlib/BitbucketDataProvider/BitbucketDataProvider.qm": {
+        "sha256": "7f5e904a041726e5307ea8637f7f725538de314d4ba39fd0187259c13bd41e8d",
+        "mode": "0o644"
+      },
+      "qlib/BitbucketDataProvider/BitbucketEventDataProviders.qc": {
+        "sha256": "36db65f3d79d2626a871600e477e4755294d48eadad242a9162b40db08025466",
+        "mode": "0o644"
+      },
+      "qlib/BitbucketDataProvider/BitbucketManifest.qc": {
+        "sha256": "079baffdbaf54129e7599a57c57a2bf30f00a8578495325a0992c809992820a9",
+        "mode": "0o644"
+      },
+      "qlib/BitbucketDataProvider/BitbucketRecordTables.qc": {
+        "sha256": "065d1ad0c8e9af6690319e7ab0b29d6e5a2ee58d9f10dad953e37bfd9d8cc25d",
+        "mode": "0o644"
+      },
+      "qlib/BitbucketRestClient.qm": {
+        "sha256": "a6c590641a2547af79c59068a856af842fa996c0a025dc2eaea6c681f0d5d6d7",
+        "mode": "0o644"
+      },
+      "qlib/CdsRestClient.qm": {
+        "sha256": "b36814173c407b5c63c17d574c580e91fb001fc52982dfff37b2297d5785a780",
+        "mode": "0o644"
+      },
+      "qlib/CdsRestDataProvider/CdsEntityEventDataProviders.qc": {
+        "sha256": "83324bbfa2e59e591df539dc145ba2b141be4e91c46ad5e5e70e1eda696a3c9f",
+        "mode": "0o644"
+      },
+      "qlib/ChromaDataProvider/ChromaDataProvider.qm": {
+        "sha256": "adc321c4b2ae0c7fdbb0085d17d122bb137565d45673ff61cc08d162d21867bf",
+        "mode": "0o644"
+      },
+      "qlib/ChromaRestClient.qm": {
+        "sha256": "e93b5c5bb1f246b86a4ed247f9f6662308a1e9a5ab71cc510ecb678d0b13fcc8",
+        "mode": "0o644"
+      },
+      "qlib/Cin7CoreDataProvider/Cin7CoreDataProvider.qm": {
+        "sha256": "dc157c6dd9b040f5e8e2e469f96c4392f1ea89bd44889844bd5e315279baa9ab",
+        "mode": "0o644"
+      },
+      "qlib/CircleDataProvider/CircleDataProviderFactory.qc": {
+        "sha256": "f1099135253d5321756b374bd24dca0b1ff40452f000fed5650761c2232e8888",
+        "mode": "0o644"
+      },
+      "qlib/ClickFunnelsDataProvider/ClickFunnelsDataProviderBase.qc": {
+        "sha256": "70a437303d6a929ed061240b43bb78a307fd1de80b61ad3b46d8d30af3a917a4",
+        "mode": "0o644"
+      },
+      "qlib/CohereDataProvider/CohereChatDataProvider.qc": {
+        "sha256": "53e845123e30c9533a774dbfd7d14cb9003e0bbc540e12d5868ed8df0b91c5b4",
+        "mode": "0o644"
+      },
+      "qlib/CohereDataProvider/CohereClassifyDataProvider.qc": {
+        "sha256": "752c1bbab4fbbde25681a75e530ddb847441f74fc6264607d9e90295eea9bfcf",
+        "mode": "0o644"
+      },
+      "qlib/CohereDataProvider/CohereDataProvider.qm": {
+        "sha256": "58017a7365552a83ffd57dd1aace294144db234081c04afc29483a2f58a0e43b",
+        "mode": "0o644"
+      },
+      "qlib/CohereDataProvider/CohereEmbedDataProvider.qc": {
+        "sha256": "997f24c6085ed440072d068297e89e801c72001ff82e0e89af976f8e5e01e351",
+        "mode": "0o644"
+      },
+      "qlib/CohereDataProvider/CohereRerankDataProvider.qc": {
+        "sha256": "42cbaaae4602eedbcaee2ce01647a80f3eab6ceb65fb490c62a8e89594672d65",
+        "mode": "0o644"
+      },
+      "qlib/CohereRestClient.qm": {
+        "sha256": "c9b3b149b05f9c16b008d0ea2e9849f9e90fff7c89acd1ba08b35e94a5f699dc",
+        "mode": "0o644"
+      },
+      "qlib/ConfluenceDataProvider/ConfluenceDataProvider.qm": {
+        "sha256": "1d5a472520103d86b3256dfe98d26078e686333a64e491cc7f0fe7145a44c1bd",
+        "mode": "0o644"
+      },
+      "qlib/ConfluenceDataProvider/ConfluenceEventDataProviders.qc": {
+        "sha256": "6376b29e9138473c39e4419851b8af632722ab2b8b78b5500b12aea0b334caa1",
+        "mode": "0o644"
+      },
+      "qlib/ConfluenceDataProvider/ConfluenceManifest.qc": {
+        "sha256": "8d22c361d66cb4bdfaed21c34c27fcef012c75ed0d8c4e0b061eedf301795eaa",
+        "mode": "0o644"
+      },
+      "qlib/ConfluenceDataProvider/ConfluenceRecordTables.qc": {
+        "sha256": "cd0049a69c74dea3cecac416bbe88da5776138280ff0462fe1350abf5dee34b4",
+        "mode": "0o644"
+      },
+      "qlib/ConfluenceRestClient.qm": {
+        "sha256": "3840a909fee5dc09390fef995e345728a822eafa19d7dde400d77f8a9da831ca",
+        "mode": "0o644"
+      },
+      "qlib/Connect/Connect.qm": {
+        "sha256": "f1b40420ad9c2aee568d4301c623fb50a905bc9bc69d5b3051c0b1b85f6357cd",
+        "mode": "0o644"
+      },
+      "qlib/Connect/ConnectHandler.qc": {
+        "sha256": "38374664ce4bf1e679bcd39a005fa736afbee00f1a02e18891b2f43c298bee80",
+        "mode": "0o644"
+      },
+      "qlib/ConnectionProvider/PollingConnectionMonitor.qc": {
+        "sha256": "da111fb3e129cb2a2e36470cb1ac59fdaab122b18e7cf1841672919731df3f0d",
+        "mode": "0o644"
+      },
+      "qlib/ConstantContactDataProvider/ConstantContactDataProviderBase.qc": {
+        "sha256": "6d9582fb4f235e6adde036440990024a3fc304feccd52c91192e65ee5ec582e7",
+        "mode": "0o644"
+      },
+      "qlib/DataProvider/AbstractDataField.qc": {
+        "sha256": "a41b89b351e7e2601367cb0d30eeaa8098de908420372268782f5dabe4c05e43",
+        "mode": "0o644"
+      },
+      "qlib/DataProvider/AbstractDataProvider.qc": {
+        "sha256": "73b6aa21fee934f46e935240d0b4fb2ae6ff4e1484fbab376b47f3307cbdfbf2",
+        "mode": "0o644"
+      },
+      "qlib/DataProvider/AbstractDataProviderType.qc": {
+        "sha256": "ec98f1ea34af97a922736c1a937679bc09ccec43d825c4005b9b595cffa7dc56",
+        "mode": "0o644"
+      },
+      "qlib/DataProvider/DataProvider.qc": {
+        "sha256": "0d2136f9e029e0ecd768e3dee03fdc2b5354ee8e4ed0fc8839a26d0d496ab9fc",
+        "mode": "0o644"
+      },
+      "qlib/DataProvider/DataProvider.qm": {
+        "sha256": "db4f90d2a2d56862fec06c015b3b1ad3935d044928f8d6928b5da2101e6921fd",
+        "mode": "0o644"
+      },
+      "qlib/DataProvider/DataProviderActionCatalog.qc": {
+        "sha256": "bbcd3f12604e591c5d6d7a6b9183c460ba3989de1e35ecddda96a4ac81e808fc",
+        "mode": "0o644"
+      },
+      "qlib/DataProvider/DataProviderPresentation.qc": {
+        "sha256": "880014f9cbdebd64333ba7ae08e4d21053b227120088351c3f4b2efd9956b56b",
+        "mode": "0o644"
+      },
+      "qlib/DataProvider/DpqlTokenizer.qc": {
+        "sha256": "7554c896ac65a2866c8224ab767626fcc52dd29341a830f96543246888d513e2",
+        "mode": "0o644"
+      },
+      "qlib/DataProvider/QoreStringDataTypeBase.qc": {
+        "sha256": "54f1ad8dd8dcd5da2460752c39370ededefa2bd0ebe33a461874cb0954dbe796",
+        "mode": "0o644"
+      },
+      "qlib/DataProviderDataFrame/DataProviderDataFrame.qm": {
+        "sha256": "0d2bce7bb26717388d888a3b4999f548e281c5bdd9f883ff6018f2f9da58192e",
+        "mode": "0o644"
+      },
+      "qlib/DataProviderML/QoreChunkTextProcessor.qc": {
+        "sha256": "0e3486707503d9bc1afce82b7ca7f8de4f38b6368af2f743d69f947c0b0b0070",
+        "mode": "0o644"
+      },
+      "qlib/DataProviderML/QoreEmbedTextProcessor.qc": {
+        "sha256": "ce0c1f65e5a3daebfa68aa15b7f53eb17edbbf00fc5cb76fd00c90d34401ec7b",
+        "mode": "0o644"
+      },
+      "qlib/DataProviderML/QoreGuardrailFilterProcessor.qc": {
+        "sha256": "0e385e5adc4e4c61973ab7d486968f1aa19063b85f20fe8a91242f0a61348b02",
+        "mode": "0o644"
+      },
+      "qlib/DataProviderML/QoreGuardrailTransformProcessor.qc": {
+        "sha256": "eb69c2547df84800c9be838e31683915d61038e48d6e3ab0bb58362b7495c008",
+        "mode": "0o644"
+      },
+      "qlib/DataProviderML/QoreOnnxModelProcessor.qc": {
+        "sha256": "2ee999c6f0dac42758f1681ae2fe98fa50332a157a2ab794581728a7dddf7b27",
+        "mode": "0o644"
+      },
+      "qlib/DataProviderML/QoreRerankerProcessor.qc": {
+        "sha256": "dfbd46d974fc52391959292337491215cbe8a066eb86f5c4723786c929390a63",
+        "mode": "0o644"
+      },
+      "qlib/DataProviderML/QoreSemanticChunkProcessor.qc": {
+        "sha256": "d2b5a6c742371f52b4a48f120e529914fdcf17507b924e70302c46e9635a3ffc",
+        "mode": "0o644"
+      },
+      "qlib/DataStreamClient.qm": {
+        "sha256": "ca8e5a2703abdc974cf11bab33a54eb3662c7ff2c14738dfe8fcdd83fb859f84",
+        "mode": "0o644"
+      },
+      "qlib/DataStreamClientIo.qm": {
+        "sha256": "249a514f9d0477b4ae3cf09e018cc46e71a6ca48c8618bc68b4c9927289de29b",
+        "mode": "0o644"
+      },
+      "qlib/DataStreamUtil.qm": {
+        "sha256": "67bdf5eadaa84d91de9a56fa054fbc1829827ea36b4a71676b4032ec7971512c",
+        "mode": "0o644"
+      },
+      "qlib/DbDataProvider/DbTableDataProvider.qc": {
+        "sha256": "7002f2c6252500be9003c2bb168e5afc8a7045b91310254f9d590f8514d3dc78",
+        "mode": "0o644"
+      },
+      "qlib/DeepSeekDataProvider/DeepSeekChatCompletionDataProvider.qc": {
+        "sha256": "26cdfc99676d37cdece90c4a35e0016ce2fb47efacf310744f581f43370e0dbe",
+        "mode": "0o644"
+      },
+      "qlib/DeepSeekDataProvider/DeepSeekDataProvider.qm": {
+        "sha256": "d8544190a8f713eda7b6808014614b27b05f9896a97d26a364e528a3adf71162",
+        "mode": "0o644"
+      },
+      "qlib/DeepSeekRestClient.qm": {
+        "sha256": "0f9eca5808c11c67d0170e5bec133f496c6257b577efc4878235a87d672f51dc",
+        "mode": "0o644"
+      },
+      "qlib/DeepgramDataProvider/DeepgramDataProvider.qm": {
+        "sha256": "35813a4346ceae7125df5c1e21a5ab39ff67e5bcbb7dd865a87d47a405fa985b",
+        "mode": "0o644"
+      },
+      "qlib/DeepgramRestClient.qm": {
+        "sha256": "49ac5242b89a56ec6e37c97c4005840ebfe263cb67cf8092d40db4c86db9c969",
+        "mode": "0o644"
+      },
+      "qlib/DropboxDataProvider/DropboxDataTypes.qc": {
+        "sha256": "46cd3177f4e8051ce2be683f837b38c7869e2efc38175352391466b03fcb1987",
+        "mode": "0o644"
+      },
+      "qlib/DropboxDataProvider/DropboxExtendedDataProviders.qc": {
+        "sha256": "d178392fcb9e434ad6348e9f8533588bbe977da9f2babb124f3e3af51248e8d7",
+        "mode": "0o644"
+      },
+      "qlib/DropboxDataProvider/DropboxFileLocationHandler.qc": {
+        "sha256": "67c86cd9396e5913be840f9cacc6617b6b8343cba84e6901306e967ab1c0afba",
+        "mode": "0o644"
+      },
+      "qlib/DropboxRestClient.qm": {
+        "sha256": "de5ca92c4cdbd15150d28956458c32e1c0158c06f2d661c186c4607bbdfba76a",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostAddressDataType.qc": {
+        "sha256": "384d4976797a0ba1b7ae8a3183790f5582a6d8d5215192c5b2380e96ed433169",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostBaseEventDataProvider.qc": {
+        "sha256": "7b370b1e5253baa0599995921b897f50ee1409e516c63410a915cf136af1f248",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostBatchEventDataType.qc": {
+        "sha256": "91d7d7e94ddc1ceaa9275788b16d9eeadb046d27f88c8720bd1e376f8aaf4143",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostBatchesDataProvider.qc": {
+        "sha256": "64e4919b4bb085fce682f8100402e17bb1411a812b78b96f3067d89ec15ce823",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostCreateCarrierAccountDataProvider.qc": {
+        "sha256": "c2215ca3bd4974ab3271eda3159d6d7e09730f0c9008927b6f727e215b78fca1",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostCustomsInfoDataType.qc": {
+        "sha256": "656cf582414a7c2caa7a059a00d716eeef7d1dfdf8b9945a77c08d4c0b0b20d0",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostDataProviderBase.qc": {
+        "sha256": "edb8f8128d08d919afcf8a89e1049fe24b453b1896d4e30d2f92ea97541039e8",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostEventPayloadDataType.qc": {
+        "sha256": "8182ff4e28374776fb3bbca33b62b7e553a237ad557073296acd637fbee89717",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostGetShipmentSmartratesDataProvider.qc": {
+        "sha256": "022aa3867815ebf274a67ec36459ccf27d0dd8e5a9bc8a11852ac8d139fa82b5",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostInsuranceEventDataType.qc": {
+        "sha256": "29490690dd33a9b17ec56ae4d20e2bdd8b35cbd8841f0635244065a7a50f9946",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostParcelDataType.qc": {
+        "sha256": "b1baa807a41fd4bd39934a4bf6e8d550b31132125602cdd32497187c0eed05d6",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostPaymentEventDataType.qc": {
+        "sha256": "ede41eb0af4298b474840fb28b7fc537fadb9c64cb5805f4d4187ecdf0efc935",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostRefundEventDataType.qc": {
+        "sha256": "cc041d769bfffd4f5e09cf70194205c92f8620c459b008ed08de39c37ecad968",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostScanFormDataType.qc": {
+        "sha256": "6d4e24ad9bc534d81d29fd0af2ae26f5a33f9f1fa64caf6acc08e8c33ba11c80",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostShipmentInvoiceEventDataType.qc": {
+        "sha256": "25e8890d3091813bdeb30f2993921833e7f56b60c3c17993302212f5adf6e881",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostShipmentOptionsDataType.qc": {
+        "sha256": "fe2816e4f3d54d88891223c5be1f03575e22412b3445d46bc1ef0ae4a6e717d4",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostTrackerEventDataType.qc": {
+        "sha256": "ec08ea6fc0c2cf642e25362ad7fac266580a534c8259fad70abfacec3714e185",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostWatchBatchCreatedEventDataProvider.qc": {
+        "sha256": "9822b9b5d569e73c870bc8448e06ee3fac76c9e3211e66a0b6f764a95973ed55",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostWatchBatchUpdatedEventDataProvider.qc": {
+        "sha256": "aa7bdac1e70a727d9001eb64b809920055a005298ece3d3203b3172ef9c43fa3",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostWatchInsuranceCancelledEventDataProvider.qc": {
+        "sha256": "1e988a6201bea81a1dfd26bfc81f0e2e462f37c10a7865342582e01bd2e0d651",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostWatchInsurancePurchasedEventDataProvider.qc": {
+        "sha256": "238fcbda327045df83ccfe197d7ecbae24f850fa5f7f81f9703741e040ca8762",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostWatchPaymentCompletedEventDataProvider.qc": {
+        "sha256": "13a615f2158f0e505675402a4db763e3c6d1b2c2e7d49dd7583be05e28cd25a0",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostWatchPaymentCreatedEventDataProvider.qc": {
+        "sha256": "3d2ef4c8a4a4a26f8e1c511d17221fd3b962a177f96c9ee8e8cc71fa8b6bf80c",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostWatchPaymentFailedEventDataProvider.qc": {
+        "sha256": "40d5f3297f34d1dcb869d9181e5f9bcd78ca3a5d885f5408ced55cd39bc83fea",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostWatchRefundSuccessfulEventDataProvider.qc": {
+        "sha256": "e93f676da86e9d8a96b5bc4f418395e572b6ee5d0fbd9c9a102e77bb2be176a8",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostWatchScanFormCreatedEventDataProvider.qc": {
+        "sha256": "c03939e12c96fba3f42316b86b2ef4d3d6f7c5528bb9d0bf0d9f12f32308593e",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostWatchScanFormUpdatedEventDataProvider.qc": {
+        "sha256": "b77dcdb680afe5ebc0a994a2737dc6c9a72c6cd434677f4d0be4ecbbc015f8c2",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostWatchShipmentInvoiceCreatedEventDataProvider.qc": {
+        "sha256": "36728561632cd09adbdbd120b47a12cdccd460d0ace08376b4db32e87f9f064f",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostWatchShipmentInvoiceUpdatedEventDataProvider.qc": {
+        "sha256": "31c88a07be1241dd065206d72573b69d54c26d492127510d1d3ae8712077ae62",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostWatchTrackerCreatedEventDataProvider.qc": {
+        "sha256": "6ee8bfced20ca87a76c4f978e5b6466ba0c43d660f50d50b930b9b1654bde405",
+        "mode": "0o644"
+      },
+      "qlib/EasyPostDataProvider/EasyPostWatchTrackerUpdatedEventDataProvider.qc": {
+        "sha256": "9ffb47ea8a3701eb0beda5133fb0a7738411a80942d3eb86a2d83997de6280ff",
+        "mode": "0o644"
+      },
+      "qlib/ElasticSearchDataProvider/ElasticSearchBulkDataProvider.qc": {
+        "sha256": "01a3a60159a025eb50b521e81e1bdf6b0b911bec238967329ee2b03380b8eb47",
+        "mode": "0o644"
+      },
+      "qlib/ElasticSearchDataProvider/ElasticSearchBulkOperation.qc": {
+        "sha256": "ee929395e8a96b6129802921456bc7f2f6d4ea5a1308c838342d6055b4b59a1d",
+        "mode": "0o644"
+      },
+      "qlib/ElasticSearchDataProvider/ElasticSearchDataProvider.qm": {
+        "sha256": "df08a42c0f12cab92c73a077a99ec3fbe0cdf62b1511c3bc8ffddc5715135a16",
+        "mode": "0o644"
+      },
+      "qlib/ElasticSearchDataProvider/ElasticSearchIndexSearchDataProvider.qc": {
+        "sha256": "7eb9db8ba83e9a2fcfa6a273c6da6914d5160afaf62bfd4b5da180654b3f44f3",
+        "mode": "0o644"
+      },
+      "qlib/ElasticSearchDataProvider/ElasticSearchIndexesDataProvider.qc": {
+        "sha256": "6f734dbe1f727cdeb2ca606548285d2d60b85e4157b8715638208b493baa2f6c",
+        "mode": "0o644"
+      },
+      "qlib/ElasticSearchDataProvider/ElasticSearchScrollSearchDataProvider.qc": {
+        "sha256": "6ef8928a7347cb765b4a6de89ca4d686f59c2a406858be31bf30ffa522c779b5",
+        "mode": "0o644"
+      },
+      "qlib/ElasticSearchLoggerAppender.qm": {
+        "sha256": "7ff142159688ec8b4942a36b3cec62c7505d7727953acad8fb3fe727c62724bc",
+        "mode": "0o644"
+      },
+      "qlib/EmpathicBuildingDataProvider/EmpathicBuildingDataProviderBase.qc": {
+        "sha256": "6ec5e1e8dd245d768b18ddcde2918768fa108cb38d9b680e8a0c6f3e2cccda88",
+        "mode": "0o644"
+      },
+      "qlib/ExaDataProvider/ExaDataProvider.qm": {
+        "sha256": "f251b0ecc137c92b8c355331e681552f6b3263b1ed46ad12b85c6fb075c98985",
+        "mode": "0o644"
+      },
+      "qlib/ExaDataProvider/ExaManifest.qc": {
+        "sha256": "4bdbd2cb3901ae0b71a9cfc1f960124636c9c675cae4d538235ed2e2bcc624d1",
+        "mode": "0o644"
+      },
+      "qlib/ExaRestClient.qm": {
+        "sha256": "9afc11aa0f09948fca7899f7e70da45e4a49350e3cc62381903431d6f90b0bd3",
+        "mode": "0o644"
+      },
+      "qlib/FhirRestDataProvider/FhirRestDataProviderBase.qc": {
+        "sha256": "e3ccacf6fbfc794ec405d2227c7f42530c25b43119213a66c73b087645ab80ff",
+        "mode": "0o644"
+      },
+      "qlib/FileLocationHandler/FileLocationHandlerHttp.qc": {
+        "sha256": "99f5e5013c2688c79abec5417c545fd284922908b0ff9c4182aef3675a967160",
+        "mode": "0o644"
+      },
+      "qlib/FirecrawlDataProvider/FirecrawlBrandingDataType.qc": {
+        "sha256": "4fda17ae0ab85a84ae3996a5ae8a9b42bf6416115f6ee54947b2438bf633326d",
+        "mode": "0o644"
+      },
+      "qlib/FirecrawlDataProvider/FirecrawlChangeTrackingDataType.qc": {
+        "sha256": "7d76a63e4205033f5abb1f02a06ade0b364530bdd9da85990e8aaed205b2e2ba",
+        "mode": "0o644"
+      },
+      "qlib/FirecrawlDataProvider/FirecrawlParseDataProvider.qc": {
+        "sha256": "619387d00317a76a9a3fd445282d7caae026044262cb05be52f4bc7ddfe61641",
+        "mode": "0o644"
+      },
+      "qlib/FirecrawlDataProvider/FirecrawlParseRequestDataType.qc": {
+        "sha256": "87d37ea7ebdffba3cdce16c85504c82de511580af1d60df93c1618df23c39868",
+        "mode": "0o644"
+      },
+      "qlib/FireworksDataProvider/FireworksDataProvider.qm": {
+        "sha256": "8f12a8952c1c418492b96ab8a0905df5b7bdde15bfb3ab02133b05f4ba423afd",
+        "mode": "0o644"
+      },
+      "qlib/FireworksDataProvider/FireworksManifest.qc": {
+        "sha256": "0ab405d6f72c32912216ab6d8a2867850578922a20272c12a87d6a43194d9c3f",
+        "mode": "0o644"
+      },
+      "qlib/FireworksDataProvider/FireworksRerankDataProvider.qc": {
+        "sha256": "4dd8b768d5c1ee937c802a9867b669b3158f813f82113bc2d769364cc8c2f09e",
+        "mode": "0o644"
+      },
+      "qlib/FireworksDataProvider/FireworksSchema.qc": {
+        "sha256": "0992774667ebfd339bb9bb031b25b8d4fd5e64d49a0c8c831cb002bd04680b49",
+        "mode": "0o644"
+      },
+      "qlib/FireworksRestClient.qm": {
+        "sha256": "2bfd9bee4b5cba7434082e44d7ae113faa2b2ec6bc83222984060936c0bb14b6",
+        "mode": "0o644"
+      },
+      "qlib/FreshsalesDataProvider/FreshsalesDataProviderBase.qc": {
+        "sha256": "d03f91f35f92f58723d749d46a4c46f1e3c26834e4034c260f32479bf39d3c60",
+        "mode": "0o644"
+      },
+      "qlib/FtpPollerUtil.qm": {
+        "sha256": "1578229cbfc6cfab62060a3b179e80d496aff65d135cfd8ff738440ec325c199",
+        "mode": "0o644"
+      },
+      "qlib/GcpAuth.qm": {
+        "sha256": "d49626f8b8a4f081f1c5efc38655dedb2ac4a21fbb165519d94a698bd972b98f",
+        "mode": "0o644"
+      },
+      "qlib/GeminiDataProvider/GeminiDataProviderBase.qc": {
+        "sha256": "52028c3d50219945091b8ae05dd104d14738321710ace449589441628cdd73e0",
+        "mode": "0o644"
+      },
+      "qlib/GitHubDataProvider/GitHubBaseEventDataProvider.qc": {
+        "sha256": "3f9c8b710c69d21251c5891788c47e660518519a90ad49a341f2d3a86a04cf2f",
+        "mode": "0o644"
+      },
+      "qlib/GitHubDataProvider/GitHubDataProvider.qm": {
+        "sha256": "6414fd9fc71c27c2086ba9fd4539abcd65e2ced5cc84b3cb73b5bb34101ef343",
+        "mode": "0o644"
+      },
+      "qlib/GitHubDataProvider/GitHubEventDataProviders.qc": {
+        "sha256": "8090a06bb86904a30c07ec3bbe371ef13d74866e07314e6e5fb48ec3cded1a89",
+        "mode": "0o644"
+      },
+      "qlib/GitHubDataProvider/GitHubEventDataType.qc": {
+        "sha256": "e2a4c25a399b72e07ff887fed3d43341a5ef22e5fb93b6d7caad720dec1f29b5",
+        "mode": "0o644"
+      },
+      "qlib/GitHubDataProvider/GitHubManifest.qc": {
+        "sha256": "d0d02aab031766844118d0780b67895b323c5a2ddfe3d1e5656d5a2ca5172ca2",
+        "mode": "0o644"
+      },
+      "qlib/GitHubDataProvider/GitHubRecordTables.qc": {
+        "sha256": "85eff5bcfcaa67b6f457cb90a85ea562176a1a81d5fe860bf99de857870de70e",
+        "mode": "0o644"
+      },
+      "qlib/GitHubRestClient.qm": {
+        "sha256": "872ed80ac90606b226227f03883c8d2ec4f877487ed58dc345768c42cd9f8144",
+        "mode": "0o644"
+      },
+      "qlib/GitLabDataProvider/GitLabDataProvider.qm": {
+        "sha256": "5cea65ffacbf53f357b432062a009cf920ae1a1a91818d4a648b5e3a8af7fdbe",
+        "mode": "0o644"
+      },
+      "qlib/GitLabDataProvider/GitLabEventDataProviders.qc": {
+        "sha256": "0c82a732440379d84f8bb3776e6b0da1719785c684fa1e86d80a967119ccb0eb",
+        "mode": "0o644"
+      },
+      "qlib/GitLabDataProvider/GitLabManifest.qc": {
+        "sha256": "bd05b003c3555890c8ff9628086431414d021ee9573c9be5a005367c6d8e9ebe",
+        "mode": "0o644"
+      },
+      "qlib/GitLabDataProvider/GitLabProjectIdByUrlDataProvider.qc": {
+        "sha256": "1f222183157264fc106b819c75c99ba3f1b4caa6c522ea44f08a2674e0ca2a77",
+        "mode": "0o644"
+      },
+      "qlib/GitLabDataProvider/GitLabRecordTables.qc": {
+        "sha256": "3c5044ead5d982a100aff76ec7b4fb73891c93b55deb6caf212fd0695e214297",
+        "mode": "0o644"
+      },
+      "qlib/GitLabDataProvider/GitLabSchema.qc": {
+        "sha256": "db1d209aace242e476ffef856382fbe5b791ab587fd7af34a23bba6d903dc429",
+        "mode": "0o644"
+      },
+      "qlib/GitLabRestClient.qm": {
+        "sha256": "2449ff4f63f187b86ac7d23a5526585dd9829e16400eb193778452a2222ec47e",
+        "mode": "0o644"
+      },
+      "qlib/GmailDataProvider/GmailListWithMetadataDataProvider.qc": {
+        "sha256": "3019837ac2c124411fe52854a364b63d80c54b50f2ba3ec453c10f89c5308a8e",
+        "mode": "0o644"
+      },
+      "qlib/GoogleCloudStorageDataProvider/GoogleCloudStorageDataProvider.qm": {
+        "sha256": "20b89b76327a1861b8b3534bb9c79e3d5730452b431403265c269c3a0250ee98",
+        "mode": "0o644"
+      },
+      "qlib/GoogleCloudStorageDataProvider/GoogleCloudStorageDataProviderBase.qc": {
+        "sha256": "c26d26f55cdbcec568220178351c5075b25d5af87336fdbfa37f9e6556243266",
+        "mode": "0o644"
+      },
+      "qlib/GoogleCloudStorageRestClient.qm": {
+        "sha256": "b98c41bb9be07f3b49f11ea645eb9910d4ea691677ccb1b0eacc4187cc27c713",
+        "mode": "0o644"
+      },
+      "qlib/GoogleDataProvider/GoogleDataProvider.qm": {
+        "sha256": "ee475476f8ff876f550f7be01dd17dfe26a1890d6229a67ae2ad58d5fe09ced1",
+        "mode": "0o644"
+      },
+      "qlib/GoogleDocumentAiDataProvider/GoogleDocumentAiDataProvider.qm": {
+        "sha256": "70d9e34d80e79e6452ff9c7197b792335f040ea478d52d9daaaf8176feabab27",
+        "mode": "0o644"
+      },
+      "qlib/GoogleDocumentAiDataProvider/GoogleDocumentAiDataTypes.qc": {
+        "sha256": "1cda9be37dbef20e5de952e914545ed4820c55862730c1a6fa747bfa3e73a9a4",
+        "mode": "0o644"
+      },
+      "qlib/GoogleDocumentAiRestClient.qm": {
+        "sha256": "806f1c29f8769fafe68a9c9d8fa5c46d0eb39750741e25644c5a71b9ab5d6c48",
+        "mode": "0o644"
+      },
+      "qlib/GoogleDriveDataProvider/GoogleDriveDataProvider.qm": {
+        "sha256": "ce9290dbd3204e990e80b958e5465094b0b601cd487e5eb53cc56a939da19a49",
+        "mode": "0o644"
+      },
+      "qlib/GoogleDriveDataProvider/GoogleDriveDataProviderBase.qc": {
+        "sha256": "fb062d35f6c8d63c81e5b3354e1f4d4ab22c79e13daa3bed57866a03a069d16e",
+        "mode": "0o644"
+      },
+      "qlib/GoogleDriveDataProvider/GoogleDriveDataProviderDefs.qc": {
+        "sha256": "b09baccce642ed4d2740a3d8cdf448906bc6870c11733edb29e9e4e9b109fe77",
+        "mode": "0o644"
+      },
+      "qlib/GoogleDriveDataProvider/GoogleDriveDataTypes.qc": {
+        "sha256": "1baf847eee9486d182b0d84f1c31762a281d8b856a47782f67a48839807a3283",
+        "mode": "0o644"
+      },
+      "qlib/GoogleDriveDataProvider/GoogleDriveExtendedDataProviders.qc": {
+        "sha256": "36ac2d344765b277c284eb35e836a7499cc2deafd9592e043e3055ec95ba171a",
+        "mode": "0o644"
+      },
+      "qlib/GoogleDriveDataProvider/GoogleDriveFileLocationHandler.qc": {
+        "sha256": "1daa5e564e7c43525145aa02e844322dc521a3d1257b49fa61a2ba4340e39784",
+        "mode": "0o644"
+      },
+      "qlib/GorgiasDataProvider/GorgiasCommonDataTypes.qc": {
+        "sha256": "51a6ceef27f26d4cd7343d61914406e7f17618a59d48e137de078615d3929757",
+        "mode": "0o644"
+      },
+      "qlib/GraphQL/GraphQLEventQueue.qc": {
+        "sha256": "b5af6de1373418230818f11d8be7eb86bde96d66854d180ebeacc71279c799b2",
+        "mode": "0o644"
+      },
+      "qlib/GraphQL/GraphQLSchema.qc": {
+        "sha256": "59bcc51fd1ffb62974b01660e3f704ffca4d6582953b22a2f80e0fe95bc29d3b",
+        "mode": "0o644"
+      },
+      "qlib/GraphQL/GraphQLValidator.qc": {
+        "sha256": "458fd8330a7cddd5768eeca1009eae9656134454437196567095c6422a739284",
+        "mode": "0o644"
+      },
+      "qlib/GraphQLDataProvider/GraphQLDataProviderBridge.qc": {
+        "sha256": "83b0a93739f4e78576c4c774f01db07705234941c4667a8163105b290ade604d",
+        "mode": "0o644"
+      },
+      "qlib/GraphQLHandler/GraphQLHandlerImpl.qc": {
+        "sha256": "023a7999bd444755888d8c9e76e10ae96e53c62fbb2d37092109cb12863a7e8b",
+        "mode": "0o644"
+      },
+      "qlib/GroqDataProvider/GroqChatCompletionDataProvider.qc": {
+        "sha256": "b9c9d52ebea45370c3a50981e9189ed4629e500ac7062f14844ef51d0dbd7d4c",
+        "mode": "0o644"
+      },
+      "qlib/GroqDataProvider/GroqDataProvider.qm": {
+        "sha256": "0bc507f6da088dd68c4432214903e893d5ad3aa9fc981ab910aff069606bbe53",
+        "mode": "0o644"
+      },
+      "qlib/GroqDataProvider/GroqListModelsDataProvider.qc": {
+        "sha256": "b828a8c8292feb1ab75852698a74aec37b87ebd2304cbb5ecee473e262978ad4",
+        "mode": "0o644"
+      },
+      "qlib/GroqDataProvider/GroqListModelsResponseDataType.qc": {
+        "sha256": "87ea4234e3f01325ad512b05ff2a26989bb8bd574183c65b486c6d87f8c0b74b",
+        "mode": "0o644"
+      },
+      "qlib/GroqRestClient.qm": {
+        "sha256": "5e5b61be7124ae7e2b8ddcdfeb6ef0d543b49b17755a4a4926f9c09dd7300e9b",
+        "mode": "0o644"
+      },
+      "qlib/Hl7v2Util/Hl7v2Util.qm": {
+        "sha256": "00a7e98fdf0f1fd8cf7e4dbca994eb5030cc56e7a84b76f6508de203e00c07d5",
+        "mode": "0o644"
+      },
+      "qlib/HttpClientIo/Http1ClientPollOperationImpl.qc": {
+        "sha256": "e9a6b96b125478f2e55ff1e6947c33f6b7b4c94db933910396cdd14e35ec7f3b",
+        "mode": "0o644"
+      },
+      "qlib/HttpClientIo/Http3ClientPollOperationImpl.qc": {
+        "sha256": "364581ee2581b46b3525bd57cbc119d9f8dd59f808310dd6bc30959365003004",
+        "mode": "0o644"
+      },
+      "qlib/HttpClientIo/HttpClientConnectionManager.qc": {
+        "sha256": "6d6649ac1764928d7e1f4898d8ebb414977dca55f35248b4f5234b80e60b9945",
+        "mode": "0o644"
+      },
+      "qlib/HttpClientIo/HttpClientIo.qm": {
+        "sha256": "34855066b46efdaeffabd7e87c00a06dcd182a2f35f7cf58b43f7cfea8d08d22",
+        "mode": "0o644"
+      },
+      "qlib/HttpServer.qm": {
+        "sha256": "856f5ff9deb24d2f1875886c7f647c869e7ce5ffe1155984a0edb573d02c6eb3",
+        "mode": "0o644"
+      },
+      "qlib/HttpServerAsyncIo/HttpAsyncSocketIoController.qc": {
+        "sha256": "86c8548ade712fd4a368d3dc6488e62a8e73039eac8c1a711d553ce779dc176c",
+        "mode": "0o644"
+      },
+      "qlib/HttpServerAsyncIo/HttpKeepAlivePollOperation.qc": {
+        "sha256": "fdf1f67a53ae4a4dcff8083bf73ac15c3f3f2cb86aec021610b9249fa495ccc0",
+        "mode": "0o644"
+      },
+      "qlib/ImapClient/ImapClient.qc": {
+        "sha256": "76d897d57945d0fd313922439c078ad3f255938c460c47f5475c3886925f8d88",
+        "mode": "0o644"
+      },
+      "qlib/ImapClientDataProvider/ImapWatchDataProviders.qc": {
+        "sha256": "c55cb850142bb0efc555ae6ea8e4bf5721f9c6f7983690b92ba02eed6bd168d0",
+        "mode": "0o644"
+      },
+      "qlib/InsightlyDataProvider/InsightlyDataProviderBase.qc": {
+        "sha256": "845fbb4ef52d4eeacbb739843159caf74c642f928a16614b06d6ee2c41618b08",
+        "mode": "0o644"
+      },
+      "qlib/InstantlyDataProvider/InstantlyDataProvider.qm": {
+        "sha256": "9f2558564f5052601e2123d3dccf13c7495e723a066b265d0edb7abce7d83d08",
+        "mode": "0o644"
+      },
+      "qlib/IntercomDataProvider/IntercomDataProvider.qm": {
+        "sha256": "ae9fbb36b82899109b15b116ed57f5e1183b345146a64b8210035fb2e435d548",
+        "mode": "0o644"
+      },
+      "qlib/IntercomDataProvider/IntercomEventDataProviders.qc": {
+        "sha256": "7dfe063a1163ddc178d439ae89ed7c47638a2a929c03f55a12c990df7fa05d03",
+        "mode": "0o644"
+      },
+      "qlib/IntercomDataProvider/IntercomManifest.qc": {
+        "sha256": "cbf87f11b1417f881ec5c13eeb039b007883086095fbaabb17bfdea4725afaf9",
+        "mode": "0o644"
+      },
+      "qlib/IntercomDataProvider/IntercomRecordTables.qc": {
+        "sha256": "e789e1e188c91f77d5d4adcb7c6ece3594e5297f1a441f5e32068386a2d1cc1c",
+        "mode": "0o644"
+      },
+      "qlib/IntercomDataProvider/IntercomReplyConversationDataProvider.qc": {
+        "sha256": "7c147a30ebefe2b011dc955cccee55e1e6a486b9b132661b7ba4535a95205474",
+        "mode": "0o644"
+      },
+      "qlib/IntercomRestClient.qm": {
+        "sha256": "3a89c495401254c01a0d6b320833e1e6f79804b9a165c9d9867ad7de955a6c46",
+        "mode": "0o644"
+      },
+      "qlib/JinaDataProvider/JinaDataProvider.qm": {
+        "sha256": "c7b8f19873a3546c8f58da1e296426d616eb0f257f3e2e1e1749a9f622dc1a06",
+        "mode": "0o644"
+      },
+      "qlib/JinaDataProvider/JinaDataProviderCommon.qc": {
+        "sha256": "09bff0f998b7986b73b9adaf017ae08392603398f972638e3e765149dd56ebb6",
+        "mode": "0o644"
+      },
+      "qlib/JinaRestClient.qm": {
+        "sha256": "d0369e3721751212e4198f770fa33922f389e7340053bb7b820743b6b33febe9",
+        "mode": "0o644"
+      },
+      "qlib/JsonFileDataProvider/JsonFileReadDataProvider.qc": {
+        "sha256": "a2f13abb39fa5dddf56479dda1557be8c36fca120876dc467f8e486cc419fd6d",
+        "mode": "0o644"
+      },
+      "qlib/JsonLd/JsonLdContext.qc": {
+        "sha256": "640da7e10997d92c087cbaf0a3150a9eb604e59f056428841fcbe22f1f9fc24b",
+        "mode": "0o644"
+      },
+      "qlib/JsonLd/JsonLdUtils.qc": {
+        "sha256": "74c930b2b37aa57c6a51b991e437d852e3348a1b344c00e3c823c3d3857dcfec",
+        "mode": "0o644"
+      },
+      "qlib/KatanaDataProvider/KatanaCreatePurchaseOrderDataProvider.qc": {
+        "sha256": "8063765c2e570725c09c271e6f1ee62f7c747a1c6c260b6ed0c1c539896b17fb",
+        "mode": "0o644"
+      },
+      "qlib/KatanaDataProvider/KatanaDataProviderBase.qc": {
+        "sha256": "5722b7ad1277a2013f00483abc27cc842914ee80a27a859d3435ea69a371a5aa",
+        "mode": "0o644"
+      },
+      "qlib/KatanaDataProvider/KatanaUpdatePurchaseOrderDataProvider.qc": {
+        "sha256": "1de4fc73fb72936881c5378e84fbe53850134e565bb6e9418107a93aa42291a0",
+        "mode": "0o644"
+      },
+      "qlib/KeapDataProvider/KeapContactsDataProvider.qc": {
+        "sha256": "3b3176b637255e9709df222b7d161527efd115aabec6a4885828e2f893de69cc",
+        "mode": "0o644"
+      },
+      "qlib/KeapDataProvider/KeapDataProviderBase.qc": {
+        "sha256": "f9a217a743eda0fb91185ae8803f917e9cde22ad53f5d6baa447434a9eb22421",
+        "mode": "0o644"
+      },
+      "qlib/KitDataProvider/KitWatchDataProviderBase.qc": {
+        "sha256": "3703a45fb6f5de7b4809cd03e86c75ed9b4cddae49c2a68e6ece994eb938e10b",
+        "mode": "0o644"
+      },
+      "qlib/KlaviyoDataProvider/KlaviyoCodecs.qc": {
+        "sha256": "08225e7dc79c8bec0d5766ba85ccd9bf41166a3ce2c0e8c13d7a623aa4ae7c59",
+        "mode": "0o644"
+      },
+      "qlib/KlaviyoDataProvider/KlaviyoDataProvider.qm": {
+        "sha256": "e7ead7882b450f3dd04b275bdf93b671c3ce99fbc93908d3cb1be959c3326d78",
+        "mode": "0o644"
+      },
+      "qlib/KlaviyoDataProvider/KlaviyoEventDataProviders.qc": {
+        "sha256": "2d0d0d434abd18828991d7dd22d554d760c867d708df7a995ac416f8b8192700",
+        "mode": "0o644"
+      },
+      "qlib/KlaviyoDataProvider/KlaviyoManifest.qc": {
+        "sha256": "8001945d3c6f002a43da3937a927be55543c060363c4d46d50d832ca5105c957",
+        "mode": "0o644"
+      },
+      "qlib/KlaviyoDataProvider/KlaviyoRecordTables.qc": {
+        "sha256": "01da5f654a79cc2805873b597f011d1771c82250905ca6ae48e21ed4491d5875",
+        "mode": "0o644"
+      },
+      "qlib/KlaviyoDataProvider/KlaviyoRelationshipDataProviders.qc": {
+        "sha256": "40a9d32cd3b4587a78fa001fba062cdf10de2124a1a72ab4676356acabedec6b",
+        "mode": "0o644"
+      },
+      "qlib/KlaviyoDataProvider/KlaviyoSchema.qc": {
+        "sha256": "740d519835b8c8f71182fa497a4ee9e62d57329e01652b1cedf19ac672c7f5b7",
+        "mode": "0o644"
+      },
+      "qlib/KlaviyoDataProvider/KlaviyoWriteDataProviders.qc": {
+        "sha256": "b6e671c29255f8c8a297a2ff98ed87c573c0813cd13502d1f6fe578b03eabea0",
+        "mode": "0o644"
+      },
+      "qlib/KlaviyoRestClient.qm": {
+        "sha256": "56289cb50bf4fff2a0f95b0d003622d808153ec5d2f7122b8aa3ce88a357bdec",
+        "mode": "0o644"
+      },
+      "qlib/LemlistRestClient.qm": {
+        "sha256": "02fc68c9f009c5fda899ae55fc6376574770ece8c5ca80e5896259bd614a83cd",
+        "mode": "0o644"
+      },
+      "qlib/LinearDataProvider/LinearDataProvider.qm": {
+        "sha256": "2f39ef43bace9f0ef1e98ffcd087c6ed1cd3ebe7f44ebd4c5edf857b5c145f15",
+        "mode": "0o644"
+      },
+      "qlib/LinkedInDataProvider/LinkedInDataProvider.qm": {
+        "sha256": "9435f69dbbf0d0d5395dc30be42cd8e348548091d47436fc3eb1e986e437f334",
+        "mode": "0o644"
+      },
+      "qlib/LinkedInDataProvider/LinkedInDataProviderBase.qc": {
+        "sha256": "6cb8b6aec3003af833d7293c078dbc3845b2806c76238b34bbdf99662c8c90d6",
+        "mode": "0o644"
+      },
+      "qlib/LinkedInDataProvider/LinkedInDataProviderDefs.qc": {
+        "sha256": "8e7999dc62b5d70837b49d49a4aeb5475bc21ac7ba15c2d6e693841268bf2579",
+        "mode": "0o644"
+      },
+      "qlib/LinkedInDataProvider/LinkedInDataTypes.qc": {
+        "sha256": "7d4bf4dbccc90286064496a0a5e17dd8b5704a638ce91fd6129cb5186069108c",
+        "mode": "0o644"
+      },
+      "qlib/LinkedInOrganizationsDataProvider/LinkedInOrganizationsDataProvider.qm": {
+        "sha256": "513d8f60addd751c81e4e3aecd1e62b08f8ece4e7a25cd2c055bf975cb5ac2f4",
+        "mode": "0o644"
+      },
+      "qlib/LinkedInOrganizationsDataProvider/LinkedInOrganizationsDataProviderBase.qc": {
+        "sha256": "752c115319007fa79a39906a8e8d440826affb00a26927c60a640fa1ec1edc2a",
+        "mode": "0o644"
+      },
+      "qlib/LinkedInOrganizationsDataProvider/LinkedInOrganizationsDataProviderDefs.qc": {
+        "sha256": "877b9d485cd72dea26bed627fcba965521afa9aeadd3da16c3acb0e1ae44542d",
+        "mode": "0o644"
+      },
+      "qlib/LinkedInOrganizationsDataProvider/LinkedInOrganizationsDataTypes.qc": {
+        "sha256": "75d413deb9ad80bae3d2824afb6b9498c13711291ce00aef0b0ecf3b83d3068a",
+        "mode": "0o644"
+      },
+      "qlib/LinkedInOrganizationsDataProvider/LinkedInOrganizationsEventDataProviders.qc": {
+        "sha256": "e41b41b05dd148c2a83614b04e3264590fe29f16c22fb95b30d9e14c75b782a7",
+        "mode": "0o644"
+      },
+      "qlib/LinkedInOrganizationsDataProvider/LinkedInOrganizationsProviders.qc": {
+        "sha256": "ec72524c238c0263c640568149199c2b96f248391bce66c59d1f15cc8db03928",
+        "mode": "0o644"
+      },
+      "qlib/LinkedInRestClient.qm": {
+        "sha256": "71458be315ee41c0a1f606baee9f3b8dfedfbfa1ec8e1b413d8bf42fdd2a8f61",
+        "mode": "0o644"
+      },
+      "qlib/LlamaParseDataProvider/LlamaParseDataProvider.qm": {
+        "sha256": "b3f74bbda33415357ec4eadab5158d27a817f1df1597a566ddd8733f743b5205",
+        "mode": "0o644"
+      },
+      "qlib/LlamaParseDataProvider/LlamaParseManifest.qc": {
+        "sha256": "2d7cea9d9751183090c4de5952e6c5f9d8e3d1bd764b073e49e7aff3062870b2",
+        "mode": "0o644"
+      },
+      "qlib/LlamaParseRestClient.qm": {
+        "sha256": "5c945ec9f2b35704879de9567ec010571e05dfba4ea07966e4a9462749cb6ed4",
+        "mode": "0o644"
+      },
+      "qlib/LoggerSemanticSearch/LoggerSemanticSearch.qm": {
+        "sha256": "e9e3a4f87b354ac5b2fca0d5438e6e613572f577941ded271d99745229e64537",
+        "mode": "0o644"
+      },
+      "qlib/McpClient/McpProtocol.qc": {
+        "sha256": "a5e0e2c257327858cb96aa8a8c5a5df3e64438cf25a6ae88768d30322f995e9f",
+        "mode": "0o644"
+      },
+      "qlib/McpServerHandler/McpServerHandler.qc": {
+        "sha256": "9a4a29b1cc5ce11edeee6a7f1146dd7314a32ff10b4d8d86f57956ebf3092bd4",
+        "mode": "0o644"
+      },
+      "qlib/MewsRestClient.qm": {
+        "sha256": "a4dabc79b9f3429277590ed5be1c348f947c0797d78922725509324ed74ecc35",
+        "mode": "0o644"
+      },
+      "qlib/MewsRestDataProvider/MewsRestDataProviderBase.qc": {
+        "sha256": "269865df26ed56105d6c941fca7d4c87f4932c8d5d4281b38a7dffe4cb8ca1f5",
+        "mode": "0o644"
+      },
+      "qlib/MilvusDataProvider/MilvusDataProvider.qm": {
+        "sha256": "e8ae159d1b398a1ce994e884c194184b401a8a270e4c1e5f380442bfa6f43f0f",
+        "mode": "0o644"
+      },
+      "qlib/MilvusRestClient.qm": {
+        "sha256": "8a19cede6839cb71f0a919f47f9acbeaa853eb18f258f971f75dc85a2ffe722e",
+        "mode": "0o644"
+      },
+      "qlib/MistralDataProvider/MistralDataProvider.qm": {
+        "sha256": "390f4bb54fe65d1dfaf9649ab5292d883942fb4dfce174509326513c3cb84181",
+        "mode": "0o644"
+      },
+      "qlib/MistralDataProvider/MistralOcrDataProvider.qc": {
+        "sha256": "0273ae1d8af391d324c6aac5041cdd49ff11c156d7ed22db1ad1836848c6d29e",
+        "mode": "0o644"
+      },
+      "qlib/MistralRestClient.qm": {
+        "sha256": "b9370ebfb0ed3847d4e36275f492d118bc9c4801a5adcd8dc85cde6d7dde7bb3",
+        "mode": "0o644"
+      },
+      "qlib/MongoDbDataProvider/MongoAtlasVectorStore.qc": {
+        "sha256": "997741b6337da621a795cac300da2f70d6994270be31bdb2eaf0a51ec2e2bcfc",
+        "mode": "0o644"
+      },
+      "qlib/MongoDbDataProvider/MongoDbVectorSearchDataProvider.qc": {
+        "sha256": "065cea36ea1edefc030af77a62c2a17e8d7df8a1978f10b86953308cd3552ec2",
+        "mode": "0o644"
+      },
+      "qlib/OllamaDataProvider/OllamaChatCompletionDataProvider.qc": {
+        "sha256": "a26bc6e790605a35eae4b32ee2bdc8765ebceff2e7573ec57ebc4affc17dbd23",
+        "mode": "0o644"
+      },
+      "qlib/OllamaDataProvider/OllamaDataProvider.qm": {
+        "sha256": "8ef61c802c0e92500ecbc22b362ef2868ee5d7965dc71751c0e189b069e8a47e",
+        "mode": "0o644"
+      },
+      "qlib/OllamaDataProvider/OllamaEmbedDataProvider.qc": {
+        "sha256": "9b5bfa9b524a0c187a7a74c879f94921b71094abfbf3936cd7a73c65413af4bd",
+        "mode": "0o644"
+      },
+      "qlib/OllamaDataProvider/OllamaListModelsDataProvider.qc": {
+        "sha256": "c7f8f7cd610c88bdcd1f0eb3d4be2cd028d2ac40c602527f6fa9867bd11a27c7",
+        "mode": "0o644"
+      },
+      "qlib/OllamaRestClient.qm": {
+        "sha256": "33d515aeccc75b64491e3a41a14d86a2f7b5de389524e1c437ddefaa19fe5a8a",
+        "mode": "0o644"
+      },
+      "qlib/OneDriveDataProvider/OneDriveDataProviderBase.qc": {
+        "sha256": "f659b586745db392357cb7a8cd5b6dab94a006458c24c794116a82b7a437e0aa",
+        "mode": "0o644"
+      },
+      "qlib/OneDriveRestClient.qm": {
+        "sha256": "f0f94fa31b7eed0ecddcdedfdfcdaa7bed9b1d1ee54dc0f81050ade12e2e0857",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiAssistantCreateDataProvider.qc": {
+        "sha256": "1eed4b27f29fa81e3e086fc5aa11b5add85ed446e025762cf29bc057877c35b2",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiAssistantDataProvider.qc": {
+        "sha256": "83cd50d0f88e4c17327608b198d576826771e2ebb05af26c4140281350bfe20f",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiAssistantDeleteDataProvider.qc": {
+        "sha256": "b118ad2b7313ad38ee197b29806f231d988f16b06dd362f83bd7934d101f2f5a",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiAssistantUpdateDataProvider.qc": {
+        "sha256": "93dbdb4370234d716c75fcd4d485936917b5c95053d61ed2f927f5f8e957982d",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiAssistantsDataProvider.qc": {
+        "sha256": "fea4535e83ed50d126d0d2f816cb04f9372dfab5595fa8fc277270e4f8d24532",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiDataProvider.qm": {
+        "sha256": "455078d0515a394bbe7e80fbbdac6df73e11a5e80b8c03f2d4fc4349bd3ae503",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiResponseCancelDataProvider.qc": {
+        "sha256": "d96b1490597bf49df10a272e3997714987e9dacd1b074789beadae2b8e14057d",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiRunCreateDataProvider.qc": {
+        "sha256": "741883c3458c65ec0a63182f5cbe71fc6bc69f9e3d160293379c6da7a7e5d59e",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiRunDataProvider.qc": {
+        "sha256": "93ca09c1f82f98389904fb44956d6abb4b1bdcd15025304113402e58645fc0a5",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiRunDeleteDataProvider.qc": {
+        "sha256": "39af58a7b18df359d2c1bc4ea21d288b52c27af70cf34c29d87549c6580fb13f",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiRunSubmitToolOutputs.qc": {
+        "sha256": "2efc31d8666ca6d9c2811ff59b027fc2158f21a72fc73c6f26a37081ae8a1695",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiRunUpdateDataProvider.qc": {
+        "sha256": "b8cc1b4a9373b1ceca62d13e4817fac89ade8d0b7ec52efaf27632efba9eae86",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiRunsDataProvider.qc": {
+        "sha256": "86cefd0b278daac00e1acbe523c65780e50b2bc97d5355bb42fc8651d8717f1a",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiThreadCreateDataProvider.qc": {
+        "sha256": "fe17f7cccdcc07adb2c62e040582ca6d6d60a6b5ccfbac358a49b93f6da2ce3d",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiThreadCreateRunDataProvider.qc": {
+        "sha256": "b118d0abdb4dd5aba132102645a32683314ac8df45195890473adf7255a45f6d",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiThreadDeleteDataProvider.qc": {
+        "sha256": "164bfc29afb5b9a66a135b890807573d509791dca2e0b2b58ff1b8c51abf96e8",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiThreadGetDataProvider.qc": {
+        "sha256": "2e27340c3edfd415f9b7ab915d848c06ca089cae99fe8eece17e6bdaa87a27c2",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiThreadMessagesGetDataProvider.qc": {
+        "sha256": "6a470d0a8d359a8fab03436a070c971664d71a01a0d09b1d5936c6d3ed523d7a",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiThreadUpdateDataProvider.qc": {
+        "sha256": "93be40d7e0e91e78d7c08303001e3a1c83ec1c30f533a69f3217adcb0c49f37d",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiDataProvider/OpenAiThreadsDataProvider.qc": {
+        "sha256": "640a523272277b90f212198c7ac0936bf609d44633d20a08c2b02a5355e43c4a",
+        "mode": "0o644"
+      },
+      "qlib/OpenAiRestClient.qm": {
+        "sha256": "b03a3e25943773b1a4567add95dfbbd115962b8748932ebf538d6a5565ee278f",
+        "mode": "0o644"
+      },
+      "qlib/OpenApi3.qm": {
+        "sha256": "eb73dea49ae19e6c3f22d47a709b393e4ff2d62f353d7557705b3b99e037b726",
+        "mode": "0o644"
+      },
+      "qlib/OpenSearchDataProvider/OpenSearchBulkDataProvider.qc": {
+        "sha256": "582937b5962bd17474758a3d2ee509a0c995621c63921e053c3de3e1f0b3f1f7",
+        "mode": "0o644"
+      },
+      "qlib/OpenSearchDataProvider/OpenSearchBulkOperation.qc": {
+        "sha256": "16e3a932c6950c860b023f89baa20c665805bad9fb627cf882c1dc1ca03cacf5",
+        "mode": "0o644"
+      },
+      "qlib/OpenSearchDataProvider/OpenSearchIndexSearchDataProvider.qc": {
+        "sha256": "97ea4e9e6ac33eab59f37dcbfec3b67954842ad034d02b0b2d931f28b9be83ee",
+        "mode": "0o644"
+      },
+      "qlib/OpenSearchDataProvider/OpenSearchIndexesDataProvider.qc": {
+        "sha256": "23a33cbe26c997aaea8fcb0b71d601ebd9c19c9f39e8ee8e26a7abfbaf52150c",
+        "mode": "0o644"
+      },
+      "qlib/OpenSearchDataProvider/OpenSearchScrollSearchDataProvider.qc": {
+        "sha256": "58cf9a7e4fc5cd34e1870d3e933e80f2bd747d4d246283263e11620cd274196d",
+        "mode": "0o644"
+      },
+      "qlib/OpenSearchLoggerAppender/OpenSearchLoggerAppender.qm": {
+        "sha256": "2563fab4d03b004c6317b6afe28f8416650524a421b5de95058384fc9e066f47",
+        "mode": "0o644"
+      },
+      "qlib/PaddleDataProvider/PaddleBaseEventDataProvider.qc": {
+        "sha256": "71e8a9b195124fde4f8033331e5abbb8dc16799c4604e07105916100f84724ce",
+        "mode": "0o644"
+      },
+      "qlib/PaddleDataProvider/PaddleDataProvider.qm": {
+        "sha256": "be4e4b2110d960e6234a1b31480baf9d5174826c106908fc9dd693aadc98ba5a",
+        "mode": "0o644"
+      },
+      "qlib/PaddleDataProvider/PaddleRecordTables.qc": {
+        "sha256": "4077269cdf670387ad1345e3601852957984a93f45c7783a989b8a1b897834c5",
+        "mode": "0o644"
+      },
+      "qlib/PaddleRestClient.qm": {
+        "sha256": "39766fdfc2fae23696764d375ddebc50e2ff638b4dace79cb50b6d6bd99af7d5",
+        "mode": "0o644"
+      },
+      "qlib/PdfCoDataProvider/PdfCoDataProviderDefs.qc": {
+        "sha256": "184694f3d6ea27d13c48b9b0a297f2762af7e5e0de8066537096683fb6fd3882",
+        "mode": "0o644"
+      },
+      "qlib/PineconeDataProvider/PineconeDataProvider.qm": {
+        "sha256": "a2b122640562a4ec78428329f575d445afd295a7f598be17f797ac6e9e66eff1",
+        "mode": "0o644"
+      },
+      "qlib/PineconeDataProvider/PineconeManifest.qc": {
+        "sha256": "f1358bdd6797bd9a19424f839593b62475cbd71037d3a6a28da7bdf814a51774",
+        "mode": "0o644"
+      },
+      "qlib/PineconeDataProvider/PineconeUsage.qc": {
+        "sha256": "bf3cf8fb3a462729cf7c6822e6ed98210f7b20dd7e6adee47dbcc030d301f4b0",
+        "mode": "0o644"
+      },
+      "qlib/PineconeRestClient.qm": {
+        "sha256": "3432810349afd254be0bafa30533bab896d58d7e1dda5e3d4b41dbbe95c5307a",
+        "mode": "0o644"
+      },
+      "qlib/Pop3Client.qm": {
+        "sha256": "d7f75611e5b5d5dc5810a5a5dc10f24309aceb5fa101cc7a8ac883d22b692ddc",
+        "mode": "0o644"
+      },
+      "qlib/ProviderIndexUtil/ProviderIndexUtil.qc": {
+        "sha256": "c385e5d8c0a74a7b8259f6956bc23b210f42a694d44ccfc20b396c4e29c4e25d",
+        "mode": "0o644"
+      },
+      "qlib/QUnit.qm": {
+        "sha256": "41fcf57ad80923f4f6698dad235434223b62300f086f0ac31e9609f1421af90f",
+        "mode": "0o644"
+      },
+      "qlib/QdrantDataProvider/QdrantCollectionBulkOperation.qc": {
+        "sha256": "cfc97e394b0bbfdff951516daa2ba6b5ad1a9b0b1c148a73541c817e70ac7366",
+        "mode": "0o644"
+      },
+      "qlib/QdrantDataProvider/QdrantCollectionTableDataProvider.qc": {
+        "sha256": "fe8991ac5a3bf766dd57c24e2a021af55d6d0e37b2577011436027eb533e14a0",
+        "mode": "0o644"
+      },
+      "qlib/QdrantDataProvider/QdrantSearchRecordIterator.qc": {
+        "sha256": "50325d3442a60633f15e704238d3c487e7de376b6def31ad37a5fe5935e03ae7",
+        "mode": "0o644"
+      },
+      "qlib/Qdx.qm": {
+        "sha256": "e5ae722306b6e3e4135f89d62d1f11d1bf7cb252d3b75dabce2a29c4e02ae591",
+        "mode": "0o644"
+      },
+      "qlib/QoreAsyncJobUtils.qm": {
+        "sha256": "d201deca0b229c1536bf2b886121b1199280541f7a5f3c70f1007b0008675e96",
+        "mode": "0o644"
+      },
+      "qlib/QoreCodeFormat/CodeFormatter.qc": {
+        "sha256": "e45f1c218108f27bc4b19371d5235ae1ddfea195931f105f019b61549776f7b1",
+        "mode": "0o644"
+      },
+      "qlib/QoreHistory/History.qc": {
+        "sha256": "f441e7f8c76f3ddee263105c069b2bb4648bd38a14d0184cafca7dabc31c76fa",
+        "mode": "0o644"
+      },
+      "qlib/QoreHistory/QoreHistory.qm": {
+        "sha256": "4cb7399b4ebdf752311a1a682ebcab6a27b0b819b490b439a91b0376e30ecb59",
+        "mode": "0o644"
+      },
+      "qlib/QoreHistory/QoreHistoryProvider.qc": {
+        "sha256": "f689f01d623242dc442214328cb2a202aae24e4649377f4839e7dc83fc229af6",
+        "mode": "0o644"
+      },
+      "qlib/QoreMLUtils/GridSearch.qc": {
+        "sha256": "8156010c0d9d0287c85518ec51117c9a86d768807e2a3678a38c91684bd52acc",
+        "mode": "0o644"
+      },
+      "qlib/QoreMLUtils/PermutationImportance.qc": {
+        "sha256": "c3431c3f73bdd4c49764eb25a82bb18c66c578b40217cd5745a4db22648deb29",
+        "mode": "0o644"
+      },
+      "qlib/QoreMLUtils/RandomSearch.qc": {
+        "sha256": "965a7f96b921e402adcd00306d4866962b7f78e5b4f7615cf061eb134e6c3b04",
+        "mode": "0o644"
+      },
+      "qlib/QoreMediaUtils.qm": {
+        "sha256": "edd8174a3a2ad6faf9c2bd0b6a50c2520281b3df4b767c3d49d277ea5bb1d12b",
+        "mode": "0o644"
+      },
+      "qlib/QoreModelRegistry/AbstractModelRegistryBackend.qc": {
+        "sha256": "ae20e4058f60f126ff7475d05a0b1705d1e4b61aac20c5f8594bc1bb89c9c7f3",
+        "mode": "0o644"
+      },
+      "qlib/QoreModelRegistry/ModelRegistry.qc": {
+        "sha256": "2135fc00d2a41aac95b73d4b82cf010182944e6060f2f77d1c55c4d30cccce86",
+        "mode": "0o644"
+      },
+      "qlib/QoreModelRegistry/QoreModelRegistry.qm": {
+        "sha256": "c01f0c853b2842b6d2ab52233474ef37d22f7b45513e0c4ed281533746f57e4e",
+        "mode": "0o644"
+      },
+      "qlib/QoreOnnxExport/OnnxExporter.qc": {
+        "sha256": "ef00b388acabc1e46a6ce7d142435890063c40d393fafa760f031082e6386e4a",
+        "mode": "0o644"
+      },
+      "qlib/QoreOnnxExport/QoreOnnxExport.qm": {
+        "sha256": "82a38ada688e9fbe7f093fa32201acdd5c1ccde438e5ac35ae97b2381bee37b3",
+        "mode": "0o644"
+      },
+      "qlib/QoreRagTypes.qm": {
+        "sha256": "7054d66381951308623351ad7371cfa0e907ca8ad042d9b0476906bd69b1f96c",
+        "mode": "0o644"
+      },
+      "qlib/QoreRagUtils/HttpGatewayReranker.qc": {
+        "sha256": "cf3a37af7f1b2825c044afb46fe1cff4b60ef003b787cd0cb610283096bd90d3",
+        "mode": "0o644"
+      },
+      "qlib/QoreRagUtils/LocalOnnxEmbedder.qc": {
+        "sha256": "797b9a6d31cdda372b2e5029739649b66b645a3a98ee8cfbcf7cbcf70cd3c1f3",
+        "mode": "0o644"
+      },
+      "qlib/QoreRagUtils/LocalOnnxReranker.qc": {
+        "sha256": "3b312a9e954835cf0a32b15f9ba6d61ef2a74da5c36efb3a15f300e9f880c783",
+        "mode": "0o644"
+      },
+      "qlib/QoreRagUtils/PgVectorRagProvider.qc": {
+        "sha256": "507c90b69f4a07a883b55cf4456a0fe83e2186a174ceb50c750e5c7ac8e8c09a",
+        "mode": "0o644"
+      },
+      "qlib/QoreRagUtils/QoreRagUtils.qm": {
+        "sha256": "6ff03d9d8fb3fce4cd38911cbd9b13bfd3fea99f7ac86e094200225ee6b6ce5a",
+        "mode": "0o644"
+      },
+      "qlib/QoreRagUtils/SGLangReranker.qc": {
+        "sha256": "e60dc5a82494399f65d451a5d029277b71953fb6ef08365c73815514bcdda8fa",
+        "mode": "0o644"
+      },
+      "qlib/QoreRepl/QoreRepl.qc": {
+        "sha256": "b88a8907b4a99095749e77c5f38d8ea3167b7fa435daeb9132d997054b64707b",
+        "mode": "0o644"
+      },
+      "qlib/QoreSpeechUtils.qm": {
+        "sha256": "5dda6da1b1920d2214b4cd6d901cf84e46372af5cd5a5f1aaa0782e9e721aee8",
+        "mode": "0o644"
+      },
+      "qlib/QoreStructuredExtraction/QoreStructuredExtraction.qm": {
+        "sha256": "5bbe98a2bd3a4a4a3eb53ea1e70d5b702cbcd776cf633f85f2d188c9d310c86a",
+        "mode": "0o644"
+      },
+      "qlib/QoreTokenizerUtils/CrossEncoderReranker.qc": {
+        "sha256": "b3553ac299bde4acd02589859c77130923635ebffa3ebbb126aca803520688e0",
+        "mode": "0o644"
+      },
+      "qlib/QoreTokenizerUtils/DocumentChunker.qc": {
+        "sha256": "9ca561bcc854fdb228d330b9e82e4259da9f8a4e7df01b36a16ed5b4afea0cdd",
+        "mode": "0o644"
+      },
+      "qlib/QoreTokenizerUtils/EmbeddingModel.qc": {
+        "sha256": "24c83c202623e720fc5cd67a8621e9d1a1ed9cade706a2c9ab3891ae68a766e8",
+        "mode": "0o644"
+      },
+      "qlib/QoreTokenizerUtils/QoreTokenizerUtils.qm": {
+        "sha256": "503a81926e39f124503c12f42ed8722baa120e7e10d1ebbf2bd3f1fd8e76c3c0",
+        "mode": "0o644"
+      },
+      "qlib/QoreTokenizerUtils/SemanticDocumentChunker.qc": {
+        "sha256": "e20fd33f117567ace6ec76b22b2772632081c7c418cf5c36e7f5be3987549fed",
+        "mode": "0o644"
+      },
+      "qlib/QoreTokenizerUtils/StructuredDocumentChunker.qc": {
+        "sha256": "e71dfa9103343103dc5052bf210f715a652d46620a39fd116449cc3a24b11b31",
+        "mode": "0o644"
+      },
+      "qlib/QoreTokenizerUtils/TokenCounter.qc": {
+        "sha256": "3e208a1b7edd3df390122bbbf25acc4b48e322af443eb9feffee2ba2f42f0d0c",
+        "mode": "0o644"
+      },
+      "qlib/RestClient.qm": {
+        "sha256": "2e8a331ab6c0a26c40a0ec890a75715e3d419cd5b7da73712cc8be56ddc7a198",
+        "mode": "0o644"
+      },
+      "qlib/RestClientDataProvider/GenericApiCallProvider.qc": {
+        "sha256": "e5659a90f625b8d8ff109f567cf70021a7d8d5ba03d814c9118309ab2d190aab",
+        "mode": "0o644"
+      },
+      "qlib/RestClientDataProvider/GenericApiCallRequestDataType.qc": {
+        "sha256": "14fb91c9c3ece2f79ece244b018aa01b2763ac8b4418cf387fd241e9f82e2e44",
+        "mode": "0o644"
+      },
+      "qlib/RestClientDataProvider/GenericApiCallResponseDataType.qc": {
+        "sha256": "932113ec5e5a50eb71e61b204a7a51b10dc18a18f4d7980f1b4b74d738da034f",
+        "mode": "0o644"
+      },
+      "qlib/RestClientDataProvider/RestClientDataProvider.qm": {
+        "sha256": "38c5d6d80a80e5c72990e8bead0bb2b1d90a48ef5c4f16f70b681dbe3b5873a1",
+        "mode": "0o644"
+      },
+      "qlib/RestClientDataProvider/RestClientDataProviderBase.qc": {
+        "sha256": "36bd67891b6e2d16d5c6599f7ae2006177178dc481f5786c3c3311beb2101f69",
+        "mode": "0o644"
+      },
+      "qlib/RestClientIo.qm": {
+        "sha256": "a5bce3a3d806dc5579d17cd3375a38b54098598e13c0314a262fd2ffde12f6a4",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaActions/RestSchemaActionDataProvider.qc": {
+        "sha256": "5b4cc652c9b00ae01db48b2d8378bf288b4beccd7bc096df155a75cf4dc648be",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaActions/RestSchemaActionDefs.qc": {
+        "sha256": "9a756aac870e5960b047b0c5d5ec14fc4faabe4d0648604f084409687618209e",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaActions/RestSchemaActionOperation.qc": {
+        "sha256": "aa4de53918e2acfe2d358c4e836cc94b00cec50ed2a567c8263c76f8a02fa9ba",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaActions/RestSchemaActionSet.qc": {
+        "sha256": "7625c86d179d0583874269a6867c2dcb8d3a799cfd5cf5a2a0ec069947b55efe",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaActions/RestSchemaActions.qm": {
+        "sha256": "b6eb86a13a03ed64f86b9a1d7f6a65eddfa50cc4385b8c5dffe1e2b4e9c14158",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaActions/RestSchemaHostRouter.qc": {
+        "sha256": "e55a266ddc7c64966465f964a4cc5e6997d87bd98094b555975825b89e669b63",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaActions/RestSchemaImporter.qc": {
+        "sha256": "012d1e702a7af32fc19e4a395ffd65f757f63041fbd9f90d7ad4e7e371741faa",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaActions/RestSchemaPruner.qc": {
+        "sha256": "b116684d290bad472a86bd8cdfab20bbfc4336c246e73a660d87d59b61a8a200",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaActions/RestSchemaRecordDefs.qc": {
+        "sha256": "ad69aa3f87d7670a5e516a64a74a53858c25f44a837578b3b91d7e92be4a03cc",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaActions/RestSchemaRecordFilter.qc": {
+        "sha256": "107d45e7eb16b5607273d07c0d0c4b5b1e17f124e1b375634e4ffe25131b9dca",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaActions/RestSchemaRecordPageIterator.qc": {
+        "sha256": "5a8ff6bf95272224acf2de67b8790739620da01412a83474d8f0f1b6fc6171bf",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaActions/RestSchemaTableDataProvider.qc": {
+        "sha256": "6179ebe3cfeec080963ab16e83598f4259af14a801a51068c92016bbf62723a9",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaActions/RestSchemaTablesDataProvider.qc": {
+        "sha256": "301561151a754e796be90bb338ef551dcbeeaff388514d53b642dd3990bbc936",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaDataProvider/RestSchemaDataProvider.qm": {
+        "sha256": "ba7dd19c990f3b1cee2af6c28f0d564f8258cce2efff1dc2008b3f32d17066dc",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaDataProvider/RestSchemaRequestDataProvider.qc": {
+        "sha256": "723bfdf1293f0ef5f4d646275eb5ee75b5d6454b757f89fe023624135fd605ca",
+        "mode": "0o644"
+      },
+      "qlib/RestSchemaValidator.qm": {
+        "sha256": "6d0906f824400bfa757777977fd9e5465e0a3c8b4003e7ba7ab7b82aa1de082c",
+        "mode": "0o644"
+      },
+      "qlib/SGLangDataProvider/SGLangChatCompletionDataProvider.qc": {
+        "sha256": "7d4579f7bbfae1eedeeba076749f6744d17e83bb26f56986ca500ac4c5401a35",
+        "mode": "0o644"
+      },
+      "qlib/SGLangDataProvider/SGLangDataProvider.qm": {
+        "sha256": "d7ae972b846cd3af723baf810a11cd50c2c53a0c8f0f8ed368fdaa5325a09ed9",
+        "mode": "0o644"
+      },
+      "qlib/SGLangDataProvider/SGLangEmbeddingsDataProvider.qc": {
+        "sha256": "7d73a3b4f4bfd9ee46bab1d93f0d76a3760077c6899b01310ac8920159941015",
+        "mode": "0o644"
+      },
+      "qlib/SGLangDataProvider/SGLangFlushCacheDataProvider.qc": {
+        "sha256": "229a31fb586476a175cf0e54e59a9a1e7c86e35444e667605f7d9c93949349ad",
+        "mode": "0o644"
+      },
+      "qlib/SGLangDataProvider/SGLangGenerateDataProvider.qc": {
+        "sha256": "be8ba01a58eca6bf1b5c982a737f3ce4ba780219041aaa1b88ef0dcd1649964f",
+        "mode": "0o644"
+      },
+      "qlib/SGLangDataProvider/SGLangGenerateRequestDataType.qc": {
+        "sha256": "d1be1c6fdfc786fb1fd1b1b0a2a2185b786a8c6e715baeb272063124382410cd",
+        "mode": "0o644"
+      },
+      "qlib/SGLangDataProvider/SGLangGenerateResponseDataType.qc": {
+        "sha256": "f3121ebf4ee741e8b8d199270fbdaccf7654c7ba40b8ac9ca6af348f599e8e33",
+        "mode": "0o644"
+      },
+      "qlib/SGLangDataProvider/SGLangServerInfoDataProvider.qc": {
+        "sha256": "57d83a1c927eb86c7252fce597db3e586b31f50bfcd932d8f910db907b373113",
+        "mode": "0o644"
+      },
+      "qlib/SGLangRestClient.qm": {
+        "sha256": "7147f989a187523bad17b1057f529046fcce1dd63c95cc665196955338548115",
+        "mode": "0o644"
+      },
+      "qlib/SalesforceRestClient.qm": {
+        "sha256": "80b7a206edf9dc351e1d519d4bee996d9be592a9cf787757c0130a666ca09b56",
+        "mode": "0o644"
+      },
+      "qlib/SalesforceRestDataProvider/SalesforceRestDataProviderBase.qc": {
+        "sha256": "3c8545b240d2642c7891bbe87d268d9d34b6c27f294ab97b20343ffd7bff9cab",
+        "mode": "0o644"
+      },
+      "qlib/Schema/DataSchema.qc": {
+        "sha256": "87d52c6b3ac88053cd9d05043a5cd110907c4d882108be47aaea297b79c94a89",
+        "mode": "0o644"
+      },
+      "qlib/Schema/DataSchemaLoader.qc": {
+        "sha256": "7714492185649891316d05922d0fb973370a24d82982a7f6dc1feaa0acdde0d3",
+        "mode": "0o644"
+      },
+      "qlib/Schema/Schema.qm": {
+        "sha256": "39c60d3b4630d748c6eacccc786a34f019a06dcc9c7b32e845677c4af0fe829c",
+        "mode": "0o644"
+      },
+      "qlib/SearchIndexDataProvider/SearchIndexDataProvider.qc": {
+        "sha256": "39b9b81f4031af9975cb54ba17620a980a9d46c3dad07d0b9e68aa641d941aa8",
+        "mode": "0o644"
+      },
+      "qlib/SearchIndexDataProvider/SearchIndexDataProvider.qm": {
+        "sha256": "255531e195465622933a4108810f91691df88186287b42c8dea26538cb682e06",
+        "mode": "0o644"
+      },
+      "qlib/SegmentDataProvider/SegmentDataProviderBase.qc": {
+        "sha256": "c1ea3eda92247e44f1459ed3c76c9ea9ec12eea3d5283cb4f2fe1e9b0187a367",
+        "mode": "0o644"
+      },
+      "qlib/SendCloudRestClient.qm": {
+        "sha256": "1e3a91fdda3cee530e1fd4db9226e9719b61f10f0d1ce6bba043a925bb7d629c",
+        "mode": "0o644"
+      },
+      "qlib/ServerSentEventClient/ServerSentEventClient.qc": {
+        "sha256": "bb745995f93f64b278358289ca4ac9d7b8030ddb664bfcba159bcd35bc567fae",
+        "mode": "0o644"
+      },
+      "qlib/ServerSentEventClient/ServerSentEventConnection.qc": {
+        "sha256": "39288c2eaefd0f31ab68107b385d28e47785bb4b690aa7210a8d541e0dc77eb1",
+        "mode": "0o644"
+      },
+      "qlib/ServerSentEventHandler/SseObservableBridge.qc": {
+        "sha256": "6436fc6c231a893aec3dea03c9a52823659956fa43fb855493a1b1b625383aed",
+        "mode": "0o644"
+      },
+      "qlib/SharePointDataProvider/SharePointDataProviderBase.qc": {
+        "sha256": "0ea3a6a0af422d63f056bb1ed4d9881a137638aa40dca311c9b6792c368e6c39",
+        "mode": "0o644"
+      },
+      "qlib/ShippoDataProvider/ShippoDataProvider.qm": {
+        "sha256": "bcda7a6d5aecea6d9632def94cdadf3eacbf9490ef1fc44014334e921124263b",
+        "mode": "0o644"
+      },
+      "qlib/SmartSheetDataProvider/SmartSheetDataProviderBase.qc": {
+        "sha256": "c8c129de6f3d19cdcc1618dfac54ba1af2c9ae48b123debfc93fb897aadd3d75",
+        "mode": "0o644"
+      },
+      "qlib/SqlUtil/AbstractTable.qc": {
+        "sha256": "73ed628a912c6baf09e73899ea1e491623e73fd21edb0b0fdd0b280985474126",
+        "mode": "0o644"
+      },
+      "qlib/SqlUtil/AutoTriggerHelper.qc": {
+        "sha256": "e218b36f40655964de0c68a8e5c5cc8332941dcdbd572b68d45a80ed61ba5111",
+        "mode": "0o644"
+      },
+      "qlib/SqlUtil/SqlUtil.qm": {
+        "sha256": "49fcfccac1310f2b23145f230ca989261e81d984e376ed17e4f5f2f44f80c3d7",
+        "mode": "0o644"
+      },
+      "qlib/StabilityAiDataProvider/StabilityAiDataProvider.qm": {
+        "sha256": "c6b324dc26f4c68eed7199fface2be34c6fdcf828d48a13d852a99b225beff00",
+        "mode": "0o644"
+      },
+      "qlib/StabilityAiRestClient/StabilityAiRestClient.qm": {
+        "sha256": "5cb8050fd60dd9d2138457fa3653f4e9f11bd534d6f422c9fa7c12fe51e5873c",
+        "mode": "0o644"
+      },
+      "qlib/StripeDataProvider/StripeBaseEventDataProvider.qc": {
+        "sha256": "fb0483d72ebbb20ad6e20931fcc487839a1553154c0c37ea3790e086ccd607b3",
+        "mode": "0o644"
+      },
+      "qlib/StripeDataProvider/StripeDataProvider.qm": {
+        "sha256": "05cde8f5a269686fcf8e3535a5dd087f1e612f66a10602c9f8ffed0c50ef4870",
+        "mode": "0o644"
+      },
+      "qlib/StripeDataProvider/StripeManifest.qc": {
+        "sha256": "b7a35b4fd6c310d2ebef0eb525ecad1a2eab6254c96e1bdd5f13a0e7c98f595f",
+        "mode": "0o644"
+      },
+      "qlib/StripeDataProvider/StripeRecordTables.qc": {
+        "sha256": "4affadd0eb0e3fc974e7023dfe734c69a32cb3d94eac2500db8350ffef0e80b1",
+        "mode": "0o644"
+      },
+      "qlib/StripeRestClient.qm": {
+        "sha256": "9d8918cc5133fc68d71c85711357f926293408ae3b9abba9eacfc8818965ee50",
+        "mode": "0o644"
+      },
+      "qlib/SystemeIoDataProvider/SystemeIoDataProviderBase.qc": {
+        "sha256": "26b987ea1a18312d3a1071daeb77c133d3847da670c0129a4f9c04edf160fffd",
+        "mode": "0o644"
+      },
+      "qlib/TableMapper.qm": {
+        "sha256": "60147500bf7e6c8c966122bd4106545ba673b54bf65968689d0c6be6cf759a35",
+        "mode": "0o644"
+      },
+      "qlib/TallyDataProvider/TallyDataProviderBase.qc": {
+        "sha256": "876c0a1a4c4d8fdd315d332905064ad9b2d18b4e8197f54c7beb8a96f7379124",
+        "mode": "0o644"
+      },
+      "qlib/TallyDataProvider/TallyWebhookEventPayloadDataType.qc": {
+        "sha256": "a8a45fc0cd0b37607e132ff65989798c9c91e11319e282fcdc43480cb0d053cf",
+        "mode": "0o644"
+      },
+      "qlib/TavilyDataProvider/TavilyDataProvider.qm": {
+        "sha256": "56796ddffc4453862b8646bb546ab78cfdd66a13e5dd0b986bd983f872836288",
+        "mode": "0o644"
+      },
+      "qlib/TavilyRestClient.qm": {
+        "sha256": "23df010f94bfd67d3ea6b0bd4bd8a5fbad3801234781000e31189c79c0b7f19d",
+        "mode": "0o644"
+      },
+      "qlib/TerminalFormat/TerminalMarkdownRenderer.qc": {
+        "sha256": "68c9ee4d57155af6aff0a7b02b0a8d535d194f147f6fc12557b0a9be841d1ceb",
+        "mode": "0o644"
+      },
+      "qlib/TogetherDataProvider/TogetherChatCompletionDataProvider.qc": {
+        "sha256": "f2838243df719f9ce586c0e80d821e716d3addf33e5e3bd16f2f0eef44478335",
+        "mode": "0o644"
+      },
+      "qlib/TogetherDataProvider/TogetherDataProvider.qm": {
+        "sha256": "e305d0664dbe31a516740e4c7cd4f22e363935d486806bcc8011d43154b9cf29",
+        "mode": "0o644"
+      },
+      "qlib/TogetherDataProvider/TogetherEmbeddingDataProvider.qc": {
+        "sha256": "622e8a5becd2968430e5ab5d6a32896a50f702a055a143fc911d21d6dc9d5021",
+        "mode": "0o644"
+      },
+      "qlib/TogetherDataProvider/TogetherImageGenerationDataProvider.qc": {
+        "sha256": "60eb6b1d894511566920abb46d4205265b8176ea80edc282a24867deb53a7009",
+        "mode": "0o644"
+      },
+      "qlib/TogetherRestClient.qm": {
+        "sha256": "11153f3611e14af0839f160a6b1e8457de77095f36ba021a981bfda4cd43e060",
+        "mode": "0o644"
+      },
+      "qlib/UnleashedDataProvider/UnleashedDataProvider.qm": {
+        "sha256": "8caad6bc1f85ddbefd4dac6ee4a3f6b0afded970d7f3c2f6cf1305b8901d6408",
+        "mode": "0o644"
+      },
+      "qlib/UnstructuredDataProvider/UnstructuredDataProvider.qm": {
+        "sha256": "2780fa5cf9e2b19448b7c519668fb5ed8f9afea456dddde671429a618b622dee",
+        "mode": "0o644"
+      },
+      "qlib/UnstructuredDataProvider/UnstructuredPlatformEventDataProvider.qc": {
+        "sha256": "4c8f3733c12bceeef9da147f638f08edfca42da1ecbca740d506a23325597483",
+        "mode": "0o644"
+      },
+      "qlib/UnstructuredRestClient.qm": {
+        "sha256": "2474aea8714b11db8600d9ca611ed83b0b30d5c796468b0c38818c9fcba2a71a",
+        "mode": "0o644"
+      },
+      "qlib/Util.qm": {
+        "sha256": "b5c45858edafcdaa63832003a0ea024de9116d10b54f8ed5aef8ac863466fd14",
+        "mode": "0o644"
+      },
+      "qlib/VertexAiDataProvider/VertexAiDataProvider.qm": {
+        "sha256": "cec9254fc26171499153ed9dda4678feb3d555f76796183ae121217c5b238221",
+        "mode": "0o644"
+      },
+      "qlib/WaveDataProvider/WaveDataProvider.qm": {
+        "sha256": "32c474b9259e9ba9463f170e88063dd81319a3c2647c18e6b5ce858d6cc4689d",
+        "mode": "0o644"
+      },
+      "qlib/WaveRestClient.qm": {
+        "sha256": "2ff98a0a32b3b60001c8e09d746a9fa928d1e8e7d21bc49951f8d57a452e3b35",
+        "mode": "0o644"
+      },
+      "qlib/WeaviateDataProvider/WeaviateDataProvider.qm": {
+        "sha256": "a4cfbc0fc921027d678c973d5255a1b86fab19978d7204ab06e7005e4c8ed9bb",
+        "mode": "0o644"
+      },
+      "qlib/WeaviateRestClient.qm": {
+        "sha256": "35136807fd5ab232034dce86fa3b267d25b6b731edef67cc835c7383bfdbbe20",
+        "mode": "0o644"
+      },
+      "qlib/WebSocketClient.qm": {
+        "sha256": "4cd5d5c1f0ca842d8f6cf0cc7bee8815fa13f570a101fce547a91a65d5258975",
+        "mode": "0o644"
+      },
+      "qlib/WebSocketHandler.qm": {
+        "sha256": "3db09da096007670df1471a75739b02a89617b0716cdddd439b25473213bd960",
+        "mode": "0o644"
+      },
+      "qlib/WebUtil.qm": {
+        "sha256": "54375b29035f630ca6e8f03e2216943b1d338ddc7074ee760ccd768e88a6e270",
+        "mode": "0o644"
+      },
+      "qlib/WooCommerceDataProvider/WooCommerceDataProviderDefs.qc": {
+        "sha256": "5b5568adef399de59f36eb98f9d89a7ed4da560b5e8ff81325a4327c5c10622f",
+        "mode": "0o644"
+      },
+      "qlib/WooCommerceDataProvider/WooCommerceProductAttributeDataType.qc": {
+        "sha256": "4358d3b34e83ccacd8157b93b02046753e77b28387a4ae637a0b9f8e9bf5a380",
+        "mode": "0o644"
+      },
+      "qlib/WooCommerceDataProvider/WooCommerceProductDownloadDataType.qc": {
+        "sha256": "4691ac4c1ec28d5df4ad131623906d4f8eb193e80c42f04909a635eb90b4d568",
+        "mode": "0o644"
+      },
+      "qlib/XeroDataProvider/XeroDataProvider.qm": {
+        "sha256": "eabcfce1f903a20e05844bd038bc9437ebac34016a1459c8b943879beaca8fa9",
+        "mode": "0o644"
+      },
+      "qlib/XeroDataProvider/XeroEmployeeDataProviders.qc": {
+        "sha256": "570255325c0ed2015f06ff329795223740605381b06d646ff87c8c1298158257",
+        "mode": "0o644"
+      },
+      "qlib/XeroDataProvider/XeroEventDataProviders.qc": {
+        "sha256": "c749c3ad53fd059119956ec8f7fe466fa1ed49634b5ced07313914a2476c1388",
+        "mode": "0o644"
+      },
+      "qlib/XeroDataProvider/XeroManifest.qc": {
+        "sha256": "bb3a55c45f0bbf8a75a110b41f65ef9840afa43008f7e27089786e038e61509f",
+        "mode": "0o644"
+      },
+      "qlib/XeroDataProvider/XeroRecordTables.qc": {
+        "sha256": "12b1e5160751ce53b6367770fb90783c0a06e6830be50c34bbcb8f125efd7bfa",
+        "mode": "0o644"
+      },
+      "qlib/XeroDataProvider/XeroSchema.qc": {
+        "sha256": "67683ba0e6ecb5bd65103bc157fc79155a346df22e9854f4fbde013843cfddf2",
+        "mode": "0o644"
+      },
+      "qlib/XeroRestClient.qm": {
+        "sha256": "0f5ab2b486430ad7e5ac2d707a603821e7c6aed0cf6587f7907a4b45ee438263",
+        "mode": "0o644"
+      },
+      "qlib/YamlDocumentDataProvider/YamlDocumentWriteDataProvider.qc": {
+        "sha256": "397d0f679a9a94fcce7a5727e3ff4adc13d5a792f1f1416bcd65720ea9b21aec",
+        "mode": "0o644"
+      },
+      "qlib/YamlRpcClient.qm": {
+        "sha256": "c4f4316c9482c4f46a4c81428336187e89eac9f56ab4e4d819bd06ba584239c7",
+        "mode": "0o644"
+      },
+      "qore.spec-multi": {
+        "sha256": "c81902a84beb0621516da3f1d3fe387d108b9667494098bcb217dd8db93d88fd",
+        "mode": "0o644"
+      },
+      "rpm/README.rst": {
+        "sha256": "68fcee91fb9a06ca9e6718648284228c7bebdcca513acdf7e0f3921c1f44272a",
+        "mode": "0o644"
+      },
+      "rpm/tests/documentation-sdk22.audit.rst": {
+        "sha256": "2a07843f7db65b62780627106562e36a71dacf44a006898ac97e363cff4d3496",
+        "mode": "0o644"
+      },
+      "rpm/tests/test_debug_source_order.py": {
+        "sha256": "0cfb86089340c50670af22d9aecfd10763f92c2b220c6a44e5329805e239d8a8",
+        "mode": "0o644"
+      },
+      "rpm/tests/test_flex_source_paths.py": {
+        "sha256": "92ce7c29d078d5f3323a865033e287270151cdd043c029f5fe76227880092161",
+        "mode": "0o755"
+      }
+    },
+    "commit": "49152d805b73c417db2bf3c0ac72dd22bfa8f058"
+  },
+  "audit": {
+    "pass": 16,
+    "not_applicable": 46,
+    "fail": 0
+  },
+  "tests": {
+    "documentation_helpers": 35,
+    "literal_regression_distribution_runs": 3,
+    "literal_rendering_index_passes": 21,
+    "visible_text_checks": 12,
+    "prior_complete_module_renders": 106,
+    "qdx_cases": 136,
+    "qdx_assertions": 744,
+    "scanner_distribution_positives": 3,
+    "scanner_distribution_negatives": 3,
+    "scanner_valgrind_errors": 0
+  },
+  "push": {
+    "status": "failed",
+    "remote": "origin",
+    "branch": "rpm/documentation-sdk-20261006",
+    "error": "remote rejected: Internal Server Error",
+    "force_push": false
+  },
+  "qualification_references": [
+    "core-doc-sdk22-focused-20261007.json",
+    "core-doc-literals-20261007.json",
+    "core-flex-source-path-20261007.json",
+    "core-debug-source-order-20261007.json",
+    "qdx-develop-20261007.json",
+    "core-sdk22-candidate4-20261007.json"
+  ],
+  "remaining": [
+    "Canonical builds and diagnostic review on Fedora, Leap and EL10",
+    "Installed SDK, compiler, debugger and minimal-runtime ONNX verification",
+    "OBS source upload, native x86_64/aarch64 builds and installed qualification",
+    "Repository lifecycle and publication gates"
+  ],
+  "files_sha256": {
+    "evidence/controls/core-sdk22-source-20261007/audit-core-sdk22-final-20261007.py": "392b007a0793c151b87a2bd9dea801452ef36ba24d7f5fb857a4533bcfbb1750",
+    "evidence/controls/core-sdk22-source-20261007/audit.rst": "2a07843f7db65b62780627106562e36a71dacf44a006898ac97e363cff4d3496",
+    "evidence/controls/core-sdk22-source-20261007/build-core-sdk22-canonical-final-20261007.py": "b9d902788e055dddcf2f560ca48b91a2b64daea2f95b81abc1b9067d74a7f5e6",
+    "evidence/controls/core-sdk22-source-20261007/guide-tests.log": "3901203183620c74b2e184f02767cdd683b6a9661ed8ac58a6456c0534788730",
+    "evidence/controls/core-sdk22-source-20261007/markup-tests.log": "a2f40907494c5d3c7b4d7eb7e2048474f8af7769af1cbf95f033e2f80d772326",
+    "evidence/controls/core-sdk22-source-20261007/module-tests.log": "ae429f6f5ff3f27870dec86d48950784a3edcae42548f087f8af7c9d87fb84ca",
+    "evidence/controls/core-sdk22-source-20261007/phase-tests.log": "cba681cae732fa09ff2c7761c8d12b3cbcef620fac2607329ac5e759ebeafff7",
+    "evidence/controls/core-sdk22-source-20261007/review-core-sdk22-final-source-20261007.py": "9a2a469cdb66222db4ae5faf39e80131eb1e1aa55e31146a008cc58bdb08af01",
+    "evidence/controls/core-sdk22-source-20261007/source-manifest.json": "1e335677a74d9857541ac7ee95b2faff708d8ba0a706b3e410896312130e6119",
+    "evidence/controls/core-sdk22-source-20261007/source-review.json": "9d97991f0fbae2567f324360ff4e5e0a063353a04b536ce7724dcc886152ed72"
+  }
+}

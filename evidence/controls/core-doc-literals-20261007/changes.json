@@ -1,0 +1,47 @@
+[
+  {
+    "file": "lib/QC_HTTPClient.qpp",
+    "changes": [
+      [
+        "percent encoding are: <tt>{}|\\\\^~[]`</tt>",
+        "percent encoding are:\n      @verbatim\n{}|\\^~[]`\n      @endverbatim"
+      ]
+    ],
+    "before": "0b33b7c5651b14f52f67de7e1b4e7ac54a8fb17fef7c0d739c7fd5e657fbb9cf",
+    "after": "c3e473f0d5b67586ec75cefb0736fe94468a9b91a64dd3c04ee63ec0ef384dfd"
+  },
+  {
+    "file": "qlib/TableMapper.qm",
+    "changes": [
+      [
+        "@ref TableMapper::InboundTableMapper::queueData \"queueData(list, __7_ hash)",
+        "@ref TableMapper::InboundTableMapper::queueData \"queueData(list, __7_ hash)\""
+      ]
+    ],
+    "before": "e2ed95ac73eaf660304d35c5cbd177679de8378bf8a3ae7c5d51d10566791ebd",
+    "after": "60147500bf7e6c8c966122bd4106545ba673b54bf65968689d0c6be6cf759a35"
+  },
+  {
+    "file": "doxygen/lang/900_release_notes.dox.tmpl",
+    "changes": [
+      [
+        "@ref Qore::date(string, string) \"date(string, string)\n",
+        "@ref Qore::date(string, string) \"date(string, string)\"\n"
+      ],
+      [
+        "\\c \"esmtptls://user@password:smtp.example.com\"",
+        "<tt>esmtptls://user:password\\@smtp.example.com</tt>"
+      ],
+      [
+        "\\c \"\\n\", \\c \"\\r\", or \\c \"\\r\\n\"",
+        "<tt>\\\\n</tt>, <tt>\\\\r</tt>, or <tt>\\\\r\\\\n</tt>"
+      ],
+      [
+        "scanner fix: accept \\c \"\\r\" as whitespace",
+        "scanner fix: accept <tt>\\\\r</tt> as whitespace"
+      ]
+    ],
+    "before": "4bed6d1c17cb0493520d4f8210ffcbbd162d66fd8f0d3289ab0e7f63104d434c",
+    "after": "ed5f4ee5bb39ee3fabd6e816b5c8352feeefac1955c87e00ad7611991cda11d0"
+  }
+]
