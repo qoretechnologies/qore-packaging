@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "status": "The purge/restart fixture passes focused qualification; full NATS builds and four other candidate44 failures remain open.",
+  "root_cause": "The first publication at jetstream_cluster_3_test.go:4655 can precede stream subscription arrival on the randomly selected publisher account route. Stream creation replies use a separate API route.",
+  "fix": "Join the existing stream-interest event before the first setup publication. Keep purge, snapshot and restart behavior and every original assertion unchanged.",
+  "results": {
+    "fedora": {
+      "exit_code": 0,
+      "race_enabled": true,
+      "top_level_passes": 10
+    },
+    "leap": {
+      "exit_code": 0,
+      "race_enabled": true,
+      "top_level_passes": 10
+    },
+    "el10": {
+      "exit_code": 0,
+      "race_enabled": true,
+      "top_level_passes": 10
+    }
+  },
+  "limits": [
+    "This reuses the route-interest helper qualified by earlier fixtures; no new timing-based retry, sleep or deadline change is introduced.",
+    "Historical unresolved timeout/performance gates remain open."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-purge-route-232-20261007/el10-status.json": "561648d74875890eb7f3e45d88757fc3308a4ebde5245d4d06f386a40e223c49",
+    "evidence/controls/nats-purge-route-232-20261007/el10-tests.log": "72a2c5ff829816497f7f5898234ad94aeef953265815f6e876ee20366a8db815",
+    "evidence/controls/nats-purge-route-232-20261007/fedora-status.json": "2926fc2458cace7606f905e061eb49532397e1024fe9700ca123db1ccd5f10ce",
+    "evidence/controls/nats-purge-route-232-20261007/fedora-tests.log": "430876dd186b901a170dccca1ab84d8f830fb15d9e27dec81204be4ec463b1f4",
+    "evidence/controls/nats-purge-route-232-20261007/leap-status.json": "06f12454c4380b140cd9d4522a24a463680768cbf802917e8eb7efd60173345f",
+    "evidence/controls/nats-purge-route-232-20261007/leap-tests.log": "865f6c73c1cb213430b4644002a2dffc5257446d624f93c7ff8b9117e42c1ccd",
+    "evidence/controls/nats-purge-route-232-20261007/nats-purge-route-232-dependency-tests-20261007.log": "c82f030ffc496622d9c3850546b5eb120f53657b76eb0377b48e40688f358a89",
+    "evidence/controls/nats-purge-route-232-20261007/nats-purge-route-232-fixed.json": "5bf88355b4c5ebb7f8d2e9d1e7e91cb6c3aaab13d31da084aa010f417df57010",
+    "evidence/controls/nats-purge-route-232-20261007/nats-purge-route-232-patch-check-20261007.log": "3bb85673cb2444ed8ce02af78d0039f91563ed19fefc65ac4e9628d5c57cc007",
+    "evidence/controls/nats-purge-route-232-20261007/nats-server-purge-route-tests.patch": "96ceebe61e1bd60da4dd1ffea1b920a87d5842ec37a6a6fa4e11fbec05fd7fb9",
+    "evidence/controls/nats-purge-route-232-20261007/run-nats-focused-38.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a"
+  },
+  "metadata_validation": {
+    "dependency_tests": 17,
+    "patch_dry_run": "passed with fuzz=0"
+  }
+}

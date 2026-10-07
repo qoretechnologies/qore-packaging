@@ -1,0 +1,39 @@
+{
+  "source": "work/nats-prepared-44/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-purge-route-232-fixed",
+      "target": "fedora",
+      "count": 10,
+      "race": true,
+      "pattern": "^TestJetStreamClusterPurgeExReplayAfterRestart$",
+      "sublist": "work/nats-prepared-44/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-purge-route-232-20261007/jetstream_cluster_3_test.go": "server/jetstream_cluster_3_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-purge-route-232-fixed",
+      "target": "leap",
+      "count": 10,
+      "race": true,
+      "pattern": "^TestJetStreamClusterPurgeExReplayAfterRestart$",
+      "sublist": "work/nats-prepared-44/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-purge-route-232-20261007/jetstream_cluster_3_test.go": "server/jetstream_cluster_3_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-purge-route-232-fixed",
+      "target": "el10",
+      "count": 10,
+      "race": true,
+      "pattern": "^TestJetStreamClusterPurgeExReplayAfterRestart$",
+      "sublist": "work/nats-prepared-44/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-purge-route-232-20261007/jetstream_cluster_3_test.go": "server/jetstream_cluster_3_test.go"
+      }
+    }
+  ]
+}

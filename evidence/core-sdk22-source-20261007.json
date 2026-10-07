@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "date": "2026-10-07",
-  "status": "Audited source committed; complete canonical RPM qualification started. Remote push failed with GitHub Internal Server Error and must be completed before rollout.",
+  "status": "Audited source committed and pushed; complete canonical RPM qualification is running.",
   "source": {
     "branch": "rpm/documentation-sdk-20261006",
     "base": "a2e56c1e9bbf52436f6b3cb98fa9b84bc9152734",
@@ -2686,13 +2686,6 @@
     "scanner_distribution_negatives": 3,
     "scanner_valgrind_errors": 0
   },
-  "push": {
-    "status": "failed",
-    "remote": "origin",
-    "branch": "rpm/documentation-sdk-20261006",
-    "error": "remote rejected: Internal Server Error",
-    "force_push": false
-  },
   "qualification_references": [
     "core-doc-sdk22-focused-20261007.json",
     "core-doc-literals-20261007.json",
@@ -2718,5 +2711,20 @@
     "evidence/controls/core-sdk22-source-20261007/review-core-sdk22-final-source-20261007.py": "9a2a469cdb66222db4ae5faf39e80131eb1e1aa55e31146a008cc58bdb08af01",
     "evidence/controls/core-sdk22-source-20261007/source-manifest.json": "1e335677a74d9857541ac7ee95b2faff708d8ba0a706b3e410896312130e6119",
     "evidence/controls/core-sdk22-source-20261007/source-review.json": "9d97991f0fbae2567f324360ff4e5e0a063353a04b536ce7724dcc886152ed72"
+  },
+  "earlier_failed_push": {
+    "status": "failed",
+    "remote": "origin",
+    "branch": "rpm/documentation-sdk-20261006",
+    "error": "remote rejected: Internal Server Error",
+    "force_push": false
+  },
+  "push": {
+    "at_utc": "2026-10-07T17:22:33.090207+00:00",
+    "branch": "rpm/documentation-sdk-20261006",
+    "remote_commit": "49152d805b73c417db2bf3c0ac72dd22bfa8f058",
+    "force_push": false,
+    "verification": "git ls-remote origin refs/heads/rpm/documentation-sdk-20261006",
+    "status": "pushed and remote commit verified"
   }
 }

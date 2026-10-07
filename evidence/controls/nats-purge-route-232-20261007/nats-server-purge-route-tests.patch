@@ -1,0 +1,14 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Establish publication interest before the purge snapshot/replay fixture.
+--- a/server/jetstream_cluster_3_test.go
++++ b/server/jetstream_cluster_3_test.go
+@@ -4651,6 +4651,9 @@
+ 		Replicas: 3,
+ 	})
+ 	require_NoError(t, err)
++
++	// The creation reply can precede stream interest on the publisher account route.
++	awaitStreamRouteInterest(t, c, nc, "TEST")
+ 
+ 	sendStreamMsg(t, nc, "TEST.0", "OK")
+ 	sendStreamMsg(t, nc, "TEST.1", "OK")
