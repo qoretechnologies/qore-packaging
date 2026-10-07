@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User approved the exact recorded diagnostic on 2026-10-07. Focused controls pass; complete candidate10 RPM/LTO and native ARM qualification remain separate gates.",
+  "diagnostic": "/usr/include/c++/13/ostream:667:25: warning: \u2018load\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+  "call_site": "deps/v8/src/torque/cc-generator.cc:425, declaration at line 412, CCGenerator::EmitInstruction(LoadReferenceInstruction)",
+  "root_cause": "The switch covers all three FieldSynchronization values. None and Relaxed assign the load name; AcquireRelease calls the noreturn ReportError, whose MessageBuilder::Throw throws TorqueAbortCompilation. GCC still models a path past the switch without assignment.",
+  "scope": "Only this C++ output load selector. The earlier five allocator/field-mode diagnostic approvals did not include this separately emitted site.",
+  "coverage": {
+    "checks_per_run": 810000,
+    "runs": 4,
+    "total_checks": 3240000,
+    "matrix": "All three modes, three object expressions, three result types and three offsets, 10000 repetitions. Successful modes must emit the exact C++ call. Unsupported acquire-load must throw its exact error without output.",
+    "compiler": "Both O3 and O2 controls reproduce exactly the same ostream load warning; no other diagnostics.",
+    "memory": "Both Valgrind runs have zero errors and all 3240002 allocations freed.",
+    "full_baseline": "Candidate9 passes 192 native tests and all 5249 JavaScript test results, plus installed Qore/V8 runtime and SDK checks."
+  },
+  "limits": [
+    "The unchanged branch uses a typed surrounding-state adapter and standard string streams; it does not invoke the entire Torque parser.",
+    "The adapter uses runtime_error instead of TorqueAbortCompilation to check the same nonreturning rejection behavior. Production source confirms the noreturn declaration and unconditional throw.",
+    "Only declared enum values are certified; corrupted internal enum storage is outside scope.",
+    "No warning suppression, flag or runtime change is proposed."
+  ],
+  "source_sha256": {
+    "deps/v8/src/torque/cc-generator.cc": "cf93a812d72ba8334cbe17a0fd4c7850ebe569dafd7cfb34054713e768430c1d",
+    "deps/v8/src/torque/constants.h": "f8cf3943e5d5f5fc23cbfdb28b29283b9a8b4005d6dc5232b34b9983b6bb7dd3",
+    "deps/v8/src/torque/utils.h": "1a481ba62b2dc60f8ab5b1075d0ace0e70291d72269cbfa6a6d70ca79e7d21e7",
+    "deps/v8/src/torque/utils.cc": "f2eb029edace1125bcb41d02dd0c1b8b0bf1b44579dfa6879dc831a564c1ed54"
+  },
+  "files_sha256": {
+    "evidence/controls/node-cc-load-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-cc-load-20261007/control.cc": "d5559cdba39fedf852ed8a0714d9da97c0a7c531210e010cffb8fd6d5b697e01",
+    "evidence/controls/node-cc-load-20261007/debug-compile.log.gz": "b79696577988addfd5cadef0f5b2ac06a98aeac9926dfc60ad4a3ffb244339cc",
+    "evidence/controls/node-cc-load-20261007/debug-memory.log.gz": "a24268a0d48a528acb6906a24b6de156177266e9a31c4b520d51a3fea8e981cc",
+    "evidence/controls/node-cc-load-20261007/debug-normal.log.gz": "a24268a0d48a528acb6906a24b6de156177266e9a31c4b520d51a3fea8e981cc",
+    "evidence/controls/node-cc-load-20261007/debug-valgrind.log.gz": "511bb967ee7ddbfdf267f889760561a4f5877b62cc9ba9b4058f118ee0bf4f51",
+    "evidence/controls/node-cc-load-20261007/prepare.py": "ca4f5b4711d96b3a14b09b4c105b7e209bc054cfc136e648619d0af9a1083a8f",
+    "evidence/controls/node-cc-load-20261007/release-compile.log.gz": "b79696577988addfd5cadef0f5b2ac06a98aeac9926dfc60ad4a3ffb244339cc",
+    "evidence/controls/node-cc-load-20261007/release-memory.log.gz": "a24268a0d48a528acb6906a24b6de156177266e9a31c4b520d51a3fea8e981cc",
+    "evidence/controls/node-cc-load-20261007/release-normal.log.gz": "a24268a0d48a528acb6906a24b6de156177266e9a31c4b520d51a3fea8e981cc",
+    "evidence/controls/node-cc-load-20261007/release-valgrind.log.gz": "62afadd1516033676439fb6f8176ea52d2568c69785c0fe45982b1f46943fe8b",
+    "evidence/controls/node-cc-load-20261007/run.py": "5961adffcac69282ab3813c04aa66cf6887f23f2a60971c283ba87fe7744881c",
+    "evidence/controls/node-cc-load-20261007/source-extracts.json": "41090b2ed57cad2ba4aeab2ca82836249279f83e95f5e496713fa603721bf30f",
+    "evidence/controls/node-cc-load-20261007/status.json": "7fe85c588286d511eae5a23fdb487b0f65686edf3ef4cbf9bf45c9bc86cc8c77"
+  },
+  "approval": "Allow this exact diagnostic",
+  "approval_date": "2026-10-07"
+}

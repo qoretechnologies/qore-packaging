@@ -1,0 +1,6 @@
+{
+  "file": "deps/v8/src/torque/cc-generator.cc",
+  "line": 412,
+  "body": "      const char* load;\n      switch (instruction.synchronization) {\n        case FieldSynchronization::kNone:\n          load = \"ReadField\";\n          break;\n        case FieldSynchronization::kRelaxed:\n          load = \"Relaxed_ReadField\";\n          break;\n        case FieldSynchronization::kAcquireRelease:\n          ReportError(\n              \"Torque doesn't support @cppAcquireLoad on untagged data\");\n      }\n      out() << \"(\" << object << \")->\" << load << \"<\" << result_type << \">(\"\n            << offset << \");\\n\";\n",
+  "sha256": "c88f2844529b4b01aa2bc8bc099b40f245dbcc96cf8ed56ede5f8cd17a30b739"
+}

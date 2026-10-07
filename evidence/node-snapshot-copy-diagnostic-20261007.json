@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User approved the exact recorded diagnostic on 2026-10-07. Focused controls pass; complete candidate10 RPM/LTO and native ARM qualification remain separate gates.",
+  "diagnostic": "../deps/v8/src/zone/zone-containers.h:436:20: warning: \u2018void* memcpy(void*, const void*, size_t)\u2019 writing to an object of type \u2018struct v8::internal::compiler::turboshaft::SnapshotTable<v8::internal::maglev::ValueNode*>::LogEntry\u2019 with no trivial copy-assignment; use copy-initialization instead [-Wclass-memaccess]",
+  "root_cause": "LogEntry contains a TableEntry reference and two pointer values, so reference rebinding makes copy assignment unavailable. The type remains trivially copyable. ZoneVector uses memcpy only within its std::is_trivially_copyable_v<T> branch, for which representation copying is valid. GCC classifies the copy from assignment availability.",
+  "scope": "Only the SnapshotTable<maglev::ValueNode*>::LogEntry instantiation at zone-containers.h:436. The earlier class-memory approval excluded other classes, so this added instantiation is explicitly gated.",
+  "coverage": {
+    "checks_per_run": 1144940,
+    "runs": 2,
+    "total_checks": 2289880,
+    "implementation": "Actual unmodified SnapshotTable, ZoneVector and Zone allocator, linked to the package native V8 archives. No copied snapshot implementation or private accessor is used.",
+    "matrix": "Seven key counts through 4096, twenty repetitions; log growth, unchanged Set rejection, common-base rollback, diverging branches, predecessor values, merges, replay and root reset. Every Zone returns its accounted allocation to zero.",
+    "compiler": "Reproduces exactly the additional template-instantiation warning.",
+    "memory": "Valgrind reports zero errors and all 1402 allocations freed.",
+    "full_baseline": "Candidate9 passes 192 native tests, all 5249 JavaScript test results, and installed Qore/V8 runtime/SDK checks."
+  },
+  "limits": [
+    "Pointer values are opaque distinct identities and are never dereferenced; no Maglev graph execution is implied by the table control.",
+    "Native x86_64 memory checking is complete; candidate10 and native ARM remain separate package gates.",
+    "No suppression, compiler-flag or runtime change is proposed. Nontrivially-copyable types and other instantiations remain outside this exact exception."
+  ],
+  "source_sha256": {
+    "deps/v8/src/compiler/turboshaft/snapshot-table.h": "ffd8b16e002897b31bf15cead0dfc92cc3ce4802fc2f650bc921dcb54a26e1c7",
+    "deps/v8/src/zone/zone-containers.h": "fcff970a0d48746f99c168b0df3fbd96e7c4ce26d5ef43586acb89126b79c9e0"
+  },
+  "files_sha256": {
+    "evidence/controls/node-snapshot-copy-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-snapshot-copy-20261007/control.cc": "923708bcafff5b7f1164a584a3ecda3c797fd43244843212c11b2c8030f287bd",
+    "evidence/controls/node-snapshot-copy-20261007/link.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-snapshot-copy-20261007/memory.log.gz": "a9c0169d73c4ee5126008ae636358a923c715d9fbd2c4e53c15a16fc22e02014",
+    "evidence/controls/node-snapshot-copy-20261007/normal.log.gz": "a9c0169d73c4ee5126008ae636358a923c715d9fbd2c4e53c15a16fc22e02014",
+    "evidence/controls/node-snapshot-copy-20261007/original-control-compile.log.gz": "fe4399f11b0b3e3b6baaba716222afaf2dd269c286fb6792ba2f2f50e7e7187e",
+    "evidence/controls/node-snapshot-copy-20261007/run.py": "5042aad353c9f2a269b8c8fdb7b21fdbc8764d92d5045a5b1abdfcb6b9d82ae1",
+    "evidence/controls/node-snapshot-copy-20261007/status.json": "9ce91b6419247dc4e15a174c547f344cc8a6cb5d2afd809414ce8be4de8d3dd5",
+    "evidence/controls/node-snapshot-copy-20261007/valgrind.log.gz": "9f31fc3a5f23b536d7b083674ddac4acc7f7874db47bec8b465adb442db72309"
+  },
+  "approval": "Allow this exact instantiation",
+  "approval_date": "2026-10-07"
+}
