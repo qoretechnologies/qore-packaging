@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User accepted these four exact compiler diagnostic sites on 2026-10-07. Three unchanged dispatch bodies reproduce the warnings and pass focused controls. Full RPM and native ARM qualification remain separate gates.",
+  "diagnostics": [
+    {
+      "file": "deps/v8/src/compiler/linkage.h",
+      "line": 133,
+      "diagnostic": "../deps/v8/src/compiler/linkage.h:133:5: warning: \u2018descriptor_kind\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "123:         return_slot_count_(return_slot_count),\n124:         properties_(properties),\n125:         callee_saved_registers_(callee_saved_registers),\n126:         callee_saved_fp_registers_(callee_saved_fp_registers),\n127:         allocatable_registers_(allocatable_registers),\n128:         flags_(flags),\n129:         stack_order_(stack_order),\n130:         debug_name_(debug_name),\n131:         signature_hash_(signature_hash) {\n132: #ifdef V8_ENABLE_WEBASSEMBLY\n133:     if (kind == Kind::kCallWasmFunctionIndirect) {\n134:       CHECK_NE(signature_hash, kInvalidWasmSignatureHash);\n135:     }\n136: #endif\n137:   }\n138: \n139:   CallDescriptor(const CallDescriptor&) = delete;\n140:   CallDescriptor& operator=(const CallDescriptor&) = delete;\n141: \n142:   // Returns the kind of this call.\n143:   Kind kind() const { return kind_; }"
+    },
+    {
+      "file": "deps/v8/src/objects/literal-objects.cc",
+      "line": 108,
+      "diagnostic": "../deps/v8/src/objects/literal-objects.cc:108:5: warning: \u2018value_kind\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "98:              value_kind == ClassBoilerplate::kAutoAccessor);\n99:       DirectHandle<AccessorPair> pair = isolate->factory()->NewAccessorPair();\n100:       SetAccessorPlaceholderIndices(*pair, value_kind, Cast<Smi>(*value));\n101:       d = Descriptor::AccessorConstant(name, pair, DONT_ENUM);\n102:     }\n103:     descriptor_array_template->Append(&d);\n104: \n105:   } else {\n106:     // Entry found, update it.\n107:     int sorted_index = descriptor_array_template->GetDetails(entry).pointer();\n108:     if (value_kind == ClassBoilerplate::kData) {\n109:       Descriptor d = Descriptor::DataConstant(name, value, DONT_ENUM);\n110:       d.SetSortedKeyIndex(sorted_index);\n111:       descriptor_array_template->Set(entry, &d);\n112:     } else {\n113:       DCHECK(value_kind == ClassBoilerplate::kGetter ||\n114:              value_kind == ClassBoilerplate::kSetter ||\n115:              value_kind == ClassBoilerplate::kAutoAccessor);\n116:       Tagged<Object> raw_accessor =\n117:           descriptor_array_template->GetStrongValue(entry);\n118:       Tagged<AccessorPair> pair;"
+    },
+    {
+      "file": "deps/v8/src/maglev/maglev-ir.h",
+      "line": 5708,
+      "diagnostic": "../deps/v8/src/maglev/maglev-ir.h:5708:17: warning: \u2018result\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "5698:   void ClearSlots(int last_init_slot, ValueNode* clear_value) {\n5699:     DCHECK_EQ(type_, kDefault);\n5700:     int last_init_index = last_init_slot / kTaggedSize;\n5701:     for (uint32_t i = last_init_index; i < slot_count(); i++) {\n5702:       slots_.data[i] = clear_value;\n5703:     }\n5704:   }\n5705: \n5706:   InlinedAllocation* allocation() const { return allocation_; }\n5707:   void set_allocation(InlinedAllocation* allocation) {\n5708:     allocation_ = allocation;\n5709:   }\n5710: \n5711:   bool compatible_for_merge(const VirtualObject* other) const {\n5712:     if (type_ != other->type_) return false;\n5713:     if (allocation_ != other->allocation_) return false;\n5714:     // Currently, the graph builder will never change the VO map.\n5715:     if (has_static_map()) {\n5716:       if (map() != other->map()) return false;\n5717:     }\n5718:     switch (other->type_) {"
+    },
+    {
+      "file": "deps/v8/src/maglev/maglev-graph-builder.cc",
+      "line": 12903,
+      "diagnostic": "../deps/v8/src/maglev/maglev-graph-builder.cc:12903:10: warning: \u2018result\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "12893:   }\n12894: \n12895:   return fast_literal;\n12896: }\n12897: \n12898: VirtualObject* MaglevGraphBuilder::DeepCopyVirtualObject(VirtualObject* old) {\n12899:   CHECK_EQ(old->type(), VirtualObject::kDefault);\n12900:   VirtualObject* vobject = old->Clone(NewObjectId(), zone());\n12901:   current_interpreter_frame_.add_object(vobject);\n12902:   old->allocation()->UpdateObject(vobject);\n12903:   return vobject;\n12904: }\n12905: \n12906: VirtualObject* MaglevGraphBuilder::CreateVirtualObject(\n12907:     compiler::MapRef map, uint32_t slot_count_including_map) {\n12908:   // VirtualObjects are not added to the Maglev graph.\n12909:   DCHECK_GT(slot_count_including_map, 0);\n12910:   uint32_t slot_count = slot_count_including_map - 1;\n12911:   ValueNode** slots = zone()->AllocateArray<ValueNode*>(slot_count);\n12912:   VirtualObject* vobject = NodeBase::New<VirtualObject>(\n12913:       zone(), 0, map, NewObjectId(), slot_count, slots);"
+    }
+  ],
+  "root_cause": "GCC retains paths for unnamed enum values. Every declared WasmCallKind and ClassLiteralProperty::Kind initializes its output or continues before use. VirtualObject::Clone initializes result for kDefault and unconditionally terminates for the other three declared types. The two Clone diagnostics are inlined manifestations of the same local result.",
+  "source_review": [
+    "GetWasmCallDescriptor receives four declared WasmCallKind values. Compiler and baseline call sites use literals, the default kWasmFunction, or ternaries selecting named values. Turboshaft wrapper methods pass the same typed values. No raw external integer is cast at these call paths.",
+    "ClassLiteralProperty holds a private Kind field initialized by AST factories. Parser branches construct METHOD, FIELD, GETTER, SETTER, or the AUTO_ACCESSOR constructor. The boilerplate switch handles all five; FIELD continues before value_kind is read.",
+    "VirtualObject constructors initialize private type_ to one of four declared values. DeepCopyVirtualObject CHECKs kDefault before Clone. Clone itself uses UNREACHABLE for each of the three immutable types; both switches assign or terminate before any result access. The Merge caller also uses this same guarded Clone implementation."
+  ],
+  "coverage": {
+    "checks_per_execution": 144000,
+    "executions": 4,
+    "total_checks": 576000,
+    "modes": "GCC13 -O2 release and DEBUG configurations, normally and under Valgrind; assertions stay active in both controls.",
+    "dispatch": "All four Wasm modes, exact descriptor selection and signature-hash selection; all five literal kinds, valid computed/private combinations and three starting indices.",
+    "clone": "Zero, one, 32 and 1024 slots; populated and empty clones; identity, map, allocation and slot-pointer preservation; independent storage; all three unsupported declared types; both allocation-failure boundaries.",
+    "memory": "Both Valgrind runs report zero errors and free all 423002 allocations. No suppressions."
+  },
+  "limits": [
+    "The dispatch bodies and enums are verbatim source extracts. Typed descriptor, property and Zone adapters replace V8 object/GC plumbing; this is not full-engine execution.",
+    "The clone control replaces production UNREACHABLE termination with a typed exception to observe rejection and cleanup. Production behavior is unchanged.",
+    "Zone allocation failure is modeled with bad_alloc and RAII; this verifies the control ownership, not V8 out-of-memory recovery.",
+    "Invalid cast enum values are not valid inputs and are not tested. The literal control exercises the dispatch before descriptor mutation, not full JavaScript class construction.",
+    "Normal compiler flags and all raw warnings remain visible; no production patch or warning filter is proposed."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-object-dispatch-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-object-dispatch-20261007/control-prefix.cc": "ae1cb3401a15180adc03f8eb1d24f2fb10f6a2e322e62c9939df29bee9789ffe",
+    "evidence/controls/node-object-dispatch-20261007/control.cc": "ae1cb3401a15180adc03f8eb1d24f2fb10f6a2e322e62c9939df29bee9789ffe",
+    "evidence/controls/node-object-dispatch-20261007/debug-compile.log.gz": "52ccf9932811615889d607c42f0e5688b04913347443a26dd33bafbb4e3adf20",
+    "evidence/controls/node-object-dispatch-20261007/debug-memory.log.gz": "4c9f641f3533be403c78300e30d364149fc54161dc797992f0e7e95ddfbda3f7",
+    "evidence/controls/node-object-dispatch-20261007/debug-normal.log.gz": "4c9f641f3533be403c78300e30d364149fc54161dc797992f0e7e95ddfbda3f7",
+    "evidence/controls/node-object-dispatch-20261007/debug-valgrind.log.gz": "b1134f7f44d17719d59346116a349c589048eb1b522c0db0aaaa5807575d87ce",
+    "evidence/controls/node-object-dispatch-20261007/prepare.py": "e317896319dacd57dc68cd6b49f29d681075b5b5589ec3e1b12177225db7928a",
+    "evidence/controls/node-object-dispatch-20261007/release-compile.log.gz": "52ccf9932811615889d607c42f0e5688b04913347443a26dd33bafbb4e3adf20",
+    "evidence/controls/node-object-dispatch-20261007/release-memory.log.gz": "4c9f641f3533be403c78300e30d364149fc54161dc797992f0e7e95ddfbda3f7",
+    "evidence/controls/node-object-dispatch-20261007/release-normal.log.gz": "4c9f641f3533be403c78300e30d364149fc54161dc797992f0e7e95ddfbda3f7",
+    "evidence/controls/node-object-dispatch-20261007/release-valgrind.log.gz": "4280929c73b02bab3b9a08e39547d829f2628bceae0c5f641d1a7a7d8d4732ed",
+    "evidence/controls/node-object-dispatch-20261007/run.py": "18340988507ce7915915adb6c1c8794f1883faf19950729ca1a5476ef71dbc1f",
+    "evidence/controls/node-object-dispatch-20261007/source-extracts.json": "92ea062b61b461f82a2ce4fef4b52950e62fed3385e37de0defc31390efcda77",
+    "evidence/controls/node-object-dispatch-20261007/status.json": "d4498ee556a820ac1c3199b446ab3e7661b6f3442e8f90fd46e978fa6188fd23"
+  },
+  "approval": "Allow these four exact diagnostics"
+}

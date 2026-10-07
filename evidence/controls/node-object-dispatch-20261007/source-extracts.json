@@ -1,0 +1,50 @@
+[
+  {
+    "file": "deps/v8/src/compiler/wasm-compiler-definitions.h",
+    "line": 95,
+    "body": "enum WasmCallKind {\n  kWasmFunction,\n  kWasmIndirectFunction,\n  kWasmImportWrapper,\n  kWasmCapiFunction\n}",
+    "sha256": "b8bc1959e52fe2611f5bfaffc4620fe777833d33b4fb311ff5433f1052e5fc93"
+  },
+  {
+    "file": "deps/v8/src/compiler/linkage.h",
+    "line": 47,
+    "body": "  enum Kind {\n    kCallCodeObject,         // target is a Code object\n    kCallJSFunction,         // target is a JSFunction object\n    kCallAddress,            // target is a machine pointer\n#if V8_ENABLE_WEBASSEMBLY    // \u2193 WebAssembly only\n    kCallWasmCapiFunction,   // target is a Wasm C API function\n    kCallWasmFunction,       // target is a wasm function\n    kCallWasmFunctionIndirect,  // target is a wasm function that will be called\n                                // indirectly\n    kCallWasmImportWrapper,     // target is a wasm import wrapper\n#endif                       // \u2191 WebAssembly only\n    kCallBuiltinPointer,     // target is a builtin pointer\n  }",
+    "sha256": "8a0253c8d7fae5ca34da1aba6110210d8cb4355b5772bdf2df7f2d45fcf44a7b"
+  },
+  {
+    "file": "deps/v8/src/compiler/wasm-compiler-definitions.cc",
+    "line": 73,
+    "body": "  CallDescriptor::Kind descriptor_kind;\n  uint64_t signature_hash = kInvalidWasmSignatureHash;\n\n  switch (call_kind) {\n    case kWasmFunction:\n      descriptor_kind = CallDescriptor::kCallWasmFunction;\n      break;\n    case kWasmIndirectFunction:\n      descriptor_kind = CallDescriptor::kCallWasmFunctionIndirect;\n      signature_hash = wasm::SignatureHasher::Hash(fsig);\n      break;\n    case kWasmImportWrapper:\n      descriptor_kind = CallDescriptor::kCallWasmImportWrapper;\n      break;\n    case kWasmCapiFunction:\n      descriptor_kind = CallDescriptor::kCallWasmCapiFunction;\n      break;\n  }",
+    "sha256": "685773ae3a6fed34587265ff75aed42f024f82e45898afdda1545c150b54c47c"
+  },
+  {
+    "file": "deps/v8/src/ast/ast.h",
+    "line": 2546,
+    "body": "  enum Kind : uint8_t { METHOD, GETTER, SETTER, FIELD, AUTO_ACCESSOR }",
+    "sha256": "0c81ab20b4d78feb7c9024ea738581cb42c969069fd9998eb71851c0143c482d"
+  },
+  {
+    "file": "deps/v8/src/objects/literal-objects.h",
+    "line": 134,
+    "body": "  enum ValueKind { kData, kGetter, kSetter, kAutoAccessor }",
+    "sha256": "0c1ac66f92e8059ee841117f0abc0d6ec5fd2ae0053bd22b2b04ab2233cc702b"
+  },
+  {
+    "file": "deps/v8/src/objects/literal-objects.cc",
+    "line": 760,
+    "body": "    ClassBoilerplate::ValueKind value_kind;\n    int value_index = dynamic_argument_index;\n    switch (property->kind()) {\n      case ClassLiteral::Property::METHOD:\n        value_kind = ClassBoilerplate::kData;\n        break;\n      case ClassLiteral::Property::GETTER:\n        value_kind = ClassBoilerplate::kGetter;\n        break;\n      case ClassLiteral::Property::SETTER:\n        value_kind = ClassBoilerplate::kSetter;\n        break;\n      case ClassLiteral::Property::FIELD:\n        DCHECK_IMPLIES(property->is_computed_name(), !property->is_private());\n        if (property->is_computed_name()) {\n          ++dynamic_argument_index;\n        }\n        continue;\n      case ClassLiteral::Property::AUTO_ACCESSOR:\n        value_kind = ClassBoilerplate::kAutoAccessor;\n        // Auto-accessors have two arguments (getter and setter).\n        ++dynamic_argument_index;\n    }",
+    "sha256": "3bf40eb0daac7f4ec7c68bf3942af6b95c75a936dc667ba03b5a3259c965cb68"
+  },
+  {
+    "file": "deps/v8/src/maglev/maglev-ir.h",
+    "line": 5544,
+    "body": "  enum Type : uint8_t {\n    kDefault,\n    kHeapNumber,\n    kFixedDoubleArray,\n    kConsString,\n\n    kLast = kConsString\n  }",
+    "sha256": "e1e49d9cba365c2bb5985253f478618b94732210bdd5836c93f8bd4e91425124"
+  },
+  {
+    "file": "deps/v8/src/maglev/maglev-ir.h",
+    "line": 5811,
+    "body": "  VirtualObject* Clone(uint32_t new_object_id, Zone* zone,\n                       bool empty_clone = false) const {\n    VirtualObject* result;\n    switch (type_) {\n      case kHeapNumber:\n      case kFixedDoubleArray:\n      case kConsString:\n        UNREACHABLE();\n      case kDefault: {\n        ValueNode** slots = zone->AllocateArray<ValueNode*>(slot_count());\n        result = NodeBase::New<VirtualObject>(zone, 0, map(), new_object_id,\n                                              slot_count(), slots);\n        break;\n      }\n    }\n    if (empty_clone) return result;\n\n    // Copy content\n    switch (type_) {\n      case kHeapNumber:\n      case kFixedDoubleArray:\n      case kConsString:\n        UNREACHABLE();\n      case kDefault: {\n        for (uint32_t i = 0; i < slot_count(); i++) {\n          result->set_by_index(i, get_by_index(i));\n        }\n        break;\n      }\n    }\n    result->set_allocation(allocation());\n    return result;\n  }",
+    "sha256": "57db183913a6c2e7362cf6a22765ba4c95c572da3858173626a0117c811171c6"
+  }
+]
