@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Concrete proposal completely paired-tested; not applied to the source recipe and not yet approved.",
+  "source_base_commit": "cc8e5a90e87fe37033fa21a130128b3884cc7a1b",
+  "proposal": "Remove only the optional .debug_names index from the 390 compiled core standard-library modules during RPM installation, through the existing metadata-preservation helper. Add explicit binutils BuildRequires. All full DWARF, runtime sections, symbols, source and Qore trailers remain available.",
+  "reason": "Distribution GDB rejects the LLVM-created name index. Reading the retained full DWARF succeeds without it. This extends the debugger configuration previously approved for PDFium, Oracle and selected external AOT modules.",
+  "approval": {
+    "status": "requested",
+    "scope": "390 core standard-library AOT modules only; optional .debug_names removal, no blanket diagnostic exception"
+  },
+  "validation": {
+    "distributions": {
+      "fedora": {
+        "modules": 390,
+        "source_indexed_functions": 58398,
+        "source_lookup_and_breakpoint_setup_checks": 390,
+        "metadata_only_exemptions": 0
+      },
+      "leap": {
+        "modules": 390,
+        "source_indexed_functions": 58398,
+        "source_lookup_and_breakpoint_setup_checks": 390,
+        "metadata_only_exemptions": 0
+      },
+      "el10": {
+        "modules": 390,
+        "source_indexed_functions": 58398,
+        "source_lookup_and_breakpoint_setup_checks": 390,
+        "metadata_only_exemptions": 0
+      }
+    },
+    "module_instances": 1170,
+    "source_indexed_functions_preserved": 175194,
+    "exact_install_commands_passed": 3,
+    "exact_recipe_modules_per_distribution": [
+      "QUnit",
+      "MapperUtil"
+    ],
+    "negative_scope": "A module outside the standard-library API directory remains byte-identical.",
+    "section_validation": "Before debugedit rewriting, each other .debug_* section and every allocated runtime section is byte-identical. Symbol listings and exact Qore EOF trailers are preserved. Trailers remain identical after debugedit.",
+    "paired_gdb": "Every original module reproduces the rejected-index warning. Every adjusted module preserves the complete source-indexed function list and passes source lookup and breakpoint setup without that warning."
+  },
+  "limits": [
+    "Breakpoint setup and source lookup are tested, not execution to a breakpoint in a live process.",
+    "These are retained x86_64 canonical core22 outputs; new complete RPM builds, installed artifact checks and native aarch64 qualification remain required.",
+    "Initial debugger loading may be slower because GDB reads full DWARF instead of a precomputed name index.",
+    "The proposal also needs the independently qualified debugedit >= 5.1 dependency correction.",
+    "No C++ implementation or runtime section changes; no new Valgrind run is required for this packaging operation."
+  ],
+  "control_corrections": [
+    "Initial smoke probes omitted the existing trailer-preservation helper and assumed debugedit 5.0 returned failure. They were corrected before acceptance.",
+    "Retained modules already contain RPM debug-prefix mapping; the control now derives the actual GDB source prefix before rewriting it.",
+    "The first full probe selected only ordinary _qaot_ function names and stopped at MapperUtil, which has constant initializers. The accepted probe compares every source-indexed function; all 390 modules have real functions.",
+    "The first exact-recipe probe used only a buildroot macro override; newer RPM versions replace that value. Setting _topdir as well places each actual expanded path in the private container /tmp tree. All three corrected recipe probes pass."
+  ],
+  "files_sha256": {
+    "evidence/controls/core-aot-debugger-proposal-20261007/check-core-index-recipe-20261007.py": "b4e8127f32b55d2677c282595b9f379ad1080d30c2a0708b6f51e191fd27c600",
+    "evidence/controls/core-aot-debugger-proposal-20261007/core-aot-debugger-control-20261007.py": "83fd27de54529b90268df8ea9134d71a9848d3dfc1751b026a2077fa5714d709",
+    "evidence/controls/core-aot-debugger-proposal-20261007/el10-driver.log": "7f83801b2da31a5957af952730a4e46609b5fa71b299e169891c4db3c5d27da6",
+    "evidence/controls/core-aot-debugger-proposal-20261007/el10-paired-controls.tar.gz": "e8f35beedc72ec5f90cbf7fc904f71ac629d4e80183d767f205a769bc56dd28f",
+    "evidence/controls/core-aot-debugger-proposal-20261007/fedora-driver.log": "7f83801b2da31a5957af952730a4e46609b5fa71b299e169891c4db3c5d27da6",
+    "evidence/controls/core-aot-debugger-proposal-20261007/fedora-paired-controls.tar.gz": "5ed928b1fe15da67a7b485a9dc5199d24f553f1606132eed2d84985b167cc342",
+    "evidence/controls/core-aot-debugger-proposal-20261007/leap-driver.log": "7f83801b2da31a5957af952730a4e46609b5fa71b299e169891c4db3c5d27da6",
+    "evidence/controls/core-aot-debugger-proposal-20261007/leap-paired-controls.tar.gz": "d797f91260e7cb97110493f25610556ed4c807e9b7405df16b2dc11d591612ac",
+    "evidence/controls/core-aot-debugger-proposal-20261007/paired-status.json": "f19008e87e884d1de765a7996f6fb247d8131c79601d66ff886a47987f2c3b31",
+    "evidence/controls/core-aot-debugger-proposal-20261007/proposal/README.rst": "d492b779bf92cb1ed244ec850551f7450be2f49e5e3df4ab4441bf10d81ede03",
+    "evidence/controls/core-aot-debugger-proposal-20261007/proposal/qore.spec-multi": "e3498dd9a7162fc4b0638b3bacb10967c62dfc0b9687fa54b8ba0f3a20da37ee",
+    "evidence/controls/core-aot-debugger-proposal-20261007/recipe/el10.log": "ac192a032fcadf7b367d9ffc31cfd63f7c5bf3455f76a6a4beaefc7159d22fc3",
+    "evidence/controls/core-aot-debugger-proposal-20261007/recipe/fedora.log": "0a49fe04912851fd5aa489c7220b6d3479964dd75b052494f5a38073f2304512",
+    "evidence/controls/core-aot-debugger-proposal-20261007/recipe/leap.log": "0a49fe04912851fd5aa489c7220b6d3479964dd75b052494f5a38073f2304512",
+    "evidence/controls/core-aot-debugger-proposal-20261007/recipe/status.json": "6b3eb6f439ab7b88157ca6a85efe0f092e167a494a60b0ca972188387d9e74fa",
+    "evidence/controls/core-aot-debugger-proposal-20261007/recipe-initial-harness-failure/el10.log": "e9bb132c141b739292b230490fb770472e7ae292359db03ba336d82ebffb7393",
+    "evidence/controls/core-aot-debugger-proposal-20261007/recipe-initial-harness-failure/fedora.log": "9cc861d6b19449e06580fd6061c873c721afbcd8ad683288067782d4ebd62aa7",
+    "evidence/controls/core-aot-debugger-proposal-20261007/recipe-initial-harness-failure/leap.log": "37b9df718e5cce1d560bce13cf1b54db82b7f940670342885a33c22b505de24b",
+    "evidence/controls/core-aot-debugger-proposal-20261007/recipe-initial-harness-failure/status.json": "da86be7bf943455dfce1c268a058330d3cffdf1ae8491df2bea5c32b7b119106",
+    "evidence/controls/core-aot-debugger-proposal-20261007/record.py": "76d501224b0b2feb186bff675ff83d53aa754a9ca4c91b628c5f4761c935c702",
+    "evidence/controls/core-aot-debugger-proposal-20261007/run-core-aot-debugger-20261007.py": "aba5bce784ae9735ac01380bdc9b5c2a3884c9134be086d40468fbd2b314dae9"
+  }
+}

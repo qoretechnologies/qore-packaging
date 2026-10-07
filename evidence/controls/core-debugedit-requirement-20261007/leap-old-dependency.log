@@ -1,0 +1,17 @@
+test_indexed_dwarf_build_dependency_resolves_to_installed_tool (test_spec_metadata.SpecMetadataTest.test_indexed_dwarf_build_dependency_resolves_to_installed_tool) ... FAIL
+
+======================================================================
+FAIL: test_indexed_dwarf_build_dependency_resolves_to_installed_tool (test_spec_metadata.SpecMetadataTest.test_indexed_dwarf_build_dependency_resolves_to_installed_tool)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/rpm/tests/test_spec_metadata.py", line 144, in test_indexed_dwarf_build_dependency_resolves_to_installed_tool
+    self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 11 : error: Failed build dependencies:
+	debugedit >= 5.1 is needed by qore-debugedit-dependency-probe-1-1.x86_64
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.289s
+
+FAILED (failures=1)

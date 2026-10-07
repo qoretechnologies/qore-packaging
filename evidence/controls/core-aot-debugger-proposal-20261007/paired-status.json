@@ -1,0 +1,74 @@
+[
+  {
+    "target": "fedora",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/fedora-core-sdk22-canonical-final-20261007:/work:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/core-aot-debugger-all2-20261007/fedora:/output",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/leap-debugedit-final-1:/dependency:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/core-aot-debugger-control-20261007.py:/control/control.py:ro",
+      "sha256:a437efbf23f3bf7b180f7d58a5ad3dd70d524372ae60a57380dff115a2b5feda",
+      "sh",
+      "-c",
+      "set -eu\npython3 -B -W error /control/control.py --source \"/work/rpmbuild/BUILD/qore-3.0.0_git20261007.22-build/qore-3.0.0~git20261007.22\" --output /output/new\n"
+    ],
+    "exit_code": 0
+  },
+  {
+    "target": "leap",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/leap-core-sdk22-canonical-final-20261007:/work:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/core-aot-debugger-all2-20261007/leap:/output",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/leap-debugedit-final-1:/dependency:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/core-aot-debugger-control-20261007.py:/control/control.py:ro",
+      "sha256:48f1246678238c3d1b479f5cffc69c511443b4855b7f548fc4b22bf793fb975b",
+      "sh",
+      "-c",
+      "set -eu\nrpm -U --replacepkgs /dependency/rpmbuild/RPMS/x86_64/debugedit-5.1-1.qore.x86_64.rpm\npython3 -B -W error /control/control.py --source \"/work/rpmbuild/BUILD/qore-3.0.0_git20261007.22-build/qore-3.0.0~git20261007.22\" --output /output/new\n"
+    ],
+    "exit_code": 0
+  },
+  {
+    "target": "el10",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/el10-core-sdk22-canonical-final-20261007:/work:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/core-aot-debugger-all2-20261007/el10:/output",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/leap-debugedit-final-1:/dependency:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/core-aot-debugger-control-20261007.py:/control/control.py:ro",
+      "sha256:50db5ec21c50dffb918d77c420f6c39d0c3c2c4c286b6150741de8c3dd80baeb",
+      "sh",
+      "-c",
+      "set -eu\npython3 -B -W error /control/control.py --source \"/work/rpmbuild/BUILD/qore-3.0.0~git20261007.22\" --output /output/new\n"
+    ],
+    "exit_code": 0
+  }
+]

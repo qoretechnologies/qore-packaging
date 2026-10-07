@@ -1,0 +1,5 @@
+PASS: exact RPM install command preserves two real AOT modules and does not modify a module outside the standard-library tree
+python3 rpm/preserve-aot-metadata.py "/tmp/core-index-stage/BUILDROOT/usr/lib64/qore-modules/3.0.0" \
+    find "/tmp/core-index-stage/BUILDROOT/usr/lib64/qore-modules/3.0.0" -type f -name '*.qmod' \
+    -exec objcopy --remove-section=.debug_names '{}' \;
+

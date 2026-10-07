@@ -1,0 +1,74 @@
+[
+  {
+    "target": "fedora",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/fedora-core-sdk22-canonical-final-20261007:/work:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/core-aot-index-proposal-20261007/qore.spec-multi:/control/qore.spec-multi:ro",
+      "sha256:a437efbf23f3bf7b180f7d58a5ad3dd70d524372ae60a57380dff115a2b5feda",
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "-c",
+      "import hashlib,importlib.util,json,pathlib,re,shlex,shutil,subprocess,sys\nsource=pathlib.Path(sys.argv[1])\nloader=importlib.util.spec_from_file_location('preserve',source/'rpm/preserve-aot-metadata.py')\nhelper=importlib.util.module_from_spec(loader);loader.loader.exec_module(helper)\nparsed=subprocess.run(['rpmspec','-P','--define','_topdir /tmp/core-index-stage','--define','buildroot /tmp/core-index-stage/BUILDROOT','/control/qore.spec-multi'],capture_output=True,text=True,check=True)\nassert not parsed.stderr,parsed.stderr\ninstall=parsed.stdout.split('%install\\n',1)[1].split('%check\\n',1)[0]\nmatch=re.search(r'(?m)^python3 rpm/preserve-aot-metadata\\.py .*?-exec objcopy --remove-section=\\.debug_names .*?\\\\;\\n',install,re.S)\nassert match,install\ncommand=match[0];args=shlex.split(command.replace('\\\\\\n',''))\ndestination=pathlib.Path(args[2]);assert destination.is_relative_to('/tmp'),destination\nassert str(destination).endswith('/usr/lib64/qore-modules/3.0.0'),destination\ndestination.mkdir(parents=True)\nsaved={}\nfor name in ('QUnit','MapperUtil'):\n original=source/'build/qlib-qmod'/(name+'.qmod');fixed=destination/(name+'.qmod')\n shutil.copy2(original,fixed)\n saved[name]={'metadata':helper.read_trailers(original),'symbols':subprocess.check_output(['nm','-a',str(original)])}\noutside=destination.parent/'outside-api-2.0.qmod';shutil.copy2(source/'build/qlib-qmod/QUnit.qmod',outside)\noutside_hash=hashlib.sha256(outside.read_bytes()).hexdigest()\nresult=subprocess.run(['/bin/sh','-ec',command],cwd=source,capture_output=True,text=True,check=True)\nassert not result.stdout and not result.stderr,(result.stdout,result.stderr)\nfor name,record in saved.items():\n fixed=destination/(name+'.qmod')\n assert '.debug_names' not in subprocess.check_output(['readelf','-SW',str(fixed)],text=True)\n assert helper.read_trailers(fixed)==record['metadata']\n assert subprocess.check_output(['nm','-a',str(fixed)])==record['symbols']\nassert hashlib.sha256(outside.read_bytes()).hexdigest()==outside_hash\nprint('PASS: exact RPM install command preserves two real AOT modules and does not modify a module outside the standard-library tree')\nprint(command)\n",
+      "/work/rpmbuild/BUILD/qore-3.0.0_git20261007.22-build/qore-3.0.0~git20261007.22"
+    ],
+    "exit_code": 0
+  },
+  {
+    "target": "leap",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/leap-core-sdk22-canonical-final-20261007:/work:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/core-aot-index-proposal-20261007/qore.spec-multi:/control/qore.spec-multi:ro",
+      "sha256:48f1246678238c3d1b479f5cffc69c511443b4855b7f548fc4b22bf793fb975b",
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "-c",
+      "import hashlib,importlib.util,json,pathlib,re,shlex,shutil,subprocess,sys\nsource=pathlib.Path(sys.argv[1])\nloader=importlib.util.spec_from_file_location('preserve',source/'rpm/preserve-aot-metadata.py')\nhelper=importlib.util.module_from_spec(loader);loader.loader.exec_module(helper)\nparsed=subprocess.run(['rpmspec','-P','--define','_topdir /tmp/core-index-stage','--define','buildroot /tmp/core-index-stage/BUILDROOT','/control/qore.spec-multi'],capture_output=True,text=True,check=True)\nassert not parsed.stderr,parsed.stderr\ninstall=parsed.stdout.split('%install\\n',1)[1].split('%check\\n',1)[0]\nmatch=re.search(r'(?m)^python3 rpm/preserve-aot-metadata\\.py .*?-exec objcopy --remove-section=\\.debug_names .*?\\\\;\\n',install,re.S)\nassert match,install\ncommand=match[0];args=shlex.split(command.replace('\\\\\\n',''))\ndestination=pathlib.Path(args[2]);assert destination.is_relative_to('/tmp'),destination\nassert str(destination).endswith('/usr/lib64/qore-modules/3.0.0'),destination\ndestination.mkdir(parents=True)\nsaved={}\nfor name in ('QUnit','MapperUtil'):\n original=source/'build/qlib-qmod'/(name+'.qmod');fixed=destination/(name+'.qmod')\n shutil.copy2(original,fixed)\n saved[name]={'metadata':helper.read_trailers(original),'symbols':subprocess.check_output(['nm','-a',str(original)])}\noutside=destination.parent/'outside-api-2.0.qmod';shutil.copy2(source/'build/qlib-qmod/QUnit.qmod',outside)\noutside_hash=hashlib.sha256(outside.read_bytes()).hexdigest()\nresult=subprocess.run(['/bin/sh','-ec',command],cwd=source,capture_output=True,text=True,check=True)\nassert not result.stdout and not result.stderr,(result.stdout,result.stderr)\nfor name,record in saved.items():\n fixed=destination/(name+'.qmod')\n assert '.debug_names' not in subprocess.check_output(['readelf','-SW',str(fixed)],text=True)\n assert helper.read_trailers(fixed)==record['metadata']\n assert subprocess.check_output(['nm','-a',str(fixed)])==record['symbols']\nassert hashlib.sha256(outside.read_bytes()).hexdigest()==outside_hash\nprint('PASS: exact RPM install command preserves two real AOT modules and does not modify a module outside the standard-library tree')\nprint(command)\n",
+      "/work/rpmbuild/BUILD/qore-3.0.0_git20261007.22-build/qore-3.0.0~git20261007.22"
+    ],
+    "exit_code": 0
+  },
+  {
+    "target": "el10",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/el10-core-sdk22-canonical-final-20261007:/work:ro",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/core-aot-index-proposal-20261007/qore.spec-multi:/control/qore.spec-multi:ro",
+      "sha256:50db5ec21c50dffb918d77c420f6c39d0c3c2c4c286b6150741de8c3dd80baeb",
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "-c",
+      "import hashlib,importlib.util,json,pathlib,re,shlex,shutil,subprocess,sys\nsource=pathlib.Path(sys.argv[1])\nloader=importlib.util.spec_from_file_location('preserve',source/'rpm/preserve-aot-metadata.py')\nhelper=importlib.util.module_from_spec(loader);loader.loader.exec_module(helper)\nparsed=subprocess.run(['rpmspec','-P','--define','_topdir /tmp/core-index-stage','--define','buildroot /tmp/core-index-stage/BUILDROOT','/control/qore.spec-multi'],capture_output=True,text=True,check=True)\nassert not parsed.stderr,parsed.stderr\ninstall=parsed.stdout.split('%install\\n',1)[1].split('%check\\n',1)[0]\nmatch=re.search(r'(?m)^python3 rpm/preserve-aot-metadata\\.py .*?-exec objcopy --remove-section=\\.debug_names .*?\\\\;\\n',install,re.S)\nassert match,install\ncommand=match[0];args=shlex.split(command.replace('\\\\\\n',''))\ndestination=pathlib.Path(args[2]);assert destination.is_relative_to('/tmp'),destination\nassert str(destination).endswith('/usr/lib64/qore-modules/3.0.0'),destination\ndestination.mkdir(parents=True)\nsaved={}\nfor name in ('QUnit','MapperUtil'):\n original=source/'build/qlib-qmod'/(name+'.qmod');fixed=destination/(name+'.qmod')\n shutil.copy2(original,fixed)\n saved[name]={'metadata':helper.read_trailers(original),'symbols':subprocess.check_output(['nm','-a',str(original)])}\noutside=destination.parent/'outside-api-2.0.qmod';shutil.copy2(source/'build/qlib-qmod/QUnit.qmod',outside)\noutside_hash=hashlib.sha256(outside.read_bytes()).hexdigest()\nresult=subprocess.run(['/bin/sh','-ec',command],cwd=source,capture_output=True,text=True,check=True)\nassert not result.stdout and not result.stderr,(result.stdout,result.stderr)\nfor name,record in saved.items():\n fixed=destination/(name+'.qmod')\n assert '.debug_names' not in subprocess.check_output(['readelf','-SW',str(fixed)],text=True)\n assert helper.read_trailers(fixed)==record['metadata']\n assert subprocess.check_output(['nm','-a',str(fixed)])==record['symbols']\nassert hashlib.sha256(outside.read_bytes()).hexdigest()==outside_hash\nprint('PASS: exact RPM install command preserves two real AOT modules and does not modify a module outside the standard-library tree')\nprint(command)\n",
+      "/work/rpmbuild/BUILD/qore-3.0.0~git20261007.22"
+    ],
+    "exit_code": 0
+  }
+]

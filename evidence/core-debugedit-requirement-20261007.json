@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Dependency correction committed and pushed on the isolated RPM branch; updated canonical core RPM builds remain required.",
+  "source_commit": "cc8e5a90e87fe37033fa21a130128b3884cc7a1b",
+  "source_branch": "rpm/documentation-sdk-20261006",
+  "root_cause": "The previous Leap builder still selected debugedit 5.0. It reports an unsupported indexed DWARF form while returning success. The recipe did not require the minimum supported reader.",
+  "fix": "Require debugedit >= 5.1 unconditionally as a build dependency, including when documentation and checks are disabled. No runtime dependency is added.",
+  "validation": {
+    "metadata_tests_per_distribution": 10,
+    "total_metadata_tests": 30,
+    "old_leap_dependency_rejected": true,
+    "impossible_version_rejected_on_all_distributions": true,
+    "old_reader_control": "QUnit reproduces Unknown DWARF DW_FORM_0x25 with exit 0 after optional-index removal.",
+    "backport_sha256": "519b4e707be7b7534c3665d6758d334ced86dc3d3a0ed844b8850bcef8188d95",
+    "backport_qualification": "evidence/debugedit-leap-20261003.json"
+  },
+  "limits": [
+    "This minimum-version correction does not resolve the separate unsupported optional .debug_names index.",
+    "No C++ implementation changed. Existing reader backport qualification is reused."
+  ],
+  "files_sha256": {
+    "evidence/controls/core-debugedit-requirement-20261007/el10-tests.log": "034fd7dcdbaf4bf0b8ee0e0a1d4f5223f934093d4a3b5720a84bc21f022fb412",
+    "evidence/controls/core-debugedit-requirement-20261007/fedora-tests.log": "b1c971a7de1fc79da6e81bde2c720c4e2bbf3690d952284992e119b0cecf6a3c",
+    "evidence/controls/core-debugedit-requirement-20261007/leap-old-dependency.log": "4d5e46d95bf8e466d22016a5ad447e69dd1e718f67e8df4f3aea55f9ed6bd8fe",
+    "evidence/controls/core-debugedit-requirement-20261007/leap-tests.log": "46f2c113ea6cb450f566c55edb7da757256139562ea851cd6004b351bb2f5b03",
+    "evidence/controls/core-debugedit-requirement-20261007/old-reader-QUnit-old-debugedit.log.gz": "cc94fe2cfeafa318e350d36d3516cd99d9c48ff5c5555f7dad5afc5431346f27",
+    "evidence/controls/core-debugedit-requirement-20261007/old-reader-checks.json": "ad8f10f41a7a0ed453438e6f38810363558db76c2286aa49e651c5fa36174951",
+    "evidence/controls/core-debugedit-requirement-20261007/qore.spec-multi": "df9ce9034bc2a9a6c73fdfb12ff165d61866d02d2c8c1be38b3ec1de04a4df14",
+    "evidence/controls/core-debugedit-requirement-20261007/record.py": "76d501224b0b2feb186bff675ff83d53aa754a9ca4c91b628c5f4761c935c702",
+    "evidence/controls/core-debugedit-requirement-20261007/rpm/README.rst": "c59acbbcb9a18f86520c706e78d8f1ee2706f28dda527003a8378d775b556079",
+    "evidence/controls/core-debugedit-requirement-20261007/rpm/tests/debugedit-requirement.audit.rst": "a627aed6aa6d97a6b1a56f5af6d4153f599b13acff8b7af76d3847cf30e2f4ca",
+    "evidence/controls/core-debugedit-requirement-20261007/rpm/tests/test_spec_metadata.py": "4510cb461f1d46408a48560aa70e24babc78ff034e1c195e054be0455be52602",
+    "evidence/controls/core-debugedit-requirement-20261007/status.json": "542724409dd1e454ef8b209698d4bc17e2dccce9641fed5ae11f7a4c77eaf731",
+    "evidence/controls/core-debugedit-requirement-20261007/test.py": "fc06d2fe1b567f582f7b69660baa5c54cad318ca3304a1d2b1113b6f13fa288b"
+  }
+}
