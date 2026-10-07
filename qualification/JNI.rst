@@ -53,3 +53,17 @@ The architecture must match the manifest. Package signatures, package payloads
 and dependency resolution are verified by the common runner. Logs, inventories
 and fixture provenance are retained as CI artifacts. These installation checks
 do not replace native RPM build checks or repository lifecycle qualification.
+
+Pipeline 59874 passes all six native ARM jobs on Fedora, Leap and AlmaLinux.
+Each distribution reports 37 SDK suites (632 cases, 8,662 assertions) and
+23 runtime suites (478 cases, 4,336 assertions). The reports preserve existing
+external-service skips; these totals do not imply live database, JMS or hardware
+qualification. Each fresh runtime executes the verified SDK-built consumer
+without compiler or development packages. Core runtime/ONNX and SDK checks pass.
+
+Only the already approved XML-triggered AOT source-fallback messages and
+OpenJDK 21 SunLayoutEngine diagnostics remain. There are no font-cache errors.
+Exact manifests, signatures, artifact hashes, inventories and all logs are
+recorded in ``evidence/jni-native-results-20261007.json``. The final core22
+combined installation, outstanding package-lint review, external-service tests
+and repository lifecycle remain separate delivery gates.
