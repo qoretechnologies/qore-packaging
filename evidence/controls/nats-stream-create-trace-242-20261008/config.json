@@ -1,0 +1,45 @@
+{
+  "source": "work/nats-prepared-45/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-stream-create-trace-242",
+      "target": "fedora",
+      "count": 30,
+      "race": true,
+      "pattern": "^TestJetStreamClusterDeleteAndRestoreAndRestart$",
+      "sublist": "work/nats-prepared-45/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-stream-create-trace-242-20261007/jetstream_api.go": "server/jetstream_api.go",
+        "work/nats-stream-create-trace-242-20261007/jetstream_cluster.go": "server/jetstream_cluster.go",
+        "work/nats-stream-create-trace-242-20261007/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-stream-create-trace-242",
+      "target": "leap",
+      "count": 30,
+      "race": true,
+      "pattern": "^TestJetStreamClusterDeleteAndRestoreAndRestart$",
+      "sublist": "work/nats-prepared-45/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-stream-create-trace-242-20261007/jetstream_api.go": "server/jetstream_api.go",
+        "work/nats-stream-create-trace-242-20261007/jetstream_cluster.go": "server/jetstream_cluster.go",
+        "work/nats-stream-create-trace-242-20261007/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-stream-create-trace-242",
+      "target": "el10",
+      "count": 30,
+      "race": true,
+      "pattern": "^TestJetStreamClusterDeleteAndRestoreAndRestart$",
+      "sublist": "work/nats-prepared-45/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-stream-create-trace-242-20261007/jetstream_api.go": "server/jetstream_api.go",
+        "work/nats-stream-create-trace-242-20261007/jetstream_cluster.go": "server/jetstream_cluster.go",
+        "work/nats-stream-create-trace-242-20261007/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go"
+      }
+    }
+  ]
+}

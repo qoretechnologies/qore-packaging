@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "The correctly instrumented stream-create test passes 90 race-enabled runs; the historical timeout remains unresolved.",
+  "correction": "Retained candidate44 source identifies the failed call as AddStream(TEST2), after ConsumerInfo has succeeded. Earlier ConsumerInfo-only traces did not observe the failed operation.",
+  "previous_evidence": "evidence/nats-candidate45-full-results-20261007.json",
+  "instrumentation": [
+    "Actual TEST2 API request and return branches",
+    "Metadata stream assignment, membership and recovery state",
+    "Stream leadership and response ownership",
+    "Actual API response and client result"
+  ],
+  "results": {
+    "fedora": {
+      "exit_code": 0,
+      "race_enabled_passes": 30,
+      "successful_stream_create_responses": 30,
+      "result_directory": "results/fedora-nats-stream-create-trace-242"
+    },
+    "leap": {
+      "exit_code": 0,
+      "race_enabled_passes": 30,
+      "successful_stream_create_responses": 30,
+      "result_directory": "results/leap-nats-stream-create-trace-242"
+    },
+    "el10": {
+      "exit_code": 0,
+      "race_enabled_passes": 30,
+      "successful_stream_create_responses": 30,
+      "result_directory": "results/el10-nats-stream-create-trace-242"
+    }
+  },
+  "candidate45_original_source_sha256": {
+    "jetstream_api.go": "9d69769662ec59557adecd187ba744c1347c3514ac7c3ed1834dd278d3804071",
+    "jetstream_cluster.go": "82e1b3fd100f728034d699b747567eb3756c0792847b1ea5b5188bcd04e94d14",
+    "jetstream_cluster_2_test.go": "0344d02343d3b999b2bfa75b755d5ea76500b856a8d36d801be32a8a4afa4d6d"
+  },
+  "limits": [
+    "These diagnostic-only overlays are not registered in the RPM and make no functional change.",
+    "Every observed assignment that hosted TEST2 was non-recovering and had not responded; each operation emitted exactly one successful response.",
+    "No failed request was captured. These passes cannot establish which stage caused the historical timeout, nor justify a reply-ownership or timeout workaround.",
+    "Metadata election/readiness and response routing remain hypotheses requiring an observed failure or a controlled lifecycle proof."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-stream-create-trace-242-20261008/config.json": "2836ca2b13591a0461f90471a1d6078548791f18feb153349768c7984acf602d",
+    "evidence/controls/nats-stream-create-trace-242-20261008/el10-status.json": "179fcf0512c784f6f0237770adad333c95230ef4dce7b16d53b5c49f54dad570",
+    "evidence/controls/nats-stream-create-trace-242-20261008/el10-tests.log.gz": "9357ab9b0b0a8cfcab6d7518ed4e258b984c90d00d00e661096e975bec7417df",
+    "evidence/controls/nats-stream-create-trace-242-20261008/fedora-status.json": "03e29dd579d0601f2c1bd4ec6b6fd23b01f2edc6237e1cd7ee984e9243cf949a",
+    "evidence/controls/nats-stream-create-trace-242-20261008/fedora-tests.log.gz": "388b0fa2a693897c1cada93f8c5de416edaefb7b6bf11fc1aa4bdbbd1e357f6c",
+    "evidence/controls/nats-stream-create-trace-242-20261008/jetstream_api.go.gz": "a733f4d5cf6ba1f449ea9f2c45ea9a41439ce44f14e570b6aa1e054a671dd214",
+    "evidence/controls/nats-stream-create-trace-242-20261008/jetstream_cluster.go.gz": "e470d2c746025dcf06f3a7165497b424fab0961866516eeffe48e13b6b4f53d7",
+    "evidence/controls/nats-stream-create-trace-242-20261008/jetstream_cluster_2_test.go.gz": "b7f1cc021c7538a92dafb70b3816752efc4adc5a739918323381a66e2003ae2e",
+    "evidence/controls/nats-stream-create-trace-242-20261008/leap-status.json": "84af07b2e3b744abeba03d445564ecf372db5018a9744fd978e79f214759a012",
+    "evidence/controls/nats-stream-create-trace-242-20261008/leap-tests.log.gz": "e2a3fc3e82dfb5e1afaa289ee7752c97dc631b1c69f121a22552f838ec392500",
+    "evidence/controls/nats-stream-create-trace-242-20261008/prepare.py": "e992fd1b5d81d2a356c3cd86d5ec4bb430f67504b971ee55ca2a96950bc893cb",
+    "evidence/controls/nats-stream-create-trace-242-20261008/record.py": "8043e99b56a8194d401e1d33ca58fb58ac3199fa24b545111853c1d378dad496",
+    "evidence/controls/nats-stream-create-trace-242-20261008/run.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a"
+  }
+}
