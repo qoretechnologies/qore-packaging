@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User accepted the 1 exact diagnostic sites on 2026-10-07. Focused qualification and its recorded limits are unchanged. Full RPM and native architecture qualification remain separate gates.",
+  "diagnostics": [
+    {
+      "file": "deps/v8/include/v8-internal.h",
+      "line": 1054,
+      "diagnostic": "../deps/v8/include/v8-internal.h:1054:24: warning: \u2018index_val\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "1044:            kSmiTag;\n1045:   }\n1046: \n1047:   V8_INLINE static constexpr Address IntToSmi(int value) {\n1048:     return AddressToSmi(static_cast<Address>(value));\n1049:   }\n1050: \n1051:   template <typename T,\n1052:             typename std::enable_if_t<std::is_integral_v<T>>* = nullptr>\n1053:   V8_INLINE static constexpr Address IntegralToSmi(T value) {\n1054:     return AddressToSmi(static_cast<Address>(value));\n1055:   }\n1056: \n1057:   template <typename T,\n1058:             typename std::enable_if_t<std::is_integral_v<T>>* = nullptr>\n1059:   V8_INLINE static constexpr bool IsValidSmi(T value) {\n1060:     return PlatformSmiTagging::IsValidSmi(value);\n1061:   }\n1062: \n1063:   template <typename T,\n1064:             typename std::enable_if_t<std::is_integral_v<T>>* = nullptr>"
+    }
+  ],
+  "root_cause": "GCC cannot connect the recognized array-segment builtin call with the producer\u2019s integer-constant input contract, so it treats the ignored matcher return as a potentially uninitialized output.",
+  "source_review": [
+    "ArrayNewSegment emits Word32Constant(segment_imm.index) as its first builtin argument. IsArrayNewSegment recognizes that exact builtin after unwrapping optional type and nonthrowing-operation annotations.",
+    "MatchIntegralWord32Constant initializes its output for a Word32 constant; StringNewWtf8ArrayImpl consumes that initialized output.",
+    "ValidateDataSegment rejects indexes outside num_declared_data_segments. The decoder caps this count at 100000, so every valid index fits the tagged small-integer range."
+  ],
+  "coverage": {
+    "native_checks": 105200,
+    "checks_per_run": 26300,
+    "matrix": "Eight valid boundary indexes through 99999, all four annotation/nonthrowing wrapper combinations, correct/other/nonconstant callees and non-call nodes, reachable/unreachable generation, invalid unreachable index and rejected nonintegral matcher inputs. Release/debug normally and under Valgrind.",
+    "compiler": "Both modes reproduce index_val; no additional diagnostics.",
+    "memory": "Both qualified runs have zero errors and all allocations freed.",
+    "actual_wasm_checks": 18840,
+    "actual_wasm": "Real array.new_data plus string.new_wtf8_array modules, with baseline compiler disabled, validate eight distinct segments: empty, ASCII, NUL, two/four-byte UTF-8, lone surrogate, mixed string and malformed encoding. Check complete/subrange decoding, empty ranges, reversed/out-of-range indexes and invalid segment compile rejection.",
+    "upstream_test_builder": "Version-matched V8 13.6.233.17 wasm-module-builder.js; source URL and SHA-256 retained."
+  },
+  "limits": [
+    "The builtin recognizer, scalar shortcut and matcher bodies are verbatim. Graph nodes, type tags and small-integer objects are adapters; the producer\u2019s constant contract is modeled and separately verified in source.",
+    "Native rejected-matcher checks cover nonintegral constants and preserve sentinel output. They do not construct malformed recognized builtin calls, which the reviewed producer does not emit.",
+    "Actual Wasm tests exercise eight segment indexes; larger validated indexes are covered by the native producer/matcher control and decoder bounds review.",
+    "A requested upstream stringrefs.js fixture did not exist at that tag; the retained receipt records the 404. The actual Wasm tests are authored locally using the successfully fetched version-matched builder.",
+    "No runtime patch, suppression or compiler-flag change is proposed."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-wasm-segment-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-wasm-segment-20261007/control.cc": "b52c86304ad43d33a42950c09f2c26d4c2542a27e3edbbaf00768c2564296db6",
+    "evidence/controls/node-wasm-segment-20261007/control.js": "50be0a9db84adec996f3d9f925d33c6cb0e20fb389a8bf7883e55a1a1cbbe8c1",
+    "evidence/controls/node-wasm-segment-20261007/debug-compile.log.gz": "419b6cf1164138059703e72e30e5c56680900caa9c1c5af4af2f0bf65c92a04e",
+    "evidence/controls/node-wasm-segment-20261007/debug-memory.log.gz": "3ac2b69b01cecdff0d8fe8b3f5a4520b933ef08d35e426117b90f8aec0015cca",
+    "evidence/controls/node-wasm-segment-20261007/debug-normal.log.gz": "3ac2b69b01cecdff0d8fe8b3f5a4520b933ef08d35e426117b90f8aec0015cca",
+    "evidence/controls/node-wasm-segment-20261007/debug-valgrind.log.gz": "738ac0d1ef2f38f1f5e211527a77b147bf031aff358dd75ce838840ee0108967",
+    "evidence/controls/node-wasm-segment-20261007/javascript-status.json": "4f8c5a24a68ce13be48070413ac7bf5bdb2ff7c61c2bf6de12f5efd2e6269ee3",
+    "evidence/controls/node-wasm-segment-20261007/javascript.log.gz": "0bd604dc301dd7ceae3bddc4f8936a06fb287e4f8917c46a8e72f39b6be15610",
+    "evidence/controls/node-wasm-segment-20261007/prepare.py": "7f905dbb0a6e6dc64e14be3ff09e9245c532f4af1a5874ee794fc975baa7bfed",
+    "evidence/controls/node-wasm-segment-20261007/release-compile.log.gz": "419b6cf1164138059703e72e30e5c56680900caa9c1c5af4af2f0bf65c92a04e",
+    "evidence/controls/node-wasm-segment-20261007/release-memory.log.gz": "3ac2b69b01cecdff0d8fe8b3f5a4520b933ef08d35e426117b90f8aec0015cca",
+    "evidence/controls/node-wasm-segment-20261007/release-normal.log.gz": "3ac2b69b01cecdff0d8fe8b3f5a4520b933ef08d35e426117b90f8aec0015cca",
+    "evidence/controls/node-wasm-segment-20261007/release-valgrind.log.gz": "4c4e59d307e97437e7bf27d6d8541c4b62ba3177f96cb64b71268d5ddd38e488",
+    "evidence/controls/node-wasm-segment-20261007/run.py": "18340988507ce7915915adb6c1c8794f1883faf19950729ca1a5476ef71dbc1f",
+    "evidence/controls/node-wasm-segment-20261007/source-extracts.json": "94b519ec39c5826bb0cc2d158a3a91433cb1551092e800d25a8f9fd88ece8e28",
+    "evidence/controls/node-wasm-segment-20261007/status.json": "d4498ee556a820ac1c3199b446ab3e7661b6f3442e8f90fd46e978fa6188fd23",
+    "evidence/controls/node-wasm-segment-20261007/upstream-sources.json": "f8526e1aef510a50bcceba0d9ae96cc19739560c741e9f9d0ed22b89e8c969d5",
+    "evidence/controls/node-wasm-segment-20261007/wasm-module-builder.js": "b2fd038b811cf841c047b519be7ff299b706c9e8e548f2bf61f4c940026e2d84"
+  },
+  "approval": "Allow this exact diagnostic",
+  "approval_date": "2026-10-07"
+}

@@ -1,0 +1,68 @@
+[
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 2603,
+    "body": "  enum class Kind : uint8_t {\n    kWord32,\n    kWord64,\n    kFloat32,\n    kFloat64,\n    kSmi,\n    kNumber,  // TODO(tebbi): See if we can avoid number constants.\n    kTaggedIndex,\n    kExternal,\n    kHeapObject,\n    kCompressedHeapObject,\n    kTrustedHeapObject,\n    kRelocatableWasmCall,\n    kRelocatableWasmStubCall,\n    kRelocatableWasmIndirectCallTarget,\n    kRelocatableWasmCanonicalSignatureId\n  };",
+    "sha256": "6f42421708d2ac9701b90c88497765dd29c61f393086bc650ea6f8c60dd352d4"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 2694,
+    "body": "  uint64_t integral() const {\n    DCHECK(IsIntegral());\n    return storage.integral;\n  }\n\n  int64_t signed_integral() const {\n    DCHECK(IsIntegral());\n    switch (kind) {\n      case Kind::kWord32:\n      case Kind::kRelocatableWasmCanonicalSignatureId:\n        return static_cast<int32_t>(storage.integral);\n      case Kind::kWord64:\n        return static_cast<int64_t>(storage.integral);\n      default:\n        UNREACHABLE();\n    }\n  }",
+    "sha256": "f794fc558bb915e9b0331813eff1da98255b1b2b3041f9304163e6c644b0e043"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 2769,
+    "body": "  bool IsIntegral() const {\n    return kind == Kind::kWord32 || kind == Kind::kWord64 ||\n           kind == Kind::kRelocatableWasmCall ||\n           kind == Kind::kRelocatableWasmStubCall ||\n           kind == Kind::kRelocatableWasmCanonicalSignatureId ||\n           kind == Kind::kRelocatableWasmIndirectCallTarget;\n  }",
+    "sha256": "6cd480c9929b298637239f9da92c6a42b61ab76aaabdde4d8aa411f9b4687ed0"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operation-matcher.h",
+    "line": 214,
+    "body": "  bool MatchIntegralWordConstant(V<Any> matched, WordRepresentation rep,\n                                 uint64_t* unsigned_constant,\n                                 int64_t* signed_constant = nullptr) const {\n    const ConstantOp* op = TryCast<ConstantOp>(matched);\n    if (!op) return false;\n    switch (op->kind) {\n      case ConstantOp::Kind::kWord32:\n      case ConstantOp::Kind::kWord64:\n      case ConstantOp::Kind::kRelocatableWasmCall:\n      case ConstantOp::Kind::kRelocatableWasmStubCall:\n        if (rep.value() == WordRepresentation::Word32()) {\n          if (unsigned_constant) {\n            *unsigned_constant = static_cast<uint32_t>(op->integral());\n          }\n          if (signed_constant) {\n            *signed_constant = static_cast<int32_t>(op->signed_integral());\n          }\n          return true;\n        } else if (rep.value() == WordRepresentation::Word64()) {\n          if (unsigned_constant) {\n            *unsigned_constant = op->integral();\n          }\n          if (signed_constant) {\n            *signed_constant = op->signed_integral();\n          }\n          return true;\n        }\n        return false;\n      default:\n        return false;\n    }\n    UNREACHABLE();\n  }\n\n  bool MatchIntegralWordConstant(V<Any> matched, WordRepresentation rep,\n                                 int64_t* signed_constant) const {\n    return MatchIntegralWordConstant(matched, rep, nullptr, signed_constant);\n  }",
+    "sha256": "cb6610583ed596c16a63e4c0569101b55fad43aec0582aff275a30b35bd343f5"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operation-matcher.h",
+    "line": 280,
+    "body": "  bool MatchIntegralWord32Constant(V<Any> matched, int32_t* constant) const {\n    if (int64_t value; MatchIntegralWordConstant(\n            matched, WordRepresentation::Word32(), &value)) {\n      *constant = static_cast<int32_t>(value);\n      return true;\n    }\n    return false;\n  }",
+    "sha256": "1aa9106b04822d5b4bfd5d251bf589ef9d743c7b9ee4c1f9ca0ad2008962d3f8"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operation-matcher.h",
+    "line": 337,
+    "body": "  bool MatchWasmStubCallConstant(V<Any> matched, uint64_t* stub_id) const {\n    const ConstantOp* op = TryCast<ConstantOp>(matched);\n    if (!op) return false;\n    if (op->kind != ConstantOp::Kind::kRelocatableWasmStubCall) {\n      return false;\n    }\n    *stub_id = op->integral();\n    return true;\n  }",
+    "sha256": "3b838698728564d7760ea4a8410689a6d6aa26f24aa576888824bcdf27d287d0"
+  },
+  {
+    "file": "deps/v8/src/wasm/turboshaft-graph-interface.cc",
+    "line": 4913,
+    "body": "  const CallOp* IsArrayNewSegment(V<Object> array) {\n    DCHECK_IMPLIES(!array.valid(), __ generating_unreachable_operations());\n    if (__ generating_unreachable_operations()) return nullptr;\n    if (const WasmTypeAnnotationOp* annotation =\n            __ output_graph().Get(array).TryCast<WasmTypeAnnotationOp>()) {\n      array = annotation->value();\n    }\n    if (const DidntThrowOp* didnt_throw =\n            __ output_graph().Get(array).TryCast<DidntThrowOp>()) {\n      array = didnt_throw->throwing_operation();\n    }\n    const CallOp* call = __ output_graph().Get(array).TryCast<CallOp>();\n    if (call == nullptr) return nullptr;\n    uint64_t stub_id{};\n    if (!OperationMatcher(__ output_graph())\n             .MatchWasmStubCallConstant(call->callee(), &stub_id)) {\n      return nullptr;\n    }\n    DCHECK_LT(stub_id, static_cast<uint64_t>(Builtin::kFirstBytecodeHandler));\n    if (stub_id == static_cast<uint64_t>(Builtin::kWasmArrayNewSegment)) {\n      return call;\n    }\n    return nullptr;\n  }",
+    "sha256": "2d0b81357880077b3507fe9f8f94fdf310c19775e63987bf1ec6ca9ae5a3443f"
+  },
+  {
+    "file": "deps/v8/src/wasm/turboshaft-graph-interface.cc",
+    "line": 4950,
+    "body": "      OpIndex segment_index = array_new->input(1);\n      int32_t index_val;\n      OperationMatcher(__ output_graph())\n          .MatchIntegralWord32Constant(segment_index, &index_val);\n      V<Smi> index_smi = __ SmiConstant(Smi::FromInt(index_val));",
+    "sha256": "1312b3feead4078a124cc07feb52b5e28a78134d618aa32e845e99a29c6869de"
+  },
+  {
+    "file": "deps/v8/src/wasm/turboshaft-graph-interface.cc",
+    "line": 4661,
+    "body": "  void ArrayNewSegment(FullDecoder* decoder,\n                       const ArrayIndexImmediate& array_imm,\n                       const IndexImmediate& segment_imm, const Value& offset,\n                       const Value& length, Value* result) {\n    bool is_element = array_imm.array_type->element_type().is_reference();\n    // TODO(14616): Data segments aren't available during streaming compilation.\n    // Discussion: github.com/WebAssembly/shared-everything-threads/issues/83\n    bool segment_is_shared =\n        decoder->enabled_.has_shared() &&\n        (is_element\n             ? decoder->module_->elem_segments[segment_imm.index].shared\n             : decoder->module_->data_segments[segment_imm.index].shared);\n    // TODO(14616): Add DCHECK that array sharedness is equal to `shared`?\n    V<WasmArray> result_value =\n        CallBuiltinThroughJumptable<BuiltinCallDescriptor::WasmArrayNewSegment>(\n            decoder,\n            {__ Word32Constant(segment_imm.index), offset.op, length.op,\n             __ SmiConstant(Smi::FromInt(is_element ? 1 : 0)),\n             __ SmiConstant(Smi::FromInt(!shared_ && segment_is_shared)),\n             __ RttCanon(managed_object_maps(segment_is_shared),\n                         array_imm.index)});\n    result->op = __ AnnotateWasmType(result_value, result->type);\n  }",
+    "sha256": "e8d1762dfb3a38305f9d8a4d0d80fb0eecdd60529fec9dd7b0adb8c289f141b7"
+  },
+  {
+    "file": "deps/v8/src/wasm/function-body-decoder-impl.h",
+    "line": 2117,
+    "body": "  bool ValidateDataSegment(const uint8_t* pc, IndexImmediate& imm) {\n    if (!VALIDATE(imm.index < module_->num_declared_data_segments)) {\n      DecodeError(pc, \"invalid data segment index: %u\", imm.index);\n      return false;\n    }\n    // TODO(14616): Data segments aren't available during eager validation.",
+    "sha256": "950d52262d71d7bd16c8c749dd0abe20e1958617c574440822a6b8234d533152"
+  },
+  {
+    "file": "deps/v8/src/wasm/wasm-limits.h",
+    "line": 37,
+    "body": "constexpr size_t kV8MaxWasmDataSegments = 100'000;",
+    "sha256": "0fbefd9b894f6dabdd768533898812fd6113fdc8846cb18b75e3a473e373738a"
+  }
+]
