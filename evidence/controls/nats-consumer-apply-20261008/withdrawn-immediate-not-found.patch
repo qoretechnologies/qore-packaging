@@ -1,0 +1,17 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Honor inflight deletion when answering consumer information from the metadata leader.
+--- a/server/jetstream_api.go
++++ b/server/jetstream_api.go
+@@ -5581,6 +5581,12 @@
+ 			// Fallback for a stream that's being created.
+ 			sa = js.streamAssignmentOrInflight(acc.Name, streamName)
+ 		}
++		// A consumer leader can acknowledge deletion before the meta leader
++		// applies that entry locally. Honor its pending deletion instead of
++		// directing this request to a consumer that has already stopped.
++		if isLeader && ca != nil && js.consumerAssignmentOrInflight(acc.Name, streamName, consumerName) == nil {
++			ca = nil
++		}
+ 		if sa != nil && ca == nil {
+ 			// Fallback for a consumer that's being created.
+ 			ca = js.consumerAssignmentOrInflight(acc.Name, streamName, consumerName)

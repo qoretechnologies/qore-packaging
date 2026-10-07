@@ -1,0 +1,525 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Re-evaluate consumer information after pending metadata deletion has applied.
+--- a/server/jetstream_api.go
++++ b/server/jetstream_api.go
+@@ -5531,7 +5531,86 @@
+ 	s.sendAPIResponse(ci, acc, subject, reply, string(msg), s.jsonResponse(resp))
+ }
+ 
+-// Request for information about an consumer.
++// deferConsumerInfoRequest retains the metadata leader's request while a
++// deletion is pending. The current consumer leader can still answer immediately;
++// the metadata leader re-evaluates its applied state when the proposals finish.
++// A pending deletion alone does not prove that the consumer has stopped.
++func (js *jetStream) deferConsumerInfoRequest(sub *subscription, c *client, acc *Account, subject, reply string, rmsg []byte, stream, consumer string) (deferred, overloaded bool) {
++	js.mu.Lock()
++	cc := js.cluster
++	if cc == nil || cc.meta == nil || cc.qch == nil || js.shuttingDown || js.srv.isShuttingDown() || !cc.isLeader() || cc.isConsumerLeader(acc.Name, stream, consumer) ||
++		js.consumerAssignment(acc.Name, stream, consumer) == nil {
++		js.mu.Unlock()
++		return false, false
++	}
++	inflight := cc.inflightConsumers[acc.Name][stream][consumer]
++	if inflight == nil || !inflight.deleted {
++		js.mu.Unlock()
++		return false, false
++	}
++	// Bound retained requests by the same configured limit as the info queue.
++	if cc.pendingConsumerInfos >= atomic.LoadInt64(&js.infoQueueLimit) {
++		js.mu.Unlock()
++		return false, true
++	}
++	if inflight.applied == nil {
++		inflight.applied = make(chan struct{})
++	}
++	applied, quit, meta := inflight.applied, cc.qch, cc.meta
++	cc.pendingConsumerInfos++
++	atomic.AddInt64(&js.apiInflight, 1)
++	js.mu.Unlock()
++
++	// The API worker's client is reused after this callback. Keep only the
++	// independent request bytes and parse state, never that mutable client.
++	s := js.srv
++	metaQuit := meta.QuitC()
++	rmsg = copyBytes(rmsg)
++	requestClient := &client{srv: s, kind: JETSTREAM}
++	requestClient.pa.hdr = c.pa.hdr
++	finish := func() {
++		js.mu.Lock()
++		cc.pendingConsumerInfos--
++		js.mu.Unlock()
++		atomic.AddInt64(&js.apiInflight, -1)
++	}
++	if !s.startGoRoutine(func() {
++		defer s.grWG.Done()
++		replay := false
++		defer func() {
++			// Release the retained-request slot before the queue can run it again.
++			finish()
++			// Server shutdown steps down Raft before closing quit channels.
++			// That term change must release, rather than replay, retained reads.
++			if replay && !s.isShuttingDown() {
++				select {
++				case <-quit:
++					return
++				case <-metaQuit:
++					return
++				case <-s.quitCh:
++					return
++				default:
++				}
++				js.apiDispatch(sub, requestClient, acc, subject, reply, rmsg)
++			}
++		}()
++		select {
++		case <-applied:
++			// Re-enter the normal bounded queue, with fresh leadership and
++			// assignment checks. No delay, polling, or stale response is used.
++			replay = true
++		case <-quit:
++		case <-metaQuit:
++		case <-s.quitCh:
++		}
++	}) {
++		finish()
++	}
++	return true, false
++}
++
++// Request for information about a consumer.
+ func (s *Server) jsConsumerInfoRequest(sub *subscription, c *client, _ *Account, subject, reply string, rmsg []byte) {
+ 	if c == nil || !s.JetStreamEnabled() {
+ 		return
+@@ -5559,6 +5638,14 @@
+ 		// Check to make sure the consumer is assigned.
+ 		js, cc := s.getJetStreamCluster()
+ 		if js == nil || cc == nil {
++			return
++		}
++
++		if deferred, overloaded := js.deferConsumerInfoRequest(sub, c, acc, subject, reply, rmsg, streamName, consumerName); deferred {
++			return
++		} else if overloaded {
++			resp.Error = NewJSClusterNotAvailError()
++			s.sendAPIErrResponse(ci, acc, subject, reply, string(msg), s.jsonResponse(&resp))
+ 			return
+ 		}
+ 
+--- a/server/jetstream_cluster.go
++++ b/server/jetstream_cluster.go
+@@ -54,6 +54,8 @@
+ 	// a response but they need to be same group, peers etc. and sync subjects.
+ 	inflightStreams   map[string]map[string]*inflightStreamInfo
+ 	inflightConsumers map[string]map[string]map[string]*inflightConsumerInfo
++	// Requests waiting for pending consumer changes to be applied; guarded by js.mu.
++	pendingConsumerInfos int64
+ 	// Tracks raft groups currently being started by createRaftGroup, so that
+ 	// concurrent callers for the same group can wait without holding js.mu
+ 	// across the disk I/O performed during startup.
+@@ -116,6 +118,8 @@
+ 	ops     uint64 // Inflight operations, i.e. inflight consumer creates/updates/deletes.
+ 	deleted bool   // Whether the consumer has been deleted.
+ 	*consumerAssignment
++	// Closed when these proposals finish or their metadata leadership term ends.
++	applied chan struct{}
+ }
+ 
+ // Used to track inflight peer-remove info to respond 'success' after quorum.
+@@ -1689,7 +1693,7 @@
+ 		inflight.deleted = deleted
+ 		inflight.consumerAssignment = ca
+ 	} else {
+-		consumers[ca.Name] = &inflightConsumerInfo{1, deleted, ca}
++		consumers[ca.Name] = &inflightConsumerInfo{ops: 1, deleted: deleted, consumerAssignment: ca}
+ 	}
+ }
+ 
+@@ -1707,7 +1711,10 @@
+ 		// Decrement one pending operation.
+ 		inflight.ops--
+ 	} else {
+-		// No pending operations left, clean up.
++		// No pending operations left; wake information requests before cleanup.
++		if inflight.applied != nil {
++			close(inflight.applied)
++		}
+ 		delete(consumers, consumerName)
+ 		if len(consumers) == 0 {
+ 			delete(streams, streamName)
+@@ -1716,6 +1723,21 @@
+ 			delete(cc.inflightConsumers, accName)
+ 		}
+ 	}
++}
++
++// Wake retained information requests when their leadership term ends.
++// (Write) Lock held on entry.
++func (cc *jetStreamCluster) clearInflightConsumerProposals() {
++	for _, streams := range cc.inflightConsumers {
++		for _, consumers := range streams {
++			for _, inflight := range consumers {
++				if inflight.applied != nil {
++					close(inflight.applied)
++				}
++			}
++		}
++	}
++	cc.inflightConsumers = nil
+ }
+ 
+ // Return the cluster quit chan.
+@@ -9590,7 +9612,7 @@
+ 
+ 	// Clear inflight proposal tracking.
+ 	js.cluster.inflightStreams = nil
+-	js.cluster.inflightConsumers = nil
++	js.cluster.clearInflightConsumerProposals()
+ 
+ 	if isLeader {
+ 		if meta := js.cluster.meta; meta != nil && meta.IsObserver() {
+--- a/server/jetstream_cluster_2_test.go
++++ b/server/jetstream_cluster_2_test.go
+@@ -10150,3 +10150,343 @@
+ 	node.Unlock()
+ 	require_Equal(t, before, after)
+ }
++
++// A real update blocks only the metadata leader's local consumer application.
++// Its Raft group continues committing, so another consumer leader can acknowledge
++// deletion before that local application catches up. No production hook or
++// privately fabricated assignment is used.
++func TestJetStreamConsumerRecreateDuringMetaApplyLag(t *testing.T) {
++	c := createJetStreamClusterExplicit(t, "WQ-META", 3)
++	defer c.shutdown()
++	meta := c.leader()
++	require_NotNil(t, meta)
++	nc, js := jsClientConnect(t, c.randomServer())
++	defer nc.Close()
++	_, err := js.AddStream(&nats.StreamConfig{
++		Name: "TEST", Subjects: []string{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
++		Retention: nats.WorkQueuePolicy, Replicas: 3,
++	})
++	require_NoError(t, err)
++	awaitStreamRouteInterest(t, c, nc, "TEST")
++	for _, subject := range []string{"2", "5", "7", "9"} {
++		for range 10 {
++			_, err := js.Publish(subject, []byte("workqueue message"))
++			require_NoError(t, err)
++		}
++	}
++	delivery, err := nc.SubscribeSync("bob")
++	require_NoError(t, err)
++	defer delivery.Unsubscribe()
++	cfg := &nats.ConsumerConfig{Name: "test", FilterSubjects: []string{"6", "7", "8", "9", "10"},
++		DeliverSubject: "bob", AckPolicy: nats.AckExplicitPolicy, AckWait: time.Minute, MaxAckPending: 1}
++	created, err := js.AddConsumer("TEST", cfg)
++	require_NoError(t, err)
++	_, err = delivery.NextMsg(time.Second)
++	require_NoError(t, err)
++	awaitClusterMetaApplied(t, c)
++	preferred := c.randomNonLeader()
++	consumerLeader := c.consumerLeader(globalAccountName, "TEST", "test")
++	require_NotNil(t, consumerLeader)
++	if consumerLeader != preferred {
++		elected := observePreferredElection(t, preferred, JSAdvisoryConsumerLeaderElectedPre+".TEST.test", globalAccountName, "TEST", 10*time.Second)
++		stream, err := consumerLeader.GlobalAccount().lookupStream("TEST")
++		require_NoError(t, err)
++		consumer := stream.lookupConsumer("test")
++		require_NotNil(t, consumer)
++		consumer.mu.RLock()
++		node := consumer.node.(*raft)
++		consumer.mu.RUnlock()
++		peer := preferred.getJetStream().getMetaGroup().ID()
++		awaitPreferredPeer(t, node, peer)
++		require_NoError(t, node.StepDown(peer))
++		elected()
++	}
++	require_True(t, c.consumerLeader(globalAccountName, "TEST", "test") != meta)
++	require_True(t, c.leader() == meta)
++	stream, err := meta.GlobalAccount().lookupStream("TEST")
++	require_NoError(t, err)
++	consumer := stream.lookupConsumer("test")
++	require_NotNil(t, consumer)
++	consumer.mu.Lock()
++	var unlocked sync.Once
++	unblock := func() { unlocked.Do(consumer.mu.Unlock) }
++	defer unblock()
++	updated := *cfg
++	updated.AckWait = 2 * time.Minute
++	_, err = js.UpdateConsumer("TEST", &updated)
++	require_NoError(t, err)
++	require_NoError(t, js.DeleteConsumer("TEST", "test"))
++	// Prove this is an acknowledged real delete, still unapplied on the meta
++	// leader, and not a constructed copy of a completed create assignment.
++	mjs := meta.getJetStream()
++	mjs.mu.RLock()
++	applied := mjs.consumerAssignment(globalAccountName, "TEST", "test")
++	inflight := mjs.consumerAssignmentOrInflight(globalAccountName, "TEST", "test")
++	mjs.mu.RUnlock()
++	require_NotNil(t, applied)
++	require_True(t, inflight == nil)
++
++	// Observe completion of each real information handler without altering it.
++	infoSubject := fmt.Sprintf(JSApiConsumerInfoT, "TEST", "test")
++	finished := make(chan *Server, 8)
++	var observing atomic.Bool
++	observing.Store(true)
++	for _, server := range c.servers {
++		api := server.getJetStream().apiSubs
++		matched := api.Match(infoSubject).psubs
++		require_Equal(t, len(matched), 1)
++		original := matched[0]
++		replacement := &subscription{subject: append([]byte(nil), original.subject...),
++			icb: func(sub *subscription, client *client, account *Account, subject, reply string, msg []byte) {
++				original.icb(sub, client, account, subject, reply, msg)
++				if subject == infoSubject && observing.Load() {
++					finished <- server
++				}
++			}}
++		require_NoError(t, api.Remove(original))
++		require_NoError(t, api.Insert(replacement))
++		defer func() { require_NoError(t, api.Remove(replacement)); require_NoError(t, api.Insert(original)) }()
++	}
++	requests := make(chan string, 8)
++	traced, err := nc.JetStream(nats.MaxWait(10*time.Second), nats.ClientTrace{
++		RequestSent: func(subject string, _ []byte) { requests <- subject },
++	})
++	require_NoError(t, err)
++	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
++	type result struct {
++		info *nats.ConsumerInfo
++		err  error
++	}
++	completed := make(chan result, 1)
++	var workers sync.WaitGroup
++	workers.Add(1)
++	defer func() { cancel(); workers.Wait() }()
++	go func() {
++		defer workers.Done()
++		info, err := traced.AddConsumer("TEST", cfg, nats.Context(ctx))
++		completed <- result{info, err}
++	}()
++	seen := make(map[*Server]bool)
++	for len(seen) < len(c.servers) {
++		select {
++		case server := <-finished:
++			seen[server] = true
++		case <-ctx.Done():
++			t.Fatal("information request did not finish on all three handlers")
++		}
++	}
++	observing.Store(false)
++	unblock()
++	recreated := <-completed
++	var sent []string
++	for len(requests) > 0 {
++		sent = append(sent, <-requests)
++	}
++	t.Logf("acknowledged delete with lagging metadata; AddConsumer requests: %v", sent)
++	require_NoError(t, recreated.err)
++	require_NotNil(t, recreated.info)
++	require_True(t, recreated.info.Created.After(created.Created))
++	require_Equal(t, len(sent), 2)
++	require_Equal(t, sent[0], infoSubject)
++	require_Equal(t, sent[1], "$JS.API.CONSUMER.CREATE.TEST.test")
++	previous := recreated.info.Created
++	for range 4 {
++		message, err := delivery.NextMsg(time.Second)
++		require_NoError(t, err)
++		require_Equal(t, string(message.Data), "workqueue message")
++		require_NoError(t, js.DeleteConsumer("TEST", "test"))
++		next, err := js.AddConsumer("TEST", cfg)
++		require_NoError(t, err)
++		require_True(t, next.Created.After(previous))
++		previous = next.Created
++	}
++	info, err := js.StreamInfo("TEST")
++	require_NoError(t, err)
++	require_Equal(t, info.State.Msgs, uint64(40))
++}
++
++// These are lifecycle tests of the pending-request mechanism. Unlike the real
++// update/delete reproduction above, the proposals here are deliberately synthetic
++// so application, term reset, queue limits and shutdown can be controlled exactly.
++func TestJetStreamConsumerInfoPendingDeleteLifecycle(t *testing.T) {
++	for _, completion := range []string{"live_consumer", "applied", "term_reset", "shutdown", "start_rejected"} {
++		t.Run(completion, func(t *testing.T) {
++			c := createJetStreamClusterExplicit(t, "INFO-LIFETIME", 3)
++			defer c.shutdown()
++			meta := c.leader()
++			nc, js := jsClientConnect(t, c.randomServer())
++			defer nc.Close()
++			_, err := js.AddStream(&nats.StreamConfig{Name: "TEST", Subjects: []string{"foo"}, Replicas: 3})
++			require_NoError(t, err)
++			_, err = js.AddConsumer("TEST", &nats.ConsumerConfig{Durable: "C", AckPolicy: nats.AckExplicitPolicy, Replicas: 3})
++			require_NoError(t, err)
++			preferred := c.randomNonLeader()
++			c.stepDownConsumerLeader(nc, globalAccountName, "TEST", "C", preferred)
++			awaitClusterMetaApplied(t, c)
++			mjs := meta.getJetStream()
++			mjs.mu.RLock()
++			cc := mjs.cluster
++			ca := mjs.consumerAssignment(globalAccountName, "TEST", "C")
++			isConsumerLeader := cc.isConsumerLeader(globalAccountName, "TEST", "C")
++			mjs.mu.RUnlock()
++			require_NotNil(t, ca)
++			require_True(t, !isConsumerLeader)
++			subject := fmt.Sprintf(JSApiConsumerInfoT, "TEST", "C")
++			body, err := json.Marshal(&ClientInfo{Account: globalAccountName})
++			require_NoError(t, err)
++			raw := genHeader(nil, ClientInfoHdr, string(body))
++			originalRaw := copyBytes(raw)
++			requestClient := &client{srv: meta, kind: JETSTREAM}
++			requestClient.pa.hdr = len(raw)
++			acc := meta.GlobalAccount()
++			// Ordinary reads, nonleader reads and absent consumers do not defer.
++			deferred, overloaded := mjs.deferConsumerInfoRequest(nil, requestClient, acc, subject, "reply", raw, "TEST", "C")
++			require_True(t, !deferred && !overloaded)
++			deferred, overloaded = mjs.deferConsumerInfoRequest(nil, requestClient, acc, subject, "reply", raw, "TEST", "missing")
++			require_True(t, !deferred && !overloaded)
++			oldLimit := atomic.SwapInt64(&mjs.infoQueueLimit, 2)
++			defer atomic.StoreInt64(&mjs.infoQueueLimit, oldLimit)
++			mjs.mu.Lock()
++			cc.trackInflightConsumerProposal(globalAccountName, "TEST", ca, false)
++			cc.trackInflightConsumerProposal(globalAccountName, "TEST", ca, true)
++			mjs.mu.Unlock()
++
++			// A still-live consumer leader answers while the metadata leader retains
++			// its copy. This is the remote-leader variant of the upstream regression.
++			if completion == "live_consumer" {
++				finished := make(chan struct{})
++				var notified sync.Once
++				api := mjs.apiSubs
++				matches := api.Match(subject).psubs
++				require_Equal(t, len(matches), 1)
++				original := matches[0]
++				replacement := &subscription{subject: copyBytes(original.subject),
++					icb: func(sub *subscription, c *client, acc *Account, subject, reply string, raw []byte) {
++						original.icb(sub, c, acc, subject, reply, raw)
++						notified.Do(func() { close(finished) })
++					}}
++				require_NoError(t, api.Remove(original))
++				require_NoError(t, api.Insert(replacement))
++				defer func() { require_NoError(t, api.Remove(replacement)); require_NoError(t, api.Insert(original)) }()
++				ci, err := js.ConsumerInfo("TEST", "C")
++				require_NoError(t, err)
++				require_Equal(t, ci.Name, "C")
++				ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
++				defer cancel()
++				select {
++				case <-finished:
++				case <-ctx.Done():
++					t.Fatal("metadata handler did not retain its live-consumer request")
++				}
++				mjs.mu.RLock()
++				retained := cc.pendingConsumerInfos
++				mjs.mu.RUnlock()
++				require_Equal(t, retained, int64(1))
++				// Clearing the synthetic term releases that retained request.
++				mjs.mu.Lock()
++				cc.clearInflightConsumerProposals()
++				mjs.mu.Unlock()
++				// The direct mechanism checks use the other completion variants; the
++				// full shutdown join proves all retained copies have been released.
++				meta.Shutdown()
++				meta.WaitForShutdown()
++				mjs.mu.RLock()
++				pending := cc.pendingConsumerInfos
++				mjs.mu.RUnlock()
++				require_Equal(t, pending, int64(0))
++				return
++			}
++
++			type replay struct {
++				subject, reply string
++				raw            []byte
++				hdr            int
++			}
++			replayed := make(chan replay, 2)
++			api := mjs.apiSubs
++			matches := api.Match(subject).psubs
++			require_Equal(t, len(matches), 1)
++			original := matches[0]
++			replacement := &subscription{subject: copyBytes(original.subject),
++				icb: func(_ *subscription, c *client, _ *Account, subject, reply string, raw []byte) {
++					replayed <- replay{subject, reply, copyBytes(raw), c.pa.hdr}
++				}}
++			require_NoError(t, api.Remove(original))
++			require_NoError(t, api.Insert(replacement))
++			defer func() { require_NoError(t, api.Remove(replacement)); require_NoError(t, api.Insert(original)) }()
++			if completion == "start_rejected" {
++				meta.grMu.Lock()
++				meta.grRunning = false
++				meta.grMu.Unlock()
++				deferred, overloaded = mjs.deferConsumerInfoRequest(nil, requestClient, acc, subject, "rejected", raw, "TEST", "C")
++				meta.grMu.Lock()
++				meta.grRunning = true
++				meta.grMu.Unlock()
++				require_True(t, deferred && !overloaded)
++				mjs.mu.RLock()
++				pending := cc.pendingConsumerInfos
++				mjs.mu.RUnlock()
++				require_Equal(t, pending, int64(0))
++				return
++			}
++			for i := range 2 {
++				deferred, overloaded = mjs.deferConsumerInfoRequest(nil, requestClient, acc, subject, fmt.Sprintf("reply-%d", i), raw, "TEST", "C")
++				require_True(t, deferred && !overloaded)
++			}
++			deferred, overloaded = mjs.deferConsumerInfoRequest(nil, requestClient, acc, subject, "overflow", raw, "TEST", "C")
++			require_True(t, !deferred && overloaded)
++			for i := range raw {
++				raw[i] = 'x'
++			}
++			requestClient.pa.hdr = 0
++			mjs.mu.Lock()
++			pendingBefore := cc.pendingConsumerInfos
++			inflight := cc.inflightConsumers[globalAccountName]["TEST"]["C"]
++			applied := inflight.applied
++			cc.removeInflightConsumerProposal(globalAccountName, "TEST", "C")
++			mjs.mu.Unlock()
++			require_Equal(t, pendingBefore, int64(2))
++			select {
++			case <-applied:
++				t.Fatal("released before all pending operations were applied")
++			default:
++			}
++			// Restore the ordinary queue capacity after checking the retained-request
++			// cap: two simultaneous replays must not intentionally fill and drain
++			// a queue whose test-only limit is two.
++			atomic.StoreInt64(&mjs.infoQueueLimit, oldLimit)
++			if completion == "term_reset" || completion == "applied" {
++				mjs.mu.Lock()
++				if completion == "applied" {
++					cc.removeInflightConsumerProposal(globalAccountName, "TEST", "C")
++				} else {
++					cc.clearInflightConsumerProposals()
++				}
++				mjs.mu.Unlock()
++				ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
++				defer cancel()
++				seen := map[string]bool{}
++				for range 2 {
++					select {
++					case r := <-replayed:
++						require_Equal(t, r.subject, subject)
++						require_Equal(t, r.hdr, len(originalRaw))
++						require_True(t, bytes.Equal(r.raw, originalRaw))
++						require_True(t, !seen[r.reply])
++						seen[r.reply] = true
++					case <-ctx.Done():
++						t.Fatal("retained request was not replayed")
++					}
++				}
++				require_True(t, seen["reply-0"] && seen["reply-1"])
++			}
++			meta.Shutdown()
++			meta.WaitForShutdown()
++			mjs.mu.RLock()
++			pending := cc.pendingConsumerInfos
++			mjs.mu.RUnlock()
++			require_Equal(t, pending, int64(0))
++			require_Equal(t, len(replayed), 0)
++		})
++	}
++}

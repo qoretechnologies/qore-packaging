@@ -1,0 +1,265 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Real consumer-info timeout corrected and focused-qualified. Next combined RPM candidate integration and full package qualification remain required.",
+  "root_cause": "A remote consumer leader can apply and acknowledge deletion while the metadata leader still has an older applied assignment. AddConsumer first sends ConsumerInfo. The metadata leader discards it in favor of the now-deleted consumer leader, while the other servers have no assignment and also discard it; later application does not recover the request.",
+  "fix": "Retain the metadata leader information request until its outstanding consumer proposals finish, then re-evaluate through the ordinary bounded API queue. Preserve immediate reads from a still-live consumer leader. Copy request ownership, cap retention by infoQueueLimit, release on term/node/cluster/server changes and reject replay once shutdown starts.",
+  "real_control": "An actual consumer update is held at the metadata leader local consumer mutex, outside the metadata lock. A different consumer leader acknowledges the real update and deletion. All three information callbacks are observed before the local application is released. The old server still times out; the fixed server sends INFO then CREATE, creates a fresh consumer and retains all 40 workqueue messages through five recreate lifetimes.",
+  "qualification": {
+    "race_enabled_results_including_subtests": 246,
+    "results": [
+      {
+        "target": "fedora",
+        "run": 264,
+        "race_enabled_results_including_subtests": 40,
+        "exit_code": 0
+      },
+      {
+        "target": "leap",
+        "run": 264,
+        "race_enabled_results_including_subtests": 40,
+        "exit_code": 0
+      },
+      {
+        "target": "el10",
+        "run": 264,
+        "race_enabled_results_including_subtests": 40,
+        "exit_code": 0
+      },
+      {
+        "target": "fedora",
+        "run": 265,
+        "race_enabled_results_including_subtests": 42,
+        "exit_code": 0
+      },
+      {
+        "target": "leap",
+        "run": 265,
+        "race_enabled_results_including_subtests": 42,
+        "exit_code": 0
+      },
+      {
+        "target": "el10",
+        "run": 265,
+        "race_enabled_results_including_subtests": 42,
+        "exit_code": 0
+      }
+    ],
+    "broader_named_suites_per_distribution": 25,
+    "patch_fuzz_and_offsets": 0
+  },
+  "controls": [
+    {
+      "run": 256,
+      "target": "fedora",
+      "variant": "original",
+      "expected_exit_code": 1
+    },
+    {
+      "run": 256,
+      "target": "leap",
+      "variant": "original",
+      "expected_exit_code": 1
+    },
+    {
+      "run": 256,
+      "target": "el10",
+      "variant": "original",
+      "expected_exit_code": 1
+    },
+    {
+      "run": 256,
+      "target": "fedora",
+      "variant": "fixed",
+      "expected_exit_code": 0
+    },
+    {
+      "run": 256,
+      "target": "leap",
+      "variant": "fixed",
+      "expected_exit_code": 0
+    },
+    {
+      "run": 256,
+      "target": "el10",
+      "variant": "fixed",
+      "expected_exit_code": 0
+    },
+    {
+      "run": 257,
+      "target": "fedora",
+      "variant": "original",
+      "expected_exit_code": 0
+    },
+    {
+      "run": 257,
+      "target": "leap",
+      "variant": "original",
+      "expected_exit_code": 0
+    },
+    {
+      "run": 257,
+      "target": "el10",
+      "variant": "original",
+      "expected_exit_code": 0
+    },
+    {
+      "run": 257,
+      "target": "fedora",
+      "variant": "fixed",
+      "expected_exit_code": 1
+    },
+    {
+      "run": 257,
+      "target": "leap",
+      "variant": "fixed",
+      "expected_exit_code": 1
+    },
+    {
+      "run": 257,
+      "target": "el10",
+      "variant": "fixed",
+      "expected_exit_code": 1
+    },
+    {
+      "run": 263,
+      "target": "fedora",
+      "variant": "",
+      "expected_exit_code": 1
+    },
+    {
+      "run": 263,
+      "target": "leap",
+      "variant": "",
+      "expected_exit_code": 1
+    },
+    {
+      "run": 263,
+      "target": "el10",
+      "variant": "",
+      "expected_exit_code": 1
+    }
+  ],
+  "withdrawn_proposal": "Returning consumer-not-found merely because a delete is pending breaks TestJetStreamClusterConsumerInfoWithInflightConsumerDelete on every distribution. That proposal is never integrated.",
+  "harness_and_proposal_corrections": [
+    "255 tried overlaying a new test file into a read-only mount and never executed Go. The regression was moved into an existing test file.",
+    "258 used a promoted parser field in a struct literal; 260 shadowed the client type. Both compile errors were corrected before qualification.",
+    "261 used a test-only info queue limit of two while replaying two requests, intentionally triggering the existing queue-drain policy. The ordinary capacity is restored after the separate retention-cap assertion.",
+    "261/262/263 expected no replay during shutdown, but server shutdown first triggers a Raft term change. The final proposal checks the shutdown state before replay. All retained counters already returned to zero; the failed assertion was the unexpected replay count, not a retained allocation.",
+    "WaitForShutdown joins full teardown in the final controls. It alone did not correct the replay failure; that required the production shutdown guard."
+  ],
+  "limits": [
+    "The candidate36 historical timeout has no per-request trace. The controlled real update/delete sequence demonstrates a reproducible defect in the same public AddConsumer information-probe path, not a trace of the historical scheduler interleaving.",
+    "Synthetic proposal entries are used only for the explicitly labeled capacity, ownership and cleanup tests. The root-cause reproduction uses real committed update and delete operations and no fabricated assignments.",
+    "Metadata leadership loss releases/re-evaluates retained requests; it does not promise transparent client-operation completion through unavailable consensus or partitions.",
+    "Full combined RPM builds, upstream skip review, native architectures, NATS client/module and repository lifecycle remain independent release gates."
+  ],
+  "source_sha256": {
+    "jetstream_api.go": "9ad7ea66cf56c48fb59d2147b2826b43bbfc695087db240be8eb05396d22d295",
+    "jetstream_cluster.go": "c8eb75e7a64e6848db7c91466260f4101b05baa725c9678887f03351a231ec8b",
+    "jetstream_cluster_2_test.go": "f879e6e0c1bf06989a24eea5a0da5df36a42f0ee70880794407275337cd7c280"
+  },
+  "files_sha256": {
+    "evidence/controls/nats-consumer-apply-20261008/audit.rst": "08853aff774a3459d4cb2ff8c9de4b81266a811a32e17ebbc2ee191be6eab444",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-255-fixed-status.json.gz": "1adb7fb45117abce6940cb72cbe5e6d9cebbc45813522accdda3609856b014bd",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-255-fixed-tests.log.gz": "f40fd760282000bd7a73ae43a963940b50fe98796d2cb2aec669ecb7134ceaab",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-255-original-status.json.gz": "f2c9ddb2e8847c5ada78dcb9384a5a372dbd11624f7f94ad5a4e62e1a1074149",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-255-original-tests.log.gz": "f40fd760282000bd7a73ae43a963940b50fe98796d2cb2aec669ecb7134ceaab",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-256-fixed-status.json": "c9ba93adc6301f5cb43d24d0a93d3de75de700ca6b91e991e3ca6833c821cb2b",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-256-fixed.log.gz": "f76b9c1366f78926858c712aa5cc97439e826f245c16c4f6efdf62b47e8e156e",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-256-original-status.json": "4b6cb2b2d2bc37efacf061f6bff3dbf92ea07dfc572073796d084ebe3a5f1811",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-256-original.log.gz": "a897c36100805cb7478d93bd4491b067e8788da57f0b0d5773f1df081521017b",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-257-fixed-status.json": "005bc1fb5a3a5214ea22bb62156d2d0e7ba112734f6e920bd5fc14df39ec3ad5",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-257-fixed.log.gz": "3e99a00b13905b1edfd5efcceb5290a7b07f2111b59c9ddf6b1de76c59939395",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-257-original-status.json": "ac2fe489116bf045a651e0cc82edebf28731c6c3a64d05727de9dce56c2999d4",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-257-original.log.gz": "91d7a1d287373b8b7897f3c4454836399e3d428a920354db614c139ee9ef6f1d",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-258-status.json.gz": "07fef4a881fc28786c43bc0df96750f0039dd05dcb28c110f413adc0c2af6f53",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-258-tests.log.gz": "94bac8ee02c035ecc6c6fbf9829a22583545c35add80bed325400790b4bdeb36",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-260-status.json.gz": "4b8af2024d47c67bb63f82862a9751b9428ffc38d49fffc8b419cc2f83fa43b6",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-260-tests.log.gz": "0c81b64d944eb336d3d1bad4566c5a12ad2968ff2feb8c8502ade8e9312c126a",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-261-status.json.gz": "1d907ff9399ee7bd4d1d96792cc7550b291cee99eb7a61356b72669c38f44f83",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-261-tests.log.gz": "cc9cd5c1c7d8436dbe129bcaa3f51946e657e29ac0ac139a61283ce7783a6ffc",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-262-status.json.gz": "8338c799bf5709ac47f4a50be72a71fca9139c602804f2286a13cf4173ba7601",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-262-tests.log.gz": "a153aafbb343af6ecdff51376d20e63a94c716da795de164d015714a5b708a83",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-263-status.json": "58f36e6c976c5f16b64597cf72841b1a809ffc027a635a4baef868d32cd1f50e",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-263.log.gz": "dd26c78a7ac347a39d53a1618f157979921ead7cf44eb0fbd346297f9150f7b4",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-264-status.json": "bc9dd6e4e4f6adb233f063038af0192395281c43e82f8ad5e2b41ec4a2b32bbd",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-264.log.gz": "d2565bf64a06f8613a0d1df77f114ed21718078014063d2e0c18d438de0005ca",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-265-broad-status.json": "95d6471df87fd805664cc70f6223de289a21936168b48cd876d1acf867a8cbfe",
+    "evidence/controls/nats-consumer-apply-20261008/el10-nats-workqueue-inflight-265-broad.log.gz": "7e74daac494ec22c9d80b53018ead99f6bdfdfdad3916aaac286f9e3ed90e0a2",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-255-fixed-status.json.gz": "8b9d950cd8721e5d791d5a9a073c99a30fc6ab39beee7cb8d52a0a7e4e5b50ce",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-255-fixed-tests.log.gz": "f40fd760282000bd7a73ae43a963940b50fe98796d2cb2aec669ecb7134ceaab",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-255-original-status.json.gz": "3c616ef1bb883f3365587c7e5402b03fe13785c39c99d9465f02b7b63cd62252",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-255-original-tests.log.gz": "f40fd760282000bd7a73ae43a963940b50fe98796d2cb2aec669ecb7134ceaab",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-256-fixed-status.json": "5f91a098b41f5858a9036645e49fd1e12ebbcdfbd31616f85a0bfeab2b7e3fab",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-256-fixed.log.gz": "4b4bb5c91bd973334b39b67142d2c203481eebe29bf8cee6805f3abdcefcaced",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-256-original-status.json": "c9e699ef7de725e4f31c41483483e89b3401a195733e48b3ba2371245d88ea6e",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-256-original.log.gz": "ec9a9bf8c1c9a454ec71f519389427d5caac9df77b55de487d1d28f5198a9616",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-257-fixed-status.json": "23a5f87b4394efd91531cfdf2a967e928c228849e857d690dd935caed0f2a0f1",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-257-fixed.log.gz": "c5f2cacdbf22ee386c5ad9c560d823ded1f68b8a320d16aea28f57b816345f08",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-257-original-status.json": "05ee9b8a52f6bead6e34fae6599ee2cb9460406de5af4e4a79a02ba2e7932f87",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-257-original.log.gz": "be5fb9716893e75913d97a10b1aed190b14286d54204f67c3024aad3fcf85a02",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-258-status.json.gz": "29ae474b13e7cb761abd39331ba341d37179c59cd0b73ee96b950dddf8f11fd7",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-258-tests.log.gz": "82573072400dc7375af52c0c1b0e2eed283406ccb69fb81c81d91e53eefde318",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-260-status.json.gz": "f8a7ea5459742754d7db4d365bb6d07a9c37dbf604892af231e396fe7f7cf98a",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-260-tests.log.gz": "0c81b64d944eb336d3d1bad4566c5a12ad2968ff2feb8c8502ade8e9312c126a",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-261-status.json.gz": "3f20e1bffb66537dad54f3f640fe3962ab30f4f293d22c85a06a6ad64dd86872",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-261-tests.log.gz": "00e619c9a51fee3a56b4beb34704a0fb78ed52db6498ad4472caaf6402224d74",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-262-status.json.gz": "425145104ff781128bb000fb76bc29e76985c838c6f283b86313ab08f3f2aa47",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-262-tests.log.gz": "526203e5dbb143bcc04ed315a08c1830a9eaa4a8dded5a42f6b88b0023602502",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-263-status.json": "726448cbe45136598f987ee7b7b31c81560620dd7b61d2296f5aff290ac78c28",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-263.log.gz": "cc3ce96036645d18df824094cfba75b5d62e1fc674bb5ffea04ab02fd78bb1da",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-264-status.json": "9911eb3ac72bc7400b89d0472d6eba616b589c75452a23cb8eff8b84f0eaae7f",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-264.log.gz": "8f9776832e9cfa3b88e0caa136c7739d36a77b7c179fc17e40010bd338090933",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-265-broad-status.json": "721a2505eb92f720c3dd4af4b689aee90afc54f818e9c11f6ddf4477d1ce08ac",
+    "evidence/controls/nats-consumer-apply-20261008/fedora-nats-workqueue-inflight-265-broad.log.gz": "13e612afc3300b0149bf5424d5e756aeede9b491a2b4407050d0aa4df8db7db6",
+    "evidence/controls/nats-consumer-apply-20261008/jetstream_api.go.gz": "1803cd9bbc5103ddba6b0705521d85896684c6f2194ff618f1cc99540c53c050",
+    "evidence/controls/nats-consumer-apply-20261008/jetstream_cluster.go.gz": "3394e1660d55586619478435e18d4da5016cc8489453b1921a927e098961756f",
+    "evidence/controls/nats-consumer-apply-20261008/jetstream_cluster_2_test.go.gz": "671174108d8227b768128ed669d62d69400c7fe9f50b3cb430fbe90c1325b8ab",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-255-fixed-status.json.gz": "24dd1f0396401afc6826b8a1d15152a0f6e2996a68acfc2386e03bb6e08d2113",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-255-fixed-tests.log.gz": "f40fd760282000bd7a73ae43a963940b50fe98796d2cb2aec669ecb7134ceaab",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-255-original-status.json.gz": "03677194401f9b8687dd2f31b9944172c60fbde25823e1ddfe080c5e306f5692",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-255-original-tests.log.gz": "f40fd760282000bd7a73ae43a963940b50fe98796d2cb2aec669ecb7134ceaab",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-256-fixed-status.json": "4fe19691ab81c2e44ca32b2248fc46c036b5b128d4bb290cbccca5964bc7e1e7",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-256-fixed.log.gz": "881be4918cd0f5c05fbe924d907ed4afef8bb95cefe2e8c328d2021fa997fabf",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-256-original-status.json": "e121f83c9ac1ec6d9fa86655229ab62415a3664783afe06b72f4c2e13509bde4",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-256-original.log.gz": "d3dbd690c31e29c57b504cc0888aa45435878c7430786712e3976f3729250c1b",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-257-fixed-status.json": "8ef4176c4a03a161dc6afca6c54adfc56fabe6756aa6295f5edf9df065dfdfe0",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-257-fixed.log.gz": "c801ee8349114cb4da7f3dc5886fca4f7d449ea86c61af647859de0df865dba4",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-257-original-status.json": "15a92acf6a951d20df7cfb718b2fa0a605909e6ceda2725c9d6a5992fd4d3a55",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-257-original.log.gz": "70089bbe0dc1f57ecebde4e58b9e73afaf7f33c0f88a93e07bc7d6ab54868f3c",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-258-status.json.gz": "1c0866e95455d675c1d71254852a41a0b269034ffc7a7680a4835678b7b20705",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-258-tests.log.gz": "94bac8ee02c035ecc6c6fbf9829a22583545c35add80bed325400790b4bdeb36",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-260-status.json.gz": "f638c68181e35acb4c92cdc3921bd0a20ef92e07d8bf23427b54dc3cbfb200e1",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-260-tests.log.gz": "0c81b64d944eb336d3d1bad4566c5a12ad2968ff2feb8c8502ade8e9312c126a",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-261-status.json.gz": "99770786ff4742a5e70e5a925fcd8b7ef5f2269b67788677b97d08b18421aae0",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-261-tests.log.gz": "c21a8b756b17813a8e4187a48cfe2082ece3b59b55ad62398795f98876f67636",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-262-status.json.gz": "1e64c84cc898d8c66caa9b1ce1ba35800b9a730951db83e37d1ca0097229271f",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-262-tests.log.gz": "63dae887d11124c546c6274749970d964b7644c556c0d9f7026693c7731ac186",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-263-status.json": "7e27f16d0ab7597fc1f9d9dafbe4f5a1f8ab7fd80a78cf5e7cf6fd6aac76872a",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-263.log.gz": "884729886c70cc3944fd08564f7e5a4f5fdeb5737886f3d1aa44621decdbe049",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-264-status.json": "c32349c4774ce9b4bcbdd0ddd07d1217cf1c7b3874d0079e5af4e7dc07fac723",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-264.log.gz": "850bc2f3030f07bd5fc826a08b3b3d21b0863c922c59c6bc3408f4028d8f5708",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-265-broad-status.json": "c55199adf1869deb2014a1b96217086860349dfff851c03ed0311273eb0ef5c0",
+    "evidence/controls/nats-consumer-apply-20261008/leap-nats-workqueue-inflight-265-broad.log.gz": "02384d610f4d9f12b0a34d886b45b56f85c1b3c917f2884c3f01edf1d59f8d38",
+    "evidence/controls/nats-consumer-apply-20261008/nats-server-consumer-info-apply.patch": "62b10c2177e641446dabceb6037dc91be4977145ca683089ec258a7a8ad6b3d3",
+    "evidence/controls/nats-consumer-apply-20261008/nats-workqueue-inflight-256.json": "b3c47dee8e5830e0a945fc13eed58c1ec5b00a716b2e2ecb6de8d3409c2f81d8",
+    "evidence/controls/nats-consumer-apply-20261008/nats-workqueue-inflight-257.json": "697c0e7d9c7f47ea8711d528d9e225234b5281d954789a5a737c688513d4ab0a",
+    "evidence/controls/nats-consumer-apply-20261008/nats-workqueue-inflight-263.json": "e973ff14d7277b7a1ef003614fb62a5bb7885f6a6d8f9be4c324feabb60451ef",
+    "evidence/controls/nats-consumer-apply-20261008/nats-workqueue-inflight-264.json": "a01ae00d57ac74fd434e814972cba6b0aeac553a798c892f9a0a8002a6e2a6a8",
+    "evidence/controls/nats-consumer-apply-20261008/nats-workqueue-inflight-265.json": "30b88bca4586f7920aa86e7b77077d6913f54b96653e725c4c3e7193a52304e7",
+    "evidence/controls/nats-consumer-apply-20261008/patch-check.txt": "ceaedfaf518645cebdfc94c7f75c4c922fdcde11361ef78ffe423388c23b56be",
+    "evidence/controls/nats-consumer-apply-20261008/prepare-nats-workqueue-inflight-256-20261008.py": "9d4fd09b437d4f13b17ed50e02219933e21ff926add9a428ee6675257fef2d7d",
+    "evidence/controls/nats-consumer-apply-20261008/prepare-nats-workqueue-inflight-258-20261008.py": "b8c35c2d6c8ef80599dff5a252a80c1ebd2ce09be8891fbfcaef6ddbcfa3f34f",
+    "evidence/controls/nats-consumer-apply-20261008/prepare-nats-workqueue-inflight-259-20261008.py": "83efbb8c9188d1d5013513ca1a9a9b7061d6c9201547dc5d22be9f1fe84dc490",
+    "evidence/controls/nats-consumer-apply-20261008/prepare-nats-workqueue-inflight-260-20261008.py": "60c229a6fb0d1dcad5d31a5714f4740b0df2f944d1369709d0db9546ead038e1",
+    "evidence/controls/nats-consumer-apply-20261008/prepare-nats-workqueue-inflight-261-20261008.py": "15e602608da0b5e21245dc6bb983c17b4bd1348627fcecf0c9b177da5b711618",
+    "evidence/controls/nats-consumer-apply-20261008/prepare-nats-workqueue-inflight-262-20261008.py": "1afa44a953dfbd48e82cd1c6c4f0a7ab457812dbf4d13bf8c41ecae90548c062",
+    "evidence/controls/nats-consumer-apply-20261008/prepare-nats-workqueue-inflight-263-20261008.py": "7a7ab4640240c8a57de49f21998c297a4988d13b5769d9aece83526509796dd0",
+    "evidence/controls/nats-consumer-apply-20261008/prepare-nats-workqueue-inflight-264-20261008.py": "09f5e8e61af5cde35da7678b915d52af91fa832a7177023d08da1406374051f8",
+    "evidence/controls/nats-consumer-apply-20261008/record.py": "59f32065054916085555ad22a925eed1c3d237e01ca1620ac4d3e42bae34cd80",
+    "evidence/controls/nats-consumer-apply-20261008/run-nats-focused.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a",
+    "evidence/controls/nats-consumer-apply-20261008/withdrawn-immediate-not-found.patch": "dece70b247df7f7f47745c4216dda50b7694dadaaea6280505732bc4fb6a46ac"
+  }
+}

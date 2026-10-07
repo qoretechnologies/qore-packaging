@@ -1,0 +1,45 @@
+{
+  "source": "work/nats-prepared-48/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-workqueue-inflight-263",
+      "target": "fedora",
+      "count": 5,
+      "race": true,
+      "pattern": "^TestJetStream(ConsumerRecreateDuringMetaApplyLag|ConsumerInfoPendingDeleteLifecycle|ClusterConsumerInfoWithInflightConsumerDelete)$",
+      "sublist": "work/nats-prepared-48/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-workqueue-inflight-263-20261008/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go",
+        "work/nats-workqueue-inflight-263-20261008/jetstream_api.go": "server/jetstream_api.go",
+        "work/nats-workqueue-inflight-263-20261008/jetstream_cluster.go": "server/jetstream_cluster.go"
+      }
+    },
+    {
+      "name": "leap-nats-workqueue-inflight-263",
+      "target": "leap",
+      "count": 5,
+      "race": true,
+      "pattern": "^TestJetStream(ConsumerRecreateDuringMetaApplyLag|ConsumerInfoPendingDeleteLifecycle|ClusterConsumerInfoWithInflightConsumerDelete)$",
+      "sublist": "work/nats-prepared-48/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-workqueue-inflight-263-20261008/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go",
+        "work/nats-workqueue-inflight-263-20261008/jetstream_api.go": "server/jetstream_api.go",
+        "work/nats-workqueue-inflight-263-20261008/jetstream_cluster.go": "server/jetstream_cluster.go"
+      }
+    },
+    {
+      "name": "el10-nats-workqueue-inflight-263",
+      "target": "el10",
+      "count": 5,
+      "race": true,
+      "pattern": "^TestJetStream(ConsumerRecreateDuringMetaApplyLag|ConsumerInfoPendingDeleteLifecycle|ClusterConsumerInfoWithInflightConsumerDelete)$",
+      "sublist": "work/nats-prepared-48/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-workqueue-inflight-263-20261008/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go",
+        "work/nats-workqueue-inflight-263-20261008/jetstream_api.go": "server/jetstream_api.go",
+        "work/nats-workqueue-inflight-263-20261008/jetstream_cluster.go": "server/jetstream_cluster.go"
+      }
+    }
+  ]
+}
