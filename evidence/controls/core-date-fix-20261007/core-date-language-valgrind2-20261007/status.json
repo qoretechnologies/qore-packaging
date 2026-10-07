@@ -1,0 +1,15 @@
+{
+  "command": [
+    "valgrind",
+    "--error-exitcode=99",
+    "--leak-check=full",
+    "--show-leak-kinds=all",
+    "--errors-for-leak-kinds=definite,indirect,possible",
+    "--track-origins=yes",
+    "/home/david/src/qore/git/qore/build-debug/qore",
+    "-b",
+    "--enable-debug",
+    "/home/david/src/qore/git/qore/examples/test/qore/vars/date-add-native.qtest"
+  ],
+  "exit_code": 99
+}

@@ -1,0 +1,237 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Both date defects fixed, audited, committed and pushed to develop and the isolated RPM source branch. Complete updated RPM qualification remains required.",
+  "main_commit": "298fdb595c982b6c621cdabeed163198639dd696",
+  "rpm_branch_commit": "d740af66e7fcff19433b94aca94ad5aa41e656f1",
+  "root_causes": [
+    "DateTime::add passed the right operand pointer to a private date constructor through bool conversion, replacing it with an empty relative date.",
+    "Pairwise relative-time normalization missed opposite signs separated by zero seconds/minutes, producing unequal representations for equal elapsed times."
+  ],
+  "fixes": [
+    "Dereference the operand, make the private bool constructor explicit, and guard allocated results with unique_ptr.",
+    "Normalize the bounded sub-hour remainder with int64 arithmetic and move a conflicting hour sign toward zero before splitting lower units."
+  ],
+  "qualification": {
+    "schema": 1,
+    "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+    "result": "pass",
+    "builds": [
+      {
+        "mode": "debug",
+        "native_cases": 1836,
+        "suites": [
+          {
+            "name": "date-add-native",
+            "cases": 2,
+            "assertions": 29,
+            "platform_skips": []
+          },
+          {
+            "name": "date",
+            "cases": 7,
+            "assertions": 1232,
+            "platform_skips": [
+              "Skipped: WindowsTimeZoneTests: 0 assertions (skipping because the test is not run on Windows)"
+            ]
+          },
+          {
+            "name": "date-utc-offset",
+            "cases": 5,
+            "assertions": 611,
+            "platform_skips": []
+          },
+          {
+            "name": "date_durations",
+            "cases": 1,
+            "assertions": 27,
+            "platform_skips": []
+          }
+        ]
+      },
+      {
+        "mode": "release",
+        "native_cases": 1836,
+        "suites": [
+          {
+            "name": "date-add-native",
+            "cases": 2,
+            "assertions": 29,
+            "platform_skips": []
+          },
+          {
+            "name": "date",
+            "cases": 7,
+            "assertions": 1232,
+            "platform_skips": [
+              "Skipped: WindowsTimeZoneTests: 0 assertions (skipping because the test is not run on Windows)"
+            ]
+          },
+          {
+            "name": "date-utc-offset",
+            "cases": 5,
+            "assertions": 611,
+            "platform_skips": []
+          },
+          {
+            "name": "date_durations",
+            "cases": 1,
+            "assertions": 27,
+            "platform_skips": []
+          }
+        ]
+      }
+    ],
+    "normalization_control_cases": 679,
+    "source_sha256": {
+      "CMakeLists.txt": "901f7f00199a12a76eed2abf54c04d84865533da68e5dda845c9c98c4e011df5",
+      "lib/DateTime.cpp": "6fe5d525468ac6e6e9ba7d260635c3560bc40832f4e683343267a1f9af7a4733",
+      "include/qore/intern/qore_date_private.h": "e89ee47a9f27e70d5fbe408f23938b8b239d5f75c0cb186f058c37812fb2b6c3",
+      "include/qore/DateTime.h": "4d454377c24ef33275ca56cce6a333fabcd25bfd279d249bcccca729c046980a",
+      "examples/test/qore/vars/date_add.cpp": "cbafc7a7c83a8f942f9d0082e6c9ae40cb42b2b7625e2282c39cf594b9d0fb3c",
+      "examples/test/qore/vars/date-add-native.qtest": "9e677ef558c58509cb93b83b5b740de4b42768302c28cccb685a5d687a269a3e",
+      "examples/test/qore/vars/date-add-native.rst": "dfb1d95da2e405956841883d2082c6bea857070f4b1597ecefeda53aae89f57f",
+      "doxygen/lang/900_release_notes.dox.tmpl": "8c1a6294cf6715b4656e54c3b86375f950143872ac503ff3716fcb2d40da0000"
+    },
+    "diagnostics": [
+      "Existing GCC/Valgrind DW_AT_abstract_origin exception; exact library path verified.",
+      "Existing Fedora PCRE2 10.47 QUnit suffix-scan exception; exact JIT branch independently inspected under GDB."
+    ],
+    "harness_correction": "The running qualifier expected plural test cases for the single-case duration suite; every child completed successfully. This verifier accepts QUnit singular/plural summaries and validates all recorded exit codes, checks and diagnostics without rerunning successful tests."
+  },
+  "backport": {
+    "source_commit": "298fdb595c982b6c621cdabeed163198639dd696",
+    "identical_sources": [
+      "lib/DateTime.cpp",
+      "include/qore/DateTime.h",
+      "include/qore/intern/qore_date_private.h",
+      "examples/test/qore/vars/date_add.cpp",
+      "examples/test/qore/vars/date-add-native.qtest"
+    ],
+    "steps": [
+      {
+        "name": "configure",
+        "command": [
+          "cmake",
+          "-S",
+          "/tmp/qore date backport 8urpnraf",
+          "-B",
+          "/tmp/qore date backport 8urpnraf/build",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_INSTALL_PREFIX=/usr"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "build",
+        "command": [
+          "cmake",
+          "--build",
+          "/tmp/qore date backport 8urpnraf/build",
+          "--target",
+          "qore-date-add-test",
+          "-j2"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "native",
+        "command": [
+          "/tmp/qore date backport 8urpnraf/build/qore-date-add-test"
+        ],
+        "exit_code": 0
+      },
+      {
+        "name": "qore",
+        "command": [
+          "/home/david/src/qore/git/qore/build/qore",
+          "-b",
+          "--enable-debug",
+          "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-documentation-sdk-20261006/examples/test/qore/vars/date-add-native.qtest"
+        ],
+        "exit_code": 0
+      }
+    ],
+    "limits": "Exact new target and identical date implementation verified; full RPM rebuild remains required."
+  },
+  "negative_controls": "The exact committed native regression fails with the expected first-case wrong result against all three installed core22 SDKs; the original relative-time header fails the independent boundary control.",
+  "existing_approvals": [
+    "evidence/core-close-rpm-qualification-20261002.json",
+    "evidence/zmq-pcre2-diagnostic-20261006.json"
+  ],
+  "limits": [
+    "The RPM-branch focused build reuses the qualified identical date implementation; full new RPM builds, native OBS and installed-package qualification remain required.",
+    "No new diagnostic exception, memory suppression or runtime workaround is introduced.",
+    "Earlier harness failures and the missing local XML module path are retained and explained in the audit. The raw running qualifier has a singular/plural summary bug; final verification validates successful child exit codes and both summary forms."
+  ],
+  "files_sha256": {
+    "evidence/controls/core-date-fix-20261007/check-core-date-backport-20261007.py": "80b426b805e2c64d4bb72ae5197e6090b46e07698c4b515538b71a2ed60148b8",
+    "evidence/controls/core-date-fix-20261007/check-core-date-conversion-20261007.py": "4a8841130ce7d2165c4870985541b140971ec5d83340fbf23c4418f58838a935",
+    "evidence/controls/core-date-fix-20261007/check-core-date-docs-20261007.py": "e0a3c4fe5e07c8a0438d414dfa4c4cb78276ab19aae48789b40d124268d3c5dd",
+    "evidence/controls/core-date-fix-20261007/check-core-date-docs2-20261007.py": "c5d90ec16cab167db49af1d379d80ec3b5b61f99e939771cf69810dbe3130dc7",
+    "evidence/controls/core-date-fix-20261007/check-core-date-rpm-negative-final-20261007.py": "6ac9f334e2a0032260fbac0739161078e5b8dbb479d84475b432e2234c16b4f9",
+    "evidence/controls/core-date-fix-20261007/check-date-language-valgrind2-20261007.py": "b57d83420876a22dc488d744e7aae88584bed680da74855aa225d9d8e2aa6302",
+    "evidence/controls/core-date-fix-20261007/check-relative-sign-control-final-20261007.py": "369bc5ee597a40608e91585dc74bcbac6f66479bce0adae9f12ebee5dd79ce40",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/debug/date-add-native.log.gz": "30e66c2aed23055f8fc973793f6d021b82d5d86b8be727df8e9a5270d31b96e5",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/debug/date-utc-offset.log.gz": "b1f92d15501ea2bd93a0116e37c76e1fb8fba189c5c9f43ef0d89254414c0e10",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/debug/date.log.gz": "f11a9c3ca3876abb1cf019cc8ba8c021bf55c37d33bb68b7b0c3e6ff36f600b7",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/debug/date_durations.log.gz": "d2965373a3b57a887d80fb02c6ccf2e25f63ec23a68cccc4c376f0cca892bf6d",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/debug/native-build.log.gz": "f4dcdc171d18ed8140a09fe049cacdac576d9f7bfe61a2b24813ba9903e01b8b",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/debug/native-valgrind.log.gz": "df5aa5a944019ab337f6465a48c955d2648323d88d7e2b0ea955f5b81a2c4f42",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/debug/native.log.gz": "8351e6f50d829bce820406971361f95ca83f39564fb03d1022b4b0277efd6645",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/debug/status.json": "67f7ea2f996a20040d63626a333b3663998ad9e477a7b2b8c77d342fd20323c9",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/release/date-add-native.log.gz": "30e66c2aed23055f8fc973793f6d021b82d5d86b8be727df8e9a5270d31b96e5",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/release/date-utc-offset.log.gz": "b1f92d15501ea2bd93a0116e37c76e1fb8fba189c5c9f43ef0d89254414c0e10",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/release/date.log.gz": "9415d220eb4043d08de52259c958c8eb00e84774e27a00d4fb33feee8c413389",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/release/date_durations.log.gz": "d2965373a3b57a887d80fb02c6ccf2e25f63ec23a68cccc4c376f0cca892bf6d",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/release/native-build.log.gz": "23669eb45df4efe99b5a14c903f5923ea8e47d0d989f1023b335a0ac09382e3a",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/release/native-valgrind.log.gz": "81268cd4044466d57eb7171e7305f7462ca1a364bc9daaf3bebcecf13c66287f",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/release/native.log.gz": "8351e6f50d829bce820406971361f95ca83f39564fb03d1022b4b0277efd6645",
+    "evidence/controls/core-date-fix-20261007/core-date-add-final3-tests-20261007/release/status.json": "fae08c966e9f9681faeca7cd62c77fea50f6421aa97fa841f76a56820bb8ff92",
+    "evidence/controls/core-date-fix-20261007/core-date-backport-20261007/build.log.gz": "ed19b4c6e906923308e9b059b7d840af123c9d82e02b2e4e6cac53a41b7dd139",
+    "evidence/controls/core-date-fix-20261007/core-date-backport-20261007/configure.log.gz": "9afaf35ace09966b431779582ad05e3fc24de403a631812bb86ae115e0f31ddd",
+    "evidence/controls/core-date-fix-20261007/core-date-backport-20261007/native.log.gz": "8351e6f50d829bce820406971361f95ca83f39564fb03d1022b4b0277efd6645",
+    "evidence/controls/core-date-fix-20261007/core-date-backport-20261007/qore.log.gz": "30e66c2aed23055f8fc973793f6d021b82d5d86b8be727df8e9a5270d31b96e5",
+    "evidence/controls/core-date-fix-20261007/core-date-backport-20261007/status.json": "96ad240b322049729a1558a97023b26f0ea97c857aa3da05d9871d03dd595417",
+    "evidence/controls/core-date-fix-20261007/core-date-conversion-20261007/fixed.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/core-date-fix-20261007/core-date-conversion-20261007/old-pointer-call.log.gz": "e060bcc46a0b9d42bdd3e0d808eb59b60a3fc1341fcb3b51fbb4cf16b297b4df",
+    "evidence/controls/core-date-fix-20261007/core-date-conversion-20261007/status.json": "1e4d9a99b270db752673838acf30dd177c552f4ec4add3c93f2e82ac9e4621ad",
+    "evidence/controls/core-date-fix-20261007/core-date-docs-20261007/date-format-codes.log.gz": "9c6a08c92c35f5f2a7ff5cdeb46f78fe4e98196306078816fdf941cb62500780",
+    "evidence/controls/core-date-fix-20261007/core-date-docs-20261007/invoice-build.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/core-date-fix-20261007/core-date-docs-20261007/invoice.cpp": "0fe1e72775f9a79dfbb6d3f9a2e4c0c148a1f03eec85dd624c9363cd31c543d6",
+    "evidence/controls/core-date-fix-20261007/core-date-docs-20261007/invoice.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/core-date-fix-20261007/core-date-docs-20261007/status.json": "5d8d5619d5e7faef0083d8bf7afe1325c3a5803d71de437fb3503df79d2d161b",
+    "evidence/controls/core-date-fix-20261007/core-date-docs-20261007/timezone-date-errors.log.gz": "927272855342949147181418a0a0376f387cc0079c164c4ea45b6477de079099",
+    "evidence/controls/core-date-fix-20261007/core-date-docs2-20261007/date-format-codes.log.gz": "b746772e5542ea5f34c596697c9c25414adb7377c87d4282eb525aa96b6dbb33",
+    "evidence/controls/core-date-fix-20261007/core-date-docs2-20261007/invoice.cpp": "0fe1e72775f9a79dfbb6d3f9a2e4c0c148a1f03eec85dd624c9363cd31c543d6",
+    "evidence/controls/core-date-fix-20261007/core-date-docs2-20261007/status.json": "404d9b18e24e695f7e9437371bcfb99ff61f759b86ebcf973b909060294f8ca2",
+    "evidence/controls/core-date-fix-20261007/core-date-final-verification-20261007.json": "c2fc95b6a3048b65a53cc5970e64955b3690a11ff4328b7c0a654e6056d9f0b9",
+    "evidence/controls/core-date-fix-20261007/core-date-final2-harness-correction-20261007.json": "b5f3c2aa4c23bd0c79c4ee90e6e1d1bad6150f7a6fe3070436ab259cec2c6989",
+    "evidence/controls/core-date-fix-20261007/core-date-language-valgrind2-20261007/status.json": "ed5410d9aa42f575256da852c6bd155e25205998a8905130a65f5b720924c8ce",
+    "evidence/controls/core-date-fix-20261007/core-date-language-valgrind2-20261007/test.log.gz": "9cbea568ef86e737e575e4a93fe94be93c59cd7d0f81840a731669f63bda34fb",
+    "evidence/controls/core-date-fix-20261007/core-date-memory-profile-correction-20261007.json": "f5993b6b1991492021e87162aba8940c217ac9ccdd1b26e8f1cdbe30b6c9a282",
+    "evidence/controls/core-date-fix-20261007/core-date-pcre-debug-20261007/gdb.log.gz": "5d25086aafc43afb2d594f140ca68551576e96b814bdb3583b25e331eea5f171",
+    "evidence/controls/core-date-fix-20261007/core-date-pcre-debug-20261007/program.log.gz": "2a8fa96de8d1583b7fc9ec9f43e71a22264639375f3b73b8cf0a84d5cbbd88fe",
+    "evidence/controls/core-date-fix-20261007/core-date-rpm-negative-final-20261007/el10.log.gz": "eaa48193d4c6a81ea4b7ea1d46fef1a7bf4c951c96f801d154317bdc96323412",
+    "evidence/controls/core-date-fix-20261007/core-date-rpm-negative-final-20261007/fedora.log.gz": "eaa48193d4c6a81ea4b7ea1d46fef1a7bf4c951c96f801d154317bdc96323412",
+    "evidence/controls/core-date-fix-20261007/core-date-rpm-negative-final-20261007/leap.log.gz": "eaa48193d4c6a81ea4b7ea1d46fef1a7bf4c951c96f801d154317bdc96323412",
+    "evidence/controls/core-date-fix-20261007/core-date-rpm-negative-final-20261007/status.json": "43b19dab2f9d88a9839cd62e4c72374c279b7effe0064f9ba8bd1932faf29b8f",
+    "evidence/controls/core-date-fix-20261007/core-date-stale-qualifier-cancellation-20261007.json": "771a513de94b2a2fa3e61e48c7bf804d70ebc48165572d407c36c3f8856df5bb",
+    "evidence/controls/core-date-fix-20261007/core-relative-sign-control-20261007.cpp": "f1dbba00281e0fba63dc48c0f91b9b0a88ed861bcebfc064168f2e48a259ad39",
+    "evidence/controls/core-date-fix-20261007/core-relative-sign-matrix-final-20261007/fixed-build.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/core-date-fix-20261007/core-relative-sign-matrix-final-20261007/fixed.log.gz": "356e43aea0a6f68f645667f0b9852a5f3fd8b097c3c8ce9ddcdb3fee776170f3",
+    "evidence/controls/core-date-fix-20261007/core-relative-sign-matrix-final-20261007/original-build.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/core-date-fix-20261007/core-relative-sign-matrix-final-20261007/original.log.gz": "e66a62eac2506caffd003919dd35e0dfc5fa589941a08a4f3f4662866950023c",
+    "evidence/controls/core-date-fix-20261007/core-relative-sign-matrix-final-20261007/status.json": "afb3d695959d64008d37130e40ab32cd0733536f8938a545f074aefaf4932451",
+    "evidence/controls/core-date-fix-20261007/core-relative-sign-matrix-final-20261007/ubsan-build.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/core-date-fix-20261007/core-relative-sign-matrix-final-20261007/ubsan.log.gz": "356e43aea0a6f68f645667f0b9852a5f3fd8b097c3c8ce9ddcdb3fee776170f3",
+    "evidence/controls/core-date-fix-20261007/core-relative-sign-matrix-final-20261007/valgrind.log.gz": "2221f197dda433c39fd9cd5a7ac313c160ab49afee0e6fe9df3bcf9039ecd33b",
+    "evidence/controls/core-date-fix-20261007/debug-date-pcre-20261007.py": "5c38bbd734b673e02470e6f3c429d9e8d908e4da94cfd6caa05b1d0e49d79582",
+    "evidence/controls/core-date-fix-20261007/main-audit.rst": "c28b9063f61b11c4d9114510e0bc25352cd901945a6d80f23ce22b180f95740d",
+    "evidence/controls/core-date-fix-20261007/qualify-core-date-add-final3-running-source-20261007.py": "d56aed69649d2889530fd3f4412e7f471a2cbb9ef6e904b2cca6fd655b1a659e",
+    "evidence/controls/core-date-fix-20261007/record.py": "4d05d1424d4c790d816a7885d7ca2bab49a073f8caea568f660520e0b1176e9a",
+    "evidence/controls/core-date-fix-20261007/rpm-branch-audit.rst": "c4218ef13001f5d21357a2fff952308fab825e00f4d6bc265d42943cc75ac9f7",
+    "evidence/controls/core-date-fix-20261007/verify-core-date-final-20261007.py": "8e3b4123059a62a0f66aaf53ff073a89ccab8171c5b022bce153ea2c1acc59d9"
+  }
+}

@@ -1,0 +1,61 @@
+[
+  {
+    "name": "native",
+    "command": [
+      "/home/david/src/qore/git/qore/build/qore-date-add-test"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "native-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "/home/david/src/qore/git/qore/build/qore-date-add-test"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "date-add-native",
+    "command": [
+      "/home/david/src/qore/git/qore/build/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore/examples/test/qore/vars/date-add-native.qtest"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "date",
+    "command": [
+      "/home/david/src/qore/git/qore/build/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore/examples/test/qore/vars/date.qtest"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "date-utc-offset",
+    "command": [
+      "/home/david/src/qore/git/qore/build/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore/examples/test/qore/vars/date-utc-offset.qtest"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "date_durations",
+    "command": [
+      "/home/david/src/qore/git/qore/build/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore/examples/test/qore/functions/date_durations.qtest"
+    ],
+    "exit_code": 0
+  }
+]

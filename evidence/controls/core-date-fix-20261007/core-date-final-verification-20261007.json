@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "result": "pass",
+  "builds": [
+    {
+      "mode": "debug",
+      "native_cases": 1836,
+      "suites": [
+        {
+          "name": "date-add-native",
+          "cases": 2,
+          "assertions": 29,
+          "platform_skips": []
+        },
+        {
+          "name": "date",
+          "cases": 7,
+          "assertions": 1232,
+          "platform_skips": [
+            "Skipped: WindowsTimeZoneTests: 0 assertions (skipping because the test is not run on Windows)"
+          ]
+        },
+        {
+          "name": "date-utc-offset",
+          "cases": 5,
+          "assertions": 611,
+          "platform_skips": []
+        },
+        {
+          "name": "date_durations",
+          "cases": 1,
+          "assertions": 27,
+          "platform_skips": []
+        }
+      ]
+    },
+    {
+      "mode": "release",
+      "native_cases": 1836,
+      "suites": [
+        {
+          "name": "date-add-native",
+          "cases": 2,
+          "assertions": 29,
+          "platform_skips": []
+        },
+        {
+          "name": "date",
+          "cases": 7,
+          "assertions": 1232,
+          "platform_skips": [
+            "Skipped: WindowsTimeZoneTests: 0 assertions (skipping because the test is not run on Windows)"
+          ]
+        },
+        {
+          "name": "date-utc-offset",
+          "cases": 5,
+          "assertions": 611,
+          "platform_skips": []
+        },
+        {
+          "name": "date_durations",
+          "cases": 1,
+          "assertions": 27,
+          "platform_skips": []
+        }
+      ]
+    }
+  ],
+  "normalization_control_cases": 679,
+  "source_sha256": {
+    "CMakeLists.txt": "901f7f00199a12a76eed2abf54c04d84865533da68e5dda845c9c98c4e011df5",
+    "lib/DateTime.cpp": "6fe5d525468ac6e6e9ba7d260635c3560bc40832f4e683343267a1f9af7a4733",
+    "include/qore/intern/qore_date_private.h": "e89ee47a9f27e70d5fbe408f23938b8b239d5f75c0cb186f058c37812fb2b6c3",
+    "include/qore/DateTime.h": "4d454377c24ef33275ca56cce6a333fabcd25bfd279d249bcccca729c046980a",
+    "examples/test/qore/vars/date_add.cpp": "cbafc7a7c83a8f942f9d0082e6c9ae40cb42b2b7625e2282c39cf594b9d0fb3c",
+    "examples/test/qore/vars/date-add-native.qtest": "9e677ef558c58509cb93b83b5b740de4b42768302c28cccb685a5d687a269a3e",
+    "examples/test/qore/vars/date-add-native.rst": "dfb1d95da2e405956841883d2082c6bea857070f4b1597ecefeda53aae89f57f",
+    "doxygen/lang/900_release_notes.dox.tmpl": "8c1a6294cf6715b4656e54c3b86375f950143872ac503ff3716fcb2d40da0000"
+  },
+  "diagnostics": [
+    "Existing GCC/Valgrind DW_AT_abstract_origin exception; exact library path verified.",
+    "Existing Fedora PCRE2 10.47 QUnit suffix-scan exception; exact JIT branch independently inspected under GDB."
+  ],
+  "harness_correction": "The running qualifier expected plural test cases for the single-case duration suite; every child completed successfully. This verifier accepts QUnit singular/plural summaries and validates all recorded exit codes, checks and diagnostics without rerunning successful tests."
+}

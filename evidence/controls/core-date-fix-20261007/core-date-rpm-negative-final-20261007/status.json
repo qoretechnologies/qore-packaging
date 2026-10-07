@@ -1,0 +1,59 @@
+[
+  {
+    "target": "fedora",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore/examples/test/qore/vars/date_add.cpp:/control/date_add.cpp:ro",
+      "sha256:c79c5d4976af69c06aed5468af5a342486f4708ffd468751e0a2a5f4d1c854e0",
+      "sh",
+      "-c",
+      "set -eu\nc++ -std=c++20 -O2 -g -Wall -Werror /control/date_add.cpp -lqore -o /tmp/date-add\nstatus=0\n/tmp/date-add > /tmp/result.log 2>&1 || status=$?\ncat /tmp/result.log\ntest \"$status\" -eq 1\ntest \"$(cat /tmp/result.log)\" = 'FAIL after 0 cases: DateTime::add returned the wrong date'\n"
+    ],
+    "exit_code": 0,
+    "old_library_expected_failure": true
+  },
+  {
+    "target": "leap",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore/examples/test/qore/vars/date_add.cpp:/control/date_add.cpp:ro",
+      "sha256:e0176d6c7b4f38d8da2549c67eee0d30b517242715b38f7253d3b9a335376774",
+      "sh",
+      "-c",
+      "set -eu\nc++ -std=c++20 -O2 -g -Wall -Werror /control/date_add.cpp -lqore -o /tmp/date-add\nstatus=0\n/tmp/date-add > /tmp/result.log 2>&1 || status=$?\ncat /tmp/result.log\ntest \"$status\" -eq 1\ntest \"$(cat /tmp/result.log)\" = 'FAIL after 0 cases: DateTime::add returned the wrong date'\n"
+    ],
+    "exit_code": 0,
+    "old_library_expected_failure": true
+  },
+  {
+    "target": "el10",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore/examples/test/qore/vars/date_add.cpp:/control/date_add.cpp:ro",
+      "sha256:d0afb23bfd369f2ffd1a1a6bcc70fad26a762a976ce680904238132d09c5cc92",
+      "sh",
+      "-c",
+      "set -eu\nc++ -std=c++20 -O2 -g -Wall -Werror /control/date_add.cpp -lqore -o /tmp/date-add\nstatus=0\n/tmp/date-add > /tmp/result.log 2>&1 || status=$?\ncat /tmp/result.log\ntest \"$status\" -eq 1\ntest \"$(cat /tmp/result.log)\" = 'FAIL after 0 cases: DateTime::add returned the wrong date'\n"
+    ],
+    "exit_code": 0,
+    "old_library_expected_failure": true
+  }
+]

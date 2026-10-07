@@ -1,0 +1,55 @@
+{
+  "source_commit": "298fdb595c982b6c621cdabeed163198639dd696",
+  "identical_sources": [
+    "lib/DateTime.cpp",
+    "include/qore/DateTime.h",
+    "include/qore/intern/qore_date_private.h",
+    "examples/test/qore/vars/date_add.cpp",
+    "examples/test/qore/vars/date-add-native.qtest"
+  ],
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "-S",
+        "/tmp/qore date backport 8urpnraf",
+        "-B",
+        "/tmp/qore date backport 8urpnraf/build",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_INSTALL_PREFIX=/usr"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "/tmp/qore date backport 8urpnraf/build",
+        "--target",
+        "qore-date-add-test",
+        "-j2"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "native",
+      "command": [
+        "/tmp/qore date backport 8urpnraf/build/qore-date-add-test"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "qore",
+      "command": [
+        "/home/david/src/qore/git/qore/build/qore",
+        "-b",
+        "--enable-debug",
+        "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-documentation-sdk-20261006/examples/test/qore/vars/date-add-native.qtest"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "limits": "Exact new target and identical date implementation verified; full RPM rebuild remains required."
+}
