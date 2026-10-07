@@ -1,0 +1,19 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Complete valid retained-message storage before restarting the DEL-recovery fixture.
+--- a/server/mqtt_test.go
++++ b/server/mqtt_test.go
+@@ -9355,10 +9355,13 @@
+ 	defer testMQTTShutdownServer(s)
+ 
+ 	// Publish one normal retained message through MQTT.
+-	mc, r := testMQTTConnectRetry(t, &mqttConnInfo{cleanSess: true}, o.MQTT.Host, o.MQTT.Port, 5)
++	mc, r := testMQTTConnectRetry(t, &mqttConnInfo{clientID: "retained-publisher", cleanSess: true}, o.MQTT.Host, o.MQTT.Port, 5)
+ 	defer mc.Close()
+ 	testMQTTCheckConnAck(t, r, mqttConnAckRCConnectionAccepted, false)
++	awaitRetained := testMQTTObserveRetained(t, testMQTTGetAccountSessionManager(t, s, "retained-publisher"), nil)
+ 	testMQTTPublish(t, mc, r, 0, false, true, "foo/ok", 0, []byte("ok"))
++	// QoS 0 write completion does not establish retained storage before restart.
++	awaitRetained("ok")
+ 	mc.Close()
+ 
+ 	// Store a legacy retained message directly into JetStream using a subject

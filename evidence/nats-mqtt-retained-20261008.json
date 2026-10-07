@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "The candidate46 MQTT restart fixture storage precondition is corrected and focused-qualified; combined package integration remains required.",
+  "failure": "AlmaLinux candidate46 times out at mqtt_test.go:9392 waiting for the valid retained foo/ok message after restart.",
+  "root_cause": "The fixture writes QoS0 and closes its MQTT socket, then receives PubAck for a different record on a NATS socket. Those operations do not guarantee the valid MQTT publication has been read or stored before server shutdown. Earlier retained-index replay readiness cannot recover a record absent from storage.",
+  "fix": "Give the publisher a stable test ID, observe its actual retained callback and join the valid payload before closing it and restarting. All original retained-message, invalid-DEL, QoS and request-deadline assertions remain unchanged.",
+  "qualification": {
+    "race_enabled_cases": 75,
+    "results": [
+      {
+        "target": "fedora",
+        "variant": "clean",
+        "race_enabled_cases": 20,
+        "exit_code": 0
+      },
+      {
+        "target": "leap",
+        "variant": "clean",
+        "race_enabled_cases": 20,
+        "exit_code": 0
+      },
+      {
+        "target": "el10",
+        "variant": "clean",
+        "race_enabled_cases": 20,
+        "exit_code": 0
+      },
+      {
+        "target": "fedora",
+        "variant": "control",
+        "race_enabled_cases": 5,
+        "exit_code": 0
+      },
+      {
+        "target": "leap",
+        "variant": "control",
+        "race_enabled_cases": 5,
+        "exit_code": 0
+      },
+      {
+        "target": "el10",
+        "variant": "control",
+        "race_enabled_cases": 5,
+        "exit_code": 0
+      }
+    ],
+    "patch_fuzz_and_offsets": 0
+  },
+  "control": "Hold the real server-side MQTT publisher mutex while the original QoS0 write, TCP close and independent legacy-message PubAck complete. A real JetStream GetLastMsg still reports the valid subject absent. Release that read path, join retained completion, verify its exact stored raw payload, then complete the original restart and invalid-DEL assertions.",
+  "harness_correction": "The first control incorrectly tried JSON decoding the current raw-payload MQTT record. The deliberately injected legacy invalid record uses JSON; current MQTT storage does not. The final control checks the correct raw representation; the clean patch is unchanged.",
+  "prior_related_evidence": [
+    "evidence/nats-mqtt-readiness-20261003.json",
+    "evidence/nats-retained-completion-20261004.json"
+  ],
+  "limits": [
+    "The mutex control deterministically disproves the fixture precondition and then completes recovery; it does not trace the historical scheduler or force the original ten-second timeout.",
+    "The prior runtime retained-replay readiness correction remains necessary and unchanged. The new join verifies pre-shutdown storage, not merely producer PING completion.",
+    "Only the clean fixture changes enter the package. Mutex manipulation and additional NATS probes are confined to the control.",
+    "Full combined RPM and native/installed qualification remain required."
+  ],
+  "source_sha256": {
+    "baseline": "410a6d843ce46be13562d3e6f2d8abadd4ef528b68b581773b2f3d6bc3baddd0",
+    "clean": "c82d1a9af0c6b734bf692a051823efed6b1e8f4be62c390389deee17db8d6d00"
+  },
+  "files_sha256": {
+    "evidence/controls/nats-mqtt-retained-20261008/audit.rst": "4af76277dd9c8d1ab7a5d070296b9aed11aa6b30d411caf9c18a391616867f7d",
+    "evidence/controls/nats-mqtt-retained-20261008/candidate46-failure.json": "12f3057cf6eceb9676a5448433f303277a384255d6caf381405f932b649bdf76",
+    "evidence/controls/nats-mqtt-retained-20261008/clean.go.gz": "c020acfcb4ad6fc27ca670122a4c42d9859766e97169dca049408059d6e978a9",
+    "evidence/controls/nats-mqtt-retained-20261008/control.go.gz": "4dd2da7a75a3b27c413961967e04e94b15c6d709a66b1fe9120b018716e971f8",
+    "evidence/controls/nats-mqtt-retained-20261008/el10-nats-mqtt-retained-266-clean-status.json": "1bc795b2de5a6981fe23b635d24bf25b1ba30323ef67be07b4a7eea6ba27b88a",
+    "evidence/controls/nats-mqtt-retained-20261008/el10-nats-mqtt-retained-266-clean.log.gz": "cb6bbb95a95ef053c756bebebd1d7e9d774c242f023426b3242ea680e82d1581",
+    "evidence/controls/nats-mqtt-retained-20261008/el10-nats-mqtt-retained-266-control-status.json": "a85997d018b8513f7027af9c571bd0b02738969bfedaf1d98c59d5d03e28c123",
+    "evidence/controls/nats-mqtt-retained-20261008/el10-nats-mqtt-retained-266-control.log.gz": "9626d7393ccead78ab2509d266285e07f812f5f75a44ec92fb189a8456733913",
+    "evidence/controls/nats-mqtt-retained-20261008/el10-nats-mqtt-retained-267-control-status.json": "93d9a53e4be51e0554e4d6a4ea184feac6765b33139282ac3f89152c5449f1ac",
+    "evidence/controls/nats-mqtt-retained-20261008/el10-nats-mqtt-retained-267-control.log.gz": "2fb20cb9ee97140736462a4e306ee356158579d1da2012af5bc9078f5d7e3ae3",
+    "evidence/controls/nats-mqtt-retained-20261008/fedora-nats-mqtt-retained-266-clean-status.json": "4a69e85271fb3e3b0bfe234d5c573602a36bf708ba7ac125d47a9e2d029656d2",
+    "evidence/controls/nats-mqtt-retained-20261008/fedora-nats-mqtt-retained-266-clean.log.gz": "902b860d4ce113b8eec3d99774b81d08cc30fa01ea74d42ffef49cacef769146",
+    "evidence/controls/nats-mqtt-retained-20261008/fedora-nats-mqtt-retained-266-control-status.json": "01595380c655294348b519a27065672fac946913c9aade0a6073f1aabd87eba9",
+    "evidence/controls/nats-mqtt-retained-20261008/fedora-nats-mqtt-retained-266-control.log.gz": "19f800c126c8b6793dba8e4cad383a0481ffa719895f95a20ce1c04e12918657",
+    "evidence/controls/nats-mqtt-retained-20261008/fedora-nats-mqtt-retained-267-control-status.json": "36a0f9f8efcfa0fe5535dfb2a0429c8a1c866e7e79c7c1c61306518c44ebf2a8",
+    "evidence/controls/nats-mqtt-retained-20261008/fedora-nats-mqtt-retained-267-control.log.gz": "7c27fdb6d7a74291de5804d8d84025621d747502123471c9c71af2f55ff5252d",
+    "evidence/controls/nats-mqtt-retained-20261008/leap-nats-mqtt-retained-266-clean-status.json": "327408145f16c96fc00593dbdf4f9e41b634ef2313c59f8083183cfcec8decde",
+    "evidence/controls/nats-mqtt-retained-20261008/leap-nats-mqtt-retained-266-clean.log.gz": "63413557a383723eea9223a9f91c5a2670e1a03cf5d62dc656f35937c3388491",
+    "evidence/controls/nats-mqtt-retained-20261008/leap-nats-mqtt-retained-266-control-status.json": "26b6956c250eac8df21dff3c7d3e7347c5312cdb5e6952d1edfb457c1dfb9d5f",
+    "evidence/controls/nats-mqtt-retained-20261008/leap-nats-mqtt-retained-266-control.log.gz": "e8fd2536dbe0afc085c88719e8d5495de651428c0b53ff66c5e74662975be506",
+    "evidence/controls/nats-mqtt-retained-20261008/leap-nats-mqtt-retained-267-control-status.json": "a95d44fafb9b8892e6850e09058b57098afc120c5ff060caa5422fc2604d7fc8",
+    "evidence/controls/nats-mqtt-retained-20261008/leap-nats-mqtt-retained-267-control.log.gz": "3179e7102b66657336e7b94d1f2f0e3996700f906df84c63eb8103dde8299acb",
+    "evidence/controls/nats-mqtt-retained-20261008/nats-mqtt-retained-266.json": "3224a6969b17ca65a0a90fc8324758d40d22f6b9302a25e32f868df4690a9be9",
+    "evidence/controls/nats-mqtt-retained-20261008/nats-mqtt-retained-267.json": "093b7878bae6634d440cab590ceb5211a09cbbebc96710ecd767f960e5f55745",
+    "evidence/controls/nats-mqtt-retained-20261008/nats-server-mqtt-restart-storage-tests.patch": "35271d77ee9ce74dbcd0ca72e6840e536c55c4b6a1b81a4ac7f516a90641760d",
+    "evidence/controls/nats-mqtt-retained-20261008/patch-check.txt": "0a4fba2846952c59dd4ab7acbe8c4d92805da1176e95f48ddf9763479d81416f",
+    "evidence/controls/nats-mqtt-retained-20261008/prepare-nats-mqtt-retained-266-20261008.py": "175c025ffd2299ef13ae94e15f324dad31bf97aea4c528115429677c10001ffe",
+    "evidence/controls/nats-mqtt-retained-20261008/prepare-nats-mqtt-retained-267-20261008.py": "14fe5447458a771e37fc4889b06ccb7c4261ca92f693ec7528bf74c54be05521",
+    "evidence/controls/nats-mqtt-retained-20261008/record.py": "78dd9507bcfa3410093e874891e049f01897d8afd641c07cd25f1c948499155f",
+    "evidence/controls/nats-mqtt-retained-20261008/run-nats-focused-38.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a"
+  }
+}

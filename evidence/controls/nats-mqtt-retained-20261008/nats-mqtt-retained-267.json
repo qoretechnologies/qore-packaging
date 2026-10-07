@@ -1,0 +1,39 @@
+{
+  "source": "work/nats-prepared-49/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-mqtt-retained-267-control",
+      "target": "fedora",
+      "count": 5,
+      "race": true,
+      "pattern": "^TestMQTTRetainedMessageWithDelSubjectIsNotRestored$",
+      "sublist": "work/nats-prepared-49/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-mqtt-retained-267-20261008/control.go": "server/mqtt_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-mqtt-retained-267-control",
+      "target": "leap",
+      "count": 5,
+      "race": true,
+      "pattern": "^TestMQTTRetainedMessageWithDelSubjectIsNotRestored$",
+      "sublist": "work/nats-prepared-49/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-mqtt-retained-267-20261008/control.go": "server/mqtt_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-mqtt-retained-267-control",
+      "target": "el10",
+      "count": 5,
+      "race": true,
+      "pattern": "^TestMQTTRetainedMessageWithDelSubjectIsNotRestored$",
+      "sublist": "work/nats-prepared-49/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-mqtt-retained-267-20261008/control.go": "server/mqtt_test.go"
+      }
+    }
+  ]
+}

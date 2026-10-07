@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Candidate50 is prepared with the focused-qualified MQTT pre-restart storage correction and earlier qualified fixes. Full builds have not started; candidate46 is still collecting complete results.",
+  "patches": 113,
+  "fuzz": 0,
+  "new_patch_offsets": 0,
+  "exact_focused_source_identity": true,
+  "changed_go_files_from_candidate49": [
+    "server/mqtt_test.go"
+  ],
+  "qualification": {
+    "race_enabled_cases": 75,
+    "tool_tests": 218,
+    "runner_tests": 7,
+    "evidence": "evidence/nats-mqtt-retained-20261008.json"
+  },
+  "remaining": [
+    "Review all candidate46 results before starting the combined full matrix.",
+    "Historical sparse-consumer performance and atomic-batch creation, upstream skip review, native OBS, NATS client/module and repository lifecycle remain release gates."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-candidate50-preparation-20261008/nats-candidate50-patch-verification-20261008.json": "91104c8d3a85e882bef2e9add4f17180f1ea393e392cc38d2c3542b45e5e8c9f",
+    "evidence/controls/nats-candidate50-preparation-20261008/nats-candidate50-patches-20261008.log.gz": "55e3bf702a8a1cb1cfbe65cb251c20918aaabd7bea6ae0861b61eb9b8b12bfee",
+    "evidence/controls/nats-candidate50-preparation-20261008/nats-candidate50-prepare-20261008.log.gz": "94f230e15198f6f45d3d2349ef3427119e270ecc0a9dcb45c5b63287763b6c73",
+    "evidence/controls/nats-candidate50-preparation-20261008/nats-candidate50-runner-tests-20261008.log.gz": "1263e4a504f9a1488d390728f7922dfca5f52292d5d289d7fb0da780eb3bcb97",
+    "evidence/controls/nats-candidate50-preparation-20261008/nats-candidate50-tools-tests-20261008.log.gz": "bb64d209fba1b319c81d6c47306ef929882b08b16673dabdc4d3bbd8f42012e1",
+    "evidence/controls/nats-candidate50-preparation-20261008/nats-server.rst": "2db9584c0a2cbb4a7b25c1cf2ff1a372c69a1fb07ab058b03d5fb3727ae21a2a",
+    "evidence/controls/nats-candidate50-preparation-20261008/nats-server.spec": "70f001eadb19bdc32db975b094a7f1625c9eda1aacc3affdd3823a8f292f08d9",
+    "evidence/controls/nats-candidate50-preparation-20261008/prepare.py": "1abd88962a66735f716015ecc2f8982f641808c7ad29e91c7caaaff912831b47",
+    "evidence/controls/nats-candidate50-preparation-20261008/record.py": "302a503138605eb3709b24078299aae5f104d33a1d1b9c9bb0f098908cbb7878"
+  }
+}
