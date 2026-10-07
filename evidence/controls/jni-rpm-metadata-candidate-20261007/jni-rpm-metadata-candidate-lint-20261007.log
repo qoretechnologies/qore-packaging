@@ -1,0 +1,39 @@
+============================ rpmlint session starts ============================
+rpmlint: 2.7.0
+configuration:
+    /usr/lib/python3.13/site-packages/rpmlint/configdefaults.toml
+    /etc/xdg/rpmlint/cron-whitelist.toml
+    /etc/xdg/rpmlint/dbus-services.toml
+    /etc/xdg/rpmlint/device-files-whitelist.toml
+    /etc/xdg/rpmlint/licenses.toml
+    /etc/xdg/rpmlint/opensuse.toml
+    /etc/xdg/rpmlint/pam-modules.toml
+    /etc/xdg/rpmlint/permissions-whitelist.toml
+    /etc/xdg/rpmlint/pie-executables.toml
+    /etc/xdg/rpmlint/polkit-rules-whitelist.toml
+    /etc/xdg/rpmlint/scoring.toml
+    /etc/xdg/rpmlint/security.toml
+    /etc/xdg/rpmlint/sudoers-whitelist.toml
+    /etc/xdg/rpmlint/sysctl-whitelist.toml
+    /etc/xdg/rpmlint/systemd-tmpfiles.toml
+    /etc/xdg/rpmlint/users-groups.toml
+    /etc/xdg/rpmlint/world-writable-whitelist.toml
+    /etc/xdg/rpmlint/zypper-plugins.toml
+checks: 41, packages: 5
+
+qore-jni-module.spec: W: invalid-url Source1: qore-jni-vendor-2.7.0.tar.xz
+qore-jni-module.spec: W: invalid-url Source0: qore-jni-module-2.7.0.tar.xz
+qore-jni-kotlin.noarch: W: invalid-license LicenseRef-Kotlin-notices
+qore-jni-module.x86_64: W: invalid-license LicenseRef-Public-Domain
+qore-jni-module.x86_64: W: invalid-license LicenseRef-OpenPDF-notices
+qore-jni-module.src: W: invalid-license LicenseRef-Public-Domain
+qore-jni-module.src: W: invalid-license LicenseRef-OpenPDF-notices
+qore-jni-module.x86_64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests
+qore-jni-module.x86_64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests
+qore-jni-kotlin.noarch: E: devel-dependency java-21-openjdk-devel
+qore-jni-tools.noarch: E: devel-dependency java-21-openjdk-devel
+qore-jni-kotlin.noarch: W: class-path-in-manifest /usr/share/qore/java/kotlin/lib/kotlin-compiler.jar
+qore-jni-kotlin.noarch: W: class-path-in-manifest /usr/share/qore/java/kotlin/lib/kotlin-runner.jar
+qore-jni-module.x86_64: W: class-path-in-manifest /usr/share/qore-modules/OdsDataProvider/jar/java-rdfa-1.0.0-BETA1.jar
+qore-jni-module.x86_64: W: class-path-in-manifest /usr/share/qore-modules/OdsDataProvider/jar/serializer-2.7.3.jar
+ 5 packages and 0 specfiles checked; 2 errors, 13 warnings, 35495 filtered, 2 badness; has taken 33.8 s 

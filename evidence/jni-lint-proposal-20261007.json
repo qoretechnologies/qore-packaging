@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-07",
+  "status": "Concrete tested lint exception proposal; no new exception approved and no filter registered.",
+  "scopes": {
+    "compiler_dependencies": [
+      "qore-jni-kotlin.noarch: E: devel-dependency java-21-openjdk-devel",
+      "qore-jni-tools.noarch: E: devel-dependency java-21-openjdk-devel"
+    ],
+    "license_and_catalog_metadata": [
+      "qore-jni-kotlin.noarch: W: invalid-license LicenseRef-Kotlin-notices",
+      "qore-jni-module.x86_64: W: invalid-license LicenseRef-Public-Domain",
+      "qore-jni-module.x86_64: W: invalid-license LicenseRef-OpenPDF-notices",
+      "qore-jni-module.src: W: invalid-license LicenseRef-Public-Domain",
+      "qore-jni-module.src: W: invalid-license LicenseRef-OpenPDF-notices",
+      "qore-jni-module.x86_64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests",
+      "qore-jni-module.x86_64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests"
+    ],
+    "vendor_manifests": [
+      "qore-jni-kotlin.noarch: W: class-path-in-manifest /usr/share/qore/java/kotlin/lib/kotlin-compiler.jar",
+      "qore-jni-kotlin.noarch: W: class-path-in-manifest /usr/share/qore/java/kotlin/lib/kotlin-runner.jar",
+      "qore-jni-module.x86_64: W: class-path-in-manifest /usr/share/qore-modules/OdsDataProvider/jar/java-rdfa-1.0.0-BETA1.jar",
+      "qore-jni-module.x86_64: W: class-path-in-manifest /usr/share/qore-modules/OdsDataProvider/jar/serializer-2.7.3.jar"
+    ]
+  },
+  "proposal": {
+    "compiler_dependencies": "One anchored filter accepts only the two exact java-21-openjdk-devel errors for qore-jni-tools.noarch and qore-jni-kotlin.noarch. They deliver compilers and need the JDK. The installed compiler and qjava2jar tests already pass on all three distributions.",
+    "license_and_catalog_metadata": "Retain five exact LicenseRef vocabulary warnings with the complete pinned upstream notices, plus two exact hidden catalog ownership-directory messages. No warning filter or behavior change.",
+    "vendor_manifests": "Retain the four exact Class-Path warnings. All Kotlin targets exist. Qore declares its ODF classpath explicitly, including Jena 4.10; XML APIs are supplied by java.xml. The ODF source uses its SAX RDFa parser and never references the optional java-rdfa HTML ParserFactory. No JAR rewriting, dependency removal or warning filter."
+  },
+  "validation": {
+    "manifest_controls_per_distribution": 67,
+    "manifest_controls_total": 201,
+    "manifest_distributions": [
+      "fedora",
+      "leap",
+      "el10"
+    ],
+    "filter_scope_checks": 18,
+    "unrelated_lint_diagnostics_preserved": 13,
+    "helper_tests": 24,
+    "candidate_package_evidence": "evidence/jni-rpm-metadata-candidate-20261007.json",
+    "source_urls": [
+      {
+        "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-jni-module/qore-jni-module-2.7.0.tar.xz",
+        "status": 200,
+        "listing_bytes": 131894696,
+        "response_length": "131894696",
+        "listing_md5": "440c4feea568d4bf9ea67cb163de71ea"
+      },
+      {
+        "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-jni-module/qore-jni-vendor-2.7.0.tar.xz",
+        "status": 200,
+        "listing_bytes": 328607344,
+        "response_length": "328607344",
+        "listing_md5": "15ef74e0afb7bfa8fd5a555198cb90d5"
+      }
+    ]
+  },
+  "limits": [
+    "The Java controls cover Qore ODF RDFa metadata and XML serialization, not java-rdfa standalone HTML command-line use, which is not an exposed Qore module feature.",
+    "Installed JAR byte identity, Kotlin compiler/runner execution, and complete notice provenance are covered by the candidate package evidence.",
+    "The first lint harness used obsolete rpmlint -f. It exited before linting; the recorded complete run uses rpmlint 2.7 -r.",
+    "Two source-URL warnings in the existing RPM disappear only after a new canonical source package is generated; all three distributions parse the new source URLs without changing build/install/check commands.",
+    "Canonical committed-source builds, native ARM and final core22 integration remain required."
+  ],
+  "approval": {
+    "compiler_dependencies": {
+      "status": "requested"
+    },
+    "license_and_catalog_metadata": {
+      "status": "requested"
+    },
+    "vendor_manifests": {
+      "status": "requested"
+    }
+  },
+  "files_sha256": {
+    "evidence/controls/jni-lint-proposal-20261007/JniManifestControl.java": "9918fc4bbdfba28ab3f495b6e8682d1cbd2d895b7e84503d98789d31a17fa248",
+    "evidence/controls/jni-lint-proposal-20261007/check-jni-lint-proposal.py": "280e0e3741836db7988154933bf4a2ec8f4354de0a3c1936e0d6c78330ea0c1a",
+    "evidence/controls/jni-lint-proposal-20261007/check-jni-manifests.py": "f218687ec8d1bfeb77c97f1820af0c9845240f77b92fa6c89bac66f27543366f",
+    "evidence/controls/jni-lint-proposal-20261007/el10-manifest.log": "bc3337727aefbe261ce051c2e54ec12ff44c35f2efafdd8c1e2fef7456fee541",
+    "evidence/controls/jni-lint-proposal-20261007/fedora-manifest.log": "bc3337727aefbe261ce051c2e54ec12ff44c35f2efafdd8c1e2fef7456fee541",
+    "evidence/controls/jni-lint-proposal-20261007/helper-tests.log": "2fb1b28cbe7ab04d3273e41b09094aec45031248fd8a5cb7654b4c0f59137212",
+    "evidence/controls/jni-lint-proposal-20261007/installed-manifests.json": "6716ad62a085287f4b36a65a53f572bc932b967445280394d855a022c57e0a6a",
+    "evidence/controls/jni-lint-proposal-20261007/leap-manifest.log": "bc3337727aefbe261ce051c2e54ec12ff44c35f2efafdd8c1e2fef7456fee541",
+    "evidence/controls/jni-lint-proposal-20261007/lint-status.json": "4185dc34e3fd82a690a2602fc37b53e392f775a5e31db9810140d51ed4e84b3c",
+    "evidence/controls/jni-lint-proposal-20261007/lint.log": "e20c9a7882b3c30e1517e5e9d6144158f46ed1ee054e841e841c3eeec7971a15",
+    "evidence/controls/jni-lint-proposal-20261007/manifest-status.json": "7d9e25507f3ee6456c0061616ac9b651898fdad2d6b1da11eb8e64eae6abc47e",
+    "evidence/controls/jni-lint-proposal-20261007/odf-rdfa-source-review.json": "e64ab579fd0883951866d9620a0762de33961776f119bfac1c7170874fefd55d",
+    "evidence/controls/jni-lint-proposal-20261007/proposed-rpmlintrc": "0d5e2c5694263d25e114ea33484bd9e873c52d9cb8e0128c722436419b027341",
+    "evidence/controls/jni-lint-proposal-20261007/proposed-spec": "91f22f4be75d8b5f05816867f758d648b794992e434b881669161a3e7f3de0d0",
+    "evidence/controls/jni-lint-proposal-20261007/record.py": "3d94658f68ca53ad8b5ef8912cf6b276a3c76ee52c634a7380928500e365105a",
+    "evidence/controls/jni-lint-proposal-20261007/source-url-recipe-tests.json": "e4c779e01478a7a3c4defb68f3bb701a1569356313b1608fc3b65fcec43e94d5"
+  }
+}

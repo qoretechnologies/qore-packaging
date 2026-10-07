@@ -1,0 +1,56 @@
+[
+  {
+    "target": "fedora",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/JniManifestControl.java:/control/JniManifestControl.java:ro",
+      "sha256:bfe0923f7c8559097e0bb71f806959ef047cc18d4d7a884404560ece91a2b0d5",
+      "sh",
+      "-c",
+      "set -eu\nmkdir /tmp/control\ncd /tmp/control\ntest ! -e /usr/share/qore-modules/OdsDataProvider/jar/jena-iri-3.16.0.jar\ntest ! -e /usr/share/qore-modules/OdsDataProvider/jar/xml-apis.jar\njavac -Werror -cp '/usr/share/qore-modules/OdsDataProvider/jar/*' -d . /control/JniManifestControl.java\njava -ea -Djava.awt.headless=true -cp '.:/usr/share/qore-modules/OdsDataProvider/jar/*' JniManifestControl\n"
+    ],
+    "exit_code": 0
+  },
+  {
+    "target": "leap",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/JniManifestControl.java:/control/JniManifestControl.java:ro",
+      "sha256:e54770931ec8e267051aaa6d5b6f2948e9060f28e516f6cc2654349c64dd5f95",
+      "sh",
+      "-c",
+      "set -eu\nmkdir /tmp/control\ncd /tmp/control\ntest ! -e /usr/share/qore-modules/OdsDataProvider/jar/jena-iri-3.16.0.jar\ntest ! -e /usr/share/qore-modules/OdsDataProvider/jar/xml-apis.jar\njavac -Werror -cp '/usr/share/qore-modules/OdsDataProvider/jar/*' -d . /control/JniManifestControl.java\njava -ea -Djava.awt.headless=true -cp '.:/usr/share/qore-modules/OdsDataProvider/jar/*' JniManifestControl\n"
+    ],
+    "exit_code": 0
+  },
+  {
+    "target": "el10",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/JniManifestControl.java:/control/JniManifestControl.java:ro",
+      "sha256:1384b1afeb69be4d5cabd47d9b580d7f289b80559ccac6026d98e2ac47239fd1",
+      "sh",
+      "-c",
+      "set -eu\nmkdir /tmp/control\ncd /tmp/control\ntest ! -e /usr/share/qore-modules/OdsDataProvider/jar/jena-iri-3.16.0.jar\ntest ! -e /usr/share/qore-modules/OdsDataProvider/jar/xml-apis.jar\njavac -Werror -cp '/usr/share/qore-modules/OdsDataProvider/jar/*' -d . /control/JniManifestControl.java\njava -ea -Djava.awt.headless=true -cp '.:/usr/share/qore-modules/OdsDataProvider/jar/*' JniManifestControl\n"
+    ],
+    "exit_code": 0
+  }
+]

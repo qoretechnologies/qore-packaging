@@ -1,0 +1,47 @@
+{
+  "filter_checks": 18,
+  "filter_matched": [
+    "qore-jni-kotlin.noarch: E: devel-dependency java-21-openjdk-devel",
+    "qore-jni-tools.noarch: E: devel-dependency java-21-openjdk-devel"
+  ],
+  "other_diagnostics_preserved": 13,
+  "public_sources": [
+    {
+      "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-jni-module/qore-jni-module-2.7.0.tar.xz",
+      "status": 200,
+      "listing_bytes": 131894696,
+      "response_length": "131894696",
+      "listing_md5": "440c4feea568d4bf9ea67cb163de71ea"
+    },
+    {
+      "url": "https://api.opensuse.org/public/source/home:davidnichols:qore:testing/qore-jni-module/qore-jni-vendor-2.7.0.tar.xz",
+      "status": 200,
+      "listing_bytes": 328607344,
+      "response_length": "328607344",
+      "listing_md5": "15ef74e0afb7bfa8fd5a555198cb90d5"
+    }
+  ],
+  "lint_command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/leap-jni-rpm-metadata-candidate-20261007:/rpms:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/jni-proposed-rpmlintrc:/control/jni-rpmlintrc:ro",
+    "qore-rpm-keep:leap-debugedit-lint-1",
+    "rpmlint",
+    "-r",
+    "/control/jni-rpmlintrc",
+    "/rpms/rpmbuild/RPMS/noarch/qore-jni-kotlin-2.7.0-2.noarch.rpm",
+    "/rpms/rpmbuild/RPMS/noarch/qore-jni-module-doc-2.7.0-2.noarch.rpm",
+    "/rpms/rpmbuild/RPMS/noarch/qore-jni-tools-2.7.0-2.noarch.rpm",
+    "/rpms/rpmbuild/RPMS/x86_64/qore-jni-module-2.7.0-2.x86_64.rpm",
+    "/rpms/rpmbuild/SRPMS/qore-jni-module-2.7.0-2.src.rpm"
+  ],
+  "lint_exit_code": 0,
+  "status": "Proposal only; no filter registered in the module recipe."
+}

@@ -1,0 +1,4 @@
+# Copyright 2026 Qore Technologies, s.r.o.; SPDX-License-Identifier: MIT
+# PROPOSAL: not registered in the RPM until the narrow exception is approved.
+# These packages provide Java/Kotlin compilers, and need the actual JDK tools.
+addFilter(r'^qore-jni-(?:tools|kotlin)\.noarch: E: devel-dependency java-21-openjdk-devel$')
