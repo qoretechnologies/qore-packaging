@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "status": "Scanner source-path fix passes focused native qualification; full updated RPM matrix remains required.",
+  "root_cause": "Flex ran from the source directory with relative lib/scanner.lpp input, but the generated scanner was compiled from build/. DWARF therefore named missing build/lib/scanner.lpp, and cpio could not package that source.",
+  "fix": "Pass the absolute CMake source path to Flex. Existing RPM prefix maps produce the correct installed debug source path.",
+  "tests": {
+    "distribution_positive": 3,
+    "distribution_original_negative": 3,
+    "main_checkout_positive": 1,
+    "lexical_inputs_per_positive": 4,
+    "valgrind_lifecycle_tokens_per_positive": 2000,
+    "memory_errors": 0,
+    "lost_allocations": 0
+  },
+  "generator_identity": {
+    "status": "Actual Qore scanner output byte-identical after removing #line directives; no filename-dependent macros.",
+    "normalized_sha256": "f4f25f665310fb3d4f1837b0d4cbf637bb43248ff88d7981616698271706d17b",
+    "files_sha256": {
+      "fixed.cpp": "4f570190eaee04ce8c8af71e2de9ea5f9b0bb09ebfc62c8cdf739c5680083363",
+      "original.cpp": "9f4817e1c70a2466a64a9b4b9a845cb1863c0d2fadfd6f71118a26a374733c38"
+    }
+  },
+  "limits": [
+    "The first test images lacked Valgrind. Installing the test tool produced the successful complete three-distribution runs; no checks were skipped.",
+    "The running full core candidate4 predates this fix and still records the original cpio diagnostic. It cannot qualify the new source path."
+  ],
+  "files_sha256": {
+    "evidence/controls/core-flex-source-path-20261007/audit.rst": "cb5b71abd803076d86ff9cf89f1b2998b52d5421239bf16af8a16b074d748cbf",
+    "evidence/controls/core-flex-source-path-20261007/develop.log": "f84f424da4b4adf0f8cb3c35545e219ce662554155e7c2c196a3a3ae4e7aeff5",
+    "evidence/controls/core-flex-source-path-20261007/el10-fixed.log": "7dff3eefbc490f10b00603cf6d1693f0fca4b676049210d8373b40c51072da08",
+    "evidence/controls/core-flex-source-path-20261007/el10-original.log": "292ad7daf810fe6a1df124c8719cb9b22e70fa4a5169f72e6c94a6aa6c44da77",
+    "evidence/controls/core-flex-source-path-20261007/fedora-fixed.log": "b367bc61352d85dad285d7248ae45aa95153c33abfeb1343308eb976037d8410",
+    "evidence/controls/core-flex-source-path-20261007/fedora-original.log": "edbdeb94cafccb96ef9355dd870937e331ae42c9dc61b94489b28508a33bf968",
+    "evidence/controls/core-flex-source-path-20261007/generator-comparison.json": "39bd40a92df49c25fdd55bad1427a9fb121b06d0d8d6ab06b8019b181dd056e7",
+    "evidence/controls/core-flex-source-path-20261007/leap-fixed.log": "47f9b719a493b5d7e3a891dfb2895e8868c25e918f44bab0afdfe3d0077a5897",
+    "evidence/controls/core-flex-source-path-20261007/leap-original.log": "5d73538e621d3ee921e07c5e184f36a6f45f74dec81b698d3bec0ff818d47894",
+    "evidence/controls/core-flex-source-path-20261007/results.json": "8fa07a065358a3dfe18c92dcab5bdc5f3b04220114da2bcb50848700ded99e51",
+    "evidence/controls/core-flex-source-path-20261007/test.py": "04cd32ee219f7c39d9333805300886f5a61a6ff963d9ae495cc178d1510f45bf",
+    "evidence/controls/core-flex-source-path-20261007/test_flex_source_paths.py": "92ce7c29d078d5f3323a865033e287270151cdd043c029f5fe76227880092161"
+  },
+  "main_commit": "3c0fe14805c41cf1a0b8978546b8c13cc218d0a2",
+  "main_branch": "develop",
+  "push": {
+    "status": "pushed and remote commit verified",
+    "at_utc": "2026-10-07T16:07:17.294583+00:00",
+    "force_push": false
+  }
+}

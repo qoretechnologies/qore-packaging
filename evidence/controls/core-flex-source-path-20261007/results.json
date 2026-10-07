@@ -1,0 +1,152 @@
+{
+  "fedora": [
+    {
+      "variant": "fixed",
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-e",
+        "HOME=/tmp",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-documentation-sdk-20261006:/fixture:ro",
+        "sha256:1a2c2394035d35fd506c3bb06639174eca1c5edf6555bec108e41d8006221cf6",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "/fixture/rpm/tests/test_flex_source_paths.py",
+        "-v"
+      ]
+    },
+    {
+      "variant": "original",
+      "exit_code": 1,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-e",
+        "HOME=/tmp",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/core-flex-source-path-20261007/original:/fixture:ro",
+        "sha256:1a2c2394035d35fd506c3bb06639174eca1c5edf6555bec108e41d8006221cf6",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "/fixture/rpm/tests/test_flex_source_paths.py",
+        "-v"
+      ]
+    }
+  ],
+  "leap": [
+    {
+      "variant": "fixed",
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-e",
+        "HOME=/tmp",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-documentation-sdk-20261006:/fixture:ro",
+        "sha256:77a164a0d93442e1677a11c41a1070899ab9afa35326035a1096c4efa18916dc",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "/fixture/rpm/tests/test_flex_source_paths.py",
+        "-v"
+      ]
+    },
+    {
+      "variant": "original",
+      "exit_code": 1,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-e",
+        "HOME=/tmp",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/core-flex-source-path-20261007/original:/fixture:ro",
+        "sha256:77a164a0d93442e1677a11c41a1070899ab9afa35326035a1096c4efa18916dc",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "/fixture/rpm/tests/test_flex_source_paths.py",
+        "-v"
+      ]
+    }
+  ],
+  "el10": [
+    {
+      "variant": "fixed",
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-e",
+        "HOME=/tmp",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-documentation-sdk-20261006:/fixture:ro",
+        "sha256:159d150141891e75c2c868e6456951cd64feaef8dcad5f3646118b0baf9da274",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "/fixture/rpm/tests/test_flex_source_paths.py",
+        "-v"
+      ]
+    },
+    {
+      "variant": "original",
+      "exit_code": 1,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-e",
+        "HOME=/tmp",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/core-flex-source-path-20261007/original:/fixture:ro",
+        "sha256:159d150141891e75c2c868e6456951cd64feaef8dcad5f3646118b0baf9da274",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "/fixture/rpm/tests/test_flex_source_paths.py",
+        "-v"
+      ]
+    }
+  ]
+}
