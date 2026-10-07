@@ -1,0 +1,84 @@
+[
+  {
+    "name": "javascript-pgo1-minor0",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--user",
+      "1019:100",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/node-sweep-serializer-controls-20261007:/work:ro",
+      "qore-rpm-keep:leap-node-compaction-baseline2-20261006",
+      "node",
+      "--expose-gc",
+      "--profile-guided-optimization",
+      "/work/control.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "javascript-pgo1-minor1",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--user",
+      "1019:100",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/node-sweep-serializer-controls-20261007:/work:ro",
+      "qore-rpm-keep:leap-node-compaction-baseline2-20261006",
+      "node",
+      "--expose-gc",
+      "--profile-guided-optimization",
+      "--minor-ms",
+      "/work/control.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "javascript-pgo0-minor0",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--user",
+      "1019:100",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/node-sweep-serializer-controls-20261007:/work:ro",
+      "qore-rpm-keep:leap-node-compaction-baseline2-20261006",
+      "node",
+      "--expose-gc",
+      "--no-profile-guided-optimization",
+      "/work/control.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "javascript-pgo0-minor1",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "--user",
+      "1019:100",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/node-sweep-serializer-controls-20261007:/work:ro",
+      "qore-rpm-keep:leap-node-compaction-baseline2-20261006",
+      "node",
+      "--expose-gc",
+      "--no-profile-guided-optimization",
+      "--minor-ms",
+      "/work/control.js"
+    ],
+    "exit_code": 0
+  }
+]

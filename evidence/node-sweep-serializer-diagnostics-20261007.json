@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User accepted the 2 exact diagnostic sites on 2026-10-07. Focused qualification and its recorded limits are unchanged. Full RPM and native architecture qualification remain separate gates.",
+  "diagnostics": [
+    {
+      "file": "deps/v8/src/tracing/trace-event.h",
+      "line": 216,
+      "diagnostic": "../deps/v8/src/tracing/trace-event.h:216:74: warning: \u2018scope_id\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "206:                     h);                                                      \\\n207:   }\n208: \n209: #define INTERNAL_TRACE_EVENT_ADD_SCOPED_WITH_FLOW(category_group, name,     \\\n210:                                                   bind_id, flow_flags, ...) \\\n211:   INTERNAL_TRACE_EVENT_GET_CATEGORY_INFO(category_group);                   \\\n212:   v8::internal::tracing::ScopedTracer INTERNAL_TRACE_EVENT_UID(tracer);     \\\n213:   if (INTERNAL_TRACE_EVENT_CATEGORY_GROUP_ENABLED_FOR_RECORDING_MODE()) {   \\\n214:     unsigned int trace_event_flags = flow_flags;                            \\\n215:     v8::internal::tracing::TraceID trace_event_bind_id(bind_id,             \\\n216:                                                        &trace_event_flags); \\\n217:     uint64_t h = v8::internal::tracing::AddTraceEvent(                      \\\n218:         TRACE_EVENT_PHASE_COMPLETE,                                         \\\n219:         INTERNAL_TRACE_EVENT_UID(category_group_enabled), name,             \\\n220:         v8::internal::tracing::kGlobalScope, v8::internal::tracing::kNoId,  \\\n221:         trace_event_bind_id.raw_id(), trace_event_flags, ##__VA_ARGS__);    \\\n222:     INTERNAL_TRACE_EVENT_UID(tracer)                                        \\\n223:         .Initialize(INTERNAL_TRACE_EVENT_UID(category_group_enabled), name, \\\n224:                     h);                                                     \\\n225:   }\n226: "
+    },
+    {
+      "file": "deps/v8/src/snapshot/code-serializer.cc",
+      "line": 206,
+      "diagnostic": "../deps/v8/src/snapshot/code-serializer.cc:206:46: warning: \u2018cached_tiering_decision\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "196:         }\n197:       }\n198:     }\n199:     SerializeGeneric(obj, slot_type);\n200:     DisallowGarbageCollection no_gc;\n201:     Tagged<SharedFunctionInfo> sfi = Cast<SharedFunctionInfo>(*obj);\n202:     if (restore_bytecode) {\n203:       sfi->SetActiveBytecodeArray(debug_info->DebugBytecodeArray(isolate()),\n204:                                   isolate());\n205:     }\n206:     if (v8_flags.profile_guided_optimization &&\n207:         cached_tiering_decision > CachedTieringDecision::kEarlySparkplug) {\n208:       sfi->set_cached_tiering_decision(cached_tiering_decision);\n209:     }\n210:     return;\n211:   } else if (InstanceTypeChecker::IsUncompiledDataWithoutPreparseDataWithJob(\n212:                  instance_type)) {\n213:     Handle<UncompiledDataWithoutPreparseDataWithJob> data =\n214:         Cast<UncompiledDataWithoutPreparseDataWithJob>(obj);\n215:     Address job = data->job();\n216:     data->set_job(kNullAddress);"
+    }
+  ],
+  "root_cause": "GCC does not prove complete collector-enum dispatch or stable PGO flag state across the opaque serialization call.",
+  "source_review": [
+    "CompleteArrayBufferSweeping assigns scope_id for each of the three declared GarbageCollector values before tracing and finishing the sweep. An inactive sweeper bypasses tracing.",
+    "The SharedFunctionInfo branch saves the tiering decision under profile_guided_optimization, clamps it only during serialization and restores it under the same flag. Instrumented bytecode is likewise temporarily replaced and restored.",
+    "CodeSerializer::SerializeGeneric creates ObjectSerializer and synchronously serializes the object graph. The reviewed serialization path does not execute JavaScript.",
+    "Node src/node.cc explicitly disables V8 flag freezing to expose setFlagsFromString. Flags must NOT be described as immutable. Node doc/api/v8.md warns that changing flags after VM startup can cause unpredictable behavior, crashes or data loss."
+  ],
+  "coverage": {
+    "native_checks": 1680000,
+    "native_checks_per_run": 420000,
+    "native_matrix": "All three collectors, active/inactive sweep and repeated completion; six tiering decisions, PGO on/off, absent/uninstrumented/instrumented debug info. Verify serialized state and restored decision/bytecode.",
+    "native_modes": "Release/debug, normally and under Valgrind. Both exact warnings reproduce; both memory runs have zero errors and all allocations freed.",
+    "javascript_checks": 323000,
+    "javascript_matrix": "Four fresh Node processes: PGO on/off and minor mark-sweep on/off. Cold/lazy/hot code caches round-trip; corrupted header and wrong source length are rejected. ArrayBuffer contents survive minor and major collection.",
+    "node_image": "qore-rpm-keep:leap-node-compaction-baseline2-20261006"
+  },
+  "limits": [
+    "The collector enum, complete sweep helper, tiering enum and SharedFunctionInfo branch are verbatim. Heap, handle, trace and serializer adapters model state transitions, not a full V8 heap.",
+    "The serializer qualification assumes a stable PGO setting during synchronous serialization. Concurrent runtime flag mutation is not covered and is not claimed safe.",
+    "Actual JavaScript checks exercise packaged Node code-cache and GC behavior; they do not prove all adapter paths execute in that binary.",
+    "An initial control header link error was fixed before qualification. Two initial JavaScript negative tests hit the in-memory compilation cache; distinct script filenames now force the external-cache validation path without disabling compiler features.",
+    "No runtime patch, suppression or compiler-flag change is proposed."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-sweep-serializer-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-sweep-serializer-20261007/control-initial.js": "9679df24f477c15120d2c3e6c74507b9ca596443d9ddb5b3cd5f8f244d52df28",
+    "evidence/controls/node-sweep-serializer-20261007/control-second.js": "1bf4a5a301da8d96dd5b50cf1ce75fa7a1cb679502ccca67da3215ce3a7aecb6",
+    "evidence/controls/node-sweep-serializer-20261007/control.cc": "17fba16d5320489dfaee05182ee329a53e3a25f037a0950a6f0253b10e41dd36",
+    "evidence/controls/node-sweep-serializer-20261007/control.h": "b8caa13ad9c6cd060ea195a13b65f7d3c0021f6660d0017d813daaaf80f5866d",
+    "evidence/controls/node-sweep-serializer-20261007/control.js": "e193e6fa431774e213cf8b124c9ac44255838919fd3d11287667767e46fe3035",
+    "evidence/controls/node-sweep-serializer-20261007/debug-compile2.log.gz": "51fd5efa2c44089659fc94bcdc7cf3c2cb29864a4dad1b7c3631d53b3d065f30",
+    "evidence/controls/node-sweep-serializer-20261007/debug-memory2.log.gz": "8b048c9ab7834614680782e6510caab5e167f55a16383ba85cd46f756cdc9daf",
+    "evidence/controls/node-sweep-serializer-20261007/debug-normal2.log.gz": "8b048c9ab7834614680782e6510caab5e167f55a16383ba85cd46f756cdc9daf",
+    "evidence/controls/node-sweep-serializer-20261007/debug-valgrind2.log.gz": "7fffe0178d9920972a5040d4aeb4320ce2937ba6f02b26e772191e63e958889e",
+    "evidence/controls/node-sweep-serializer-20261007/helper.cc": "0740948ed4a140b234b1a4978087c82a2f0b7ce2cbee0bb33ff525d358089826",
+    "evidence/controls/node-sweep-serializer-20261007/javascript-pgo0-minor0-qualified.log.gz": "c4843358d02d7ab439a8c871b39a040d5ded82ae6b64f7ca461752af91bab3f3",
+    "evidence/controls/node-sweep-serializer-20261007/javascript-pgo0-minor1-qualified.log.gz": "c4843358d02d7ab439a8c871b39a040d5ded82ae6b64f7ca461752af91bab3f3",
+    "evidence/controls/node-sweep-serializer-20261007/javascript-pgo1-minor0-final.log.gz": "41cdbee5bc9bd53a91e9dffc27500b40d953aec23dc6a0e3582ab9fe735a9509",
+    "evidence/controls/node-sweep-serializer-20261007/javascript-pgo1-minor0-qualified.log.gz": "c4843358d02d7ab439a8c871b39a040d5ded82ae6b64f7ca461752af91bab3f3",
+    "evidence/controls/node-sweep-serializer-20261007/javascript-pgo1-minor0.log.gz": "b5dca42e78e95d4986a13942db362ecdb4bd133bc87d01842add98a991eb07e5",
+    "evidence/controls/node-sweep-serializer-20261007/javascript-pgo1-minor1-qualified.log.gz": "c4843358d02d7ab439a8c871b39a040d5ded82ae6b64f7ca461752af91bab3f3",
+    "evidence/controls/node-sweep-serializer-20261007/javascript-run-final.py": "bf8424fe402f565c96d7d2990f5c9df43547dda0a5e8bb3ebab9780edf4031b7",
+    "evidence/controls/node-sweep-serializer-20261007/javascript-run-qualified.py": "78fac35c36d39037667bd68e2d805f64208130bbbe4744543ff6b4652c5412be",
+    "evidence/controls/node-sweep-serializer-20261007/javascript-run.py": "1dec7b39bc25a198a0b13d4ae766a10e8a57a30e8e27577ec7c276e615b7fd3b",
+    "evidence/controls/node-sweep-serializer-20261007/javascript-status-final.json": "cfc4867aaaccc4a48d9a1acffb4f1842deed08a6e634ae084cdc105af3ce701d",
+    "evidence/controls/node-sweep-serializer-20261007/javascript-status-qualified.json": "a4ffc6069fd2b2562723121153b00a9b794539f5ab261a9c5f7f8fe10f722406",
+    "evidence/controls/node-sweep-serializer-20261007/javascript-status.json": "cfc4867aaaccc4a48d9a1acffb4f1842deed08a6e634ae084cdc105af3ce701d",
+    "evidence/controls/node-sweep-serializer-20261007/prepare.py": "ff1311318f5fa7c4ec60eb317decff63e01662a1d0b9e09ea7e401a88d4bd6b5",
+    "evidence/controls/node-sweep-serializer-20261007/release-compile.log.gz": "66d539376936a9fc377132af4d06084ef3c9190f14456e50a22d50d906750555",
+    "evidence/controls/node-sweep-serializer-20261007/release-compile2.log.gz": "51fd5efa2c44089659fc94bcdc7cf3c2cb29864a4dad1b7c3631d53b3d065f30",
+    "evidence/controls/node-sweep-serializer-20261007/release-memory2.log.gz": "8b048c9ab7834614680782e6510caab5e167f55a16383ba85cd46f756cdc9daf",
+    "evidence/controls/node-sweep-serializer-20261007/release-normal2.log.gz": "8b048c9ab7834614680782e6510caab5e167f55a16383ba85cd46f756cdc9daf",
+    "evidence/controls/node-sweep-serializer-20261007/release-valgrind2.log.gz": "729c2d9b71fd6fc39f98c1594b22ba42c35d63a2820c29d879266726f2cbe26e",
+    "evidence/controls/node-sweep-serializer-20261007/run.py": "e6c627b2e1968459375e8884a7c94c5e587cc003f311d3ce17ff4992a440950b",
+    "evidence/controls/node-sweep-serializer-20261007/run2.py": "5b0720501d5cb44d3e5a4988a0854193adf89e86b05ce6b973f0b9bb2d86457d",
+    "evidence/controls/node-sweep-serializer-20261007/source-extracts.json": "1c6f2bcbc770f9e124cfe6989e835e6da8517da508d2890b7984680fd656ad09",
+    "evidence/controls/node-sweep-serializer-20261007/status.json": "d70d7dddd29c87aa9458e3f136d3bc9badae4a6f98ad354cd97d4be55b0e8df6",
+    "evidence/controls/node-sweep-serializer-20261007/status2.json": "c70ecf36f39236c138b25bdd8c56116a88fe122eeae74ed16b9fdd6db00bcacc"
+  },
+  "approval": "Allow these two exact diagnostics",
+  "approval_date": "2026-10-07"
+}

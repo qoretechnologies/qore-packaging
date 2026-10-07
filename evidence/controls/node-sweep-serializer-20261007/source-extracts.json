@@ -1,0 +1,26 @@
+[
+  {
+    "file": "deps/v8/src/common/globals.h",
+    "line": 1569,
+    "body": "enum class GarbageCollector { SCAVENGER, MARK_COMPACTOR, MINOR_MARK_SWEEPER }",
+    "sha256": "82942157a45ea3afd87ef853ed265cdbfb977a53427900e2732d20f4b0d0401b"
+  },
+  {
+    "file": "deps/v8/src/common/globals.h",
+    "line": 2568,
+    "body": "enum class CachedTieringDecision : int32_t {\n  kPending,\n  kEarlySparkplug,\n  kDelayMaglev,\n  kEarlyMaglev,\n  kEarlyTurbofan,\n  kNormal,\n}",
+    "sha256": "31aef38b2e834e1107f7ba5832492535ba4d4f1c30775cffac89cd13aeebc1f2"
+  },
+  {
+    "file": "deps/v8/src/heap/heap.cc",
+    "line": 1944,
+    "body": "void CompleteArrayBufferSweeping(Heap* heap) {\n  auto* array_buffer_sweeper = heap->array_buffer_sweeper();\n  if (array_buffer_sweeper->sweeping_in_progress()) {\n    auto* tracer = heap->tracer();\n    GCTracer::Scope::ScopeId scope_id;\n\n    switch (tracer->GetCurrentCollector()) {\n      case GarbageCollector::MINOR_MARK_SWEEPER:\n        scope_id = GCTracer::Scope::MINOR_MS_COMPLETE_SWEEP_ARRAY_BUFFERS;\n        break;\n      case GarbageCollector::SCAVENGER:\n        scope_id = GCTracer::Scope::SCAVENGER_COMPLETE_SWEEP_ARRAY_BUFFERS;\n        break;\n      case GarbageCollector::MARK_COMPACTOR:\n        scope_id = GCTracer::Scope::MC_COMPLETE_SWEEP_ARRAY_BUFFERS;\n    }\n\n    TRACE_GC_EPOCH_WITH_FLOW(\n        tracer, scope_id, ThreadKind::kMain,\n        array_buffer_sweeper->GetTraceIdForFlowEvent(scope_id),\n        TRACE_EVENT_FLAG_FLOW_IN);\n    array_buffer_sweeper->EnsureFinished();\n  }\n}",
+    "sha256": "06652a6f3211f7c619718eee8ce780809d897b6452ed7f9a3cc8034209ae60b9"
+  },
+  {
+    "file": "deps/v8/src/snapshot/code-serializer.cc",
+    "line": 169,
+    "body": "    DirectHandle<DebugInfo> debug_info;\n    CachedTieringDecision cached_tiering_decision;\n    bool restore_bytecode = false;\n    {\n      DisallowGarbageCollection no_gc;\n      Tagged<SharedFunctionInfo> sfi = Cast<SharedFunctionInfo>(*obj);\n      DCHECK(!sfi->IsApiFunction());\n#if V8_ENABLE_WEBASSEMBLY\n      // TODO(7110): Enable serializing of Asm modules once the AsmWasmData\n      // is context independent.\n      DCHECK(!sfi->HasAsmWasmData());\n#endif  // V8_ENABLE_WEBASSEMBLY\n\n      if (auto maybe_debug_info = sfi->TryGetDebugInfo(isolate())) {\n        debug_info = direct_handle(maybe_debug_info.value(), isolate());\n        // Clear debug info.\n        if (debug_info->HasInstrumentedBytecodeArray()) {\n          restore_bytecode = true;\n          sfi->SetActiveBytecodeArray(\n              debug_info->OriginalBytecodeArray(isolate()), isolate());\n        }\n      }\n      if (v8_flags.profile_guided_optimization) {\n        cached_tiering_decision = sfi->cached_tiering_decision();\n        if (cached_tiering_decision > CachedTieringDecision::kEarlySparkplug) {\n          sfi->set_cached_tiering_decision(\n              CachedTieringDecision::kEarlySparkplug);\n        }\n      }\n    }\n    SerializeGeneric(obj, slot_type);\n    DisallowGarbageCollection no_gc;\n    Tagged<SharedFunctionInfo> sfi = Cast<SharedFunctionInfo>(*obj);\n    if (restore_bytecode) {\n      sfi->SetActiveBytecodeArray(debug_info->DebugBytecodeArray(isolate()),\n                                  isolate());\n    }\n    if (v8_flags.profile_guided_optimization &&\n        cached_tiering_decision > CachedTieringDecision::kEarlySparkplug) {\n      sfi->set_cached_tiering_decision(cached_tiering_decision);\n    }\n    return;",
+    "sha256": "fce10f641d431a89cb161d8644677ad3099b105b659ffbcaf64b513e0d70f274"
+  }
+]
