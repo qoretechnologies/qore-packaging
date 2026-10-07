@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "status": "Focused qualification passes; corrected full core RPM matrix remains required.",
+  "root_cause": "Core installed every Qore debug source before find-debuginfo. debugedit now enumerates 4282 of 4390 Qore source files; cpio refuses identical-or-newer preinstalled targets and emits one diagnostic per overlap.",
+  "correction": "Run the existing validated source installer after the distribution post-install pipeline. Automatic source extraction runs against an empty destination; supplemental input files are included before binary package file collection.",
+  "scope": "Core spec ordering only. No compiler flags, diagnostics, debug sections or source contents are removed.",
+  "positive": {
+    "fedora": 0,
+    "leap": 0,
+    "el10": 0
+  },
+  "negative": {
+    "fedora": {
+      "exit_code": 1,
+      "rejects_duplicate_copy": true
+    },
+    "leap": {
+      "exit_code": 1,
+      "rejects_duplicate_copy": true
+    },
+    "el10": {
+      "exit_code": 1,
+      "rejects_duplicate_copy": true
+    }
+  },
+  "helper_tests": 5,
+  "test_contract": [
+    "Build a real executable whose DWARF names a Qore input.",
+    "Package automatically found and unreferenced Qore inputs together.",
+    "Verify byte equality in %check and both paths in the resulting debugsource RPM.",
+    "Reject every warning/error/cpio diagnostic.",
+    "Restoring the old order must fail on exactly the duplicate-copy diagnostic."
+  ],
+  "limitations": [
+    "The focused test uses a native executable with a mapped Qore source filename; full Qore AOT qualification is still required.",
+    "The current full candidate3 RPMs predate this ordering change.",
+    "This does not classify or accept other compiler/debugger diagnostics."
+  ],
+  "files": {
+    "evidence/controls/core-debug-source-order-20261007/fedora-fixed.log": "a7febdfa652173b631c83a5603952ffd566b301930e88e3dd848c108b081861d",
+    "evidence/controls/core-debug-source-order-20261007/fedora-negative.log": "18befc40760fafa21d1142abc965ae93e3af3773e78f8bd36062cab2b1aca3a8",
+    "evidence/controls/core-debug-source-order-20261007/leap-fixed.log": "15bfc4655e7e7fb556b1ed794488beb0037fb3c52957f16f09cf2228c3cacc5a",
+    "evidence/controls/core-debug-source-order-20261007/leap-negative.log": "aaa34acbffff169461a1d8ff71fe61ced0e623fb64f4417c122cdb7a95a8bc2b",
+    "evidence/controls/core-debug-source-order-20261007/el10-fixed.log": "da1123cf97d0dc474a94ae7f9864911f66e71d1c78328193f0ed2cf76b0e1d4b",
+    "evidence/controls/core-debug-source-order-20261007/el10-negative.log": "dbf5496e26a2dd5911b69f88a8f7f9cba9b397e1ecb09eabe2f5ee8183c199ac",
+    "evidence/controls/core-debug-source-order-20261007/core-debug-source-helper-tests-20261007.log": "ba3715b8ff03a34cae69ae3f0be74c6e56a68a285bc5cb9b5263b86915b2a794",
+    "evidence/controls/core-debug-source-order-20261007/core-sdk22-debug-source-coverage-20261007.json": "94d070fbb4b001811ef7f1fd6d627187a32625ca35d8b2a763cc4c0354e51df1"
+  },
+  "test_sha256": "0cfb86089340c50670af22d9aecfd10763f92c2b220c6a44e5329805e239d8a8"
+}
