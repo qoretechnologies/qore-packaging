@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User accepted the 1 exact diagnostic sites on 2026-10-07. Focused qualification and its recorded limits are unchanged. Full RPM and native architecture qualification remain separate gates.",
+  "diagnostics": [
+    {
+      "file": "deps/v8/src/parsing/preparser.h",
+      "line": 1028,
+      "diagnostic": "../deps/v8/src/parsing/preparser.h:1028:47: warning: \u2018variable_name.v8::internal::PreParserIdentifier::string_\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "1018:                                        bool* was_added) {\n1019:     DCHECK(IsImmutableLexicalOrPrivateVariableMode(mode));\n1020:     return scope->DeclarePrivateName(name, mode, is_static_flag, was_added);\n1021:   }\n1022: \n1023:   Variable* DeclareVariableName(const AstRawString* name, VariableMode mode,\n1024:                                 Scope* scope, bool* was_added,\n1025:                                 int position = kNoSourcePosition,\n1026:                                 VariableKind kind = NORMAL_VARIABLE) {\n1027:     DCHECK(!IsPrivateMethodOrAccessorVariableMode(mode));\n1028:     Variable* var = scope->DeclareVariableName(name, mode, was_added, kind);\n1029:     if (var == nullptr) {\n1030:       ReportUnidentifiableError();\n1031:       if (!IsLexicalVariableMode(mode)) scope = scope->GetDeclarationScope();\n1032:       var = scope->LookupLocal(name);\n1033:     } else if (var->scope() != scope) {\n1034:       DCHECK_NE(kNoSourcePosition, position);\n1035:       DCHECK_EQ(VariableMode::kVar, mode);\n1036:       Declaration* nested_declaration =\n1037:           factory()->ast_node_factory()->NewNestedVariableDeclaration(scope,\n1038:                                                                       position);"
+    }
+  ],
+  "root_cause": "The shared declaration template includes the anonymous default-export branch. PreParser does not initialize default-export strings because it is never called in that context. GCC nevertheless considers that branch, leaving variable_name.string_ potentially uninitialized in its analysis.",
+  "source_review": [
+    "All declaration calls reachable by PreParser pass default_export=false, including ordinary, statement-list and async declaration wrappers. Their exact call sites are retained.",
+    "An unnamed declaration with default_export=false returns before DeclareFunction. A named declaration assigns variable_name from ParseIdentifier; GetIdentifier and EmptyIdentifierString both initialize string_.",
+    "Only Parser handles export-default declarations. Its GetDefaultStrings initializes both the display name and the synthetic binding name. PreParser GetDefaultStrings is deliberately empty.",
+    "The original PreParserIdentifier class, including its default constructor and private pointer field, is copied verbatim into the control."
+  ],
+  "coverage": {
+    "native_checks": 13824000,
+    "checks_per_run": 3456000,
+    "matrix": "Both template implementations, named/reserved/error tokens, missing names, normal/generator/async/async-generator flags, strict/sloppy modes, declaration/module/block scope, and valid Parser default exports. Both compiler modes normally and under Valgrind.",
+    "compiler": "Both modes reproduce only variable_name.string_.",
+    "memory": "Both native memory runs have zero errors and all allocations freed.",
+    "actual_node_checks": 8280,
+    "actual_node": "Lazy and eager modes execute nested declarations with ASCII/Unicode/special identifiers, normal and async functions/generators, named/anonymous default exports and invalid declaration/module syntax. Function names, captures, values and generator completion are checked."
+  },
+  "limits": [
+    "The complete declaration function and identifier class are verbatim. Scanner, scope, AST and symbol-table operations use typed adapters; their key pointer-initialization contracts are reviewed separately in source.",
+    "The control does not invoke PreParser with default_export=true: no reviewed call site permits that combination. This qualification does not certify misuse of that internal template API.",
+    "Native reserved/error-token cases validate initialized pointer flow, not the entire parser error machinery. Actual JavaScript tests cover language syntax rejection.",
+    "No runtime patch, suppression or compiler-flag change is proposed."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-preparser-name-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-preparser-name-20261007/control.cc": "c167dd8925e3f8b431ffd507e15cfa37d59fd2abd9c107942efed63537dca708",
+    "evidence/controls/node-preparser-name-20261007/control.h": "44c6591c799a674159ea6d07c08ad846e713fde8003d885104200bef60ae08a6",
+    "evidence/controls/node-preparser-name-20261007/control.js": "c104682ce4163f560c1c2c2b98037d73f537e12e56e7a331943c128debc78625",
+    "evidence/controls/node-preparser-name-20261007/debug-compile.log.gz": "c24e9b3953f6f87d6b9b5245b34dcf0bf6f527f9fc0b835e6e7a19962d6aa609",
+    "evidence/controls/node-preparser-name-20261007/debug-memory.log.gz": "c5daa225dd8fefb6f82f61226686401936fd5baf4080c44772a6e9a2f3e7ce02",
+    "evidence/controls/node-preparser-name-20261007/debug-normal.log.gz": "c5daa225dd8fefb6f82f61226686401936fd5baf4080c44772a6e9a2f3e7ce02",
+    "evidence/controls/node-preparser-name-20261007/debug-valgrind.log.gz": "22e0abf6d8c12a1cdfc5cbae0296586d155e9fdf4f7f801bd76e1d25d99bf394",
+    "evidence/controls/node-preparser-name-20261007/helper.cc": "d3e2e6bc2a49cf65eaf0c085ee245882e14f64d657377b53af22c22e8bff2ab9",
+    "evidence/controls/node-preparser-name-20261007/javascript-lazy.log.gz": "d1f84c18d4c6bdfa3473fede8b65774a90451a4c10ab555a7527cf9744ccd6d4",
+    "evidence/controls/node-preparser-name-20261007/javascript-no-lazy.log.gz": "d1f84c18d4c6bdfa3473fede8b65774a90451a4c10ab555a7527cf9744ccd6d4",
+    "evidence/controls/node-preparser-name-20261007/javascript-status.json": "b3bf1856e471268bdc4582f38b4189305994d2d44de96d4b272a3e274a5585ab",
+    "evidence/controls/node-preparser-name-20261007/prepare.py": "84442938577e3c00ebe3e0534d3fc2cd07e1818032cf320456436b0149481d8a",
+    "evidence/controls/node-preparser-name-20261007/release-compile.log.gz": "c24e9b3953f6f87d6b9b5245b34dcf0bf6f527f9fc0b835e6e7a19962d6aa609",
+    "evidence/controls/node-preparser-name-20261007/release-memory.log.gz": "c5daa225dd8fefb6f82f61226686401936fd5baf4080c44772a6e9a2f3e7ce02",
+    "evidence/controls/node-preparser-name-20261007/release-normal.log.gz": "c5daa225dd8fefb6f82f61226686401936fd5baf4080c44772a6e9a2f3e7ce02",
+    "evidence/controls/node-preparser-name-20261007/release-valgrind.log.gz": "cb9b3372f383dd9b36b33348b9993f9d55070eb4255e80ca275a74994e83db2c",
+    "evidence/controls/node-preparser-name-20261007/run-javascript.py": "9041e74cecc73ddff1db69beed97a3bc5ef231043dbd71994899ba7a026a1458",
+    "evidence/controls/node-preparser-name-20261007/run.py": "e6c627b2e1968459375e8884a7c94c5e587cc003f311d3ce17ff4992a440950b",
+    "evidence/controls/node-preparser-name-20261007/source-extracts.json": "a135202c5233fdfd6c2631152f235c3b524a7a0f72a4bbc12e90e0fee6904c17",
+    "evidence/controls/node-preparser-name-20261007/status.json": "ee53c57998ffb08c31d3721ace46255b3c8166b571ec871a4054dbffc25d485a"
+  },
+  "approval": "Allow this exact diagnostic",
+  "approval_date": "2026-10-07"
+}

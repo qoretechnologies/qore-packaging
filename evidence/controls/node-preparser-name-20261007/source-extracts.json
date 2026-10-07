@@ -1,0 +1,92 @@
+[
+  {
+    "file": "deps/v8/src/parsing/preparser.h",
+    "line": 29,
+    "body": "class PreParserIdentifier {\n public:\n  PreParserIdentifier() : type_(kUnknownIdentifier) {}\n  static PreParserIdentifier Default() {\n    return PreParserIdentifier(kUnknownIdentifier);\n  }\n  static PreParserIdentifier Null() {\n    return PreParserIdentifier(kNullIdentifier);\n  }\n  static PreParserIdentifier Eval() {\n    return PreParserIdentifier(kEvalIdentifier);\n  }\n  static PreParserIdentifier Arguments() {\n    return PreParserIdentifier(kArgumentsIdentifier);\n  }\n  static PreParserIdentifier Constructor() {\n    return PreParserIdentifier(kConstructorIdentifier);\n  }\n  static PreParserIdentifier Async() {\n    return PreParserIdentifier(kAsyncIdentifier);\n  }\n  static PreParserIdentifier PrivateName() {\n    return PreParserIdentifier(kPrivateNameIdentifier);\n  }\n  bool IsNull() const { return type_ == kNullIdentifier; }\n  bool IsEval() const { return type_ == kEvalIdentifier; }\n  bool IsAsync() const { return type_ == kAsyncIdentifier; }\n  bool IsArguments() const { return type_ == kArgumentsIdentifier; }\n  bool IsEvalOrArguments() const {\n    static_assert(kEvalIdentifier + 1 == kArgumentsIdentifier);\n    return base::IsInRange(type_, kEvalIdentifier, kArgumentsIdentifier);\n  }\n  bool IsConstructor() const { return type_ == kConstructorIdentifier; }\n  bool IsPrivateName() const { return type_ == kPrivateNameIdentifier; }\n\n private:\n  enum Type : uint8_t {\n    kNullIdentifier,\n    kUnknownIdentifier,\n    kEvalIdentifier,\n    kArgumentsIdentifier,\n    kConstructorIdentifier,\n    kAsyncIdentifier,\n    kPrivateNameIdentifier\n  };\n\n  explicit PreParserIdentifier(Type type) : string_(nullptr), type_(type) {}\n  const AstRawString* string_;\n\n  Type type_;\n  friend class PreParserExpression;\n  friend class PreParser;\n};\n",
+    "sha256": "da49aac8bcb332ba6c7538cd61450ab13c3099f4be9ca518ba9a8b287b785e29"
+  },
+  {
+    "file": "deps/v8/src/parsing/parser-base.h",
+    "line": 4679,
+    "body": "template <typename Impl>\ntypename ParserBase<Impl>::StatementT\nParserBase<Impl>::ParseHoistableDeclaration(\n    int pos, ParseFunctionFlags flags, ZonePtrList<const AstRawString>* names,\n    bool default_export) {\n  CheckStackOverflow();\n\n  // FunctionDeclaration ::\n  //   'function' Identifier '(' FormalParameters ')' '{' FunctionBody '}'\n  //   'function' '(' FormalParameters ')' '{' FunctionBody '}'\n  // GeneratorDeclaration ::\n  //   'function' '*' Identifier '(' FormalParameters ')' '{' FunctionBody '}'\n  //   'function' '*' '(' FormalParameters ')' '{' FunctionBody '}'\n  //\n  // The anonymous forms are allowed iff [default_export] is true.\n  //\n  // 'function' and '*' (if present) have been consumed by the caller.\n\n  DCHECK_IMPLIES((flags & ParseFunctionFlag::kIsAsync) != 0,\n                 (flags & ParseFunctionFlag::kIsGenerator) == 0);\n\n  if ((flags & ParseFunctionFlag::kIsAsync) != 0 && Check(Token::kMul)) {\n    // Async generator\n    flags |= ParseFunctionFlag::kIsGenerator;\n  }\n\n  IdentifierT name;\n  FunctionNameValidity name_validity;\n  IdentifierT variable_name;\n  if (peek() == Token::kLeftParen) {\n    if (default_export) {\n      impl()->GetDefaultStrings(&name, &variable_name);\n      name_validity = kSkipFunctionNameCheck;\n    } else {\n      ReportMessage(MessageTemplate::kMissingFunctionName);\n      return impl()->NullStatement();\n    }\n  } else {\n    bool is_strict_reserved = Token::IsStrictReservedWord(peek());\n    name = ParseIdentifier();\n    name_validity = is_strict_reserved ? kFunctionNameIsStrictReserved\n                                       : kFunctionNameValidityUnknown;\n    variable_name = name;\n  }\n\n  FuncNameInferrerState fni_state(&fni_);\n  impl()->PushEnclosingName(name);\n\n  FunctionKind function_kind = FunctionKindFor(flags);\n\n  FunctionLiteralT function = impl()->ParseFunctionLiteral(\n      name, scanner()->location(), name_validity, function_kind, pos,\n      FunctionSyntaxKind::kDeclaration, language_mode(), nullptr);\n\n  // In ES6, a function behaves as a lexical binding, except in\n  // a script scope, or the initial scope of eval or another function.\n  VariableMode mode =\n      (!scope()->is_declaration_scope() || scope()->is_module_scope())\n          ? VariableMode::kLet\n          : VariableMode::kVar;\n  // Async functions don't undergo sloppy mode block scoped hoisting, and don't\n  // allow duplicates in a block. Both are represented by the\n  // sloppy_block_functions_. Don't add them to the map for async functions.\n  // Generators are also supposed to be prohibited; currently doing this behind\n  // a flag and UseCounting violations to assess web compatibility.\n  VariableKind kind = is_sloppy(language_mode()) &&\n                              !scope()->is_declaration_scope() &&\n                              flags == ParseFunctionFlag::kIsNormal\n                          ? SLOPPY_BLOCK_FUNCTION_VARIABLE\n                          : NORMAL_VARIABLE;\n\n  return impl()->DeclareFunction(variable_name, function, mode, kind, pos,\n                                 end_position(), names);\n}\n",
+    "sha256": "bb23305ea44bb7373949de5de8b60856968e9f99b025323bcc91bbbf36c52fe1"
+  },
+  {
+    "file": "deps/v8/src/parsing/preparser.cc",
+    "line": 58,
+    "body": "PreParserIdentifier PreParser::GetIdentifier() const {\n  const AstRawString* result = scanner()->CurrentSymbol(ast_value_factory());\n  PreParserIdentifier symbol =\n      GetIdentifierHelper(scanner(), result, ast_value_factory());\n  DCHECK_NOT_NULL(result);\n  symbol.string_ = result;\n  return symbol;\n}\n",
+    "sha256": "fdda9310495779d2c93a0037154fb8c2a11c57dace330cb68ba5570e714977a2"
+  },
+  {
+    "file": "deps/v8/src/parsing/preparser.h",
+    "line": 1430,
+    "body": "  V8_INLINE PreParserIdentifier EmptyIdentifierString() const {\n    PreParserIdentifier result = PreParserIdentifier::Default();\n    result.string_ = ast_value_factory()->empty_string();\n    return result;\n  }",
+    "sha256": "dd7bb3c1b24e7ad0bc7a279eddbed99c96ad1b27b2b55f8818f0d62f04f0caeb"
+  },
+  {
+    "file": "deps/v8/src/parsing/preparser.h",
+    "line": 1283,
+    "body": "  V8_INLINE static void GetDefaultStrings(\n      PreParserIdentifier* default_string,\n      PreParserIdentifier* dot_default_string) {}\n",
+    "sha256": "ecd590b4bc8b64094ad3e4a564498d28f0acbf9587104edd6f9b55a3a4386cfa"
+  },
+  {
+    "file": "deps/v8/src/parsing/parser.h",
+    "line": 642,
+    "body": "  V8_INLINE void GetDefaultStrings(const AstRawString** default_string,\n                                   const AstRawString** dot_default_string) {\n    *default_string = ast_value_factory()->default_string();\n    *dot_default_string = ast_value_factory()->dot_default_string();\n  }\n",
+    "sha256": "68765b06a67ba90902101bfa176f29418dfa2c7a08c6fc927e4bec2f7a451407"
+  },
+  {
+    "file": "deps/v8/src/parsing/parser-base.h",
+    "line": 4660,
+    "body": "    return impl()->NullStatement();\n  }\n  return ParseHoistableDeclaration(pos, flags, nullptr, false);\n}\n",
+    "sha256": "6a32d461cc42633c5a0cf9b6ca7fe3d1347db488f087bb90dcfec968241cc47a"
+  },
+  {
+    "file": "deps/v8/src/parsing/parser-base.h",
+    "line": 4674,
+    "body": "    flags |= ParseFunctionFlag::kIsGenerator;\n  }\n  return ParseHoistableDeclaration(pos, flags, names, default_export);\n}\n",
+    "sha256": "3c0cfe98924de91988f847871592bad0eb7193d8ad8606641bd5644ecff58ad4"
+  },
+  {
+    "file": "deps/v8/src/parsing/parser-base.h",
+    "line": 4833,
+    "body": "  Consume(Token::kFunction);\n  ParseFunctionFlags flags = ParseFunctionFlag::kIsAsync;\n  return ParseHoistableDeclaration(pos, flags, names, default_export);\n}\n",
+    "sha256": "2dd7d0e52077da7d71e3689887c797f3096e363872cdac1f6fb9004337bc316d"
+  },
+  {
+    "file": "deps/v8/src/parsing/parser-base.h",
+    "line": 5734,
+    "body": "  switch (peek()) {\n    case Token::kFunction:\n      return ParseHoistableDeclaration(nullptr, false);\n    case Token::kClass:\n",
+    "sha256": "afa0abe3a889c21ec196893a67994d97ad965272f11113edab8d75646828013f"
+  },
+  {
+    "file": "deps/v8/src/parsing/parser-base.h",
+    "line": 5769,
+    "body": "          !scanner()->HasLineTerminatorAfterNext()) {\n        Consume(Token::kAsync);\n        return ParseAsyncFunctionDeclaration(nullptr, false);\n      }\n",
+    "sha256": "2f6305f08a2a72bcd1185c402e3dd65e42ae57e73391ee0f465fc1eaa70f6d1d"
+  },
+  {
+    "file": "deps/v8/src/parsing/parser.cc",
+    "line": 1651,
+    "body": "  switch (peek()) {\n    case Token::kFunction:\n      result = ParseHoistableDeclaration(&local_names, true);\n      break;\n",
+    "sha256": "835325b89735daed1fd41c4ba63e6a9f7db38cdfc2d74a3f3c8fea727d1604df"
+  },
+  {
+    "file": "deps/v8/src/parsing/parser.cc",
+    "line": 1663,
+    "body": "          !scanner()->HasLineTerminatorAfterNext()) {\n        Consume(Token::kAsync);\n        result = ParseAsyncFunctionDeclaration(&local_names, true);\n        break;\n",
+    "sha256": "251294d26a3c8ecefddef56286d231a16745edb0ead4ec03c3b1150273604048"
+  },
+  {
+    "file": "deps/v8/src/parsing/parser.cc",
+    "line": 1848,
+    "body": "\n    case Token::kFunction:\n      result = ParseHoistableDeclaration(&names, false);\n      break;\n",
+    "sha256": "9d1100fff7f8426635d519812b3391466bf1889e0d0449fb5a8038006c2febc3"
+  },
+  {
+    "file": "deps/v8/src/parsing/parser.cc",
+    "line": 1866,
+    "body": "      if (peek() == Token::kFunction &&\n          !scanner()->HasLineTerminatorBeforeNext()) {\n        result = ParseAsyncFunctionDeclaration(&names, false);\n        break;\n",
+    "sha256": "37ae3ae6eda30c82f84788ece0440dc3c8dce3fbb19f2c0c99dfddd1edec9722"
+  }
+]
