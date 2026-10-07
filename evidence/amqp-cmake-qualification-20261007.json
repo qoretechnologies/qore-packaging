@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-07",
+  "result": "All three complete candidate RPM builds and focused uninstall tests pass without compiler or CMake warnings.",
+  "correction": "Earlier AMQP SDK22 builds succeeded but retained CMake warnings. Their installed and memory results remain valid; they were not warning-free full-build qualification.",
+  "root_causes": [
+    "The module omitted the cmake/cmake_uninstall.cmake.in template required by QORE_BINARY_MODULE_INTERN2.",
+    "CMake 3.31+ saw non-normalized SDK installation destinations under an unspecified CMP0177 policy."
+  ],
+  "changes": [
+    "Declare the tested 3.21...3.31 policy range; keep support for CMake 3.21.",
+    "Provide manifest-based uninstall with DESTDIR support, quoted paths, missing-file idempotence and explicit invalid-input failures.",
+    "Add six focused uninstall tests to RPM checks; document source installation and uninstallation."
+  ],
+  "records": {
+    "fedora": {
+      "build_record": "results/fedora-amqp-cmake-candidate-20261007/build.json",
+      "build_log_sha256": "9f16196bfdc87a20c5e884fbbe5126b4d3b006f5e7659e5690ffaf1eb81895b9",
+      "source_overlay": {
+        "CMakeLists.txt": "2d3bbe5b4af6b8c3ff7c264780d74f772d6be08755f4a13a3f860cef7f84b521",
+        "cmake/cmake_uninstall.cmake.in": "4c2abc69265c014b2f2cccadd6197329dcb8bc84e07badbfd0b17db575a9ed33",
+        "test/test_uninstall.py": "7f220f60b0f159f667ee4a9ead9728ca77ef5cb59663b3f118d45dc0ac2bee1b",
+        "README.md": "c5ba9465256b9b0d43dadb8f11d44e39c8de633ff919ea68408ba9409963d987",
+        "qore-amqp-module.spec": "90e9dbfc9f427a4aa33a8312d4e339035afc69a194f1e840d9d539389072dcb7"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-amqp-module-doc-1.0.0-4.fc44.noarch.rpm": "f34fcd95f2cf2327306b91919fa2d3055b1309eebf11ea6b5821707677cbe533",
+        "rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-4.fc44.x86_64.rpm": "41b3b99cb26dd4c98de6bdbeff1ef68fc8e457804a3898b086e3d380cb5cfd10",
+        "rpmbuild/RPMS/x86_64/qore-amqp-module-debuginfo-1.0.0-4.fc44.x86_64.rpm": "e3b363a3eca7f5ccd7bf83bb65cafa80f06c703cefc3f6cc03d15b5ee7f5f065",
+        "rpmbuild/RPMS/x86_64/qore-amqp-module-debugsource-1.0.0-4.fc44.x86_64.rpm": "778277a5c3b819a3a64a0b5342ad8e534cf2046f4424e7f4ec7966dc385740e8",
+        "rpmbuild/SRPMS/qore-amqp-module-1.0.0-4.fc44.src.rpm": "616c68fd80924b44fa39fa2b15be489fe12d5679316349997a1014726c434cd6"
+      },
+      "uninstall_tests": 6,
+      "exit_code": 0,
+      "unexpected_diagnostics": 0
+    },
+    "leap": {
+      "build_record": "results/leap-amqp-cmake-candidate-20261007/build.json",
+      "build_log_sha256": "61646b07d0d73822eb32fb7617a86966014226f9dca802ba42ddb80d82b54892",
+      "source_overlay": {
+        "CMakeLists.txt": "2d3bbe5b4af6b8c3ff7c264780d74f772d6be08755f4a13a3f860cef7f84b521",
+        "cmake/cmake_uninstall.cmake.in": "4c2abc69265c014b2f2cccadd6197329dcb8bc84e07badbfd0b17db575a9ed33",
+        "test/test_uninstall.py": "7f220f60b0f159f667ee4a9ead9728ca77ef5cb59663b3f118d45dc0ac2bee1b",
+        "README.md": "c5ba9465256b9b0d43dadb8f11d44e39c8de633ff919ea68408ba9409963d987",
+        "qore-amqp-module.spec": "90e9dbfc9f427a4aa33a8312d4e339035afc69a194f1e840d9d539389072dcb7"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-amqp-module-doc-1.0.0-4.noarch.rpm": "721900a5cd5116154d9dce9ae78a8168ee1c6c896276817d5ec8a35cdd61ba6a",
+        "rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-4.x86_64.rpm": "dcee9515b6c70fe4799efeeda0a80d95c15d388fa6335e3b34958140d674e66a",
+        "rpmbuild/RPMS/x86_64/qore-amqp-module-debuginfo-1.0.0-4.x86_64.rpm": "8436640431e7c3ebc6b7a95934c241c0b01aa1c1bd9c0ffc14662c25dbf7d541",
+        "rpmbuild/RPMS/x86_64/qore-amqp-module-debugsource-1.0.0-4.x86_64.rpm": "b12113708958f24ed8a197f2ccc2586d43b5631eebcad554cc72667afd1ac8a2",
+        "rpmbuild/SRPMS/qore-amqp-module-1.0.0-4.src.rpm": "25ab6d7571eb83265fb8508412260e8143b1b5f0277c3dd7154f6ef2a0513f0c"
+      },
+      "uninstall_tests": 6,
+      "exit_code": 0,
+      "unexpected_diagnostics": 0
+    },
+    "el10": {
+      "build_record": "results/el10-amqp-cmake-candidate-20261007/build.json",
+      "build_log_sha256": "15a557f1d37bd6df3639dc534160615b7f2ca50e65a986b011eef762d7206a36",
+      "source_overlay": {
+        "CMakeLists.txt": "2d3bbe5b4af6b8c3ff7c264780d74f772d6be08755f4a13a3f860cef7f84b521",
+        "cmake/cmake_uninstall.cmake.in": "4c2abc69265c014b2f2cccadd6197329dcb8bc84e07badbfd0b17db575a9ed33",
+        "test/test_uninstall.py": "7f220f60b0f159f667ee4a9ead9728ca77ef5cb59663b3f118d45dc0ac2bee1b",
+        "README.md": "c5ba9465256b9b0d43dadb8f11d44e39c8de633ff919ea68408ba9409963d987",
+        "qore-amqp-module.spec": "90e9dbfc9f427a4aa33a8312d4e339035afc69a194f1e840d9d539389072dcb7"
+      },
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-amqp-module-doc-1.0.0-4.el10.noarch.rpm": "f5509dba443450bcb0fd60bebae4bd80d0b3b5e68dd42d1bafdb0f521c6112ab",
+        "rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-4.el10.x86_64.rpm": "833c548e7319f5084b3a39e0d643e683eeab212fcccb0a0997bd452d965f3358",
+        "rpmbuild/RPMS/x86_64/qore-amqp-module-debuginfo-1.0.0-4.el10.x86_64.rpm": "f14a1ae5e346570bc1badb1f427bac4d64aeba7b1658ae0f55a85ff7912a792c",
+        "rpmbuild/RPMS/x86_64/qore-amqp-module-debugsource-1.0.0-4.el10.x86_64.rpm": "a1930f684038bdd13f76670a8bc1975bc19a6955a629b3f3db1766a2068ef820",
+        "rpmbuild/SRPMS/qore-amqp-module-1.0.0-4.el10.src.rpm": "7717eb578ec3c461e7bca8c55dc8957f22d1e476585a2a42f39ec50a0438c8d2"
+      },
+      "uninstall_tests": 6,
+      "exit_code": 0,
+      "unexpected_diagnostics": 0
+    }
+  },
+  "limits": [
+    "No C++ source change; prior native/Valgrind results apply to the unchanged module implementation.",
+    "Canonical committed-source rebuild and native OBS qualification remain required."
+  ]
+}

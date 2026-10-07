@@ -1,0 +1,712 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "All six committed-source RPM builds, all three package-manager dependency resolutions and installed runtime/SDK runs pass. GEOS debugger checks pass on the exact canonical artifacts.",
+  "proof": {
+    "fedora": {
+      "installed": {
+        "target": "fedora",
+        "artifacts": {
+          "amqp": {
+            "rpmbuild/RPMS/noarch/qore-amqp-module-doc-1.0.0-4.fc44.noarch.rpm": "0e8fbda636ba406011e05cd01b9a32696ff26b5169d88637efaeee89780c4b64",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-4.fc44.x86_64.rpm": "b16bd1c42984a5236a178b6294ff5cb68c4e0c2b4de3aff98366085c5d2e8153",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-debuginfo-1.0.0-4.fc44.x86_64.rpm": "b713a6e0a0e0f2c72a0bbc0711c27f09b9871c16143770b2bf108b9fec7b24ed",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-debugsource-1.0.0-4.fc44.x86_64.rpm": "4064f2e6d47c19d62c89723d8ce473f71539e61b7332329b7e0e737b79b35d3f"
+          },
+          "geos": {
+            "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-3.fc44.noarch.rpm": "3fa0ef3209ae8197386719f8bf9309faa997baa469497d6317bb1eeaba806b8b",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.fc44.x86_64.rpm": "22abd43b6cffdb5daeae0b9a183c40b0ca43f337c6e759ec25b217b33344bbb6",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-3.fc44.x86_64.rpm": "3c809af6a15ccd3233a8bbb2dbe6719cd712d4c4887804e2f77491f33af38c39",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-3.fc44.x86_64.rpm": "d4d4f0aaf46252dbddcfb329097b8d4cd9e00fbec13cf2130f54a96fa2f58345"
+          }
+        },
+        "steps": [
+          {
+            "step": "runtime-install",
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-fedora-amqp4-geos-sdk22-canonical-repo-runtime-20261007",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-amqp-cmake-canonical-20261007/rpmbuild/RPMS:/amqp-rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-geos-sdk22-canonical-20261007/rpmbuild/RPMS:/geos-rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/amqp4-geos-sdk22-canonical-repo-20261007/fedora:/module-repo:ro",
+              "sha256:f256677e638fc987abbac12df7e44ded2b6c8e9bdb48039c56fbbef2f73ccfd1",
+              "sh",
+              "-eu",
+              "-c",
+              "dnf -y --nogpgcheck --repofrompath=qore-qualification,file:///module-repo --setopt=install_weak_deps=False install qore-amqp-module qore-geos-module\nrpm -V qore-amqp-module qore-geos-module qore-xml-module\nrpm -q --requires qore-amqp-module\nrpm -q --requires qore-amqp-module | grep -Fx \"qore-xml-module(x86-64) >= 1.0\"\nfor p in qore-devel gcc gcc-c++; do if rpm -q \"$p\"; then exit 1; fi; done\n",
+              "packages",
+              "/amqp-rpms/x86_64/qore-amqp-module-1.0.0-4.fc44.x86_64.rpm",
+              "/geos-rpms/x86_64/qore-geos-module-1.0.0-3.fc44.x86_64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "step": "runtime-tests",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/amqp-geos-installed-sdk22-20261006:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-amqp4-geos-installed-sdk22-canonical-repo-20261007:/results",
+              "sha256:2a59099e490f7c9b462d1037a2a6e0be0e274e0e8cb60d0f80242536e6a31f43",
+              "sh",
+              "-eu",
+              "-c",
+              "unset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nmkdir -p /results/runtime-amqp /results/runtime-geos\ncd /source/amqp-source\nQORE_RPM_TEST_TMP=/results/runtime-amqp /source/amqp-source/rpm/tests-installed-runtime\ncp /source/geos-source/test/*.qtest /results/runtime-geos/\ncd /results/runtime-geos\nfor test in ./*.qtest; do timeout 180 /usr/bin/qore -b --enable-debug -l /usr/lib64/qore-modules/GEOSDataProvider/GEOSDataProvider.qmod \"$test\" -v; done\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "step": "sdk-install",
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-fedora-amqp4-geos-sdk22-canonical-repo-sdk-20261007",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-amqp-cmake-canonical-20261007/rpmbuild/RPMS:/amqp-rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-geos-sdk22-canonical-20261007/rpmbuild/RPMS:/geos-rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/amqp4-geos-sdk22-canonical-repo-20261007/fedora:/module-repo:ro",
+              "sha256:f57bea3d6bc8eae8adc5ed69d13f7f04a8dacf1695abf56443b170f557d6667e",
+              "sh",
+              "-eu",
+              "-c",
+              "dnf -y --nogpgcheck --repofrompath=qore-qualification,file:///module-repo --setopt=install_weak_deps=False install qore-amqp-module qore-geos-module\nrpm -V qore-amqp-module qore-geos-module qore-xml-module\nrpm -q --requires qore-amqp-module\nrpm -q --requires qore-amqp-module | grep -Fx \"qore-xml-module(x86-64) >= 1.0\"\n",
+              "packages",
+              "/amqp-rpms/x86_64/qore-amqp-module-1.0.0-4.fc44.x86_64.rpm",
+              "/geos-rpms/x86_64/qore-geos-module-1.0.0-3.fc44.x86_64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "step": "sdk-tests",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/amqp-geos-installed-sdk22-20261006:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/fedora-amqp4-geos-installed-sdk22-canonical-repo-20261007:/results",
+              "sha256:a79d30b4d57f1d9bd87ceff0f9c73d496a1df4a72fdd59ee5f94fd4b80f31053",
+              "sh",
+              "-eu",
+              "-c",
+              "unset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nmkdir -p /results/sdk-amqp /results/sdk-geos\ncd /source/amqp-source\nQORE_RPM_TEST_TMP=/results/sdk-amqp /source/amqp-source/rpm/tests-installed-runtime\ncp /source/geos-source/test/*.qtest /results/sdk-geos/\ncd /results/sdk-geos\nfor test in ./*.qtest; do timeout 180 /usr/bin/qore -b --enable-debug -l /usr/lib64/qore-modules/GEOSDataProvider/GEOSDataProvider.qmod \"$test\" -v; done\nAUTOPKGTEST_TMP=/results/sdk-amqp /source/amqp-source/debian/tests/compiler\nAUTOPKGTEST_TMP=/results/sdk-geos /source/geos-source/debian/tests/compiler\n"
+            ],
+            "exit_code": 0
+          }
+        ],
+        "local_repository": {
+          "qore-amqp-module-1.0.0-4.fc44.x86_64.rpm": {
+            "sha256": "b16bd1c42984a5236a178b6294ff5cb68c4e0c2b4de3aff98366085c5d2e8153",
+            "source": "/home/david/src/qore/git/qore-packaging/results/fedora-amqp-cmake-canonical-20261007/rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-4.fc44.x86_64.rpm"
+          },
+          "qore-geos-module-1.0.0-3.fc44.x86_64.rpm": {
+            "sha256": "22abd43b6cffdb5daeae0b9a183c40b0ca43f337c6e759ec25b217b33344bbb6",
+            "source": "/home/david/src/qore/git/qore-packaging/results/fedora-geos-sdk22-canonical-20261007/rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.fc44.x86_64.rpm"
+          },
+          "qore-xml-module-2.3.0-1.fc44.x86_64.rpm": {
+            "sha256": "e0883c042984614e2907bee093959bc39d0d84863354ab13eadf3053e606cbb3",
+            "source": "/home/david/src/qore/git/qore-packaging/results/fedora-xml-final-build-2/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.fc44.x86_64.rpm"
+          }
+        },
+        "runtime_image": "sha256:2a59099e490f7c9b462d1037a2a6e0be0e274e0e8cb60d0f80242536e6a31f43",
+        "sdk_image": "sha256:a79d30b4d57f1d9bd87ceff0f9c73d496a1df4a72fdd59ee5f94fd4b80f31053",
+        "exit_code": 0
+      },
+      "checks": {
+        "runtime": {
+          "reported_cases": 141,
+          "assertions": 971,
+          "skipped_case_markers": 4,
+          "approved_warning_features": [
+            "DataProvider",
+            "QUnit"
+          ],
+          "log_sha256": "9fc8e4b67eab6030250a66821fbf05bcd3fc980c9c82481ef3650e63114e935a"
+        },
+        "sdk": {
+          "reported_cases": 141,
+          "assertions": 971,
+          "skipped_case_markers": 4,
+          "approved_warning_features": [
+            "DataProvider",
+            "QUnit"
+          ],
+          "log_sha256": "a6560b82ba00dfa2f23d30e7be7d41ffee91aad968202e5ef8b83417feb248c6"
+        }
+      },
+      "builds": {
+        "amqp": {
+          "source": {
+            "schema": 1,
+            "commit": "38b2f710950b6c664d0436fb8766918cff92a13b",
+            "source_date_epoch": 1791352991,
+            "name": "qore-amqp-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-amqp-module-1.0.0.tar.xz": "4409e4a37f6b4ae435cc0780b2d2f160ddfb6c90aeac2b91ee4a9d5032e13079",
+              "qore-amqp-module.spec": "90e9dbfc9f427a4aa33a8312d4e339035afc69a194f1e840d9d539389072dcb7",
+              "qore-amqp-module.changes": "5f5ad0dcca4d59bf255ec556c161aa09fac2f1948f64532768b3fbde1b7b1f4e"
+            },
+            "spec": "qore-amqp-module.spec"
+          },
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-amqp-module-doc-1.0.0-4.fc44.noarch.rpm": "0e8fbda636ba406011e05cd01b9a32696ff26b5169d88637efaeee89780c4b64",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-4.fc44.x86_64.rpm": "b16bd1c42984a5236a178b6294ff5cb68c4e0c2b4de3aff98366085c5d2e8153",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-debuginfo-1.0.0-4.fc44.x86_64.rpm": "b713a6e0a0e0f2c72a0bbc0711c27f09b9871c16143770b2bf108b9fec7b24ed",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-debugsource-1.0.0-4.fc44.x86_64.rpm": "4064f2e6d47c19d62c89723d8ce473f71539e61b7332329b7e0e737b79b35d3f",
+            "rpmbuild/SRPMS/qore-amqp-module-1.0.0-4.fc44.src.rpm": "897e20eeff09d4f21ab8b439c1fa2a71de3322e403febd95a1a6c7ba64f1c492"
+          },
+          "exit_code": 0,
+          "log_sha256": "76d130c07213a6610ae72ec1a14cf875eeb772d8e33509a0af92a04cbb2465ae"
+        },
+        "geos": {
+          "source": {
+            "schema": 1,
+            "commit": "5543a6be996fd150b69312f52b5138d0b114300b",
+            "source_date_epoch": 1791314108,
+            "name": "qore-geos-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-geos-module-1.0.0.tar.xz": "98b42f2d56e31288ec8d957d04e1c7c5dd609a57d51218ab36754f314e82d6ce",
+              "qore-geos-module.spec": "c2d33c5fe2020c261649e6c5523ba5b8b3fadeda821ee8cad92763eeb054e67f",
+              "qore-geos-module.changes": "b63c8000e0090673df6ac712e8b7a62665c257fe2dc8a0179d5e476f1afb3653"
+            },
+            "spec": "qore-geos-module.spec"
+          },
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-3.fc44.noarch.rpm": "3fa0ef3209ae8197386719f8bf9309faa997baa469497d6317bb1eeaba806b8b",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.fc44.x86_64.rpm": "22abd43b6cffdb5daeae0b9a183c40b0ca43f337c6e759ec25b217b33344bbb6",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-3.fc44.x86_64.rpm": "3c809af6a15ccd3233a8bbb2dbe6719cd712d4c4887804e2f77491f33af38c39",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-3.fc44.x86_64.rpm": "d4d4f0aaf46252dbddcfb329097b8d4cd9e00fbec13cf2130f54a96fa2f58345",
+            "rpmbuild/SRPMS/qore-geos-module-1.0.0-3.fc44.src.rpm": "faa9f91e0c961725c7a61f369c884fb9a18d5b951dc824d56a9f881e9bd4aca3"
+          },
+          "exit_code": 0,
+          "log_sha256": "dd58ae8df203e01f10c50b427cbd74e66972e324d42184de81f2ab4951e2a75b"
+        }
+      },
+      "geos_debugger": {
+        "aot_functions": 108,
+        "breakpoint": "/usr/src/debug/qore-geos-module-1.0.0-3.fc44.x86_64/qlib/GEOSDataProvider/GEOSDataProvider.qm:222",
+        "no_optional_name_index": true,
+        "full_dwarf": true,
+        "source_lookup": true
+      }
+    },
+    "leap": {
+      "installed": {
+        "target": "leap",
+        "artifacts": {
+          "amqp": {
+            "rpmbuild/RPMS/noarch/qore-amqp-module-doc-1.0.0-4.noarch.rpm": "a25672938de2866375e3971538b1996d69f38fd22ba85db76a0de6e04b0b8d0c",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-4.x86_64.rpm": "711f520e923c0e52ecbbc3085d3f25cfe4f3255e00cd56b0c5d6d1a6fad4fddb",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-debuginfo-1.0.0-4.x86_64.rpm": "186a955d8986658965f6f72c762566601de26555a96528449aecda574610003a",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-debugsource-1.0.0-4.x86_64.rpm": "1f38a1e33aa3da41241e3b2f94bac2417184dbbfe303871b9f49b3c27cc8f0d3"
+          },
+          "geos": {
+            "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-3.noarch.rpm": "3c279a009a0475d733c0edb089e80068b6b5052e8e3faf8f96ab5146916e452b",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.x86_64.rpm": "1783431f60f02f35cb313f7c6c97ab5a9e98deebc2f8d8d4d8f3934907bd6b6f",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-3.x86_64.rpm": "f0474a633a1c73fdcb89681ba45baf86b6e9c46b6d08b528011e688a3e5b22cc",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-3.x86_64.rpm": "fff17db432457129d8f8f286eebdc08cb4a18da61e84308647dfa23d9453469a"
+          }
+        },
+        "steps": [
+          {
+            "step": "runtime-install",
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-leap-amqp4-geos-sdk22-canonical-repo-runtime-20261007",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-amqp-cmake-canonical-20261007/rpmbuild/RPMS:/amqp-rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-geos-sdk22-canonical-20261007/rpmbuild/RPMS:/geos-rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/amqp4-geos-sdk22-canonical-repo-20261007/leap:/module-repo:ro",
+              "sha256:79c45bb08135993cda06136d78485c85725ac34a81128a91006c6084bf2e76e6",
+              "sh",
+              "-eu",
+              "-c",
+              "zypper --non-interactive addrepo --no-gpgcheck file:///module-repo qore-qualification\nzypper --non-interactive refresh qore-qualification\nzypper --non-interactive install --no-recommends qore-amqp-module qore-geos-module\nrpm -V qore-amqp-module qore-geos-module qore-xml-module\nrpm -q --requires qore-amqp-module\nrpm -q --requires qore-amqp-module | grep -Fx \"qore-xml-module(x86-64) >= 1.0\"\nfor p in qore-devel gcc gcc-c++; do if rpm -q \"$p\"; then exit 1; fi; done\n",
+              "packages",
+              "/amqp-rpms/x86_64/qore-amqp-module-1.0.0-4.x86_64.rpm",
+              "/geos-rpms/x86_64/qore-geos-module-1.0.0-3.x86_64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "step": "runtime-tests",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/amqp-geos-installed-sdk22-20261006:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-amqp4-geos-installed-sdk22-canonical-repo-20261007:/results",
+              "sha256:30fc0b476724b531d9684f368441540f107d24c2204f402fcae492db47570366",
+              "sh",
+              "-eu",
+              "-c",
+              "unset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nmkdir -p /results/runtime-amqp /results/runtime-geos\ncd /source/amqp-source\nQORE_RPM_TEST_TMP=/results/runtime-amqp /source/amqp-source/rpm/tests-installed-runtime\ncp /source/geos-source/test/*.qtest /results/runtime-geos/\ncd /results/runtime-geos\nfor test in ./*.qtest; do timeout 180 /usr/bin/qore -b --enable-debug -l /usr/lib64/qore-modules/GEOSDataProvider/GEOSDataProvider.qmod \"$test\" -v; done\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "step": "sdk-install",
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-leap-amqp4-geos-sdk22-canonical-repo-sdk-20261007",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-amqp-cmake-canonical-20261007/rpmbuild/RPMS:/amqp-rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-geos-sdk22-canonical-20261007/rpmbuild/RPMS:/geos-rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/amqp4-geos-sdk22-canonical-repo-20261007/leap:/module-repo:ro",
+              "sha256:979545271dbd4cfc11af8e739a5276f1ed3e95e8b52272afc43026cd1047f13e",
+              "sh",
+              "-eu",
+              "-c",
+              "zypper --non-interactive addrepo --no-gpgcheck file:///module-repo qore-qualification\nzypper --non-interactive refresh qore-qualification\nzypper --non-interactive install --no-recommends qore-amqp-module qore-geos-module\nrpm -V qore-amqp-module qore-geos-module qore-xml-module\nrpm -q --requires qore-amqp-module\nrpm -q --requires qore-amqp-module | grep -Fx \"qore-xml-module(x86-64) >= 1.0\"\n",
+              "packages",
+              "/amqp-rpms/x86_64/qore-amqp-module-1.0.0-4.x86_64.rpm",
+              "/geos-rpms/x86_64/qore-geos-module-1.0.0-3.x86_64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "step": "sdk-tests",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/amqp-geos-installed-sdk22-20261006:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/leap-amqp4-geos-installed-sdk22-canonical-repo-20261007:/results",
+              "sha256:d493821643f620c4ac2b8340e92700f30f1d3c6ba2900cb0af0b711d107e44f2",
+              "sh",
+              "-eu",
+              "-c",
+              "unset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nmkdir -p /results/sdk-amqp /results/sdk-geos\ncd /source/amqp-source\nQORE_RPM_TEST_TMP=/results/sdk-amqp /source/amqp-source/rpm/tests-installed-runtime\ncp /source/geos-source/test/*.qtest /results/sdk-geos/\ncd /results/sdk-geos\nfor test in ./*.qtest; do timeout 180 /usr/bin/qore -b --enable-debug -l /usr/lib64/qore-modules/GEOSDataProvider/GEOSDataProvider.qmod \"$test\" -v; done\nAUTOPKGTEST_TMP=/results/sdk-amqp /source/amqp-source/debian/tests/compiler\nAUTOPKGTEST_TMP=/results/sdk-geos /source/geos-source/debian/tests/compiler\n"
+            ],
+            "exit_code": 0
+          }
+        ],
+        "local_repository": {
+          "qore-amqp-module-1.0.0-4.x86_64.rpm": {
+            "sha256": "711f520e923c0e52ecbbc3085d3f25cfe4f3255e00cd56b0c5d6d1a6fad4fddb",
+            "source": "/home/david/src/qore/git/qore-packaging/results/leap-amqp-cmake-canonical-20261007/rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-4.x86_64.rpm"
+          },
+          "qore-geos-module-1.0.0-3.x86_64.rpm": {
+            "sha256": "1783431f60f02f35cb313f7c6c97ab5a9e98deebc2f8d8d4d8f3934907bd6b6f",
+            "source": "/home/david/src/qore/git/qore-packaging/results/leap-geos-sdk22-canonical-20261007/rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.x86_64.rpm"
+          },
+          "qore-xml-module-2.3.0-1.x86_64.rpm": {
+            "sha256": "91aea0be90122912796a6e59a8f952c45686eba550df237812cd35958cc62e9b",
+            "source": "/home/david/src/qore/git/qore-packaging/results/leap-xml-final-build-2/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.x86_64.rpm"
+          }
+        },
+        "runtime_image": "sha256:30fc0b476724b531d9684f368441540f107d24c2204f402fcae492db47570366",
+        "sdk_image": "sha256:d493821643f620c4ac2b8340e92700f30f1d3c6ba2900cb0af0b711d107e44f2",
+        "exit_code": 0
+      },
+      "checks": {
+        "runtime": {
+          "reported_cases": 141,
+          "assertions": 960,
+          "skipped_case_markers": 5,
+          "approved_warning_features": [
+            "DataProvider",
+            "QUnit"
+          ],
+          "log_sha256": "3a2052f86f92be93bf27ca638f74ad639468da157dc939527895bd703c39e98a"
+        },
+        "sdk": {
+          "reported_cases": 141,
+          "assertions": 960,
+          "skipped_case_markers": 5,
+          "approved_warning_features": [
+            "DataProvider",
+            "QUnit"
+          ],
+          "log_sha256": "24ad1797fa3d63f5c1c7c50b6b508cd3f227fcc2722ad1fbd46cd566a085aad9"
+        }
+      },
+      "builds": {
+        "amqp": {
+          "source": {
+            "schema": 1,
+            "commit": "38b2f710950b6c664d0436fb8766918cff92a13b",
+            "source_date_epoch": 1791352991,
+            "name": "qore-amqp-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-amqp-module-1.0.0.tar.xz": "4409e4a37f6b4ae435cc0780b2d2f160ddfb6c90aeac2b91ee4a9d5032e13079",
+              "qore-amqp-module.spec": "90e9dbfc9f427a4aa33a8312d4e339035afc69a194f1e840d9d539389072dcb7",
+              "qore-amqp-module.changes": "5f5ad0dcca4d59bf255ec556c161aa09fac2f1948f64532768b3fbde1b7b1f4e"
+            },
+            "spec": "qore-amqp-module.spec"
+          },
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-amqp-module-doc-1.0.0-4.noarch.rpm": "a25672938de2866375e3971538b1996d69f38fd22ba85db76a0de6e04b0b8d0c",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-4.x86_64.rpm": "711f520e923c0e52ecbbc3085d3f25cfe4f3255e00cd56b0c5d6d1a6fad4fddb",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-debuginfo-1.0.0-4.x86_64.rpm": "186a955d8986658965f6f72c762566601de26555a96528449aecda574610003a",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-debugsource-1.0.0-4.x86_64.rpm": "1f38a1e33aa3da41241e3b2f94bac2417184dbbfe303871b9f49b3c27cc8f0d3",
+            "rpmbuild/SRPMS/qore-amqp-module-1.0.0-4.src.rpm": "d6f990a55dcba74e1a7f2604e5af80a58a4cc081fa0e845f25df7e52d677b513"
+          },
+          "exit_code": 0,
+          "log_sha256": "86b79a1c80ec4ff2e0df7fc1abe400cfe731eef8591f5ece88eb7f7b8af6bf90"
+        },
+        "geos": {
+          "source": {
+            "schema": 1,
+            "commit": "5543a6be996fd150b69312f52b5138d0b114300b",
+            "source_date_epoch": 1791314108,
+            "name": "qore-geos-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-geos-module-1.0.0.tar.xz": "98b42f2d56e31288ec8d957d04e1c7c5dd609a57d51218ab36754f314e82d6ce",
+              "qore-geos-module.spec": "c2d33c5fe2020c261649e6c5523ba5b8b3fadeda821ee8cad92763eeb054e67f",
+              "qore-geos-module.changes": "b63c8000e0090673df6ac712e8b7a62665c257fe2dc8a0179d5e476f1afb3653"
+            },
+            "spec": "qore-geos-module.spec"
+          },
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-3.noarch.rpm": "3c279a009a0475d733c0edb089e80068b6b5052e8e3faf8f96ab5146916e452b",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.x86_64.rpm": "1783431f60f02f35cb313f7c6c97ab5a9e98deebc2f8d8d4d8f3934907bd6b6f",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-3.x86_64.rpm": "f0474a633a1c73fdcb89681ba45baf86b6e9c46b6d08b528011e688a3e5b22cc",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-3.x86_64.rpm": "fff17db432457129d8f8f286eebdc08cb4a18da61e84308647dfa23d9453469a",
+            "rpmbuild/SRPMS/qore-geos-module-1.0.0-3.src.rpm": "67604593b083741c506d5e63ba0478497b1af077dc824629590e992093337595"
+          },
+          "exit_code": 0,
+          "log_sha256": "59c601d856e3fe61c32a43b2878a73a1bf63824a77050d33b1d954b1a49b1511"
+        }
+      },
+      "geos_debugger": {
+        "aot_functions": 108,
+        "breakpoint": "/usr/src/debug/qore-geos-module-1.0.0/qlib/GEOSDataProvider/GEOSDataProvider.qm:222",
+        "no_optional_name_index": true,
+        "full_dwarf": true,
+        "source_lookup": true
+      }
+    },
+    "el10": {
+      "installed": {
+        "target": "el10",
+        "artifacts": {
+          "amqp": {
+            "rpmbuild/RPMS/noarch/qore-amqp-module-doc-1.0.0-4.el10.noarch.rpm": "3bb55d7033d0883dc151134a38cd5a769fb344cac186618317525c404180356a",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-4.el10.x86_64.rpm": "fdeddcdf0c5279a526dbd06d2889fae3acbfa508c9748bfa89f1ce5774e9e34b",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-debuginfo-1.0.0-4.el10.x86_64.rpm": "c3b08f5ce493f4d2d2f6c8930f32d30b2bf6a1b71a553d08c330f79a29c68ff1",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-debugsource-1.0.0-4.el10.x86_64.rpm": "6a81c833e3b477fa6f677fcdc8b70c9e0eeef582cc7f36231f9f769bca0b90eb"
+          },
+          "geos": {
+            "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-3.el10.noarch.rpm": "3f9198b5369b05f0ef3589a7d4f1618f5234e392ec77d6f413565d723cda8205",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.el10.x86_64.rpm": "6bfee58c12d73685732de39e91509398b3a554e90e235fab03f3182bd4c8ec4c",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-3.el10.x86_64.rpm": "a5b12b95de4bad272fa2efa0f99de8d2ff3f7550669b05e292a9c259ebc1ceb5",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-3.el10.x86_64.rpm": "71c3eeea5992b3cf02fff6718def9cd8a8e620d736285ae92521fb01ec769e9b"
+          }
+        },
+        "steps": [
+          {
+            "step": "runtime-install",
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-el10-amqp4-geos-sdk22-canonical-repo-runtime-20261007",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-amqp-cmake-canonical-20261007/rpmbuild/RPMS:/amqp-rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-geos-sdk22-canonical-20261007/rpmbuild/RPMS:/geos-rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/amqp4-geos-sdk22-canonical-repo-20261007/el10:/module-repo:ro",
+              "sha256:21f57b01cc0a7b19b709ce645b1df6c409824ac9b5b62c551ff641369b3f019b",
+              "sh",
+              "-eu",
+              "-c",
+              "dnf -y --nogpgcheck --repofrompath=qore-qualification,file:///module-repo --setopt=install_weak_deps=False install qore-amqp-module qore-geos-module\nrpm -V qore-amqp-module qore-geos-module qore-xml-module\nrpm -q --requires qore-amqp-module\nrpm -q --requires qore-amqp-module | grep -Fx \"qore-xml-module(x86-64) >= 1.0\"\nfor p in qore-devel gcc gcc-c++; do if rpm -q \"$p\"; then exit 1; fi; done\n",
+              "packages",
+              "/amqp-rpms/x86_64/qore-amqp-module-1.0.0-4.el10.x86_64.rpm",
+              "/geos-rpms/x86_64/qore-geos-module-1.0.0-3.el10.x86_64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "step": "runtime-tests",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/amqp-geos-installed-sdk22-20261006:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-amqp4-geos-installed-sdk22-canonical-repo-20261007:/results",
+              "sha256:a5a9c32833c452d2734faf3c83284aa3791197080f39a1f2d14d4527dad3f0dc",
+              "sh",
+              "-eu",
+              "-c",
+              "unset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nmkdir -p /results/runtime-amqp /results/runtime-geos\ncd /source/amqp-source\nQORE_RPM_TEST_TMP=/results/runtime-amqp /source/amqp-source/rpm/tests-installed-runtime\ncp /source/geos-source/test/*.qtest /results/runtime-geos/\ncd /results/runtime-geos\nfor test in ./*.qtest; do timeout 180 /usr/bin/qore -b --enable-debug -l /usr/lib64/qore-modules/GEOSDataProvider/GEOSDataProvider.qmod \"$test\" -v; done\n"
+            ],
+            "exit_code": 0
+          },
+          {
+            "step": "sdk-install",
+            "command": [
+              "docker",
+              "run",
+              "--init",
+              "--name",
+              "qore-el10-amqp4-geos-sdk22-canonical-repo-sdk-20261007",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-amqp-cmake-canonical-20261007/rpmbuild/RPMS:/amqp-rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-geos-sdk22-canonical-20261007/rpmbuild/RPMS:/geos-rpms:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/amqp4-geos-sdk22-canonical-repo-20261007/el10:/module-repo:ro",
+              "sha256:66b31402956389a2ca14106bbaaa65ba4b81ff2edcf293b3bc03062300d9f8d4",
+              "sh",
+              "-eu",
+              "-c",
+              "dnf -y --nogpgcheck --repofrompath=qore-qualification,file:///module-repo --setopt=install_weak_deps=False install qore-amqp-module qore-geos-module\nrpm -V qore-amqp-module qore-geos-module qore-xml-module\nrpm -q --requires qore-amqp-module\nrpm -q --requires qore-amqp-module | grep -Fx \"qore-xml-module(x86-64) >= 1.0\"\n",
+              "packages",
+              "/amqp-rpms/x86_64/qore-amqp-module-1.0.0-4.el10.x86_64.rpm",
+              "/geos-rpms/x86_64/qore-geos-module-1.0.0-3.el10.x86_64.rpm"
+            ],
+            "exit_code": 0
+          },
+          {
+            "step": "sdk-tests",
+            "command": [
+              "docker",
+              "run",
+              "--rm",
+              "--init",
+              "--network",
+              "none",
+              "--user",
+              "1019:100",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/work/amqp-geos-installed-sdk22-20261006:/source:ro",
+              "-v",
+              "/home/david/src/qore/git/qore-packaging/results/el10-amqp4-geos-installed-sdk22-canonical-repo-20261007:/results",
+              "sha256:505d44cd6752596f1580c40c48f732e39901b4ea36debe0eba1153b6607bdf1a",
+              "sh",
+              "-eu",
+              "-c",
+              "unset QORE_MODULE_DIR QORE_MODULE_DIR_ONLY QORE_INCLUDE_DIR LD_LIBRARY_PATH LD_PRELOAD\nmkdir -p /results/sdk-amqp /results/sdk-geos\ncd /source/amqp-source\nQORE_RPM_TEST_TMP=/results/sdk-amqp /source/amqp-source/rpm/tests-installed-runtime\ncp /source/geos-source/test/*.qtest /results/sdk-geos/\ncd /results/sdk-geos\nfor test in ./*.qtest; do timeout 180 /usr/bin/qore -b --enable-debug -l /usr/lib64/qore-modules/GEOSDataProvider/GEOSDataProvider.qmod \"$test\" -v; done\nAUTOPKGTEST_TMP=/results/sdk-amqp /source/amqp-source/debian/tests/compiler\nAUTOPKGTEST_TMP=/results/sdk-geos /source/geos-source/debian/tests/compiler\n"
+            ],
+            "exit_code": 0
+          }
+        ],
+        "local_repository": {
+          "qore-amqp-module-1.0.0-4.el10.x86_64.rpm": {
+            "sha256": "fdeddcdf0c5279a526dbd06d2889fae3acbfa508c9748bfa89f1ce5774e9e34b",
+            "source": "/home/david/src/qore/git/qore-packaging/results/el10-amqp-cmake-canonical-20261007/rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-4.el10.x86_64.rpm"
+          },
+          "qore-geos-module-1.0.0-3.el10.x86_64.rpm": {
+            "sha256": "6bfee58c12d73685732de39e91509398b3a554e90e235fab03f3182bd4c8ec4c",
+            "source": "/home/david/src/qore/git/qore-packaging/results/el10-geos-sdk22-canonical-20261007/rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.el10.x86_64.rpm"
+          },
+          "qore-xml-module-2.3.0-1.el10.x86_64.rpm": {
+            "sha256": "78dd32e1849a26c0fb1cb9e9db87f376c8a395932b73d0e767bf4a440e4e250d",
+            "source": "/home/david/src/qore/git/qore-packaging/results/el10-xml-final-build-2/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.el10.x86_64.rpm"
+          }
+        },
+        "runtime_image": "sha256:a5a9c32833c452d2734faf3c83284aa3791197080f39a1f2d14d4527dad3f0dc",
+        "sdk_image": "sha256:505d44cd6752596f1580c40c48f732e39901b4ea36debe0eba1153b6607bdf1a",
+        "exit_code": 0
+      },
+      "checks": {
+        "runtime": {
+          "reported_cases": 141,
+          "assertions": 960,
+          "skipped_case_markers": 5,
+          "approved_warning_features": [
+            "DataProvider",
+            "QUnit"
+          ],
+          "log_sha256": "a316e7d764f4b8a3c2bc687eac24f41cd0ccab00109a98caef211b6e8838afef"
+        },
+        "sdk": {
+          "reported_cases": 141,
+          "assertions": 960,
+          "skipped_case_markers": 5,
+          "approved_warning_features": [
+            "DataProvider",
+            "QUnit"
+          ],
+          "log_sha256": "f9930f792923f3ef830f024ab39e7d3ae555c8eedd4665f8990991f41635fcfa"
+        }
+      },
+      "builds": {
+        "amqp": {
+          "source": {
+            "schema": 1,
+            "commit": "38b2f710950b6c664d0436fb8766918cff92a13b",
+            "source_date_epoch": 1791352991,
+            "name": "qore-amqp-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-amqp-module-1.0.0.tar.xz": "4409e4a37f6b4ae435cc0780b2d2f160ddfb6c90aeac2b91ee4a9d5032e13079",
+              "qore-amqp-module.spec": "90e9dbfc9f427a4aa33a8312d4e339035afc69a194f1e840d9d539389072dcb7",
+              "qore-amqp-module.changes": "5f5ad0dcca4d59bf255ec556c161aa09fac2f1948f64532768b3fbde1b7b1f4e"
+            },
+            "spec": "qore-amqp-module.spec"
+          },
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-amqp-module-doc-1.0.0-4.el10.noarch.rpm": "3bb55d7033d0883dc151134a38cd5a769fb344cac186618317525c404180356a",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-1.0.0-4.el10.x86_64.rpm": "fdeddcdf0c5279a526dbd06d2889fae3acbfa508c9748bfa89f1ce5774e9e34b",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-debuginfo-1.0.0-4.el10.x86_64.rpm": "c3b08f5ce493f4d2d2f6c8930f32d30b2bf6a1b71a553d08c330f79a29c68ff1",
+            "rpmbuild/RPMS/x86_64/qore-amqp-module-debugsource-1.0.0-4.el10.x86_64.rpm": "6a81c833e3b477fa6f677fcdc8b70c9e0eeef582cc7f36231f9f769bca0b90eb",
+            "rpmbuild/SRPMS/qore-amqp-module-1.0.0-4.el10.src.rpm": "177bc49e48488c2d7673286e9672fb8b0a84fbf7e9df6ec99965e2eccfafd23a"
+          },
+          "exit_code": 0,
+          "log_sha256": "59a75cdc3f90d35f2cd84b3b26981a206461c90c3dbecf128b0746e376206b53"
+        },
+        "geos": {
+          "source": {
+            "schema": 1,
+            "commit": "5543a6be996fd150b69312f52b5138d0b114300b",
+            "source_date_epoch": 1791314108,
+            "name": "qore-geos-module",
+            "version": "1.0.0",
+            "exclusions": [],
+            "sources": {
+              "qore-geos-module-1.0.0.tar.xz": "98b42f2d56e31288ec8d957d04e1c7c5dd609a57d51218ab36754f314e82d6ce",
+              "qore-geos-module.spec": "c2d33c5fe2020c261649e6c5523ba5b8b3fadeda821ee8cad92763eeb054e67f",
+              "qore-geos-module.changes": "b63c8000e0090673df6ac712e8b7a62665c257fe2dc8a0179d5e476f1afb3653"
+            },
+            "spec": "qore-geos-module.spec"
+          },
+          "artifacts": {
+            "rpmbuild/RPMS/noarch/qore-geos-module-doc-1.0.0-3.el10.noarch.rpm": "3f9198b5369b05f0ef3589a7d4f1618f5234e392ec77d6f413565d723cda8205",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-1.0.0-3.el10.x86_64.rpm": "6bfee58c12d73685732de39e91509398b3a554e90e235fab03f3182bd4c8ec4c",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debuginfo-1.0.0-3.el10.x86_64.rpm": "a5b12b95de4bad272fa2efa0f99de8d2ff3f7550669b05e292a9c259ebc1ceb5",
+            "rpmbuild/RPMS/x86_64/qore-geos-module-debugsource-1.0.0-3.el10.x86_64.rpm": "71c3eeea5992b3cf02fff6718def9cd8a8e620d736285ae92521fb01ec769e9b",
+            "rpmbuild/SRPMS/qore-geos-module-1.0.0-3.el10.src.rpm": "ce9cef1008ffc3bcfb35b8eb9d634e58415c531de92b52edf0708234479896aa"
+          },
+          "exit_code": 0,
+          "log_sha256": "371dd0e762bed60a7f6fac0483b0f38b71e99c8ea1a1decfadfd4778fa73212b"
+        }
+      },
+      "geos_debugger": {
+        "aot_functions": 108,
+        "breakpoint": "/usr/src/debug/qore-geos-module-1.0.0-3.el10.x86_64/qlib/GEOSDataProvider/GEOSDataProvider.qm:222",
+        "no_optional_name_index": true,
+        "full_dwarf": true,
+        "source_lookup": true
+      }
+    }
+  },
+  "approved_diagnostics": [
+    "evidence/xml-library-aot-diagnostics-20261006.json",
+    "evidence/qunit-xml-aot-diagnostic-20261006.json"
+  ],
+  "connected_tests": "evidence/amqp-sdk22-connected-20261007.json records the unchanged AMQP implementation against Artemis and TLS fixtures, including memory traces; these canonical offline installed runs do not replace that connected evidence.",
+  "limits": [
+    "Core SDK22 itself still has unresolved build diagnostics.",
+    "Native OBS builds and signed repository lifecycle qualification remain required.",
+    "Broker/TLS-dependent cases are explicitly skipped in these offline runtime/SDK runs."
+  ],
+  "record_sha256": {
+    "results/fedora-amqp4-geos-installed-sdk22-canonical-repo-20261007/status.json": "97a459c864ff70dcd034dd48a6973a8d4d18b4a1b4307b713f7c27f76e27d3cc",
+    "results/geos-sdk22-canonical-debugger-20261007/fedora/status.json": "dee23a1913a683ba2a4839b801915b6254b8aed6709f730ad7c44b9861a3e8da",
+    "results/geos-sdk22-canonical-debugger-20261007/fedora/checks.json": "4dd536459dfa0295f663b693506b661a5df016e8fbdd25f91b9efa18bf08ef93",
+    "results/leap-amqp4-geos-installed-sdk22-canonical-repo-20261007/status.json": "cf9886e31413e7722d96221d8c552e83b2e17a815867d41bab70eb0c479f64f8",
+    "results/geos-sdk22-canonical-debugger-20261007/leap/status.json": "0af37079881cf060bf8cea72a96d3d851ac64d8d2a5a3f960d72f67cebb5a34f",
+    "results/geos-sdk22-canonical-debugger-20261007/leap/checks.json": "dd5321b8a2aa968ef6ce99a17d322400c18d324bc97b77f425c713d2563a6656",
+    "results/el10-amqp4-geos-installed-sdk22-canonical-repo-20261007/status.json": "96da052539078f27cadf1b4d934616dc13d84bf94c2bf0334c8663e3367be91f",
+    "results/geos-sdk22-canonical-debugger-20261007/el10/status.json": "e04c91ad61aa6f998f93eb2ea523c9558172324eea6c8cdaba6ebb53c3c84753",
+    "results/geos-sdk22-canonical-debugger-20261007/el10/checks.json": "eb116e5bf39cf8f6deee62c38cc25e75a2040f5e0d872bb3f128df7612a663d4"
+  },
+  "durable_records_sha256": {
+    "evidence/controls/amqp-geos-canonical-20261007/fedora-status.json": "97a459c864ff70dcd034dd48a6973a8d4d18b4a1b4307b713f7c27f76e27d3cc",
+    "evidence/controls/amqp-geos-canonical-20261007/el10-geos-debugger-status.json": "e04c91ad61aa6f998f93eb2ea523c9558172324eea6c8cdaba6ebb53c3c84753",
+    "evidence/controls/amqp-geos-canonical-20261007/el10-geos-debugger-checks.json": "eb116e5bf39cf8f6deee62c38cc25e75a2040f5e0d872bb3f128df7612a663d4",
+    "evidence/controls/amqp-geos-canonical-20261007/fedora-sdk-tests.log.gz": "33f5de17bb587725a820c202f2264182b0a7f79c658ba293c5f7a20cbaea4b06",
+    "evidence/controls/amqp-geos-canonical-20261007/el10-amqp-build.log.gz": "9ef750cba5f00a472269642d0c781108d29929732134a8cafd819917941fa08e",
+    "evidence/controls/amqp-geos-canonical-20261007/leap-geos-debugger-checks.json": "dd5321b8a2aa968ef6ce99a17d322400c18d324bc97b77f425c713d2563a6656",
+    "evidence/controls/amqp-geos-canonical-20261007/fedora-geos-build.json": "91cec039a48004d7e5c966f361eb4de01b9f856e93dcde2f6733a87f4fa84839",
+    "evidence/controls/amqp-geos-canonical-20261007/leap-amqp-build.log.gz": "a54a85f353222318db835e0039dd2e719db2eb05b75c165eba49bd9eac194c5e",
+    "evidence/controls/amqp-geos-canonical-20261007/el10-status.json": "96da052539078f27cadf1b4d934616dc13d84bf94c2bf0334c8663e3367be91f",
+    "evidence/controls/amqp-geos-canonical-20261007/leap-amqp-build.json": "8f5d4c390bd65824581624097d87d0b61e1a30b4bd7f1bf3f59e1206eab5b364",
+    "evidence/controls/amqp-geos-canonical-20261007/el10-sdk-tests.log.gz": "4a8cde882923e06eb38663115a012b2c73244afa1708a7bb481db090992ccb36",
+    "evidence/controls/amqp-geos-canonical-20261007/leap-sdk-install.log.gz": "0172588e0c2151f47f3ae12ad9640cb2ab8a66802ac003d484dd7c081a17742a",
+    "evidence/controls/amqp-geos-canonical-20261007/el10-amqp-build.json": "bbae9ec9ed67ffe350c748dcc0dc8943be498ba2af59da7c39aac16d5352ba72",
+    "evidence/controls/amqp-geos-canonical-20261007/el10-geos-build.json": "07992a16dcc5e9a061838dc860aa91557f73f85678c65c869a1b30b8c66c0b68",
+    "evidence/controls/amqp-geos-canonical-20261007/fedora-amqp-build.json": "275e18944fe2ef140eb4b31c0ff2a58082ab000e7f74606d8324e44f2dea22d4",
+    "evidence/controls/amqp-geos-canonical-20261007/el10-geos-debugger-gdb.log.gz": "2f1578d11ccae1ee98d49774788cfe13a0d8af69af85327a32a30ce2c5253109",
+    "evidence/controls/amqp-geos-canonical-20261007/el10-runtime-install.log.gz": "0a9e8910097b6024fefb724c8479e1a8ab84ba6002095153b05e6943c1b8c082",
+    "evidence/controls/amqp-geos-canonical-20261007/fedora-runtime-tests.log.gz": "e681d09a851940a19a219fe29aa14631e519ad8cd827f6f85435ad0d8d70c5dd",
+    "evidence/controls/amqp-geos-canonical-20261007/fedora-sdk-install.log.gz": "06d03fca9e781ab190f82628b2245d8fda79d880402bf97ab994d2caee064522",
+    "evidence/controls/amqp-geos-canonical-20261007/leap-runtime-install.log.gz": "c155e38df93dcc85b7b455b3b166df80088ac20e56cc7685a7a94625734fae49",
+    "evidence/controls/amqp-geos-canonical-20261007/fedora-geos-debugger-status.json": "dee23a1913a683ba2a4839b801915b6254b8aed6709f730ad7c44b9861a3e8da",
+    "evidence/controls/amqp-geos-canonical-20261007/leap-geos-build.json": "7932c88bda289a991a93e9008b8041be5ae2f3c51c2019b441b69995a6a076d1",
+    "evidence/controls/amqp-geos-canonical-20261007/el10-runtime-tests.log.gz": "65fc3e4fdc52d6964527d1fc0cfecbace4c363f65f06d2dac0da3859d384a6b8",
+    "evidence/controls/amqp-geos-canonical-20261007/fedora-geos-debugger-checks.json": "4dd536459dfa0295f663b693506b661a5df016e8fbdd25f91b9efa18bf08ef93",
+    "evidence/controls/amqp-geos-canonical-20261007/leap-geos-build.log.gz": "eb6712af7a200568aca4010429daefbc85240efa492517019b7b5b0de80cf5e2",
+    "evidence/controls/amqp-geos-canonical-20261007/leap-sdk-tests.log.gz": "f35142b0e18062ec621d89ec54dad6cfd30922f8572e27c8b8523e84bb3472f6",
+    "evidence/controls/amqp-geos-canonical-20261007/leap-geos-debugger-status.json": "0af37079881cf060bf8cea72a96d3d851ac64d8d2a5a3f960d72f67cebb5a34f",
+    "evidence/controls/amqp-geos-canonical-20261007/leap-runtime-tests.log.gz": "fc0aeb9a0ec3bab4655e35481fe70d6bc4bb9981a2c5937454616625874d9984",
+    "evidence/controls/amqp-geos-canonical-20261007/fedora-runtime-install.log.gz": "07cafcf53db969ca231eaa9b48009b88da474d5b732ea74dc8322029ed88adaf",
+    "evidence/controls/amqp-geos-canonical-20261007/fedora-amqp-build.log.gz": "21f093a7a17263bedfb89c51b8a64a2a13a588c342245cc39c9c23c03013d262",
+    "evidence/controls/amqp-geos-canonical-20261007/el10-geos-build.log.gz": "9f9bda50dd58c0186e57823cd8e4c17f195d68eb66b9a7f2b87c295ad9125f83",
+    "evidence/controls/amqp-geos-canonical-20261007/leap-status.json": "cf9886e31413e7722d96221d8c552e83b2e17a815867d41bab70eb0c479f64f8",
+    "evidence/controls/amqp-geos-canonical-20261007/fedora-geos-debugger-gdb.log.gz": "e9812b82272e54a6a760786416b80e34b55090ae3334c38bb8bc925674cc224a",
+    "evidence/controls/amqp-geos-canonical-20261007/leap-geos-debugger-gdb.log.gz": "7cdac2fd33dbe6f2ebb2babc14abf137c82ba788ccf4b26cd277c8fb2cd8fa87",
+    "evidence/controls/amqp-geos-canonical-20261007/el10-sdk-install.log.gz": "69ad663f964a56458542651b135a9de89d21bd881b1bb9a60e07844e6aa5d014",
+    "evidence/controls/amqp-geos-canonical-20261007/fedora-geos-build.log.gz": "5a64a98d3d75a368ffd5863122ed4b513e54bdc9378a53ce59775c2fda188f63"
+  }
+}
