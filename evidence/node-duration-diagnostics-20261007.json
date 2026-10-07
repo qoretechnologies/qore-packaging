@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User accepted the 3 exact diagnostic sites on 2026-10-07. Focused qualification and its recorded limits are unchanged. Full RPM and native architecture qualification remain separate gates.",
+  "diagnostics": [
+    {
+      "file": "deps/v8/src/objects/js-duration-format-inl.h",
+      "line": 34,
+      "diagnostic": "../deps/v8/src/objects/js-duration-format-inl.h:34:12: warning: \u2018*(int*)((char*)&years_option + offsetof(v8::internal::<unnamed>::DurationUnitOptions, v8::internal::<unnamed>::DurationUnitOptions::display))\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "24: \n25: TQ_OBJECT_CONSTRUCTORS_IMPL(JSDurationFormat)\n26: \n27: ACCESSORS(JSDurationFormat, icu_locale, Tagged<Managed<icu::Locale>>,\n28:           kIcuLocaleOffset)\n29: \n30: #define IMPL_INLINE_SETTER_GETTER(T, n, B, f, M)           \\\n31:   inline void JSDurationFormat::set_##n(T value) {         \\\n32:     DCHECK(B::is_valid(value));                            \\\n33:     DCHECK_GE(T::M, value);                                \\\n34:     set_##f(B::update(f(), value));                        \\\n35:   }                                                        \\\n36:   inline JSDurationFormat::T JSDurationFormat::n() const { \\\n37:     return B::decode(f());                                 \\\n38:   }\n39: \n40: #define IMPL_INLINE_DISPLAY_SETTER_GETTER(f, R)                  \\\n41:   IMPL_INLINE_SETTER_GETTER(Display, f##_display, R##DisplayBit, \\\n42:                             display_flags, kAlways)\n43: \n44: #define IMPL_INLINE_FIELD_STYLE3_SETTER_GETTER(f, R)                          \\"
+    },
+    {
+      "file": "deps/v8/src/objects/js-duration-format.cc",
+      "line": 370,
+      "diagnostic": "../deps/v8/src/objects/js-duration-format.cc:370:29: warning: \u2018*(int*)((char*)&years_option + offsetof(v8::internal::<unnamed>::DurationUnitOptions, v8::internal::<unnamed>::DurationUnitOptions::style))\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "360:   DurationUnitOptions minutes_option;\n361:   DurationUnitOptions seconds_option;\n362:   DurationUnitOptions milliseconds_option;\n363:   DurationUnitOptions microseconds_option;\n364:   DurationUnitOptions nanoseconds_option;\n365: \n366: #define CALL_GET_DURATION_UNIT_OPTIONS(unit, property, strings, enums,         \\\n367:                                        digital_base, prev_style)               \\\n368:   MAYBE_ASSIGN_RETURN_ON_EXCEPTION_VALUE(                                      \\\n369:       isolate, property##_option,                                              \\\n370:       GetDurationUnitOptions(                                                  \\\n371:           isolate, Unit::unit, #property, #property \"Display\", options, style, \\\n372:           strings, enums, JSDurationFormat::FieldStyle::digital_base,          \\\n373:           prev_style),                                                         \\\n374:       DirectHandle<JSDurationFormat>());\n375: \n376:   // #table-durationformat\n377:   // Table 3: Internal slots and property names of DurationFormat instances\n378:   // relevant to Intl.DurationFormat constructor\n379:   // [[YearsStyle]] [[YearsDisplay]] \"years\" \u00ab \"long\", \"short\",\n380:   // \"narrow\" \u00bb \"short\""
+    },
+    {
+      "file": "deps/v8/src/base/bit-field.h",
+      "line": 57,
+      "diagnostic": "../deps/v8/src/base/bit-field.h:57:12: warning: \u2018*(int*)((char*)&months_option + offsetof(v8::internal::<unnamed>::DurationUnitOptions, v8::internal::<unnamed>::DurationUnitOptions::display))\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "47:   using Next = BitField<T2, kShift + kSize, size2, U>;\n48: \n49:   // Tells whether the provided value fits into the bit field.\n50:   static constexpr bool is_valid(T value) {\n51:     return (static_cast<U>(value) & ~kMax) == 0;\n52:   }\n53: \n54:   // Returns a type U with the bit field value encoded.\n55:   static constexpr U encode(T value) {\n56:     DCHECK(is_valid(value));\n57:     return static_cast<U>(value) << kShift;\n58:   }\n59: \n60:   // Returns a type U with the bit field value updated.\n61:   V8_NODISCARD static constexpr U update(U previous, T value) {\n62:     return (previous & ~kMask) | encode(value);\n63:   }\n64: \n65:   // Extracts the bit field from the value.\n66:   static constexpr T decode(U value) {\n67:     return static_cast<T>((value & kMask) >> kShift);"
+    }
+  ],
+  "source_review": [
+    "GetDurationUnitOptions returns Just(DurationUnitOptions({style, display})) only after both option lookups initialize their outputs. Every exceptional path returns Nothing<DurationUnitOptions>.",
+    "The actual V8 Maybe<T>::To assigns the complete value before returning true; it returns false without assigning when the Maybe is empty.",
+    "MAYBE_ASSIGN_RETURN_ON_EXCEPTION_VALUE returns from the constructor when To returns false. Thus every path reaching years_option.style or either display setter has initialized that complete record.",
+    "The month lookup occurs after the successful year assignment. If either year or month style/display getter fails, constructor exit precedes subsequent lookups and every affected field read."
+  ],
+  "interpretation": "The full-build warnings conservatively lose the correlation between the Maybe success state and complete output assignment. This conclusion is supported by the unchanged source and passing controls; it is not a claim to have minimized the GCC full-build reproducer.",
+  "coverage": {
+    "cpp_checks": 1153600,
+    "cpp_modes": "288400 cases each in release and DEBUG configurations, normally and under Valgrind.",
+    "cases": "All four base styles, unset/long/short/narrow years and months, unset/auto/always displays, failure at each of the four lookups, and invalid values in each field. Early failure must leave the caller output untouched and perform no later lookups.",
+    "memory": "Both Valgrind runs report zero errors and free every allocation, without suppressions.",
+    "actual_node": "11536 actual Intl.DurationFormat cases against packaged Node 24.18.1: option results, exact exception propagation and getter order, nonempty formatting, and formatToParts reconstruction.",
+    "node_image": "qore-rpm-keep:leap-node-compaction-baseline2-20261006"
+  },
+  "limits": [
+    "The complete helper, enum declarations and assignment macros are source extracts; the enclosing macro return type is adapted to the standalone result.",
+    "The actual upstream v8-maybe.h is included. Typed option lookup and Isolate adapters replace object handles and exception plumbing; actual JavaScript controls separately exercise that plumbing.",
+    "The native control covers the years/months fields named by the diagnostics, not the numeric/fractional hour-to-nanosecond paths.",
+    "Smaller controls compile without reproducing the three full-build warnings. The exact full-build sites remain visible and require explicit acceptance.",
+    "Initial control compilation enabled extra unused-parameter diagnostics in public no-op headers. The final control uses V8's existing -Wno-unused-parameter policy from the actual compiler receipt; no package or runtime flags change.",
+    "The complete updated RPM and native ARM qualification remain separate gates."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-duration-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-duration-20261007/control.cc": "6b28ebefab21d2932750029248a3a8f750dd4ac6f32dea7a9bfa1bcfcaa72774",
+    "evidence/controls/node-duration-20261007/control.js": "d5f8c9eb31f8f82dc73346ba506ac084f5cb3c29bd038797ba4fc1952cea48b7",
+    "evidence/controls/node-duration-20261007/debug-compile.log.gz": "2acbbb3b0f5fa6c3c95669a126b207df6ead04acf4f52a6f08bfabfa13ae6baf",
+    "evidence/controls/node-duration-20261007/debug-compile2.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-duration-20261007/debug-memory.log.gz": "54fbe818db0340503653b6465a9b9a9f643038aa79661046b92a7176b90d717a",
+    "evidence/controls/node-duration-20261007/debug-memory2.log.gz": "54fbe818db0340503653b6465a9b9a9f643038aa79661046b92a7176b90d717a",
+    "evidence/controls/node-duration-20261007/debug-normal.log.gz": "54fbe818db0340503653b6465a9b9a9f643038aa79661046b92a7176b90d717a",
+    "evidence/controls/node-duration-20261007/debug-normal2.log.gz": "54fbe818db0340503653b6465a9b9a9f643038aa79661046b92a7176b90d717a",
+    "evidence/controls/node-duration-20261007/debug-valgrind.log.gz": "8704fbfe9f25c888923a95ed938eee69b05df6def7bcb937c183d47d872ec9a9",
+    "evidence/controls/node-duration-20261007/debug-valgrind2.log.gz": "8704fbfe9f25c888923a95ed938eee69b05df6def7bcb937c183d47d872ec9a9",
+    "evidence/controls/node-duration-20261007/javascript.log.gz": "3ba1a232fc200cc68169d95400ee48aef13647985ed386be987c87fea1072e1d",
+    "evidence/controls/node-duration-20261007/node-version.log.gz": "7320c82e0cbda0a261842adeaeb8c04fd7b5a4e17fdbbf69b00a1270a765b239",
+    "evidence/controls/node-duration-20261007/prepare.py": "9eb155f1cc118e8d49ac10f3d4bc29aa52c44da6ae0e12e2ba27d1cbbfb41ec8",
+    "evidence/controls/node-duration-20261007/release-compile.log.gz": "2acbbb3b0f5fa6c3c95669a126b207df6ead04acf4f52a6f08bfabfa13ae6baf",
+    "evidence/controls/node-duration-20261007/release-compile2.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-duration-20261007/release-memory.log.gz": "54fbe818db0340503653b6465a9b9a9f643038aa79661046b92a7176b90d717a",
+    "evidence/controls/node-duration-20261007/release-memory2.log.gz": "54fbe818db0340503653b6465a9b9a9f643038aa79661046b92a7176b90d717a",
+    "evidence/controls/node-duration-20261007/release-normal.log.gz": "54fbe818db0340503653b6465a9b9a9f643038aa79661046b92a7176b90d717a",
+    "evidence/controls/node-duration-20261007/release-normal2.log.gz": "54fbe818db0340503653b6465a9b9a9f643038aa79661046b92a7176b90d717a",
+    "evidence/controls/node-duration-20261007/release-valgrind.log.gz": "9529fbc6141ba829945d0aa7e38642435f9ea48e4f2d0aa7ae4c3bf5085c2f3a",
+    "evidence/controls/node-duration-20261007/release-valgrind2.log.gz": "9529fbc6141ba829945d0aa7e38642435f9ea48e4f2d0aa7ae4c3bf5085c2f3a",
+    "evidence/controls/node-duration-20261007/run.py": "9dc66dc440d7ec61e09963148770d70d2472b7955a8cb20c61f1896f0303331d",
+    "evidence/controls/node-duration-20261007/run2.py": "3bff991b43c0f2d6ba3cb459c2c38dac0830937669ae63e0bf686b68432cffe8",
+    "evidence/controls/node-duration-20261007/source-extracts.json": "584425f1699057b50044160901d91e8b37fed0dc116ce95cb20eba69f50d7ccc",
+    "evidence/controls/node-duration-20261007/status.json": "d70e46137fc26bcdae4238be0aeb3879f53f8924bd3ffd276715592fb4b9f39b",
+    "evidence/controls/node-duration-20261007/status2.json": "672c92a9abc9eef6ef5c347676f74901079431ab682bdf8593a7eb33b24fb745"
+  },
+  "approval": "Allow these three exact diagnostics",
+  "approval_date": "2026-10-07"
+}

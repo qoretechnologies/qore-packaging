@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User accepted the 3 exact diagnostic sites on 2026-10-07. Focused qualification and its recorded limits are unchanged. Full RPM and native architecture qualification remain separate gates.",
+  "diagnostics": [
+    {
+      "file": "deps/v8/src/maglev/maglev-ir.h",
+      "line": 2482,
+      "diagnostic": "../deps/v8/src/maglev/maglev-ir.h:2482:5: warning: \u2018untagged\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "2472:   int use_count() const {\n2473:     // Invalid to check use_count externally once an id is allocated.\n2474:     DCHECK(!has_id());\n2475:     return use_count_;\n2476:   }\n2477:   bool is_used() const { return use_count_ > 0; }\n2478:   bool unused_inputs_were_visited() const { return use_count_ == -1; }\n2479:   void add_use() {\n2480:     // Make sure a saturated use count won't overflow.\n2481:     DCHECK_LT(use_count_, kMaxInt);\n2482:     use_count_++;\n2483:   }\n2484:   void remove_use() {\n2485:     // Make sure a saturated use count won't drop below zero.\n2486:     DCHECK_GT(use_count_, 0);\n2487:     use_count_--;\n2488:   }\n2489:   // Avoid revisiting nodes when processing an unused node's inputs, by marking\n2490:   // it as visited.\n2491:   void mark_unused_inputs_visited() {\n2492:     DCHECK_EQ(use_count_, 0);"
+    },
+    {
+      "file": "deps/v8/src/maglev/maglev-phi-representation-selector.cc",
+      "line": 1108,
+      "diagnostic": "../deps/v8/src/maglev/maglev-phi-representation-selector.cc:1108:17: warning: \u2018block\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "1098:                 phi->value_representation() ==\n1099:                     ValueRepresentation::kHoleyFloat64));\n1100:         phi->change_input(last_input_idx, backedge->input(0).node());\n1101:       }\n1102:     }\n1103:   }\n1104: }\n1105: \n1106: ValueNode* MaglevPhiRepresentationSelector::AddNodeAtBlockEnd(\n1107:     ValueNode* node, BasicBlock* block, DeoptFrame* deopt_frame) {\n1108:   return AddNode(node, block, NewNodePosition::kEndOfBlock, nullptr,\n1109:                  deopt_frame);\n1110: }\n1111: \n1112: ValueNode* MaglevPhiRepresentationSelector::AddNode(\n1113:     ValueNode* node, BasicBlock* block, NewNodePosition pos,\n1114:     const ProcessingState* state, DeoptFrame* deopt_frame) {\n1115:   if (node->properties().can_eager_deopt()) {\n1116:     DCHECK_NOT_NULL(deopt_frame);\n1117:     node->SetEagerDeoptInfo(builder_->zone(), *deopt_frame);\n1118:   }"
+    },
+    {
+      "file": "deps/v8/src/maglev/maglev-phi-representation-selector.cc",
+      "line": 658,
+      "diagnostic": "../deps/v8/src/maglev/maglev-phi-representation-selector.cc:658:11: warning: \u2018deopt_frame\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "648:                     TaggedToFloat64ConversionType::kOnlyNumber),\n649:                 block, deopt_frame);\n650:             untagged =\n651:                 AddNodeAtBlockEnd(NodeBase::New<CheckedTruncateFloat64ToInt32>(\n652:                                       builder_->zone(), {untagged}),\n653:                                   block, deopt_frame);\n654:           }\n655:           break;\n656:         case ValueRepresentation::kFloat64:\n657:         case ValueRepresentation::kHoleyFloat64:\n658:           if (!deopt_frame) {\n659:             DCHECK(\n660:                 NodeTypeIs(StaticTypeForNode(builder_->broker(),\n661:                                              builder_->local_isolate(), input),\n662:                            NodeType::kNumber));\n663:             untagged = AddNodeAtBlockEnd(\n664:                 NodeBase::New<UncheckedNumberOrOddballToFloat64>(\n665:                     builder_->zone(), {input},\n666:                     TaggedToFloat64ConversionType::kOnlyNumber),\n667:                 block);\n668:           } else {"
+    }
+  ],
+  "root_cause": "The HoistType and ValueRepresentation switches initialize block/deopt_frame/untagged for every supported enumerator or terminate. GCC additionally considers unnamed enum values.",
+  "source_review": [
+    "HoistType is private; its list starts at kNone and ProcessPhi assigns only kPrologue, kLoopEntryUnchecked or kLoopEntry. The reviewed branch executes only when its entry is not kNone.",
+    "ConvertTaggedPhiTo supports Int32, Float64 and HoleyFloat64. Every hoist case initializes both block and deopt_frame; unchecked loop entry intentionally uses a null deopt frame.",
+    "Each supported representation assigns untagged through one or two node constructions before change_input. All three unsupported declared representations terminate at UNREACHABLE.",
+    "NodeBase::New allocates from the V8 zone; allocation exhaustion terminates. The diagnostic adapter throws to test ownership and the absence of a committed phi change on failed allocation."
+  ],
+  "coverage": {
+    "native_checks": 636000,
+    "checks_per_run": 159000,
+    "modes": "Release/debug, both normal and Valgrind. Three hoist modes, all supported representations, two predecessor positions, loop/nonloop inputs, allocation failure at both node-construction positions, and every declared invalid-mode combination.",
+    "invariants": "Checks emitted node sequence, predecessor/prologue block, exact deopt-frame identity, dataflow edges, final phi input and unchanged phi on allocation failure. Rejected modes allocate nothing.",
+    "compiler": "All three original diagnostic variable names reproduce in both control builds.",
+    "memory": "Both Valgrind runs report zero errors and all allocations freed.",
+    "image": "sha256:471fb347e0308caa05f79e41ca4813767c6a7a687f03cc823a78b2a8e81a3414"
+  },
+  "limits": [
+    "Verbatim enum definitions and complete hoisting branch are extracted with checksums. Typed block, node and zone adapters model graph construction, not machine-code execution or a complete engine.",
+    "UNREACHABLE throws a typed exception in the control; allocation failure is injected into the adapter. These are control-only changes.",
+    "The adapter static type is Smi, satisfying both Smi and Number checks. Numeric conversion semantics and full compiler graph reachability are outside this control; source review establishes accepted enum producers.",
+    "Initial container launch used the wrong uid and ran no tests; corrected uid 1019:100 matches the workspace.",
+    "No runtime patch, warning filter or package compiler-flag change is proposed."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-phi-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-phi-20261007/control.cc": "9f02333b16d5374a1b0d7326c4d7a853c5512cd43fb3bc2649a9a2e907284337",
+    "evidence/controls/node-phi-20261007/debug-compile.log.gz": "226c56220cd238ca2f027f8e190936a32fc74647468d3cda6982e7d7eee32197",
+    "evidence/controls/node-phi-20261007/debug-memory.log.gz": "4aae6e3db4393ee0f84f96fa377a8112646ff5e8780747f1d669aedef260ed6e",
+    "evidence/controls/node-phi-20261007/debug-normal.log.gz": "4aae6e3db4393ee0f84f96fa377a8112646ff5e8780747f1d669aedef260ed6e",
+    "evidence/controls/node-phi-20261007/debug-valgrind.log.gz": "b882a0e805cca199acd614a67c8f67361db448a9dfa4ab75ba704238ca987ced",
+    "evidence/controls/node-phi-20261007/launch-failed.json": "6ab79a0a3f46fcd40a8bd831baedd7b56a84b7385c184a3b8eddda71e9812464",
+    "evidence/controls/node-phi-20261007/prepare.py": "5c732daaae4c58b57e8eadfca6d204e04ef32881c8157ce6e8a88e7d26bf5d8b",
+    "evidence/controls/node-phi-20261007/release-compile.log.gz": "226c56220cd238ca2f027f8e190936a32fc74647468d3cda6982e7d7eee32197",
+    "evidence/controls/node-phi-20261007/release-memory.log.gz": "4aae6e3db4393ee0f84f96fa377a8112646ff5e8780747f1d669aedef260ed6e",
+    "evidence/controls/node-phi-20261007/release-normal.log.gz": "4aae6e3db4393ee0f84f96fa377a8112646ff5e8780747f1d669aedef260ed6e",
+    "evidence/controls/node-phi-20261007/release-valgrind.log.gz": "e0938d280f356af397467f193845ec62ae3c62c6ba1e4c56b0efba4d99af6bf3",
+    "evidence/controls/node-phi-20261007/run.py": "18340988507ce7915915adb6c1c8794f1883faf19950729ca1a5476ef71dbc1f",
+    "evidence/controls/node-phi-20261007/source-extracts.json": "c0dd80c886f2dc8beee7d0e0d1ca349173f17f112ea8c824a4ffb4cf4ced1968",
+    "evidence/controls/node-phi-20261007/status.json": "d4498ee556a820ac1c3199b446ab3e7661b6f3442e8f90fd46e978fa6188fd23"
+  },
+  "approval": "Allow these three exact diagnostics",
+  "approval_date": "2026-10-07"
+}

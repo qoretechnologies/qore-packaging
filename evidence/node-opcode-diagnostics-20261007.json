@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User accepted the 2 exact diagnostic sites on 2026-10-07. Focused qualification and its recorded limits are unchanged. Full RPM and native architecture qualification remain separate gates.",
+  "diagnostics": [
+    {
+      "file": "deps/v8/src/compiler/backend/instruction-selector.cc",
+      "line": 2174,
+      "diagnostic": "../deps/v8/src/compiler/backend/instruction-selector.cc:2174:19: warning: \u2018opcode\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "2164:     buffer.instruction_args.push_back(g.Label(handler));\n2165:   } else {\n2166:     if (call_op.descriptor->lazy_deopt_on_throw == LazyDeoptOnThrow::kYes) {\n2167:       flags |= CallDescriptor::kHasExceptionHandler;\n2168:       buffer.instruction_args.push_back(\n2169:           g.UseImmediate(kLazyDeoptOnThrowSentinel));\n2170:     }\n2171:   }\n2172: \n2173:   // Select the appropriate opcode based on the call type.\n2174:   InstructionCode opcode;\n2175:   switch (call_descriptor->kind()) {\n2176:     case CallDescriptor::kCallAddress: {\n2177:       int gp_param_count =\n2178:           static_cast<int>(call_descriptor->GPParameterCount());\n2179:       int fp_param_count =\n2180:           static_cast<int>(call_descriptor->FPParameterCount());\n2181: #if ABI_USES_FUNCTION_DESCRIPTORS\n2182:       // Highest fp_param_count bit is used on AIX to indicate if a CFunction\n2183:       // call has function descriptor or not.\n2184:       static_assert(FPParamField::kSize == kHasFunctionDescriptorBitShift + 1);"
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc",
+      "line": 4035,
+      "diagnostic": "../deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc:4035:12: warning: \u2018opcode\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "4025:   LoadRepresentation load_rep = this->load_view(node).loaded_rep();\n4026:   DCHECK(IsIntegral(load_rep.representation()) ||\n4027:          IsAnyTagged(load_rep.representation()) ||\n4028:          (COMPRESS_POINTERS_BOOL &&\n4029:           CanBeCompressedPointer(load_rep.representation())));\n4030:   DCHECK_NE(load_rep.representation(), MachineRepresentation::kWord64);\n4031:   DCHECK(!load_rep.IsMapWord());\n4032:   // The memory order is ignored as both acquire and sequentially consistent\n4033:   // loads can emit MOV.\n4034:   // https://www.cl.cam.ac.uk/~pes20/cpp/cpp0xmappings.html\n4035:   VisitLoad(node, node, GetLoadOpcode(load_rep));\n4036: }\n4037: \n4038: void InstructionSelectorT::VisitWord64AtomicLoad(OpIndex node) {\n4039:   LoadRepresentation load_rep = this->load_view(node).loaded_rep();\n4040:   DCHECK(!load_rep.IsMapWord());\n4041:   // The memory order is ignored as both acquire and sequentially consistent\n4042:   // loads can emit MOV.\n4043:   // https://www.cl.cam.ac.uk/~pes20/cpp/cpp0xmappings.html\n4044:   VisitLoad(node, node, GetLoadOpcode(load_rep));\n4045: }"
+    }
+  ],
+  "root_cause": "GCC retains paths for unnamed enum values. Every declared CallDescriptor::Kind assigns opcode; every declared MachineRepresentation either assigns the load opcode or takes an unconditional failure path.",
+  "source_review": [
+    "InstructionSelectorT::VisitCall switches on the CallDescriptor Kind constructed by compiler linkage helpers. All eight declared kinds are handled, including the four WebAssembly kinds enabled in this package.",
+    "GetLoadOpcode handles all 21 distinct MachineRepresentation values. None, MapWord, IndirectPointer and Float16RawBits terminate. Compressed representations terminate without pointer compression. ProtectedPointer requires sandbox support. Every returning case initializes opcode.",
+    "The observed load warning is in VisitWord32AtomicLoad after inlining GetLoadOpcode. Its representation comes from the typed compiler load operation; its integral/tagged representation invariants further restrict the accepted inputs."
+  ],
+  "coverage": {
+    "checks_per_execution": 810000,
+    "executions": 4,
+    "total_checks": 3240000,
+    "call": "All eight declared kinds, both frame-state settings, general/floating argument counts 0/1/8/255, and three flag combinations. Correct opcode selection and branch-specific parameter/flag propagation.",
+    "load": "All 21 declared representations, both signedness settings, pointer compression enabled/disabled, and every unsupported representation rejection.",
+    "memory": "Both Valgrind runs report zero errors and free every allocation. No suppressions.",
+    "compiler": "Each GCC13 build reproduces exactly the two opcode maybe-uninitialized warnings."
+  },
+  "limits": [
+    "Enum declarations, GetLoadOpcode and the call selection switch are verbatim extracts. Typed descriptor/load adapters expose the selected result.",
+    "Instruction opcode numeric values and field encodings are symbolic control adapters; this verifies dispatch and initialization, not instruction emission or execution.",
+    "CHECK/UNREACHABLE rejection becomes a typed test exception. This makes negative paths observable with complete cleanup; production termination behavior is unchanged.",
+    "Linux does not use the AIX function-descriptor branch, which is excluded. The package uses its existing uncompressed configuration; the additional compressed control checks the other source branch only.",
+    "An initial extraction script used an incorrect enum delimiter and stopped before generation; the corrected script and final outputs are retained.",
+    "No package compiler flags, runtime behavior or diagnostic filters change."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-opcodes-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-opcodes-20261007/compressed-compile.log.gz": "6f3df3106e996a304f72494ec9fa079543bb3ada30ee107f03f11ef2a44db58f",
+    "evidence/controls/node-opcodes-20261007/compressed-memory.log.gz": "b619fd9bb9642c8c98583374c64c75ef416b794f482edb77077b8f65e4490bb7",
+    "evidence/controls/node-opcodes-20261007/compressed-normal.log.gz": "b619fd9bb9642c8c98583374c64c75ef416b794f482edb77077b8f65e4490bb7",
+    "evidence/controls/node-opcodes-20261007/compressed-valgrind.log.gz": "0e11182ea81a00fdd216753e66f304f7a8ef8b9cdbaf949e97056ff7bc1b78ce",
+    "evidence/controls/node-opcodes-20261007/control.cc": "c5b8dabc8447f16d6dae421a747a72ff21189023d9f21c9e18b71465d1ee5bdf",
+    "evidence/controls/node-opcodes-20261007/native-compile.log.gz": "6f3df3106e996a304f72494ec9fa079543bb3ada30ee107f03f11ef2a44db58f",
+    "evidence/controls/node-opcodes-20261007/native-memory.log.gz": "b619fd9bb9642c8c98583374c64c75ef416b794f482edb77077b8f65e4490bb7",
+    "evidence/controls/node-opcodes-20261007/native-normal.log.gz": "b619fd9bb9642c8c98583374c64c75ef416b794f482edb77077b8f65e4490bb7",
+    "evidence/controls/node-opcodes-20261007/native-valgrind.log.gz": "40dce918e939e17a28db3328a34e85c247816fd8d75e2adc2abf7cff92840447",
+    "evidence/controls/node-opcodes-20261007/prepare.py": "3c347bd8f627b26949241e5493d253626efaae7c2d21fd5e9f3d5ead2c77d1a4",
+    "evidence/controls/node-opcodes-20261007/run.py": "81084d1f83fb5e58d58c9f2c3b3a0bbd8cbb0ab125cfdf661c4417c14c1f0d00",
+    "evidence/controls/node-opcodes-20261007/source-extracts.json": "667d93fe79507ae80985128f4802fb43d5116c485130e3b76ac33e59bfde5e2c",
+    "evidence/controls/node-opcodes-20261007/status.json": "d48705cc419c0ba7556cca19e15f6942eda663de479463cc78599f9eed8be1d6"
+  },
+  "approval": "Allow these two exact diagnostics",
+  "approval_date": "2026-10-07"
+}

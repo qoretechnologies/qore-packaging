@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User accepted the 1 exact diagnostic sites on 2026-10-07. Focused qualification and its recorded limits are unchanged. Full RPM and native architecture qualification remain separate gates.",
+  "diagnostics": [
+    {
+      "file": "deps/v8/src/compiler/bytecode-graph-builder.cc",
+      "line": 755,
+      "diagnostic": "../deps/v8/src/compiler/bytecode-graph-builder.cc:755:35: warning: \u2018result\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "745:     int values_index = RegisterToValuesIndex(the_register);\n746:     return values()->at(values_index);\n747:   }\n748: }\n749: \n750: void BytecodeGraphBuilder::Environment::BindAccumulator(\n751:     Node* node, FrameStateAttachmentMode mode) {\n752:   if (mode == FrameStateAttachmentMode::kAttachFrameState) {\n753:     builder()->PrepareFrameState(node, OutputFrameStateCombine::PokeAt(0));\n754:   }\n755:   values()->at(accumulator_base_) = node;\n756: }\n757: \n758: void BytecodeGraphBuilder::Environment::BindGeneratorState(Node* node) {\n759:   generator_state_ = node;\n760: }\n761: \n762: void BytecodeGraphBuilder::Environment::BindRegister(\n763:     interpreter::Register the_register, Node* node,\n764:     FrameStateAttachmentMode mode) {\n765:   int values_index = RegisterToValuesIndex(the_register);"
+    }
+  ],
+  "root_cause": "The inlined BindAccumulator warning originates at VisitTestTypeOf result. Every declared literal flag initializes the result or terminates at kOther. GCC additionally considers unnamed enum values.",
+  "source_review": "The actual TYPEOF_LITERAL_LIST has eight recognized type names and kOther. BytecodeGenerator emits CompareTypeOf only for recognized flags; kOther emits LoadFalse instead. VisitTestTypeOf handles each recognized flag and rejects kOther. No accepted bytecode path reaches BindAccumulator with an uninitialized result.",
+  "coverage": {
+    "native_checks": 3240000,
+    "native_modes": "810000 cases per release/debug run, normally and under Valgrind. All eight recognized flags across ten modeled ordinary input categories, plus kOther rejection without allocations.",
+    "memory": "Both Valgrind runs have zero errors; all 1190002 allocations are freed in each.",
+    "compiler": "Each GCC13 control build reproduces the same result maybe-uninitialized diagnostic.",
+    "actual_javascript_checks": 180000,
+    "actual_javascript": "All nine type strings over 20 real JavaScript values, including NaN, Infinity, null, boxed primitives and callable/noncallable proxies. TurboFan optimization is explicitly requested and verified with runtime.h kOptimized/kTurboFanned bits. --no-turbolev retains the BytecodeGraphBuilder frontend.",
+    "javascript_command": "node --no-turbolev --allow-natives-syntax /work/control.js",
+    "node_image": "qore-rpm-keep:leap-node-compaction-baseline2-20261006"
+  },
+  "limits": [
+    "The enum/macro and dispatch body are verbatim extracts. The standalone graph evaluator models predicate results with owned nodes; it does not emit machine code.",
+    "Ordinary Node value categories are covered; browser-only exotic undetectable objects are outside this control.",
+    "UNREACHABLE becomes a typed test exception so rejection and allocation cleanup can be observed. Production behavior is unchanged.",
+    "The first JavaScript run requested optimization without checking its final state; the retained second run adds those assertions and is the qualified result.",
+    "Compiler flags and visible warnings remain unchanged; no suppression or runtime patch is proposed."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-typeof-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-typeof-20261007/control.cc": "8b94d794d193028bbd28d312ffbf0f07802ff644e7c73e446467b81468e91e30",
+    "evidence/controls/node-typeof-20261007/control.js": "4ba9da0ddabe09865d274a8199a6757a087b93fe603fc9852fc4cd9c9aef6722",
+    "evidence/controls/node-typeof-20261007/debug-compile.log.gz": "426f0f3527c2f16c0fa66588be06a760a78e069a24a1ddc4e5f98adb6967c943",
+    "evidence/controls/node-typeof-20261007/debug-memory.log.gz": "22003767e11a605e391aac6f6c1128f27df003975efe59c4a30b7f67c511c331",
+    "evidence/controls/node-typeof-20261007/debug-normal.log.gz": "22003767e11a605e391aac6f6c1128f27df003975efe59c4a30b7f67c511c331",
+    "evidence/controls/node-typeof-20261007/debug-valgrind.log.gz": "db161ee6c5b10c5f33c09f9df0f2d5367b5cde221ca9f5b1f5b5743f39e0ee1b",
+    "evidence/controls/node-typeof-20261007/javascript.log.gz": "c6a5002a19206581ccb206029b0b01797326f239ea0aa1c2a6bc8c68db1e14ca",
+    "evidence/controls/node-typeof-20261007/javascript2.log.gz": "c6a5002a19206581ccb206029b0b01797326f239ea0aa1c2a6bc8c68db1e14ca",
+    "evidence/controls/node-typeof-20261007/prepare.py": "65d4314ee94bd12c4b7473982c873dea3689cf1ab4458b976c9574b350920066",
+    "evidence/controls/node-typeof-20261007/release-compile.log.gz": "426f0f3527c2f16c0fa66588be06a760a78e069a24a1ddc4e5f98adb6967c943",
+    "evidence/controls/node-typeof-20261007/release-memory.log.gz": "22003767e11a605e391aac6f6c1128f27df003975efe59c4a30b7f67c511c331",
+    "evidence/controls/node-typeof-20261007/release-normal.log.gz": "22003767e11a605e391aac6f6c1128f27df003975efe59c4a30b7f67c511c331",
+    "evidence/controls/node-typeof-20261007/release-valgrind.log.gz": "7c9df7bb17c74542f448a426c98e3aaf5f0a84fd6b5987e6a1d9232c1a599579",
+    "evidence/controls/node-typeof-20261007/run.py": "18340988507ce7915915adb6c1c8794f1883faf19950729ca1a5476ef71dbc1f",
+    "evidence/controls/node-typeof-20261007/source-extracts.json": "cd1210feb36ab50acf7bdcd8be58eb22eb395e9df183ac17f013a3921e982306",
+    "evidence/controls/node-typeof-20261007/status.json": "d4498ee556a820ac1c3199b446ab3e7661b6f3442e8f90fd46e978fa6188fd23"
+  },
+  "approval": "Allow this exact diagnostic",
+  "approval_date": "2026-10-07"
+}

@@ -1,0 +1,71 @@
+[
+  {
+    "name": "native-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "/work/control.cc",
+      "-o",
+      "/work/control-native"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "native-normal",
+    "command": [
+      "/work/control-native"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "native-memory",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/work/native-valgrind.log",
+      "/work/control-native"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "compressed-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-DV8_COMPRESS_POINTERS",
+      "/work/control.cc",
+      "-o",
+      "/work/control-compressed"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "compressed-normal",
+    "command": [
+      "/work/control-compressed"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "compressed-memory",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/work/compressed-valgrind.log",
+      "/work/control-compressed"
+    ],
+    "exit_code": 0
+  }
+]

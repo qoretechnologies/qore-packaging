@@ -1,0 +1,71 @@
+[
+  {
+    "name": "release-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "/work/control.cc",
+      "-o",
+      "/work/control-release"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "release-normal",
+    "command": [
+      "/work/control-release"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "release-memory",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/work/release-valgrind.log",
+      "/work/control-release"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-DDEBUG",
+      "/work/control.cc",
+      "-o",
+      "/work/control-debug"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-normal",
+    "command": [
+      "/work/control-debug"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-memory",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/work/debug-valgrind.log",
+      "/work/control-debug"
+    ],
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "file": "deps/v8/src/interpreter/bytecode-flags-and-tokens.h",
+    "line": 54,
+    "body": "#define TYPEOF_LITERAL_LIST(V) \\\n  V(Number, number)            \\\n  V(String, string)            \\\n  V(Symbol, symbol)            \\\n  V(Boolean, boolean)          \\\n  V(BigInt, bigint)            \\\n  V(Undefined, undefined)      \\\n  V(Function, function)        \\\n  V(Object, object)            \\\n  V(Other, other)",
+    "sha256": "66a62ea1715523eb28732319c672922bab7e07155370c52758c99c480b912142"
+  },
+  {
+    "file": "deps/v8/src/interpreter/bytecode-flags-and-tokens.h",
+    "line": 67,
+    "body": "  enum class LiteralFlag : uint8_t {\n#define DECLARE_LITERAL_FLAG(name, _) k##name,\n    TYPEOF_LITERAL_LIST(DECLARE_LITERAL_FLAG)\n#undef DECLARE_LITERAL_FLAG\n  };",
+    "sha256": "047772c286a7ca3884cf33b5cc20ddf2c3c628201df832d75662b39cf9842987"
+  },
+  {
+    "file": "deps/v8/src/compiler/bytecode-graph-builder.cc",
+    "line": 3524,
+    "body": "  Node* result;\n  switch (literal_flag) {\n    case interpreter::TestTypeOfFlags::LiteralFlag::kNumber:\n      result = NewNode(simplified()->ObjectIsNumber(), object);\n      break;\n    case interpreter::TestTypeOfFlags::LiteralFlag::kString:\n      result = NewNode(simplified()->ObjectIsString(), object);\n      break;\n    case interpreter::TestTypeOfFlags::LiteralFlag::kSymbol:\n      result = NewNode(simplified()->ObjectIsSymbol(), object);\n      break;\n    case interpreter::TestTypeOfFlags::LiteralFlag::kBigInt:\n      result = NewNode(simplified()->ObjectIsBigInt(), object);\n      break;\n    case interpreter::TestTypeOfFlags::LiteralFlag::kBoolean:\n      result = NewNode(common()->Select(MachineRepresentation::kTagged),\n                       NewNode(simplified()->ReferenceEqual(), object,\n                               jsgraph()->TrueConstant()),\n                       jsgraph()->TrueConstant(),\n                       NewNode(simplified()->ReferenceEqual(), object,\n                               jsgraph()->FalseConstant()));\n      break;\n    case interpreter::TestTypeOfFlags::LiteralFlag::kUndefined:\n      result = graph()->NewNode(\n          common()->Select(MachineRepresentation::kTagged),\n          graph()->NewNode(simplified()->ReferenceEqual(), object,\n                           jsgraph()->NullConstant()),\n          jsgraph()->FalseConstant(),\n          graph()->NewNode(simplified()->ObjectIsUndetectable(), object));\n      break;\n    case interpreter::TestTypeOfFlags::LiteralFlag::kFunction:\n      result =\n          graph()->NewNode(simplified()->ObjectIsDetectableCallable(), object);\n      break;\n    case interpreter::TestTypeOfFlags::LiteralFlag::kObject:\n      result = graph()->NewNode(\n          common()->Select(MachineRepresentation::kTagged),\n          graph()->NewNode(simplified()->ObjectIsNonCallable(), object),\n          jsgraph()->TrueConstant(),\n          graph()->NewNode(simplified()->ReferenceEqual(), object,\n                           jsgraph()->NullConstant()));\n      break;\n    case interpreter::TestTypeOfFlags::LiteralFlag::kOther:\n      UNREACHABLE();  // Should never be emitted.\n  }",
+    "sha256": "feb63088c3d5018ec4d035dc83689ab133692c0a4317f0ec5e95d7ff50b0162e"
+  }
+]

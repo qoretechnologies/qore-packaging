@@ -1,0 +1,50 @@
+[
+  {
+    "file": "deps/v8/src/objects/js-duration-format.h",
+    "line": 54,
+    "body": "  enum class Display {\n    kAuto,\n    kAlways,\n\n    kMax = kAlways",
+    "sha256": "9896a05998af872fb72c88e4900d2339e80151c7a93245e922f21a2e25623e08"
+  },
+  {
+    "file": "deps/v8/src/objects/js-duration-format.h",
+    "line": 61,
+    "body": "  enum class Style {\n    kLong,\n    kShort,\n    kNarrow,\n    kDigital,\n\n    kMax = kDigital",
+    "sha256": "edab3e8f5df758c8e877fff0a1261e870f419859818993d93e37b15a11966ef9"
+  },
+  {
+    "file": "deps/v8/src/objects/js-duration-format.h",
+    "line": 84,
+    "body": "  enum class FieldStyle {\n    kLong,\n    kShort,\n    kNarrow,\n    kNumeric,\n    k2Digit,\n    kFractional,\n    kUndefined,\n\n    kStyle3Max = kNarrow,\n    kStyle4Max = kFractional,\n    kStyle5Max = k2Digit,",
+    "sha256": "b88f664440ef397a706d76cf156cda1ca50a16415a40a402f576b4b2873af428"
+  },
+  {
+    "file": "deps/v8/src/objects/js-duration-format.cc",
+    "line": 45,
+    "body": "enum class Unit {\n  kYears,\n  kMonths,\n  kWeeks,\n  kDays,\n  kHours,\n  kMinutes,\n  kSeconds,\n  kMilliseconds,\n  kMicroseconds,\n  kNanoseconds\n};\nstruct DurationUnitOptions {\n  JSDurationFormat::FieldStyle style;\n  JSDurationFormat::Display display;\n};",
+    "sha256": "a88241862b5cc4cb2b356eb9dfa7edbe0d7a480dbbf064be024ce6cceeb569ec"
+  },
+  {
+    "file": "deps/v8/src/objects/js-duration-format.cc",
+    "line": 86,
+    "body": "Maybe<DurationUnitOptions> GetDurationUnitOptions(\n    Isolate* isolate, Unit unit, const char* unit_string,\n    const char* display_field, DirectHandle<JSReceiver> options,\n    JSDurationFormat::Style base_style,\n    const std::vector<const char*>& value_strings,\n    const std::vector<JSDurationFormat::FieldStyle>& value_enums,\n    JSDurationFormat::FieldStyle digital_base,\n    JSDurationFormat::FieldStyle prev_style) {\n  const char* method_name = \"Intl.DurationFormat\";\n  JSDurationFormat::FieldStyle style;\n  // 1. Let style be ? GetOption(options, unit, \"string\", stylesList,\n  // undefined).\n  MAYBE_ASSIGN_RETURN_ON_EXCEPTION_VALUE(\n      isolate, style,\n      GetStringOption<JSDurationFormat::FieldStyle>(\n          isolate, options, unit_string, method_name, value_strings,\n          value_enums, JSDurationFormat::FieldStyle::kUndefined),\n      Nothing<DurationUnitOptions>());\n\n  // 2. Let displayDefault be \"always\".\n  JSDurationFormat::Display display_default =\n      JSDurationFormat::Display::kAlways;\n  // 3. If style is undefined, then\n  if (style == JSDurationFormat::FieldStyle::kUndefined) {\n    // a. If baseStyle is \"digital\", then\n    if (base_style == JSDurationFormat::Style::kDigital) {\n      // i. If unit is not one of \"hours\", \"minutes\", or \"seconds\", then\n      if (unit != Unit::kHours && unit != Unit::kMinutes &&\n          unit != Unit::kSeconds) {\n        // a. Set displayDefault to \"auto\".\n        display_default = JSDurationFormat::Display::kAuto;\n      }\n      // ii. Set style to digitalBase.\n      style = digital_base;\n      // b. Else\n    } else {\n      // i. if prevStyle is \"fractional\", \"numeric\", or \"2-digit\", then\n      if (prev_style == JSDurationFormat::FieldStyle::kFractional ||\n          prev_style == JSDurationFormat::FieldStyle::kNumeric ||\n          prev_style == JSDurationFormat::FieldStyle::k2Digit) {\n        // 1. If unit is not one of \"minutes\" or \"seconds\", then\n        if (unit != Unit::kMinutes && unit != Unit::kSeconds) {\n          // a. Set displayDefault to \"auto\".\n          display_default = JSDurationFormat::Display::kAuto;\n        }\n        // 2. Set style to \"numeric\".\n        style = JSDurationFormat::FieldStyle::kNumeric;\n        // iii. Else,\n      } else {\n        // 1. Set displayDefault to \"auto\".\n        display_default = JSDurationFormat::Display::kAuto;\n        // 2. Set style to baseStyle.\n        switch (base_style) {\n          case JSDurationFormat::Style::kLong:\n            style = JSDurationFormat::FieldStyle::kLong;\n            break;\n          case JSDurationFormat::Style::kShort:\n            style = JSDurationFormat::FieldStyle::kShort;\n            break;\n          case JSDurationFormat::Style::kNarrow:\n            style = JSDurationFormat::FieldStyle::kNarrow;\n            break;\n          default:\n            UNREACHABLE();\n        }\n      }\n    }\n  }\n  // 4. If style is \"numeric\", then\n  if (style == JSDurationFormat::FieldStyle::kNumeric) {\n    // a. If unit is one of \"milliseconds\", \"microseconds\", or \"nanoseconds\",\n    // then\n    if (unit == Unit::kMilliseconds || unit == Unit::kMicroseconds ||\n        unit == Unit::kNanoseconds) {\n      // i. Set style to \"fractional\".\n      style = JSDurationFormat::FieldStyle::kFractional;\n      // ii. Set displayDefault to \"auto\".\n      display_default = JSDurationFormat::Display::kAuto;\n    }\n  }\n  // 5. Let displayField be the string-concatenation of unit and \"Display\".\n  // 6. Let display be ? GetOption(options, displayField, \"string\", \u00ab \"auto\",\n  // \"always\" \u00bb, displayDefault).\n  JSDurationFormat::Display display;\n  MAYBE_ASSIGN_RETURN_ON_EXCEPTION_VALUE(\n      isolate, display,\n      GetStringOption<JSDurationFormat::Display>(\n          isolate, options, display_field, method_name, {\"auto\", \"always\"},\n          {JSDurationFormat::Display::kAuto,\n           JSDurationFormat::Display::kAlways},\n          display_default),\n      Nothing<DurationUnitOptions>());\n  // 7. If display is \"always\" and style is \"fractional\", then\n  if (display == JSDurationFormat::Display::kAlways &&\n      style == JSDurationFormat::FieldStyle::kFractional) {\n    // a. Throw a RangeError exception.\n    THROW_NEW_ERROR_RETURN_VALUE(\n        isolate,\n        NewRangeError(MessageTemplate::kInvalid,\n                      isolate->factory()->object_string(), options),\n        Nothing<DurationUnitOptions>());\n  }\n  // 8. If prevStyle is \"fractional\", then\n  if (prev_style == JSDurationFormat::FieldStyle::kFractional) {\n    // a. If style is not \"fractional\", then\n    if (style != JSDurationFormat::FieldStyle::kFractional) {\n      // i. Throw a RangeError exception.\n      THROW_NEW_ERROR_RETURN_VALUE(\n          isolate,\n          NewRangeError(MessageTemplate::kInvalid,\n                        isolate->factory()->object_string(), options),\n          Nothing<DurationUnitOptions>());\n    }\n  }\n  // 7. If prevStyle is \"numeric\" or \"2-digit\", then\n  if (prev_style == JSDurationFormat::FieldStyle::kNumeric ||\n      prev_style == JSDurationFormat::FieldStyle::k2Digit) {\n    // a. If style is not \"fractional\", \"numeric\" or \"2-digit\", then\n    if (style != JSDurationFormat::FieldStyle::kFractional &&\n        style != JSDurationFormat::FieldStyle::kNumeric &&\n        style != JSDurationFormat::FieldStyle::k2Digit) {\n      // i. Throw a RangeError exception.\n      THROW_NEW_ERROR_RETURN_VALUE(\n          isolate,\n          NewRangeError(MessageTemplate::kInvalid,\n                        isolate->factory()->object_string(), options),\n          Nothing<DurationUnitOptions>());\n    }\n    // b. If unit is \"minutes\" or \"seconds\", then\n    if (unit == Unit::kMinutes || unit == Unit::kSeconds) {\n      // i. Set style to \"2-digit\".\n      style = JSDurationFormat::FieldStyle::k2Digit;\n    }\n  }\n  // 8. Return the Record { [[Style]]: style, [[Display]]: display }.\n  return Just(DurationUnitOptions({style, display}));\n}",
+    "sha256": "79b675caf787a4242216371d8b4da729182e3d0e06bd19589fc4668a256e90db"
+  },
+  {
+    "file": "deps/v8/src/execution/isolate.h",
+    "line": 440,
+    "body": "#define MAYBE_ASSIGN_RETURN_ON_EXCEPTION_VALUE(isolate, dst, call, value) \\\n  do {                                                                    \\\n    if (!(call).To(&dst)) {                                               \\\n      DCHECK((isolate)->has_exception());                                 \\\n      return value;                                                       \\\n    }                                                                     \\\n  } while (false)",
+    "sha256": "837ef13536a7d5ce86cc30c830361079face3e4777ebef2669dc6b5912314ebe"
+  },
+  {
+    "file": "deps/v8/src/objects/js-duration-format.cc",
+    "line": 366,
+    "body": "#define CALL_GET_DURATION_UNIT_OPTIONS(unit, property, strings, enums,         \\\n                                       digital_base, prev_style)               \\\n  MAYBE_ASSIGN_RETURN_ON_EXCEPTION_VALUE(                                      \\\n      isolate, property##_option,                                              \\\n      GetDurationUnitOptions(                                                  \\\n          isolate, Unit::unit, #property, #property \"Display\", options, style, \\\n          strings, enums, JSDurationFormat::FieldStyle::digital_base,          \\\n          prev_style),                                                         \\\n      DirectHandle<JSDurationFormat>());",
+    "sha256": "6f5b7499f18747027696ca77fa3ba629d942605a2673d12efb4463b3614c1e85"
+  },
+  {
+    "file": "deps/v8/src/objects/js-duration-format.cc",
+    "line": 381,
+    "body": "  CALL_GET_DURATION_UNIT_OPTIONS(kYears, years, kLongShortNarrowStrings,\n                                 kLongShortNarrowEnums, kShort,\n                                 FieldStyle::kUndefined)\n  // [[MonthsStyle]] [[MonthsDisplay]] \"months\" \u00ab \"long\",\n  // \"short\", \"narrow\" \u00bb \"short\"\n  CALL_GET_DURATION_UNIT_OPTIONS(kMonths, months, kLongShortNarrowStrings,\n                                 kLongShortNarrowEnums, kShort,\n                                 years_option.style)",
+    "sha256": "9f1a3827a8358ea42022bffe682b6a65abfe3891b34877c8f0fc59d6f1f8e507"
+  }
+]
