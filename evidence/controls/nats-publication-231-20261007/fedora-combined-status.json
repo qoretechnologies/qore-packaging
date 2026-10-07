@@ -1,0 +1,97 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "3d4dcb172494d69ef07c4fbd84da8afd0a1bc6c4b3f013017398d26deb11d506",
+    "--tmpfs",
+    "/tmp:rw,exec,size=4g,mode=1777",
+    "--user",
+    "1019:100",
+    "-e",
+    "GOMAXPROCS=2",
+    "-e",
+    "GOTOOLCHAIN=local",
+    "-e",
+    "GOPROXY=off",
+    "-e",
+    "GOSUMDB=off",
+    "-e",
+    "GOFLAGS=-mod=vendor",
+    "-e",
+    "GOCACHE=/cache",
+    "-e",
+    "GOPATH=/gopath",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-prepared-44/nats-server-2.15.0:/source:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-go-cache:/cache",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-go-path:/gopath",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-prepared-44/nats-server-2.15.0/server/sublist.go:/source/server/sublist.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-publication-231-20261007/jetstream_batching_test.go:/source/server/jetstream_batching_test.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-publication-231-20261007/jetstream_test.go:/source/server/jetstream_test.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-publication-231-20261007/controls_jetstream_consumer_test.go:/source/server/jetstream_consumer_test.go:ro",
+    "-w",
+    "/source",
+    "sha256:f1f889474f303ffe6f98b381e3061e812daa34e9018a00c4a25cb65f9a82fee9",
+    "go",
+    "test",
+    "-race",
+    "-v",
+    "-short",
+    "-count=3",
+    "-timeout=20m",
+    "-run",
+    "^(TestJetStreamFastBatchPublishHeaderCheckError|TestJetStreamFastBatchPublishHeaderCheckErrorOnCommit|TestJetStreamLastSequenceBySubjectWithSubject|TestJetStreamConsumerNumPendingWithMaxPerSubjectGreaterThanOne|TestConsumerCreationDoesNotJoinAsyncPublications|TestAsyncPublicationCompletionIncludesFailure)$",
+    "./server"
+  ],
+  "network": {
+    "Name": "qore-rpm-isolated-c6a15dfb85a7473fa1b548495a440614",
+    "Id": "3d4dcb172494d69ef07c4fbd84da8afd0a1bc6c4b3f013017398d26deb11d506",
+    "Created": "2026-10-07T18:45:10.226538103+02:00",
+    "Scope": "local",
+    "Driver": "bridge",
+    "EnableIPv4": true,
+    "EnableIPv6": false,
+    "IPAM": {
+      "Driver": "default",
+      "Options": {},
+      "Config": [
+        {
+          "Subnet": "172.31.0.0/16"
+        }
+      ]
+    },
+    "Internal": true,
+    "Attachable": false,
+    "Ingress": false,
+    "ConfigFrom": {
+      "Network": ""
+    },
+    "ConfigOnly": false,
+    "Options": {
+      "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+      "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+    },
+    "Labels": {},
+    "Containers": {},
+    "Status": {
+      "IPAM": {
+        "Subnets": {
+          "172.31.0.0/16": {
+            "IPsInUse": 2,
+            "DynamicIPsAvailable": 65534
+          }
+        }
+      }
+    }
+  }
+}

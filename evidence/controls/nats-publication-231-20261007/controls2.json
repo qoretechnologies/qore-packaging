@@ -1,0 +1,39 @@
+{
+  "source": "work/nats-prepared-44/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-publication-231-controls2",
+      "target": "fedora",
+      "count": 20,
+      "race": true,
+      "pattern": "^(TestConsumerCreationDoesNotJoinAsyncPublications|TestAsyncPublicationCompletionIncludesFailure)$",
+      "sublist": "work/nats-prepared-44/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-publication-231-20261007/controls_jetstream_consumer_test.go": "server/jetstream_consumer_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-publication-231-controls2",
+      "target": "leap",
+      "count": 20,
+      "race": true,
+      "pattern": "^(TestConsumerCreationDoesNotJoinAsyncPublications|TestAsyncPublicationCompletionIncludesFailure)$",
+      "sublist": "work/nats-prepared-44/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-publication-231-20261007/controls_jetstream_consumer_test.go": "server/jetstream_consumer_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-publication-231-controls2",
+      "target": "el10",
+      "count": 20,
+      "race": true,
+      "pattern": "^(TestConsumerCreationDoesNotJoinAsyncPublications|TestAsyncPublicationCompletionIncludesFailure)$",
+      "sublist": "work/nats-prepared-44/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-publication-231-20261007/controls_jetstream_consumer_test.go": "server/jetstream_consumer_test.go"
+      }
+    }
+  ]
+}

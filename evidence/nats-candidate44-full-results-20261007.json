@@ -1,0 +1,149 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "status": "All three full RPM builds failed; 9 distinct top-level failing tests are preserved for diagnosis. The C-client handoff stopped before any build. Historical unresolved timeout/performance gates remain open.",
+  "results": {
+    "fedora": {
+      "build_exit_code": 1,
+      "terminal_results": {
+        "pass": 10126,
+        "fail": 9,
+        "skip": 72
+      },
+      "failures": [
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamFastBatchPublishHeaderCheckError/R1/ok",
+          "output": "=== RUN   TestJetStreamFastBatchPublishHeaderCheckError/R1/ok\n    jetstream_batching_test.go:4789: require no error, but got: nats: no responders available for request\n--- FAIL: TestJetStreamFastBatchPublishHeaderCheckError/R1/ok (0.25s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamFastBatchPublishHeaderCheckError",
+          "output": "=== RUN   TestJetStreamFastBatchPublishHeaderCheckError\n--- FAIL: TestJetStreamFastBatchPublishHeaderCheckError (1.02s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamFastBatchPublishHeaderCheckErrorOnCommit/R1/gap/ok",
+          "output": "=== RUN   TestJetStreamFastBatchPublishHeaderCheckErrorOnCommit/R1/gap/ok\n    jetstream_batching_test.go:4877: require no error, but got: nats: no responders available for request\n--- FAIL: TestJetStreamFastBatchPublishHeaderCheckErrorOnCommit/R1/gap/ok (0.25s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamFastBatchPublishHeaderCheckErrorOnCommit",
+          "output": "=== RUN   TestJetStreamFastBatchPublishHeaderCheckErrorOnCommit\n--- FAIL: TestJetStreamFastBatchPublishHeaderCheckErrorOnCommit (3.32s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamLastSequenceBySubjectWithSubject/R1/File",
+          "output": "=== RUN   TestJetStreamLastSequenceBySubjectWithSubject/R1/File\n    jetstream_test.go:10275: Expected to get an error and got none\n--- FAIL: TestJetStreamLastSequenceBySubjectWithSubject/R1/File (0.46s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamLastSequenceBySubjectWithSubject",
+          "output": "=== RUN   TestJetStreamLastSequenceBySubjectWithSubject\n--- FAIL: TestJetStreamLastSequenceBySubjectWithSubject (1.19s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterPeerRemovalAPI",
+          "output": "=== RUN   TestJetStreamClusterPeerRemovalAPI\n    jetstream_cluster_1_test.go:3559: Unexpected error: cluster member change is in progress (10202)\n--- FAIL: TestJetStreamClusterPeerRemovalAPI (0.32s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterDeleteAndRestoreAndRestart",
+          "output": "=== RUN   TestJetStreamClusterDeleteAndRestoreAndRestart\n    jetstream_cluster_2_test.go:5784: require no error, but got: context deadline exceeded\n--- FAIL: TestJetStreamClusterDeleteAndRestoreAndRestart (10.76s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot",
+          "output": "=== RUN   TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot\n    norace_1_test.go:5073: [TEST] Leader S-3 has 12776 messages, Follower S-2 has 5001 messages\n        [TEST] Leader S-3 LastSeq is 12776, Follower S-2 is at 5001\n--- FAIL: TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot (10.54s)\n"
+        }
+      ],
+      "artifacts": {}
+    },
+    "leap": {
+      "build_exit_code": 1,
+      "terminal_results": {
+        "pass": 10134,
+        "skip": 72,
+        "fail": 1
+      },
+      "failures": [
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterPurgeExReplayAfterRestart",
+          "output": "=== RUN   TestJetStreamClusterPurgeExReplayAfterRestart\n    jetstream_cluster_3_test.go:4655: No response for \"OK\" (error: nats: no responders available for request)\n--- FAIL: TestJetStreamClusterPurgeExReplayAfterRestart (0.31s)\n"
+        }
+      ],
+      "artifacts": {}
+    },
+    "el10": {
+      "build_exit_code": 1,
+      "terminal_results": {
+        "pass": 10127,
+        "fail": 8,
+        "skip": 72
+      },
+      "failures": [
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamFastBatchPublishHeaderCheckError/R1/fail",
+          "output": "=== RUN   TestJetStreamFastBatchPublishHeaderCheckError/R1/fail\n    jetstream_batching_test.go:4789: require no error, but got: nats: no responders available for request\n--- FAIL: TestJetStreamFastBatchPublishHeaderCheckError/R1/fail (0.24s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamFastBatchPublishHeaderCheckError",
+          "output": "=== RUN   TestJetStreamFastBatchPublishHeaderCheckError\n--- FAIL: TestJetStreamFastBatchPublishHeaderCheckError (1.01s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamLastSequenceBySubjectWithSubject/R3/File",
+          "output": "=== RUN   TestJetStreamLastSequenceBySubjectWithSubject/R3/File\n    jetstream_test.go:10275: Expected to get an error and got none\n--- FAIL: TestJetStreamLastSequenceBySubjectWithSubject/R3/File (0.52s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamLastSequenceBySubjectWithSubject",
+          "output": "=== RUN   TestJetStreamLastSequenceBySubjectWithSubject\n--- FAIL: TestJetStreamLastSequenceBySubjectWithSubject (3.29s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterPurgeBySequence/Memory",
+          "output": "=== RUN   TestJetStreamClusterPurgeBySequence/Memory\n    jetstream_cluster_2_test.go:2064: expected sequence 18 got 16\n--- FAIL: TestJetStreamClusterPurgeBySequence/Memory (0.29s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterPurgeBySequence",
+          "output": "=== RUN   TestJetStreamClusterPurgeBySequence\n--- FAIL: TestJetStreamClusterPurgeBySequence (2.53s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamConsumerNumPendingWithMaxPerSubjectGreaterThanOne/FileStore",
+          "output": "=== RUN   TestJetStreamConsumerNumPendingWithMaxPerSubjectGreaterThanOne/FileStore\n    jetstream_consumer_test.go:6718: Expected 3 NumPending, but got 0\n--- FAIL: TestJetStreamConsumerNumPendingWithMaxPerSubjectGreaterThanOne/FileStore (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamConsumerNumPendingWithMaxPerSubjectGreaterThanOne",
+          "output": "=== RUN   TestJetStreamConsumerNumPendingWithMaxPerSubjectGreaterThanOne\n--- FAIL: TestJetStreamConsumerNumPendingWithMaxPerSubjectGreaterThanOne (0.01s)\n"
+        }
+      ],
+      "artifacts": {}
+    }
+  },
+  "files_sha256": {
+    "evidence/controls/nats-candidate44/leap-build.json": "b4be398a59f242ac1d7936457dd4c268073b52873eef16559ee2f722f8dab291",
+    "evidence/controls/nats-candidate44/fedora-build.log.gz": "2a1ae32b876e23a363fee9fcf505ca11164ff75ce98cb499e253c9106972c2d4",
+    "evidence/controls/nats-candidate44/fedora-build.json": "ab9f3566426f048966f9baa5cfe6dad79ddd7c86a7e38001163aa02c10be300a",
+    "evidence/controls/nats-candidate44/el10-build.json": "5834c75225c3b83f34c2159ca3d56648faec61365b5da64c6de0aedf47a21890",
+    "evidence/controls/nats-candidate44/el10-build.log.gz": "c02756358a9eec5b3d20762351e9fbb11ae8c8476a199493c31d5f7a4d29ab5c",
+    "evidence/controls/nats-candidate44/leap-build.log.gz": "8e50779465c0ec559fcde1ef8089c4e387cabea498a9c514ac84626066bdb8a9"
+  },
+  "failing_top_level_tests": [
+    "TestJetStreamClusterDeleteAndRestoreAndRestart",
+    "TestJetStreamClusterPeerRemovalAPI",
+    "TestJetStreamClusterPurgeBySequence",
+    "TestJetStreamClusterPurgeExReplayAfterRestart",
+    "TestJetStreamConsumerNumPendingWithMaxPerSubjectGreaterThanOne",
+    "TestJetStreamFastBatchPublishHeaderCheckError",
+    "TestJetStreamFastBatchPublishHeaderCheckErrorOnCommit",
+    "TestJetStreamLastSequenceBySubjectWithSubject",
+    "TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot"
+  ]
+}

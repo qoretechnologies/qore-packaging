@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "status": "Four candidate44 failing fixtures are corrected and pass focused qualification. The full NATS matrix and five other candidate44 failing tests remain unresolved; no package completion is claimed.",
+  "root_causes": [
+    "The two batch-header tests publish before their publisher account route receives the stream subscription; the creation reply arrives through a separate API route. The existing event-based route barrier establishes the required ordering.",
+    "LastSequenceBySubject ignores every asynchronous publication acknowledgement. PublishAsyncComplete closes on errors too, so the subsequent sequence assertions can observe an uninitialized stream.",
+    "ConsumerNumPending creates its consumer before asynchronous stream persistence completes; its snapshot can legitimately contain zero messages. A control using the real stream atomic-publication lock reproduces this on both storage engines and proves correct state after acknowledgements."
+  ],
+  "changes": [
+    "Join the existing route-interest barrier before the two batch header tests and the last-sequence fixture.",
+    "Retain and verify every setup PubAck, including the stream and sequence, before sequence assertions or consumer creation.",
+    "Add two regression controls for consumer creation ordering and failed-publication completion."
+  ],
+  "tests": {
+    "fixed": {
+      "fedora": {
+        "exit_code": 0,
+        "top_level_passes": 80,
+        "top_level_failures": 0,
+        "race_enabled": true
+      },
+      "leap": {
+        "exit_code": 0,
+        "top_level_passes": 80,
+        "top_level_failures": 0,
+        "race_enabled": true
+      },
+      "el10": {
+        "exit_code": 0,
+        "top_level_passes": 80,
+        "top_level_failures": 0,
+        "race_enabled": true
+      }
+    },
+    "controls2": {
+      "fedora": {
+        "exit_code": 0,
+        "top_level_passes": 40,
+        "top_level_failures": 0,
+        "race_enabled": true
+      },
+      "leap": {
+        "exit_code": 0,
+        "top_level_passes": 40,
+        "top_level_failures": 0,
+        "race_enabled": true
+      },
+      "el10": {
+        "exit_code": 0,
+        "top_level_passes": 40,
+        "top_level_failures": 0,
+        "race_enabled": true
+      }
+    },
+    "negative2": {
+      "fedora": {
+        "exit_code": 1,
+        "top_level_passes": 1,
+        "top_level_failures": 1,
+        "race_enabled": true
+      },
+      "leap": {
+        "exit_code": 1,
+        "top_level_passes": 1,
+        "top_level_failures": 1,
+        "race_enabled": true
+      },
+      "el10": {
+        "exit_code": 1,
+        "top_level_passes": 1,
+        "top_level_failures": 1,
+        "race_enabled": true
+      }
+    },
+    "combined": {
+      "fedora": {
+        "exit_code": 0,
+        "top_level_passes": 18,
+        "top_level_failures": 0,
+        "race_enabled": true
+      },
+      "leap": {
+        "exit_code": 0,
+        "top_level_passes": 18,
+        "top_level_failures": 0,
+        "race_enabled": true
+      },
+      "el10": {
+        "exit_code": 0,
+        "top_level_passes": 18,
+        "top_level_failures": 0,
+        "race_enabled": true
+      }
+    }
+  },
+  "top_level_positive_runs": 414,
+  "negative_storage_cases": 6,
+  "remaining": [
+    "TestJetStreamClusterDeleteAndRestoreAndRestart",
+    "TestJetStreamClusterPeerRemovalAPI",
+    "TestJetStreamClusterPurgeBySequence",
+    "TestJetStreamClusterPurgeExReplayAfterRestart",
+    "TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot"
+  ],
+  "limits": [
+    "The first control harness attempted to mount a new file below a read-only source mount and exited 125 before tests. The completed controls2 harness appends the controls to an existing fixture overlay.",
+    "Historical unresolved timeout/performance gates remain open. This evidence does not accept an external diagnostic exception."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-publication-231-20261007/combined.json": "2680c62b42c59a8794d5d80ed270fcdd22b22164b652ca513ec2f23765dd339b",
+    "evidence/controls/nats-publication-231-20261007/controls2.json": "230449e2220813c545e44cea8b3ec50a00b61e731194ffb91c8d76904a12a97f",
+    "evidence/controls/nats-publication-231-20261007/controls_jetstream_consumer_test.go": "578730bd17c02ec59cb4eddf79bf8926fdab16282719e4f39e85f43c4aaf4487",
+    "evidence/controls/nats-publication-231-20261007/el10-combined-status.json": "95397c9d86bd282ce6fe68ba1b12982b35f164c7f06f48a433fa4bd4d0ca889e",
+    "evidence/controls/nats-publication-231-20261007/el10-combined-tests.log": "54f7725637b922201f07653d642da1ff0a022438156841cf48384f4c55991247",
+    "evidence/controls/nats-publication-231-20261007/el10-controls2-status.json": "728d051ea816b0b8402e673294c28bbf3a2765b812f2d1ad81c40a064928c914",
+    "evidence/controls/nats-publication-231-20261007/el10-controls2-tests.log": "c3a4be2efd52d4c461a1c52625456b58dd82050cc8bcd720f93a7f9c0e3edfb7",
+    "evidence/controls/nats-publication-231-20261007/el10-fixed-status.json": "3933967933dffdcaf33fd398ab17d6c37cf82b998d11339ce0663cafab575b22",
+    "evidence/controls/nats-publication-231-20261007/el10-fixed-tests.log": "46458e935979769626bd02cb6b53aaf9777a0b943e89bbc84fc3b3d1df3d2480",
+    "evidence/controls/nats-publication-231-20261007/el10-negative2-status.json": "c1c32848dcf37174eb06560e236bc1574fbb5a4d3019f3cd750b38218b59835a",
+    "evidence/controls/nats-publication-231-20261007/el10-negative2-tests.log": "2fda2a15ed4f93db96a71331e57def4a51022dfdb8fcdcf9913b8e4d84acad02",
+    "evidence/controls/nats-publication-231-20261007/fedora-combined-status.json": "99c53e9a0fda258b007e03355e522a23f5585d9bc6ba273ba62560990d450d2b",
+    "evidence/controls/nats-publication-231-20261007/fedora-combined-tests.log": "001bdf1476243324e2fc5b11f17ce72f68615c8c28ff217e7f903951f551d6a6",
+    "evidence/controls/nats-publication-231-20261007/fedora-controls2-status.json": "dd701a9e965a5efb072e4fa81f1a7f70548f8d5f983f9771e090d871039f0eba",
+    "evidence/controls/nats-publication-231-20261007/fedora-controls2-tests.log": "022df29c6bc82467a8dbd971a9322ceeaec978b4b98966183739231319d235df",
+    "evidence/controls/nats-publication-231-20261007/fedora-fixed-status.json": "8dd23c3750c73785593bc03e5d823f5d3323156d2202b950cfa596837740e823",
+    "evidence/controls/nats-publication-231-20261007/fedora-fixed-tests.log": "8da8365161596972a81ac10a388551288132bfafff62f0d770a1a4c638837464",
+    "evidence/controls/nats-publication-231-20261007/fedora-negative2-status.json": "432667a2550fba16b96f388ec7206914e7449d4be3322cda44bf114c0e8aa796",
+    "evidence/controls/nats-publication-231-20261007/fedora-negative2-tests.log": "e164ece78f6424daab2ab3d173741ccba871e2e6aa635942c05f1bf1df270f3b",
+    "evidence/controls/nats-publication-231-20261007/fixed.json": "fceafa108b70723675e88e5860559edab84197ba846c8bb3379e3a15fbc22676",
+    "evidence/controls/nats-publication-231-20261007/jetstream_batching_test.go": "8ca60e115b7d0ab3f92c345f8a4e41ec29aab5d8082d25d709c352ea8ccd740d",
+    "evidence/controls/nats-publication-231-20261007/jetstream_test.go": "ac2c479d43e19801ea11fe1ffc35deac84d065ec03e5b912eb6d6cd377711297",
+    "evidence/controls/nats-publication-231-20261007/leap-combined-status.json": "32f4bf19e9cde5f8fc7d0ad461ce496171add95eb4a50c7b7b787c89a364396e",
+    "evidence/controls/nats-publication-231-20261007/leap-combined-tests.log": "9bf7891557647798f276c0d88736733737e0d1f1c9f746d5ab91e848eb05463a",
+    "evidence/controls/nats-publication-231-20261007/leap-controls2-status.json": "6a76c6251bd46ab970716370344761f124fe4878432707a932e14e550d1cc1d1",
+    "evidence/controls/nats-publication-231-20261007/leap-controls2-tests.log": "35c968a577749390842db07369327920fc77e99f71632d10beb7e0344d6081e6",
+    "evidence/controls/nats-publication-231-20261007/leap-fixed-status.json": "b81c8cde8bbdb2bd90fd3ff468bd262110b1505e76364bcac270c5f02c5738bd",
+    "evidence/controls/nats-publication-231-20261007/leap-fixed-tests.log": "2c54ea7be63939706539bb3aa9bc043d78547804add30c595059a42ca790d6d4",
+    "evidence/controls/nats-publication-231-20261007/leap-negative2-status.json": "5a823318ab661c7c95994726b6b56f08e2a8063c0efc4d5331d86cfe57dc60c4",
+    "evidence/controls/nats-publication-231-20261007/leap-negative2-tests.log": "911e8839b8f2b98dfb492fbb295b1fb09e705741520996e6b49191cd86ce3f68",
+    "evidence/controls/nats-publication-231-20261007/nats-server-publication-completion-tests.patch": "774dc7bd6a867396147c21e36cec6b5f0b9b11a3410e7e48a8444724d30b6d3f",
+    "evidence/controls/nats-publication-231-20261007/negative2.json": "f6cad5fa410b846021f8dacd01ecee01f1ec251488521562acd1bed2012f1518",
+    "evidence/controls/nats-publication-231-20261007/negative_jetstream_consumer_test.go": "4d400ac0853eed8022e92700c846e4833d1ae6876d64d6e928bf399f4289c9b3",
+    "evidence/controls/nats-publication-231-20261007/prepare.py": "3eef76830fcbe26371600b56d347e97aaea06f1a137fe37abf141d5e57799993",
+    "evidence/controls/nats-publication-231-20261007/run.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "source": "work/nats-prepared-44/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-publication-231-combined",
+      "target": "fedora",
+      "count": 3,
+      "race": true,
+      "pattern": "^(TestJetStreamFastBatchPublishHeaderCheckError|TestJetStreamFastBatchPublishHeaderCheckErrorOnCommit|TestJetStreamLastSequenceBySubjectWithSubject|TestJetStreamConsumerNumPendingWithMaxPerSubjectGreaterThanOne|TestConsumerCreationDoesNotJoinAsyncPublications|TestAsyncPublicationCompletionIncludesFailure)$",
+      "sublist": "work/nats-prepared-44/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-publication-231-20261007/jetstream_batching_test.go": "server/jetstream_batching_test.go",
+        "work/nats-publication-231-20261007/jetstream_test.go": "server/jetstream_test.go",
+        "work/nats-publication-231-20261007/controls_jetstream_consumer_test.go": "server/jetstream_consumer_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-publication-231-combined",
+      "target": "leap",
+      "count": 3,
+      "race": true,
+      "pattern": "^(TestJetStreamFastBatchPublishHeaderCheckError|TestJetStreamFastBatchPublishHeaderCheckErrorOnCommit|TestJetStreamLastSequenceBySubjectWithSubject|TestJetStreamConsumerNumPendingWithMaxPerSubjectGreaterThanOne|TestConsumerCreationDoesNotJoinAsyncPublications|TestAsyncPublicationCompletionIncludesFailure)$",
+      "sublist": "work/nats-prepared-44/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-publication-231-20261007/jetstream_batching_test.go": "server/jetstream_batching_test.go",
+        "work/nats-publication-231-20261007/jetstream_test.go": "server/jetstream_test.go",
+        "work/nats-publication-231-20261007/controls_jetstream_consumer_test.go": "server/jetstream_consumer_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-publication-231-combined",
+      "target": "el10",
+      "count": 3,
+      "race": true,
+      "pattern": "^(TestJetStreamFastBatchPublishHeaderCheckError|TestJetStreamFastBatchPublishHeaderCheckErrorOnCommit|TestJetStreamLastSequenceBySubjectWithSubject|TestJetStreamConsumerNumPendingWithMaxPerSubjectGreaterThanOne|TestConsumerCreationDoesNotJoinAsyncPublications|TestAsyncPublicationCompletionIncludesFailure)$",
+      "sublist": "work/nats-prepared-44/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-publication-231-20261007/jetstream_batching_test.go": "server/jetstream_batching_test.go",
+        "work/nats-publication-231-20261007/jetstream_test.go": "server/jetstream_test.go",
+        "work/nats-publication-231-20261007/controls_jetstream_consumer_test.go": "server/jetstream_consumer_test.go"
+      }
+    }
+  ]
+}
