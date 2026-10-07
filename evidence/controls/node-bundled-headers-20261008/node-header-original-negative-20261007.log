@@ -1,0 +1,96 @@
+test_bundled_headers_win_over_incompatible_system_headers (headers.NodeHeaderInputsTest.test_bundled_headers_win_over_incompatible_system_headers) ... 
+  test_bundled_headers_win_over_incompatible_system_headers (headers.NodeHeaderInputsTest.test_bundled_headers_win_over_incompatible_system_headers) (control='out/platform-priority-control') ... FAIL
+  test_bundled_headers_win_over_incompatible_system_headers (headers.NodeHeaderInputsTest.test_bundled_headers_win_over_incompatible_system_headers) (control='out/allocation-status-control') ... FAIL
+  test_bundled_headers_win_over_incompatible_system_headers (headers.NodeHeaderInputsTest.test_bundled_headers_win_over_incompatible_system_headers) (control='out/page-permissions-control') ... FAIL
+test_bundled_headers_work_without_installed_development_package (headers.NodeHeaderInputsTest.test_bundled_headers_work_without_installed_development_package) ... 
+  test_bundled_headers_work_without_installed_development_package (headers.NodeHeaderInputsTest.test_bundled_headers_work_without_installed_development_package) (control='out/platform-priority-control') ... FAIL
+  test_bundled_headers_work_without_installed_development_package (headers.NodeHeaderInputsTest.test_bundled_headers_work_without_installed_development_package) (control='out/allocation-status-control') ... FAIL
+  test_bundled_headers_work_without_installed_development_package (headers.NodeHeaderInputsTest.test_bundled_headers_work_without_installed_development_package) (control='out/page-permissions-control') ... FAIL
+test_original_missing_path_cannot_compile_without_installed_headers (headers.NodeHeaderInputsTest.test_original_missing_path_cannot_compile_without_installed_headers) ... ok
+test_original_missing_path_selects_incompatible_system_headers (headers.NodeHeaderInputsTest.test_original_missing_path_selects_incompatible_system_headers) ... ok
+
+======================================================================
+FAIL: test_bundled_headers_win_over_incompatible_system_headers (headers.NodeHeaderInputsTest.test_bundled_headers_win_over_incompatible_system_headers) (control='out/platform-priority-control')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/david/src/qore/git/qore-packaging/tests/test_node_header_inputs.py", line 61, in test_bundled_headers_win_over_incompatible_system_headers
+    self.assertEqual(0, result.returncode, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : control.cc:2:40: error: static assertion failed: wrong Abseil headers
+    2 | static_assert(packaging_header_version == 137, "wrong Abseil headers");
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+  • the comparison reduces to ‘(999 == 137)’
+
+
+======================================================================
+FAIL: test_bundled_headers_win_over_incompatible_system_headers (headers.NodeHeaderInputsTest.test_bundled_headers_win_over_incompatible_system_headers) (control='out/allocation-status-control')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/david/src/qore/git/qore-packaging/tests/test_node_header_inputs.py", line 61, in test_bundled_headers_win_over_incompatible_system_headers
+    self.assertEqual(0, result.returncode, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : control.cc:2:40: error: static assertion failed: wrong Abseil headers
+    2 | static_assert(packaging_header_version == 137, "wrong Abseil headers");
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+  • the comparison reduces to ‘(999 == 137)’
+
+
+======================================================================
+FAIL: test_bundled_headers_win_over_incompatible_system_headers (headers.NodeHeaderInputsTest.test_bundled_headers_win_over_incompatible_system_headers) (control='out/page-permissions-control')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/david/src/qore/git/qore-packaging/tests/test_node_header_inputs.py", line 61, in test_bundled_headers_win_over_incompatible_system_headers
+    self.assertEqual(0, result.returncode, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : control.cc:2:40: error: static assertion failed: wrong Abseil headers
+    2 | static_assert(packaging_header_version == 137, "wrong Abseil headers");
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+  • the comparison reduces to ‘(999 == 137)’
+
+
+======================================================================
+FAIL: test_bundled_headers_work_without_installed_development_package (headers.NodeHeaderInputsTest.test_bundled_headers_work_without_installed_development_package) (control='out/platform-priority-control')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/david/src/qore/git/qore-packaging/tests/test_node_header_inputs.py", line 54, in test_bundled_headers_work_without_installed_development_package
+    self.assertEqual(0, result.returncode, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : In file included from control.cc:1:
+deps/v8/src/base/platform/mutex.h:1:10: fatal error: absl/synchronization/mutex.h: No such file or directory
+    1 | #include "absl/synchronization/mutex.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+
+
+======================================================================
+FAIL: test_bundled_headers_work_without_installed_development_package (headers.NodeHeaderInputsTest.test_bundled_headers_work_without_installed_development_package) (control='out/allocation-status-control')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/david/src/qore/git/qore-packaging/tests/test_node_header_inputs.py", line 54, in test_bundled_headers_work_without_installed_development_package
+    self.assertEqual(0, result.returncode, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : In file included from control.cc:1:
+deps/v8/src/base/platform/mutex.h:1:10: fatal error: absl/synchronization/mutex.h: No such file or directory
+    1 | #include "absl/synchronization/mutex.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+
+
+======================================================================
+FAIL: test_bundled_headers_work_without_installed_development_package (headers.NodeHeaderInputsTest.test_bundled_headers_work_without_installed_development_package) (control='out/page-permissions-control')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/david/src/qore/git/qore-packaging/tests/test_node_header_inputs.py", line 54, in test_bundled_headers_work_without_installed_development_package
+    self.assertEqual(0, result.returncode, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1 : In file included from control.cc:1:
+deps/v8/src/base/platform/mutex.h:1:10: fatal error: absl/synchronization/mutex.h: No such file or directory
+    1 | #include "absl/synchronization/mutex.h"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+
+
+----------------------------------------------------------------------
+Ran 4 tests in 2.375s
+
+FAILED (failures=6)

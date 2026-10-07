@@ -143,3 +143,12 @@ missing build output instead of selecting a library from the build host.
 versioned-only library, a competing installed library, and a missing build
 output. The regression also demonstrates how the original ``-lnode`` input
 could select the installed development library.
+
+Private V8 controls also use the bundled Abseil include directory explicitly.
+V8's mutex header includes Abseil unconditionally; an installed
+``abseil-cpp-devel`` package previously masked three missing include paths in
+the local builder. The same recipe then failed in clean native OBS. The header
+regression exercises all seven private-header consumers without system headers
+and with an incompatible competing system header, and verifies both failure
+modes of the original search path. Complete check-phase qualification removes
+both Node and Abseil development packages from the disposable build container.

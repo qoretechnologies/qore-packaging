@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Local complete check phase, tool regressions and three affected memory controls pass. Native OBS qualification remains required.",
+  "root_cause": "Three private V8 controls omitted the bundled Abseil directory. V8 mutex.h includes absl/synchronization/mutex.h unconditionally. Installed abseil-cpp-devel masked the missing paths in the local builder; the clean native ARM OBS build failed at Source11.",
+  "fix": "Explicit -Ideps/v8/third_party/abseil-cpp in platform-priority, allocation-status and page-permissions controls. All seven private V8 controls now select the bundled headers.",
+  "validation": {
+    "tool_tests_local": 218,
+    "tool_tests_pinned_ci": 218,
+    "private_header_consumers": 7,
+    "original_recipe_expected_subtest_failures": 6,
+    "native_tests": 192,
+    "javascript_reported_results_including_upstream_skips": 5249,
+    "wasm_scripts": 31,
+    "valgrind_controls": 3,
+    "memory_errors": 0,
+    "lost_allocations": 0,
+    "reachable_openssl_startup_bytes_per_control": 9840,
+    "production_library_sha256": "89175cfe67a566878c44e09f57b873417d2f58e7426ce5ebbcb0460a2d7411b5",
+    "reviewed_deprecations": [
+      "../deps/ncrypto/ncrypto.h:306:45: warning: 'void RSA_free(RSA*)' is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+      "../deps/ncrypto/ncrypto.h:1131:26: warning: 'void DH_free(DH*)' is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+      "../deps/ncrypto/ncrypto.h:1475:34: warning: 'void EC_KEY_free(EC_KEY*)' is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]",
+      "../deps/ncrypto/ncrypto.h:1555:38: warning: 'void HMAC_CTX_free(HMAC_CTX*)' is deprecated: Since OpenSSL 3.0 [-Wdeprecated-declarations]"
+    ],
+    "approval": "evidence/node-api-deprecations-20261003.json"
+  },
+  "limits": [
+    "The complete modified check phase reuses the qualified canonical compiled source tree. It removes libnode-devel, abseil-cpp-devel and the dependent protobuf-devel from the disposable container before compiling any controls.",
+    "All three memory controls use the newly compiled binaries and versioned library. OpenSSL retains 361 reachable startup allocations; no definite, indirect or possible losses and no suppressions.",
+    "The driver captured the spec before its changelog addition. The exact expanded current check phase is byte-identical to the executed check.sh.",
+    "No native OBS success is inferred from local x86_64 qualification. Both native architectures still need the new committed source revision."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-bundled-headers-20261008/allocation-status-control.log.gz": "9c5f7e755bca20cf35ff48e81b324ed898fad1f74980ff94e538cad80a456b25",
+    "evidence/controls/node-bundled-headers-20261008/audit.rst": "5776b41fe08001523e3cf1273ee7facf8688b18f31747a2c10cec13fa77a1911",
+    "evidence/controls/node-bundled-headers-20261008/check-memory.py": "13f92880fdd8922377b1dd3da2947af468aeeb662621abbc41cd64f9184af472",
+    "evidence/controls/node-bundled-headers-20261008/check.log.gz": "cb26a875cfa1f2e7eaa79191b50c312bcbf2b6eb8a4a1fa3aeb290c3b91c413d",
+    "evidence/controls/node-bundled-headers-20261008/check.py": "3f87ced70c84de9f241699fbdf6ba0ff224dcb4b106b6b8dbb4d193bdc7a8656",
+    "evidence/controls/node-bundled-headers-20261008/check.sh": "285298d0217a3fa153d8c46f6dd755ac7711247c109439bb85d708d868618b59",
+    "evidence/controls/node-bundled-headers-20261008/memory-status.json": "40fe855ff8250abee901211e730d36c1ba9c9b61d5376646f94fcc178ec1386a",
+    "evidence/controls/node-bundled-headers-20261008/node-bundled-headers-ci-tests-20261007.log": "f404c46a98feee589475adf922706985b34d20f3eb18d4ecf79665542c6a0729",
+    "evidence/controls/node-bundled-headers-20261008/node-bundled-headers-tools-tests-final-20261007.log": "38b51c0c8d32f17335118b2cbeb17c60323628261daa007011aeeebb6f9e9842",
+    "evidence/controls/node-bundled-headers-20261008/node-header-original-negative-20261007.log": "9f3acc7da0b07c5291c0ec50353c3ebbb9f616803ec4379fe06e0518f80c47fc",
+    "evidence/controls/node-bundled-headers-20261008/nodejs24-libnode.spec": "b134acb570edcdbc9e4036907f957eee262805dc0f13a017d4d55ac210fdd4d6",
+    "evidence/controls/node-bundled-headers-20261008/obs-arm-rev4-failure.log.gz": "80a5291dc6f010db8d57252d51c4f2e42f88b6576f9e62511d9cc763dea33b4a",
+    "evidence/controls/node-bundled-headers-20261008/page-permissions-control.log.gz": "5c3046690b0804aa8c61b9df8c369bc45f385f454c624d7c93ad19f2124a25ce",
+    "evidence/controls/node-bundled-headers-20261008/platform-priority-control.log.gz": "67376d40837ee83c992f616a725f05bebdc0999ed15309b56ba520f312a2172e",
+    "evidence/controls/node-bundled-headers-20261008/record.py": "213220168a28b580bc01d862a53a72207d8d4387f752a1d91edbfe97bb7f9771",
+    "evidence/controls/node-bundled-headers-20261008/status.json": "4293d5d161e7e6670202f845b5eb46b6491ec63b2415122b014d8c74475e514a",
+    "evidence/controls/node-bundled-headers-20261008/test_node_header_inputs.py": "00a359224fc18df77c4f7799c780aa3ab321bdaab68479d833f2350291dc648e"
+  }
+}

@@ -1,0 +1,71 @@
+[
+  {
+    "name": "platform-priority-control",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/leap-nodejs24-canonical-final-20261007:/work:ro",
+      "-w",
+      "/work/rpmbuild/BUILD/nodejs24-libnode-24.18.1-build/node-v24.18.1",
+      "sha256:471fb347e0308caa05f79e41ca4813767c6a7a687f03cc823a78b2a8e81a3414",
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "out/platform-priority-control"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "allocation-status-control",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/leap-nodejs24-canonical-final-20261007:/work:ro",
+      "-w",
+      "/work/rpmbuild/BUILD/nodejs24-libnode-24.18.1-build/node-v24.18.1",
+      "sha256:471fb347e0308caa05f79e41ca4813767c6a7a687f03cc823a78b2a8e81a3414",
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "out/allocation-status-control"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "page-permissions-control",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--init",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/results/leap-nodejs24-canonical-final-20261007:/work:ro",
+      "-w",
+      "/work/rpmbuild/BUILD/nodejs24-libnode-24.18.1-build/node-v24.18.1",
+      "sha256:471fb347e0308caa05f79e41ca4813767c6a7a687f03cc823a78b2a8e81a3414",
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "out/page-permissions-control"
+    ],
+    "exit_code": 0
+  }
+]

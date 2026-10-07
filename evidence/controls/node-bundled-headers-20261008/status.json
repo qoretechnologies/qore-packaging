@@ -1,0 +1,26 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/leap-nodejs24-canonical-final-20261007:/work",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/dependencies:/sources:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/node-bundled-headers-check-20261007:/control",
+    "-w",
+    "/work/rpmbuild/BUILD/nodejs24-libnode-24.18.1-build/node-v24.18.1",
+    "sha256:471fb347e0308caa05f79e41ca4813767c6a7a687f03cc823a78b2a8e81a3414",
+    "sh",
+    "-c",
+    "set -eu\nrpm -q libnode-devel abseil-cpp-devel protobuf-devel\nrpm -e libnode-devel abseil-cpp-devel protobuf-devel\nif rpm -q libnode-devel; then exit 1; fi\nif rpm -q abseil-cpp-devel; then exit 1; fi\ntest ! -e /usr/include/absl/synchronization/mutex.h\ntest ! -e /usr/lib64/libnode.so\nexec setpriv --reuid=1019 --regid=100 --clear-groups bash /control/check.sh\n"
+  ],
+  "exit_code": 0,
+  "built_library_sha256_before": "89175cfe67a566878c44e09f57b873417d2f58e7426ce5ebbcb0460a2d7411b5",
+  "built_library_sha256_after": "89175cfe67a566878c44e09f57b873417d2f58e7426ce5ebbcb0460a2d7411b5",
+  "recipe_sha256": "0cad095223edfa4c469fb06456b59c3dc250b91c6854fc9f9dc98435a2e859b8"
+}
