@@ -1,0 +1,39 @@
+<project name="Fedora:44">
+  <title>Fedora 44</title>
+  <description>All package from "Everything" of Fedora 44 release.</description>
+  <person userid="adrianSuSE" role="maintainer"/>
+  <repository name="update">
+    <download arch="x86_64" url="http://ftp-stud.hs-esslingen.de/pub/fedora/linux/updates/44/Everything/x86_64/" repotype="rpmmd">
+      <master url="https://dl.fedoraproject.org/pub/fedora/linux/updates/44/Everything/x86_64/" sslfingerprint="sha256:b4667491065fe2850316e7fff012ac7777a030a4277ec7d1163cb52706a9cfd0"/>
+    </download>
+    <download arch="aarch64" url="https://ftp-stud.hs-esslingen.de/pub/fedora/linux/updates/44/Everything/aarch64/" repotype="rpmmd">
+      <master url="https://dl.fedoraproject.org/pub/fedora/linux/updates/44/Everything/aarch64/" sslfingerprint="sha256:b4667491065fe2850316e7fff012ac7777a030a4277ec7d1163cb52706a9cfd0"/>
+    </download>
+    <path project="Fedora:44" repository="standard"/>
+    <arch>x86_64</arch>
+    <arch>aarch64</arch>
+  </repository>
+  <repository name="standard">
+    <download arch="x86_64" url="http://ftp-stud.hs-esslingen.de/pub/fedora/linux/releases/44/Everything/x86_64/os" repotype="rpmmd">
+      <master url="https://dl.fedoraproject.org/pub/fedora/linux/releases/44/Everything/x86_64/os" sslfingerprint="sha256:b4667491065fe2850316e7fff012ac7777a030a4277ec7d1163cb52706a9cfd0"/>
+    </download>
+    <download arch="aarch64" url="https://dl.fedoraproject.org/pub/fedora/linux/releases/44/Everything/aarch64/os/" repotype="rpmmd">
+      <master url="https://dl.fedoraproject.org/pub/fedora/linux/releases/44/Everything/aarch64/os/" sslfingerprint="sha256:b4667491065fe2850316e7fff012ac7777a030a4277ec7d1163cb52706a9cfd0"/>
+    </download>
+    <download arch="i586" url="https://kojipkgs.fedoraproject.org/repos/f44-build/latest/i386/" repotype="rpmmd">
+      <master url="https://kojipkgs.fedoraproject.org/repos/f44-build/latest/i386/" sslfingerprint="sha256:b4667491065fe2850316e7fff012ac7777a030a4277ec7d1163cb52706a9cfd0"/>
+    </download>
+    <download arch="ppc64le" url="https://kojipkgs.fedoraproject.org/repos/f44-build/latest/ppc64le/" repotype="rpmmd">
+      <master url="https://kojipkgs.fedoraproject.org/repos/f44-build/latest/ppc64le/" sslfingerprint="sha256:b4667491065fe2850316e7fff012ac7777a030a4277ec7d1163cb52706a9cfd0"/>
+    </download>
+    <download arch="s390x" url="https://kojipkgs.fedoraproject.org/repos/f44-build/latest/s390x/" repotype="rpmmd">
+      <master url="https://kojipkgs.fedoraproject.org/repos/f44-build/latest/s390x/" sslfingerprint="sha256:b4667491065fe2850316e7fff012ac7777a030a4277ec7d1163cb52706a9cfd0"/>
+    </download>
+    <path project="OBS:DefaultKernel" repository="standard"/>
+    <arch>x86_64</arch>
+    <arch>aarch64</arch>
+    <arch>i586</arch>
+    <arch>ppc64le</arch>
+    <arch>s390x</arch>
+  </repository>
+</project>

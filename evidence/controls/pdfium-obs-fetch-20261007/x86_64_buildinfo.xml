@@ -1,0 +1,616 @@
+<buildinfo project="home:davidnichols:qore:testing" repository="Fedora_44" package="qore-pdfium" downloadurl="https://download.opensuse.org/repositories">
+  <arch>x86_64</arch>
+  <srcmd5>0a64f20f306d5b99447c24ab21a79f83</srcmd5>
+  <verifymd5>0a64f20f306d5b99447c24ab21a79f83</verifymd5>
+  <rev>2</rev>
+  <specfile>qore-pdfium.spec</specfile>
+  <file>qore-pdfium.spec</file>
+  <versrel>148.0.7778-2</versrel>
+  <bcnt>1</bcnt>
+  <release>2.1</release>
+  <debuginfo>1</debuginfo>
+  <bdep name="alternatives" preinstall="1" notmeta="1" version="1.33" release="5.fc44" arch="x86_64" hdrmd5="0bfb4895063cce0c00df2ed173e5cc60" project="Fedora:44" repository="standard"/>
+  <bdep name="audit-libs" preinstall="1" notmeta="1" version="4.2.1" release="1.fc44" arch="x86_64" hdrmd5="77bc2538d24c818aa240401049b7b91f" project="Fedora:44" repository="update"/>
+  <bdep name="bash" preinstall="1" notmeta="1" version="5.3.9" release="3.fc44" arch="x86_64" hdrmd5="2b3d727d18d8c294d6d678f324f3075a" project="Fedora:44" repository="standard"/>
+  <bdep name="bzip2-libs" preinstall="1" notmeta="1" version="1.0.8" release="23.fc44" arch="x86_64" hdrmd5="da7f184e18ccc0dab3550fef2850afd1" project="Fedora:44" repository="standard"/>
+  <bdep name="ca-certificates" preinstall="1" notmeta="1" version="2026.2.90_v9.0.317" release="1.fc44" arch="noarch" hdrmd5="2132aceaf66050fa28bdbb5b20f23886" project="Fedora:44" repository="update"/>
+  <bdep name="coreutils" preinstall="1" notmeta="1" version="9.10" release="5.fc44" arch="x86_64" hdrmd5="0d1fb6f59ce02c90550f2f505f32b02b" project="Fedora:44" repository="update"/>
+  <bdep name="coreutils-common" preinstall="1" notmeta="1" version="9.10" release="5.fc44" arch="x86_64" hdrmd5="f60b724d0e390f2667406da3e7b2c067" project="Fedora:44" repository="update"/>
+  <bdep name="crypto-policies" preinstall="1" notmeta="1" version="20251128" release="3.git19878fe.fc44" arch="noarch" hdrmd5="5611d231f3669b1b70b220f757183761" project="Fedora:44" repository="standard"/>
+  <bdep name="curl" preinstall="1" notmeta="1" version="8.18.0" release="10.fc44" arch="x86_64" hdrmd5="4bcf9b74d172439a2eb53a13c259d4d9" project="Fedora:44" repository="update"/>
+  <bdep name="filesystem" preinstall="1" notmeta="1" version="3.18" release="52.fc44" arch="x86_64" hdrmd5="2b0b9911dca1bb3eead9e3040ee9353e" project="Fedora:44" repository="standard"/>
+  <bdep name="findutils" preinstall="1" notmeta="1" epoch="1" version="4.10.0" release="7.fc44" arch="x86_64" hdrmd5="efe1a0b1a117af9821cfb2dae3462375" project="Fedora:44" repository="standard"/>
+  <bdep name="generic-release" preinstall="1" notmeta="1" version="44" release="0.2" arch="noarch" hdrmd5="b049973456d5e9d4f82e8b6eba2634e2" project="Fedora:44" repository="standard"/>
+  <bdep name="generic-release-common" preinstall="1" notmeta="1" version="44" release="0.2" arch="noarch" hdrmd5="c3f1b6691f86a5667235b802844ead66" project="Fedora:44" repository="standard"/>
+  <bdep name="glibc" preinstall="1" version="2.43" release="8.fc44" arch="x86_64" hdrmd5="956752ea8d90ba4ca1b12f08542e0f66" project="Fedora:44" repository="update"/>
+  <bdep name="glibc-common" preinstall="1" notmeta="1" version="2.43" release="8.fc44" arch="x86_64" hdrmd5="862bb7a762aa568e390747cba0d56d46" project="Fedora:44" repository="update"/>
+  <bdep name="gmp" preinstall="1" notmeta="1" epoch="1" version="6.3.0" release="5.fc44" arch="x86_64" hdrmd5="4fdd0624a57d420f4786d9a714277c27" project="Fedora:44" repository="standard"/>
+  <bdep name="gnulib-l10n" preinstall="1" notmeta="1" version="20241231" release="2.fc44" arch="noarch" hdrmd5="984c83e166e83cd401f8573bffd5a062" project="Fedora:44" repository="standard"/>
+  <bdep name="grep" preinstall="1" notmeta="1" version="3.12" release="3.fc44" arch="x86_64" hdrmd5="5b75455a8e7d8d9418f0ba9f2d7dc5bb" project="Fedora:44" repository="standard"/>
+  <bdep name="groff-base" preinstall="1" notmeta="1" version="1.23.0" release="12.fc44" arch="x86_64" hdrmd5="1c75ea7c2c788448c3d3904782fb57cb" project="Fedora:44" repository="standard"/>
+  <bdep name="keyutils-libs" preinstall="1" notmeta="1" version="1.6.3" release="7.fc44" arch="x86_64" hdrmd5="ae9e47e82b2545d7da1e4aa212012d66" project="Fedora:44" repository="standard"/>
+  <bdep name="krb5-libs" preinstall="1" notmeta="1" version="1.22.2" release="4.fc44" arch="x86_64" hdrmd5="324fa78cdd3f5021769b071c046b73e3" project="Fedora:44" repository="update"/>
+  <bdep name="libacl" preinstall="1" notmeta="1" version="2.4.0" release="1.fc44" arch="x86_64" hdrmd5="5982821ea117252ce32b02f1bb51e1f2" project="Fedora:44" repository="update"/>
+  <bdep name="libarchive" preinstall="1" notmeta="1" version="3.8.7" release="1.fc44" arch="x86_64" hdrmd5="59a3795a2138263471308f48c2d20d53" project="Fedora:44" repository="update"/>
+  <bdep name="libattr" preinstall="1" notmeta="1" version="2.6.0" release="1.fc44" arch="x86_64" hdrmd5="1cebd36d50b477c1ba32c5758eb5a23c" project="Fedora:44" repository="update"/>
+  <bdep name="libcap" preinstall="1" notmeta="1" version="2.78" release="1.fc44" arch="x86_64" hdrmd5="deb0e414d8fd4ca45722a7afd82c8c1a" project="Fedora:44" repository="update"/>
+  <bdep name="libcap-ng" preinstall="1" notmeta="1" version="0.9.6" release="1.fc44" arch="x86_64" hdrmd5="a4e66dac9e7d5a0d51f3f4482d54d13c" project="Fedora:44" repository="update"/>
+  <bdep name="libcom_err" preinstall="1" notmeta="1" version="1.47.3" release="4.fc44" arch="x86_64" hdrmd5="3d0134e3cff3ff8daa6d05cdf8925fbf" project="Fedora:44" repository="standard"/>
+  <bdep name="libcurl-minimal" preinstall="1" notmeta="1" version="8.18.0" release="10.fc44" arch="x86_64" hdrmd5="3a26da925e2f4b0c9cc505da0c3e9ce2" project="Fedora:44" repository="update"/>
+  <bdep name="libeconf" preinstall="1" notmeta="1" version="0.7.9" release="3.fc44" arch="x86_64" hdrmd5="68c22c1cdad26fef96880e239b8212e5" project="Fedora:44" repository="standard"/>
+  <bdep name="libffi" preinstall="1" notmeta="1" version="3.5.2" release="2.fc44" arch="x86_64" hdrmd5="001d0cba8f558dbc949cab58d27db83f" project="Fedora:44" repository="standard"/>
+  <bdep name="libgcc" preinstall="1" notmeta="1" version="16.2.1" release="2.fc44" arch="x86_64" hdrmd5="437e55e58df8ee652e0dc9cfbab918de" project="Fedora:44" repository="update"/>
+  <bdep name="libidn2" preinstall="1" notmeta="1" version="2.3.8" release="3.fc44" arch="x86_64" hdrmd5="546c5669cc90ffbd603c0a55301e8b29" project="Fedora:44" repository="standard"/>
+  <bdep name="libnghttp2" preinstall="1" notmeta="1" version="1.70.0" release="3.2" arch="x86_64" hdrmd5="0ed0530f97576d7a523c75e22bc4a1bd" project="home:davidnichols:qore:testing" repository="Fedora_44"/>
+  <bdep name="libselinux" preinstall="1" notmeta="1" version="3.11" release="2.fc44" arch="x86_64" hdrmd5="0caa6a4f3ddbf44a581534235eb2bfc0" project="Fedora:44" repository="update"/>
+  <bdep name="libsepol" preinstall="1" notmeta="1" version="3.11" release="1.fc44" arch="x86_64" hdrmd5="fed333fc27fa0d8ff46b5a569e3dc0b8" project="Fedora:44" repository="update"/>
+  <bdep name="libstdc++" preinstall="1" notmeta="1" version="16.2.1" release="2.fc44" arch="x86_64" hdrmd5="02bbfa9be8ec05b274e2168e998a6804" project="Fedora:44" repository="update"/>
+  <bdep name="libtasn1" preinstall="1" notmeta="1" version="4.21.0" release="1.fc44" arch="x86_64" hdrmd5="df9465e0d8964239ef12cfa24a831e32" project="Fedora:44" repository="standard"/>
+  <bdep name="libunistring" preinstall="1" notmeta="1" version="1.1" release="11.fc44" arch="x86_64" hdrmd5="e9097ddf9eb1d24358c6a78df3575f21" project="Fedora:44" repository="standard"/>
+  <bdep name="libverto" preinstall="1" notmeta="1" version="0.3.2" release="12.fc44" arch="x86_64" hdrmd5="3930c912c53ad6a6d77ab139ca99bc9c" project="Fedora:44" repository="standard"/>
+  <bdep name="libxcrypt" preinstall="1" notmeta="1" version="4.5.2" release="3.fc44" arch="x86_64" hdrmd5="31a7cde7dc291c7e5b19fedddd71ebc9" project="Fedora:44" repository="standard"/>
+  <bdep name="libxml2" preinstall="1" notmeta="1" version="2.12.10" release="6.fc44" arch="x86_64" hdrmd5="580ab293715fe79dfd1d1ca00f335668" project="Fedora:44" repository="standard"/>
+  <bdep name="libzstd" preinstall="1" notmeta="1" version="1.5.7" release="5.fc44" arch="x86_64" hdrmd5="52da1fd46c01ad20d37082ce951beb4c" project="Fedora:44" repository="standard"/>
+  <bdep name="lua-libs" preinstall="1" notmeta="1" version="5.4.8" release="5.fc44" arch="x86_64" hdrmd5="273615992f2f81315db2f5daa16d0d59" project="Fedora:44" repository="standard"/>
+  <bdep name="lz4-libs" preinstall="1" notmeta="1" version="1.10.0" release="4.fc44" arch="x86_64" hdrmd5="12295d317e4febcf35c5cf2aae886ec3" project="Fedora:44" repository="standard"/>
+  <bdep name="ncurses" preinstall="1" version="6.6" release="1.fc44" arch="x86_64" hdrmd5="f13fb3e1467e46a26976feb55fdc8777" project="Fedora:44" repository="standard"/>
+  <bdep name="ncurses-base" preinstall="1" notmeta="1" version="6.6" release="1.fc44" arch="noarch" hdrmd5="444585217bbd591aec28bc0182c23bb2" project="Fedora:44" repository="standard"/>
+  <bdep name="ncurses-libs" preinstall="1" notmeta="1" version="6.6" release="1.fc44" arch="x86_64" hdrmd5="f2e405e5e400ad78be163b3d529d3b0f" project="Fedora:44" repository="standard"/>
+  <bdep name="openssl-libs" preinstall="1" notmeta="1" epoch="1" version="3.5.8" release="1.fc44" arch="x86_64" hdrmd5="079f46b38e744abc03182d05c1a6c9b8" project="Fedora:44" repository="update"/>
+  <bdep name="p11-kit" preinstall="1" notmeta="1" version="0.26.5" release="1.fc44" arch="x86_64" hdrmd5="8b5a75aa7007f79dfe8861a8a98dc902" project="Fedora:44" repository="update"/>
+  <bdep name="p11-kit-trust" preinstall="1" notmeta="1" version="0.26.5" release="1.fc44" arch="x86_64" hdrmd5="7a69b3fe4bcbfd6bc3da61bd35a00380" project="Fedora:44" repository="update"/>
+  <bdep name="pam-libs" preinstall="1" notmeta="1" version="1.7.2" release="2.fc44" arch="x86_64" hdrmd5="418536835084970f90b706cb8015bf6e" project="Fedora:44" repository="update"/>
+  <bdep name="pcre2" preinstall="1" notmeta="1" version="10.47" release="1.fc44.1" arch="x86_64" hdrmd5="7fc81d185ba04d810a634fbbb2bca02f" project="Fedora:44" repository="standard"/>
+  <bdep name="pcre2-syntax" preinstall="1" notmeta="1" version="10.47" release="1.fc44.1" arch="noarch" hdrmd5="7f84b328d83c56c86485b773172a62ed" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-AutoLoader" preinstall="1" notmeta="1" version="5.74" release="525.fc44" arch="noarch" hdrmd5="97872ba9a876aafc5455477155293550" project="Fedora:44" repository="update"/>
+  <bdep name="perl-B" preinstall="1" notmeta="1" version="1.89" release="525.fc44" arch="x86_64" hdrmd5="e6134056aff9f1defb3269c5a87fdc42" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Carp" preinstall="1" notmeta="1" version="1.54" release="521.fc44" arch="noarch" hdrmd5="8110d9293e9d4b3e430ca1a90a9d6031" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Class-Struct" preinstall="1" notmeta="1" version="0.68" release="525.fc44" arch="noarch" hdrmd5="df2cd12e2f979d8049383bc0f494bd33" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Data-Dumper" preinstall="1" notmeta="1" version="2.192" release="523.fc44" arch="x86_64" hdrmd5="0a4fe0d21c911dbfcb0384cb256e8936" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Digest" preinstall="1" notmeta="1" version="1.20" release="521.fc44" arch="noarch" hdrmd5="94a58aa96eeedda961033686e4e62172" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Digest-MD5" preinstall="1" notmeta="1" version="2.59" release="521.fc44" arch="x86_64" hdrmd5="876bf351ed6db3ff4c89cae39b469b6f" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Digest-SHA" preinstall="1" notmeta="1" epoch="1" version="6.04" release="522.fc44" arch="x86_64" hdrmd5="96746babbc39c57a1c1750e5c3685c28" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-DynaLoader" preinstall="1" notmeta="1" version="1.57" release="525.fc44" arch="x86_64" hdrmd5="527843b385bd636ec36d00578a644570" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Encode" preinstall="1" notmeta="1" epoch="4" version="3.21" release="521.fc44" arch="x86_64" hdrmd5="029a26fac9b3e4a2f5083616c80fd960" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Errno" preinstall="1" notmeta="1" version="1.38" release="525.fc44" arch="x86_64" hdrmd5="a38b64b571dbf36d5e5e3ba31d6e45f8" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Exporter" preinstall="1" notmeta="1" version="5.79" release="521.fc44" arch="noarch" hdrmd5="b54446ce32ebbfd16f62c85281f25b85" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Fcntl" preinstall="1" notmeta="1" version="1.20" release="525.fc44" arch="x86_64" hdrmd5="9c045366e97b00f3b1d6eeb210947e44" project="Fedora:44" repository="update"/>
+  <bdep name="perl-File-Basename" preinstall="1" notmeta="1" version="2.86" release="525.fc44" arch="noarch" hdrmd5="d7f529454d9cf175bf2a15b30c4b2cce" project="Fedora:44" repository="update"/>
+  <bdep name="perl-File-Path" preinstall="1" notmeta="1" version="2.18" release="522.fc44" arch="noarch" hdrmd5="b0f363da821f5e6804d732befc393674" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-File-Temp" preinstall="1" notmeta="1" epoch="1" version="0.231.200" release="2.fc44" arch="noarch" hdrmd5="e8329406988da007c95671621bec755c" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-File-stat" preinstall="1" notmeta="1" version="1.14" release="525.fc44" arch="noarch" hdrmd5="b65f0e1f1b962063be9347bded392f10" project="Fedora:44" repository="update"/>
+  <bdep name="perl-FileHandle" preinstall="1" notmeta="1" version="2.05" release="525.fc44" arch="noarch" hdrmd5="85ebb08bc97c8a35fa93c74e4c03a6aa" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Getopt-Long" preinstall="1" notmeta="1" epoch="1" version="2.58" release="521.fc44" arch="noarch" hdrmd5="c4025ea751299f87268779a8a6dbc0ec" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Getopt-Std" preinstall="1" notmeta="1" version="1.14" release="525.fc44" arch="noarch" hdrmd5="d91ec2f9f3fc524fe2e5c1e4f68a3505" project="Fedora:44" repository="update"/>
+  <bdep name="perl-HTTP-Tiny" preinstall="1" notmeta="1" version="0.096" release="1.fc44" arch="noarch" hdrmd5="68c379a74e7b5983b219e7e8518d1fda" project="Fedora:44" repository="update"/>
+  <bdep name="perl-IO" preinstall="1" notmeta="1" version="1.55" release="525.fc44" arch="x86_64" hdrmd5="9b425c342d0af20c7a405b004f7007f0" project="Fedora:44" repository="update"/>
+  <bdep name="perl-IO-Socket-IP" preinstall="1" notmeta="1" version="0.43" release="522.fc44" arch="noarch" hdrmd5="1ffd8913f29888815a1233dae8563f6f" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-IO-Socket-SSL" preinstall="1" notmeta="1" version="2.098" release="2.fc44" arch="noarch" hdrmd5="f4cf676c3973d04fbf056cb2fb4a3188" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-IPC-Open3" preinstall="1" notmeta="1" version="1.24" release="525.fc44" arch="noarch" hdrmd5="4eeff67fc885896f67b211ffef693d51" project="Fedora:44" repository="update"/>
+  <bdep name="perl-MIME-Base32" preinstall="1" notmeta="1" version="1.303" release="25.fc44" arch="noarch" hdrmd5="ca4c2329d97a9061aeb1074552c70a21" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-MIME-Base64" preinstall="1" notmeta="1" version="3.16" release="521.fc44" arch="x86_64" hdrmd5="64f7a08313c7ef2d50da070542cc5a0e" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Net-SSLeay" preinstall="1" notmeta="1" version="1.94" release="12.fc44" arch="x86_64" hdrmd5="e6b135f60b67ae363bebb829727af6b2" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-POSIX" preinstall="1" notmeta="1" version="2.23" release="525.fc44" arch="x86_64" hdrmd5="9eddc7e1a10340c0ee8a565b13e3679b" project="Fedora:44" repository="update"/>
+  <bdep name="perl-PathTools" preinstall="1" notmeta="1" version="3.94" release="521.fc44" arch="x86_64" hdrmd5="058f8d90b6a535276333ccb0b9c5cab6" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Pod-Escapes" preinstall="1" notmeta="1" epoch="1" version="1.07" release="521.fc44" arch="noarch" hdrmd5="08557d21f2913ac492e1a0469d33ff32" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Pod-Perldoc" preinstall="1" notmeta="1" version="3.28.01" release="522.fc44" arch="noarch" hdrmd5="b0328c48628363ada4c0f23eb92a172e" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Pod-Simple" preinstall="1" notmeta="1" epoch="1" version="3.47" release="4.fc44" arch="noarch" hdrmd5="31f5599f97e6e6a88432e77e8876d9dc" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Pod-Usage" preinstall="1" notmeta="1" epoch="4" version="2.05" release="521.fc44" arch="noarch" hdrmd5="3ad24be69991dbc549cff2d993c20bd2" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Scalar-List-Utils" preinstall="1" notmeta="1" epoch="5" version="1.70" release="2.fc44" arch="x86_64" hdrmd5="bfc3c27a75d352268f37527a24060d3d" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-SelectSaver" preinstall="1" notmeta="1" version="1.02" release="525.fc44" arch="noarch" hdrmd5="36ad008d961816656d7b846c61bc05b1" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Socket" preinstall="1" notmeta="1" epoch="4" version="2.043" release="1.fc44" arch="x86_64" hdrmd5="59e2e38fe27dbe975ddf23b56131855b" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Storable" preinstall="1" notmeta="1" epoch="1" version="3.37" release="522.fc44" arch="x86_64" hdrmd5="4f8ec6bc534a6d719cdd7d371b92180e" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Symbol" preinstall="1" notmeta="1" version="1.09" release="525.fc44" arch="noarch" hdrmd5="3c23c48af2310f10e8b54894c0022002" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Term-ANSIColor" preinstall="1" notmeta="1" version="5.01" release="522.fc44" arch="noarch" hdrmd5="ad5e3ca1b4e8e79b33f64baece827c51" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Term-Cap" preinstall="1" notmeta="1" version="1.18" release="521.fc44" arch="noarch" hdrmd5="f76aba28b9e8b38abfd21e769d74cdc3" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Text-ParseWords" preinstall="1" notmeta="1" version="3.31" release="521.fc44" arch="noarch" hdrmd5="1d14c8c9774665f8a3734a7c30a00ddb" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Text-Tabs+Wrap" preinstall="1" notmeta="1" version="2024.001" release="521.fc44" arch="noarch" hdrmd5="d48d0b08e1b20d965c75678baf6920d1" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Time-HiRes" preinstall="1" notmeta="1" epoch="4" version="1.9778" release="521.fc44" arch="x86_64" hdrmd5="b902c116ee29e6e2dcf7b99452779da5" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Time-Local" preinstall="1" notmeta="1" epoch="2" version="1.350" release="521.fc44" arch="noarch" hdrmd5="65fe4720d4ac8bc5455f8430763e2d8c" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-URI" preinstall="1" notmeta="1" version="5.36" release="1.fc44" arch="noarch" hdrmd5="b53f3c8d4c786ccebbf4b53ddaac728d" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Unicode-Normalize" preinstall="1" notmeta="1" version="1.32" release="521.fc44" arch="x86_64" hdrmd5="0400aa0c3a6aad77805c3e513d4d71be" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-base" preinstall="1" notmeta="1" version="2.27" release="525.fc44" arch="noarch" hdrmd5="153cc6b7ab67251924efa4a82a05f3b6" project="Fedora:44" repository="update"/>
+  <bdep name="perl-constant" preinstall="1" notmeta="1" version="1.33" release="522.fc44" arch="noarch" hdrmd5="0288ecc5c8db3d7d774fa5a936cbc654" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-if" preinstall="1" notmeta="1" version="0.61.000" release="525.fc44" arch="noarch" hdrmd5="7c1f762922b3dac2c3cc8e2fe74ba40b" project="Fedora:44" repository="update"/>
+  <bdep name="perl-interpreter" preinstall="1" notmeta="1" epoch="4" version="5.42.3" release="525.fc44" arch="x86_64" hdrmd5="7f5ff9ee54367e2117bc57620490d473" project="Fedora:44" repository="update"/>
+  <bdep name="perl-libnet" preinstall="1" notmeta="1" version="3.15" release="522.fc44" arch="noarch" hdrmd5="fab91509c1a481162ff535e2dec46ac6" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-libs" preinstall="1" notmeta="1" epoch="4" version="5.42.3" release="525.fc44" arch="x86_64" hdrmd5="be0d980bef96932b0e230e2d76c7237c" project="Fedora:44" repository="update"/>
+  <bdep name="perl-locale" preinstall="1" notmeta="1" version="1.13" release="525.fc44" arch="noarch" hdrmd5="5ad64dfc56f87bcb9f03fc7f36028402" project="Fedora:44" repository="update"/>
+  <bdep name="perl-mro" preinstall="1" notmeta="1" version="1.29" release="525.fc44" arch="x86_64" hdrmd5="240763e1ac1c06ea277be3de5b283c09" project="Fedora:44" repository="update"/>
+  <bdep name="perl-overload" preinstall="1" notmeta="1" version="1.40" release="525.fc44" arch="noarch" hdrmd5="72a15fde40204f23fe2d9ece1032a4c6" project="Fedora:44" repository="update"/>
+  <bdep name="perl-overloading" preinstall="1" notmeta="1" version="0.02" release="525.fc44" arch="noarch" hdrmd5="aed2bfae2bd43c1a176ffc98ff5ab349" project="Fedora:44" repository="update"/>
+  <bdep name="perl-parent" preinstall="1" notmeta="1" epoch="1" version="0.244" release="521.fc44" arch="noarch" hdrmd5="3d9f9c37875ef7813afda8ed3e8a0c72" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-podlators" preinstall="1" notmeta="1" epoch="1" version="6.0.2" release="521.fc44" arch="noarch" hdrmd5="574a44512668a17ed27799d15797012d" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-vars" preinstall="1" notmeta="1" version="1.05" release="525.fc44" arch="noarch" hdrmd5="25fddde58d879a3226b5f6968b0c3819" project="Fedora:44" repository="update"/>
+  <bdep name="popt" preinstall="1" notmeta="1" version="1.19" release="10.fc44" arch="x86_64" hdrmd5="e43009bcd3b5146b5696a422208d472f" project="Fedora:44" repository="standard"/>
+  <bdep name="rpm" preinstall="1" version="6.0.2" release="1.fc44" arch="x86_64" hdrmd5="576f628807430f11ffcb3ff20d972621" project="Fedora:44" repository="update"/>
+  <bdep name="rpm-libs" preinstall="1" notmeta="1" version="6.0.2" release="1.fc44" arch="x86_64" hdrmd5="af9b97be211553cc4e5e6b3f270a9db0" project="Fedora:44" repository="update"/>
+  <bdep name="rpm-sequoia" preinstall="1" notmeta="1" version="1.10.3" release="1.fc44" arch="x86_64" hdrmd5="fd9fa3d7758bc06e2009fb98ab438f2b" project="Fedora:44" repository="update"/>
+  <bdep name="sed" preinstall="1" notmeta="1" version="4.9" release="7.fc44" arch="x86_64" hdrmd5="636f28e3e957f0466816464cc1a70435" project="Fedora:44" repository="standard"/>
+  <bdep name="setup" preinstall="1" notmeta="1" version="2.15.0" release="28.fc44" arch="noarch" hdrmd5="3a0e5643ffc6ca68aa4fbc26ea28457f" project="Fedora:44" repository="standard"/>
+  <bdep name="sqlite-libs" preinstall="1" notmeta="1" version="3.51.2" release="2.fc44" arch="x86_64" hdrmd5="a260bd57f51aa2aef00291d116c343b1" project="Fedora:44" repository="update"/>
+  <bdep name="systemd-libs" preinstall="1" notmeta="1" version="259.9" release="1.fc44" arch="x86_64" hdrmd5="c06e0a649bbd97a3f3167fce0d5c9177" project="Fedora:44" repository="update"/>
+  <bdep name="systemd-standalone-sysusers" preinstall="1" notmeta="1" version="259.9" release="1.fc44" arch="x86_64" hdrmd5="ac1a4e474d46ebf634e19cac4743e463" project="Fedora:44" repository="update"/>
+  <bdep name="xz-libs" preinstall="1" notmeta="1" epoch="1" version="5.8.2" release="2.fc44" arch="x86_64" hdrmd5="6d9fe58aee0f5d921bd5413d94d9d930" project="Fedora:44" repository="standard"/>
+  <bdep name="zlib-ng-compat" preinstall="1" notmeta="1" version="2.3.3" release="3.fc44" arch="x86_64" hdrmd5="2200a70402aa1438406b46fbed0f0d94" project="Fedora:44" repository="standard"/>
+  <bdep name="cryptsetup-libs" vminstall="1" notmeta="1" version="2.8.8" release="1.fc44" arch="x86_64" hdrmd5="514067b03f3e043212154b5613a869cc" project="Fedora:44" repository="update"/>
+  <bdep name="device-mapper" vminstall="1" notmeta="1" version="1.02.212" release="2.fc44" arch="x86_64" hdrmd5="b97f42e0ee6d3167741dc17b41be097e" project="Fedora:44" repository="standard"/>
+  <bdep name="device-mapper-libs" vminstall="1" notmeta="1" version="1.02.212" release="2.fc44" arch="x86_64" hdrmd5="6a022c0dc2f26eb5a3b0823a28e46ad5" project="Fedora:44" repository="standard"/>
+  <bdep name="iptables-libs" vminstall="1" notmeta="1" version="1.8.11" release="13.fc44" arch="x86_64" hdrmd5="f33274cb83bc62ece60054ea0838e21a" project="Fedora:44" repository="standard"/>
+  <bdep name="json-c" vminstall="1" version="0.18" release="8.fc44" arch="x86_64" hdrmd5="a1db9efe68664943a2fd40a2a201bc41" project="Fedora:44" repository="standard"/>
+  <bdep name="kernel-obs-build" vminstall="1" notmeta="1" version="6.4.0" release="150700.53.78.1" arch="x86_64" hdrmd5="bbcbe423375ff62e7a2bb6a0181df868" project="OBS:DefaultKernel" repository="standard"/>
+  <bdep name="libblkid" vminstall="1" version="2.41.5" release="1.fc44" arch="x86_64" hdrmd5="23497e7feb48c0bd618f6f9b32288398" project="Fedora:44" repository="update"/>
+  <bdep name="libfdisk" vminstall="1" version="2.41.5" release="1.fc44" arch="x86_64" hdrmd5="53d310f49678a5b23dfd61a0cd32d0dc" project="Fedora:44" repository="update"/>
+  <bdep name="libmnl" vminstall="1" notmeta="1" version="1.0.5" release="9.fc44" arch="x86_64" hdrmd5="1548e4d0ad28779d1654c0c0f2a71b05" project="Fedora:44" repository="standard"/>
+  <bdep name="libmount" vminstall="1" version="2.41.5" release="1.fc44" arch="x86_64" hdrmd5="7689fe4e60c46b4dbc2f98ce607dcff2" project="Fedora:44" repository="update"/>
+  <bdep name="libnetfilter_conntrack" vminstall="1" notmeta="1" version="1.1.1" release="1.fc44" arch="x86_64" hdrmd5="48b09dc72fbc4924d4157d5ec57f45ae" project="Fedora:44" repository="standard"/>
+  <bdep name="libnfnetlink" vminstall="1" notmeta="1" version="1.0.1" release="32.fc44" arch="x86_64" hdrmd5="db435b9b90eac562fc67c3bb9ae6c26e" project="Fedora:44" repository="standard"/>
+  <bdep name="libseccomp" vminstall="1" notmeta="1" version="2.6.1" release="2.fc44" arch="x86_64" hdrmd5="8c56fbfd5b5b5c3fad2e468847dff493" project="Fedora:44" repository="update"/>
+  <bdep name="libsmartcols" vminstall="1" version="2.41.5" release="1.fc44" arch="x86_64" hdrmd5="24329a4703074bc0f3b733231b2a5664" project="Fedora:44" repository="update"/>
+  <bdep name="libuuid" vminstall="1" version="2.41.5" release="1.fc44" arch="x86_64" hdrmd5="01afc1a13428453f25ddbdfa8596671a" project="Fedora:44" repository="update"/>
+  <bdep name="systemd" vminstall="1" notmeta="1" version="259.9" release="1.fc44" arch="x86_64" hdrmd5="2e59f46a2a3bb45e1cb9371681275763" project="Fedora:44" repository="update"/>
+  <bdep name="systemd-shared" vminstall="1" notmeta="1" version="259.9" release="1.fc44" arch="x86_64" hdrmd5="a2823c2a965ef9a91387681f3370576f" project="Fedora:44" repository="update"/>
+  <bdep name="util-linux-core" vminstall="1" version="2.41.5" release="1.fc44" arch="x86_64" hdrmd5="7c3693af9fc1f3be79663b1411ed943b" project="Fedora:44" repository="update"/>
+  <bdep name="libatomic" version="16.2.1" release="2.fc44" arch="x86_64" hdrmd5="a1415fa62c76238598b600aaeb2cf9c9" project="Fedora:44" repository="update"/>
+  <bdep name="glibc-langpack-da" version="2.43" release="8.fc44" arch="x86_64" hdrmd5="d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0" project="Fedora:44" repository="update"/>
+  <bdep name="clang" version="22.1.8" release="4.fc44" arch="x86_64" hdrmd5="45ef786f9e8ea754adeff1c3858105fe" project="Fedora:44" repository="update"/>
+  <bdep name="llvm" version="22.1.8" release="4.fc44" arch="x86_64" hdrmd5="e68db7fcfd1db23cbd6a178a2ec14e59" project="Fedora:44" repository="update"/>
+  <bdep name="lld" version="22.1.8" release="4.fc44" arch="x86_64" hdrmd5="a8d3897fd18c816ba67459218c880aa1" project="Fedora:44" repository="update"/>
+  <bdep name="compiler-rt" version="22.1.8" release="4.fc44" arch="x86_64" hdrmd5="56ee23ddea507a627caaf45673db0796" project="Fedora:44" repository="update"/>
+  <bdep name="ninja-build" version="1.13.2" release="2.fc44" arch="x86_64" hdrmd5="ca60ed096c22ee58a399cae107600b4e" project="Fedora:44" repository="standard"/>
+  <bdep name="python3-jinja2" version="3.1.6" release="7.fc44" arch="noarch" hdrmd5="6b0ec4f21d349e6c4ddd4f4313c7913f" project="Fedora:44" repository="standard"/>
+  <bdep name="gcc-c++" version="16.2.1" release="2.fc44" arch="x86_64" hdrmd5="f0891343584463f2b1bb0da0edeba3ed" project="Fedora:44" repository="update"/>
+  <bdep name="python3" version="3.14.7" release="1.fc44" arch="x86_64" hdrmd5="ba9d1b0e5c6e2cb2d95a463d84890100" project="Fedora:44" repository="update"/>
+  <bdep name="autoconf" version="2.72" release="10.fc44" arch="noarch" hdrmd5="13994ee9a1aac6ddc36cfc655900dd12" project="Fedora:44" repository="standard"/>
+  <bdep name="automake" version="1.18.1" release="4.fc44" arch="noarch" hdrmd5="31f18a6077da4007895aae1b7e9b2c6d" project="Fedora:44" repository="standard"/>
+  <bdep name="binutils" version="2.46.1" release="1.fc44" arch="x86_64" hdrmd5="37e0f92b4ddacdc00d657617e745f385" project="Fedora:44" repository="update"/>
+  <bdep name="bzip2" version="1.0.8" release="23.fc44" arch="x86_64" hdrmd5="666d9593fbca884cf5266c949586bb42" project="Fedora:44" repository="standard"/>
+  <bdep name="gcc" version="16.2.1" release="2.fc44" arch="x86_64" hdrmd5="11e5bac1f2969a8bdff0c0705ce1afd5" project="Fedora:44" repository="update"/>
+  <bdep name="gdbm" epoch="1" version="1.23" release="11.fc44" arch="x86_64" hdrmd5="84005ed6bd5d311183e12791ab5d5bda" project="Fedora:44" repository="standard"/>
+  <bdep name="gettext" version="0.26" release="5.fc44" arch="x86_64" hdrmd5="484c2a7777f1ef657f8c3a23defc2230" project="Fedora:44" repository="update"/>
+  <bdep name="libtool" version="2.5.4" release="10.fc44" arch="x86_64" hdrmd5="ead15521f70281a04a754bd14a346c2a" project="Fedora:44" repository="standard"/>
+  <bdep name="nss-softokn-freebl" version="3.129.0" release="1.fc44" arch="x86_64" hdrmd5="819b6b786c64d07c3879b12dfdd5e98f" project="Fedora:44" repository="update"/>
+  <bdep name="perl" epoch="4" version="5.42.3" release="525.fc44" arch="x86_64" hdrmd5="14bcbdd344df05786e4b31d39b36780d" project="Fedora:44" repository="update"/>
+  <bdep name="rpm-build" version="6.0.2" release="1.fc44" arch="x86_64" hdrmd5="a14dfc4b7baa52932f6dd50c1f1e16d0" project="Fedora:44" repository="update"/>
+  <bdep name="pkgconf-pkg-config" version="2.5.1" release="1.fc44" arch="x86_64" hdrmd5="b7d08e3ed42dee101fb43bfe193e5354" project="Fedora:44" repository="standard"/>
+  <bdep name="freetype-devel" version="2.14.3" release="1.fc44" arch="x86_64" hdrmd5="cc706a2150d438da4a055480870a44c4" project="Fedora:44" repository="update"/>
+  <bdep name="libicu-devel" version="77.1" release="3.fc44" arch="x86_64" hdrmd5="c5c91e54e015500523120204160ba1b3" project="Fedora:44" repository="update"/>
+  <bdep name="lcms2-devel" version="2.16" release="7.fc44" arch="x86_64" hdrmd5="f3f60107d1d33270690d673a2aac9b8f" project="Fedora:44" repository="standard"/>
+  <bdep name="openjpeg-devel" version="2.5.4" release="3.fc44" arch="x86_64" hdrmd5="f80a7ca18a69ceb8b1c4f52865e71068" project="Fedora:44" repository="standard"/>
+  <bdep name="libjpeg-turbo-devel" version="3.1.3" release="1.fc44" arch="x86_64" hdrmd5="4db04cbd11b7a06fe05ea7105eb88309" project="Fedora:44" repository="standard"/>
+  <bdep name="libpng-devel" epoch="2" version="1.6.58" release="1.fc44" arch="x86_64" hdrmd5="c8e5a802a5ad4107f50ae2c5e0232d9b" project="Fedora:44" repository="update"/>
+  <bdep name="libtiff-devel" version="4.7.2" release="1.fc44" arch="x86_64" hdrmd5="a08e586ebc704453337225c3a9b30d4f" project="Fedora:44" repository="update"/>
+  <bdep name="zlib-ng-compat-devel" version="2.3.3" release="3.fc44" arch="x86_64" hdrmd5="6c7c25f6a8133cb38e1fcb6ddc61f48a" project="Fedora:44" repository="standard"/>
+  <bdep name="brotli-devel" version="1.2.0" release="3.fc44" arch="x86_64" hdrmd5="292a8f8c71848555de57403da7d1a205" project="Fedora:44" repository="standard"/>
+  <bdep name="glib2-devel" version="2.88.3" release="1.fc44" arch="x86_64" hdrmd5="5ea4c1420d92b440e8d7d2593793d67c" project="Fedora:44" repository="update"/>
+  <bdep name="llvm-libs" version="22.1.8" release="4.fc44" arch="x86_64" hdrmd5="1e6356113d01bfcf98928d9a2c20c1ee" project="Fedora:44" repository="update"/>
+  <bdep name="libstdc++-devel" version="16.2.1" release="2.fc44" arch="x86_64" hdrmd5="6604e18efee26ee1cff134ec74db6a3c" project="Fedora:44" repository="update"/>
+  <bdep name="clang-libs" version="22.1.8" release="4.fc44" arch="x86_64" hdrmd5="b66ce0530c7e9b93848891ec25bd2762" project="Fedora:44" repository="update"/>
+  <bdep name="lld-libs" version="22.1.8" release="4.fc44" arch="x86_64" hdrmd5="73391faa94b106d014cc6ad1e4a0f1a8" project="Fedora:44" repository="update"/>
+  <bdep name="clang-resource-filesystem" version="22.1.8" release="4.fc44" arch="x86_64" hdrmd5="1d8edac95f94a83ec4a0720abed85bbf" project="Fedora:44" repository="update"/>
+  <bdep name="vim-filesystem" epoch="2" version="9.2.1129" release="1.fc44" arch="noarch" hdrmd5="98ab008eb1942bac45714710070b1dd9" project="Fedora:44" repository="update"/>
+  <bdep name="python3-markupsafe" version="3.0.2" release="7.fc44" arch="x86_64" hdrmd5="9487851a2b81efeb4e5596b5a565f575" project="Fedora:44" repository="standard"/>
+  <bdep name="mpfr" version="4.2.2" release="3.fc44" arch="x86_64" hdrmd5="9e5e04a9c61a3b10fea4862f0dc06714" project="Fedora:44" repository="standard"/>
+  <bdep name="libmpc" version="1.4.1" release="1.fc44" arch="x86_64" hdrmd5="5667d026b2fbc05742183ce060107aab" project="Fedora:44" repository="update"/>
+  <bdep name="python3-libs" version="3.14.7" release="1.fc44" arch="x86_64" hdrmd5="c9d0ddb83798fa14d77bb77c43da7197" project="Fedora:44" repository="update"/>
+  <bdep name="perl-File-Find" version="1.44" release="525.fc44" arch="noarch" hdrmd5="e3aa7530353ecb8f1951bc33da8322e6" project="Fedora:44" repository="update"/>
+  <bdep name="perl-File-Copy" version="2.41" release="525.fc44" arch="noarch" hdrmd5="7c2fb506bc63808c014c0c8d4733d416" project="Fedora:44" repository="update"/>
+  <bdep name="emacs-filesystem" epoch="1" version="30.2" release="2.fc44" arch="x86_64" hdrmd5="527da84bef6ff397f48676dc2be94508" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-File-Compare" version="1.100.800" release="525.fc44" arch="noarch" hdrmd5="27b8ff9ff350121bc3c41e7219201882" project="Fedora:44" repository="update"/>
+  <bdep name="m4" version="1.4.21" release="1.fc44" arch="x86_64" hdrmd5="a32b0086abef8275c6ae22cfe45bdc71" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-threads" epoch="1" version="2.43" release="521.fc44" arch="x86_64" hdrmd5="357adacaefb3889bb44218bb4256cc0f" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Thread-Queue" version="3.14" release="521.fc44" arch="noarch" hdrmd5="cb6380b1aabb489f6440895596d688a9" project="Fedora:44" repository="standard"/>
+  <bdep name="jansson" version="2.14" release="4.fc44" arch="x86_64" hdrmd5="a8a283adce30baa4414f8b3db7755f28" project="Fedora:44" repository="standard"/>
+  <bdep name="elfutils-debuginfod-client" version="0.196" release="1.fc44" arch="x86_64" hdrmd5="11c89a41875013a945595e2d8e8d4014" project="Fedora:44" repository="update"/>
+  <bdep name="libgomp" version="16.2.1" release="2.fc44" arch="x86_64" hdrmd5="2fd5ce2753db31c63352da8f34bf6c7b" project="Fedora:44" repository="update"/>
+  <bdep name="readline" version="8.3" release="4.fc44" arch="x86_64" hdrmd5="6d7e80050053ed0937037685c52bbed8" project="Fedora:44" repository="standard"/>
+  <bdep name="gdbm-libs" epoch="1" version="1.23" release="11.fc44" arch="x86_64" hdrmd5="123a38708bd02e794ef7cfbcf1c0abff" project="Fedora:44" repository="standard"/>
+  <bdep name="libtextstyle" version="0.26" release="5.fc44" arch="x86_64" hdrmd5="7d4625f1ff314787f9fe8b3fbcf8bb81" project="Fedora:44" repository="update"/>
+  <bdep name="gettext-libs" version="0.26" release="5.fc44" arch="x86_64" hdrmd5="863e379b8dae17741e8e964bce48c93b" project="Fedora:44" repository="update"/>
+  <bdep name="gettext-runtime" version="0.26" release="5.fc44" arch="x86_64" hdrmd5="2b61086c178f30e2138f32c6d2c146a7" project="Fedora:44" repository="update"/>
+  <bdep name="tar" epoch="2" version="1.35" release="9.fc44" arch="x86_64" hdrmd5="d266fc6cc139e39197761eca28382a9b" project="Fedora:44" repository="update"/>
+  <bdep name="nspr" version="4.39.0" release="5.fc44" arch="x86_64" hdrmd5="3e4b590aa02daf06c059ad5f0b8a63f6" project="Fedora:44" repository="update"/>
+  <bdep name="nss-util" version="3.129.0" release="1.fc44" arch="x86_64" hdrmd5="7e7fc7d484eefc3cf515a8391e72ece4" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Test-Harness" epoch="1" version="3.52" release="5.fc44" arch="noarch" hdrmd5="4e759fe6b0852fe400431035e8f35295" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Module-CoreList" epoch="1" version="5.20260820" release="1.fc44" arch="noarch" hdrmd5="93f9af9a772196a12e6df048ce531180" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Archive-Tar" version="3.12" release="1.fc44" arch="noarch" hdrmd5="fa6acf3d1c8816b73284887a3aadc000" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Compress-Raw-Bzip2" version="2.218" release="1.fc44" arch="x86_64" hdrmd5="31f8018dcae59debe86817d1916e9d43" project="Fedora:44" repository="update"/>
+  <bdep name="perl-IO-Compress" version="2.223" release="1.fc44" arch="noarch" hdrmd5="c6c063741c82ee16ed47f40b5a881279" project="Fedora:44" repository="update"/>
+  <bdep name="perl-debugger" version="1.60" release="525.fc44" arch="noarch" hdrmd5="599dbd9d1fe43c624d24843d95be87e0" project="Fedora:44" repository="update"/>
+  <bdep name="perl-sigtrap" version="1.10" release="525.fc44" arch="noarch" hdrmd5="f66f300ee2cf4557f33fcf4106899b76" project="Fedora:44" repository="update"/>
+  <bdep name="perl-utils" version="5.42.3" release="525.fc44" arch="noarch" hdrmd5="a52e5524764f64ea4f8170e58ca5f373" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Attribute-Handlers" version="1.03" release="525.fc44" arch="noarch" hdrmd5="e6386919f1a51245dc6508cd897b4784" project="Fedora:44" repository="update"/>
+  <bdep name="perl-AutoSplit" version="5.74" release="525.fc44" arch="noarch" hdrmd5="7dd8e8f429d40133828bd5634fc4a91d" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Benchmark" version="1.27" release="525.fc44" arch="noarch" hdrmd5="59514076860355476c714b472df6df49" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Config-Extensions" version="0.03" release="525.fc44" arch="noarch" hdrmd5="ca1cd74ecf494c911e59d3f9c257d9e7" project="Fedora:44" repository="update"/>
+  <bdep name="perl-DBM_Filter" version="0.07" release="525.fc44" arch="noarch" hdrmd5="3e9d6ff8aa16f9f67747ce6bd7e932f8" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Devel-Peek" version="1.36" release="525.fc44" arch="x86_64" hdrmd5="7a9ace328363ace2a6c34c4c6720e667" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Devel-SelfStubber" version="1.06" release="525.fc44" arch="noarch" hdrmd5="e1a5aa867e8733de575dd470658a1323" project="Fedora:44" repository="update"/>
+  <bdep name="perl-DirHandle" version="1.05" release="525.fc44" arch="noarch" hdrmd5="0685edf79a18a7516dd71c1a1dcff7e4" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Dumpvalue" version="2.27" release="525.fc44" arch="noarch" hdrmd5="ededa2880ca151fdc144be92b5d9e3b4" project="Fedora:44" repository="update"/>
+  <bdep name="perl-English" version="1.11" release="525.fc44" arch="noarch" hdrmd5="d2bba336257eb2fdd96b928df9b0de51" project="Fedora:44" repository="update"/>
+  <bdep name="perl-ExtUtils-Constant" version="0.25" release="525.fc44" arch="noarch" hdrmd5="8709e466768c798136f8c6e0f0a2b394" project="Fedora:44" repository="update"/>
+  <bdep name="perl-ExtUtils-Embed" version="1.35" release="525.fc44" arch="noarch" hdrmd5="33f3f0a8997cd8db0ee0c8917c36a6fb" project="Fedora:44" repository="update"/>
+  <bdep name="perl-ExtUtils-Miniperl" version="1.14" release="525.fc44" arch="noarch" hdrmd5="880675526ec0c3f4bb9be7475097592c" project="Fedora:44" repository="update"/>
+  <bdep name="perl-File-DosGlob" version="1.12" release="525.fc44" arch="x86_64" hdrmd5="1b7c49ce3e7fae766e236af3c78ffb2a" project="Fedora:44" repository="update"/>
+  <bdep name="perl-FileCache" version="1.10" release="525.fc44" arch="noarch" hdrmd5="9a5c2a861909d063b9dbe584f9734dfd" project="Fedora:44" repository="update"/>
+  <bdep name="perl-FindBin" version="1.54" release="525.fc44" arch="noarch" hdrmd5="5b5afb9482d50e654560e45578ca8ebb" project="Fedora:44" repository="update"/>
+  <bdep name="perl-GDBM_File" epoch="1" version="1.24" release="525.fc44" arch="x86_64" hdrmd5="56b7be67c819520281adfaee9c2a55b0" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Hash-Util" version="0.32" release="525.fc44" arch="x86_64" hdrmd5="9aad59184baef2fe6eebe43f252921b5" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Hash-Util-FieldHash" version="1.27" release="525.fc44" arch="x86_64" hdrmd5="44b11fd7dacd1d25dd102433aa2d0135" project="Fedora:44" repository="update"/>
+  <bdep name="perl-I18N-Collate" version="1.02" release="525.fc44" arch="noarch" hdrmd5="46b8381bf724a723585a1854e05167cb" project="Fedora:44" repository="update"/>
+  <bdep name="perl-I18N-LangTags" version="0.45" release="525.fc44" arch="noarch" hdrmd5="661a8f6c06944fd9575490b081aa0ed0" project="Fedora:44" repository="update"/>
+  <bdep name="perl-I18N-Langinfo" version="0.24" release="525.fc44" arch="x86_64" hdrmd5="14cfb2622402f3939f1afbad06ba55ea" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Locale-Maketext-Simple" epoch="1" version="0.21" release="525.fc44" arch="noarch" hdrmd5="6bd449e92fa02bdbb256218c21bf448b" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Math-Complex" version="1.63" release="525.fc44" arch="noarch" hdrmd5="abc28aabd9d823721bfc3551c0c15064" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Memoize" version="1.17" release="525.fc44" arch="noarch" hdrmd5="5ed2947106c506c2a6fcea27ad7e14ac" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Module-CoreList-tools" epoch="1" version="5.20260820" release="1.fc44" arch="noarch" hdrmd5="08bae59a9791f918ca8b356dcc37e0b3" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Module-Loaded" epoch="1" version="0.08" release="525.fc44" arch="noarch" hdrmd5="6130626469bbf0ffafd23520d7062bce" project="Fedora:44" repository="update"/>
+  <bdep name="perl-NDBM_File" version="1.18" release="525.fc44" arch="x86_64" hdrmd5="de82f9e377d7ac052558610babb15f6f" project="Fedora:44" repository="update"/>
+  <bdep name="perl-NEXT" version="0.69" release="525.fc44" arch="noarch" hdrmd5="6030903b1f3706d3f3069316cb60c36e" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Net" version="1.04" release="525.fc44" arch="noarch" hdrmd5="599ca4e9a648e0b40a08b420c7bb64c7" project="Fedora:44" repository="update"/>
+  <bdep name="perl-ODBM_File" version="1.20" release="525.fc44" arch="x86_64" hdrmd5="12e88db5694c70e37e546b2bac51cf18" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Opcode" version="1.69" release="525.fc44" arch="x86_64" hdrmd5="8397f903dab24f8c2a4e29ec51b1b759" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Pod-Functions" version="1.14" release="525.fc44" arch="noarch" hdrmd5="2f9dbbf4546aeea5554c77f210a6dd0c" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Pod-Html" version="1.35" release="525.fc44" arch="noarch" hdrmd5="3e687f8bbaf44ca11753d53d4bb2ab28" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Safe" version="2.47" release="525.fc44" arch="noarch" hdrmd5="700f7c54c5aedf9b08a912e662a040fa" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Search-Dict" version="1.08" release="525.fc44" arch="noarch" hdrmd5="758f4ecd77941e07ad3bea17dd4c9df8" project="Fedora:44" repository="update"/>
+  <bdep name="perl-SelfLoader" version="1.28" release="525.fc44" arch="noarch" hdrmd5="310ad887e08b29a0100a2bdb93c68528" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Sys-Hostname" version="1.25" release="525.fc44" arch="x86_64" hdrmd5="f95033816368d69f40d449ea3c9f6528" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Term-Complete" version="1.403" release="525.fc44" arch="noarch" hdrmd5="6fe17fb48095ad9843942a49d40c4c16" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Term-ReadLine" version="1.17" release="525.fc44" arch="noarch" hdrmd5="b686fbcd0caf0002784174e376830129" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Test" version="1.31" release="525.fc44" arch="noarch" hdrmd5="2df5fab21e6b2114acd1c21289c0695f" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Text-Abbrev" version="1.02" release="525.fc44" arch="noarch" hdrmd5="463496a0c06146f3ceaf646a4b9778f1" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Thread" version="3.06" release="525.fc44" arch="noarch" hdrmd5="1604e70193547456dc53772f7c7b57ad" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Thread-Semaphore" version="2.13" release="525.fc44" arch="noarch" hdrmd5="0058da1b6db2b8a7d46e8fd64dc53395" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Tie" version="4.6" release="525.fc44" arch="noarch" hdrmd5="90470c490b6c280266e02ec82b103c50" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Tie-File" version="1.10" release="525.fc44" arch="noarch" hdrmd5="d0d5a17987f0a3c462011e45819e83a0" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Tie-Memoize" version="1.1" release="525.fc44" arch="noarch" hdrmd5="97da661d31954560f4433b05c2a170af" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Time" version="1.04" release="525.fc44" arch="noarch" hdrmd5="5d6b354760c38db5bfa21ab36720436d" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Time-Piece" version="1.3600" release="525.fc44" arch="x86_64" hdrmd5="b5035f2538b52f246fde8ab8307fdc04" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Unicode-UCD" version="0.81" release="525.fc44" arch="noarch" hdrmd5="f7b8427d649770a54f32fe04731b5740" project="Fedora:44" repository="update"/>
+  <bdep name="perl-User-pwent" version="1.05" release="525.fc44" arch="noarch" hdrmd5="c06e377865e398c9e836df341659cf12" project="Fedora:44" repository="update"/>
+  <bdep name="perl-autouse" version="1.11" release="525.fc44" arch="noarch" hdrmd5="3e10d02f6661118892450e10b7cc2431" project="Fedora:44" repository="update"/>
+  <bdep name="perl-blib" version="1.07" release="525.fc44" arch="noarch" hdrmd5="79015dc9fad980d9e6ae40b3039de3d2" project="Fedora:44" repository="update"/>
+  <bdep name="perl-deprecate" version="0.04" release="525.fc44" arch="noarch" hdrmd5="71abba3bc8fc77fa844f60a9f6178509" project="Fedora:44" repository="update"/>
+  <bdep name="perl-diagnostics" version="1.40" release="525.fc44" arch="noarch" hdrmd5="b0bc0f6960837d9d825a6c6638fee329" project="Fedora:44" repository="update"/>
+  <bdep name="perl-doc" version="5.42.3" release="525.fc44" arch="noarch" hdrmd5="4c3de25d53cad73ca7dbb7a7487c102d" project="Fedora:44" repository="update"/>
+  <bdep name="perl-encoding-warnings" version="0.14" release="525.fc44" arch="noarch" hdrmd5="c4b6f05c566f53583395d07106eadfa2" project="Fedora:44" repository="update"/>
+  <bdep name="perl-fields" version="2.27" release="525.fc44" arch="noarch" hdrmd5="02cd0e11e28c5fa4dc36c474ab03dd59" project="Fedora:44" repository="update"/>
+  <bdep name="perl-filetest" version="1.03" release="525.fc44" arch="noarch" hdrmd5="84e237c4e95fccc020e644c432c25df4" project="Fedora:44" repository="update"/>
+  <bdep name="perl-less" version="0.03" release="525.fc44" arch="noarch" hdrmd5="0c412737c0ab82f1a0379383f2cbc903" project="Fedora:44" repository="update"/>
+  <bdep name="perl-lib" version="0.65" release="525.fc44" arch="x86_64" hdrmd5="512ef81f16eaa583bc808391d5869554" project="Fedora:44" repository="update"/>
+  <bdep name="perl-libnetcfg" epoch="4" version="5.42.3" release="525.fc44" arch="noarch" hdrmd5="269260f7f3b87ca1b24e478bea2220f4" project="Fedora:44" repository="update"/>
+  <bdep name="perl-macros" epoch="4" version="5.42.3" release="525.fc44" arch="noarch" hdrmd5="54547bf0a8c89135aadd7cbd39d1119e" project="Fedora:44" repository="update"/>
+  <bdep name="perl-meta-notation" version="5.42.3" release="525.fc44" arch="noarch" hdrmd5="5d268cb353c87f75d548f9cc65574667" project="Fedora:44" repository="update"/>
+  <bdep name="perl-open" version="1.13" release="525.fc44" arch="noarch" hdrmd5="9e99dda62dd694cb7c5a224ee75a29e1" project="Fedora:44" repository="update"/>
+  <bdep name="perl-ph" version="5.42.3" release="525.fc44" arch="x86_64" hdrmd5="2b049fe7ad9f66df6fa3db39aed88d0d" project="Fedora:44" repository="update"/>
+  <bdep name="perl-sort" version="2.06" release="525.fc44" arch="noarch" hdrmd5="42ebc1b7ffe935a1255473087d1b2184" project="Fedora:44" repository="update"/>
+  <bdep name="perl-subs" version="1.04" release="525.fc44" arch="noarch" hdrmd5="2736d29c649cf770ef53383e22e5dd01" project="Fedora:44" repository="update"/>
+  <bdep name="perl-vmsish" version="1.04" release="525.fc44" arch="noarch" hdrmd5="18ec3b748a28a593a20b9f1a81c0ec72" project="Fedora:44" repository="update"/>
+  <bdep name="perl-autodie" version="2.37" release="522.fc44" arch="noarch" hdrmd5="87b818e2f73fd51740bff4c123ee258d" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-CPAN" version="2.38" release="522.fc44" arch="noarch" hdrmd5="bad1a25b33fd8565d267ee232f2bf839" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-CPAN-Meta" version="2.150013" release="1.fc44" arch="noarch" hdrmd5="35dfb694b9f9d666798f6067f4eca2f6" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-CPAN-Meta-Requirements" version="2.145" release="1.fc44" arch="noarch" hdrmd5="f33b7d8f75a825e5588276e4073007ea" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-CPAN-Meta-YAML" version="0.020" release="522.fc44" arch="noarch" hdrmd5="da2b45efc7662bb898e3aff754ae0fd7" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Compress-Raw-Zlib" version="2.222" release="1.fc44" arch="x86_64" hdrmd5="96c620ea39c413722036f624d35f95ae" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Config-Perl-V" version="0.39" release="1.fc44" arch="noarch" hdrmd5="b7d56726a52732f9fea2b36ef1ad9fd4" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-DB_File" version="1.860" release="1.fc44" arch="x86_64" hdrmd5="41a5145f94ce8f39c60b956bdf93e62d" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Devel-PPPort" version="3.73" release="522.fc44" arch="x86_64" hdrmd5="c200c15927770e510e99d6c1c67441ac" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Encode-devel" epoch="4" version="3.21" release="521.fc44" arch="x86_64" hdrmd5="1ce451e6192f9a622355609488800a73" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Env" version="1.06" release="521.fc44" arch="noarch" hdrmd5="a23de2591780b95fb191abd810c392ec" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-ExtUtils-CBuilder" epoch="1" version="0.280242" release="521.fc44" arch="noarch" hdrmd5="ea2889da1a540dd04a8eda3232f76289" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-ExtUtils-Command" epoch="2" version="7.76" release="522.fc44" arch="noarch" hdrmd5="321efcfaee0f1446a9ae75c8a2cf82e0" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-ExtUtils-Install" version="2.22" release="521.fc44" arch="noarch" hdrmd5="4aae2d261ac76d3e93ca4910c2f7d4ea" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-ExtUtils-MM-Utils" epoch="2" version="7.76" release="522.fc44" arch="noarch" hdrmd5="519abea2ab33fe8429b2d3375fe3a99c" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-ExtUtils-MakeMaker" epoch="2" version="7.76" release="522.fc44" arch="noarch" hdrmd5="30c8a915824996c405caa9c525d434a4" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-ExtUtils-Manifest" epoch="1" version="1.75" release="521.fc44" arch="noarch" hdrmd5="e90bc8cdf71ff368a1826af51f1b04d8" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-ExtUtils-ParseXS" epoch="1" version="3.61" release="2.fc44" arch="noarch" hdrmd5="39fef50c8b518d0bc7a796bcde455205" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-File-Fetch" version="1.08" release="4.fc44" arch="noarch" hdrmd5="14ddf153d5c60282a1dc506c7cfeae4b" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Filter" epoch="2" version="1.65" release="2.fc44" arch="x86_64" hdrmd5="563d77ea4754b41fa6161ac9b56e29ec" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Filter-Simple" version="0.96" release="521.fc44" arch="noarch" hdrmd5="ad9177a9a2bc989d5c2e8c8f8348c61c" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-IO-Zlib" epoch="1" version="1.15" release="521.fc44" arch="noarch" hdrmd5="9e4f2cec8988e09325bc31f3dcefe402" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-IPC-Cmd" epoch="2" version="1.04" release="522.fc44" arch="noarch" hdrmd5="f92162e227c300479aa060339337e05d" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-IPC-SysV" version="2.09" release="522.fc44" arch="x86_64" hdrmd5="dd27b6cddd1a1f84469296e7e9cb5bea" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-JSON-PP" epoch="1" version="4.16" release="523.fc44" arch="noarch" hdrmd5="27fbbb864c3376e0ec34074dae9414b6" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Locale-Maketext" version="1.33" release="522.fc44" arch="noarch" hdrmd5="351e8dc31c9e3bd21d442d2e638a7194" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Math-BigInt" epoch="1" version="2.0050.03" release="4.fc44" arch="noarch" hdrmd5="8313820c9fdbfb1b051984db300b9469" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Math-BigInt-FastCalc" version="0.502.000" release="521.fc44" arch="x86_64" hdrmd5="022f2a6dcc2fc1c472aae713f8e0d43d" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Module-Load" epoch="1" version="0.36" release="521.fc44" arch="noarch" hdrmd5="140b930618ffdb8e8efe84d2c3e11de3" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Module-Load-Conditional" version="0.74" release="521.fc44" arch="noarch" hdrmd5="5c1368b3ba845212f603ca4021f71aea" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Module-Metadata" version="1.000038" release="521.fc44" arch="noarch" hdrmd5="f1dc06230516cfa5429ea653f702dac1" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Net-Ping" version="2.76" release="521.fc44" arch="noarch" hdrmd5="7f3bbc3891a4873d2e15cb331f94faac" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Params-Check" epoch="1" version="0.38" release="521.fc44" arch="noarch" hdrmd5="3f411a39fdbefc61ed3c05ddcca11b73" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Perl-OSType" version="1.010" release="522.fc44" arch="noarch" hdrmd5="e8120340b2eb2b3a99645b2ef180e3fe" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-PerlIO-via-QuotedPrint" version="0.10" release="521.fc44" arch="noarch" hdrmd5="df22168770c9306287a9c346957c3e69" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Pod-Checker" epoch="4" version="1.77" release="521.fc44" arch="noarch" hdrmd5="6725c7fa9539381984508fd68b83a3cf" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Sys-Syslog" version="0.36" release="522.fc44" arch="x86_64" hdrmd5="577361992ad2f015a500b05b6ce298f9" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Term-Table" version="0.028" release="2.fc44" arch="noarch" hdrmd5="d76be1d916f86381d4c54c688d1d614b" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Test-Simple" epoch="3" version="1.302219" release="2.fc44" arch="noarch" hdrmd5="ec68351bc2ad5a294806b2267d654a89" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Text-Balanced" version="2.07" release="2.fc44" arch="noarch" hdrmd5="1175961571e8f50d5d44b12d81b53ce0" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Tie-RefHash" version="1.41" release="521.fc44" arch="noarch" hdrmd5="28b79b7def812766b96688b606bcea25" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Unicode-Collate" version="1.31" release="521.fc44" arch="x86_64" hdrmd5="61a7eef0e332c861f5caeef326a3447d" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-bignum" version="0.67" release="522.fc44" arch="noarch" hdrmd5="5f976f923ad3b9878ade0a3050a27b0f" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-encoding" epoch="4" version="3.00" release="521.fc44" arch="x86_64" hdrmd5="2d8c5cb11fe7252d4cc83945382ea82b" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-experimental" version="0.036" release="3.fc44" arch="noarch" hdrmd5="6fceccd86369edfac839d2a94ac3f8b5" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-perlfaq" version="5.20250619" release="521.fc44" arch="noarch" hdrmd5="fcf3a4c11ec23bab1c2ff5ae4f130551" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-threads-shared" version="1.70" release="521.fc44" arch="x86_64" hdrmd5="d3975b65f6f7901b27fee7de92f3e7b0" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-version" epoch="9" version="0.99.33" release="522.fc44" arch="x86_64" hdrmd5="2687bd863421cbd37a8745c97833118b" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-devel" epoch="4" version="5.42.3" release="525.fc44" arch="x86_64" hdrmd5="5278fa5e2a3e832d6b650c121d136a43" project="Fedora:44" repository="update"/>
+  <bdep name="elfutils-libelf" version="0.196" release="1.fc44" arch="x86_64" hdrmd5="cbe6761ba431dce06296a3d67a19bd7c" project="Fedora:44" repository="update"/>
+  <bdep name="xz" epoch="1" version="5.8.2" release="2.fc44" arch="x86_64" hdrmd5="8772214f19eb23398abb772cee3ff1da" project="Fedora:44" repository="standard"/>
+  <bdep name="diffutils" version="3.12" release="5.fc44" arch="x86_64" hdrmd5="2e87ead1c0232125dcacc37e9a3b823d" project="Fedora:44" repository="standard"/>
+  <bdep name="zstd" version="1.5.7" release="5.fc44" arch="x86_64" hdrmd5="b5aa7e95e81e29d043f6dec64389e0b6" project="Fedora:44" repository="standard"/>
+  <bdep name="rpm-build-libs" version="6.0.2" release="1.fc44" arch="x86_64" hdrmd5="9aec4b83fd8b1230b531158220605cee" project="Fedora:44" repository="update"/>
+  <bdep name="gdb-minimal" version="17.2" release="4.fc44" arch="x86_64" hdrmd5="b542d4114f65e7bd52d7707bcebb4c1c" project="Fedora:44" repository="update"/>
+  <bdep name="debugedit" version="5.3" release="2.fc44" arch="x86_64" hdrmd5="23375e0d2795d02bcb9c11bf22e7b71b" project="Fedora:44" repository="update"/>
+  <bdep name="elfutils" version="0.196" release="1.fc44" arch="x86_64" hdrmd5="ace9fb97cea47880876f3a3ce3e02f9e" project="Fedora:44" repository="update"/>
+  <bdep name="glibc-gconv-extra" version="2.43" release="8.fc44" arch="x86_64" hdrmd5="2b43903dce06d92617671b4d64d68160" project="Fedora:44" repository="update"/>
+  <bdep name="pkgconf-m4" version="2.5.1" release="1.fc44" arch="noarch" hdrmd5="8ab011e13a18c52c7d88a14780ffa8ae" project="Fedora:44" repository="standard"/>
+  <bdep name="pkgconf" version="2.5.1" release="1.fc44" arch="x86_64" hdrmd5="1197d3fcd4c1a19fe7fefe335783cd2c" project="Fedora:44" repository="standard"/>
+  <bdep name="freetype" version="2.14.3" release="1.fc44" arch="x86_64" hdrmd5="b92f015e4107e07158ef149b04e67d5f" project="Fedora:44" repository="update"/>
+  <bdep name="harfbuzz-devel" version="14.1.0" release="2.fc44" arch="x86_64" hdrmd5="cccbae479bd31e0292644dcbfa770ce0" project="Fedora:44" repository="update"/>
+  <bdep name="libicu" version="77.1" release="3.fc44" arch="x86_64" hdrmd5="13be9169e1a451309660af25690c75e2" project="Fedora:44" repository="update"/>
+  <bdep name="lcms2" version="2.16" release="7.fc44" arch="x86_64" hdrmd5="ce55fc2f01cb1d2ba1062624b7517593" project="Fedora:44" repository="standard"/>
+  <bdep name="cmake-filesystem" version="4.3.0" release="1.fc44" arch="x86_64" hdrmd5="3a6b901a285bbd105f8d610158dda8b9" project="Fedora:44" repository="standard"/>
+  <bdep name="openjpeg" version="2.5.4" release="3.fc44" arch="x86_64" hdrmd5="d49194f44931a5d6c488e781fcd78608" project="Fedora:44" repository="standard"/>
+  <bdep name="openjpeg-tools" version="2.5.4" release="3.fc44" arch="x86_64" hdrmd5="c3fe28e2f6a872e7b7c746e53618f7ad" project="Fedora:44" repository="standard"/>
+  <bdep name="libjpeg-turbo" version="3.1.3" release="1.fc44" arch="x86_64" hdrmd5="888b9a0e97c3269298232d956bdc3c66" project="Fedora:44" repository="standard"/>
+  <bdep name="libpng" epoch="2" version="1.6.58" release="1.fc44" arch="x86_64" hdrmd5="b3436dabb78939e561817d87aec884bc" project="Fedora:44" repository="update"/>
+  <bdep name="libtiff" version="4.7.2" release="1.fc44" arch="x86_64" hdrmd5="d28ff32775b325f76e9ea31e380ce759" project="Fedora:44" repository="update"/>
+  <bdep name="libzstd-devel" version="1.5.7" release="5.fc44" arch="x86_64" hdrmd5="0298e05caf8f6ba04ebca15fc860358a" project="Fedora:44" repository="standard"/>
+  <bdep name="libwebp-devel" version="1.6.0" release="3.fc44" arch="x86_64" hdrmd5="98b4a1cc33e2c3436ba42095ccc941bf" project="Fedora:44" repository="standard"/>
+  <bdep name="liblerc-devel" version="4.0.0" release="10.fc44" arch="x86_64" hdrmd5="78588e509518d3820f08a45eb22d468c" project="Fedora:44" repository="standard"/>
+  <bdep name="libbrotli" version="1.2.0" release="3.fc44" arch="x86_64" hdrmd5="73760986c340b4500182764c19a764d6" project="Fedora:44" repository="standard"/>
+  <bdep name="brotli" version="1.2.0" release="3.fc44" arch="x86_64" hdrmd5="cdcbfd287fba3c831869742197474700" project="Fedora:44" repository="standard"/>
+  <bdep name="glib2" version="2.88.3" release="1.fc44" arch="x86_64" hdrmd5="bdeb345fc54210fa6686f9f9d09fca9a" project="Fedora:44" repository="update"/>
+  <bdep name="python3-packaging" version="25.0" release="8.fc44" arch="noarch" hdrmd5="38800dbe23c3c7fc19264477351cd429" project="Fedora:44" repository="standard"/>
+  <bdep name="libffi-devel" version="3.5.2" release="2.fc44" arch="x86_64" hdrmd5="03faab586eadff19159df0038903d31d" project="Fedora:44" repository="standard"/>
+  <bdep name="pcre2-devel" version="10.47" release="1.fc44.1" arch="x86_64" hdrmd5="bcf9263f63c24182196542b7b8adfacb" project="Fedora:44" repository="standard"/>
+  <bdep name="libselinux-devel" version="3.11" release="2.fc44" arch="x86_64" hdrmd5="653c55d2409ab5cf3928d2a681fba2d2" project="Fedora:44" repository="update"/>
+  <bdep name="libmount-devel" version="2.41.5" release="1.fc44" arch="x86_64" hdrmd5="e978dc6686ee3e4913e02419e7f0622f" project="Fedora:44" repository="update"/>
+  <bdep name="sysprof-capture-devel" version="50.0" release="1.fc44" arch="x86_64" hdrmd5="03397b355619f071f3dddc599c27062b" project="Fedora:44" repository="standard"/>
+  <bdep name="libedit" version="3.1" release="59.20260512cvs.fc44" arch="x86_64" hdrmd5="b19710e3afb0549f6777ccbf9cfb98e0" project="Fedora:44" repository="update"/>
+  <bdep name="llvm-filesystem" version="22.1.8" release="4.fc44" arch="x86_64" hdrmd5="77dfdc0a01a357503121105cba1c6f22" project="Fedora:44" repository="update"/>
+  <bdep name="expat" version="2.8.3" release="1.fc44" arch="x86_64" hdrmd5="cdd73f33038ae62d38ec267674e94d53" project="Fedora:44" repository="update"/>
+  <bdep name="tzdata" version="2026c" release="2.fc44" arch="noarch" hdrmd5="58cf44ef9bce2ef1b5702b9f047b5b2e" project="Fedora:44" repository="update"/>
+  <bdep name="mpdecimal" version="4.0.1" release="3.fc44" arch="x86_64" hdrmd5="57ae79e2b494d5e7761fbc887d1e7207" project="Fedora:44" repository="standard"/>
+  <bdep name="python-pip-wheel" version="26.0.1" release="3.fc44" arch="noarch" hdrmd5="c4051c3c7caf338d57368230289968f6" project="Fedora:44" repository="update"/>
+  <bdep name="gettext-common-devel" version="0.26" release="5.fc44" arch="noarch" hdrmd5="2e30b1eaf192bacff6c17f18038f106e" project="Fedora:44" repository="update"/>
+  <bdep name="elfutils-libs" version="0.196" release="1.fc44" arch="x86_64" hdrmd5="d0b6f00281457bdcef094d8248bd4bbe" project="Fedora:44" repository="update"/>
+  <bdep name="kernel-headers" version="7.2.4" release="200.fc44" arch="x86_64" hdrmd5="1dd3e0d13ec3d3774630cfbaf5e58ad7" project="Fedora:44" repository="update"/>
+  <bdep name="libxcrypt-devel" version="4.5.2" release="3.fc44" arch="x86_64" hdrmd5="db5ad1a7ced4396ce9bbc7f9f4023e60" project="Fedora:44" repository="standard"/>
+  <bdep name="gettext-envsubst" version="0.26" release="5.fc44" arch="x86_64" hdrmd5="a143f90246537173c0f0ae89111afca4" project="Fedora:44" repository="update"/>
+  <bdep name="perl-IO-Compress-Lzma" version="2.217" release="1.fc44" arch="noarch" hdrmd5="cfae17071e1458403b560d03cda1721d" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Text-Diff" version="1.45" release="25.fc44" arch="noarch" hdrmd5="b0b3d3d1a6605c7e6845be62ef10ca2f" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-IPC-System-Simple" version="1.30" release="17.fc44" arch="noarch" hdrmd5="2019159ab816adef520d809c7ec3c348" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Archive-Zip" version="1.68" release="18.fc44" arch="noarch" hdrmd5="5d9be986b2bc1bf0c71064e8201b5f30" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Module-Build" epoch="2" version="0.42.34" release="10.fc44" arch="noarch" hdrmd5="f98c4adc89bcd2c95c50013dd58bda63" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Text-Glob" version="0.11" release="27.fc44" arch="noarch" hdrmd5="e9e2fa8d33b1a7533ab106fc43d138bd" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-local-lib" version="2.000029" release="11.fc44" arch="noarch" hdrmd5="f6f2e5a1f7f5d54e657583400f8505b0" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Module-Signature" version="0.93" release="3.fc44" arch="noarch" hdrmd5="e652d98c3cf67ee00793ddd8f9a1b734" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Compress-Bzip2" version="2.28" release="25.fc44" arch="x86_64" hdrmd5="e0b5b7490c00ac1f4513d662ee6e7d27" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Devel-Size" version="0.86" release="1.fc44" arch="x86_64" hdrmd5="a16ee032112ee484dbaec841be1bb7ca" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-File-HomeDir" version="1.006" release="16.fc44" arch="noarch" hdrmd5="ac1bdecfa2380ad9e21ffc1e1fc41040" project="Fedora:44" repository="standard"/>
+  <bdep name="libdb" version="5.3.28" release="67.fc44" arch="x86_64" hdrmd5="432e1072032ad8f2ddab2be86bae2d59" project="Fedora:44" repository="standard"/>
+  <bdep name="systemtap-sdt-devel" version="5.6" release="1.fc44" arch="x86_64" hdrmd5="694b6c781ea13b304b602c4292fc4e88" project="Fedora:44" repository="update"/>
+  <bdep name="systemtap-sdt-dtrace" version="5.6" release="1.fc44" arch="x86_64" hdrmd5="dc2c241679460eb356fbacecf9f89e81" project="Fedora:44" repository="update"/>
+  <bdep name="file-libs" version="5.46" release="10.fc44" arch="x86_64" hdrmd5="a61c1cdf124b0ab3890be1418bf94db2" project="Fedora:44" repository="update"/>
+  <bdep name="rpm-sign-libs" version="6.0.2" release="1.fc44" arch="x86_64" hdrmd5="e50e598a02eab91184c6a3572599b791" project="Fedora:44" repository="update"/>
+  <bdep name="xxhash-libs" version="0.8.3" release="4.fc44" arch="x86_64" hdrmd5="205e418d66fa1a698223e062d5f31975" project="Fedora:44" repository="standard"/>
+  <bdep name="zip" version="3.0" release="45.fc44" arch="x86_64" hdrmd5="1d1ceb1171fc93ff3d678782fedbb9cc" project="Fedora:44" repository="standard"/>
+  <bdep name="gnome-srpm-macros" version="1.0" release="1.fc44" arch="noarch" hdrmd5="2bbaa6afcb861d76b0036e4b5bf9b3be" project="Fedora:44" repository="update"/>
+  <bdep name="R-srpm-macros" version="1.3.7" release="2.fc44" arch="noarch" hdrmd5="b686f2691cc27b46f1a01b7b868994a9" project="Fedora:44" repository="update"/>
+  <bdep name="build-reproducibility-srpm-macros" version="0.7.3" release="4.1" arch="noarch" hdrmd5="8c60fa309a981702280ba3290f0e0e3e" project="home:davidnichols:qore:testing" repository="Fedora_44"/>
+  <bdep name="package-notes-srpm-macros" version="0.20" release="1.fc44" arch="noarch" hdrmd5="d43942c0c4a23b8797c5faaf256e6503" project="Fedora:44" repository="update"/>
+  <bdep name="pyproject-srpm-macros" version="1.23.2" release="1.fc44" arch="noarch" hdrmd5="ea0f3a9db5fe3363d3e353e6dfbda24a" project="Fedora:44" repository="update"/>
+  <bdep name="qt6-srpm-macros" version="6.11.2" release="1.fc44" arch="noarch" hdrmd5="41202f06247b1892427cf947a59b852e" project="Fedora:44" repository="update"/>
+  <bdep name="rust-srpm-macros" version="28.5" release="1.fc44" arch="noarch" hdrmd5="e5e859976fa9f178bd63922ebef66751" project="Fedora:44" repository="update"/>
+  <bdep name="ansible-srpm-macros" version="1" release="20.1.fc44" arch="noarch" hdrmd5="92c257dfcaa63bd84fa44caced232776" project="Fedora:44" repository="standard"/>
+  <bdep name="cmake-srpm-macros" version="4.3.0" release="1.fc44" arch="noarch" hdrmd5="a70636e7584c9ed409414a50470c10dc" project="Fedora:44" repository="standard"/>
+  <bdep name="efi-srpm-macros" version="6" release="6.fc44" arch="noarch" hdrmd5="30a0b0635068c602f1f933419b2cbf84" project="Fedora:44" repository="standard"/>
+  <bdep name="erlang-srpm-macros" version="0.3.11" release="1.fc44" arch="noarch" hdrmd5="ec0a73c52cc214921a197c2e8fa98438" project="Fedora:44" repository="standard"/>
+  <bdep name="filesystem-srpm-macros" version="3.18" release="52.fc44" arch="noarch" hdrmd5="15c6bc9cdac9a47a7654e827b79c7ac1" project="Fedora:44" repository="standard"/>
+  <bdep name="fonts-srpm-macros" epoch="1" version="5.0.0" release="2.fc44" arch="noarch" hdrmd5="e9d4cf4ac2615f742126356f71bed49e" project="Fedora:44" repository="standard"/>
+  <bdep name="forge-srpm-macros" version="0.4.0" release="4.fc44" arch="noarch" hdrmd5="aab249ac9acd004e86897b7447985c80" project="Fedora:44" repository="standard"/>
+  <bdep name="fpc-srpm-macros" version="1.3" release="16.fc44" arch="noarch" hdrmd5="fed53c1dc04a80c28c390825a256feb1" project="Fedora:44" repository="standard"/>
+  <bdep name="gap-srpm-macros" version="2" release="2.fc44" arch="noarch" hdrmd5="90930d8293ced643d22d2d921c260155" project="Fedora:44" repository="standard"/>
+  <bdep name="ghc-srpm-macros" version="1.10" release="1.fc44" arch="noarch" hdrmd5="61f360a6ef48d43acc030e9e0fcdfc42" project="Fedora:44" repository="standard"/>
+  <bdep name="gnat-srpm-macros" version="7" release="2.fc44" arch="noarch" hdrmd5="0270a2adcf182bf9f841a3c329242cf1" project="Fedora:44" repository="standard"/>
+  <bdep name="go-srpm-macros" version="3.8.0" release="2.fc44" arch="noarch" hdrmd5="6f0b3791a6d27bf3a0297bd5d9133203" project="Fedora:44" repository="standard"/>
+  <bdep name="java-srpm-macros" version="1" release="8.fc44" arch="noarch" hdrmd5="8bb2236dadcdd0bcb5e241920cda3b9c" project="Fedora:44" repository="standard"/>
+  <bdep name="lua-srpm-macros" version="1" release="17.fc44" arch="noarch" hdrmd5="a710a78675f58d9bf0253ad097c58dc9" project="Fedora:44" repository="standard"/>
+  <bdep name="ocaml-srpm-macros" version="11" release="3.fc44" arch="noarch" hdrmd5="b910a89ea704cff0729f06f082604ff7" project="Fedora:44" repository="standard"/>
+  <bdep name="openblas-srpm-macros" version="2" release="21.fc44" arch="noarch" hdrmd5="6e243717e93476d3bd87834543c97a7d" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-srpm-macros" version="1" release="61.fc44" arch="noarch" hdrmd5="8e5130f4dda5acde44d3a380bc26b9b1" project="Fedora:44" repository="standard"/>
+  <bdep name="qt5-srpm-macros" version="5.15.18" release="2.fc44" arch="noarch" hdrmd5="b168df377d36df226d33df3ee0bc9913" project="Fedora:44" repository="standard"/>
+  <bdep name="tree-sitter-srpm-macros" version="0.4.2" release="2.fc44" arch="noarch" hdrmd5="1aef37bcd71e4965430d43cfa5d29397" project="Fedora:44" repository="standard"/>
+  <bdep name="zig-srpm-macros" version="1" release="8.fc44" arch="noarch" hdrmd5="4a2a771340a56b0dee91136f5efe0dfe" project="Fedora:44" repository="standard"/>
+  <bdep name="annobin-plugin-gcc" version="13.14" release="1.fc44" arch="x86_64" hdrmd5="30dcd6c7b610b9c9142a0c708bfd3ce3" project="Fedora:44" repository="update"/>
+  <bdep name="gcc-plugin-annobin" version="16.2.1" release="2.fc44" arch="x86_64" hdrmd5="db8afdcc0b0866c6d9c854ffe911b2e2" project="Fedora:44" repository="update"/>
+  <bdep name="dwz" version="0.16" release="3.fc44" arch="x86_64" hdrmd5="66e6e6d1d8834344b07b00a6516c3f7d" project="Fedora:44" repository="standard"/>
+  <bdep name="kernel-srpm-macros" version="1.0" release="28.fc44" arch="noarch" hdrmd5="c897cfce50fb7f88b9566ab0ab2b2c66" project="Fedora:44" repository="standard"/>
+  <bdep name="python-srpm-macros" version="3.14" release="12.fc44" arch="noarch" hdrmd5="8e769b4d5d98e6d6012f60d648e277ea" project="Fedora:44" repository="standard"/>
+  <bdep name="libpfm" version="4.13.0" release="20.fc44" arch="x86_64" hdrmd5="8d3340a34243fe94badf7ab91f89d20c" project="Fedora:44" repository="update"/>
+  <bdep name="ed" version="1.22.5" release="2.fc44" arch="x86_64" hdrmd5="59053830329e26c51d8b4a5e95efbad0" project="Fedora:44" repository="standard"/>
+  <bdep name="libpkgconf" version="2.5.1" release="1.fc44" arch="x86_64" hdrmd5="ad033b3be79ccbd0e5d031e74215b83d" project="Fedora:44" repository="standard"/>
+  <bdep name="harfbuzz" version="14.1.0" release="2.fc44" arch="x86_64" hdrmd5="58882747053e6a2bf61ffed9c2d0c2f5" project="Fedora:44" repository="update"/>
+  <bdep name="cairo" version="1.18.4" release="6.fc44" arch="x86_64" hdrmd5="c70b00670009067d12a61f4ec24f8dc9" project="Fedora:44" repository="standard"/>
+  <bdep name="libglvnd-glx" epoch="1" version="1.7.0" release="9.fc44" arch="x86_64" hdrmd5="81930821c466891635ac51a15db5e893" project="Fedora:44" repository="standard"/>
+  <bdep name="harfbuzz-icu" version="14.1.0" release="2.fc44" arch="x86_64" hdrmd5="65b085fe749107a899dc352249a40d95" project="Fedora:44" repository="update"/>
+  <bdep name="libGLEW" version="2.2.0" release="12.fc44" arch="x86_64" hdrmd5="5605cff31c49f900ec53d4dbf4992d73" project="Fedora:44" repository="standard"/>
+  <bdep name="harfbuzz-raster" version="14.1.0" release="2.fc44" arch="x86_64" hdrmd5="bfe87a718429efb2d8b53fd042f3b6cf" project="Fedora:44" repository="update"/>
+  <bdep name="harfbuzz-vector" version="14.1.0" release="2.fc44" arch="x86_64" hdrmd5="b698ce8acb1fea020f8993d866a7e5d2" project="Fedora:44" repository="update"/>
+  <bdep name="harfbuzz-cairo" version="14.1.0" release="2.fc44" arch="x86_64" hdrmd5="708fc5cc9370fac2a46fbdd20034b8b9" project="Fedora:44" repository="update"/>
+  <bdep name="harfbuzz-gpu" version="14.1.0" release="2.fc44" arch="x86_64" hdrmd5="129e3d8ed9215d70b3a2a7a0cc4bf63b" project="Fedora:44" repository="update"/>
+  <bdep name="glfw" epoch="1" version="3.4" release="6.fc44" arch="x86_64" hdrmd5="34235b5ae2bc34137d531b82f2aee607" project="Fedora:44" repository="standard"/>
+  <bdep name="cairo-devel" version="1.18.4" release="6.fc44" arch="x86_64" hdrmd5="660386954674fcbe27570784d3028ea1" project="Fedora:44" repository="standard"/>
+  <bdep name="graphite2-devel" version="1.3.14" release="20.fc44" arch="x86_64" hdrmd5="8820fd7947a87d227d74bfab0636026c" project="Fedora:44" repository="standard"/>
+  <bdep name="libwebp" version="1.6.0" release="3.fc44" arch="x86_64" hdrmd5="4a05b67d38e68d913e39161cc54da8b1" project="Fedora:44" repository="standard"/>
+  <bdep name="liblerc" version="4.0.0" release="10.fc44" arch="x86_64" hdrmd5="ee9c7f47fa6f72293adf9188ad65275f" project="Fedora:44" repository="standard"/>
+  <bdep name="jbigkit-libs" version="2.1" release="33.fc44" arch="x86_64" hdrmd5="6e245edb7a5aa14804fad7dc9b1c3ea8" project="Fedora:44" repository="standard"/>
+  <bdep name="gnutls" version="3.8.13" release="1.fc44" arch="x86_64" hdrmd5="fd31cceacc21b1bf2a27d1eee9db61be" project="Fedora:44" repository="update"/>
+  <bdep name="pcre2-utf32" version="10.47" release="1.fc44.1" arch="x86_64" hdrmd5="9959eb74c49ab7a7ef386c1da2be27d5" project="Fedora:44" repository="standard"/>
+  <bdep name="pcre2-utf16" version="10.47" release="1.fc44.1" arch="x86_64" hdrmd5="4362998d1fe24305213e5bd25e877c4e" project="Fedora:44" repository="standard"/>
+  <bdep name="libsepol-devel" version="3.11" release="1.fc44" arch="x86_64" hdrmd5="4b0fe165b46df7019290c926aee83b81" project="Fedora:44" repository="update"/>
+  <bdep name="libblkid-devel" version="2.41.5" release="1.fc44" arch="x86_64" hdrmd5="450f65dab56e11efb8a379ffe72a5d75" project="Fedora:44" repository="update"/>
+  <bdep name="elfutils-default-yama-scope" version="0.196" release="1.fc44" arch="noarch" hdrmd5="2f0f4f28ce9a1ce037c9ae48437efaee" project="Fedora:44" repository="update"/>
+  <bdep name="perl-Compress-Raw-Lzma" version="2.221" release="1.fc44" arch="x86_64" hdrmd5="224acb18a954fbbf7d82e43f8a2718fe" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Algorithm-Diff" version="1.2010" release="15.fc44" arch="noarch" hdrmd5="1e53368da7dbb1ce6493058c18a31746" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Software-License" version="0.104007" release="3.fc44" arch="noarch" hdrmd5="6ced803444feeae914b1ef3448cd4cca" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-inc-latest" epoch="2" version="0.500" release="32.fc44" arch="noarch" hdrmd5="1bbf04b4b9d7500d9b1be85e7f06d6e3" project="Fedora:44" repository="standard"/>
+  <bdep name="gnupg2" version="2.4.9" release="16.fc44" arch="x86_64" hdrmd5="23bd7b8a5aac12598c2094ad38fc939f" project="Fedora:44" repository="update"/>
+  <bdep name="perl-File-Which" version="1.27" release="15.fc44" arch="noarch" hdrmd5="cd2b6d5ec43b68d1b284b84b9284005a" project="Fedora:44" repository="standard"/>
+  <bdep name="python3-pyparsing" version="3.1.2" release="15.fc44" arch="noarch" hdrmd5="48d7f8ecd5205b58c5fbb2b1fe978a8e" project="Fedora:44" repository="standard"/>
+  <bdep name="libfsverity" version="1.6" release="4.fc44" arch="x86_64" hdrmd5="db7f736a71422e90221d3803264cf370" project="Fedora:44" repository="standard"/>
+  <bdep name="ima-evm-utils-libs" version="1.6.2" release="8.fc44" arch="x86_64" hdrmd5="6e5d4db25fa2d763a48e74e36e3390a2" project="Fedora:44" repository="standard"/>
+  <bdep name="linkdupes" version="0.7.3" release="4.1" arch="x86_64" hdrmd5="a0b26af99e170689da331a45f0a6cf0a" project="home:davidnichols:qore:testing" repository="Fedora_44"/>
+  <bdep name="add-determinism" version="0.7.3" release="4.1" arch="x86_64" hdrmd5="b89e630e7881509b08f147c0dcefbe62" project="home:davidnichols:qore:testing" repository="Fedora_44"/>
+  <bdep name="annobin-docs" version="13.14" release="1.fc44" arch="noarch" hdrmd5="ea61518fc3fc05bc9d542f7cefd27596" project="Fedora:44" repository="update"/>
+  <bdep name="gpgverify" version="2.2" release="4.fc44" arch="noarch" hdrmd5="f3756a97d7c544b93cf36b15d812fa91" project="Fedora:44" repository="standard"/>
+  <bdep name="graphite2" version="1.3.14" release="20.fc44" arch="x86_64" hdrmd5="9e58161ed9e261d7e1c22439d76dab2c" project="Fedora:44" repository="standard"/>
+  <bdep name="libX11" version="1.8.13" release="1.fc44" arch="x86_64" hdrmd5="e9ee620ffae0ab52f246df56726fc64c" project="Fedora:44" repository="standard"/>
+  <bdep name="fontconfig" version="2.17.0" release="4.fc44" arch="x86_64" hdrmd5="606bb0693a8f7352965c4ba20424c7b1" project="Fedora:44" repository="standard"/>
+  <bdep name="libXext" version="1.3.6" release="5.fc44" arch="x86_64" hdrmd5="2a7a43ec39f2eb39b058689a15820186" project="Fedora:44" repository="standard"/>
+  <bdep name="libxcb" version="1.17.0" release="7.fc44" arch="x86_64" hdrmd5="a2945b803f419f35e762f7b0b1f9bc19" project="Fedora:44" repository="standard"/>
+  <bdep name="libXrender" version="0.9.12" release="4.fc44" arch="x86_64" hdrmd5="b88a4bc7c6807d05a48b82dc3ac3d5fc" project="Fedora:44" repository="standard"/>
+  <bdep name="pixman" version="0.46.2" release="3.fc44" arch="x86_64" hdrmd5="67d8b35e71a41e9ff071ed5228f4eb95" project="Fedora:44" repository="standard"/>
+  <bdep name="lzo" version="2.10" release="16.fc44" arch="x86_64" hdrmd5="816293760709d9c0a36cdeaf6f77aeb0" project="Fedora:44" repository="standard"/>
+  <bdep name="libglvnd" epoch="1" version="1.7.0" release="9.fc44" arch="x86_64" hdrmd5="26e1393782bc8347e460bc8379dc6c6c" project="Fedora:44" repository="standard"/>
+  <bdep name="mesa-libGL" version="26.2.3" release="1.fc44" arch="x86_64" hdrmd5="94fc434311437cb71d71e632e87462f8" project="Fedora:44" repository="update"/>
+  <bdep name="libX11-devel" version="1.8.13" release="1.fc44" arch="x86_64" hdrmd5="f6e12b0a127690e3cd4ff4ecaca9f050" project="Fedora:44" repository="standard"/>
+  <bdep name="libXext-devel" version="1.3.6" release="5.fc44" arch="x86_64" hdrmd5="f6e2c892d9d8bc99726d325891f831aa" project="Fedora:44" repository="standard"/>
+  <bdep name="libxcb-devel" version="1.17.0" release="7.fc44" arch="x86_64" hdrmd5="6af2ba50de6fc1f6be45d1ff7109ac80" project="Fedora:44" repository="standard"/>
+  <bdep name="lzo-devel" version="2.10" release="16.fc44" arch="x86_64" hdrmd5="2e17479feffe9be330c75a2180e40873" project="Fedora:44" repository="standard"/>
+  <bdep name="fontconfig-devel" version="2.17.0" release="4.fc44" arch="x86_64" hdrmd5="f95ea01b8518270b10ca0fc428215ab7" project="Fedora:44" repository="standard"/>
+  <bdep name="pixman-devel" version="0.46.2" release="3.fc44" arch="x86_64" hdrmd5="7057bf694633f7e8a8f65e1b308e087d" project="Fedora:44" repository="standard"/>
+  <bdep name="libXrender-devel" version="0.9.12" release="4.fc44" arch="x86_64" hdrmd5="7aa54dbe9c9965c09497f2a080a592e8" project="Fedora:44" repository="standard"/>
+  <bdep name="nettle" version="3.10.1" release="3.fc44" arch="x86_64" hdrmd5="987f5283c32d4c6a2d088971b5b86e12" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Text-Template" version="1.61" release="9.fc44" arch="noarch" hdrmd5="d3abaf18d87a8491e27433876a3cc0fa" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Data-Section" version="0.200008" release="9.fc44" arch="noarch" hdrmd5="fec55ef55d0dc4421cc6cac8e21c770b" project="Fedora:44" repository="standard"/>
+  <bdep name="libgcrypt" version="1.12.2" release="1.fc44" arch="x86_64" hdrmd5="b912d48b563019dafc9d0972854b4e03" project="Fedora:44" repository="update"/>
+  <bdep name="libgpg-error" version="1.58" release="2.fc44" arch="x86_64" hdrmd5="578f84039c73059376923abe81d484ac" project="Fedora:44" repository="standard"/>
+  <bdep name="libassuan" version="2.5.7" release="5.fc44" arch="x86_64" hdrmd5="92d06c17f4437df55d8fae8b343c330b" project="Fedora:44" repository="standard"/>
+  <bdep name="npth" version="1.8" release="4.fc44" arch="x86_64" hdrmd5="981e742b88585c2ae7ef1d58e29001d4" project="Fedora:44" repository="standard"/>
+  <bdep name="gnupg2-gpgconf" version="2.4.9" release="16.fc44" arch="x86_64" hdrmd5="5e5cadea1a911e1703f65d3b14eb1ee0" project="Fedora:44" repository="update"/>
+  <bdep name="gnupg2-dirmngr" version="2.4.9" release="16.fc44" arch="x86_64" hdrmd5="73dea79debfcf6e14012815a20ad9ff1" project="Fedora:44" repository="update"/>
+  <bdep name="gnupg2-gpg-agent" version="2.4.9" release="16.fc44" arch="x86_64" hdrmd5="b9a67da163fa5ab4450e19c4d1f67b18" project="Fedora:44" repository="update"/>
+  <bdep name="gnupg2-keyboxd" version="2.4.9" release="16.fc44" arch="x86_64" hdrmd5="3f32280b1030951d0a040a4f42ed4165" project="Fedora:44" repository="update"/>
+  <bdep name="gnupg2-verify" version="2.4.9" release="16.fc44" arch="x86_64" hdrmd5="a439b67f87e74cca71ce567d9fde6f86" project="Fedora:44" repository="update"/>
+  <bdep name="tpm2-tss" version="4.1.3" release="9.fc44" arch="x86_64" hdrmd5="f0c15ed03b9c528732e7fc135468d3da" project="Fedora:44" repository="standard"/>
+  <bdep name="selinux-policy-targeted" version="44.10" release="1.fc44" arch="noarch" hdrmd5="4f4823a03748a3a29bdf69496815f614" project="Fedora:44" repository="update"/>
+  <bdep name="libX11-common" version="1.8.13" release="1.fc44" arch="noarch" hdrmd5="1fc3feab7a9439816f28052cf1d711db" project="Fedora:44" repository="standard"/>
+  <bdep name="default-fonts-core-sans" version="4.3" release="1.fc44" arch="noarch" hdrmd5="eea0ee00fd8a0c2eb42df02e8f8d12e8" project="Fedora:44" repository="standard"/>
+  <bdep name="fonts-filesystem" epoch="1" version="5.0.0" release="2.fc44" arch="noarch" hdrmd5="792339b007401e37ddea7d5710da3cbf" project="Fedora:44" repository="standard"/>
+  <bdep name="xml-common" version="0.6.3" release="68.fc44" arch="noarch" hdrmd5="57c792de647944645e4989e2aa942022" project="Fedora:44" repository="standard"/>
+  <bdep name="libXau" version="1.0.12" release="4.fc44" arch="x86_64" hdrmd5="bb0decb325b4c31568166a03e7c13e46" project="Fedora:44" repository="standard"/>
+  <bdep name="libdrm" version="2.4.134" release="1.fc44" arch="x86_64" hdrmd5="834116a712f314eea3ae3350858d8d2a" project="Fedora:44" repository="update"/>
+  <bdep name="libX11-xcb" version="1.8.13" release="1.fc44" arch="x86_64" hdrmd5="5068c857fd9213e127641104042d696e" project="Fedora:44" repository="standard"/>
+  <bdep name="libXxf86vm" version="1.1.6" release="4.fc44" arch="x86_64" hdrmd5="386ac0600e136abb69b600f658d24e33" project="Fedora:44" repository="standard"/>
+  <bdep name="mesa-dri-drivers" version="26.2.3" release="1.fc44" arch="x86_64" hdrmd5="95dc3e96ba7eeca8731c0e44d59b5d22" project="Fedora:44" repository="update"/>
+  <bdep name="xorg-x11-proto-devel" version="2025.1" release="2.fc44" arch="noarch" hdrmd5="a633ed0eedb46f0b6082d9ad651b333c" project="Fedora:44" repository="standard"/>
+  <bdep name="libXau-devel" version="1.0.12" release="4.fc44" arch="x86_64" hdrmd5="84367b5a1336549f48709449e42883a7" project="Fedora:44" repository="standard"/>
+  <bdep name="lzo-minilzo" version="2.10" release="16.fc44" arch="x86_64" hdrmd5="6d7ad9688e40554a9b1819ddb7bea9e6" project="Fedora:44" repository="standard"/>
+  <bdep name="libxml2-devel" version="2.12.10" release="6.fc44" arch="x86_64" hdrmd5="2a00e2ddd60a9f5898c408ac751bb78b" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-MRO-Compat" version="0.15" release="13.fc44" arch="noarch" hdrmd5="f68bfd91bc34c076a983f0f28021173c" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Sub-Exporter" version="0.991" release="7.fc44" arch="noarch" hdrmd5="ffd0c3b6e28de88aba1d390a18313d6a" project="Fedora:44" repository="standard"/>
+  <bdep name="openldap" version="2.6.14" release="1.fc44" arch="x86_64" hdrmd5="5f92aedd2e13f2625022530fbeaec3a1" project="Fedora:44" repository="update"/>
+  <bdep name="libksba" version="1.6.7" release="5.fc44" arch="x86_64" hdrmd5="d105a13e4906a0ecbd9e6fc84651a575" project="Fedora:44" repository="standard"/>
+  <bdep name="libusb1" version="1.0.30" release="1.fc44" arch="x86_64" hdrmd5="a181c785d1ce1fe3d5dfe07c1d53c26f" project="Fedora:44" repository="update"/>
+  <bdep name="selinux-policy" version="44.10" release="1.fc44" arch="noarch" hdrmd5="29215ba2a739f66a39b87996f9424310" project="Fedora:44" repository="update"/>
+  <bdep name="policycoreutils" version="3.11" release="2.fc44" arch="x86_64" hdrmd5="4b5d2a9c321c799c4edb530d59582ffe" project="Fedora:44" repository="update"/>
+  <bdep name="abattis-cantarell-vf-fonts" version="0.301" release="17.fc44" arch="noarch" hdrmd5="bfb8663a6d654ac5a11a4169ebf06ce7" project="Fedora:44" repository="standard"/>
+  <bdep name="google-noto-sans-vf-fonts" version="20251201" release="2.fc44" arch="noarch" hdrmd5="6070c67a8c5a8e606edf9b36a3df389a" project="Fedora:44" repository="standard"/>
+  <bdep name="libpciaccess" version="0.16" release="17.fc44" arch="x86_64" hdrmd5="a23fd651748dc1593d6fb6039a85f1fb" project="Fedora:44" repository="standard"/>
+  <bdep name="mesa-libgbm" version="26.2.3" release="1.fc44" arch="x86_64" hdrmd5="4f6c40a9eb1debffe06a5ebc29e424be" project="Fedora:44" repository="update"/>
+  <bdep name="spirv-tools-libs" version="2026.1" release="1.fc44" arch="x86_64" hdrmd5="f4415a338228783569541d6d6003b038" project="Fedora:44" repository="standard"/>
+  <bdep name="libxshmfence" version="1.3.2" release="8.fc44" arch="x86_64" hdrmd5="a6dcd4e1a7ef2e176bc7819e0d1ec64e" project="Fedora:44" repository="standard"/>
+  <bdep name="lm_sensors-libs" version="3.6.0" release="24.fc44" arch="x86_64" hdrmd5="087cc227d2e955b032bd548ffac22dc4" project="Fedora:44" repository="standard"/>
+  <bdep name="mesa-filesystem" version="26.2.3" release="1.fc44" arch="x86_64" hdrmd5="56e1d4bd194d87663c9493cad4e54c82" project="Fedora:44" repository="update"/>
+  <bdep name="xz-devel" epoch="1" version="5.8.2" release="2.fc44" arch="x86_64" hdrmd5="fdb1e827cbef5905a907c88f2f3aa0c2" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Package-Generator" version="1.106" release="35.fc44" arch="noarch" hdrmd5="04b589d205d79b1d0db99fcf4c30f9bb" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Data-OptList" version="0.114" release="8.fc44" arch="noarch" hdrmd5="608841a8f3ebbf22f3b72507416ae930" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Params-Util" version="1.102" release="20.fc44" arch="x86_64" hdrmd5="480ee98ffd82ec8929f7a4acfc51c4b5" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Sub-Install" version="0.929" release="9.fc44" arch="noarch" hdrmd5="9408b8d8063de9ca83f5499ce50923e2" project="Fedora:44" repository="standard"/>
+  <bdep name="cyrus-sasl-lib" version="2.1.28" release="35.fc44" arch="x86_64" hdrmd5="561921d0a42a3f72552ecbef644b6d3c" project="Fedora:44" repository="standard"/>
+  <bdep name="libtool-ltdl" version="2.5.4" release="10.fc44" arch="x86_64" hdrmd5="f545edb5a1f276a76730b851fe19246d" project="Fedora:44" repository="standard"/>
+  <bdep name="libevent" version="2.1.13" release="1.fc44" arch="x86_64" hdrmd5="9d71d394787c52ca07035ab4646f1c41" project="Fedora:44" repository="update"/>
+  <bdep name="rpm-plugin-selinux" version="6.0.2" release="1.fc44" arch="x86_64" hdrmd5="d320ab792a78cb0212aa8236f85f456a" project="Fedora:44" repository="update"/>
+  <bdep name="libsemanage" version="3.11" release="1.fc44" arch="x86_64" hdrmd5="0f5d4f5a683dc4a6dd18de33a417ac81" project="Fedora:44" repository="update"/>
+  <bdep name="libselinux-utils" version="3.11" release="2.fc44" arch="x86_64" hdrmd5="c074d9025273a0036f828ff70b8a6911" project="Fedora:44" repository="update"/>
+  <bdep name="google-noto-fonts-common" version="20251201" release="2.fc44" arch="noarch" hdrmd5="24964b0c762fd199bd69fbed8f42eae3" project="Fedora:44" repository="standard"/>
+  <bdep name="hwdata" version="0.411" release="1.fc44" arch="noarch" hdrmd5="e66f1ecf5017fffa0483073bd1101514" project="Fedora:44" repository="update"/>
+  <bdep name="liblastlog2" version="2.41.5" release="1.fc44" arch="x86_64" hdrmd5="79920f808bb1d17e5f3265dba7f5f982" project="Fedora:44" repository="update"/>
+  <bdep name="bind-libs" notmeta="1" epoch="32" version="9.18.50" release="2.fc44" arch="x86_64" hdrmd5="9c8789826c8c407cb484c88991f9913a" project="Fedora:44" repository="update"/>
+  <bdep name="bind-utils" notmeta="1" epoch="32" version="9.18.50" release="2.fc44" arch="x86_64" hdrmd5="4f4e0d57abefcd048b3e8bee835ebac7" project="Fedora:44" repository="update"/>
+  <bdep name="bison" notmeta="1" version="3.8.2" release="15.fc44" arch="x86_64" hdrmd5="9f9fbd31bac3771f1d030888656ad285" project="Fedora:44" repository="standard"/>
+  <bdep name="cpp" notmeta="1" version="16.2.1" release="2.fc44" arch="x86_64" hdrmd5="7ca9de4e88900fc70f216c43278384ba" project="Fedora:44" repository="update"/>
+  <bdep name="cracklib" notmeta="1" version="2.10.3" release="1.fc44" arch="x86_64" hdrmd5="3ccc0927f2ed7c4de002a344906f1c4b" project="Fedora:44" repository="update"/>
+  <bdep name="cpio" notmeta="1" version="2.15" release="9.fc44" arch="x86_64" hdrmd5="766faac25ef1799afe531f6924844bcc" project="Fedora:44" repository="standard"/>
+  <bdep name="e2fsprogs" notmeta="1" version="1.47.3" release="4.fc44" arch="x86_64" hdrmd5="714a1a88853776edfb90f66acff6fef2" project="Fedora:44" repository="standard"/>
+  <bdep name="file" notmeta="1" version="5.46" release="10.fc44" arch="x86_64" hdrmd5="c126d3800d36eddfd6d9ce283098956f" project="Fedora:44" repository="update"/>
+  <bdep name="flex" notmeta="1" version="2.6.4" release="24.fc44" arch="x86_64" hdrmd5="6f73f217cdfdf0ead29ed8f060fd10fd" project="Fedora:44" repository="standard"/>
+  <bdep name="gawk" notmeta="1" version="5.3.2" release="3.fc44" arch="x86_64" hdrmd5="6395fe090c8a663e3c22d4e5cf04e383" project="Fedora:44" repository="standard"/>
+  <bdep name="gdbm-devel" notmeta="1" epoch="1" version="1.23" release="11.fc44" arch="x86_64" hdrmd5="520faf9a55b4e83a69b8533016e88eea" project="Fedora:44" repository="standard"/>
+  <bdep name="gettext-devel" notmeta="1" version="0.26" release="5.fc44" arch="x86_64" hdrmd5="b45a901c376a899875a718dfbc873ea1" project="Fedora:44" repository="update"/>
+  <bdep name="glibc-devel" notmeta="1" version="2.43" release="8.fc44" arch="x86_64" hdrmd5="c5376c597f7b2f307ab8a928f1a63dc9" project="Fedora:44" repository="update"/>
+  <bdep name="gpm" notmeta="1" version="1.20.7" release="53.fc44" arch="x86_64" hdrmd5="f78b62078ffb96906b4eda36a4c9a8d9" project="Fedora:44" repository="standard"/>
+  <bdep name="groff" notmeta="1" version="1.23.0" release="12.fc44" arch="x86_64" hdrmd5="ad1b69197add73437150472315de44d6" project="Fedora:44" repository="standard"/>
+  <bdep name="gzip" notmeta="1" version="1.14" release="2.fc44" arch="x86_64" hdrmd5="d005a98ec7a3abd09adb9457eb9048c1" project="Fedora:44" repository="standard"/>
+  <bdep name="info" notmeta="1" version="7.2" release="9.fc44" arch="x86_64" hdrmd5="7cd06c9116234e26a968b1c2ff5be47d" project="Fedora:44" repository="standard"/>
+  <bdep name="less" notmeta="1" version="704" release="4.fc44" arch="x86_64" hdrmd5="874984314767f2c5d29cdfaa3de0c908" project="Fedora:44" repository="update"/>
+  <bdep name="make" notmeta="1" epoch="1" version="4.4.1" release="12.fc44" arch="x86_64" hdrmd5="4cab7ebc1e1a9964cac55b0e7d33fa98" project="Fedora:44" repository="standard"/>
+  <bdep name="man-db" notmeta="1" version="2.13.1" release="3.fc44" arch="x86_64" hdrmd5="2cb886012ffd83ac1d1ee6e4ddec7311" project="Fedora:44" repository="standard"/>
+  <bdep name="kmod" notmeta="1" version="34.2" release="4.fc44" arch="x86_64" hdrmd5="df352567b0d7c40537ad66926f74bb5b" project="Fedora:44" repository="standard"/>
+  <bdep name="which" notmeta="1" version="2.25" release="1.fc44" arch="x86_64" hdrmd5="177f2e8f6da79872e03000a88c66087c" project="Fedora:44" repository="update"/>
+  <bdep name="ncurses-devel" notmeta="1" version="6.6" release="1.fc44" arch="x86_64" hdrmd5="3cca7d533c32ba11239aec086298e74a" project="Fedora:44" repository="standard"/>
+  <bdep name="net-tools" notmeta="1" version="2.0" release="0.77.20160912git.fc44" arch="x86_64" hdrmd5="dbd27484a1e143863577f70815f3466b" project="Fedora:44" repository="standard"/>
+  <bdep name="openssl" notmeta="1" epoch="1" version="3.5.8" release="1.fc44" arch="x86_64" hdrmd5="6b8116f36b18305218b88271b4e9dd8c" project="Fedora:44" repository="update"/>
+  <bdep name="patch" notmeta="1" version="2.8" release="4.fc44" arch="x86_64" hdrmd5="938a6cc072213ade8dccf69ec97b12be" project="Fedora:44" repository="standard"/>
+  <bdep name="psmisc" notmeta="1" version="23.7" release="7.fc44" arch="x86_64" hdrmd5="b77a232d3f2ea65bc048350c7b5cedd4" project="Fedora:44" repository="standard"/>
+  <bdep name="strace" notmeta="1" version="7.2" release="1.fc44" arch="x86_64" hdrmd5="3d2dc0c63a9cd46d2a98761a72b0f553" project="Fedora:44" repository="update"/>
+  <bdep name="texinfo" notmeta="1" version="7.2" release="9.fc44" arch="x86_64" hdrmd5="04fb887327ca5d0a77d72df73dc76cc3" project="Fedora:44" repository="standard"/>
+  <bdep name="unzip" notmeta="1" version="6.0" release="69.fc44" arch="x86_64" hdrmd5="15785d67731ef137b77a09025e1ce4c5" project="Fedora:44" repository="standard"/>
+  <bdep name="util-linux" notmeta="1" version="2.41.5" release="1.fc44" arch="x86_64" hdrmd5="be63dd7d5a23e9e7066ca454cfe342d8" project="Fedora:44" repository="update"/>
+  <bdep name="vim-enhanced" notmeta="1" epoch="2" version="9.2.1129" release="1.fc44" arch="x86_64" hdrmd5="3386be61c9996e890e5498f45ecaaacf" project="Fedora:44" repository="update"/>
+  <bdep name="initscripts" notmeta="1" version="10.27" release="2.fc44" arch="x86_64" hdrmd5="d2e6ab3cedcf256b45444b72c863b798" project="Fedora:44" repository="standard"/>
+  <bdep name="bzip2-devel" notmeta="1" version="1.0.8" release="23.fc44" arch="x86_64" hdrmd5="7d05a50d6559b9bacfab7a4d2575949a" project="Fedora:44" repository="standard"/>
+  <bdep name="shadow-utils" notmeta="1" epoch="2" version="4.19.0" release="7.fc44" arch="x86_64" hdrmd5="0cf540f6ca2924a679d6a321f6d8e1cb" project="Fedora:44" repository="update"/>
+  <bdep name="redhat-rpm-config" notmeta="1" version="344" release="2.fc44" arch="noarch" hdrmd5="85eda37977cb85c7a57f75e2528ecf5e" project="Fedora:44" repository="update"/>
+  <bdep name="procps-ng" notmeta="1" version="4.0.6" release="1.fc44" arch="x86_64" hdrmd5="9d997c09dda973febc30ace15d74ebf1" project="Fedora:44" repository="standard"/>
+  <bdep name="lmdb-libs" notmeta="1" version="0.9.34" release="2.fc44" arch="x86_64" hdrmd5="ad0fe902387819f1546e74014825f9b1" project="Fedora:44" repository="standard"/>
+  <bdep name="protobuf-c" notmeta="1" version="1.5.2" release="2.fc44" arch="x86_64" hdrmd5="19a9781fc32ba4c8dedee80814ba4b96" project="Fedora:44" repository="standard"/>
+  <bdep name="libuv" notmeta="1" epoch="1" version="1.52.1" release="2.fc44" arch="x86_64" hdrmd5="89c2f6824865a342b92c1b772a934cde" project="Fedora:44" repository="update"/>
+  <bdep name="libmaxminddb" notmeta="1" version="1.14.1" release="1.fc44" arch="x86_64" hdrmd5="5e06ea333154b79cc1f5dcd7ce56dac7" project="Fedora:44" repository="update"/>
+  <bdep name="fstrm" notmeta="1" version="0.6.1" release="14.fc44" arch="x86_64" hdrmd5="b6af431168fd1cc4a6045e32347940c7" project="Fedora:44" repository="standard"/>
+  <bdep name="fuse3-libs" notmeta="1" version="3.18.2" release="1.fc44" arch="x86_64" hdrmd5="db1a7c61a24c7a349174354c83e9b3df" project="Fedora:44" repository="standard"/>
+  <bdep name="e2fsprogs-libs" notmeta="1" version="1.47.3" release="4.fc44" arch="x86_64" hdrmd5="db979fb7a59086f78830c0194dfec52d" project="Fedora:44" repository="standard"/>
+  <bdep name="libss" notmeta="1" version="1.47.3" release="4.fc44" arch="x86_64" hdrmd5="cdfd551075d88f9712c5861d458ab43c" project="Fedora:44" repository="standard"/>
+  <bdep name="gpm-libs" notmeta="1" version="1.20.7" release="53.fc44" arch="x86_64" hdrmd5="8850e3cfe5ade066a08169c840fd9026" project="Fedora:44" repository="standard"/>
+  <bdep name="linuxconsoletools" notmeta="1" version="1.8.1" release="11.fc44" arch="x86_64" hdrmd5="f7271b2d8dd37f1023d10790d095b97e" project="Fedora:44" repository="standard"/>
+  <bdep name="libpipeline" notmeta="1" version="1.5.8" release="4.fc44" arch="x86_64" hdrmd5="596b39bf9d2b67e43c5377604c332f20" project="Fedora:44" repository="standard"/>
+  <bdep name="ncurses-c++-libs" notmeta="1" version="6.6" release="1.fc44" arch="x86_64" hdrmd5="8c70014b77d9f76c31d89da6eabf2dc7" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Text-Unidecode" notmeta="1" version="1.30" release="28.fc44" arch="noarch" hdrmd5="5a077a3cc4d661ea0407ef220398dad1" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-libintl-perl" notmeta="1" version="1.35" release="4.fc44" arch="x86_64" hdrmd5="e5c66379d11a3aca1992483895a558ea" project="Fedora:44" repository="standard"/>
+  <bdep name="perl-Unicode-EastAsianWidth" notmeta="1" version="12.0" release="20.fc44" arch="noarch" hdrmd5="f535cbf2c36383a57ba9507c3dfde7b2" project="Fedora:44" repository="standard"/>
+  <bdep name="libsodium" notmeta="1" version="1.0.22" release="1.fc44" arch="x86_64" hdrmd5="ca8ff64185d9b0bb8a6ef0d7b7523430" project="Fedora:44" repository="update"/>
+  <bdep name="vim-common" notmeta="1" epoch="2" version="9.2.1129" release="1.fc44" arch="x86_64" hdrmd5="f5b084202b8de4ffe0b571d465e876ad" project="Fedora:44" repository="update"/>
+  <bdep name="chkconfig" notmeta="1" version="1.33" release="5.fc44" arch="x86_64" hdrmd5="0cc1811ac9e10a7c15f1f180f01e9855" project="Fedora:44" repository="standard"/>
+  <bdep name="initscripts-service" notmeta="1" version="10.27" release="2.fc44" arch="noarch" hdrmd5="e1d2dd9981f6d23b02177598533372c0" project="Fedora:44" repository="standard"/>
+  <bdep name="initscripts-rename-device" notmeta="1" version="10.27" release="2.fc44" arch="x86_64" hdrmd5="88509da94fd0add28ec96754d06ef829" project="Fedora:44" repository="standard"/>
+  <bdep name="pam" notmeta="1" version="1.7.2" release="2.fc44" arch="x86_64" hdrmd5="bf371ec42b819370151151cb9345faf4" project="Fedora:44" repository="update"/>
+  <bdep name="sdl2-compat" notmeta="1" version="2.32.72" release="1.fc44" arch="x86_64" hdrmd5="7d423463184b1dd7856b8a42c0eacd1e" project="Fedora:44" repository="update"/>
+  <bdep name="systemd-rpm-macros" notmeta="1" version="259.9" release="1.fc44" arch="noarch" hdrmd5="b75bd6a0eb56d3cc1e6d56d6d0befd76" project="Fedora:44" repository="update"/>
+  <bdep name="xxd" notmeta="1" epoch="2" version="9.2.1129" release="1.fc44" arch="x86_64" hdrmd5="58ce11c914cf2617dfdd227ce6def2ef" project="Fedora:44" repository="update"/>
+  <bdep name="vim-data" notmeta="1" epoch="2" version="9.2.1129" release="1.fc44" arch="noarch" hdrmd5="df49c616ffd5e0513769c7f04fd1d902" project="Fedora:44" repository="update"/>
+  <bdep name="libtirpc" notmeta="1" version="1.3.8" release="0.fc44" arch="x86_64" hdrmd5="b44110954c0e59ed65ffa8d92337d856" project="Fedora:44" repository="update"/>
+  <bdep name="libnsl2" notmeta="1" version="2.0.1" release="5.fc44" arch="x86_64" hdrmd5="8d569f0775c2a2fada120fdbc480451f" project="Fedora:44" repository="standard"/>
+  <bdep name="libpwquality" notmeta="1" version="1.4.5" release="15.fc44" arch="x86_64" hdrmd5="a03c1eaa852b12391338fbfd6e9860d5" project="Fedora:44" repository="standard"/>
+  <bdep name="authselect" notmeta="1" version="1.7.1" release="1.fc44" arch="x86_64" hdrmd5="641b3ffc4806bee4e6a4a044c66fc85b" project="Fedora:44" repository="standard"/>
+  <bdep name="SDL3" notmeta="1" version="3.4.16" release="1.fc44" arch="x86_64" hdrmd5="bcb88435c0ec9dfdf45ba5a1d1e9a126" project="Fedora:44" repository="update"/>
+  <bdep name="authselect-libs" notmeta="1" version="1.7.1" release="1.fc44" arch="x86_64" hdrmd5="74e995c66fb46e3619f1e9faa8f2fcc3" project="Fedora:44" repository="standard"/>
+  <path project="home:davidnichols:qore:testing" repository="Fedora_44" url="https://download.opensuse.org/repositories/home:/davidnichols:/qore:/testing/Fedora_44/"/>
+  <path project="Fedora:44" repository="update" url="https://download.opensuse.org/repositories/Fedora:/44/update/"/>
+  <path project="Fedora:44" repository="standard" url="https://download.opensuse.org/repositories/Fedora:/44/standard/"/>
+  <path project="OBS:DefaultKernel" repository="standard" url="https://download.opensuse.org/repositories/OBS:/DefaultKernel/standard/"/>
+</buildinfo>

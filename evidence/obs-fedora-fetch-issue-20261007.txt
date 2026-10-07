@@ -1,0 +1,25 @@
+OBS workers cannot fetch four Fedora:44/update inputs that the API serves correctly
+
+On build.opensuse.org, qore-pdfium in home:davidnichols:qore:testing fails before compilation on Fedora_44 x86_64 and aarch64:
+
+    404 getbinaries: missing packages: gnome-srpm-macros harfbuzz-raster harfbuzz-vector harfbuzz-gpu
+
+The last failed workers were i03-ch1a:4 and i01-armsrv3:1. One explicit rebuild reproduced the failure on both architectures. As of 2026-10-07, both remain failed and the requested dependency versions/header IDs are unchanged. I have not requested another identical rebuild.
+
+Package: https://build.opensuse.org/package/show/home:davidnichols:qore:testing/qore-pdfium
+
+Build logs:
+- https://build.opensuse.org/package/live_build_log/home:davidnichols:qore:testing/qore-pdfium/Fedora_44/x86_64
+- https://build.opensuse.org/package/live_build_log/home:davidnichols:qore:testing/qore-pdfium/Fedora_44/aarch64
+
+The missing inputs are gnome-srpm-macros 1.0-1.fc44.noarch and harfbuzz-raster, harfbuzz-vector and harfbuzz-gpu 14.1.0-2.fc44 for each native architecture. Buildinfo assigns all four to Fedora:44/update, and includes that repository in its path.
+
+Fresh authenticated API downloads on 2026-10-07 return all eight architecture/input combinations. Every downloaded RPM's SIGMD5 exactly matches the current buildinfo hdrmd5. Earlier batch CPIO, public CPIO and binary-version queries also succeeded. The API path below retrieves the exact binary; substitute the other names or aarch64 as appropriate:
+
+    osc -A https://api.opensuse.org api /build/home:davidnichols:qore:testing/Fedora_44/x86_64/qore-pdfium/_buildinfo
+    osc -A https://api.opensuse.org api /build/Fedora:44/update/x86_64/_repository/gnome-srpm-macros.rpm > gnome-srpm-macros.rpm
+    rpm -qp --qf '%{SIGMD5}\n' gnome-srpm-macros.rpm
+
+The same source builds and passes its tests locally on Fedora and in OBS on both Leap and AlmaLinux architectures. No spec workaround or binary injection has been applied; testing-project publication remains disabled.
+
+Could an OBS administrator inspect the worker-side repository/binary-version/cache path for these four inputs? I cannot establish the precise server-side cause from the public/API view. This report concerns the deployment fetch inconsistency, not a demonstrated defect in bs_worker itself.
