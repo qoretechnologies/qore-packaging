@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User accepted the 1 exact diagnostic sites on 2026-10-07. Focused qualification and its recorded limits are unchanged. Full RPM and native architecture qualification remain separate gates.",
+  "diagnostics": [
+    {
+      "file": "deps/v8/src/compiler/turboshaft/structural-optimization-reducer.h",
+      "line": 267,
+      "diagnostic": "../deps/v8/src/compiler/turboshaft/structural-optimization-reducer.h:267:22: warning: \u2018current_if_false\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "257:     auto it = std::adjacent_find(\n258:         cases.begin(), cases.end(),\n259:         [](SwitchOp::Case a, SwitchOp::Case b) { return a.value == b.value; });\n260:     if (it != cases.end()) {\n261:       TRACE(\"\\t [bailout] Multiple cases with the value %d.\\n\", (*it).value);\n262:       goto no_change;\n263:     }\n264: \n265:     TRACE(\"[reduce] Successfully emit a Switch with %zu cases.\\n\",\n266:           cases.size());\n267:     return EmitSwitch(switch_var, cases, false_blocks, current_if_false,\n268:                       next_hint);\n269:   }\n270: \n271:  private:\n272:   static bool ContainsOnlyPureOps(const Block* block, const Graph& graph) {\n273:     for (const auto& op : base::IterateWithoutLast(graph.operations(*block))) {\n274:       // We are moving the block content to before the switch, effectively\n275:       // moving it before the previously existing branches.\n276:       if (!op.Effects().hoistable_before_a_branch()) {\n277:         return false;"
+    }
+  ],
+  "root_cause": "GCC does not connect the nonempty cases vector with the assignment of current_if_false before every insertion. The final pointer is read only when more than two cases have been collected.",
+  "source_review": [
+    "Both supported branch forms assign current_if_true/current_if_false before appending to cases and false_blocks.",
+    "An early break before any assignment leaves cases empty and reaches no_change. A later early break retains the last initialized false block, which becomes the default continuation.",
+    "EmitSwitch is reachable only after cases.size()>2 and duplicate-case rejection, so at least three pointer assignments occurred."
+  ],
+  "coverage": {
+    "native_checks": 940800,
+    "checks_per_run": 235200,
+    "matrix": "Cascades of length 1\u20137; equality and inverted zero-test first branches; all three hint modes; optimization bypass; early exits for wrong comparison, wrong constant, impure continuation and differing variable; duplicate-case rejection; truncated terminal blocks. Verify switch destinations, sorted cases, inlined blocks and exact default continuation.",
+    "compiler": "Both modes reproduce only current_if_false.",
+    "memory": "Both runs have zero errors; all 12560102 allocations freed per run.",
+    "actual_node_checks": 99400,
+    "actual_node": "Turbofan-verified functions cover lengths 1\u20137, duplicate values, side effects that must not be hoisted, and mixed input variables. Independent sequential reference checks results and side-effect counts over signed 32-bit boundary values."
+  },
+  "limits": [
+    "The entire ReduceInputGraphBranch body is verbatim, including bailouts and case sorting. Graph operations, block purity and switch emission use typed adapters.",
+    "Native checks validate destinations and initialization. They do not model instruction selection, graph cloning, or branch-hint performance heuristics.",
+    "Actual JavaScript checks confirm the Turbofan execution tier and semantics; they do not assert that every generated graph is transformed into a switch.",
+    "No runtime patch, suppression or compiler-flag change is proposed."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-structural-cascade-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-structural-cascade-20261007/control.cc": "eb25f655fed757587d94782dc76dec88dfdc4264f9daec32670d2b637e8384d5",
+    "evidence/controls/node-structural-cascade-20261007/control.h": "b64fafdf69bc6f97afbc9127e86a9d8d801da8e11eab0db6e073f5da6174c65b",
+    "evidence/controls/node-structural-cascade-20261007/control.js": "77277a2d2a740bb7255b0b93ddeca47e8dfded98b5bda424f0af5c6332d70ddf",
+    "evidence/controls/node-structural-cascade-20261007/debug-compile.log.gz": "207bd57179d01bb0312031e710fa41e5406632ef77e0dc41c89dd3217fa5b1b4",
+    "evidence/controls/node-structural-cascade-20261007/debug-memory.log.gz": "70e248633008b2c0adce5962dcf8bbabe0fa0f544bf00a402b2abd7ad01b15c3",
+    "evidence/controls/node-structural-cascade-20261007/debug-normal.log.gz": "70e248633008b2c0adce5962dcf8bbabe0fa0f544bf00a402b2abd7ad01b15c3",
+    "evidence/controls/node-structural-cascade-20261007/debug-valgrind.log.gz": "8f79a198221e45bed69b46b4f470de9e17f5bb00b7037a64af75f50b3876610a",
+    "evidence/controls/node-structural-cascade-20261007/helper.cc": "ff6a8d292829368555a8774d44d9e64cf4f4619134cb290c47c67d2e9e56b5cf",
+    "evidence/controls/node-structural-cascade-20261007/javascript-status.json": "7225754265501a3da15ebc85917e566f1714b69f420d7631020ad70c865a32cb",
+    "evidence/controls/node-structural-cascade-20261007/javascript.log.gz": "3eb1cc147f6c424bd073f155b274fcbe46fd1fe2596b5369591a67f6f7e45418",
+    "evidence/controls/node-structural-cascade-20261007/prepare.py": "729e31c575c8f7047a6e146a3d6f8bb6da67aa18f873a4c4a1fef596591bbb5c",
+    "evidence/controls/node-structural-cascade-20261007/release-compile.log.gz": "207bd57179d01bb0312031e710fa41e5406632ef77e0dc41c89dd3217fa5b1b4",
+    "evidence/controls/node-structural-cascade-20261007/release-memory.log.gz": "70e248633008b2c0adce5962dcf8bbabe0fa0f544bf00a402b2abd7ad01b15c3",
+    "evidence/controls/node-structural-cascade-20261007/release-normal.log.gz": "70e248633008b2c0adce5962dcf8bbabe0fa0f544bf00a402b2abd7ad01b15c3",
+    "evidence/controls/node-structural-cascade-20261007/release-valgrind.log.gz": "20576b98fb1801d37b69331f5932c3159b4b10d840e7f2758bfe925fab23830d",
+    "evidence/controls/node-structural-cascade-20261007/run.py": "e6c627b2e1968459375e8884a7c94c5e587cc003f311d3ce17ff4992a440950b",
+    "evidence/controls/node-structural-cascade-20261007/source-extracts.json": "1fbea06fda977df6b8881bb8a9efb95706f24c72531180e70a156d507e60a27b",
+    "evidence/controls/node-structural-cascade-20261007/status.json": "ee53c57998ffb08c31d3721ace46255b3c8166b571ec871a4054dbffc25d485a"
+  },
+  "approval": "Allow this exact diagnostic",
+  "approval_date": "2026-10-07"
+}

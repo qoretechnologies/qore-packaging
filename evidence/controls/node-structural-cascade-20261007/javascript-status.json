@@ -1,0 +1,20 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--user",
+    "1019:100",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/node-structural-cascade-controls-20261007:/work:ro",
+    "qore-rpm-keep:leap-node-compaction-baseline2-20261006",
+    "node",
+    "--no-turbolev",
+    "--no-concurrent-recompilation",
+    "--allow-natives-syntax",
+    "/work/control.js"
+  ],
+  "exit_code": 0
+}
