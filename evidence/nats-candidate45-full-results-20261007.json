@@ -1,0 +1,1156 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "All three local candidate45 RPM builds and full upstream test runs pass; this does not close historical intermittent release gates or qualify publication.",
+  "source": "evidence/nats-candidate45-start-20261007.json",
+  "results": {
+    "fedora": {
+      "exit_code": 0,
+      "test_results": {
+        "pass": 10144,
+        "skip": 72
+      },
+      "package_results": {
+        "pass": 27
+      },
+      "skips": [
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubAckPerf",
+          "output": "=== RUN   TestJetStreamPubAckPerf\n--- SKIP: TestJetStreamPubAckPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubPerfWithFullStream",
+          "output": "=== RUN   TestJetStreamPubPerfWithFullStream\n--- SKIP: TestJetStreamPubPerfWithFullStream (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamSnapshotsAPIPerf",
+          "output": "=== RUN   TestJetStreamSnapshotsAPIPerf\n--- SKIP: TestJetStreamSnapshotsAPIPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubPerf",
+          "output": "=== RUN   TestJetStreamPubPerf\n--- SKIP: TestJetStreamPubPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubWithAsyncResponsePerf",
+          "output": "=== RUN   TestJetStreamPubWithAsyncResponsePerf\n--- SKIP: TestJetStreamPubWithAsyncResponsePerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubWithSyncPerf",
+          "output": "=== RUN   TestJetStreamPubWithSyncPerf\n--- SKIP: TestJetStreamPubWithSyncPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubSubPerf",
+          "output": "=== RUN   TestJetStreamPubSubPerf\n--- SKIP: TestJetStreamPubSubPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamKVMemoryStorePerf",
+          "output": "=== RUN   TestJetStreamKVMemoryStorePerf\n--- SKIP: TestJetStreamKVMemoryStorePerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamKVMemoryStoreDirectGetPerf",
+          "output": "=== RUN   TestJetStreamKVMemoryStoreDirectGetPerf\n--- SKIP: TestJetStreamKVMemoryStoreDirectGetPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamMultiplePullPerf",
+          "output": "=== RUN   TestJetStreamMultiplePullPerf\n--- SKIP: TestJetStreamMultiplePullPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterBusyStreams",
+          "output": "=== RUN   TestJetStreamClusterBusyStreams\n    jetstream_cluster_4_test.go:1201: Too long for CI at the moment\n--- SKIP: TestJetStreamClusterBusyStreams (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterRemoveServer",
+          "output": "=== RUN   TestJetStreamClusterRemoveServer\n--- SKIP: TestJetStreamClusterRemoveServer (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterPullPerf",
+          "output": "=== RUN   TestJetStreamClusterPullPerf\n--- SKIP: TestJetStreamClusterPullPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterStreamPerf",
+          "output": "=== RUN   TestJetStreamClusterStreamPerf\n--- SKIP: TestJetStreamClusterStreamPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterRestartAndRemoveAdvisories",
+          "output": "=== RUN   TestJetStreamClusterRestartAndRemoveAdvisories\n--- SKIP: TestJetStreamClusterRestartAndRemoveAdvisories (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterConsumerPerf",
+          "output": "=== RUN   TestJetStreamClusterConsumerPerf\n--- SKIP: TestJetStreamClusterConsumerPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamConsumerFetchWithDrain",
+          "output": "=== RUN   TestJetStreamConsumerFetchWithDrain\n    jetstream_consumer_test.go:1138: \n--- SKIP: TestJetStreamConsumerFetchWithDrain (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamConsumerPerf",
+          "output": "=== RUN   TestJetStreamConsumerPerf\n--- SKIP: TestJetStreamConsumerPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamConsumerAckFileStorePerf",
+          "output": "=== RUN   TestJetStreamConsumerAckFileStorePerf\n--- SKIP: TestJetStreamConsumerAckFileStorePerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestMQTTClusterConnectDisconnectClean",
+          "output": "=== RUN   TestMQTTClusterConnectDisconnectClean\n    mqtt_test.go:3518: \n--- SKIP: TestMQTTClusterConnectDisconnectClean (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestMQTTClusterConnectDisconnectPersist",
+          "output": "=== RUN   TestMQTTClusterConnectDisconnectPersist\n    mqtt_test.go:3540: \n--- SKIP: TestMQTTClusterConnectDisconnectPersist (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestMQTTQoS2InflightMsgsDeliveredAfterUnsubscribe",
+          "output": "=== RUN   TestMQTTQoS2InflightMsgsDeliveredAfterUnsubscribe\n    mqtt_test.go:6263: \n--- SKIP: TestMQTTQoS2InflightMsgsDeliveredAfterUnsubscribe (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamOrderedConsumerLongRTTPerformance",
+          "output": "=== RUN   TestNoRaceJetStreamOrderedConsumerLongRTTPerformance\n--- SKIP: TestNoRaceJetStreamOrderedConsumerLongRTTPerformance (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterCatchupStallGate",
+          "output": "=== RUN   TestNoRaceJetStreamClusterCatchupStallGate\n--- SKIP: TestNoRaceJetStreamClusterCatchupStallGate (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterCatchupBailMidway",
+          "output": "=== RUN   TestNoRaceJetStreamClusterCatchupBailMidway\n--- SKIP: TestNoRaceJetStreamClusterCatchupBailMidway (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamManyPullConsumersNeedAckOptimization",
+          "output": "=== RUN   TestNoRaceJetStreamManyPullConsumersNeedAckOptimization\n--- SKIP: TestNoRaceJetStreamManyPullConsumersNeedAckOptimization (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceFileStoreStreamMaxAgePerformance",
+          "output": "=== RUN   TestNoRaceFileStoreStreamMaxAgePerformance\n--- SKIP: TestNoRaceFileStoreStreamMaxAgePerformance (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamKVAccountWithServerRestarts",
+          "output": "=== RUN   TestNoRaceJetStreamKVAccountWithServerRestarts\n--- SKIP: TestNoRaceJetStreamKVAccountWithServerRestarts (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterF3Setup",
+          "output": "=== RUN   TestNoRaceJetStreamClusterF3Setup\n--- SKIP: TestNoRaceJetStreamClusterF3Setup (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterDifferentRTTInterestBasedStreamSetup",
+          "output": "=== RUN   TestNoRaceJetStreamClusterDifferentRTTInterestBasedStreamSetup\n--- SKIP: TestNoRaceJetStreamClusterDifferentRTTInterestBasedStreamSetup (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterInterestStreamConsistencyAfterRollingRestart",
+          "output": "=== RUN   TestNoRaceJetStreamClusterInterestStreamConsistencyAfterRollingRestart\n--- SKIP: TestNoRaceJetStreamClusterInterestStreamConsistencyAfterRollingRestart (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterLeafnodeConnectPerf",
+          "output": "=== RUN   TestNoRaceJetStreamClusterLeafnodeConnectPerf\n--- SKIP: TestNoRaceJetStreamClusterLeafnodeConnectPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterLargeMetaSnapshotTiming",
+          "output": "=== RUN   TestNoRaceJetStreamClusterLargeMetaSnapshotTiming\n    norace_2_test.go:2959: \n--- SKIP: TestNoRaceJetStreamClusterLargeMetaSnapshotTiming (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterExtendedStreamPurgeStall",
+          "output": "=== RUN   TestNoRaceJetStreamClusterExtendedStreamPurgeStall\n--- SKIP: TestNoRaceJetStreamClusterExtendedStreamPurgeStall (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterLargeActiveOnReplica",
+          "output": "=== RUN   TestNoRaceJetStreamClusterLargeActiveOnReplica\n--- SKIP: TestNoRaceJetStreamClusterLargeActiveOnReplica (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamSuperClusterRIPStress",
+          "output": "=== RUN   TestNoRaceJetStreamSuperClusterRIPStress\n--- SKIP: TestNoRaceJetStreamSuperClusterRIPStress (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamFileStoreBufferReuse",
+          "output": "=== RUN   TestNoRaceJetStreamFileStoreBufferReuse\n--- SKIP: TestNoRaceJetStreamFileStoreBufferReuse (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamOrderedConsumerMissingMsg",
+          "output": "=== RUN   TestNoRaceJetStreamOrderedConsumerMissingMsg\n--- SKIP: TestNoRaceJetStreamOrderedConsumerMissingMsg (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamMsgIdPerfDuringCatchup",
+          "output": "=== RUN   TestNoRaceJetStreamMsgIdPerfDuringCatchup\n--- SKIP: TestNoRaceJetStreamMsgIdPerfDuringCatchup (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamRebuildDeDupeAndMemoryPerf",
+          "output": "=== RUN   TestNoRaceJetStreamRebuildDeDupeAndMemoryPerf\n--- SKIP: TestNoRaceJetStreamRebuildDeDupeAndMemoryPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamMemoryUsageOnLimitedStreamWithMirror",
+          "output": "=== RUN   TestNoRaceJetStreamMemoryUsageOnLimitedStreamWithMirror\n--- SKIP: TestNoRaceJetStreamMemoryUsageOnLimitedStreamWithMirror (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamLargeNumConsumersPerfImpact",
+          "output": "=== RUN   TestNoRaceJetStreamLargeNumConsumersPerfImpact\n--- SKIP: TestNoRaceJetStreamLargeNumConsumersPerfImpact (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamLargeNumConsumersSparseDelivery",
+          "output": "=== RUN   TestNoRaceJetStreamLargeNumConsumersSparseDelivery\n--- SKIP: TestNoRaceJetStreamLargeNumConsumersSparseDelivery (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceLargeStreamCatchups",
+          "output": "=== RUN   TestNoRaceLargeStreamCatchups\n    norace_2_test.go:2186: \n--- SKIP: TestNoRaceLargeStreamCatchups (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestStreamSourcingScalingSourcingManyBenchmark",
+          "output": "=== RUN   TestStreamSourcingScalingSourcingManyBenchmark\n    jetstream_sourcing_scaling_test.go:111: \n--- SKIP: TestStreamSourcingScalingSourcingManyBenchmark (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestXMQTTCompliance",
+          "output": "=== RUN   TestXMQTTCompliance\n    mqtt_ex_test_test.go:49: \"mqtt\" command is not found in $PATH nor $MQTT_CLI. See https://hivemq.github.io/mqtt-cli/docs/installation/#debian-package for installation instructions\n--- SKIP: TestXMQTTCompliance (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestXMQTTRetainedMessages",
+          "output": "=== RUN   TestXMQTTRetainedMessages\n    mqtt_ex_test_test.go:70: \"mqtt-test\" command is not found in $PATH.\n--- SKIP: TestXMQTTRetainedMessages (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestVersionMatchesTag",
+          "output": "=== RUN   TestVersionMatchesTag\n--- SKIP: TestVersionMatchesTag (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreAgeLimit/None-S2",
+          "output": "=== RUN   TestFileStoreAgeLimit/None-S2\n--- SKIP: TestFileStoreAgeLimit/None-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreAgeLimit/AES-GCM-None",
+          "output": "=== RUN   TestFileStoreAgeLimit/AES-GCM-None\n--- SKIP: TestFileStoreAgeLimit/AES-GCM-None (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreAgeLimit/AES-GCM-S2",
+          "output": "=== RUN   TestFileStoreAgeLimit/AES-GCM-S2\n--- SKIP: TestFileStoreAgeLimit/AES-GCM-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreAgeLimit/ChaCha20-Poly1305-None",
+          "output": "=== RUN   TestFileStoreAgeLimit/ChaCha20-Poly1305-None\n--- SKIP: TestFileStoreAgeLimit/ChaCha20-Poly1305-None (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreAgeLimit/ChaCha20-Poly1305-S2",
+          "output": "=== RUN   TestFileStoreAgeLimit/ChaCha20-Poly1305-S2\n--- SKIP: TestFileStoreAgeLimit/ChaCha20-Poly1305-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreCompactPerf",
+          "output": "=== RUN   TestFileStoreCompactPerf\n--- SKIP: TestFileStoreCompactPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStorePartialIndexes",
+          "output": "=== RUN   TestFileStorePartialIndexes\n--- SKIP: TestFileStorePartialIndexes (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreWriteFailures",
+          "output": "=== RUN   TestFileStoreWriteFailures\n--- SKIP: TestFileStoreWriteFailures (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStorePerf",
+          "output": "=== RUN   TestFileStorePerf\n--- SKIP: TestFileStorePerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreReadBackMsgPerf",
+          "output": "=== RUN   TestFileStoreReadBackMsgPerf\n--- SKIP: TestFileStoreReadBackMsgPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreStoreLimitRemovePerf",
+          "output": "=== RUN   TestFileStoreStoreLimitRemovePerf\n--- SKIP: TestFileStoreStoreLimitRemovePerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStorePubPerfWithSmallBlkSize",
+          "output": "=== RUN   TestFileStorePubPerfWithSmallBlkSize\n--- SKIP: TestFileStorePubPerfWithSmallBlkSize (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreConsumerPerf",
+          "output": "=== RUN   TestFileStoreConsumerPerf\n--- SKIP: TestFileStoreConsumerPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreExpireMsgsOnStart/None-S2",
+          "output": "=== RUN   TestFileStoreExpireMsgsOnStart/None-S2\n--- SKIP: TestFileStoreExpireMsgsOnStart/None-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreExpireMsgsOnStart/AES-GCM-None",
+          "output": "=== RUN   TestFileStoreExpireMsgsOnStart/AES-GCM-None\n--- SKIP: TestFileStoreExpireMsgsOnStart/AES-GCM-None (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreExpireMsgsOnStart/AES-GCM-S2",
+          "output": "=== RUN   TestFileStoreExpireMsgsOnStart/AES-GCM-S2\n--- SKIP: TestFileStoreExpireMsgsOnStart/AES-GCM-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-None",
+          "output": "=== RUN   TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-None\n--- SKIP: TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-None (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-S2",
+          "output": "=== RUN   TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-S2\n--- SKIP: TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreFetchPerf",
+          "output": "=== RUN   TestFileStoreFetchPerf\n--- SKIP: TestFileStoreFetchPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreWriteFullStateHighSubjectCardinality",
+          "output": "=== RUN   TestFileStoreWriteFullStateHighSubjectCardinality\n    filestore_test.go:7249: \n--- SKIP: TestFileStoreWriteFullStateHighSubjectCardinality (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server/stree",
+          "test": "TestSubjectTreeMatchAllPerf",
+          "output": "=== RUN   TestSubjectTreeMatchAllPerf\n    stree_test.go:753: \n--- SKIP: TestSubjectTreeMatchAllPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server/stree",
+          "test": "TestSubjectTreeIterPerf",
+          "output": "=== RUN   TestSubjectTreeIterPerf\n    stree_test.go:783: \n--- SKIP: TestSubjectTreeIterPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server/stree",
+          "test": "TestSubjectTreeMemoryPerf",
+          "output": "=== RUN   TestSubjectTreeMemoryPerf\n    stree_test.go:803: \n--- SKIP: TestSubjectTreeMemoryPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/test",
+          "test": "TestNoRaceSlowProxy",
+          "output": "=== RUN   TestNoRaceSlowProxy\n    norace_test.go:651: \n--- SKIP: TestNoRaceSlowProxy (0.00s)\n"
+        }
+      ],
+      "artifacts": {
+        "rpmbuild/RPMS/x86_64/nats-server-2.15.0-1.qore.fc44.x86_64.rpm": "b14ab41dbbe93b3e734752f4ca9dd8156520814699694d03be1aff3cce111eaa",
+        "rpmbuild/RPMS/x86_64/nats-server-debuginfo-2.15.0-1.qore.fc44.x86_64.rpm": "f2574a4425513a0db190eb3199cb39ed9e698d995faf982c5eab6ac43f356ef9",
+        "rpmbuild/RPMS/x86_64/nats-server-debugsource-2.15.0-1.qore.fc44.x86_64.rpm": "a039bfee3ab09a5d62e836f88e43ee3bad311086389a707c469de325e619e682",
+        "rpmbuild/SRPMS/nats-server-2.15.0-1.qore.fc44.src.rpm": "e746a6a2aa99a9cffbf5b3b86f27382b8ddce9881d76b670ae5ce8a7af87dec2"
+      }
+    },
+    "leap": {
+      "exit_code": 0,
+      "test_results": {
+        "pass": 10144,
+        "skip": 72
+      },
+      "package_results": {
+        "pass": 27
+      },
+      "skips": [
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubAckPerf",
+          "output": "=== RUN   TestJetStreamPubAckPerf\n--- SKIP: TestJetStreamPubAckPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubPerfWithFullStream",
+          "output": "=== RUN   TestJetStreamPubPerfWithFullStream\n--- SKIP: TestJetStreamPubPerfWithFullStream (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamSnapshotsAPIPerf",
+          "output": "=== RUN   TestJetStreamSnapshotsAPIPerf\n--- SKIP: TestJetStreamSnapshotsAPIPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubPerf",
+          "output": "=== RUN   TestJetStreamPubPerf\n--- SKIP: TestJetStreamPubPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubWithAsyncResponsePerf",
+          "output": "=== RUN   TestJetStreamPubWithAsyncResponsePerf\n--- SKIP: TestJetStreamPubWithAsyncResponsePerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubWithSyncPerf",
+          "output": "=== RUN   TestJetStreamPubWithSyncPerf\n--- SKIP: TestJetStreamPubWithSyncPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubSubPerf",
+          "output": "=== RUN   TestJetStreamPubSubPerf\n--- SKIP: TestJetStreamPubSubPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamKVMemoryStorePerf",
+          "output": "=== RUN   TestJetStreamKVMemoryStorePerf\n--- SKIP: TestJetStreamKVMemoryStorePerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamKVMemoryStoreDirectGetPerf",
+          "output": "=== RUN   TestJetStreamKVMemoryStoreDirectGetPerf\n--- SKIP: TestJetStreamKVMemoryStoreDirectGetPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamMultiplePullPerf",
+          "output": "=== RUN   TestJetStreamMultiplePullPerf\n--- SKIP: TestJetStreamMultiplePullPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterBusyStreams",
+          "output": "=== RUN   TestJetStreamClusterBusyStreams\n    jetstream_cluster_4_test.go:1201: Too long for CI at the moment\n--- SKIP: TestJetStreamClusterBusyStreams (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterRemoveServer",
+          "output": "=== RUN   TestJetStreamClusterRemoveServer\n--- SKIP: TestJetStreamClusterRemoveServer (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterPullPerf",
+          "output": "=== RUN   TestJetStreamClusterPullPerf\n--- SKIP: TestJetStreamClusterPullPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterStreamPerf",
+          "output": "=== RUN   TestJetStreamClusterStreamPerf\n--- SKIP: TestJetStreamClusterStreamPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterRestartAndRemoveAdvisories",
+          "output": "=== RUN   TestJetStreamClusterRestartAndRemoveAdvisories\n--- SKIP: TestJetStreamClusterRestartAndRemoveAdvisories (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterConsumerPerf",
+          "output": "=== RUN   TestJetStreamClusterConsumerPerf\n--- SKIP: TestJetStreamClusterConsumerPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamConsumerFetchWithDrain",
+          "output": "=== RUN   TestJetStreamConsumerFetchWithDrain\n    jetstream_consumer_test.go:1138: \n--- SKIP: TestJetStreamConsumerFetchWithDrain (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamConsumerPerf",
+          "output": "=== RUN   TestJetStreamConsumerPerf\n--- SKIP: TestJetStreamConsumerPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamConsumerAckFileStorePerf",
+          "output": "=== RUN   TestJetStreamConsumerAckFileStorePerf\n--- SKIP: TestJetStreamConsumerAckFileStorePerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestMQTTClusterConnectDisconnectClean",
+          "output": "=== RUN   TestMQTTClusterConnectDisconnectClean\n    mqtt_test.go:3518: \n--- SKIP: TestMQTTClusterConnectDisconnectClean (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestMQTTClusterConnectDisconnectPersist",
+          "output": "=== RUN   TestMQTTClusterConnectDisconnectPersist\n    mqtt_test.go:3540: \n--- SKIP: TestMQTTClusterConnectDisconnectPersist (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestMQTTQoS2InflightMsgsDeliveredAfterUnsubscribe",
+          "output": "=== RUN   TestMQTTQoS2InflightMsgsDeliveredAfterUnsubscribe\n    mqtt_test.go:6263: \n--- SKIP: TestMQTTQoS2InflightMsgsDeliveredAfterUnsubscribe (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamOrderedConsumerLongRTTPerformance",
+          "output": "=== RUN   TestNoRaceJetStreamOrderedConsumerLongRTTPerformance\n--- SKIP: TestNoRaceJetStreamOrderedConsumerLongRTTPerformance (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterCatchupStallGate",
+          "output": "=== RUN   TestNoRaceJetStreamClusterCatchupStallGate\n--- SKIP: TestNoRaceJetStreamClusterCatchupStallGate (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterCatchupBailMidway",
+          "output": "=== RUN   TestNoRaceJetStreamClusterCatchupBailMidway\n--- SKIP: TestNoRaceJetStreamClusterCatchupBailMidway (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamManyPullConsumersNeedAckOptimization",
+          "output": "=== RUN   TestNoRaceJetStreamManyPullConsumersNeedAckOptimization\n--- SKIP: TestNoRaceJetStreamManyPullConsumersNeedAckOptimization (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceFileStoreStreamMaxAgePerformance",
+          "output": "=== RUN   TestNoRaceFileStoreStreamMaxAgePerformance\n--- SKIP: TestNoRaceFileStoreStreamMaxAgePerformance (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamKVAccountWithServerRestarts",
+          "output": "=== RUN   TestNoRaceJetStreamKVAccountWithServerRestarts\n--- SKIP: TestNoRaceJetStreamKVAccountWithServerRestarts (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterF3Setup",
+          "output": "=== RUN   TestNoRaceJetStreamClusterF3Setup\n--- SKIP: TestNoRaceJetStreamClusterF3Setup (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterDifferentRTTInterestBasedStreamSetup",
+          "output": "=== RUN   TestNoRaceJetStreamClusterDifferentRTTInterestBasedStreamSetup\n--- SKIP: TestNoRaceJetStreamClusterDifferentRTTInterestBasedStreamSetup (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterInterestStreamConsistencyAfterRollingRestart",
+          "output": "=== RUN   TestNoRaceJetStreamClusterInterestStreamConsistencyAfterRollingRestart\n--- SKIP: TestNoRaceJetStreamClusterInterestStreamConsistencyAfterRollingRestart (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterLeafnodeConnectPerf",
+          "output": "=== RUN   TestNoRaceJetStreamClusterLeafnodeConnectPerf\n--- SKIP: TestNoRaceJetStreamClusterLeafnodeConnectPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterLargeMetaSnapshotTiming",
+          "output": "=== RUN   TestNoRaceJetStreamClusterLargeMetaSnapshotTiming\n    norace_2_test.go:2959: \n--- SKIP: TestNoRaceJetStreamClusterLargeMetaSnapshotTiming (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterExtendedStreamPurgeStall",
+          "output": "=== RUN   TestNoRaceJetStreamClusterExtendedStreamPurgeStall\n--- SKIP: TestNoRaceJetStreamClusterExtendedStreamPurgeStall (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterLargeActiveOnReplica",
+          "output": "=== RUN   TestNoRaceJetStreamClusterLargeActiveOnReplica\n--- SKIP: TestNoRaceJetStreamClusterLargeActiveOnReplica (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamSuperClusterRIPStress",
+          "output": "=== RUN   TestNoRaceJetStreamSuperClusterRIPStress\n--- SKIP: TestNoRaceJetStreamSuperClusterRIPStress (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamFileStoreBufferReuse",
+          "output": "=== RUN   TestNoRaceJetStreamFileStoreBufferReuse\n--- SKIP: TestNoRaceJetStreamFileStoreBufferReuse (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamOrderedConsumerMissingMsg",
+          "output": "=== RUN   TestNoRaceJetStreamOrderedConsumerMissingMsg\n--- SKIP: TestNoRaceJetStreamOrderedConsumerMissingMsg (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamMsgIdPerfDuringCatchup",
+          "output": "=== RUN   TestNoRaceJetStreamMsgIdPerfDuringCatchup\n--- SKIP: TestNoRaceJetStreamMsgIdPerfDuringCatchup (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamRebuildDeDupeAndMemoryPerf",
+          "output": "=== RUN   TestNoRaceJetStreamRebuildDeDupeAndMemoryPerf\n--- SKIP: TestNoRaceJetStreamRebuildDeDupeAndMemoryPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamMemoryUsageOnLimitedStreamWithMirror",
+          "output": "=== RUN   TestNoRaceJetStreamMemoryUsageOnLimitedStreamWithMirror\n--- SKIP: TestNoRaceJetStreamMemoryUsageOnLimitedStreamWithMirror (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamLargeNumConsumersPerfImpact",
+          "output": "=== RUN   TestNoRaceJetStreamLargeNumConsumersPerfImpact\n--- SKIP: TestNoRaceJetStreamLargeNumConsumersPerfImpact (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamLargeNumConsumersSparseDelivery",
+          "output": "=== RUN   TestNoRaceJetStreamLargeNumConsumersSparseDelivery\n--- SKIP: TestNoRaceJetStreamLargeNumConsumersSparseDelivery (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceLargeStreamCatchups",
+          "output": "=== RUN   TestNoRaceLargeStreamCatchups\n    norace_2_test.go:2186: \n--- SKIP: TestNoRaceLargeStreamCatchups (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestStreamSourcingScalingSourcingManyBenchmark",
+          "output": "=== RUN   TestStreamSourcingScalingSourcingManyBenchmark\n    jetstream_sourcing_scaling_test.go:111: \n--- SKIP: TestStreamSourcingScalingSourcingManyBenchmark (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestXMQTTCompliance",
+          "output": "=== RUN   TestXMQTTCompliance\n    mqtt_ex_test_test.go:49: \"mqtt\" command is not found in $PATH nor $MQTT_CLI. See https://hivemq.github.io/mqtt-cli/docs/installation/#debian-package for installation instructions\n--- SKIP: TestXMQTTCompliance (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestXMQTTRetainedMessages",
+          "output": "=== RUN   TestXMQTTRetainedMessages\n    mqtt_ex_test_test.go:70: \"mqtt-test\" command is not found in $PATH.\n--- SKIP: TestXMQTTRetainedMessages (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestVersionMatchesTag",
+          "output": "=== RUN   TestVersionMatchesTag\n--- SKIP: TestVersionMatchesTag (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreAgeLimit/None-S2",
+          "output": "=== RUN   TestFileStoreAgeLimit/None-S2\n--- SKIP: TestFileStoreAgeLimit/None-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreAgeLimit/AES-GCM-None",
+          "output": "=== RUN   TestFileStoreAgeLimit/AES-GCM-None\n--- SKIP: TestFileStoreAgeLimit/AES-GCM-None (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreAgeLimit/AES-GCM-S2",
+          "output": "=== RUN   TestFileStoreAgeLimit/AES-GCM-S2\n--- SKIP: TestFileStoreAgeLimit/AES-GCM-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreAgeLimit/ChaCha20-Poly1305-None",
+          "output": "=== RUN   TestFileStoreAgeLimit/ChaCha20-Poly1305-None\n--- SKIP: TestFileStoreAgeLimit/ChaCha20-Poly1305-None (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreAgeLimit/ChaCha20-Poly1305-S2",
+          "output": "=== RUN   TestFileStoreAgeLimit/ChaCha20-Poly1305-S2\n--- SKIP: TestFileStoreAgeLimit/ChaCha20-Poly1305-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreCompactPerf",
+          "output": "=== RUN   TestFileStoreCompactPerf\n--- SKIP: TestFileStoreCompactPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStorePartialIndexes",
+          "output": "=== RUN   TestFileStorePartialIndexes\n--- SKIP: TestFileStorePartialIndexes (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreWriteFailures",
+          "output": "=== RUN   TestFileStoreWriteFailures\n--- SKIP: TestFileStoreWriteFailures (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStorePerf",
+          "output": "=== RUN   TestFileStorePerf\n--- SKIP: TestFileStorePerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreReadBackMsgPerf",
+          "output": "=== RUN   TestFileStoreReadBackMsgPerf\n--- SKIP: TestFileStoreReadBackMsgPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreStoreLimitRemovePerf",
+          "output": "=== RUN   TestFileStoreStoreLimitRemovePerf\n--- SKIP: TestFileStoreStoreLimitRemovePerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStorePubPerfWithSmallBlkSize",
+          "output": "=== RUN   TestFileStorePubPerfWithSmallBlkSize\n--- SKIP: TestFileStorePubPerfWithSmallBlkSize (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreConsumerPerf",
+          "output": "=== RUN   TestFileStoreConsumerPerf\n--- SKIP: TestFileStoreConsumerPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreExpireMsgsOnStart/None-S2",
+          "output": "=== RUN   TestFileStoreExpireMsgsOnStart/None-S2\n--- SKIP: TestFileStoreExpireMsgsOnStart/None-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreExpireMsgsOnStart/AES-GCM-None",
+          "output": "=== RUN   TestFileStoreExpireMsgsOnStart/AES-GCM-None\n--- SKIP: TestFileStoreExpireMsgsOnStart/AES-GCM-None (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreExpireMsgsOnStart/AES-GCM-S2",
+          "output": "=== RUN   TestFileStoreExpireMsgsOnStart/AES-GCM-S2\n--- SKIP: TestFileStoreExpireMsgsOnStart/AES-GCM-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-None",
+          "output": "=== RUN   TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-None\n--- SKIP: TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-None (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-S2",
+          "output": "=== RUN   TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-S2\n--- SKIP: TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreFetchPerf",
+          "output": "=== RUN   TestFileStoreFetchPerf\n--- SKIP: TestFileStoreFetchPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreWriteFullStateHighSubjectCardinality",
+          "output": "=== RUN   TestFileStoreWriteFullStateHighSubjectCardinality\n    filestore_test.go:7249: \n--- SKIP: TestFileStoreWriteFullStateHighSubjectCardinality (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server/stree",
+          "test": "TestSubjectTreeMatchAllPerf",
+          "output": "=== RUN   TestSubjectTreeMatchAllPerf\n    stree_test.go:753: \n--- SKIP: TestSubjectTreeMatchAllPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server/stree",
+          "test": "TestSubjectTreeIterPerf",
+          "output": "=== RUN   TestSubjectTreeIterPerf\n    stree_test.go:783: \n--- SKIP: TestSubjectTreeIterPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server/stree",
+          "test": "TestSubjectTreeMemoryPerf",
+          "output": "=== RUN   TestSubjectTreeMemoryPerf\n    stree_test.go:803: \n--- SKIP: TestSubjectTreeMemoryPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/test",
+          "test": "TestNoRaceSlowProxy",
+          "output": "=== RUN   TestNoRaceSlowProxy\n    norace_test.go:651: \n--- SKIP: TestNoRaceSlowProxy (0.00s)\n"
+        }
+      ],
+      "artifacts": {
+        "rpmbuild/RPMS/x86_64/nats-server-2.15.0-1.qore.x86_64.rpm": "20c41613999cf0619d3602c91f33c1defcea3721ffc4592580c2c13cc1913931",
+        "rpmbuild/RPMS/x86_64/nats-server-debuginfo-2.15.0-1.qore.x86_64.rpm": "c0d101236734700957d520ccdeca76678c666fefeca0dc81e9eb475276385baa",
+        "rpmbuild/RPMS/x86_64/nats-server-debugsource-2.15.0-1.qore.x86_64.rpm": "811ca6fdcde8aef4e6ac4801bb3769ae06bef1050b151d3b233f89605ab3fde2",
+        "rpmbuild/SRPMS/nats-server-2.15.0-1.qore.src.rpm": "d461e5935603393f515d9a132a76db56348e04aabf23e318907c2a3e6dbc461c"
+      }
+    },
+    "el10": {
+      "exit_code": 0,
+      "test_results": {
+        "pass": 10144,
+        "skip": 72
+      },
+      "package_results": {
+        "pass": 27
+      },
+      "skips": [
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubAckPerf",
+          "output": "=== RUN   TestJetStreamPubAckPerf\n--- SKIP: TestJetStreamPubAckPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubPerfWithFullStream",
+          "output": "=== RUN   TestJetStreamPubPerfWithFullStream\n--- SKIP: TestJetStreamPubPerfWithFullStream (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamSnapshotsAPIPerf",
+          "output": "=== RUN   TestJetStreamSnapshotsAPIPerf\n--- SKIP: TestJetStreamSnapshotsAPIPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubPerf",
+          "output": "=== RUN   TestJetStreamPubPerf\n--- SKIP: TestJetStreamPubPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubWithAsyncResponsePerf",
+          "output": "=== RUN   TestJetStreamPubWithAsyncResponsePerf\n--- SKIP: TestJetStreamPubWithAsyncResponsePerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubWithSyncPerf",
+          "output": "=== RUN   TestJetStreamPubWithSyncPerf\n--- SKIP: TestJetStreamPubWithSyncPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamPubSubPerf",
+          "output": "=== RUN   TestJetStreamPubSubPerf\n--- SKIP: TestJetStreamPubSubPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamKVMemoryStorePerf",
+          "output": "=== RUN   TestJetStreamKVMemoryStorePerf\n--- SKIP: TestJetStreamKVMemoryStorePerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamKVMemoryStoreDirectGetPerf",
+          "output": "=== RUN   TestJetStreamKVMemoryStoreDirectGetPerf\n--- SKIP: TestJetStreamKVMemoryStoreDirectGetPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamMultiplePullPerf",
+          "output": "=== RUN   TestJetStreamMultiplePullPerf\n--- SKIP: TestJetStreamMultiplePullPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterBusyStreams",
+          "output": "=== RUN   TestJetStreamClusterBusyStreams\n    jetstream_cluster_4_test.go:1201: Too long for CI at the moment\n--- SKIP: TestJetStreamClusterBusyStreams (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterRemoveServer",
+          "output": "=== RUN   TestJetStreamClusterRemoveServer\n--- SKIP: TestJetStreamClusterRemoveServer (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterPullPerf",
+          "output": "=== RUN   TestJetStreamClusterPullPerf\n--- SKIP: TestJetStreamClusterPullPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterStreamPerf",
+          "output": "=== RUN   TestJetStreamClusterStreamPerf\n--- SKIP: TestJetStreamClusterStreamPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterRestartAndRemoveAdvisories",
+          "output": "=== RUN   TestJetStreamClusterRestartAndRemoveAdvisories\n--- SKIP: TestJetStreamClusterRestartAndRemoveAdvisories (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamClusterConsumerPerf",
+          "output": "=== RUN   TestJetStreamClusterConsumerPerf\n--- SKIP: TestJetStreamClusterConsumerPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamConsumerFetchWithDrain",
+          "output": "=== RUN   TestJetStreamConsumerFetchWithDrain\n    jetstream_consumer_test.go:1138: \n--- SKIP: TestJetStreamConsumerFetchWithDrain (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamConsumerPerf",
+          "output": "=== RUN   TestJetStreamConsumerPerf\n--- SKIP: TestJetStreamConsumerPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamConsumerAckFileStorePerf",
+          "output": "=== RUN   TestJetStreamConsumerAckFileStorePerf\n--- SKIP: TestJetStreamConsumerAckFileStorePerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestMQTTClusterConnectDisconnectClean",
+          "output": "=== RUN   TestMQTTClusterConnectDisconnectClean\n    mqtt_test.go:3518: \n--- SKIP: TestMQTTClusterConnectDisconnectClean (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestMQTTClusterConnectDisconnectPersist",
+          "output": "=== RUN   TestMQTTClusterConnectDisconnectPersist\n    mqtt_test.go:3540: \n--- SKIP: TestMQTTClusterConnectDisconnectPersist (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestMQTTQoS2InflightMsgsDeliveredAfterUnsubscribe",
+          "output": "=== RUN   TestMQTTQoS2InflightMsgsDeliveredAfterUnsubscribe\n    mqtt_test.go:6263: \n--- SKIP: TestMQTTQoS2InflightMsgsDeliveredAfterUnsubscribe (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamOrderedConsumerLongRTTPerformance",
+          "output": "=== RUN   TestNoRaceJetStreamOrderedConsumerLongRTTPerformance\n--- SKIP: TestNoRaceJetStreamOrderedConsumerLongRTTPerformance (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterCatchupStallGate",
+          "output": "=== RUN   TestNoRaceJetStreamClusterCatchupStallGate\n--- SKIP: TestNoRaceJetStreamClusterCatchupStallGate (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterCatchupBailMidway",
+          "output": "=== RUN   TestNoRaceJetStreamClusterCatchupBailMidway\n--- SKIP: TestNoRaceJetStreamClusterCatchupBailMidway (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamManyPullConsumersNeedAckOptimization",
+          "output": "=== RUN   TestNoRaceJetStreamManyPullConsumersNeedAckOptimization\n--- SKIP: TestNoRaceJetStreamManyPullConsumersNeedAckOptimization (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceFileStoreStreamMaxAgePerformance",
+          "output": "=== RUN   TestNoRaceFileStoreStreamMaxAgePerformance\n--- SKIP: TestNoRaceFileStoreStreamMaxAgePerformance (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamKVAccountWithServerRestarts",
+          "output": "=== RUN   TestNoRaceJetStreamKVAccountWithServerRestarts\n--- SKIP: TestNoRaceJetStreamKVAccountWithServerRestarts (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterF3Setup",
+          "output": "=== RUN   TestNoRaceJetStreamClusterF3Setup\n--- SKIP: TestNoRaceJetStreamClusterF3Setup (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterDifferentRTTInterestBasedStreamSetup",
+          "output": "=== RUN   TestNoRaceJetStreamClusterDifferentRTTInterestBasedStreamSetup\n--- SKIP: TestNoRaceJetStreamClusterDifferentRTTInterestBasedStreamSetup (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterInterestStreamConsistencyAfterRollingRestart",
+          "output": "=== RUN   TestNoRaceJetStreamClusterInterestStreamConsistencyAfterRollingRestart\n--- SKIP: TestNoRaceJetStreamClusterInterestStreamConsistencyAfterRollingRestart (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterLeafnodeConnectPerf",
+          "output": "=== RUN   TestNoRaceJetStreamClusterLeafnodeConnectPerf\n--- SKIP: TestNoRaceJetStreamClusterLeafnodeConnectPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterLargeMetaSnapshotTiming",
+          "output": "=== RUN   TestNoRaceJetStreamClusterLargeMetaSnapshotTiming\n    norace_2_test.go:2959: \n--- SKIP: TestNoRaceJetStreamClusterLargeMetaSnapshotTiming (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterExtendedStreamPurgeStall",
+          "output": "=== RUN   TestNoRaceJetStreamClusterExtendedStreamPurgeStall\n--- SKIP: TestNoRaceJetStreamClusterExtendedStreamPurgeStall (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamClusterLargeActiveOnReplica",
+          "output": "=== RUN   TestNoRaceJetStreamClusterLargeActiveOnReplica\n--- SKIP: TestNoRaceJetStreamClusterLargeActiveOnReplica (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamSuperClusterRIPStress",
+          "output": "=== RUN   TestNoRaceJetStreamSuperClusterRIPStress\n--- SKIP: TestNoRaceJetStreamSuperClusterRIPStress (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamFileStoreBufferReuse",
+          "output": "=== RUN   TestNoRaceJetStreamFileStoreBufferReuse\n--- SKIP: TestNoRaceJetStreamFileStoreBufferReuse (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamOrderedConsumerMissingMsg",
+          "output": "=== RUN   TestNoRaceJetStreamOrderedConsumerMissingMsg\n--- SKIP: TestNoRaceJetStreamOrderedConsumerMissingMsg (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamMsgIdPerfDuringCatchup",
+          "output": "=== RUN   TestNoRaceJetStreamMsgIdPerfDuringCatchup\n--- SKIP: TestNoRaceJetStreamMsgIdPerfDuringCatchup (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamRebuildDeDupeAndMemoryPerf",
+          "output": "=== RUN   TestNoRaceJetStreamRebuildDeDupeAndMemoryPerf\n--- SKIP: TestNoRaceJetStreamRebuildDeDupeAndMemoryPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamMemoryUsageOnLimitedStreamWithMirror",
+          "output": "=== RUN   TestNoRaceJetStreamMemoryUsageOnLimitedStreamWithMirror\n--- SKIP: TestNoRaceJetStreamMemoryUsageOnLimitedStreamWithMirror (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamLargeNumConsumersPerfImpact",
+          "output": "=== RUN   TestNoRaceJetStreamLargeNumConsumersPerfImpact\n--- SKIP: TestNoRaceJetStreamLargeNumConsumersPerfImpact (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceJetStreamLargeNumConsumersSparseDelivery",
+          "output": "=== RUN   TestNoRaceJetStreamLargeNumConsumersSparseDelivery\n--- SKIP: TestNoRaceJetStreamLargeNumConsumersSparseDelivery (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNoRaceLargeStreamCatchups",
+          "output": "=== RUN   TestNoRaceLargeStreamCatchups\n    norace_2_test.go:2186: \n--- SKIP: TestNoRaceLargeStreamCatchups (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestStreamSourcingScalingSourcingManyBenchmark",
+          "output": "=== RUN   TestStreamSourcingScalingSourcingManyBenchmark\n    jetstream_sourcing_scaling_test.go:111: \n--- SKIP: TestStreamSourcingScalingSourcingManyBenchmark (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestXMQTTCompliance",
+          "output": "=== RUN   TestXMQTTCompliance\n    mqtt_ex_test_test.go:49: \"mqtt\" command is not found in $PATH nor $MQTT_CLI. See https://hivemq.github.io/mqtt-cli/docs/installation/#debian-package for installation instructions\n--- SKIP: TestXMQTTCompliance (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestXMQTTRetainedMessages",
+          "output": "=== RUN   TestXMQTTRetainedMessages\n    mqtt_ex_test_test.go:70: \"mqtt-test\" command is not found in $PATH.\n--- SKIP: TestXMQTTRetainedMessages (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestVersionMatchesTag",
+          "output": "=== RUN   TestVersionMatchesTag\n--- SKIP: TestVersionMatchesTag (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreAgeLimit/None-S2",
+          "output": "=== RUN   TestFileStoreAgeLimit/None-S2\n--- SKIP: TestFileStoreAgeLimit/None-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreAgeLimit/AES-GCM-None",
+          "output": "=== RUN   TestFileStoreAgeLimit/AES-GCM-None\n--- SKIP: TestFileStoreAgeLimit/AES-GCM-None (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreAgeLimit/AES-GCM-S2",
+          "output": "=== RUN   TestFileStoreAgeLimit/AES-GCM-S2\n--- SKIP: TestFileStoreAgeLimit/AES-GCM-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreAgeLimit/ChaCha20-Poly1305-None",
+          "output": "=== RUN   TestFileStoreAgeLimit/ChaCha20-Poly1305-None\n--- SKIP: TestFileStoreAgeLimit/ChaCha20-Poly1305-None (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreAgeLimit/ChaCha20-Poly1305-S2",
+          "output": "=== RUN   TestFileStoreAgeLimit/ChaCha20-Poly1305-S2\n--- SKIP: TestFileStoreAgeLimit/ChaCha20-Poly1305-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreCompactPerf",
+          "output": "=== RUN   TestFileStoreCompactPerf\n--- SKIP: TestFileStoreCompactPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStorePartialIndexes",
+          "output": "=== RUN   TestFileStorePartialIndexes\n--- SKIP: TestFileStorePartialIndexes (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreWriteFailures",
+          "output": "=== RUN   TestFileStoreWriteFailures\n--- SKIP: TestFileStoreWriteFailures (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStorePerf",
+          "output": "=== RUN   TestFileStorePerf\n--- SKIP: TestFileStorePerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreReadBackMsgPerf",
+          "output": "=== RUN   TestFileStoreReadBackMsgPerf\n--- SKIP: TestFileStoreReadBackMsgPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreStoreLimitRemovePerf",
+          "output": "=== RUN   TestFileStoreStoreLimitRemovePerf\n--- SKIP: TestFileStoreStoreLimitRemovePerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStorePubPerfWithSmallBlkSize",
+          "output": "=== RUN   TestFileStorePubPerfWithSmallBlkSize\n--- SKIP: TestFileStorePubPerfWithSmallBlkSize (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreConsumerPerf",
+          "output": "=== RUN   TestFileStoreConsumerPerf\n--- SKIP: TestFileStoreConsumerPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreExpireMsgsOnStart/None-S2",
+          "output": "=== RUN   TestFileStoreExpireMsgsOnStart/None-S2\n--- SKIP: TestFileStoreExpireMsgsOnStart/None-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreExpireMsgsOnStart/AES-GCM-None",
+          "output": "=== RUN   TestFileStoreExpireMsgsOnStart/AES-GCM-None\n--- SKIP: TestFileStoreExpireMsgsOnStart/AES-GCM-None (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreExpireMsgsOnStart/AES-GCM-S2",
+          "output": "=== RUN   TestFileStoreExpireMsgsOnStart/AES-GCM-S2\n--- SKIP: TestFileStoreExpireMsgsOnStart/AES-GCM-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-None",
+          "output": "=== RUN   TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-None\n--- SKIP: TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-None (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-S2",
+          "output": "=== RUN   TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-S2\n--- SKIP: TestFileStoreExpireMsgsOnStart/ChaCha20-Poly1305-S2 (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreFetchPerf",
+          "output": "=== RUN   TestFileStoreFetchPerf\n--- SKIP: TestFileStoreFetchPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestFileStoreWriteFullStateHighSubjectCardinality",
+          "output": "=== RUN   TestFileStoreWriteFullStateHighSubjectCardinality\n    filestore_test.go:7249: \n--- SKIP: TestFileStoreWriteFullStateHighSubjectCardinality (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server/stree",
+          "test": "TestSubjectTreeMatchAllPerf",
+          "output": "=== RUN   TestSubjectTreeMatchAllPerf\n    stree_test.go:753: \n--- SKIP: TestSubjectTreeMatchAllPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server/stree",
+          "test": "TestSubjectTreeIterPerf",
+          "output": "=== RUN   TestSubjectTreeIterPerf\n    stree_test.go:783: \n--- SKIP: TestSubjectTreeIterPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server/stree",
+          "test": "TestSubjectTreeMemoryPerf",
+          "output": "=== RUN   TestSubjectTreeMemoryPerf\n    stree_test.go:803: \n--- SKIP: TestSubjectTreeMemoryPerf (0.00s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/test",
+          "test": "TestNoRaceSlowProxy",
+          "output": "=== RUN   TestNoRaceSlowProxy\n    norace_test.go:651: \n--- SKIP: TestNoRaceSlowProxy (0.00s)\n"
+        }
+      ],
+      "artifacts": {
+        "rpmbuild/RPMS/x86_64/nats-server-2.15.0-1.qore.el10.x86_64.rpm": "52c3a3ce59cee90f2bf91555a826e5b9ff1c43fbd4185826c276bef42e2ccd48",
+        "rpmbuild/RPMS/x86_64/nats-server-debuginfo-2.15.0-1.qore.el10.x86_64.rpm": "305f6f476dace580bb460c7cf9e7ad149c3fa6f4c1106ec41a2d5567db7d27e4",
+        "rpmbuild/RPMS/x86_64/nats-server-debugsource-2.15.0-1.qore.el10.x86_64.rpm": "4b1ce55ebca9fcf56249eecb84afd8de14aa357997df74959830579c7da8ca55",
+        "rpmbuild/SRPMS/nats-server-2.15.0-1.qore.el10.src.rpm": "2fa3f7f39998b69780556670db7acf7bac1c47dff72e00d1d6902cb0ca966f26"
+      }
+    }
+  },
+  "remaining": [
+    "Review all upstream skip reasons and diagnostics against source and approved scope.",
+    "Root-cause the prior ConsumerInfo restart timeout and historical sparse-consumer performance, atomic-batch, workqueue and fail-tracking failures; a fresh pass alone does not resolve them.",
+    "Qualify NATS client and Qore module packages, debugger/lint and repository lifecycle, then native OBS builds."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-candidate45-final-20261007/el10-build.json": "d5ae43f6fb9e6d28727e3cd0a612faecd829515fe4b6f7f61b040eef58108079",
+    "evidence/controls/nats-candidate45-final-20261007/el10-build.log.gz": "ccd9ba56e7e158272cbe30b470116f22f66b7f93eab5e1fef9f97da5d2453e01",
+    "evidence/controls/nats-candidate45-final-20261007/fedora-build.json": "0b2ee35aef48b6f8f8b2f625cef06b91bb1cbbd0060c67f15822035037d188d8",
+    "evidence/controls/nats-candidate45-final-20261007/fedora-build.log.gz": "756e4f478e177b4212a51b8b0806f1ed49a0b8201d9a36deb2952690a59de84e",
+    "evidence/controls/nats-candidate45-final-20261007/leap-build.json": "8212e27c74f19329d23eec628a98f84161005a93f3e46ab5f7dfee437301c392",
+    "evidence/controls/nats-candidate45-final-20261007/leap-build.log.gz": "4179e9fa5e92a799bce35021d05a71f1d2f413811fb60146a2d1d54da29807b8"
+  }
+}
