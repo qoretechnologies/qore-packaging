@@ -1,0 +1,473 @@
+package qore-devel is not installed
+package gcc is not installed
+package gcc-c++ is not installed
+package libnode-devel is not installed
+(node:13) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+"/tmp/tmp.sQwLuQ6BRv/input.json": 266.00 bytes -> "/tmp/tmp.sQwLuQ6BRv/output.yaml": 192.00 bytes
+QUnit Test "HubSpot optional CMS OAuth" v1.0
+Running: HubSpot catalog fixture
+Skipped: HubSpot catalog fixture: 0 assertions (build the matching TypeScript catalog to run the HubSpot OAuth fixture)
+2026-10-07 18:29:33.963066: Skip requested at test/hubspot-oauth.qtest:237 [HubspotOAuthTest::<anonymous closure>()] <- test/hubspot-oauth.qtest:239 [HubspotOAuthTest::constructor()]
+-----
+	>> build the matching TypeScript catalog to run the HubSpot OAuth fixture
+-----
+Ran 1 test case, 1 succeeded (0 assertions)
+QUnit Test "JavaScriptInProcessPoolTest" v1.0
+Running: pool creation
+Success: pool creation: 4 assertions
+Running: get and release
+Success: get and release: 5 assertions
+Running: thread reuse
+Success: thread reuse: 1 assertion
+Running: concurrent access
+Success: concurrent access: 3 assertions
+Running: closure mapping
+Success: closure mapping: 11 assertions
+Running: dispatch integration
+Success: dispatch integration: 5 assertions
+Running: error handling
+Success: error handling: 1 assertion
+Running: shutdown safety
+Success: shutdown safety: 2 assertions
+Running: bounded pool contention
+Success: bounded pool contention: 4 assertions
+Running: sustained contention throughput
+Success: sustained contention throughput: 3 assertions
+Running: shutdown under contention
+Success: shutdown under contention: 4 assertions
+Running: on-demand max size
+Success: on-demand max size: 4 assertions
+Running: shutdown
+Success: shutdown: 5 assertions
+Ran 13 test cases, 13 succeeded (52 assertions)
+QUnit Test "js program destroy in use test" v1.0
+Running: destroy while a call is in progress
+Success: destroy while a call is in progress: 1 assertion
+Ran 1 test case, 1 succeeded (1 assertion)
+QUnit Test "js teardown test" v1.0
+Running: compilation completes when the event loop is run
+Success: compilation completes when the event loop is run: 1 assertion
+Running: invalid module is rejected when the event loop is run
+Success: invalid module is rejected when the event loop is run: 1 assertion
+Running: destroy with a compilation in progress
+Success: destroy with a compilation in progress: 10 assertions
+Running: destroy with a failing compilation in progress
+Success: destroy with a failing compilation in progress: 10 assertions
+Running: destroy with compilations in progress in multiple threads
+Success: destroy with compilations in progress in multiple threads: 2 assertions
+Running: destroy after the compilation completed
+Success: destroy after the compilation completed: 2 assertions
+Running: exit with a compilation in progress
+Success: exit with a compilation in progress: 2 assertions
+Running: promise with a callback outlives the program
+Success: promise with a callback outlives the program: 4 assertions
+Running: call reference outlives the program
+Success: call reference outlives the program: 3 assertions
+Ran 9 test cases, 9 succeeded (35 assertions)
+QUnit Test "TypeScriptActionInterfaceTest" v1.0
+Running: js event extension
+Success: js event extension: 7 assertions
+Running: js events
+Success: js events: 11 assertions
+Running: event checkpoints
+Success: event checkpoints: 9 assertions
+Running: event checkpoint validation
+Success: event checkpoint validation: 2 assertions
+Running: webhook events
+Success: webhook events: 10 assertions
+Running: webhook format_event_data transform
+Success: webhook format_event_data transform: 9 assertions
+Running: webhook format_event_data filter
+Success: webhook format_event_data filter: 8 assertions
+Running: webhook format_event_data exception
+Success: webhook format_event_data exception: 8 assertions
+Running: pool
+Success: pool: 1 assertion
+Running: sanity
+Success: sanity: 4 assertions
+Running: js
+Success: js: 72 assertions
+Running: test API
+Success: test API: 6 assertions
+Running: include_response_headers flag
+Success: include_response_headers flag: 3 assertions
+Running: app base dir
+Success: app base dir: 3 assertions
+Running: structured field choices
+Success: structured field choices: 10 assertions
+Running: producer schema boundary
+Success: producer schema boundary: 37 assertions
+Running: eager registration failure reporting
+Success: eager registration failure reporting: 8 assertions
+Running: optional resource initialization failures
+Success: optional resource initialization failures: 9 assertions
+Running: schema connections and retry
+Success: schema connections and retry: 16 assertions
+Running: HubSpot schema connections and retry
+Success: HubSpot schema connections and retry: 16 assertions
+Running: failed app initialization retry
+Success: failed app initialization retry: 6 assertions
+Running: failed existing app initialization retry
+Success: failed existing app initialization retry: 5 assertions
+Running: failed deferred action retry
+Running: app metadata protocol validation
+Success: failed deferred action retry: 4 assertions
+Success: app metadata protocol validation: 3 assertions
+Running: schema option additions
+Success: schema option additions: 7 assertions
+Running: producer identity contract skew
+Success: producer identity contract skew: 6 assertions
+Ran 26 test cases, 26 succeeded (280 assertions)
+QUnit Test "TypeScript app initialization" v1.0
+Running: bulk failures remain isolated and retryable
+Success: bulk failures remain isolated and retryable: 113 assertions
+Running: action failures retain their action identity
+Success: action failures retain their action identity: 11 assertions
+Running: module loading survives app initialization failure
+Success: module loading survives app initialization failure: 11 assertions
+Running: HubSpot without a schema snapshot
+Skipped: HubSpot without a schema snapshot: 0 assertions (build the matching TypeScript catalogue to run the HubSpot fixture)
+2026-10-07 18:29:53.394377: Skip requested at test/ts-app-initialization.qtest:163 [AppInitializationTest::hubspotTest()] <- test/ts-app-initialization.qtest:32 [AppInitializationTest::constructor()]
+-----
+	>> build the matching TypeScript catalogue to run the HubSpot fixture
+-----
+Ran 4 test cases, 4 succeeded (135 assertions)
+QUnit Test "TsProxyTest" v1.0
+Running: proxy tests
+Success: proxy tests: 7 assertions
+Running: proxy restarts after child exit
+Success: proxy restarts after child exit: 5 assertions
+Running: proxy command socket close mid-command
+Skipped: proxy command socket close mid-command: 0 assertions (fault injection requires TypeScriptActionInterface source with --enable-debug)
+2026-10-07 18:29:55.542555: Skip requested at test/ts-proxy.qtest:109 [TsProxyTest::skipIfDebugHooksUnavailable()] <- test/ts-proxy.qtest:195 [TsProxyTest::proxySocketCloseMidCommandTest()] <- test/ts-proxy.qtest:45 [TsProxyTest::constructor()]
+-----
+	>> fault injection requires TypeScriptActionInterface source with --enable-debug
+-----
+Running: proxy bounded restart on persistent socket close
+Skipped: proxy bounded restart on persistent socket close: 0 assertions (fault injection requires TypeScriptActionInterface source with --enable-debug)
+2026-10-07 18:29:55.543462: Skip requested at test/ts-proxy.qtest:109 [TsProxyTest::skipIfDebugHooksUnavailable()] <- test/ts-proxy.qtest:237 [TsProxyTest::proxyBoundedRestartTest()] <- test/ts-proxy.qtest:45 [TsProxyTest::constructor()]
+-----
+	>> fault injection requires TypeScriptActionInterface source with --enable-debug
+-----
+Running: proxy parent send error mid-command
+Skipped: proxy parent send error mid-command: 0 assertions (fault injection requires TypeScriptActionInterface source with --enable-debug)
+2026-10-07 18:29:55.544301: Skip requested at test/ts-proxy.qtest:109 [TsProxyTest::skipIfDebugHooksUnavailable()] <- test/ts-proxy.qtest:284 [TsProxyTest::proxyParentSendErrorMidCommandTest()] <- test/ts-proxy.qtest:45 [TsProxyTest::constructor()]
+-----
+	>> fault injection requires TypeScriptActionInterface source with --enable-debug
+-----
+Running: proxy parent send error bounded restart
+Skipped: proxy parent send error bounded restart: 0 assertions (fault injection requires TypeScriptActionInterface source with --enable-debug)
+2026-10-07 18:29:55.544890: Skip requested at test/ts-proxy.qtest:109 [TsProxyTest::skipIfDebugHooksUnavailable()] <- test/ts-proxy.qtest:327 [TsProxyTest::proxyParentSendErrorBoundedRestartTest()] <- test/ts-proxy.qtest:45 [TsProxyTest::constructor()]
+-----
+	>> fault injection requires TypeScriptActionInterface source with --enable-debug
+-----
+Running: proxy restart error handling
+Skipped: proxy restart error handling: 0 assertions (fault injection requires TypeScriptActionInterface source with --enable-debug)
+2026-10-07 18:29:55.545442: Skip requested at test/ts-proxy.qtest:109 [TsProxyTest::skipIfDebugHooksUnavailable()] <- test/ts-proxy.qtest:372 [TsProxyTest::proxyRestartErrorHandlingTest()] <- test/ts-proxy.qtest:45 [TsProxyTest::constructor()]
+-----
+	>> fault injection requires TypeScriptActionInterface source with --enable-debug
+-----
+Running: proxy restart wait fast paths
+Skipped: proxy restart wait fast paths: 0 assertions (fault injection requires TypeScriptActionInterface source with --enable-debug)
+2026-10-07 18:29:55.545952: Skip requested at test/ts-proxy.qtest:109 [TsProxyTest::skipIfDebugHooksUnavailable()] <- test/ts-proxy.qtest:490 [TsProxyTest::proxyRestartWaitFastPathTest()] <- test/ts-proxy.qtest:45 [TsProxyTest::constructor()]
+-----
+	>> fault injection requires TypeScriptActionInterface source with --enable-debug
+-----
+Running: proxy send error handling
+Skipped: proxy send error handling: 0 assertions (fault injection requires TypeScriptActionInterface source with --enable-debug)
+2026-10-07 18:29:55.546485: Skip requested at test/ts-proxy.qtest:109 [TsProxyTest::skipIfDebugHooksUnavailable()] <- test/ts-proxy.qtest:433 [TsProxyTest::proxySendErrorHandlingTest()] <- test/ts-proxy.qtest:45 [TsProxyTest::constructor()]
+-----
+	>> fault injection requires TypeScriptActionInterface source with --enable-debug
+-----
+Running: proxy startup send error handling
+Skipped: proxy startup send error handling: 0 assertions (fault injection requires TypeScriptActionInterface source with --enable-debug)
+2026-10-07 18:29:55.546912: Skip requested at test/ts-proxy.qtest:109 [TsProxyTest::skipIfDebugHooksUnavailable()] <- test/ts-proxy.qtest:517 [TsProxyTest::proxyStartupSendErrorHandlingTest()] <- test/ts-proxy.qtest:45 [TsProxyTest::constructor()]
+-----
+	>> fault injection requires TypeScriptActionInterface source with --enable-debug
+-----
+Ran 10 test cases, 10 succeeded (12 assertions)
+QUnit Test "TypeScript schema cache" v1.0
+Running: long snapshot locations and cache reload
+Success: long snapshot locations and cache reload: 24 assertions
+Running: canonical allowed-path sets and distinct locations
+Success: canonical allowed-path sets and distinct locations: 50 assertions
+Running: unambiguous path boundaries
+Success: unambiguous path boundaries: 13 assertions
+Running: unfiltered Swagger and OpenAPI schemas
+Success: unfiltered Swagger and OpenAPI schemas: 38 assertions
+Running: legacy cache entries are ignored
+Success: legacy cache entries are ignored: 11 assertions
+Running: invalid input does not populate the cache
+Success: invalid input does not populate the cache: 22 assertions
+Running: disabled cache bypasses reads and writes
+Success: disabled cache bypasses reads and writes: 17 assertions
+Ran 7 test cases, 7 succeeded (175 assertions)
+QUnit Test "TypeScript schema request encoding" v1.0
+Running: encoded path and query transport with error recovery
+Success: encoded path and query transport with error recovery: 14 assertions
+Ran 1 test case, 1 succeeded (14 assertions)
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+QUnit Test "TypeScript test" v1.0
+Running: named argument calls
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: named argument calls: 1 assertion
+Running: basic type stripping
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: basic type stripping: 7 assertions
+Running: source labels do not select parser modes
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: source labels do not select parser modes: 4 assertions
+Running: type aliases and union types
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: type aliases and union types: 4 assertions
+Running: interfaces
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: interfaces: 3 assertions
+Running: interface extends
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: interface extends: 2 assertions
+Running: enums
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: enums: 10 assertions
+Running: const enums
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: const enums: 1 assertion
+Running: typed classes
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: typed classes: 4 assertions
+Running: class inheritance
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: class inheritance: 2 assertions
+Running: arrow functions with types
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: arrow functions with types: 5 assertions
+Running: generics
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: generics: 8 assertions
+Running: tuple types
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: tuple types: 2 assertions
+Running: type assertions
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: type assertions: 3 assertions
+Running: optional and default parameters
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: optional and default parameters: 7 assertions
+Running: rest parameters
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: rest parameters: 5 assertions
+Running: destructuring with types
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: destructuring with types: 2 assertions
+Running: readonly modifier
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: readonly modifier: 3 assertions
+Running: TS namespace transpilation
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: TS namespace transpilation: 3 assertions
+Running: literal types and const
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: literal types and const: 6 assertions
+Running: intersection types
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: intersection types: 2 assertions
+Running: plain JS in TypeScript
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: plain JS in TypeScript: 4 assertions
+Running: inherited getGlobal
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: inherited getGlobal: 3 assertions
+Running: inherited setSaveReferenceCallback
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: inherited setSaveReferenceCallback: 2 assertions
+Running: inherited spinOnce
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: inherited spinOnce: 2 assertions
+Running: qore global access
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: qore global access: 5 assertions
+Running: qore class instantiation from TS
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: qore class instantiation from TS: 2 assertions
+Running: qore function calls from TS
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: qore function calls from TS: 3 assertions
+Running: async/promises
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: async/promises: 3 assertions
+Running: event loop integration
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: event loop integration: 1 assertion
+Running: multiple TypeScriptProgram instances
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: multiple TypeScriptProgram instances: 6 assertions
+Running: copy semantics
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: copy semantics: 3 assertions
+Running: copy preserves transpilation
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: copy preserves transpilation: 5 assertions
+Running: TS syntax error
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: TS syntax error: 1 assertion
+Running: invalid source
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: invalid source: 2 assertions
+Running: empty source
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: empty source: 3 assertions
+Running: runtime error from TS
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: runtime error from TS: 1 assertion
+Running: custom error properties from TS
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: custom error properties from TS: 4 assertions
+Running: JavaScriptProgram rejects TypeScript
+(node:482) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `qore --trace-warnings ...` to show where the warning was created)
+Success: JavaScriptProgram rejects TypeScript: 5 assertions
+Ran 39 test cases, 39 succeeded (139 assertions)
+QUnit Test "v8 qore import test" v1.0
+Running: qore global exists
+Success: qore global exists: 2 assertions
+Running: namespace access
+Success: namespace access: 5 assertions
+Running: function calls
+Success: function calls: 4 assertions
+Running: constants
+Success: constants: 4 assertions
+Running: class instantiation
+Success: class instantiation: 6 assertions
+Running: method calls
+Success: method calls: 4 assertions
+Running: static methods
+Success: static methods: 1 assertion
+Running: error handling
+Success: error handling: 5 assertions
+Running: value round-trip
+Success: value round-trip: 5 assertions
+Running: property enumeration
+Success: property enumeration: 2 assertions
+Running: multiple objects
+Success: multiple objects: 9 assertions
+Running: deep namespace
+Success: deep namespace: 7 assertions
+Running: list and type marshalling
+Success: list and type marshalling: 12 assertions
+Running: type conversion
+Success: type conversion: 13 assertions
+Running: string functions
+Success: string functions: 11 assertions
+Running: math functions
+Success: math functions: 5 assertions
+Running: negative constructor
+Success: negative constructor: 4 assertions
+Running: read-only namespace
+Success: read-only namespace: 4 assertions
+Running: multiple programs
+Success: multiple programs: 6 assertions
+Running: object return
+Success: object return: 6 assertions
+Running: object passing
+Success: object passing: 7 assertions
+Running: callback chain
+Success: callback chain: 7 assertions
+Running: member access
+Success: member access: 29 assertions
+Ran 23 test cases, 23 succeeded (158 assertions)
+QUnit Test "v8 host signal handling" v1.0
+Running: Qore handlers survive V8 initialization
+Success: Qore handlers survive V8 initialization: 5 assertions
+Ran 1 test case, 1 succeeded (5 assertions)
+QUnit Test "v8 stdio inheritance test" v1.0
+Running: child processes inherit stdio
+Success: child processes inherit stdio: 3 assertions
+Ran 1 test case, 1 succeeded (3 assertions)
+QUnit Test "v8 test" v1.0
+Running: indirect references
+Success: indirect references: 4 assertions
+Running: function test
+Success: function test: 5 assertions
+Running: named argument calls
+Success: named argument calls: 2 assertions
+Running: timeout
+Success: timeout: 4 assertions
+Running: process
+Success: process: 1 assertion
+Running: io test
+Success: io test: 20 assertions
+Running: async test
+Success: async test: 22 assertions
+Running: v8 program test
+Success: v8 program test: 55 assertions
+Running: exception test
+Success: exception test: 6 assertions
+Running: crash safety test
+Success: crash safety test: 7 assertions
+Running: unhandled rejection keeps the program usable
+Success: unhandled rejection keeps the program usable: 16 assertions
+Running: WebAssembly memory bounds
+Success: WebAssembly memory bounds: 2 assertions
+Ran 12 test cases, 12 succeeded (144 assertions)

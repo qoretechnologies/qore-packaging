@@ -1,0 +1,127 @@
+==1== Memcheck, a memory error detector
+==1== Copyright (C) 2002-2026, and GNU GPL'd, by Julian Seward et al.
+==1== Using Valgrind-3.27.1 and LibVEX; rerun with -h for copyright info
+==1== Command: out/external-string-resource-control ordinary
+==1== Parent PID: 0
+==1== 
+==1== 
+==1== HEAP SUMMARY:
+==1==     in use at exit: 216 bytes in 6 blocks
+==1==   total heap usage: 8,544 allocs, 8,538 frees, 1,637,087 bytes allocated
+==1== 
+==1== 8 bytes in 1 blocks are still reachable in loss record 1 of 6
+==1==    at 0x4844EFF: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1==    by 0x5B38FE9: ConstructNew<v8::base::Mutex> (code-memory-access.cc:65)
+==1==    by 0x5B38FE9: ConstructNew<v8::base::Mutex> (code-memory-access.cc:59)
+==1==    by 0x5B38FE9: v8::internal::ThreadIsolation::Initialize(v8::ThreadIsolatedAllocator*) (code-memory-access.cc:115)
+==1==    by 0x5DBF3D0: v8::internal::V8::Initialize() (v8.cc:188)
+==1==    by 0x5A54631: v8::V8::Initialize(int) (api.cc:6476)
+==1==    by 0x40248A: Initialize (v8-initialization.h:127)
+==1==    by 0x40248A: main (nodejs24-external-string-resource-test.cc:41)
+==1== 
+==1== 8 bytes in 1 blocks are still reachable in loss record 2 of 6
+==1==    at 0x4844EFF: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1==    by 0x66828D1: allocate (new_allocator.h:151)
+==1==    by 0x66828D1: allocate (allocator.h:198)
+==1==    by 0x66828D1: allocate (alloc_traits.h:482)
+==1==    by 0x66828D1: _M_allocate (stl_vector.h:381)
+==1==    by 0x66828D1: _M_allocate (stl_vector.h:378)
+==1==    by 0x66828D1: _M_realloc_insert<cppgc::internal::HeapBase*> (vector.tcc:459)
+==1==    by 0x66828D1: emplace_back<cppgc::internal::HeapBase*> (vector.tcc:123)
+==1==    by 0x66828D1: push_back (stl_vector.h:1299)
+==1==    by 0x66828D1: cppgc::internal::HeapRegistry::RegisterHeap(cppgc::internal::HeapBase&) (process-heap.cc:39)
+==1==    by 0x666F783: Subscription (process-heap.h:96)
+==1==    by 0x666F783: cppgc::internal::HeapBase::HeapBase(std::shared_ptr<cppgc::Platform>, std::vector<std::unique_ptr<cppgc::CustomSpaceBase, std::default_delete<cppgc::CustomSpaceBase> >, std::allocator<std::unique_ptr<cppgc::CustomSpaceBase, std::default_delete<cppgc::CustomSpaceBase> > > > const&, cppgc::Heap::StackSupport, cppgc::Heap::MarkingType, cppgc::Heap::SweepingType, cppgc::internal::GarbageCollector&) (heap-base.cc:129)
+==1==    by 0x5C559B3: v8::internal::CppHeap::CppHeap(v8::Platform*, std::vector<std::unique_ptr<cppgc::CustomSpaceBase, std::default_delete<cppgc::CustomSpaceBase> >, std::allocator<std::unique_ptr<cppgc::CustomSpaceBase, std::default_delete<cppgc::CustomSpaceBase> > > > const&, cppgc::Heap::MarkingType, cppgc::Heap::SweepingType) (cpp-heap.cc:505)
+==1==    by 0x5C55C11: make_unique<v8::internal::CppHeap, v8::Platform*&, const std::vector<std::unique_ptr<cppgc::CustomSpaceBase, std::default_delete<cppgc::CustomSpaceBase> >, std::allocator<std::unique_ptr<cppgc::CustomSpaceBase, std::default_delete<cppgc::CustomSpaceBase> > > >&, const cppgc::Heap::MarkingType&, const cppgc::Heap::SweepingType&> (unique_ptr.h:1070)
+==1==    by 0x5C55C11: v8::CppHeap::Create(v8::Platform*, v8::CppHeapCreateParams const&) (cpp-heap.cc:105)
+==1==    by 0x5A7057D: v8::Isolate::Initialize(v8::Isolate*, v8::Isolate::CreateParams const&) (api.cc:10066)
+==1==    by 0x5A706FC: v8::Isolate::New(v8::IsolateGroup const&, v8::Isolate::CreateParams const&) (api.cc:10124)
+==1==    by 0x5A70743: v8::Isolate::New(v8::Isolate::CreateParams const&) (api.cc:10118)
+==1==    by 0x4024BF: main (nodejs24-external-string-resource-test.cc:44)
+==1== 
+==1== 8 bytes in 1 blocks are still reachable in loss record 3 of 6
+==1==    at 0x4844EFF: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1==    by 0x5C2FFD9: allocate (new_allocator.h:151)
+==1==    by 0x5C2FFD9: allocate (allocator.h:198)
+==1==    by 0x5C2FFD9: allocate (alloc_traits.h:482)
+==1==    by 0x5C2FFD9: _M_allocate (stl_vector.h:381)
+==1==    by 0x5C2FFD9: _M_allocate (stl_vector.h:378)
+==1==    by 0x5C2FFD9: _M_realloc_insert<long unsigned int const&> (vector.tcc:459)
+==1==    by 0x5C2FFD9: push_back (stl_vector.h:1292)
+==1==    by 0x5C2FFD9: v8::internal::CodeRangeAddressHint::NotifyFreedCodeRange(unsigned long, unsigned long) (code-range.cc:57)
+==1==    by 0x5C30104: Free (code-range.cc:333)
+==1==    by 0x5C30104: Free (code-range.cc:321)
+==1==    by 0x5C30104: ~CodeRange (code-range.cc:60)
+==1==    by 0x5C30104: v8::internal::CodeRange::~CodeRange() (code-range.cc:60)
+==1==    by 0x5CBC126: operator() (unique_ptr.h:99)
+==1==    by 0x5CBC126: ~unique_ptr (unique_ptr.h:404)
+==1==    by 0x5CBC126: v8::internal::Heap::~Heap() (heap.cc:203)
+==1==    by 0x5C07D64: v8::internal::Isolate::Deinitialize(v8::internal::Isolate*) (isolate.cc:4162)
+==1==    by 0x5C07DE0: v8::internal::Isolate::Delete(v8::internal::Isolate*) (isolate.cc:4136)
+==1==    by 0x403200: main (nodejs24-external-string-resource-test.cc:103)
+==1== 
+==1== 40 bytes in 1 blocks are still reachable in loss record 4 of 6
+==1==    at 0x4844EFF: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1==    by 0x5C2FD4D: allocate (new_allocator.h:151)
+==1==    by 0x5C2FD4D: allocate (allocator.h:198)
+==1==    by 0x5C2FD4D: allocate (alloc_traits.h:482)
+==1==    by 0x5C2FD4D: _M_allocate_node<const std::piecewise_construct_t&, std::tuple<long unsigned int const&>, std::tuple<> > (hashtable_policy.h:1992)
+==1==    by 0x5C2FD4D: _Scoped_node<const std::piecewise_construct_t&, std::tuple<long unsigned int const&>, std::tuple<> > (hashtable.h:307)
+==1==    by 0x5C2FD4D: operator[] (hashtable_policy.h:818)
+==1==    by 0x5C2FD4D: operator[] (unordered_map.h:987)
+==1==    by 0x5C2FD4D: v8::internal::CodeRangeAddressHint::NotifyFreedCodeRange(unsigned long, unsigned long) (code-range.cc:57)
+==1==    by 0x5C30104: Free (code-range.cc:333)
+==1==    by 0x5C30104: Free (code-range.cc:321)
+==1==    by 0x5C30104: ~CodeRange (code-range.cc:60)
+==1==    by 0x5C30104: v8::internal::CodeRange::~CodeRange() (code-range.cc:60)
+==1==    by 0x5CBC126: operator() (unique_ptr.h:99)
+==1==    by 0x5CBC126: ~unique_ptr (unique_ptr.h:404)
+==1==    by 0x5CBC126: v8::internal::Heap::~Heap() (heap.cc:203)
+==1==    by 0x5C07D64: v8::internal::Isolate::Deinitialize(v8::internal::Isolate*) (isolate.cc:4162)
+==1==    by 0x5C07DE0: v8::internal::Isolate::Delete(v8::internal::Isolate*) (isolate.cc:4136)
+==1==    by 0x403200: main (nodejs24-external-string-resource-test.cc:103)
+==1== 
+==1== 48 bytes in 1 blocks are still reachable in loss record 5 of 6
+==1==    at 0x4844EFF: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1==    by 0x5B38EA9: ConstructNew<std::map<long unsigned int, v8::internal::ThreadIsolation::JitPage*, std::less<long unsigned int>, v8::internal::ThreadIsolation::StlAllocator<std::pair<long unsigned int const, v8::internal::ThreadIsolation::JitPage*> > > > (code-memory-access.cc:65)
+==1==    by 0x5B38EA9: void v8::internal::ThreadIsolation::ConstructNew<std::map<unsigned long, v8::internal::ThreadIsolation::JitPage*, std::less<unsigned long>, v8::internal::ThreadIsolation::StlAllocator<std::pair<unsigned long const, v8::internal::ThreadIsolation::JitPage*> > >>(std::map<unsigned long, v8::internal::ThreadIsolation::JitPage*, std::less<unsigned long>, v8::internal::ThreadIsolation::StlAllocator<std::pair<unsigned long const, v8::internal::ThreadIsolation::JitPage*> > >**) (code-memory-access.cc:59)
+==1==    by 0x5B38F5B: v8::internal::ThreadIsolation::Initialize(v8::ThreadIsolatedAllocator*) (code-memory-access.cc:116)
+==1==    by 0x5DBF3D0: v8::internal::V8::Initialize() (v8.cc:188)
+==1==    by 0x5A54631: v8::V8::Initialize(int) (api.cc:6476)
+==1==    by 0x40248A: Initialize (v8-initialization.h:127)
+==1==    by 0x40248A: main (nodejs24-external-string-resource-test.cc:41)
+==1== 
+==1== 104 bytes in 1 blocks are still reachable in loss record 6 of 6
+==1==    at 0x4844EFF: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1==    by 0x5C2FE6E: allocate (new_allocator.h:151)
+==1==    by 0x5C2FE6E: allocate (allocator.h:198)
+==1==    by 0x5C2FE6E: allocate (alloc_traits.h:482)
+==1==    by 0x5C2FE6E: _M_allocate_buckets (hashtable_policy.h:2046)
+==1==    by 0x5C2FE6E: _M_allocate_buckets (hashtable.h:442)
+==1==    by 0x5C2FE6E: _M_rehash_aux (hashtable.h:2586)
+==1==    by 0x5C2FE6E: _M_rehash (hashtable.h:2565)
+==1==    by 0x5C2FE6E: _M_insert_unique_node (hashtable.h:2179)
+==1==    by 0x5C2FE6E: operator[] (hashtable_policy.h:825)
+==1==    by 0x5C2FE6E: operator[] (unordered_map.h:987)
+==1==    by 0x5C2FE6E: v8::internal::CodeRangeAddressHint::NotifyFreedCodeRange(unsigned long, unsigned long) (code-range.cc:57)
+==1==    by 0x5C30104: Free (code-range.cc:333)
+==1==    by 0x5C30104: Free (code-range.cc:321)
+==1==    by 0x5C30104: ~CodeRange (code-range.cc:60)
+==1==    by 0x5C30104: v8::internal::CodeRange::~CodeRange() (code-range.cc:60)
+==1==    by 0x5CBC126: operator() (unique_ptr.h:99)
+==1==    by 0x5CBC126: ~unique_ptr (unique_ptr.h:404)
+==1==    by 0x5CBC126: v8::internal::Heap::~Heap() (heap.cc:203)
+==1==    by 0x5C07D64: v8::internal::Isolate::Deinitialize(v8::internal::Isolate*) (isolate.cc:4162)
+==1==    by 0x5C07DE0: v8::internal::Isolate::Delete(v8::internal::Isolate*) (isolate.cc:4136)
+==1==    by 0x403200: main (nodejs24-external-string-resource-test.cc:103)
+==1== 
+==1== LEAK SUMMARY:
+==1==    definitely lost: 0 bytes in 0 blocks
+==1==    indirectly lost: 0 bytes in 0 blocks
+==1==      possibly lost: 0 bytes in 0 blocks
+==1==    still reachable: 216 bytes in 6 blocks
+==1==         suppressed: 0 bytes in 0 blocks
+==1== 
+==1== For lists of detected and suppressed errors, rerun with: -s
+==1== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 0 from 0)
