@@ -1,0 +1,29 @@
+{
+  "at_utc": "2026-10-07T22:29:59.673086+00:00",
+  "scope": "/home/david/src/qore/git/qore-packaging/work/nats-go-cache",
+  "purpose": "Reclaim reproducible inactive Go compiler cache; preserve source, result logs and RPMs",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--user",
+    "1019:100",
+    "-e",
+    "GOCACHE=/cache",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-go-cache:/cache",
+    "sha256:f1f889474f303ffe6f98b381e3061e812daa34e9018a00c4a25cb65f9a82fee9",
+    "go",
+    "clean",
+    "-cache"
+  ],
+  "before_bytes": 23374938112,
+  "after_bytes": 12288,
+  "reclaimed_bytes": 23374925824,
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "",
+  "active_container_mounts_checked": 2
+}

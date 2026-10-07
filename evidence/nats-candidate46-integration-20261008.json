@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "observed_at_utc": "2026-10-07T22:43:56.639863+00:00",
+  "status": "Qualified metadata-readiness test correction integrated as Patch108; complete three-distribution RPM builds are running.",
+  "verification": {
+    "patches": 109,
+    "fuzz": 0,
+    "new_patch_offsets": 0,
+    "changed_go_files_from_candidate45": [
+      "server/jetstream_cluster_2_test.go"
+    ],
+    "changed_bundle_files": [
+      "nats-server-meta-api-ready-tests.patch",
+      "nats-server.changes",
+      "nats-server.spec"
+    ],
+    "exact_focused_source_identity": true
+  },
+  "focused_qualification": "evidence/nats-meta-readiness-20261008.json",
+  "packaging_tests": {
+    "tools": 218,
+    "runner": 7
+  },
+  "active_builds_at_observation": {
+    "fedora": {
+      "container_id": "bda5fdc3c697b003469af8dd80e1c69c69c58e279ec724b91ccaa6b1f01b3845",
+      "pid": 1873638,
+      "started_at": "2026-10-07T22:34:13.592483892Z",
+      "image": "sha256:f1f889474f303ffe6f98b381e3061e812daa34e9018a00c4a25cb65f9a82fee9"
+    },
+    "el10": {
+      "container_id": "dc62586cb7c417d7a4a63751f6785c3b8ee7d423eec8cb0b8c230f1628a1b4f4",
+      "pid": 1873628,
+      "started_at": "2026-10-07T22:34:13.586161741Z",
+      "image": "sha256:0bc68ce99e4cd1340c79149a0601d7496351acd655a537ddae23116f036370c5"
+    },
+    "leap": {
+      "container_id": "0367bea9ab10e35a47313706506964be4445aa33f3fae640b3da13bf2d7aff8f",
+      "pid": 1873596,
+      "started_at": "2026-10-07T22:34:13.573080617Z",
+      "image": "sha256:2b44d9f9636b4e454c93b06c95cd9ff9f23136b159e80ac2ded68b32d7f1190b"
+    }
+  },
+  "disk_cleanup": "Reclaimed 23,374,925,824 bytes from the inactive reproducible Go compiler cache after checking every running container mount; sources, logs and RPM artifacts are preserved.",
+  "remaining": [
+    "Complete candidate46 RPM matrix and review every failure and diagnostic.",
+    "Resolve historical sparse-consumer performance, atomic-batch, workqueue and replica-update failures.",
+    "Review upstream skips; finish client/module, native OBS, package lint/debug and repository lifecycle qualification."
+  ],
+  "limits": [
+    "This is an integration and live-build record, not a claim that candidate46 or NATS is release qualified.",
+    "The uncommitted complete NATS dependency stack still awaits all release gates."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-candidate46-integration-20261008/build-nats-candidate46-20261008.py": "6afca5d52d2e45e78c111eecea3c05db05560ea5a1cd4876b23a29342875a86d",
+    "evidence/controls/nats-candidate46-integration-20261008/nats-candidate46-patch-verification-20261008.json": "45f4542af1f2388424fd1ab7b988066e6806624101d5fbfa876cd06fab04de9f",
+    "evidence/controls/nats-candidate46-integration-20261008/nats-candidate46-patches-20261008.log.gz": "2e903957d63f425f3518085e47aa1b9596c6e20687c0ded83d17e34cd1cb6257",
+    "evidence/controls/nats-candidate46-integration-20261008/nats-candidate46-prepare-20261008.log.gz": "52a71579c9956ef8f630163590035a36684f9498121e15145d36586d91f47ca7",
+    "evidence/controls/nats-candidate46-integration-20261008/nats-candidate46-runner-tests-20261008.log.gz": "1263e4a504f9a1488d390728f7922dfca5f52292d5d289d7fb0da780eb3bcb97",
+    "evidence/controls/nats-candidate46-integration-20261008/nats-candidate46-tools-tests-20261008.log.gz": "52f2f6b5ffa15c738136e9570fb6cf63ed3d5f52b6fe24f3814368cedb530a3d",
+    "evidence/controls/nats-candidate46-integration-20261008/nats-inactive-cache-cleanup-20261008.json": "47281d05070b49b70baf69a2a7d7675bc6db30a963c180479483464eefb14edc",
+    "evidence/controls/nats-candidate46-integration-20261008/prepare-nats-candidate46-20261008.py": "99fa4fdd8feda5f158737eb57aa7804384526d7692c67042e5b88f0fce0eb023",
+    "evidence/controls/nats-candidate46-integration-20261008/record.py": "c2b1215d005af9575ff183e609063d84e68eb1f26bf90fc3171cd64acda8f2cf"
+  }
+}
