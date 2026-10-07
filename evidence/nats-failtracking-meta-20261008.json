@@ -1,0 +1,145 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "A missing metadata API readiness precondition in the replica-update fixture is reproduced and corrected; focused qualification passed on all three distributions. RPM integration remains required.",
+  "root_cause": "The randomly restarted non-stream leader may be the metadata leader. Stream reset/recovery, leader changes and deduplicated publication can complete while the new metadata Raft leader has not published application-level API leadership. Every stream-update handler then declines the request; publishing leadership later does not recover it.",
+  "fix": "Join the already qualified awaitMetadataAPILeader helper immediately before reducing stream replicas. Keep the original client request deadline and all original state/order assertions.",
+  "historical_source": {
+    "file_sha256": "70baee78b8a911827aa5973b7ba38702fca58cd1194ae72d6b6d8711224539f3",
+    "test_body_sha256": "e1df7010dbf421a9c6e9e3af518fb475a52956ccf4a8c0a7300d207b630afb0f",
+    "candidate39_and_candidate46_test_bodies_identical": true
+  },
+  "controlled_schedule": [
+    "Create the original R3 stream and publish duplicate message-ID batches.",
+    "Use public preferred-placement stepdown to put stream leadership away from the metadata leader; restart that eligible non-stream leader after resetting its stream Raft state.",
+    "Pause the real metadata leadership callback before API publication, join stream recovery and select the restarted stream leader through actual Raft events.",
+    "The original update reaches and is declined by all three API handlers; release metadata publication immediately afterward and verify the original ten-second deadline still expires.",
+    "The paired corrected control enters the actual readiness helper event wait before metadata publication is released; no request is sent while publication is paused and the first update succeeds afterward. The other two followers may take their ordinary nonleader returns.",
+    "Both paths finish with one stream replica and all 25 ordered, deduplicated messages."
+  ],
+  "qualification": {
+    "final_reported_race_cases": 42,
+    "results": {
+      "fedora-nats-failtracking-meta-250": {
+        "exit_code": 0,
+        "race_enabled_reported_cases": 1
+      },
+      "leap-nats-failtracking-meta-250": {
+        "exit_code": 0,
+        "race_enabled_reported_cases": 1
+      },
+      "el10-nats-failtracking-meta-250": {
+        "exit_code": 0,
+        "race_enabled_reported_cases": 1
+      },
+      "fedora-nats-failtracking-meta-253": {
+        "exit_code": 0,
+        "race_enabled_reported_cases": 3
+      },
+      "leap-nats-failtracking-meta-253": {
+        "exit_code": 0,
+        "race_enabled_reported_cases": 3
+      },
+      "el10-nats-failtracking-meta-253": {
+        "exit_code": 0,
+        "race_enabled_reported_cases": 3
+      },
+      "fedora-nats-failtracking-clean-252": {
+        "exit_code": 0,
+        "race_enabled_reported_cases": 10
+      },
+      "leap-nats-failtracking-clean-252": {
+        "exit_code": 0,
+        "race_enabled_reported_cases": 10
+      },
+      "el10-nats-failtracking-clean-252": {
+        "exit_code": 0,
+        "race_enabled_reported_cases": 10
+      }
+    },
+    "clean_original_test_runs": 30,
+    "paired_schedule_subtests": 6
+  },
+  "initial_harness_corrections": [
+    "Control248 used a nonexistent require_Nil helper; it was replaced with an explicit pointer check.",
+    "Control249 assumed a stepdown response meant its tagged target had already become leader. Control250 uses public Preferred placement, joins the restarted stream current state, then observes actual Raft traffic until target leadership is published. Earlier failed logs are retained.",
+    "Control251 incorrectly rejected normal follower returns after metadata leadership was published. Control253 checks for premature requests only while publication is still paused, then requires the first request to succeed."
+  ],
+  "limits": [
+    "The historical failing build did not record request tracing. The deterministic control proves a reachable fixture defect with the same lifecycle and failed operation, not a recovered trace of that historical execution.",
+    "The scheduling gates, placement selection, observer witness and request traces are diagnostic-only and absent from the clean RPM patch.",
+    "The initial stream-reset delay is preserved from the original fixture in the control; no new timing sleep or polling loop is introduced.",
+    "The patch depends on candidate46 Patch108. Full RPM integration, skip review, client/module, native OBS and repository lifecycle gates remain.",
+    "Historical sparse-consumer performance, atomic-batch and workqueue failures remain separate unresolved gates."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-failtracking-meta-20261008/248-jetstream_api.go.gz": "7289d9fa872ff953325a18d805c91445d33e9ab0dd7956d20cd500e0a79e38a2",
+    "evidence/controls/nats-failtracking-meta-20261008/248-jetstream_cluster.go.gz": "1bc0afdca7b99a2a8ff5b3dba5e2f91c6a4904e6198cedcc86c64a33c496bfcc",
+    "evidence/controls/nats-failtracking-meta-20261008/248-jetstream_cluster_3_test.go.gz": "02838532ec38b2ba447de7b62ba1d79afb953a8efb22b9773f6d9744391161ce",
+    "evidence/controls/nats-failtracking-meta-20261008/249-jetstream_api.go.gz": "7289d9fa872ff953325a18d805c91445d33e9ab0dd7956d20cd500e0a79e38a2",
+    "evidence/controls/nats-failtracking-meta-20261008/249-jetstream_cluster.go.gz": "1bc0afdca7b99a2a8ff5b3dba5e2f91c6a4904e6198cedcc86c64a33c496bfcc",
+    "evidence/controls/nats-failtracking-meta-20261008/249-jetstream_cluster_3_test.go.gz": "5731d880d6b7458f5e3e8b9ed6983eaa382e1490482a9f42ae7c00ece2077ba1",
+    "evidence/controls/nats-failtracking-meta-20261008/250-jetstream_api.go.gz": "7289d9fa872ff953325a18d805c91445d33e9ab0dd7956d20cd500e0a79e38a2",
+    "evidence/controls/nats-failtracking-meta-20261008/250-jetstream_cluster.go.gz": "1bc0afdca7b99a2a8ff5b3dba5e2f91c6a4904e6198cedcc86c64a33c496bfcc",
+    "evidence/controls/nats-failtracking-meta-20261008/250-jetstream_cluster_3_test.go.gz": "426b93cf7ce4695f9c98caceec8bad887bcd3c7133fbd7d4d4451e58f18c4867",
+    "evidence/controls/nats-failtracking-meta-20261008/251-jetstream_api.go.gz": "7289d9fa872ff953325a18d805c91445d33e9ab0dd7956d20cd500e0a79e38a2",
+    "evidence/controls/nats-failtracking-meta-20261008/251-jetstream_cluster.go.gz": "1bc0afdca7b99a2a8ff5b3dba5e2f91c6a4904e6198cedcc86c64a33c496bfcc",
+    "evidence/controls/nats-failtracking-meta-20261008/251-jetstream_cluster_3_test.go.gz": "2906f4e5c4f58af45e77d74eba6718019813b252f14e1433252c87913ab1378c",
+    "evidence/controls/nats-failtracking-meta-20261008/253-jetstream_api.go.gz": "7289d9fa872ff953325a18d805c91445d33e9ab0dd7956d20cd500e0a79e38a2",
+    "evidence/controls/nats-failtracking-meta-20261008/253-jetstream_cluster.go.gz": "1bc0afdca7b99a2a8ff5b3dba5e2f91c6a4904e6198cedcc86c64a33c496bfcc",
+    "evidence/controls/nats-failtracking-meta-20261008/253-jetstream_cluster_3_test.go.gz": "799065b3714d4c53bd8ad70769fe582d8aa2f165e51352171001962858a840c5",
+    "evidence/controls/nats-failtracking-meta-20261008/audit.rst": "fb3a4c92540d9946b84695eb77de9c5d6fb7bcd90bdacafe7377afb6a842666d",
+    "evidence/controls/nats-failtracking-meta-20261008/clean-jetstream_cluster_3_test.go.gz": "7a96aacc99981e7856ce06c746bb5b806dc4c92f7f2d29506f11a197450c40a8",
+    "evidence/controls/nats-failtracking-meta-20261008/config-248.json": "0057ab6271fab19c029fbfae7be5ea6c080d55a5b9c822064705a431cafdeca6",
+    "evidence/controls/nats-failtracking-meta-20261008/config-249.json": "8e7dab1422ee254d8a2c04501fd0248f54e49943f1441583146a145be87d9038",
+    "evidence/controls/nats-failtracking-meta-20261008/config-250.json": "871dedeca4065090afec66b004268954e16a68a288593e415fdd94e9334b062f",
+    "evidence/controls/nats-failtracking-meta-20261008/config-251.json": "1607945421fd3c76ae0b4bb16f4fd5664d6fce96bc4c0ce98be777daef14dfe4",
+    "evidence/controls/nats-failtracking-meta-20261008/config-253.json": "ea5914fdd61b750dd01d43ca5fa94fd125ba43dc7a9762c55f87981e46a57ada",
+    "evidence/controls/nats-failtracking-meta-20261008/config-clean-252.json": "0fadbc175ae439cfc43ff1f01d1483df360a0116a52115173eb73c6faec6000d",
+    "evidence/controls/nats-failtracking-meta-20261008/el10-nats-failtracking-clean-252-status.json": "de86fd41381a4b3739a649b51cb333eeb6d334bfb7ce441fe387be0099880290",
+    "evidence/controls/nats-failtracking-meta-20261008/el10-nats-failtracking-clean-252.log.gz": "93ac818b82eed9a3ad44ad32f100ca63bc02e8259f42695dc2a292dfa0a5182a",
+    "evidence/controls/nats-failtracking-meta-20261008/el10-nats-failtracking-meta-248-status.json": "362e1414d526692b88a2e5b312e20c26a8da9e6561b808e1b0e102ffe57c2dfd",
+    "evidence/controls/nats-failtracking-meta-20261008/el10-nats-failtracking-meta-248.log.gz": "6b10a20eaec42b43f6b1583eb6b71b0bc2923567e2ecdbbf5b0afd87bb86f1c0",
+    "evidence/controls/nats-failtracking-meta-20261008/el10-nats-failtracking-meta-249-status.json": "b01f5e9f3f6a90477df30d2629136d1607ae471c19ddd2129e06a21b09255407",
+    "evidence/controls/nats-failtracking-meta-20261008/el10-nats-failtracking-meta-249.log.gz": "021796c1c7bfbbee2ea0c0489839815cc3ec51ed21b1f8e148bec35c1f87937c",
+    "evidence/controls/nats-failtracking-meta-20261008/el10-nats-failtracking-meta-250-status.json": "f20ca7a4d5f6b0e318587f43a3a34cf0e117f0698894c32bf3f08714be188de9",
+    "evidence/controls/nats-failtracking-meta-20261008/el10-nats-failtracking-meta-250.log.gz": "c693c870bf52331f28d03886108f849b18d0a22b7f1c0161d09729741b1e49b9",
+    "evidence/controls/nats-failtracking-meta-20261008/el10-nats-failtracking-meta-251-status.json": "74f3c5e118fa5397b159b2b6ee6e47350b868e14d97f482490f2fa8554612f43",
+    "evidence/controls/nats-failtracking-meta-20261008/el10-nats-failtracking-meta-251.log.gz": "806490568eaec6fd5c13843017c57ea0d2c97a817d8d469711244f2186f00e68",
+    "evidence/controls/nats-failtracking-meta-20261008/el10-nats-failtracking-meta-253-status.json": "79df1ddcb18882502b97a20c99090aaa9bade3b2c79b4d6b99a2ee44781b96fe",
+    "evidence/controls/nats-failtracking-meta-20261008/el10-nats-failtracking-meta-253.log.gz": "7369d0f34a081d84656854a18f28468bb26ede86ac2cc1fce015efa17c9ce618",
+    "evidence/controls/nats-failtracking-meta-20261008/fedora-nats-failtracking-clean-252-status.json": "4177e43cab2db2fd0e547d329b0bfc629d00d82690ca17bc280d1bb312570ecb",
+    "evidence/controls/nats-failtracking-meta-20261008/fedora-nats-failtracking-clean-252.log.gz": "9e5f250153e2193831001a3cfdde8f59954643a61192f94f6b4567d2ec0ccd7a",
+    "evidence/controls/nats-failtracking-meta-20261008/fedora-nats-failtracking-meta-248-status.json": "35a2961cf9200aae380a3f80359817766bc70493eb96e37c01e5f32849f9cccb",
+    "evidence/controls/nats-failtracking-meta-20261008/fedora-nats-failtracking-meta-248.log.gz": "af224caa658e65bbcd60b5e3ed9288ffa19ad0b233b0fc130fe1c91fd190af01",
+    "evidence/controls/nats-failtracking-meta-20261008/fedora-nats-failtracking-meta-249-status.json": "a996eb217e2e35f148d061fcf80a1bf71ee3f4fcfa1f08577ac9ee1d6cca9a2c",
+    "evidence/controls/nats-failtracking-meta-20261008/fedora-nats-failtracking-meta-249.log.gz": "80a732c708d1c5852ba75491d7673f3f93cd7a4eb184cf90e7eff3cb88f3462e",
+    "evidence/controls/nats-failtracking-meta-20261008/fedora-nats-failtracking-meta-250-status.json": "2a3635c5510c21920db6babc9b3289935f7fc63a24ff05ea6d20a4e93326009c",
+    "evidence/controls/nats-failtracking-meta-20261008/fedora-nats-failtracking-meta-250.log.gz": "d9b9c86cda61547a1a3198ed9400440647f4fd8049086dcd48769670bab25e8b",
+    "evidence/controls/nats-failtracking-meta-20261008/fedora-nats-failtracking-meta-251-status.json": "2db520b6e28807b76f786290d3fb8c615b036158c47a783c7c13d2e4a9107f48",
+    "evidence/controls/nats-failtracking-meta-20261008/fedora-nats-failtracking-meta-251.log.gz": "ef969732bd0fa1307b3e7bb8dc9a7bfb880776433ea0180b9f224acfafa404bf",
+    "evidence/controls/nats-failtracking-meta-20261008/fedora-nats-failtracking-meta-253-status.json": "bb044e2e270277076544f5b76d5c206f608db8de336f9bf6f4975307f4b018ae",
+    "evidence/controls/nats-failtracking-meta-20261008/fedora-nats-failtracking-meta-253.log.gz": "425ab76407950453dbabf64eaa8c8b841dbb2e6e3d417474fafcb5869a7b28d5",
+    "evidence/controls/nats-failtracking-meta-20261008/leap-nats-failtracking-clean-252-status.json": "03487c62ffc20f47cfbe6dcb05a0fb6e2d23531439899c0cbedcadb8ee037bb5",
+    "evidence/controls/nats-failtracking-meta-20261008/leap-nats-failtracking-clean-252.log.gz": "a76b4cd149499c62a14eb55bf3ddde7af05c3b8df0b91f367e45ea7fe44e2892",
+    "evidence/controls/nats-failtracking-meta-20261008/leap-nats-failtracking-meta-248-status.json": "a33a17ab671b6f0c0a4acb53d5496fd5f8fc71d5c02c8919bc1929c02a156754",
+    "evidence/controls/nats-failtracking-meta-20261008/leap-nats-failtracking-meta-248.log.gz": "6b10a20eaec42b43f6b1583eb6b71b0bc2923567e2ecdbbf5b0afd87bb86f1c0",
+    "evidence/controls/nats-failtracking-meta-20261008/leap-nats-failtracking-meta-249-status.json": "7253ba63292cd8d2abebfd6f18ab295de22c2b2ab0a30a1475b693a13cb85f50",
+    "evidence/controls/nats-failtracking-meta-20261008/leap-nats-failtracking-meta-249.log.gz": "50eeaa2a30550967a10bd8beb8af0d43c5f9172c9726654e4cc8e5ddf90d39df",
+    "evidence/controls/nats-failtracking-meta-20261008/leap-nats-failtracking-meta-250-status.json": "af90aa3e9d66fbce7ad140a141eb3f0120ecf29c1e87a9579d5e8e9e89a3016d",
+    "evidence/controls/nats-failtracking-meta-20261008/leap-nats-failtracking-meta-250.log.gz": "553f7e6b70ac92fc7a941cda7f0c7ddd371bff29037d41842c68aea5768d80cb",
+    "evidence/controls/nats-failtracking-meta-20261008/leap-nats-failtracking-meta-251-status.json": "713f19102c0bab4c4efa380a24fc7b22d11f270ac411cca15f8df26c87459c28",
+    "evidence/controls/nats-failtracking-meta-20261008/leap-nats-failtracking-meta-251.log.gz": "967a6c26e6b403fe10473912f8cd753cfc1956c9ea779cc2a44fd684c88d436b",
+    "evidence/controls/nats-failtracking-meta-20261008/leap-nats-failtracking-meta-253-status.json": "bd68d8bb36dfa0e9e5231ae7d9570bf534ded6fa308e72edc8ea5cfc2722f366",
+    "evidence/controls/nats-failtracking-meta-20261008/leap-nats-failtracking-meta-253.log.gz": "d2ccc666e938ec87ac1fca072e23597c6cf938a724a5313d1647ea59acce3d76",
+    "evidence/controls/nats-failtracking-meta-20261008/nats-server-failtracking-meta-ready-tests.patch": "7ed4782017beb274365177990689ce8b5eff9686fa3d4f5e9172efd925abaae1",
+    "evidence/controls/nats-failtracking-meta-20261008/prepare-nats-failtracking-meta-248-20261008.py": "7f0ea390c683e60a4c1d8272586afacd0407dc3a43ba20cbf25607dd7ec4bf1c",
+    "evidence/controls/nats-failtracking-meta-20261008/prepare-nats-failtracking-meta-249-20261008.py": "89fa3e9a3318a2b1e76556ac4f2233b1640a65222336e2fd2e165b5df60071ba",
+    "evidence/controls/nats-failtracking-meta-20261008/prepare-nats-failtracking-meta-250-20261008.py": "0eaa68e0beaa0e68c9f4acbd11c2ec3e7494f2f90123cdbcc415813316de89dd",
+    "evidence/controls/nats-failtracking-meta-20261008/prepare-nats-failtracking-meta-251-20261008.py": "d3dcf7ea30fcee7453b69739e928d714bf838f2e6b9aa8c23a632d2ae74f4a0c",
+    "evidence/controls/nats-failtracking-meta-20261008/prepare-nats-failtracking-meta-253-20261008.py": "84e91221007827e079318f5fce7841a224f89ecab838b6f2bf4af41e01507ef4",
+    "evidence/controls/nats-failtracking-meta-20261008/record.py": "1f4a5b690ed79aa3e4a822b6119334a879161620993267fbdf046db44e64f24d",
+    "evidence/controls/nats-failtracking-meta-20261008/run.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a"
+  }
+}

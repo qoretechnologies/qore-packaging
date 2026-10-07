@@ -1,0 +1,39 @@
+{
+  "source": "work/nats-prepared-46/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-failtracking-clean-252",
+      "target": "fedora",
+      "count": 10,
+      "race": true,
+      "pattern": "^TestJetStreamClusterStreamFailTracking$",
+      "sublist": "work/nats-prepared-46/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-failtracking-clean-252-20261008/jetstream_cluster_3_test.go": "server/jetstream_cluster_3_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-failtracking-clean-252",
+      "target": "leap",
+      "count": 10,
+      "race": true,
+      "pattern": "^TestJetStreamClusterStreamFailTracking$",
+      "sublist": "work/nats-prepared-46/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-failtracking-clean-252-20261008/jetstream_cluster_3_test.go": "server/jetstream_cluster_3_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-failtracking-clean-252",
+      "target": "el10",
+      "count": 10,
+      "race": true,
+      "pattern": "^TestJetStreamClusterStreamFailTracking$",
+      "sublist": "work/nats-prepared-46/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-failtracking-clean-252-20261008/jetstream_cluster_3_test.go": "server/jetstream_cluster_3_test.go"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Join metadata API readiness after the intentional restart before reducing stream replicas.
+--- a/server/jetstream_cluster_3_test.go
++++ b/server/jetstream_cluster_3_test.go
+@@ -5367,6 +5367,11 @@
+ 	}
+ 
+ 	sendBatch()
++
++	// Stream leadership and publication can recover before the metadata API.
++	ready, cancelReady := context.WithTimeout(context.Background(), 10*time.Second)
++	defer cancelReady()
++	require_NoError(t, awaitMetadataAPILeader(ready, c))
+ 
+ 	_, err = js.UpdateStream(&nats.StreamConfig{
+ 		Name:     "TEST",
