@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import sys
 import tempfile
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
@@ -176,6 +177,10 @@ os.write(2, b'diagnostic\\n')
 
     def add_modules(self):
         self.manifest['modules'] = []
+        for name in ('qore-jni-tools', 'qore-jni-kotlin'):
+            self.manifest['packages'].append({'name': name,
+                'filename': name + '-1-1.noarch.rpm', 'phase': 'sdk',
+                'sha256': 'f' * 64, 'url': 'https://example.org/' + name})
         self.manifest['packages'].append({'name': 'qore-xml-module',
             'filename': 'qore-xml-module-1-1.aarch64.rpm', 'phase': 'runtime',
             'sha256': 'f' * 64, 'url': 'https://example.org/xml'})
@@ -192,6 +197,96 @@ os.write(2, b'diagnostic\\n')
     def test_complete_module_manifest(self):
         self.add_modules()
         self.assertEqual(module.validate(self.manifest), self.manifest)
+
+    def test_jni_requires_complete_runtime_and_sdk_dependencies(self):
+        self.add_modules()
+        self.manifest['modules'] = [entry for entry in self.manifest['modules'] if entry['name'] == 'jni']
+        for name in ('qore-xml-module', 'qore-python-module', 'qore-process-module',
+                     'qore-jni-tools', 'qore-jni-kotlin'):
+            for mutation in ('missing', 'phase'):
+                manifest = copy.deepcopy(self.manifest)
+                entry = next(item for item in manifest['packages'] if item['name'] == name)
+                if mutation == 'missing':
+                    manifest['packages'].remove(entry)
+                else:
+                    entry['phase'] = 'runtime' if entry['phase'] == 'sdk' else 'sdk'
+                with self.subTest(name=name, mutation=mutation), self.assertRaisesRegex(ValueError, 'JNI qualification'):
+                    module.validate(manifest)
+
+    def test_jni_rejects_missing_job_boundary_before_installation(self):
+        self.add_modules()
+        with patch.object(module.subprocess, 'run') as run:
+            for phase, fixtures in ((None, None), ('runtime', None), ('sdk', None), ('unknown', 'bundle')):
+                with self.subTest(phase=phase), self.assertRaisesRegex(ValueError, 'separate SDK/runtime jobs'):
+                    module.qualify(self.manifest, 'not-created', phase, fixtures)
+            run.assert_not_called()
+
+    def test_jni_runtime_requires_verified_bundle_before_installation(self):
+        self.add_modules()
+        with (patch.object(module.installed_jni, 'verify_bundle', side_effect=ValueError('fixture provenance mismatch')),
+              patch.object(module.subprocess, 'run') as run):
+            with self.assertRaisesRegex(ValueError, 'fixture provenance mismatch'):
+                module.qualify(self.manifest, 'not-created', 'runtime', 'bundle')
+            run.assert_not_called()
+
+    def test_jni_options_cannot_change_unrelated_qualification(self):
+        with patch.object(module.subprocess, 'run') as run:
+            with self.assertRaisesRegex(ValueError, 'require a JNI'):
+                module.qualify(self.manifest, 'not-created', 'sdk', 'bundle')
+            run.assert_not_called()
+
+    def test_jni_job_phases_preserve_installation_and_artifact_boundaries(self):
+        self.add_modules()
+        self.manifest['modules'] = [entry for entry in self.manifest['modules'] if entry['name'] == 'jni']
+
+        def fetch(url, digest, path):
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text('verified fixture')
+
+        def logged(command, path, **kwargs):
+            path.write_text('Header V4 RSA/SHA256 Signature, key ID 0123456789abcdef: OK\n')
+            return module.subprocess.CompletedProcess(command, 0)
+
+        def capture(command, **kwargs):
+            if command == ['qore', '--latest-module-api']:
+                return '2.0\n'
+            self.assertEqual(command, ['rpm', '-ql', 'qore-jni-module'])
+            return '/usr/lib64/qore-modules/jni-api-2.0.qmod\n'
+
+        for phase in ('sdk', 'runtime'):
+            with self.subTest(phase=phase), tempfile.TemporaryDirectory() as temporary:
+                with (patch.object(module.platform, 'machine', return_value='aarch64'),
+                      patch.object(module.os, 'geteuid', return_value=0),
+                      patch.object(module, 'check_prerequisites'),
+                      patch.object(module, 'fetch_source', side_effect=fetch),
+                      patch.object(module, 'run_logged', side_effect=logged),
+                      patch.object(module.subprocess, 'run', return_value=module.subprocess.CompletedProcess([], 1)),
+                      patch.object(module.subprocess, 'check_output', side_effect=capture),
+                      patch.object(module.pwd, 'getpwnam', return_value=SimpleNamespace(pw_uid=1, pw_gid=1)),
+                      patch.object(module.installed_jni, 'verify_bundle', return_value={'verified': True}) as verify,
+                      patch.object(module.installed_jni, 'import_bundle') as unpack,
+                      patch.object(module.installed_jni, 'export_bundle', return_value={'exported': True}) as export):
+                    result = module.qualify(self.manifest, Path(temporary) / 'result',
+                                            phase, Path(temporary) / 'bundle')
+                self.assertEqual(result['exit_code'], 0)
+                steps = {entry['name']: entry['command'] for entry in result['steps']}
+                self.assertIn('runtime-install', steps)
+                self.assertNotIn('qore-jni-tools', ' '.join(steps['runtime-install']))
+                if phase == 'sdk':
+                    self.assertIn('sdk-install', steps)
+                    self.assertIn('sdk-jni-compiler', steps)
+                    self.assertNotIn('runtime-jni-compiled-consumer', steps)
+                    export.assert_called_once()
+                    unpack.assert_not_called()
+                    verify.assert_not_called()
+                else:
+                    self.assertNotIn('sdk-install', steps)
+                    self.assertIn('runtime-jni-compiled-consumer', steps)
+                    self.assertNotIn('sdk-jni-compiler', steps)
+                    self.assertNotIn('runtime-jni-build-java-fixtures', steps)
+                    export.assert_not_called()
+                    unpack.assert_called_once()
+                    self.assertEqual(verify.call_count, 2)
 
     def test_python_requires_xml_in_minimal_runtime(self):
         self.add_modules()
@@ -643,7 +738,7 @@ os.write(2, b'diagnostic\\n')
                   patch.object(module, 'fetch_source', side_effect=fetch),
                   patch.object(module.subprocess, 'run') as run):
                 with self.assertRaisesRegex(ValueError, 'fixture checksum mismatch'):
-                    module.qualify(self.manifest, output)
+                    module.qualify(self.manifest, output, 'sdk', Path(temporary) / 'jni-fixtures')
                 run.assert_not_called()
             self.assertIn('fixture checksum mismatch', (output / 'qualification.json').read_text())
 

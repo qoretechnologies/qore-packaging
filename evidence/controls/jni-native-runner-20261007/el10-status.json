@@ -1,0 +1,73 @@
+{
+  "bootstrap_image": "sha256:8d89e1ad139aef357e2341b82a2122153de75cd727a4aad4a92dc69214fb521e",
+  "code_sha256": {
+    "tools/qualify-installed.py": "fef2d7fee71d94a58e03833d28902f854ae7f026a761a8e0127139a3c11c24a8",
+    "tools/installed_jni.py": "8b4c403f5d58c1d5de39198567121258b72191354f85dd53a4800c6a737c734a",
+    "tools/packaging.py": "10fb08c11f578aec80c46ded9f82171587366c0ca4d8488c8515bfc54f20a80e",
+    "qualification/jni-fixtures.json": "e0182876dee202ff50444bb6ae528a02936bb5ecde43f7eae79753ea4fad11c3",
+    "work/jni-fedora-x86_64.json": "f56cee74e45d7c6f9847152032fde79eea114c5a6ca8ff08c0e656f670fad8c1",
+    "work/jni-leap-x86_64.json": "99035b6262f37854e3feaa37b57fae371ffd73d52ed26566a23ebbaf303a9f67",
+    "work/jni-el10-x86_64.json": "098bfd982f7986c77f590c28f2ef580b669ed69f0b7c652dc00c9972ac4d4a9b"
+  },
+  "steps": [
+    {
+      "name": "sdk",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/jni-native-final-code-20261007:/code:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/el10-jni-native-final-20261007:/output",
+        "-w",
+        "/code",
+        "sha256:8d89e1ad139aef357e2341b82a2122153de75cd727a4aad4a92dc69214fb521e",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "tools/qualify-installed.py",
+        "work/jni-el10-x86_64.json",
+        "--output",
+        "/output/sdk",
+        "--jni-phase",
+        "sdk",
+        "--jni-fixtures",
+        "/output/jni-fixtures"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "runtime",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/jni-native-final-code-20261007:/code:ro",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/results/el10-jni-native-final-20261007:/output",
+        "-w",
+        "/code",
+        "sha256:8d89e1ad139aef357e2341b82a2122153de75cd727a4aad4a92dc69214fb521e",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "tools/qualify-installed.py",
+        "work/jni-el10-x86_64.json",
+        "--output",
+        "/output/runtime",
+        "--jni-phase",
+        "runtime",
+        "--jni-fixtures",
+        "/output/jni-fixtures"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "exit_code": 0
+}

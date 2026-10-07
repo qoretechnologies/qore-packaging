@@ -14,10 +14,12 @@ import subprocess
 import tempfile
 
 from packaging import fetch_source
+import installed_jni
 
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'jni': installed_jni.FIXTURES,
     'python': {'rpm/run-tests.py', 'debian/tests/compiler', 'debian/tests/standalone.py',
                'test/python.qtest', 'test/fib.py', 'test/standalone-lifecycle.py'},
     'amqp': {'rpm/tests-installed-runtime', 'debian/tests/compiler'}
@@ -115,6 +117,8 @@ MODULE_PRELOADS = {
 }
 SIMPLE_MODULES = ('markdown', 'sysconf', 'magic', 'sqlite3', 'kalman', 'msgpack',
                   'fsevent', 'tar', 'zip', 'cairo', 'geos', 'git', 'imagemagick', 'proj')
+SDK_PACKAGES = {'qore-devel', 'qore-rpm-macros', 'qore-misc-tools', 'qore-debug-tools',
+                'qore-jni-tools', 'qore-jni-kotlin'}
 
 
 def validate_modules(manifest):
@@ -146,6 +150,13 @@ def validate_modules(manifest):
             raise ValueError('AMQP AOT helpers require a pinned XML runtime RPM')
         if name == 'proj' and packages.get('qore-geos-module', {}).get('phase') != 'runtime':
             raise ValueError('PROJ requires a pinned GEOS runtime RPM')
+        if name == 'jni':
+            for dependency in ('qore-xml-module', 'qore-python-module', 'qore-process-module'):
+                if packages.get(dependency, {}).get('phase') != 'runtime':
+                    raise ValueError('JNI qualification requires a pinned runtime RPM: ' + dependency)
+            for dependency in ('qore-jni-tools', 'qore-jni-kotlin'):
+                if packages.get(dependency, {}).get('phase') != 'sdk':
+                    raise ValueError('JNI qualification requires a pinned SDK RPM: ' + dependency)
         fixtures.extend(files)
     return fixtures
 
@@ -186,7 +197,7 @@ def validate(manifest):
     if library not in names:
         raise ValueError('Missing the distribution-specific Qore runtime library')
     for entry in manifest['packages']:
-        expected = 'sdk' if entry['name'] in {'qore-devel', 'qore-rpm-macros', 'qore-misc-tools', 'qore-debug-tools'} else 'runtime'
+        expected = 'sdk' if entry['name'] in SDK_PACKAGES else 'runtime'
         if entry['phase'] != expected:
             raise ValueError('Runtime and SDK phases must remain separate')
     return manifest
@@ -228,6 +239,8 @@ def module_commands(name, phase, directory, binary=None, driver=None, installed_
     """Fixed commands only; manifests select reviewed suites, never shell text."""
     if name not in MODULE_FIXTURES or phase not in ('runtime', 'sdk'):
         raise ValueError('Unknown module suite or phase')
+    if name == 'jni':
+        return installed_jni.commands(phase, directory, binary)
     if name == 'amqp':
         commands = [('tests', ['env', 'QORE_RPM_TEST_TMP=' + str(directory / 'runtime-fixture'),
                               str(directory / 'rpm/tests-installed-runtime')])]
@@ -426,8 +439,16 @@ def run_logged(command, path, cwd=None, env=None, owner=None):
                 os.close(write_fd)
 
 
-def qualify(manifest, output):
+def qualify(manifest, output, jni_phase=None, jni_fixtures=None):
     validate(manifest)
+    has_jni = any(entry['name'] == 'jni' for entry in manifest.get('modules', []))
+    if has_jni:
+        if jni_phase not in ('runtime', 'sdk') or jni_fixtures is None:
+            raise ValueError('JNI requires separate SDK/runtime jobs and a fixture bundle')
+        if jni_phase == 'runtime':
+            installed_jni.verify_bundle(jni_fixtures, manifest)
+    elif jni_phase is not None or jni_fixtures is not None:
+        raise ValueError('JNI fixture options require a JNI qualification manifest')
     if platform.machine() != manifest['arch']:
         raise ValueError('Qualification requires a matching native runner')
     if os.geteuid() != 0:
@@ -437,6 +458,8 @@ def qualify(manifest, output):
     output.mkdir(parents=True, exist_ok=False)
     result = {'manifest': manifest, 'machine': platform.machine(),
               'runner_arch': os.environ.get('CI_RUNNER_EXECUTABLE_ARCH'), 'steps': []}
+    if has_jni:
+        result['jni_phase'] = jni_phase
 
     def run(name, command, cwd=None, env=None, fixture=False):
         owner = pwd.getpwnam('qoretester') if fixture else None
@@ -483,6 +506,8 @@ def qualify(manifest, output):
                 if probe.returncode != 1:
                     raise ValueError('Container is not a clean minimal runtime: ' + name)
             for phase in ('runtime', 'sdk'):
+                if jni_phase == 'runtime' and phase == 'sdk':
+                    break
                 entries = [entry for entry in manifest['packages'] if entry['phase'] == phase]
                 paths = [rpms / entry['filename'] for entry in entries]
                 if phase == 'sdk':
@@ -495,9 +520,14 @@ def qualify(manifest, output):
                 run(phase + '-rpm-verify', ['rpm', '-V', *names])
                 run(phase + '-inventory', ['rpm', '-qa', '--qf', '%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n'])
                 if phase == 'runtime':
-                    for name in ('qore-devel', 'gcc', 'gcc-c++', 'unixODBC-devel'):
+                    for name in ('qore-devel', 'gcc', 'gcc-c++', 'unixODBC-devel',
+                                 'qore-jni-tools', 'qore-jni-kotlin', 'java-21-openjdk-devel'):
                         if subprocess.run(['rpm', '-q', name], stdout=subprocess.DEVNULL).returncode != 1:
                             raise ValueError('Runtime unexpectedly installed the compiler: ' + name)
+                if jni_phase == 'sdk' and phase == 'runtime':
+                    # The next CI job starts from a fresh runtime container and
+                    # receives only reviewed artifacts produced by these SDK tests.
+                    continue
                 suites = ('runtime',) if phase == 'runtime' else ('runtime', 'development', 'tools', 'remote-debuggers')
                 for suite in suites:
                     directory = root / (phase + '-' + suite)
@@ -510,6 +540,9 @@ def qualify(manifest, output):
                     name = entry['name']
                     directory = root / (phase + '-' + name)
                     shutil.copytree(source / ('module-' + name), directory)
+                    if name == 'jni' and phase == 'runtime':
+                        installed_jni.import_bundle(jni_fixtures, directory, manifest)
+                        result['jni_fixture_bundle'] = installed_jni.verify_bundle(jni_fixtures, manifest)
                     subprocess.run(['chown', '-R', 'qoretester:qoretester', str(directory)], check=True)
                     binary = None
                     driver = None
@@ -523,6 +556,10 @@ def qualify(manifest, output):
                         driver_package = 'psqlODBC' if manifest['family'] == 'suse' else 'postgresql-odbc'
                         files = subprocess.check_output(['rpm', '-ql', driver_package], text=True)
                         driver = installed_module_file('PostgreSQL ODBC driver', files, '/psqlodbcw.so')
+                    if name == 'jni':
+                        files = subprocess.check_output(['rpm', '-ql', 'qore-jni-module'], text=True)
+                        api = subprocess.check_output(['qore', '--latest-module-api'], text=True).strip()
+                        binary = installed_module_file(name, files, '/jni-api-' + api + '.qmod')
                     environment = ['runuser', '-u', 'qoretester', '--', 'env']
                     for variable in ('QORE_MODULE_DIR', 'QORE_MODULE_DIR_ONLY', 'QORE_INCLUDE_DIR',
                                      'LD_LIBRARY_PATH', 'LD_PRELOAD'):
@@ -532,6 +569,8 @@ def qualify(manifest, output):
                                                           family=manifest['family']):
                         run(phase + '-' + name + '-' + suite, environment + command,
                             cwd=directory, fixture=True)
+                    if name == 'jni' and phase == 'sdk':
+                        result['jni_fixture_bundle'] = installed_jni.export_bundle(directory, jni_fixtures, manifest)
         result['exit_code'] = 0
     except BaseException as error:
         result.update(exit_code=1, error=repr(error))
@@ -545,8 +584,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('manifest', type=Path)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--jni-phase', choices=('sdk', 'runtime'))
+    parser.add_argument('--jni-fixtures', type=Path)
     args = parser.parse_args()
-    qualify(json.loads(args.manifest.read_text()), args.output)
+    qualify(json.loads(args.manifest.read_text()), args.output, args.jni_phase, args.jni_fixtures)
 
 
 if __name__ == '__main__':
