@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "Focused controls pass; full matching-flag RPM candidate4 is running.",
+  "stack": {
+    "root_cause": "PopMany subtracts an unchecked count in Release and uses vector::resize for a shrink-only operation, instantiating an unnecessary default-construction path.",
+    "fix": "CHECK_GE before iterator arithmetic, then erase the moved tail. All valid ordering and ownership semantics are retained.",
+    "functional_cases": 5618,
+    "cases": "Every size/count pair through 32 over ten repetitions, plus eight injected move exceptions; includes zero, full, partial and move-only non-default-constructible values.",
+    "invalid_counts": [
+      5,
+      255,
+      4294967295,
+      18446744073709551615
+    ],
+    "valgrind": "Zero errors and zero definite, indirect or possible lost bytes; same reachable OpenSSL baseline as earlier controls."
+  },
+  "comments": {
+    "changed_lines": 56,
+    "proof": "Each changed line belongs to a comment-only chain. Original and fixed chains produce byte-identical preprocessor output; every fixed chain compiles with -Werror=comment."
+  },
+  "forbidden_smi_cast": {
+    "fix": "Keep the existing dependent static_assert and provide an explicit unreachable fallback for GCC parsing before template instantiation.",
+    "positive": "Intended BitcastTaggedToWordForTagAndSmiBits call compiles with no diagnostics.",
+    "negative": "Forbidden BitcastTaggedToWord<int> call is rejected by the exact original static assertion, with no missing-return diagnostic."
+  },
+  "sha256": {
+    "evidence/controls/node-v8-diagnostics-20261006/stack-run.py": "7982df199a4bd17abfa5b9a960c9c63f474cef4de7c67cfad2ecf475aadaea02",
+    "evidence/controls/node-v8-diagnostics-20261006/stack-fixed-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-v8-diagnostics-20261006/stack-valgrind.log.gz": "2f37ea12b97395476e15622af5195836ca565a57992805bf19c613be1379605b",
+    "evidence/controls/node-v8-diagnostics-20261006/stack-status.json": "e58c2d0e4d6bb5f42477c8da026732270f8635930d2a87d119ee510351b7bbb7",
+    "evidence/controls/node-v8-diagnostics-20261006/header-run.py": "c12ed9bd906de2e44265872ccd4de85f856cb786ef8e2e51de1edb1c6b1e4b70",
+    "evidence/controls/node-v8-diagnostics-20261006/header-positive.cc": "f3913db5086f1e220eee132c70932331a4bc15ad4d81a7c8955277d6a433e19b",
+    "evidence/controls/node-v8-diagnostics-20261006/header-negative.cc": "3d7c6001c5cfcbc1329f09c4527fda16f288e5310038883c874d9289bc004417",
+    "evidence/controls/node-v8-diagnostics-20261006/header-positive.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-v8-diagnostics-20261006/header-negative.log": "6732f8d0518fbedb1bf5906894eabb43b4642dee07d7bc65b9a92ac837b5a14c",
+    "evidence/controls/node-v8-diagnostics-20261006/header-status.json": "08d5f7fc7b91eafdf70312922f06845830ead7f7f721de944429457465203485",
+    "evidence/controls/node-v8-diagnostics-20261006/header-node-header-controls-20261006.log": "7ec57d59dd8fd649fd59a7442f865116bb4e5fa5bf8c8d3328ae0d5d99978689",
+    "evidence/controls/node-v8-diagnostics-20261006/stack-node-torque-stack-control-20261006.log": "81e0e358e047643df6993254d56d15b6c1a750987a56f895475c68bd2120cc77"
+  }
+}

@@ -1,0 +1,304 @@
+[
+  {
+    "name": "release-compile",
+    "exit_code": 0,
+    "expected": 0,
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O2",
+      "-DNDEBUG",
+      "/work/fixed.cc",
+      "-licui18n",
+      "-licuuc",
+      "-o",
+      "/work/fixed-release"
+    ]
+  },
+  {
+    "name": "release-normal",
+    "exit_code": 0,
+    "expected": 0,
+    "command": [
+      "/work/fixed-release"
+    ]
+  },
+  {
+    "name": "release-memory",
+    "exit_code": 0,
+    "expected": 0,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/work/release-valid-valgrind.log",
+      "/work/fixed-release"
+    ]
+  },
+  {
+    "name": "release-invalid--1",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "/work/fixed-release",
+      "-1"
+    ]
+  },
+  {
+    "name": "release-invalid--1-memory",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=no",
+      "--log-file=/work/release-invalid--1-valgrind.log",
+      "/work/fixed-release",
+      "-1"
+    ]
+  },
+  {
+    "name": "release-invalid--2",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "/work/fixed-release",
+      "-2"
+    ]
+  },
+  {
+    "name": "release-invalid--2-memory",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=no",
+      "--log-file=/work/release-invalid--2-valgrind.log",
+      "/work/fixed-release",
+      "-2"
+    ]
+  },
+  {
+    "name": "release-invalid--2147483648",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "/work/fixed-release",
+      "-2147483648"
+    ]
+  },
+  {
+    "name": "release-invalid--2147483648-memory",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=no",
+      "--log-file=/work/release-invalid--2147483648-valgrind.log",
+      "/work/fixed-release",
+      "-2147483648"
+    ]
+  },
+  {
+    "name": "release-invalid-638",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "/work/fixed-release",
+      "638"
+    ]
+  },
+  {
+    "name": "release-invalid-638-memory",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=no",
+      "--log-file=/work/release-invalid-638-valgrind.log",
+      "/work/fixed-release",
+      "638"
+    ]
+  },
+  {
+    "name": "release-invalid-2147483647",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "/work/fixed-release",
+      "2147483647"
+    ]
+  },
+  {
+    "name": "release-invalid-2147483647-memory",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=no",
+      "--log-file=/work/release-invalid-2147483647-valgrind.log",
+      "/work/fixed-release",
+      "2147483647"
+    ]
+  },
+  {
+    "name": "debug-compile",
+    "exit_code": 0,
+    "expected": 0,
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-O0",
+      "-DDEBUG",
+      "/work/fixed.cc",
+      "-licui18n",
+      "-licuuc",
+      "-o",
+      "/work/fixed-debug"
+    ]
+  },
+  {
+    "name": "debug-normal",
+    "exit_code": 0,
+    "expected": 0,
+    "command": [
+      "/work/fixed-debug"
+    ]
+  },
+  {
+    "name": "debug-memory",
+    "exit_code": 0,
+    "expected": 0,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/work/debug-valid-valgrind.log",
+      "/work/fixed-debug"
+    ]
+  },
+  {
+    "name": "debug-invalid--1",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "/work/fixed-debug",
+      "-1"
+    ]
+  },
+  {
+    "name": "debug-invalid--1-memory",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=no",
+      "--log-file=/work/debug-invalid--1-valgrind.log",
+      "/work/fixed-debug",
+      "-1"
+    ]
+  },
+  {
+    "name": "debug-invalid--2",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "/work/fixed-debug",
+      "-2"
+    ]
+  },
+  {
+    "name": "debug-invalid--2-memory",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=no",
+      "--log-file=/work/debug-invalid--2-valgrind.log",
+      "/work/fixed-debug",
+      "-2"
+    ]
+  },
+  {
+    "name": "debug-invalid--2147483648",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "/work/fixed-debug",
+      "-2147483648"
+    ]
+  },
+  {
+    "name": "debug-invalid--2147483648-memory",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=no",
+      "--log-file=/work/debug-invalid--2147483648-valgrind.log",
+      "/work/fixed-debug",
+      "-2147483648"
+    ]
+  },
+  {
+    "name": "debug-invalid-638",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "/work/fixed-debug",
+      "638"
+    ]
+  },
+  {
+    "name": "debug-invalid-638-memory",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=no",
+      "--log-file=/work/debug-invalid-638-valgrind.log",
+      "/work/fixed-debug",
+      "638"
+    ]
+  },
+  {
+    "name": "debug-invalid-2147483647",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "/work/fixed-debug",
+      "2147483647"
+    ]
+  },
+  {
+    "name": "debug-invalid-2147483647-memory",
+    "exit_code": -6,
+    "expected": -6,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=no",
+      "--log-file=/work/debug-invalid-2147483647-valgrind.log",
+      "/work/fixed-debug",
+      "2147483647"
+    ]
+  }
+]

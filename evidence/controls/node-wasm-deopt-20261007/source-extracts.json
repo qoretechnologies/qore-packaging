@@ -1,0 +1,16 @@
+[
+  {
+    "variant": "original",
+    "file": "src/compiler/backend/code-generator.cc",
+    "line": 1064,
+    "body": "base::OwnedVector<uint8_t> CodeGenerator::GenerateWasmDeoptimizationData() {\n  int deopt_count = static_cast<int>(deoptimization_exits_.size());\n  if (deopt_count == 0) {\n    return {};\n  }\n  // Lazy deopts are not supported in wasm.\n  DCHECK_EQ(lazy_deopt_count_, 0);\n  // Wasm doesn't use the JS inlining handling via deopt info.\n  DCHECK_EQ(inlined_function_count_, 0);\n\n  auto deopt_entries =\n      base::OwnedVector<wasm::WasmDeoptEntry>::New(deopt_count);\n  // Populate deoptimization entries.\n  for (int i = 0; i < deopt_count; i++) {\n    const DeoptimizationExit* deoptimization_exit = deoptimization_exits_[i];\n    CHECK_NOT_NULL(deoptimization_exit);\n    DCHECK_EQ(i, deoptimization_exit->deoptimization_id());\n    deopt_entries[i] = {deoptimization_exit->bailout_id(),\n                        deoptimization_exit->translation_id()};\n  }\n\n",
+    "sha256": "dab6b6e60a16cf72ba26de2a885eb1da617b4328f3b4392db50c7d566a066781"
+  },
+  {
+    "variant": "fixed",
+    "file": "src/compiler/backend/code-generator.cc",
+    "line": 1064,
+    "body": "base::OwnedVector<uint8_t> CodeGenerator::GenerateWasmDeoptimizationData() {\n  CHECK_EQ(result_, kSuccess);\n  // Successful assembly assigns IDs from zero through kMaxNumberOfEntries.\n  // Check this bound before narrowing the container size for serialization.\n  CHECK_LE(deoptimization_exits_.size(),\n           static_cast<size_t>(Deoptimizer::kMaxNumberOfEntries) + 1);\n  int deopt_count = static_cast<int>(deoptimization_exits_.size());\n  if (deopt_count == 0) {\n    return {};\n  }\n  // Lazy deopts are not supported in wasm.\n  DCHECK_EQ(lazy_deopt_count_, 0);\n  // Wasm doesn't use the JS inlining handling via deopt info.\n  DCHECK_EQ(inlined_function_count_, 0);\n\n  auto deopt_entries =\n      base::OwnedVector<wasm::WasmDeoptEntry>::New(deopt_count);\n  // Populate deoptimization entries.\n  for (int i = 0; i < deopt_count; i++) {\n    const DeoptimizationExit* deoptimization_exit = deoptimization_exits_[i];\n    CHECK_NOT_NULL(deoptimization_exit);\n    CHECK_EQ(i, deoptimization_exit->deoptimization_id());\n    deopt_entries[i] = {deoptimization_exit->bailout_id(),\n                        deoptimization_exit->translation_id()};\n  }\n\n",
+    "sha256": "f55152cd7cd90a43dd90f79141db5a2aa2463e2575b66e533623dc626193188f"
+  }
+]

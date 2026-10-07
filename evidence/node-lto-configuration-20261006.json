@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "Focused LTO, comment and packaging checks pass. Full RPM qualification remains required. No upload.",
+  "root_cause": "External -flto=auto came after Node GYP flags and bypassed configure enable_lto. The top-level assembly object has no PushAllRegistersAndIterateStack symbol in its GCC LTO symbol table. Node's existing --enable-lto configuration compiles its assembly-containing V8 target natively and enables LTO elsewhere. The recipe now routes distribution LTO requests through that configuration, preserving hardening flags.",
+  "scope": "Only LTO flag routing and six comment chains change from candidate4. Approved -Wno-error=return-type remains visible. No assembly, C++ runtime behavior, warning suppression, or global LTO disabling is introduced.",
+  "checks": {
+    "packaging_tests": 25,
+    "negative_link": "Exact missing symbol reproduced using unchanged upstream assembly in an archive and an LTO caller.",
+    "positive_link": "Native assembly plus LTO caller links and passes 1360000 stack callbacks natively and under Valgrind.",
+    "valgrind": "Zero errors, all allocations freed.",
+    "generated_commands": "Actual configure/make commands prove native assembly-containing target, LTO-enabled Node target, and all distribution hardening flags.",
+    "comments": "Six original warnings reproduced; corrected comments preprocess to identical tokens with warnings as errors."
+  },
+  "limitations": [
+    "First configure-control parser mistakenly included make's command-cache printf; corrected parser checks only actual g++ command lines.",
+    "Candidate4 did not reach RPM tests; its new allocator/string-operation diagnostics require review on the correctly configured full build.",
+    "Focused stack control is x86_64; ARM requires native OBS and installed qualification."
+  ],
+  "primary_sources": [
+    "https://github.com/nodejs/node/issues/50347",
+    "https://gcc.gnu.org/onlinedocs/gcc-13.4.0/gcc/Basic-Asm.html",
+    "https://github.com/nodejs/node/blob/v24.18.1/tools/v8_gypfiles/v8.gyp",
+    "https://git.almalinux.org/rpms/nodejs24/src/branch/c10/nodejs24.spec"
+  ],
+  "artifacts_sha256": {
+    "evidence/controls/node-lto-control-20261006/control.cc": "88d433c08d5570e5dd3da08f84ed371c2b8ebc28f17d0b5bcf468d6f09c73cce",
+    "evidence/controls/node-lto-control-20261006/run.py": "35d01e830c2904547c419a26fe3557f2e3da6be14c32060eacfc8585f8198723",
+    "evidence/controls/node-lto-control-20261006/command.json": "78ecd7ae1993837f7b8daa61fdd03bf6961790405e6c1d1a0bb71fe158988090",
+    "evidence/controls/node-lto-control-20261006/status.json": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17",
+    "evidence/controls/node-lto-control-20261006/native.log.gz": "45a0e9e41957bba7ce21ed0c2658bd5f13d4db69d6a75e6d37185ccf01cc1f6e",
+    "evidence/controls/node-lto-control-20261006/valgrind.log.gz": "df0a052c1a2123e0f625024f37e3efb5e098b0964a429ff8ccff4a4f1ed8e8ba",
+    "evidence/controls/node-lto-control-20261006/broken-link.log.gz": "a46dacfc3a5e970a882429ba700dec648994b411d9043efd1c5d86a1a2f06839",
+    "evidence/controls/node-lto-control-20261006/native-symbols.log.gz": "3073ff787cc6d61e0a223a8ad7762e76cb20b1e64371dd8e4eff840a80c04b36",
+    "evidence/controls/node-lto-control-20261006/broken-symbols.log.gz": "fa8cffc5fe4f56b034336ad9d465c2cd7526076ca474d77d4eacce6f2ae78894",
+    "evidence/controls/node-lto-control-20261006/native-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-lto-control-20261006/native-link.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-lto-config-20261006/run-final.py": "1fc466a48eece30b7535b9758950ba9b63da3b4cd20f25908b114d9167519943",
+    "evidence/controls/node-lto-config-20261006/status-final.json": "3e6d05bb85c6bab85bf5a5971d05ddc5dd8119fe9489976af38152220faba0f5",
+    "evidence/controls/node-lto-config-20261006/configure.log.gz": "5201e75fd15032933a0c7ed9f90fca680b98add9d772b41943b0bf74c74da06f",
+    "evidence/controls/node-lto-config-20261006/environment.json": "41b0a6d4b0fc0d8434fa1129c8941f8fbef9f23e0b9c94d7a84d8b543c7eec14",
+    "evidence/controls/node-lto-config-20261006/generated-commands.json": "01976573deac9e634cf7a1e616207ff8e623c68b061dbd1336692cbfef8c2ad0",
+    "evidence/controls/node-comment-controls-20261006/run.py": "5cf8fd7897ef222f0b5ae1a5718fece628dcbc8db01c2ddaf6820024868f57a7",
+    "evidence/controls/node-comment-controls-20261006/comments.json": "11e6c75f0ca111814867efc0b73cf430302bb5b5e2a4e2e030b57bf5154290a5",
+    "evidence/controls/node-comment-controls-20261006/command.json": "c9de5fa886408d1477bc117c86d26b226c38fa47b22353c0c5c1f83e86cf149e",
+    "evidence/controls/node-comment-controls-20261006/status.json": "e89df0eae5ec7db81135aed16463968955c578bcc4f2ec43172eff351f080c17"
+  }
+}

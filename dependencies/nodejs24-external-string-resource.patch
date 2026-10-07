@@ -1,0 +1,17 @@
+# Copyright 2026 Qore Technologies, s.r.o.; BSD-3-Clause.
+# Match the two-byte getter when a forwarded external resource is one-byte.
+--- a/deps/v8/src/api/api.cc
++++ b/deps/v8/src/api/api.cc
+@@ -6100,9 +6100,9 @@
+       bool is_one_byte;
+       auto resource = GetExternalResourceFromForwardingTable(
+           str, raw_hash_field, &is_one_byte);
+-      if (!is_one_byte) {
+-        expected = reinterpret_cast<const ExternalStringResource*>(resource);
+-      }
++      expected = is_one_byte
++                     ? nullptr
++                     : reinterpret_cast<const ExternalStringResource*>(resource);
+     } else {
+       expected = nullptr;
+     }

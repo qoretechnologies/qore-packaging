@@ -1,0 +1,18 @@
+From: Qore Technologies <info@qore.org>
+Subject: [PATCH] v8: reject unnamed page permission values
+
+Copyright 2026 Qore Technologies, s.r.o.
+
+The permission bitset converter must terminate for unnamed enum values instead
+of falling through its return path. Keep the exhaustive named-value switch.
+
+--- a/deps/v8/src/base/virtual-address-space.cc
++++ b/deps/v8/src/base/virtual-address-space.cc
+@@ -41,6 +41,7 @@ uint8_t PagePermissionsToBitset(PagePermissions permissions) {
+     case PagePermissions::kReadExecute:
+       return 0b101;
+   }
++  UNREACHABLE();
+ }
+ }  // namespace
+ 

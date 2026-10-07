@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "Focused controls pass. Candidate4 full matching-flag RPM qualification is running with the approved compiler policy.",
+  "trigger": {
+    "revision": "2",
+    "srcmd5": "66a1616e6f9af0a9a1b1ff4db756dec3",
+    "architectures": [
+      "x86_64",
+      "aarch64"
+    ],
+    "error": "BoundedPageAllocator::AllocationStatusToString: control reaches end of non-void function"
+  },
+  "root_cause": "Switch returns for all four named enum constants but has no terminating path for unnamed values of the fixed int underlying type. OBS enables -Werror=return-type; the prior local RPM flags did not.",
+  "fix": "Add V8 UNREACHABLE after the exhaustive switch; valid descriptions unchanged. No default case or diagnostic suppression.",
+  "qualification_gaps": [
+    "Preserve CFLAGS, CXXFLAGS and LDFLAGS during %check; prior test-build regenerated objects without the distribution flags.",
+    "Match OBS repository optflags and linker flags in the local qualification image. Its RPM defaults differed from OBS build configuration.",
+    "The initial matching-flags image retained cc -> gcc-15 with gcc/g++ -> gcc-13; LTO rejected mixed bytecode. The corrected isolated image makes cc/gcc/g++ consistently GCC 13.4.0."
+  ],
+  "tests": {
+    "named_status_checks": 40000,
+    "individual_named_statuses": 4,
+    "invalid_statuses": [
+      -1,
+      4,
+      255,
+      256,
+      2147483647,
+      -2147483648
+    ],
+    "invalid_status_result": "SIGABRT and exact V8 unreachable diagnostic; core dumps disabled",
+    "input_parser_cases": [
+      "empty",
+      "trailing characters",
+      "int overflow",
+      "int underflow",
+      "extra argument"
+    ],
+    "valgrind": {
+      "errors": 0,
+      "definitely_lost": 0,
+      "indirectly_lost": 0,
+      "possibly_lost": 0,
+      "still_reachable_bytes": 9840,
+      "still_reachable_blocks": 361,
+      "interpretation": "All retained allocations are reachable OpenSSL startup objects, identical in byte/block count to the prior priority control. First run incorrectly counted reachable blocks as errors via --errors-for-leak-kinds=all. Standard established policy checks definite/indirect/possible loss; all records retained, no suppression."
+    },
+    "dependency_python_tests": 14,
+    "metadata_python_tests": 6
+  },
+  "full_build": {
+    "source": "work/nodejs24-libnode-obs-flags-candidate-20261006",
+    "image": "sha256:471fb347e0308caa05f79e41ca4813767c6a7a687f03cc823a78b2a8e81a3414",
+    "result": "results/leap-nodejs24-obs-flags-candidate2-20261006/build.json",
+    "status": "failed"
+  },
+  "sha256": {
+    "evidence/controls/node-allocation-status-20261006/original-compile.log": "dd4c97309a9104f4249db879e28b627139d286ff71dcb9c1e1c8bb0104cef429",
+    "evidence/controls/node-allocation-status-20261006/valgrind-standard.log": "5896ea34543ecfd165a30f5967f56f1ae6073db689c51a6388c39d4ea5bffd37",
+    "evidence/controls/node-allocation-status-20261006/fixed-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-allocation-status-20261006/obs-compile-flags.json": "2baf792c5446ab7f8b9f70746692fb2c54f599a054702a542691e80f3923cd22",
+    "evidence/controls/node-allocation-status-20261006/run.py": "cb62fb3c6845384fd36fa5ba4c919adfb80b92090737f545d7a889ca70f5b28e",
+    "evidence/controls/node-allocation-status-20261006/valgrind.log": "4a262c654a7319c6f12ef2b4cd7845a220e07810eb2d0dade60e1f3212ab4efb",
+    "dependencies/nodejs24-allocation-status.patch": "3fcfd2451577c1e294b78e84b672f18e4ec329a1304c4ab69ba3e85e49f86674",
+    "dependencies/nodejs24-allocation-status-test.cc": "33bd223a96b962df3a6685007b9b8c5da961648771f9d5dfab605961d4d55c83",
+    "results/node-obs-buildconfig-20261006.txt": "75fe8633503dd3b3090b39c53c2859baf3a2894316898016d0628f5f64d3516b"
+  },
+  "current_qualification_status": {
+    "date": "2026-10-06",
+    "rpm_attempts": [
+      {
+        "candidate": 1,
+        "result": "Failed: local cc selected GCC 15 while g++ selected GCC 13; mixed LTO bytecode. Isolated image now pins all C/C++ compiler drivers to GCC 13."
+      },
+      {
+        "candidate": 2,
+        "result": "Failed: missing PagePermissionsToBitset fallback and unused generic zlib declaration."
+      },
+      {
+        "candidate": 3,
+        "result": "Failed: missing Torque AbortInstruction enum fallback and continued preprocessor comment."
+      }
+    ],
+    "diagnostic_build": "results/node-obs-diagnostic3-20261006",
+    "result": "Diagnostic3 was deliberately stopped with exit143 after policy approval; its incomplete inventory is retained. Fresh RPM candidate4 was prepared with zero-fuzz patches and passing controls.",
+    "new_rpm_result": "results/leap-nodejs24-obs-flags-candidate4-20261006/build.json"
+  }
+}

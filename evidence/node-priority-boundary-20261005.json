@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-05",
-  "status": "Focused GCC13/GCC15 controls and GCC13 Valgrind pass; complete canonical GCC13 RPM and native builds remain required.",
+  "status": "Focused GCC13/GCC15 controls and GCC13 Valgrind pass. Canonical GCC13 complete RPM build running from commit 5faac51; native builds remain required.",
   "trigger": "OBS revision1 failed on both architectures with GCC13 control-reaches-end-of-non-void-function. Local GCC15 canonical build did not diagnose this.",
   "root_cause": "DefaultPlatform::priority_from_index returned only inside a switch over a narrowed uint8_t enum. It lacked a terminating fallback, and invalid int indexes such as 256 or INT_MIN wrapped into valid priorities.",
   "fix": "Switch on the original int, use integer values of the named enum constants and terminate invalid indexes with V8 UNREACHABLE. PriorityMode::kDontApply retains its unconditional default mapping. Include logging.h directly.",
@@ -40,5 +40,11 @@
     "work/node-priority-control-1/gcc13-valgrind-final.log": "7004386fcf0210a1b79f09cb0a9547d4db52173a4ce46ef4a864a32e778fded7",
     "results/node-priority-dependency-tests-20261005.log": "1aa3b6c128030c83e0b3a6df364534dfa385546d17085c11fc9eff1a5e030ce7",
     "results/node-priority-metadata-tests-20261005.log": "7c36c0c8db361e3407d2f6a7e27cd5245fa178bd68341b886e1e0616517b64ff"
+  },
+  "full_build": {
+    "source": "work/nodejs24-libnode-gcc13-final-20261005",
+    "result": "results/leap-nodejs24-libnode-gcc13-final-2-20261005/build.json",
+    "image": "sha256:3276db6ab944abdad01a934646b77278170831e57869a659ab05e3b445c02191",
+    "setup": "First launch stopped at dependency check because the installed V8 SDK lacked declared python3-setuptools. Added that package and started a fresh output directory; compilation is running."
   }
 }

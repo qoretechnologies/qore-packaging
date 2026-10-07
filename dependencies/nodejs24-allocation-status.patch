@@ -1,0 +1,19 @@
+From: Qore Technologies <info@qore.org>
+Subject: [PATCH] v8: terminate invalid bounded allocator status values
+
+Copyright 2026 Qore Technologies, s.r.o.
+
+AllocationStatus has a fixed int underlying type. Values outside the named
+enumerators must not fall through a non-void function. Use V8's existing
+fatal unreachable path and retain exhaustive switch diagnostics for additions.
+
+--- a/deps/v8/src/base/bounded-page-allocator.cc
++++ b/deps/v8/src/base/bounded-page-allocator.cc
+@@ -271,6 +271,7 @@ const char* BoundedPageAllocator::AllocationStatusToString(
+     case AllocationStatus::kHintedAddressTakenOrNotFound:
+       return "Hinted address was taken or not found";
+   }
++  UNREACHABLE();
+ }
+ 
+ }  // namespace base

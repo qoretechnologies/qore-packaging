@@ -1,0 +1,28 @@
+[
+  {
+    "name": "helper",
+    "command": [
+      "python3",
+      "/dependencies/nodejs24-reschedule-test.py",
+      "--source",
+      "/work/rpmbuild/BUILD/nodejs24-libnode-24.18.1-build/node-v24.18.1",
+      "--test-source",
+      "/dependencies/nodejs24-reschedule-test.cc",
+      "--output",
+      "/control/reschedule"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "memory",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/control/valgrind.log",
+      "/control/reschedule"
+    ],
+    "exit_code": 0
+  }
+]

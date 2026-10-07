@@ -1,0 +1,7 @@
+In file included from /fixture/negative.cc:1:
+../deps/v8/src/compiler/code-assembler.h: In instantiation of ‘v8::internal::TNode<v8::internal::IntPtrT> v8::internal::compiler::CodeAssembler::BitcastTaggedToWord(v8::internal::TNode<v8::internal::Smi>) [with Dummy = int]’:
+/fixture/negative.cc:2:127:   required from here
+../deps/v8/src/compiler/code-assembler.h:1271:33: error: static assertion failed: Should use BitcastTaggedToWordForTagAndSmiBits instead.
+ 1271 |     static_assert(sizeof(Dummy) < 0,
+      |                   ~~~~~~~~~~~~~~^~~
+../deps/v8/src/compiler/code-assembler.h:1271:33: note: the comparison reduces to ‘(4 < 0)’

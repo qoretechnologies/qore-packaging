@@ -1,0 +1,73 @@
+From: Qore Technologies <info@qore.org>
+Subject: [PATCH] v8: define Torque enum fallbacks and fix continued comment
+
+Copyright 2026 Qore Technologies, s.r.o.
+
+Terminate unnamed Torque abort, handle and diagnostic kinds. The handle-name formatter is
+stateless, so make that explicit in its internal compiler API. Remove trailing
+backslashes from the endif comment; preprocessing joins them before comment removal.
+
+--- a/deps/v8/src/torque/instructions.h
++++ b/deps/v8/src/torque/instructions.h
+@@ -745,6 +745,7 @@
+       case Kind::kAssertionFailure:
+         return "kAssertionFailure";
+     }
++    UNREACHABLE();
+   }
+ 
+   Kind kind;
+--- a/deps/v8/src/torque/types.h
++++ b/deps/v8/src/torque/types.h
+@@ -115,8 +115,8 @@
+   virtual std::string SimpleName() const;
+ 
+   enum class HandleKind { kIndirect, kDirect };
+-  std::string GetHandleTypeName(HandleKind kind,
+-                                const std::string& type_name) const;
++  static std::string GetHandleTypeName(HandleKind kind,
++                                       const std::string& type_name);
+ 
+   std::string TagglifiedCppTypeName() const;
+   std::string HandlifiedCppTypeName(HandleKind kind) const;
+--- a/deps/v8/src/torque/types.cc
++++ b/deps/v8/src/torque/types.cc
+@@ -69,13 +69,14 @@
+ }
+ 
+ std::string Type::GetHandleTypeName(HandleKind kind,
+-                                    const std::string& type_name) const {
++                                    const std::string& type_name) {
+   switch (kind) {
+     case HandleKind::kIndirect:
+       return "Handle<" + type_name + ">";
+     case HandleKind::kDirect:
+       return "DirectHandle<" + type_name + ">";
+   }
++  UNREACHABLE();
+ }
+ 
+ // TODO(danno): HandlifiedCppTypeName should be used universally in Torque
+--- a/deps/v8/src/common/globals.h
++++ b/deps/v8/src/common/globals.h
+@@ -199,9 +199,7 @@
+ #define V8_IF_USE_SIMULATOR(V) , V
+ #else
+ #define V8_IF_USE_SIMULATOR(V)
+-#endif  // defined(USE_SIMULATOR) && \
+-        // (defined(V8_TARGET_ARCH_ARM64) || defined(V8_TARGET_ARCH_MIPS64) || \
+-        // defined(V8_TARGET_ARCH_LOONG64))
++#endif  // USE_SIMULATOR with a supported target architecture.
+ 
+ // Minimum stack size in KB required by compilers.
+ constexpr int kStackSpaceRequiredForCompilation = 40;
+--- a/deps/v8/src/torque/torque.cc
++++ b/deps/v8/src/torque/torque.cc
+@@ -16,6 +16,7 @@
+     case TorqueMessage::Kind::kLint:
+       return "Lint error";
+   }
++  UNREACHABLE();
+ }
+ 
+ int WrappedMain(int argc, const char** argv) {

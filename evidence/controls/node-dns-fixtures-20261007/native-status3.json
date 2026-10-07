@@ -1,0 +1,35 @@
+[
+  {
+    "name": "versions",
+    "command": [
+      "rpm",
+      "-qa",
+      "*cares*"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "compile",
+    "command": [
+      "gcc",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "/control/control.c",
+      "-lcares",
+      "-o",
+      "/control/control"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "normal",
+    "command": [
+      "/control/control"
+    ],
+    "exit_code": -6
+  }
+]

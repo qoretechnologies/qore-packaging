@@ -1,0 +1,13 @@
+# Copyright 2026 Qore Technologies, s.r.o.; BSD-3-Clause.
+--- a/deps/v8/src/objects/intl-objects.cc
++++ b/deps/v8/src/objects/intl-objects.cc
+@@ -2979,6 +2979,9 @@
+   if (index == JSTemporalTimeZone::kUTCTimeZoneIndex) {
+     return "UTC";
+   }
++  // Non-UTC indexes are one-based; reject invalid negative indexes before
++  // the enumeration loop, which otherwise leaves id uninitialized.
++  CHECK_GT(index, 0);
+   std::unique_ptr<icu::StringEnumeration> enumeration(
+       icu::TimeZone::createEnumeration());
+   int32_t curr = 0;

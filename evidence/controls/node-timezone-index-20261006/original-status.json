@@ -1,0 +1,51 @@
+[
+  {
+    "name": "compile",
+    "exit_code": 0,
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "/work/original.cc",
+      "-licui18n",
+      "-licuuc",
+      "-o",
+      "/work/original"
+    ]
+  },
+  {
+    "name": "normal",
+    "exit_code": 0,
+    "command": [
+      "/work/original"
+    ]
+  },
+  {
+    "name": "memory",
+    "exit_code": 0,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/work/valid-valgrind.log",
+      "/work/original"
+    ]
+  },
+  {
+    "name": "negative",
+    "exit_code": -11,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--track-origins=yes",
+      "--leak-check=full",
+      "--log-file=/work/negative-valgrind.log",
+      "/work/original",
+      "-1"
+    ]
+  }
+]

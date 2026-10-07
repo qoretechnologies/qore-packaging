@@ -28,6 +28,22 @@ Source8: nodejs24-SQLITE-LICENSE
 Source9: nodejs24-rpm-symbols.py
 Source10: nodejs24-libnode-rpmlintrc
 Source11: nodejs24-platform-priority-test.cc
+Source12: nodejs24-allocation-status-test.cc
+Source13: nodejs24-page-permissions-test.cc
+Source14: nodejs24-torque-abort-test.cc
+Source15: nodejs24-torque-handle-test.cc
+Source16: nodejs24-torque-prefix-test.cc
+Source17: nodejs24-torque-stack-test.cc
+Source18: nodejs24-build-flags.py
+Source19: nodejs24-compaction-trace-test.py
+Source20: nodejs24-timezone-index-test.py
+Source21: nodejs24-external-string-resource-test.cc
+Source22: nodejs24-reschedule-test.cc
+Source23: nodejs24-reschedule-test.py
+Source24: https://api.opensuse.org/public/source/home:davidnichols:qore:testing/%{name}/node-v24.18.1-wasm-deopt-tests.tar.xz
+Source25: nodejs24-wasm-deopt-test.cc
+Source26: nodejs24-wasm-deopt-test.py
+Source27: nodejs24-wasm-deopt-tests.json
 Patch0: nodejs24-cxx-visibility.patch
 Patch1: nodejs24-cppgc-realm-lifetime.patch
 Patch2: nodejs24-compression-cleanup.patch
@@ -37,6 +53,18 @@ Patch5: nodejs24-sqlite-types.patch
 Patch6: nodejs24-sqlite-lengths.patch
 Patch7: nodejs24-crypto-test-types.patch
 Patch8: nodejs24-platform-priority.patch
+Patch9: nodejs24-allocation-status.patch
+Patch10: nodejs24-page-permissions.patch
+Patch11: nodejs24-zlib-cpu-declaration.patch
+Patch12: nodejs24-v8-return-paths.patch
+Patch13: nodejs24-v8-diagnostics.patch
+Patch14: nodejs24-v8-source-comments.patch
+Patch15: nodejs24-compaction-trace.patch
+Patch16: nodejs24-timezone-index.patch
+Patch17: nodejs24-external-string-resource.patch
+Patch18: nodejs24-reschedule-end.patch
+Patch19: nodejs24-dns-test-lifetimes.patch
+Patch20: nodejs24-wasm-deopt-metadata.patch
 BuildRequires: gcc-c++
 BuildRequires: make
 BuildRequires: python3
@@ -88,6 +116,8 @@ runtime in native applications.
 %prep
 %autosetup -p1 -n node-v%{version}
 cp %{SOURCE8} SQLITE-LICENSE
+%{__tar} -xf %{SOURCE24}
+cmp %{SOURCE27} wasm-deopt-tests/sources.json
 # Locked documentation tools also generate the native addon example tests.
 %{__tar} -xf %{SOURCE1} -C tools/doc
 cp %{SOURCE2} tools/doc/QORE-DEPENDENCIES.json
@@ -98,10 +128,11 @@ cp %{SOURCE3} test/fixtures/icu/localizationData-v77.1.json
 touch -r tools/doc/package.json tools/doc/node_modules
 
 %build
-export CFLAGS="%{optflags}"
-export CXXFLAGS="%{optflags}"
-export LDFLAGS="%{?build_ldflags}"
-python3 configure --shared --prefix=%{_prefix} --libdir=%{_lib} \
+# Configure must own LTO so external flags cannot override its assembly handling.
+# The helper also retains the approved openSUSE return-type warning policy.
+python3 %{SOURCE18} --cflags="%{optflags}" --ldflags="%{?build_ldflags}" > node-build-flags.sh
+. ./node-build-flags.sh
+python3 configure ${NODE_LTO_OPTION} --shared --prefix=%{_prefix} --libdir=%{_lib} \
     --without-npm --without-corepack --shared-openssl --shared-zlib \
     --shared-cares --shared-nghttp2 --shared-brotli --shared-zstd \
     --with-intl=system-icu --openssl-use-def-ca-store
@@ -113,6 +144,32 @@ ln -s libnode.so.%{soname} %{buildroot}%{_libdir}/libnode.so
 python3 tools/install.py install --headers-only --dest-dir=%{buildroot} --prefix=%{_prefix}
 
 %check
+# Reject invalid native metadata and exercise all upstream Wasm deoptimization suites.
+python3 %{SOURCE26} --source . --test-source %{SOURCE25} \
+    --native-helper %{SOURCE23} --tests wasm-deopt-tests --output out/wasm-deopt-control
+# Exercise the actual native compiler archives and their generated snapshot.
+python3 %{SOURCE23} --source . --test-source %{SOURCE22} \
+    --output out/reschedule-control
+# Verify actual external resources and their forwarded one-byte representation.
+g++ %{optflags} -std=c++20 -Wall -Werror=return-type -Ideps/v8/include \
+    %{SOURCE21} -Lout/Release -Wl,-rpath,"$PWD/out/Release" \
+    -lnode -licuuc -lcrypto -ldl -pthread -o out/external-string-resource-control
+out/external-string-resource-control ordinary
+out/external-string-resource-control shared
+python3 - <<'EXTERNALCHECK'
+import resource, subprocess
+resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+for mode in ('ordinary', 'shared'):
+    result = subprocess.run(['out/external-string-resource-control', mode, 'negative'],
+                            capture_output=True, text=True)
+    if result.returncode >= 0 or 'expected == value' not in result.stderr:
+        raise AssertionError((mode, result.returncode, result.stderr))
+    print('Incorrect external string resource rejected:', mode)
+EXTERNALCHECK
+# Negative internal timezone indexes must fail a CHECK before enumeration.
+python3 %{SOURCE20} --source . --output out/timezone-index-control --cxxflags="%{optflags}"
+# Keep the same distribution flags when test-build regenerates native targets.
+. ./node-build-flags.sh
 # Keep the c-ares lint exception safe for every architecture and source update.
 python3 %{SOURCE9} out/Release/libnode.so.%{soname}
 # Node's SQLite implementation must not interpose on an embedding application's
@@ -126,6 +183,8 @@ fi
 # The locked documentation tools are supplied in Source1 for offline builds.
 %make_build test-build bench-addons-build
 out/Release/cctest
+# Exercise default/forced compaction, heap integrity and optional verbose tracing.
+python3 -B -W error %{SOURCE19} out/Release/node
 # Test the real inline platform priority mapper, including invalid int indexes.
 g++ %{optflags} -std=c++20 -Wall -Werror=return-type -Ideps/v8 -Ideps/v8/include \
     %{SOURCE11} -Lout/Release -Wl,-rpath,"$PWD/out/Release" -lnode -pthread -o out/platform-priority-control
@@ -139,6 +198,90 @@ for index in ('-1', '3', '256', '257', '258', '2147483647', '-2147483648'):
         raise AssertionError((index, result.returncode, result.stderr))
     print('Invalid priority index rejected:', index)
 PRIORITYCHECK
+# Exercise the actual allocator status implementation, including unnamed values.
+g++ %{optflags} -std=c++20 -Wall -Werror=return-type -ffunction-sections -fdata-sections \
+    -Ideps/v8 -Ideps/v8/include deps/v8/src/base/bounded-page-allocator.cc \
+    %{SOURCE12} -Lout/Release -Wl,-rpath,"$PWD/out/Release" -Wl,--gc-sections \
+    -lnode -pthread -o out/allocation-status-control
+out/allocation-status-control
+python3 - <<'STATUSCHECK'
+import resource, signal, subprocess
+resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+for status in ('-1', '4', '255', '256', '2147483647', '-2147483648'):
+    result = subprocess.run(['out/allocation-status-control', status], capture_output=True, text=True)
+    if result.returncode != -signal.SIGABRT or 'unreachable code' not in result.stderr:
+        raise AssertionError((status, result.returncode, result.stderr))
+    print('Invalid allocation status rejected:', status)
+STATUSCHECK
+g++ %{optflags} -std=c++20 -Wall -Werror=return-type -ffunction-sections -fdata-sections \
+    -Ideps/v8 -Ideps/v8/include deps/v8/src/base/virtual-address-space.cc \
+    %{SOURCE13} -Lout/Release -Wl,-rpath,"$PWD/out/Release" -Wl,--gc-sections \
+    -lnode -pthread -o out/page-permissions-control
+out/page-permissions-control
+python3 - <<'PERMISSIONCHECK'
+import resource, signal, subprocess
+resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+for value in ('-1', '5', '255', '256', '2147483647', '-2147483648'):
+    for pair in ((value, '0'), ('0', value)):
+        result = subprocess.run(['out/page-permissions-control', *pair], capture_output=True, text=True)
+        if result.returncode != -signal.SIGABRT or 'unreachable code' not in result.stderr:
+            raise AssertionError((pair, result.returncode, result.stderr))
+        print('Invalid page permissions rejected:', pair)
+PERMISSIONCHECK
+g++ %{optflags} -std=c++20 -Wall -Werror=return-type -Ideps/v8 -Ideps/v8/include \
+    -Ideps/v8/third_party/abseil-cpp %{SOURCE14} -Lout/Release \
+    -Wl,-rpath,"$PWD/out/Release" -lnode -pthread -o out/torque-abort-control
+out/torque-abort-control
+python3 - <<'TORQUECHECK'
+import resource, signal, subprocess
+resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+for kind in ('-1', '3', '255', '256', '2147483647', '-2147483648'):
+    result = subprocess.run(['out/torque-abort-control', kind], capture_output=True, text=True)
+    if result.returncode != -signal.SIGABRT or 'unreachable code' not in result.stderr:
+        raise AssertionError((kind, result.returncode, result.stderr))
+    print('Invalid Torque abort kind rejected:', kind)
+TORQUECHECK
+g++ %{optflags} -std=c++20 -Wall -Werror=return-type -ffunction-sections -fdata-sections \
+    -Ideps/v8 -Ideps/v8/include -Ideps/v8/third_party/abseil-cpp \
+    deps/v8/src/torque/types.cc %{SOURCE15} -Lout/Release \
+    -Wl,-rpath,"$PWD/out/Release" -Wl,--gc-sections -lnode -pthread -o out/torque-handle-control
+out/torque-handle-control
+python3 - <<'HANDLECHECK'
+import resource, signal, subprocess
+resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+for kind in ('-1', '2', '255', '256', '2147483647', '-2147483648'):
+    result = subprocess.run(['out/torque-handle-control', kind], capture_output=True, text=True)
+    if result.returncode != -signal.SIGABRT or 'unreachable code' not in result.stderr:
+        raise AssertionError((kind, result.returncode, result.stderr))
+    print('Invalid Torque handle kind rejected:', kind)
+HANDLECHECK
+g++ %{optflags} -std=c++20 -Wall -Werror=return-type -ffunction-sections -fdata-sections \
+    -Ideps/v8 -Ideps/v8/include -Ideps/v8/third_party/abseil-cpp \
+    %{SOURCE16} -Lout/Release -Wl,-rpath,"$PWD/out/Release" \
+    -Wl,--gc-sections -lnode -pthread -o out/torque-prefix-control
+out/torque-prefix-control
+python3 - <<'PREFIXCHECK'
+import resource, signal, subprocess
+resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+for kind in ('-1', '2', '255', '256', '2147483647', '-2147483648'):
+    result = subprocess.run(['out/torque-prefix-control', kind], capture_output=True, text=True)
+    if result.returncode != -signal.SIGABRT or 'unreachable code' not in result.stderr:
+        raise AssertionError((kind, result.returncode, result.stderr))
+    print('Invalid Torque diagnostic kind rejected:', kind)
+PREFIXCHECK
+g++ %{optflags} -std=c++20 -Wall -Werror=return-type -Ideps/v8 -Ideps/v8/include \
+    -Ideps/v8/third_party/abseil-cpp %{SOURCE17} -Lout/Release \
+    -Wl,-rpath,"$PWD/out/Release" -lnode -pthread -o out/torque-stack-control
+out/torque-stack-control
+python3 - <<'STACKCHECK'
+import resource, signal, subprocess
+resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+for count in ('5', '255', '4294967295', '18446744073709551615'):
+    result = subprocess.run(['out/torque-stack-control', count], capture_output=True, text=True)
+    if result.returncode != -signal.SIGABRT or 'elements_.size() >= count' not in result.stderr:
+        raise AssertionError((count, result.returncode, result.stderr))
+    print('Invalid Torque pop count rejected:', count)
+STACKCHECK
 # Compile the bundled SQLite source with its actual feature definitions.
 # Cover RTree dimensions, session length overflow, truncated varints and OOM.
 python3 - %{SOURCE7} <<'SQLITECHECK'
@@ -195,6 +338,42 @@ python3 tools/test.py -j %{_smp_build_ncpus} -p tap --mode=release \
 %{_libdir}/libnode.so
 
 %changelog
+* Wed Oct 07 2026 David Nichols <david@qore.org> - 24.18.1-1.qore
+- Backport V8 Wasm deoptimization metadata and block-cloning safety checks.
+- Check successful assembly bounds before narrowing the metadata entry count.
+- Run native metadata regressions and 31 version-matched upstream Wasm suites.
+
+* Wed Oct 07 2026 David Nichols <david@qore.org> - 24.18.1-1.qore
+- Bind local DNS fixtures before testing pending requests and heap references.
+
+* Wed Oct 07 2026 David Nichols <david@qore.org> - 24.18.1-1.qore
+- Complete V8 terminal graph processing before reading nonexistent block state.
+- Test seven graph shapes with the native compiler and generated snapshot.
+- Initialize the V8 verifier result for forwarded one-byte external resources.
+- Test both resource encodings, normal/shared storage and wrong-resource rejection.
+
+* Tue Oct 06 2026 David Nichols <david@qore.org> - 24.18.1-1.qore
+- Reject negative V8 timezone indexes before uninitialized pointer use.
+- Check every ICU timezone ID and invalid index boundaries in the package tests.
+
+* Tue Oct 06 2026 David Nichols <david@qore.org> - 24.18.1-1.qore
+- Fix uninitialized heuristic reads in V8 forced-compaction verbose tracing.
+- Verify ordinary and forced GC preserve retained data and produce valid traces.
+
+* Tue Oct 06 2026 David Nichols <david@qore.org> - 24.18.1-1.qore
+- Route distribution LTO flags through Node's supported configure option.
+- Preserve V8 source comments without accidental line continuation.
+
+* Tue Oct 06 2026 David Nichols <david@qore.org> - 24.18.1-1.qore
+- Terminate invalid V8 allocator statuses and test all named status descriptions.
+- Reject invalid page permissions and verify all permission subset combinations.
+- Scope the private zlib CPU declaration to the platform branches using it.
+- Define Torque enum fallbacks and test names, prefixes and invalid values.
+- Validate Torque stack pop bounds, move-only values and exception cleanup.
+- Preserve the forbidden Smi cast diagnostic and correct continued comments.
+- Retain exhaustive-enum diagnostics with the approved openSUSE compiler policy.
+- Preserve distribution compiler and linker flags during native test builds.
+
 * Mon Oct 05 2026 David Nichols <david@qore.org> - 24.18.1-1.qore
 - Define the V8 worker priority boundary and reject narrowing-invalid indexes.
 - Install SQLite's exact blessing notice and identify generated source downloads.

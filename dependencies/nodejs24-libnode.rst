@@ -29,6 +29,35 @@ concurrent lifetimes. Focused Valgrind and UBSan results, installed Qore V8
 runtime/SDK tests, and exact approved external diagnostics are recorded in
 ``evidence/node-*.json`` and ``evidence/v8-node6-installed-20261004.json``.
 
+The current native-build update also validates V8's internal timezone index
+before enumerating ICU zones. Negative indexes previously skipped the loop
+and read an uninitialized pointer; they now fail V8's invariant check. The
+package regression extracts the actual method, checks every ICU zone and UTC,
+and exercises invalid boundaries. Release and Debug controls pass Valgrind;
+this internal defect has not been demonstrated through JavaScript input.
+The same update fixes verbose tracing of forced compaction so its reported
+heuristic is initialized for every mode. The complete updated RPM and native Valgrind controls pass; native OBS
+qualification remains required.
+
+The package also fixes a missing pointer assignment in V8's external
+string verifier. For a forwarded one-byte resource, the two-byte getter returns
+null; the verifier now agrees with that result. The packaged baseline aborts
+for this valid input. Native controls cover both encodings, ordinary and shared
+storage, complete resource disposal and deliberate wrong-resource rejection.
+Focused qualification and the complete updated RPM pass; native OBS
+qualification remains required before publication.
+
+The package also fixes uninitialized terminal-block state in V8's
+``RawMachineAssembler``. The end block merges incoming return/throw controls
+and then stops; it has no successors requiring an effect/control pair.
+Seven native graph shapes pass 700 cases, including loops, merges, switches
+and deferred throws. Diagnostic Memcheck requests expose 1,200 reads in the
+original and none after the fix; both fixed runs free all allocations.
+The RPM regression uses the package's actual compiler archives and generated
+snapshot. It uses native sections of the fat archives with matching ABI,
+feature, hardening and warning flags; the runtime retains its normal LTO.
+The complete updated RPM passes; native architecture qualification remains required.
+
 Leap's resolver checker mistakes ``ares_gethostbyaddr`` for a libc resolver
 call. The approved filter covers only ``libnode137`` on x86_64/aarch64 and
 ``/usr/lib64/libnode.so.137``. Every build independently rejects all six
@@ -54,3 +83,51 @@ required; publication is disabled. See ``evidence/node-canonical-qualification-2
 The priority regression and compiler-specific reproduction are recorded in
 ``evidence/node-priority-boundary-20261005.json``. Normal compiler flags remain
 enabled; out-of-range indexes are rejected before any narrowing conversion.
+
+Offline DNS fixture qualification
+---------------------------------
+
+The pending-query and DNS heap-snapshot tests use a bound loopback DNS server.
+An unreachable distribution resolver can complete a query synchronously, so the
+original tests could observe no pending query or task list. The fixture responds
+only after those assertions, checks the returned address and closes after query
+completion. No sleeps, retries or resolver implementation changes are used.
+
+Candidate 7 passed all 192 native tests but failed those two JavaScript fixtures.
+Candidate 8 was not started. Candidate 10 passes the full RPM suite with the
+qualified fixture, external-string and raw-graph fixes; native ARM
+qualification remains required.
+
+Wasm deoptimization metadata
+---------------------------
+
+Candidate 9 passes all 192 native and 5,249 JavaScript test results, plus
+installed Qore/V8 runtime and SDK checks. Final compiler review exposed a
+signed narrowing in Wasm metadata allocation and the missing assembly-result
+check documented in upstream V8 change ``a548b49ac382``. Candidate 10 backports
+that change: deoptimization points are not cloned, failed code generation is
+rejected, and metadata counts, entry indexes and restored value kinds are
+checked in release builds. A count bound is checked before conversion to int.
+
+The native regression covers 1,969,500 valid allocation/serialization checks
+and six rejected invalid states. Both original and corrected positive controls
+have zero Valgrind errors and free all allocations; only the corrected source
+rejects all six invalid states. The actual standalone generator compilation
+is clean in both variants, so it does not reproduce the full LTO allocation
+warning. The complete candidate-10 RPM/LTO build now passes and emits no Wasm
+allocation warning; native ARM validation remains a gate.
+
+The RPM also runs all 31 V8 13.6.233.17 Wasm deoptimization scripts. Their
+unchanged sources and BSD license are supplied in a reproducible, hash-pinned
+archive; ``nodejs24-wasm-deopt-tests.json`` records every upstream URL and hash.
+The Node adapter implements only d8's file-loading and print conveniences.
+No compiler warnings, checks or runtime features are disabled by this fix.
+
+The final retained candidate-10 build passes 192 native tests, 5,249 reported
+JavaScript results and all 31 additional Wasm deoptimization scripts. All five
+native memory controls are qualified. Three free every allocation; both string
+controls retain only the six previously approved process-lifetime records
+(216 reachable bytes), with no lost allocations or invalid accesses. All 571
+unique compiler diagnostics match their reviewed, approved scope. Raw logs,
+including the two expected Valgrind exit codes of 99, remain in
+``evidence/node-candidate10-final-20261007.json`` and its control directory.

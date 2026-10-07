@@ -1,0 +1,457 @@
+[
+  {
+    "file": "deopt-call-indirect.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--no-jit-fuzzing",
+      "--wasm-inlining-call-indirect",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-call-indirect.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-debugging.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--liftoff",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-debugging.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-dynamic-tierup.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--wasm-tiering-budget=1000",
+      "--wasm-dynamic-tiering",
+      "--no-predictable",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-dynamic-tierup.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-feedback-states.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-feedback-states.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-inlined-param-stack-slots.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--liftoff",
+      "--wasm-inlining",
+      "--wasm-inlining-ignore-call-counts",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-inlined-param-stack-slots.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-inlined-stacktrace.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--wasm-inlining-ignore-call-counts",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-inlined-stacktrace.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-inlined.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--wasm-inlining-ignore-call-counts",
+      "--no-jit-fuzzing",
+      "--wasm-inlining-call-indirect",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-inlined.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-int64-values.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-int64-values.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-large-i31ref-constant.js",
+    "command": [
+      "node",
+      "--allow-natives-syntax",
+      "--wasm-deopt",
+      "--liftoff",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-large-i31ref-constant.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-many-params-many-locals-s128.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--wasm-inlining-ignore-call-counts",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-many-params-many-locals-s128.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-many-params-tagged.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--expose-gc",
+      "--wasm-inlining-ignore-call-counts",
+      "--wasm-inlining-factor=30",
+      "--wasm-inlining-budget=100000",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-many-params-tagged.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-many-params.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--wasm-inlining-ignore-call-counts",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-many-params.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-many-results.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--expose-gc",
+      "--wasm-inlining-ignore-call-counts",
+      "--wasm-inlining-factor=30",
+      "--wasm-inlining-budget=100000",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-many-results.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-memory-access.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-memory-access.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-metrics.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-metrics.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-minimal.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-minimal.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-multi-instance-call-indirect.js",
+    "command": [
+      "node",
+      "--allow-natives-syntax",
+      "--wasm-deopt",
+      "--liftoff",
+      "--wasm-inlining-call-indirect",
+      "--wasm-inlining-ignore-call-counts",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-multi-instance-call-indirect.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-multi-instance-different-callee.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--no-jit-fuzzing",
+      "--liftoff",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-multi-instance-different-callee.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-multi-instance-inlined.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--no-jit-fuzzing",
+      "--liftoff",
+      "--wasm-inlining-ignore-call-counts",
+      "--wasm-inlining-factor=15",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-multi-instance-inlined.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-multi-instance.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--no-jit-fuzzing",
+      "--liftoff",
+      "--wasm-inlining-call-indirect",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-multi-instance.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-multiple.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-multiple.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-nan.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-nan.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-non-inlineable-target.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--liftoff",
+      "--wasm-inlining",
+      "--no-jit-fuzzing",
+      "--wasm-inlining-call-indirect",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-non-inlineable-target.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-non-inlined-target.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-non-inlined-target.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-serialized-module.js",
+    "command": [
+      "node",
+      "--wasm-inlining",
+      "--wasm-deopt",
+      "--liftoff",
+      "--wasm-dynamic-tiering",
+      "--no-wasm-native-module-cache",
+      "--wasm-tiering-budget=100",
+      "--expose-gc",
+      "--allow-natives-syntax",
+      "--no-predictable",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-serialized-module.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-signal-handler.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-signal-handler.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-tail-call-parent-frame.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--no-jit-fuzzing",
+      "--wasm-inlining-ignore-call-counts",
+      "--wasm-inlining-factor=15",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-tail-call-parent-frame.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-too-much-feedback.js",
+    "command": [
+      "node",
+      "--allow-natives-syntax",
+      "--wasm-deopt",
+      "--liftoff",
+      "--wasm-inlining",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-too-much-feedback.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-untagged-parameters-s128.js",
+    "command": [
+      "node",
+      "--wasm-staging",
+      "--wasm-deopt",
+      "--liftoff",
+      "--wasm-inlining-factor=15",
+      "--allow-natives-syntax",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-untagged-parameters-s128.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-untagged-parameters.js",
+    "command": [
+      "node",
+      "--wasm-staging",
+      "--allow-natives-syntax",
+      "--wasm-deopt",
+      "--liftoff",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-untagged-parameters.js"
+    ],
+    "exit_code": 0
+  },
+  {
+    "file": "deopt-value-types.js",
+    "command": [
+      "node",
+      "--wasm-deopt",
+      "--allow-natives-syntax",
+      "--wasm-inlining",
+      "--liftoff",
+      "--no-jit-fuzzing",
+      "/fixture/node-runner.js",
+      "test/mjsunit/wasm/deopt/deopt-value-types.js"
+    ],
+    "exit_code": 0
+  }
+]

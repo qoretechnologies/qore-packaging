@@ -1,0 +1,38 @@
+From: Qore Technologies <info@qore.org>
+Subject: [PATCH] zlib: scope the CPU helper declaration to its callers
+
+Copyright 2026 Qore Technologies, s.r.o.
+
+V8's generic zlib build has no platform feature detection implementation. Declare
+the private helper only in the platform branches that call it, matching the
+existing definition selection. No feature flags or runtime behavior change.
+
+--- a/deps/v8/third_party/zlib/cpu_features.c
++++ b/deps/v8/third_party/zlib/cpu_features.c
+@@ -62,10 +62,6 @@ int ZLIB_INTERNAL riscv_cpu_enable_vclmul = 0;
+ #error cpu_features.c CPU feature detection in not defined for your platform
+ #endif
+ 
+-#if !defined(CPU_NO_SIMD) && !defined(ARMV8_OS_MACOS)
+-static void _cpu_check_features(void);
+-#endif
+-
+ #if defined(ARMV8_OS_ANDROID) || defined(ARMV8_OS_LINUX) || \
+     defined(ARMV8_OS_MACOS) || defined(ARMV8_OS_FUCHSIA) || \
+     defined(X86_NOT_WINDOWS) || defined(ARMV8_OS_IOS) || \
+@@ -75,6 +71,7 @@ static void _cpu_check_features(void);
+ // features are known at build time, so don't call it.
+ // Do provide cpu_check_features() (with a no-op implementation) so that we
+ // don't have to make all callers of it check for mac/arm.
++static void _cpu_check_features(void);
+ static pthread_once_t cpu_check_inited_once = PTHREAD_ONCE_INIT;
+ #endif
+ void ZLIB_INTERNAL cpu_check_features(void)
+@@ -84,6 +81,7 @@ void ZLIB_INTERNAL cpu_check_features(void)
+ #endif
+ }
+ #elif defined(ARMV8_OS_WINDOWS) || defined(X86_WINDOWS)
++static void _cpu_check_features(void);
+ static INIT_ONCE cpu_check_inited_once = INIT_ONCE_STATIC_INIT;
+ static BOOL CALLBACK _cpu_check_features_forwarder(PINIT_ONCE once, PVOID param, PVOID* context)
+ {

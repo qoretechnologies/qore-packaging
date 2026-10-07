@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "Focused controls pass; broader OBS-flag build exposes further V8 diagnostics. No new RPM is qualified or uploaded.",
+  "image": "sha256:471fb347e0308caa05f79e41ca4813767c6a7a687f03cc823a78b2a8e81a3414",
+  "fixes": {
+    "page_permissions": {
+      "checks": 250000,
+      "invalid_pairs": 12,
+      "parser_cases": 5,
+      "original_compile": "fails missing return",
+      "patched_compile": "passes with no stderr"
+    },
+    "zlib_declaration": {
+      "profiles": [
+        "generic",
+        "CPU_NO_SIMD",
+        "x86 SIMD"
+      ],
+      "code_identity": "Original/patched .text/.data/.bss byte identical in all three profiles. Generic warning removed.",
+      "concurrent_checks": 40000
+    },
+    "torque_abort": {
+      "checks": 30000,
+      "invalid_values": 6,
+      "parser_cases": 5,
+      "original_compile": "fails missing return",
+      "patched_compile": "passes with no stderr"
+    },
+    "torque_handle": {
+      "checks": 120000,
+      "names": [
+        "empty",
+        "Object",
+        "template",
+        "namespace",
+        "UTF-8",
+        "10000-byte name"
+      ],
+      "invalid_values": 6,
+      "parser_cases": 5
+    },
+    "torque_diagnostic_prefix": {
+      "checks": 20000,
+      "invalid_values": 6,
+      "parser_cases": 5,
+      "original_compile": "fails missing return",
+      "patched_compile": "passes with no stderr"
+    }
+  },
+  "valgrind": {
+    "all_controls": "Zero errors and zero definite, indirect or possible lost bytes; no suppressions.",
+    "v8_control_reachable": "9840 bytes in 361 reachable OpenSSL startup blocks, matching the prior allocation and priority controls.",
+    "zlib_cpu_control": "All heap allocations freed."
+  },
+  "scope_limits": [
+    "Controls exercise the actual source/header implementations, not copied algorithms.",
+    "The generic original zlib compile intentionally demotes its known unused-declaration warning for code-identity comparison only; patched compile uses -Werror.",
+    "The wider V8 diagnostic build still has additional return paths and warnings. These focused passes do not qualify the package."
+  ],
+  "sha256": {
+    "evidence/controls/node-v8-return-paths-20261006/page-permissions-run.py": "7299ce1319e778266828f96830b1c34a80938cb32329b6c6d32af57dcb39c9b1",
+    "evidence/controls/node-v8-return-paths-20261006/page-permissions-cpu-test.c": "5f4dc66a4035e9e5d2e7c4decf4f3e40aa6669f4e7213e6522c1c0ecc52af98a",
+    "evidence/controls/node-v8-return-paths-20261006/page-permissions-original-compile.log": "a19586ac183dc9646f9eb8dafb2ec5608ebb65d7669b40e37af2c8c9ea180e19",
+    "evidence/controls/node-v8-return-paths-20261006/page-permissions-fixed-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-v8-return-paths-20261006/page-permissions-control-valgrind.log.gz": "c906c37f727ed119a34f4d0414ef711a1c41bee57d8b8a020b978d5d43b6fbbc",
+    "evidence/controls/node-v8-return-paths-20261006/page-permissions-cpu-control-valgrind.log.gz": "25f7ca810fbea9b1813c468957829dc3895e424726f7811f497045aa19b58799",
+    "evidence/controls/node-v8-return-paths-20261006/page-permissions-generic-original.log": "248b50ff51e7c787345e43ab84430b65bc62eaa0a5dae8a8236b9b3ce53bef71",
+    "evidence/controls/node-v8-return-paths-20261006/page-permissions-generic-fixed.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-v8-return-paths-20261006/page-permissions-disabled-original.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-v8-return-paths-20261006/page-permissions-disabled-fixed.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-v8-return-paths-20261006/page-permissions-x86-original.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-v8-return-paths-20261006/page-permissions-x86-fixed.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-v8-return-paths-20261006/abort-run.py": "3aba77790afca760cc528e36854491a1edfe261c9782696ccbf0c162914a278f",
+    "evidence/controls/node-v8-return-paths-20261006/abort-original-compile.log": "93c4ea67e22123101c565ad344ce2a6e1bfc8b6fdd9ec9af4eb1c1b2b0335b99",
+    "evidence/controls/node-v8-return-paths-20261006/abort-fixed-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-v8-return-paths-20261006/abort-valgrind.log.gz": "08f8da52421fde9554669650ae7f7c8b8386a5b889b2a0cc40c916208288f79e",
+    "evidence/controls/node-v8-return-paths-20261006/handle-handle-check.py": "5dd7386dd5b409381622883940679820520032aff996e4270ce064eea85202a8",
+    "evidence/controls/node-v8-return-paths-20261006/handle-handle-valgrind.log.gz": "0112a60760b530a3e5738385e6528d6c575240033a438e34c82243634b6f880a",
+    "evidence/controls/node-v8-return-paths-20261006/prefix-run.py": "2a80840e22a2e0e7431697916c17ba354362b48171e4b31f4ec6d7c2c0f1169a",
+    "evidence/controls/node-v8-return-paths-20261006/prefix-original-compile.log": "f41e1a956cbd4dc396d09b10ada8ab9d9814245a44fd0cd412d4a098af3d7b5a",
+    "evidence/controls/node-v8-return-paths-20261006/prefix-fixed-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-v8-return-paths-20261006/prefix-valgrind.log.gz": "08f8da52421fde9554669650ae7f7c8b8386a5b889b2a0cc40c916208288f79e",
+    "evidence/controls/node-v8-return-paths-20261006/prefix-status.json": "3a6f1d887b787aefc2561d37140a45c890bc22e92e4bd4ba269484975869e21f",
+    "evidence/controls/node-v8-return-paths-20261006/node-page-permissions-control2-20261006.log": "b7ca77b2e653c31afdcf284b9e110fb42cbf6be3a0d943000aa5e740f70bf0bd",
+    "evidence/controls/node-v8-return-paths-20261006/node-torque-abort-final-control-20261006.log": "e70466c3aab874bc2f92e754c5cff7ea7d8df23b9f15d907609634caf0765c1e",
+    "evidence/controls/node-v8-return-paths-20261006/node-torque-handle-control-20261006.log": "7498ae3224fe8bf784fd06a851c4008cca2a92a52e4c874367bb8944d9b5ea43",
+    "evidence/controls/node-v8-return-paths-20261006/node-torque-handle-final-control-20261006.log": "4ea6e5dbc0c77066b4b38ce7b828950081ba6370e2c03d17d305059b1328a6df",
+    "evidence/controls/node-v8-return-paths-20261006/node-torque-prefix-control-20261006.log": "8b2a40a417f9c48ccf1743f4fa81e471d66ecf3cd6d9bcb621c04e7ee5c2ad3a"
+  }
+}

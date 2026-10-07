@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "User approved retaining the two documented V8 class-memory diagnostic families. Focused controls passed; complete RPM and installed qualification remain required.",
+  "proposal": {
+    "action": "Retain the exact V8 ZoneVector byte-transfer and fatal-OOM HeapStats marker-fill diagnostics without suppression or source behavior changes.",
+    "exclusions": [
+      "Other classes or memory operations",
+      "Non-trivially-copyable types",
+      "Invalid accesses or growing/native leaks",
+      "Changes to warning flags"
+    ]
+  },
+  "root_cause": {
+    "ZoneVector": "GCC warns because the classes lack trivial assignment (const fields). The actual EMIT_TRIVIAL_CASE code executes byte transfer only when std::is_trivially_copyable_v<T> is true. C++ permits representation copying of these complete trivially-copyable objects; assignment availability is a distinct property.",
+    "HeapStats": "Default member initializers make default construction nontrivial, but HeapStats remains trivially copyable/destructible and contains integer/character fields. FatalProcessOutOfMemory deliberately writes recognizable 0xde bytes into this stack diagnostic when no isolate exists, before terminating."
+  },
+  "validation": {
+    "checks_per_run": 927454,
+    "runs": [
+      "native",
+      "Valgrind"
+    ],
+    "scope": [
+      "Actual unchanged ZoneVector private CopyToNewStorage/MovingOverwrite functions accessed by standard explicit-template-instantiation test accessors; production arena allocator is not part of this control.",
+      "Counts 0 through 64, ten repetitions, byte copies of the real DeoptimizationEntry type, overlapping shifts in both directions, constant-member controls and untouched destination boundaries.",
+      "unique_ptr negative-type control proves nontrivial ownership uses element moves and remains single-owned.",
+      "1024 actual HeapStats marker fills with surrounding canaries and checks of every representation byte."
+    ],
+    "compile": "Exactly four intended class-memaccess warnings; no other warnings.",
+    "valgrind": {
+      "errors": 0,
+      "definitely_lost": 0,
+      "indirectly_lost": 0,
+      "possibly_lost": 0,
+      "suppressed": 0,
+      "still_reachable": 9840,
+      "reachable_blocks": 361,
+      "reachable_scope": "Same libnode/OpenSSL startup registrations as the qualified allocation and Torque controls."
+    }
+  },
+  "primary_sources": [
+    "https://gcc.gnu.org/onlinedocs/gcc-13.4.0/gcc/C_002b_002b-Dialect-Options.html#index-Wclass-memaccess",
+    "https://eel.is/c++draft/basic.types"
+  ],
+  "partial_build_sites": [
+    {
+      "file": "deps/v8/src/api/api.cc",
+      "line": 224,
+      "diagnostic": "'void* memset(void*, int, size_t)' writing to an object of non-trivial type 'class v8::internal::HeapStats'; use assignment instead"
+    },
+    {
+      "file": "deps/v8/src/zone/zone-containers.h",
+      "line": 436,
+      "diagnostic": "'void* memcpy(void*, const void*, size_t)' writing to an object of type 'class v8::internal::compiler::DeoptimizationEntry' with no trivial copy-assignment; use copy-initialization instead"
+    },
+    {
+      "file": "deps/v8/src/zone/zone-containers.h",
+      "line": 436,
+      "diagnostic": "'void* memcpy(void*, const void*, size_t)' writing to an object of type 'struct v8::internal::compiler::LoadElimination::ComputeLoopState(v8::internal::compiler::Node*, const AbstractState*) const::TransitionElementsKindInfo' with no trivial copy-assignment; use copy-initialization instead"
+    },
+    {
+      "file": "deps/v8/src/zone/zone-containers.h",
+      "line": 436,
+      "diagnostic": "'void* memcpy(void*, const void*, size_t)' writing to an object of type 'struct v8::internal::compiler::turboshaft::SnapshotTable<bool, v8::internal::compiler::turboshaft::NoKeyData>::LogEntry' with no trivial copy-assignment; use copy-initialization instead"
+    },
+    {
+      "file": "deps/v8/src/zone/zone-containers.h",
+      "line": 436,
+      "diagnostic": "'void* memcpy(void*, const void*, size_t)' writing to an object of type 'struct v8::internal::compiler::turboshaft::SnapshotTable<v8::internal::compiler::turboshaft::MapMaskAndOr, v8::internal::compiler::turboshaft::NoKeyData>::LogEntry' with no trivial copy-assignment; use copy-initialization instead"
+    },
+    {
+      "file": "deps/v8/src/zone/zone-containers.h",
+      "line": 436,
+      "diagnostic": "'void* memcpy(void*, const void*, size_t)' writing to an object of type 'struct v8::internal::compiler::turboshaft::SnapshotTable<v8::internal::compiler::turboshaft::OpIndex, v8::internal::compiler::turboshaft::KeyData>::LogEntry' with no trivial copy-assignment; use copy-initialization instead"
+    },
+    {
+      "file": "deps/v8/src/zone/zone-containers.h",
+      "line": 436,
+      "diagnostic": "'void* memcpy(void*, const void*, size_t)' writing to an object of type 'struct v8::internal::compiler::turboshaft::SnapshotTable<v8::internal::compiler::turboshaft::OpIndex, v8::internal::compiler::turboshaft::VariableData>::LogEntry' with no trivial copy-assignment; use copy-initialization instead"
+    },
+    {
+      "file": "deps/v8/src/zone/zone-containers.h",
+      "line": 436,
+      "diagnostic": "'void* memcpy(void*, const void*, size_t)' writing to an object of type 'struct v8::internal::compiler::turboshaft::SnapshotTable<v8::internal::compiler::turboshaft::OpIndex, v8::internal::compiler::turboshaft::wle::KeyData>::LogEntry' with no trivial copy-assignment; use copy-initialization instead"
+    },
+    {
+      "file": "deps/v8/src/zone/zone-containers.h",
+      "line": 436,
+      "diagnostic": "'void* memcpy(void*, const void*, size_t)' writing to an object of type 'struct v8::internal::compiler::turboshaft::SnapshotTable<v8::internal::compiler::turboshaft::StoreObservability, v8::internal::compiler::turboshaft::MaybeRedundantStoresKeyData>::LogEntry' with no trivial copy-assignment; use copy-initialization instead"
+    },
+    {
+      "file": "deps/v8/src/zone/zone-containers.h",
+      "line": 436,
+      "diagnostic": "'void* memcpy(void*, const void*, size_t)' writing to an object of type 'struct v8::internal::compiler::turboshaft::SnapshotTable<v8::internal::compiler::turboshaft::Type>::LogEntry' with no trivial copy-assignment; use copy-initialization instead"
+    },
+    {
+      "file": "deps/v8/src/zone/zone-containers.h",
+      "line": 436,
+      "diagnostic": "'void* memcpy(void*, const void*, size_t)' writing to an object of type 'struct v8::internal::compiler::turboshaft::SnapshotTable<v8::internal::wasm::ValueType, v8::internal::compiler::turboshaft::NoKeyData>::LogEntry' with no trivial copy-assignment; use copy-initialization instead"
+    }
+  ],
+  "limits": [
+    "Complete candidate4 build warning inventory still required; this is not RPM qualification.",
+    "First two fixture attempts could not link hidden arena symbols and ran no tests. Third attempt passed runtime/Valgrind but emitted two test-accessor friend warnings; the final concrete tag declarations remove both without compiler suppressions."
+  ],
+  "artifacts_sha256": {
+    "evidence/controls/node-class-memory-20261006/control.cc": "7cd5be57e51e06a5d2a31d2137c76bbf69cf33af3cab3bce2cf1f4b57a7ffe9f",
+    "evidence/controls/node-class-memory-20261006/run.py": "82655b10d1e282fcd0d7d72ea4abc8eecc2e5309a3c172a14df7fd184e65a1c5",
+    "evidence/controls/node-class-memory-20261006/flags.json": "ee64ac35a7abd50badd281a46a86708afd194134f18f698383094c73e90971e5",
+    "evidence/controls/node-class-memory-20261006/command.json": "2a94e4bbd069eec8bd57da1ba3726072689238598006ce6c97da38674f36b10f",
+    "evidence/controls/node-class-memory-20261006/status.json": "815e5090a08a1716a1bb305400d51d6d8bff532aa7ab575820ed19c90bb961ad",
+    "evidence/controls/node-class-memory-20261006/compile.log.gz": "fa14fd3e0c961383b55cff59573b0fee7dca379f14a07f8ecdbc2e53bf50991f",
+    "evidence/controls/node-class-memory-20261006/valgrind.log.gz": "e410477ab412b0aae6dcd0df7223b8d26b790eadc5f8503f4fb3fd24c8e8ed08",
+    "evidence/controls/node-class-memory-20261006/control.log": "200df8ec0c6115c322757a59eee666ebf3709f17209e5cca8a98f422d283992c"
+  },
+  "approval": {
+    "date": "2026-10-06",
+    "answer": "the v8 exception is approved; continue",
+    "scope": {
+      "action": "Retain the exact V8 ZoneVector byte-transfer and fatal-OOM HeapStats marker-fill diagnostics without suppression or source behavior changes.",
+      "exclusions": [
+        "Other classes or memory operations",
+        "Non-trivially-copyable types",
+        "Invalid accesses or growing/native leaks",
+        "Changes to warning flags"
+      ]
+    }
+  }
+}

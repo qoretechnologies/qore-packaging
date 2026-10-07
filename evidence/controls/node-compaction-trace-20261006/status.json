@@ -1,0 +1,108 @@
+[
+  {
+    "name": "original-debug-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-g",
+      "-O0",
+      "-Wall",
+      "-Wextra",
+      "-DDEBUG",
+      "/work/original.cc",
+      "-o",
+      "/work/original-debug"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "original-debug-normal",
+    "command": [
+      "/work/original-debug",
+      "baseline"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "original-debug-memory",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/work/original-debug-valgrind.log",
+      "/work/original-debug",
+      "baseline"
+    ],
+    "exit_code": 99
+  },
+  {
+    "name": "fixed-debug-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-g",
+      "-O0",
+      "-Wall",
+      "-Wextra",
+      "-DDEBUG",
+      "/work/fixed.cc",
+      "-o",
+      "/work/fixed-debug"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-debug-normal",
+    "command": [
+      "/work/fixed-debug"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-debug-memory",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/work/fixed-debug-valgrind.log",
+      "/work/fixed-debug"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-release-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-g",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "/work/fixed.cc",
+      "-o",
+      "/work/fixed-release"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-release-normal",
+    "command": [
+      "/work/fixed-release"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-release-memory",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/work/fixed-release-valgrind.log",
+      "/work/fixed-release"
+    ],
+    "exit_code": 0
+  }
+]

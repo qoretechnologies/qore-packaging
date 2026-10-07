@@ -1,0 +1,70 @@
+# Copyright 2026 Qore Technologies, s.r.o.; BSD-3-Clause.
+# Preserve explanatory comments without backslash-newline line splicing.
+--- a/deps/v8/src/objects/intl-objects.cc
++++ b/deps/v8/src/objects/intl-objects.cc
+@@ -1053,8 +1053,7 @@
+ // Generated from:
+ //
+ // $ wget http://www.unicode.org/Public/UCA/latest/allkeys.txt
+-// $ cat ~/allkeys.txt | grep '^00[0-7].  ;' | sort | sed 's/[*.]/ /g' |\
+-//   sed 's/.*\[ \(.*\)\].*/\1/' | python ~/gen_weights.py
++// $ cat ~/allkeys.txt | grep '^00[0-7].  ;' | sort | sed 's/[*.]/ /g' |   sed 's/.*\[ \(.*\)\].*/\1/' | python ~/gen_weights.py
+ //
+ // Where gen_weights.py does an ordinal rank s.t. weights fit in a uint8_t:
+ //
+--- a/deps/v8/src/objects/lookup.cc
++++ b/deps/v8/src/objects/lookup.cc
+@@ -1506,8 +1506,8 @@
+   //  ----------------------------------------
+   //         o   ^__^
+   //          o  (oo)\_______
+-  //             (__)\       )\/\
+-  //                 ||----w |
++  /*             (__)\       )\/\
++                 ||----w | */
+   //                 ||     ||
+   // The former is the source of truth, but due to concurrent reads it may not
+   // match the given `array_elements`.
+@@ -1522,8 +1522,8 @@
+   //  --------------------------------------
+   //         o   ^__^
+   //          o  (..)\_______
+-  //             (__)\       )\/\
+-  //                 ||----w |
++  /*             (__)\       )\/\
++                 ||----w | */
+   //                 ||     ||
+   // The elements kind may not be consistent with the given elements backing
+   // store.
+--- a/deps/v8/src/wasm/wasm-external-refs.cc
++++ b/deps/v8/src/wasm/wasm-external-refs.cc
+@@ -101,8 +101,8 @@
+   // leads to a uint64_t to float32 conversion which does not satisfy the
+   // WebAssembly specification. Therefore we do a different approach here:
+   //
+-  // / leading 0 \/  24 float data bits  \/  for rounding \/ trailing 0 \
+-  // 00000000000001XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX100000000000000
++  /* / leading 0 \/  24 float data bits  \/  for rounding \/ trailing 0 \
++ 00000000000001XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX100000000000000 */
+   //
+   // Float32 can only represent 24 data bit (1 implicit 1 bit + 23 mantissa
+   // bits). Starting from the most significant 1 bit, we can therefore extract
+--- a/deps/v8/src/bigint/tostring.cc
++++ b/deps/v8/src/bigint/tostring.cc
+@@ -295,12 +295,12 @@
+ //         12345            67890123
+ //           ↓                  ↓
+ //    (e) %10000             %10000 (b)      // RecursionLevel 1
+-//        /    \            /      \
+-//       1     2345      6789      0123
++/*        /    \            /      \
++       1     2345      6789      0123 */
+ //       ↓   (f) ↓         ↓ (d)     ↓
+ // (g) %100    %100      %100      %100 (c)  // RecursionLevel 0
+-//     / \     /   \     /   \     /   \
+-//    00 01   23   45   67   89   01   23
++/*     / \     /   \     /   \     /   \
++    00 01   23   45   67   89   01   23 */
+ //        ↓    ↓    ↓    ↓    ↓    ↓    ↓    // Base case.
+ //       "1" "23" "45" "67" "89" "01" "23"
+ //

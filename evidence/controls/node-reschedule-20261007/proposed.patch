@@ -1,0 +1,18 @@
+# Copyright 2026 Qore Technologies, s.r.o.; BSD-3-Clause.
+# Finish terminal control merging before reading nonexistent end-block state.
+--- a/deps/v8/src/compiler/raw-machine-assembler.cc
++++ b/deps/v8/src/compiler/raw-machine-assembler.cc
+@@ -246,6 +246,13 @@
+         NodeProperties::MergeControlToEnd(
+             graph(), common(), block->PredecessorAt(i)->control_input());
+       }
++      // The end block only collects terminal control inputs. It has no nodes
++      // or successors requiring a final effect/control pair.
++      DCHECK(block->empty());
++      DCHECK_EQ(block->control(), BasicBlock::kNone);
++      DCHECK_NULL(block->control_input());
++      DCHECK_EQ(block->SuccessorCount(), 0);
++      continue;
+     } else if (block->IsLoopHeader()) {
+       // The graph()->start() inputs are just placeholders until we computed the
+       // real back-edges and re-structure the control flow so the loop has

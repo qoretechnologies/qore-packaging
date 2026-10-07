@@ -1,0 +1,20 @@
+# Copyright 2026 Qore Technologies, s.r.o.; BSD-3-Clause.
+# Do not read unused heuristic thresholds when tracing forced full compaction.
+--- a/deps/v8/src/heap/mark-compact.cc
++++ b/deps/v8/src/heap/mark-compact.cc
+@@ -725,7 +725,14 @@
+         candidate_count++;
+         total_live_bytes += live_bytes;
+       }
+-      if (v8_flags.trace_fragmentation_verbose) {
++      if (v8_flags.trace_fragmentation_verbose && !in_standard_path) {
++        // Forced compaction does not compute or apply fragmentation thresholds.
++        PrintIsolate(heap_->isolate(),
++                     "compaction-selection-page: space=%s free_bytes_page=%zu "
++                     "mode=compact-on-every-full-gc sum_compaction_kb=%zu\n",
++                     ToString(space->identity()), (area_size - live_bytes) / KB,
++                     total_live_bytes / KB);
++      } else if (v8_flags.trace_fragmentation_verbose) {
+         PrintIsolate(heap_->isolate(),
+                      "compaction-selection-page: space=%s free_bytes_page=%zu "
+                      "fragmentation_limit_kb=%zu "

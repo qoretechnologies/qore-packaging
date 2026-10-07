@@ -1,0 +1,155 @@
+[
+  {
+    "name": "regression7-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-isystem",
+      "/usr/include/node",
+      "/control/regression7.cc",
+      "/control/fixed-adapter.o",
+      "-lnode",
+      "-licuuc",
+      "-lcrypto",
+      "-pthread",
+      "-Wl,--export-dynamic-symbol=_ZNK2v86String28VerifyExternalStringResourceEPNS0_22ExternalStringResourceE",
+      "-o",
+      "/control/regression7"
+    ],
+    "exit_code": 0,
+    "expected": 0
+  },
+  {
+    "name": "ordinary-lifetimes-0",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/control/ordinary-lifetimes-0-valgrind.log",
+      "/control/regression7",
+      "ordinary",
+      "0"
+    ],
+    "exit_code": 99,
+    "expected": 0
+  },
+  {
+    "name": "ordinary-lifetimes-1",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/control/ordinary-lifetimes-1-valgrind.log",
+      "/control/regression7",
+      "ordinary",
+      "1"
+    ],
+    "exit_code": 99,
+    "expected": 0
+  },
+  {
+    "name": "ordinary-lifetimes-100",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/control/ordinary-lifetimes-100-valgrind.log",
+      "/control/regression7",
+      "ordinary",
+      "100"
+    ],
+    "exit_code": 99,
+    "expected": 0
+  },
+  {
+    "name": "ordinary-lifetimes-1000",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/control/ordinary-lifetimes-1000-valgrind.log",
+      "/control/regression7",
+      "ordinary",
+      "1000"
+    ],
+    "exit_code": 99,
+    "expected": 0
+  },
+  {
+    "name": "shared-lifetimes-0",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/control/shared-lifetimes-0-valgrind.log",
+      "/control/regression7",
+      "shared",
+      "0"
+    ],
+    "exit_code": 99,
+    "expected": 0
+  },
+  {
+    "name": "shared-lifetimes-1",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/control/shared-lifetimes-1-valgrind.log",
+      "/control/regression7",
+      "shared",
+      "1"
+    ],
+    "exit_code": 99,
+    "expected": 0
+  },
+  {
+    "name": "shared-lifetimes-100",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/control/shared-lifetimes-100-valgrind.log",
+      "/control/regression7",
+      "shared",
+      "100"
+    ],
+    "exit_code": 99,
+    "expected": 0
+  },
+  {
+    "name": "shared-lifetimes-1000",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/control/shared-lifetimes-1000-valgrind.log",
+      "/control/regression7",
+      "shared",
+      "1000"
+    ],
+    "exit_code": 99,
+    "expected": 0
+  }
+]

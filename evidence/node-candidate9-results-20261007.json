@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "OBS-flags candidate9 full x86_64 RPM, installed bridge and native memory checks pass within exact approved diagnostics. One newly root-caused Wasm allocation/compiler issue is fixed in candidate10, whose full qualification remains required.",
+  "build": {
+    "exit_code": 0,
+    "native_cases": 192,
+    "javascript_reported_results": 5249,
+    "javascript_limit": "Includes upstream skip/TODO outcomes; zero not-ok results.",
+    "rpm_artifacts": {
+      "rpmbuild/RPMS/x86_64/libnode-devel-24.18.1-1.qore.x86_64.rpm": "907d027ba195e1efea4765a5b1962ed99c41df092238831fed943e4c7ade5df4",
+      "rpmbuild/RPMS/x86_64/libnode137-24.18.1-1.qore.x86_64.rpm": "778146d253e1bb1e1e9fe935b14f14833efc4e2acb4956a775ff6c2bb3139c8a",
+      "rpmbuild/RPMS/x86_64/libnode137-debuginfo-24.18.1-1.qore.x86_64.rpm": "0bf16eb413f3053ea9f5f403d9b810699bf726d4b89fc06d008eb331b36cd28f",
+      "rpmbuild/RPMS/x86_64/nodejs24-libnode-debugsource-24.18.1-1.qore.x86_64.rpm": "67b27a44878a27976ef279c11c8c03333016ccc725ebe08bfb276964ea85c3c1",
+      "rpmbuild/SRPMS/nodejs24-libnode-24.18.1-1.qore.src.rpm": "bd1e1a8cfb3e3b6a399da9820498d46f2f181e7a9f4032083e17364dbd216279"
+    }
+  },
+  "installed": {
+    "reported_cases": 148,
+    "assertions": 1153,
+    "steps": [
+      "sdk-install",
+      "runtime-install",
+      "sdk-consumer",
+      "runtime-tests"
+    ],
+    "diagnostics": "Only the approved stripTypeScriptTypes experimental notice.",
+    "limit": "Uses previously qualified bridge and core; final documentation SDK22 and native ARM are separate gates."
+  },
+  "memory": {
+    "reschedule": {
+      "raw_exit_code": 0,
+      "classification": "All allocations freed; zero errors."
+    },
+    "timezone": {
+      "raw_exit_code": 0,
+      "classification": "All allocations freed; zero errors."
+    },
+    "external-ordinary": {
+      "raw_exit_code": 99,
+      "classification": "Six exact approved V8 reachable records; 216 bytes total, zero lost bytes or invalid accesses."
+    },
+    "external-shared": {
+      "raw_exit_code": 99,
+      "classification": "Six exact approved V8 reachable records; 216 bytes total, zero lost bytes or invalid accesses."
+    }
+  },
+  "compiler_diagnostics": {
+    "unique": 572,
+    "occurrences": 4757,
+    "statuses": {
+      "approved exact diagnostic": 167,
+      "approved family with final source/diagnostic identity verified": 19,
+      "reviewed under approved exhaustive-enum policy": 360,
+      "approved exact source site": 25,
+      "Wasm metadata fix prepared in candidate 10; full LTO verification pending": 1
+    },
+    "review": "Complete exact-message/source-identity and exhaustive-enum review retained in controls. No blanket approval or warning filtering.",
+    "remaining": "Wasm metadata assembly/size invariants fixed by the tested upstream backport plus bounded count check; full candidate10 LTO result is required."
+  },
+  "related_evidence": [
+    "node-external-string-fix-20261007.json",
+    "node-cc-load-diagnostic-20261007.json",
+    "node-snapshot-copy-diagnostic-20261007.json",
+    "node-wasm-deopt-fix-20261007.json"
+  ],
+  "files_sha256": {
+    "evidence/controls/node-candidate9-20261007/build-build.json": "d4da70d4b99641decf5b4c070ad31827ed8b52ec69a8fce7ef18f43d8b7f6339",
+    "evidence/controls/node-candidate9-20261007/build-build.log.gz": "84db4641a1ca5d1eb378d36d78fd3975465734b52d8cd994fd7e22f05094fd6c",
+    "evidence/controls/node-candidate9-20261007/installed-runtime-install.log.gz": "cb0a43113c1a2c4b8aacedd263276a4ffd4d12f745be545e75bc6c2b814d2495",
+    "evidence/controls/node-candidate9-20261007/installed-runtime-tests.log.gz": "f5fa814d8703c21651f2623fb300e6b6fb832a92b6ed9ea93c5d9634e273544e",
+    "evidence/controls/node-candidate9-20261007/installed-sdk-consumer.log.gz": "f01880452953d21cfdc855086546095851adb1824dfaddd470770e7662c93b4d",
+    "evidence/controls/node-candidate9-20261007/installed-sdk-install.log.gz": "88824427e508388381e62a71dca363c87605ef033dd7a05c71fd2db99f5e0c50",
+    "evidence/controls/node-candidate9-20261007/installed-status.json": "fef0c8ee021e4b36e917ca6f34ad71892a9e44b49201481600d901b288357d5b",
+    "evidence/controls/node-candidate9-20261007/memory-external-ordinary-valgrind.log.gz": "f36eb795fc5688121206f2744c15227c1fdec559f2d82f98c62d517e7278094d",
+    "evidence/controls/node-candidate9-20261007/memory-external-ordinary.log.gz": "3bbfdd0ac08a7e20954596ecf332f609774a92301f4fbd51faad58ee414bb034",
+    "evidence/controls/node-candidate9-20261007/memory-external-shared-valgrind.log.gz": "56c7ebcdc6f57e240c56d4c61bfa9668b66c3ec4b470a4214c4d24872c55a924",
+    "evidence/controls/node-candidate9-20261007/memory-external-shared.log.gz": "3bbfdd0ac08a7e20954596ecf332f609774a92301f4fbd51faad58ee414bb034",
+    "evidence/controls/node-candidate9-20261007/memory-reschedule-valgrind.log.gz": "0caba7d3f875a1ada71eff090b50db33bc7b949f300fa8162dac2bcda7f10346",
+    "evidence/controls/node-candidate9-20261007/memory-reschedule.log.gz": "072f5ab0ba2faa619ab812ab75f7dc778fe057c736bdf7ef027198c950169385",
+    "evidence/controls/node-candidate9-20261007/memory-status.json": "0cef8f770e403bafd857ea8ea5132501a3dfbc065613d2bec625bd1b733ef93c",
+    "evidence/controls/node-candidate9-20261007/memory-timezone-valgrind.log.gz": "8e906da0912d107597aac03e39fd39dbcbc9691cfdcf1215bdc3232b15f6d7ce",
+    "evidence/controls/node-candidate9-20261007/memory-timezone.log.gz": "190238669cdde81f967f4fde33f4876b6416326a631854ff48e50d6bff6c76c2",
+    "evidence/controls/node-candidate9-20261007/reconcile-node-candidate9-warnings-20261007.py": "6ac6fffb0add90df6434dce17371d2dfbc97f484c031a32a9f601ea7d6b4a2a7",
+    "evidence/controls/node-candidate9-20261007/verify-node-candidate9-warning-context-20261007.py": "f62baf848c2737673cbbd5db779c2ce96430d4059d074866b970646d1239f167",
+    "evidence/controls/node-candidate9-20261007/warning-review.json": "e4e39dfc807b345c5a5dea5fcf6beb9359ddc08d9a925a848702ff442f5238ed"
+  }
+}

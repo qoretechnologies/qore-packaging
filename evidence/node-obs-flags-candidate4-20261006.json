@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "Failed at mksnapshot LTO link before RPM tests; root cause and candidate5 correction recorded in evidence/node-lto-configuration-20261006.json.",
+  "patch_count": 14,
+  "patched_files": 41,
+  "fuzz": 0,
+  "patched_source_comparison": "All patched files match the focused-control/diagnostic source byte for byte.",
+  "source_manifest": {
+    "schema": 1,
+    "name": "nodejs24-libnode",
+    "version": "24.18.1",
+    "commit": null,
+    "source_date_epoch": 1790985600,
+    "spec": "nodejs24-libnode.spec",
+    "upstream": {
+      "url": "https://nodejs.org/dist/v24.18.1/node-v24.18.1.tar.xz",
+      "sha256": "86d40d594bbdfcf69009a62fdf43cb19ae72b6cb5822d2bdd8349c5a1b2fa628"
+    },
+    "sources": {
+      "node-v24.18.1-doc-deps.tar.xz": "38afe7e7b4be25a43b3c56d1df9ade2c49d05f09d02529d236c84cf403da5e9f",
+      "node-v24.18.1.tar.xz": "86d40d594bbdfcf69009a62fdf43cb19ae72b6cb5822d2bdd8349c5a1b2fa628",
+      "nodejs24-SQLITE-LICENSE": "06545a6ec25fbbff6c62f205f94a35be49e38f33bea827a8cfb07d7b82e4b083",
+      "nodejs24-ada-conversion-result.patch": "fa6b29abf3ac1a96e8c31c606497592f58d4c9ee72079ce4853e7804e7f6012c",
+      "nodejs24-ada-conversion-test.cc": "518f479bc417825fe2ebb2db6c33c4412e8e6457e35ec2702a8d8d1787be2165",
+      "nodejs24-allocation-status-test.cc": "33bd223a96b962df3a6685007b9b8c5da961648771f9d5dfab605961d4d55c83",
+      "nodejs24-allocation-status.patch": "3fcfd2451577c1e294b78e84b672f18e4ec329a1304c4ab69ba3e85e49f86674",
+      "nodejs24-compression-cleanup.patch": "311cc6bf7aa673e664f2cf620a33dcd22badc88db265386edacc05f799e55aee",
+      "nodejs24-cppgc-realm-lifetime.patch": "5e648a3098280aca79d642b4a430a2c08e5383767ad926a1f944bdfcde9abb1f",
+      "nodejs24-crypto-test-types.patch": "6f2258defea0d4e709d896d01a359b777db7be0c8ec8d2fafcaf7fa7e2ed3442",
+      "nodejs24-cxx-visibility.patch": "50bab1320ef4593767e9e5cca93356e5ce3bbef700a39b7686112ded3d66ba40",
+      "nodejs24-detached-thread-counter.c": "050af87f5bbfaa81ef1dc47c23abdf08aae8b4edea0875c513eaf02fd8f047cf",
+      "nodejs24-doc-deps.json": "306f956d391cb38201ac39387f83c1f0ba50e3fba1ab1327471e9cd82b755de0",
+      "nodejs24-inspector-environments.patch": "0f0fdcf9f07e67b569abb4fd75db1de56c7509db58332f020b2fcdcc20a47617",
+      "nodejs24-inspector-lifetimes.cc": "b6b354d3f59703f18f2c015ef6a4f013f70810ae824b31f3416326d6d69f63ca",
+      "nodejs24-libnode-rpmlintrc": "bbc326925f8bf74488e45a4bcc342a57630587539dff87fae559d09e4abb963d",
+      "nodejs24-libnode.spec": "41199bf3ef930155dc07e38eb49771f33ea29ace3b637a1075d492cf50059e9b",
+      "nodejs24-localizationData-v77.1.json": "1d3db7f705c103d54b69cb61d3d2bc38ffc385b1015e18baa0c6c4423d16172b",
+      "nodejs24-page-permissions-test.cc": "5e92696cfd5a0faf96dd91f2a1453933c5720efb8a2a956ae11181cd3c880632",
+      "nodejs24-page-permissions.patch": "5074e5516d629fed1d02d99226f40f20bc736fbbad939032db7cbaefa2a2cc31",
+      "nodejs24-platform-priority-test.cc": "0208f3a5fdf43a86132fbcaabf86a0deeec24adfa81b8c02d49fc3f2eeb66fb2",
+      "nodejs24-platform-priority.patch": "accd471258a746f33f898b3e431e29f2c2a06b0a6e2e3ebef52d5a2ca9c7011a",
+      "nodejs24-rpm-symbols.py": "2a7006474f4c37ba78541ba60b740ece416c9657a37845b6af2994d2f2c7b90a",
+      "nodejs24-sqlite-lengths.patch": "489ba8e751a69a0fdea9899161137c21eb5f7a88f91b35b571794d77891edb25",
+      "nodejs24-sqlite-test.c": "6c089bd9472d439b0fd48507dee9104ba49ce8e610fdf2735d06aeb74e2153fe",
+      "nodejs24-sqlite-types.patch": "e7d9ca1b24f52aeeabf2bc10ee8e0e0b713b5362b4b04085e79b7b7215e18bc9",
+      "nodejs24-torque-abort-test.cc": "9a3ec3d8cc25ac4c2d64add5c36cd7d9b93dc3498d13f89c539be80fa602c491",
+      "nodejs24-torque-handle-test.cc": "9e805ad1abc657fb0109966945bb76b0ece717f2dc6f2364bca54c5226476a68",
+      "nodejs24-torque-prefix-test.cc": "8657a4c3bf5fe9392481ec5ce4f6beefd4894a4963c965cb4c00329c02deee6a",
+      "nodejs24-torque-stack-test.cc": "b1a4808aaf71c318276b27e9ec8cd489fe623fd1cabeb0aaa55692388cf8e838",
+      "nodejs24-v8-diagnostics.patch": "8a21c336414543eac539db92a4321a6ce9c7bb2bbe08b47502ce1df9abb99a51",
+      "nodejs24-v8-return-paths.patch": "a6eae5bbb93a5a0507f51e64a974f0978fa80fb5c1bb5ddefae4c4a728909d78",
+      "nodejs24-zlib-cpu-declaration.patch": "255d5f530d6bc19cd6634837e77febb65cb04b984fa2684d43e6f25d97789d8d"
+    },
+    "candidate": true,
+    "components": [
+      {
+        "archive": "node-v24.18.1-doc-deps.tar.xz",
+        "sha256": "38afe7e7b4be25a43b3c56d1df9ade2c49d05f09d02529d236c84cf403da5e9f",
+        "generated": "npm ci with upstream package-lock integrity verification and two pinned missing notices; preparation and licenses recorded in nodejs24-doc-deps.json; tar sorted with mtime 1790985600 and uid/gid zero, xz compressed.",
+        "url": "https://github.com/nodejs/node/blob/v24.18.1/tools/doc/package-lock.json"
+      }
+    ]
+  },
+  "source": "work/nodejs24-libnode-obs-flags-candidate4-20261006",
+  "approved_compiler_policy": "evidence/node-gcc-return-policy-proposal-20261006.json",
+  "results": "results/leap-nodejs24-obs-flags-candidate4-20261006/build.json",
+  "exit_code": 1
+}

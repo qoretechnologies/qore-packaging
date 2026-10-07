@@ -1,0 +1,93 @@
+[
+  {
+    "name": "regression-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-isystem",
+      "/usr/include/node",
+      "/control/regression4.cc",
+      "/control/fixed-adapter.o",
+      "-lnode",
+      "-pthread",
+      "-Wl,--export-dynamic-symbol=_ZNK2v86String28VerifyExternalStringResourceEPNS0_22ExternalStringResourceE",
+      "-o",
+      "/control/regression4"
+    ],
+    "exit_code": 0,
+    "expected": 0
+  },
+  {
+    "name": "ordinary-regression",
+    "command": [
+      "/control/regression4",
+      "ordinary"
+    ],
+    "exit_code": 0,
+    "expected": 0
+  },
+  {
+    "name": "ordinary-regression-memory",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/control/ordinary-regression4-valgrind.log",
+      "/control/regression4",
+      "ordinary"
+    ],
+    "exit_code": 99,
+    "expected": 0
+  },
+  {
+    "name": "ordinary-negative",
+    "command": [
+      "/control/regression4",
+      "ordinary",
+      "negative"
+    ],
+    "exit_code": -5,
+    "expected": -5
+  },
+  {
+    "name": "shared-regression",
+    "command": [
+      "/control/regression4",
+      "shared"
+    ],
+    "exit_code": 0,
+    "expected": 0
+  },
+  {
+    "name": "shared-regression-memory",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "--log-file=/control/shared-regression4-valgrind.log",
+      "/control/regression4",
+      "shared"
+    ],
+    "exit_code": 99,
+    "expected": 0
+  },
+  {
+    "name": "shared-negative",
+    "command": [
+      "/control/regression4",
+      "shared",
+      "negative"
+    ],
+    "exit_code": -5,
+    "expected": -5
+  }
+]

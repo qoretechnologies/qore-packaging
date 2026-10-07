@@ -1,0 +1,163 @@
+# Copyright 2026 Qore Technologies, s.r.o.
+# Backport V8 a548b49ac38290fa2cf449117e19f872d0f3c7f5 (BSD-3-Clause).
+# Preserve code-generation failure and deoptimization metadata invariants.
+# Adapt the pre-Simd128-register API and check the count before narrowing.
+--- a/deps/v8/src/compiler/backend/code-generator.cc
++++ b/deps/v8/src/compiler/backend/code-generator.cc
+@@ -1062,6 +1062,11 @@
+ 
+ #if V8_ENABLE_WEBASSEMBLY
+ base::OwnedVector<uint8_t> CodeGenerator::GenerateWasmDeoptimizationData() {
++  CHECK_EQ(result_, kSuccess);
++  // Successful assembly assigns IDs from zero through kMaxNumberOfEntries.
++  // Check this bound before narrowing the container size for serialization.
++  CHECK_LE(deoptimization_exits_.size(),
++           static_cast<size_t>(Deoptimizer::kMaxNumberOfEntries) + 1);
+   int deopt_count = static_cast<int>(deoptimization_exits_.size());
+   if (deopt_count == 0) {
+     return {};
+@@ -1077,7 +1082,7 @@
+   for (int i = 0; i < deopt_count; i++) {
+     const DeoptimizationExit* deoptimization_exit = deoptimization_exits_[i];
+     CHECK_NOT_NULL(deoptimization_exit);
+-    DCHECK_EQ(i, deoptimization_exit->deoptimization_id());
++    CHECK_EQ(i, deoptimization_exit->deoptimization_id());
+     deopt_entries[i] = {deoptimization_exit->bailout_id(),
+                         deoptimization_exit->translation_id()};
+   }
+--- a/deps/v8/src/compiler/backend/code-generator.h
++++ b/deps/v8/src/compiler/backend/code-generator.h
+@@ -150,6 +150,9 @@
+ 
+   CodeKind code_kind() const { return info_->code_kind(); }
+ 
++  enum CodeGenResult { kSuccess, kTooManyDeoptimizationBailouts };
++  CodeGenResult result() const { return result_; }
++
+  private:
+   GapResolver* resolver() { return &resolver_; }
+   SafepointTableBuilder* safepoints() { return &safepoints_; }
+@@ -171,8 +174,6 @@
+   // object constant.
+   bool IsMaterializableFromRoot(Handle<HeapObject> object,
+                                 RootIndex* index_return);
+-
+-  enum CodeGenResult { kSuccess, kTooManyDeoptimizationBailouts };
+ 
+   // Assemble instructions for the specified block.
+   CodeGenResult AssembleBlock(const InstructionBlock* block);
+--- a/deps/v8/src/compiler/pipeline.cc
++++ b/deps/v8/src/compiler/pipeline.cc
+@@ -2972,6 +2972,7 @@
+                                         &pipeline, data.osr_helper_ptr()));
+ 
+   CodeGenerator* code_generator = turboshaft_data.code_generator();
++  CHECK_EQ(code_generator->result(), CodeGenerator::kSuccess);
+ 
+   wasm::WasmCompilationResult result;
+   code_generator->masm()->GetCode(
+--- a/deps/v8/src/compiler/turboshaft/branch-elimination-reducer.h
++++ b/deps/v8/src/compiler/turboshaft/branch-elimination-reducer.h
+@@ -321,6 +321,15 @@
+ 
+     if (destination_origin->OpCountUpperBound() > kMaxOpCountForCloning) {
+       goto no_change;
++    }
++
++    // Do not clone blocks containing deoptimization points. These may have a
++    // significant metadata overhead.
++    for (const Operation& op :
++         __ input_graph().operations(*destination_origin)) {
++      if (op.Is<DeoptimizeIfOp>()) {
++        goto no_change;
++      }
+     }
+ 
+     if (const BranchOp* branch = last_op.template TryCast<BranchOp>()) {
+--- a/deps/v8/src/deoptimizer/deoptimizer.cc
++++ b/deps/v8/src/deoptimizer/deoptimizer.cc
+@@ -1107,13 +1107,17 @@
+           intptr_t reg_value = kZapValue;
+           switch (value.kind()) {
+             case TranslatedValue::Kind::kInt32:
++              CHECK_EQ(liftoff_iter->kind(), wasm::ValueKind::kI32);
+               // Ensure that the upper half is zeroed out.
+               reg_value = static_cast<uint32_t>(value.int32_value());
+               break;
+             case TranslatedValue::Kind::kTagged:
++              CHECK(liftoff_iter->kind() == wasm::ValueKind::kRef ||
++                    liftoff_iter->kind() == wasm::ValueKind::kRefNull);
+               reg_value = value.raw_literal().ptr();
+               break;
+             case TranslatedValue::Kind::kInt64:
++              CHECK_EQ(liftoff_iter->kind(), wasm::ValueKind::kI64);
+               reg_value = value.int64_value();
+               break;
+             default:
+@@ -1123,10 +1127,12 @@
+         } else if (liftoff_iter->is_fp_reg()) {
+           switch (value.kind()) {
+             case TranslatedValue::Kind::kDouble:
++              CHECK_EQ(liftoff_iter->kind(), wasm::ValueKind::kF64);
+               output_frame->SetDoubleRegister(liftoff_iter->reg().fp().code(),
+                                               value.double_value());
+               break;
+             case TranslatedValue::Kind::kFloat:
++              CHECK_EQ(liftoff_iter->kind(), wasm::ValueKind::kF32);
+               // Liftoff doesn't have a concept of floating point registers.
+               // This is an important distinction as e.g. on arm s1 and d1 are
+               // two completely distinct registers.
+@@ -1137,6 +1143,7 @@
+                   Float64::FromBits(value.float_value().get_bits()));
+               break;
+             case TranslatedValue::Kind::kSimd128:
++              CHECK_EQ(liftoff_iter->kind(), wasm::ValueKind::kS128);
+               output_frame->SetSimd128Register(liftoff_iter->reg().fp().code(),
+                                                value.simd_value());
+               break;
+@@ -1147,6 +1154,7 @@
+           intptr_t reg_value = kZapValue;
+           switch (value.kind()) {
+             case TranslatedValue::Kind::kInt32:
++              CHECK_EQ(liftoff_iter->kind(), wasm::ValueKind::kI64);
+               // Ensure that the upper half is zeroed out.
+               reg_value = static_cast<uint32_t>(value.int32_value());
+               break;
+@@ -1163,6 +1171,7 @@
+           if (int64_lowering_is_low) skip_increase_liftoff_iter = true;
+           int64_lowering_is_low = !int64_lowering_is_low;
+         } else if (!Is64() && liftoff_iter->is_fp_reg_pair()) {
++          CHECK_EQ(liftoff_iter->kind(), wasm::ValueKind::kS128);
+           CHECK_EQ(value.kind(), TranslatedValue::Kind::kSimd128);
+           Simd128 simd_value = value.simd_value();
+           Address val_ptr = reinterpret_cast<Address>(&simd_value);
+@@ -1221,6 +1230,7 @@
+             }
+             break;
+           case wasm::ValueKind::kS128: {
++            CHECK_EQ(value.kind(), TranslatedValue::Kind::kSimd128);
+             int64x2 values = value.simd_value().to_i64x2();
+             const int offset = base_offset - liftoff_iter->offset();
+             output_frame->SetLiftoffFrameSlot64(offset, values.val[0]);
+--- a/deps/v8/src/wasm/wasm-deopt-data.cc
++++ b/deps/v8/src/wasm/wasm-deopt-data.cc
+@@ -29,6 +29,8 @@
+     base::Vector<const uint8_t> translation_array,
+     base::Vector<wasm::WasmDeoptEntry> deopt_entries,
+     const ZoneDeque<DeoptimizationLiteral>& deopt_literals) {
++  CHECK_GE(eager_deopt_count, 0);
++  CHECK_EQ(deopt_entries.size(), static_cast<size_t>(eager_deopt_count));
+   wasm::WasmDeoptData data;
+   data.entry_count = eager_deopt_count;
+   data.deopt_exit_start_offset = deopt_exit_start_offset;
+--- a/deps/v8/src/wasm/wasm-deopt-data.h
++++ b/deps/v8/src/wasm/wasm-deopt-data.h
+@@ -69,7 +69,7 @@
+ 
+   WasmDeoptEntry GetDeoptEntry(uint32_t deopt_index) const {
+     DCHECK(HasDeoptData());
+-    DCHECK(deopt_index < base_data_.entry_count);
++    CHECK_LT(deopt_index, base_data_.entry_count);
+     const uint8_t* begin = deopt_data_.begin() + sizeof(base_data_) +
+                            base_data_.translation_array_size;
+     return base::ReadUnalignedValue<WasmDeoptEntry>(reinterpret_cast<Address>(

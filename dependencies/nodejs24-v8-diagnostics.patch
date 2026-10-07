@@ -1,0 +1,369 @@
+# Copyright 2026 Qore Technologies, s.r.o.; BSD-3-Clause.
+# Keep diagram backslashes inside block comments; preserve forbidden cast diagnostics.
+# Validate Torque pop bounds and erase the tail without instantiating vector growth.
+--- a/deps/v8/src/builtins/builtins.h
++++ b/deps/v8/src/builtins/builtins.h
+@@ -98,7 +98,7 @@
+   static constexpr bool kCodeObjectsAreInROSpace = true;
+ #else
+   static constexpr bool kCodeObjectsAreInROSpace = false;
+-#endif  // !defined(V8_SHORT_BUILTIN_CALLS) || \
++#endif  /* !defined(V8_SHORT_BUILTIN_CALLS) || \ */
+         // defined(V8_COMPRESS_POINTERS)
+ 
+ #define ADD_ONE(Name, ...) +1
+--- a/deps/v8/src/compiler/branch-elimination.cc
++++ b/deps/v8/src/compiler/branch-elimination.cc
+@@ -67,8 +67,8 @@
+   // condition                             condition
+   //    |   \                                   |
+   //    |  first_branch                        first_branch
+-  //    |   /          \                       /          \
+-  //    |  /            \                     /            \
++  /*    |   /          \                       /          \ */
++  /*    |  /            \                     /            \ */
+   //    |first_true  first_false           first_true  first_false
+   //    |  \           /                      \           /
+   //    |   \         /                        \         /
+@@ -79,8 +79,8 @@
+   //   /            \                     phi       |
+   // second_true  second_false              \       |
+   //                                      second_branch
+-  //                                      /          \
+-  //                                     /            \
++  /*                                      /          \ */
++  /*                                     /            \ */
+   //                                   second_true  second_false
+   //
+ 
+@@ -154,7 +154,7 @@
+   //       |   _____________/        =>        |         |
+   //       |  /                                |         |
+   //      branch                             succ0     succ1
+-  //      /    \
++  /*      /    \ */
+   //   false   true
+   //     |      |
+   //   succ0  succ1
+--- a/deps/v8/src/compiler/code-assembler.h
++++ b/deps/v8/src/compiler/code-assembler.h
+@@ -1270,6 +1270,7 @@
+   TNode<IntPtrT> BitcastTaggedToWord(TNode<Smi> node) {
+     static_assert(sizeof(Dummy) < 0,
+                   "Should use BitcastTaggedToWordForTagAndSmiBits instead.");
++    UNREACHABLE();
+   }
+ 
+   // Changes a double to an inptr_t for pointer arithmetic outside of Smi range.
+--- a/deps/v8/src/compiler/common-operator-reducer.cc
++++ b/deps/v8/src/compiler/common-operator-reducer.cc
+@@ -252,8 +252,8 @@
+     // corresponds in Turbofan to something like:
+     //
+     //       Branch(0 < v)
+-    //         /      \
+-    //        /        \
++    /*         /      \ */
++    /*        /        \ */
+     //       v        0 - v
+     //        \        /
+     //         \      /
+--- a/deps/v8/src/compiler/js-call-reducer.cc
++++ b/deps/v8/src/compiler/js-call-reducer.cc
+@@ -5197,8 +5197,8 @@
+   //               |
+   //               |
+   //            Branch
+-  //           /      \
+-  //          /        \
++  /*           /      \ */
++  /*          /        \ */
+   //      IfTrue      IfFalse
+   //         |          |
+   //         |          |
+--- a/deps/v8/src/compiler/string-builder-optimizer.cc
++++ b/deps/v8/src/compiler/string-builder-optimizer.cc
+@@ -549,8 +549,8 @@
+     // case corresponds to:
+     //
+     //  +--------> sb_child_block
+-    //  |         /             \
+-    //  |        |               \
++    /*  |         /             \ */
++    /*  |        |               \ */
+     //  |        v                v
+     //  | previous_block         other_child_block
+     //  |        |
+--- a/deps/v8/src/compiler/string-builder-optimizer.h
++++ b/deps/v8/src/compiler/string-builder-optimizer.h
+@@ -164,9 +164,9 @@
+     // Lattice of possible transitions:
+     //
+     //      kUnknown
+-    //      /     | \
+-    //     /      |  \
+-    //    v       |   \
++    /*      /     | \ */
++    /*     /      |  \ */
++    /*    v       |   \ */
+     //  kOneByte  |    |
+     //  |   |     |    |
+     //  |   |     |    |
+--- a/deps/v8/src/compiler/turboshaft/assembler.h
++++ b/deps/v8/src/compiler/turboshaft/assembler.h
+@@ -4262,9 +4262,9 @@
+   //                   | 1: CallOp(...)     |
+   //                   | 2: CheckException  |
+   //                   +--------------------+
+-  //                     /              \
+-  //                    /                \
+-  //                   /                  \
++  /*                     /              \ */
++  /*                    /                \ */
++  /*                   /                  \ */
+   //     + B2 ----------------+        + B3 ----------------+
+   //     | 3: DidntThrow(1)   |        | 4: CatchBlockBegin |
+   //     |  ...               |        | 5: SomeOp(4)       |
+@@ -4287,17 +4287,17 @@
+   //                             | 1: CallOp(...)     |
+   //                             | 2: CheckException  |
+   //                             +--------------------+
+-  //                               /              \
+-  //                              /                \
+-  //                             /                  \
++  /*                               /              \ */
++  /*                              /                \ */
++  /*                             /                  \ */
+   //               + B2 ----------------+        + B4 ----------------+
+   //               | 3: DidntThrow(1)   |        | 7: CatchBlockBegin |
+   //               | 4: CallOp(...)     |        | 8: Goto(B6)        |
+   //               | 5: CheckException  |        +--------------------+
+-  //               +--------------------+                        \
+-  //                   /              \                           \
+-  //                  /                \                           \
+-  //                 /                  \                           \
++  /*               +--------------------+                        \ */
++  /*                   /              \                           \ */
++  /*                  /                \                           \ */
++  /*                 /                  \                           \ */
+   //     + B3 ----------------+        + B5 ----------------+       |
+   //     | 6: DidntThrow(4)   |        | 9: CatchBlockBegin |       |
+   //     |  ...               |        | 10: Goto(B6)       |       |
+--- a/deps/v8/src/compiler/turboshaft/branch-elimination-reducer.h
++++ b/deps/v8/src/compiler/turboshaft/branch-elimination-reducer.h
+@@ -59,12 +59,12 @@
+   //       |       |        |                            |
+   //       |       v        |                            v
+   //       |     branch     |                         branch
+-  //       |     /     \    |                          /   \
+-  //       |    /       \   |                         /     \
++  /*       |     /     \    |                          /   \ */
++  /*       |    /       \   |                         /     \ */
+   //       v   /         \  v         becomes        v       v
+   //       branch      branch         ======>       B1       B4
+-  //        /  \        /  \
+-  //       /    \      /    \
++  /*        /  \        /  \ */
++  /*       /    \      /    \ */
+   //      B1     B2   B3     B4
+   //
+   //
+@@ -104,8 +104,8 @@
+   //     -------     |                                 |
+   //     |           v                                 v
+   //     |        branch                            branch
+-  //     |         /  \                              /  \
+-  //     |        /    \                            /    \
++  /*     |         /  \                              /  \ */
++  /*     |        /    \                            /    \ */
+   //     |       B1    B2                          B1    B2
+   //     |        \    /                           |     |
+   //     |         \  /         becomes            |     |
+@@ -486,20 +486,20 @@
+   // its dominator. For instance, when optimizing a double-diamond like:
+   //
+   //                  B0
+-  //                 /  \
+-  //                /    \
++  /*                 /  \ */
++  /*                /    \ */
+   //               B1    B2
+   //                \    /
+   //                 \  /
+   //                  B3
+-  //                 /  \
+-  //                /    \
++  /*                 /  \ */
++  /*                /    \ */
+   //               B4    B5
+   //                \    /
+   //                 \  /
+   //                  B6
+-  //                 /  \
+-  //                /    \
++  /*                 /  \ */
++  /*                /    \ */
+   //               B7    B8
+   //                \    /
+   //                 \  /
+--- a/deps/v8/src/compiler/turboshaft/dead-code-elimination-reducer.h
++++ b/deps/v8/src/compiler/turboshaft/dead-code-elimination-reducer.h
+@@ -68,7 +68,7 @@
+   // Lattice:
+   //
+   //  NotEliminatable
+-  //     /  |  \
++  /*     /  |  \ */
+   //    B1 ... Bn
+   //     \  |  /
+   //    Unreachable
+--- a/deps/v8/src/compiler/turboshaft/pretenuring-propagation-reducer.h
++++ b/deps/v8/src/compiler/turboshaft/pretenuring-propagation-reducer.h
+@@ -84,7 +84,7 @@
+ //                --------> b
+ //               /
+ //      a ----> p
+-//               \
++/*               \ */
+ //                --------> c
+ //
+ // Which means that in the second phase, we'll start a DFS on `a` (the only old
+@@ -110,7 +110,7 @@
+ //      ------> b
+ //     /
+ //    p ------> a
+-//     \
++/*     \ */
+ //      ------> c
+ //
+ // In order to oldify `a`, we would need to register `p` in `old_allocs_`,
+@@ -130,7 +130,7 @@
+ // The graph will be:
+ //
+ //      -----> b <-----
+-//     /               \
++/*     /               \ */
+ //    a                 p -----> d
+ //     \               /
+ //      -----> c <-----
+--- a/deps/v8/src/compiler/turboshaft/snapshot-table.h
++++ b/deps/v8/src/compiler/turboshaft/snapshot-table.h
+@@ -407,11 +407,11 @@
+ // instance:
+ //
+ //        S0
+-//      /    \
++/*      /    \ */
+ //     S1      S3
+-//     |         \
++/*     |         \ */
+ //     S2         S4
+-//               /  \
++/*               /  \ */
+ //              S5   S6
+ // If `predecessors` are S5 and S6, and `current_snapshot_` is S2, we:
+ //
+--- a/deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc
++++ b/deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc
+@@ -148,7 +148,7 @@
+   //                       + 1 ------+
+   //                       | Switch  |
+   //                       +---------+
+-  //                        /      \
++  /*                        /      \ */
+   //                      /          \      |----------------------|
+   //                    /              \    |                      |
+   //                  /                 v   v                      |
+@@ -197,7 +197,7 @@
+   //                       + 1 ------+
+   //                       | Switch  |
+   //                       +---------+
+-  //                        /      \
++  /*                        /      \ */
+   //                      /          \      |-------------|
+   //                    /              \    |             |
+   //                  /                 v   v             |
+@@ -345,17 +345,17 @@
+     //                       + 2 --------------------+
+     //                       | BranchIfRootConstant  |
+     //                       +-----------------------+
+-    //                          /                  \
+-    //                         /                     \
+-    //                        /                        \
+-    //                       /                           \
++    /*                          /                  \ */
++    /*                         /                     \ */
++    /*                        /                        \ */
++    /*                       /                           \ */
+     //                      v                              v
+     //              + 3 ----------+                  + 4 --------------+
+     //              | Load state  |                  | Initial setup   |
+     //              | Switch      |                  | return          |
+     //              +-------------+                  +-----------------+
+-    //                /    |    \
+-    //               /     |     \
++    /*                /    |    \ */
++    /*               /     |     \ */
+     //              v      v      v
+     //          Resuming in various places
+     //
+--- a/deps/v8/src/execution/simulator-base.h
++++ b/deps/v8/src/execution/simulator-base.h
+@@ -10,7 +10,7 @@
+ #if V8_TARGET_ARCH_ARM64 || V8_TARGET_ARCH_MIPS64 || V8_TARGET_ARCH_LOONG64 || \
+     V8_TARGET_ARCH_RISCV64
+ #include "include/v8-fast-api-calls.h"
+-#endif  // V8_TARGET_ARCH_ARM64 || V8_TARGET_ARCH_MIPS64 || \
++#endif  /* V8_TARGET_ARCH_ARM64 || V8_TARGET_ARCH_MIPS64 || \ */
+         // V8_TARGET_ARCH_LOONG64 || V8_TARGET_ARCH_RISCV64
+ #include "src/base/hashmap.h"
+ #include "src/common/globals.h"
+@@ -90,7 +90,7 @@
+     result.int64_value = static_cast<int64_t>(ret);
+     return result;
+   }
+-#endif  // V8_TARGET_ARCH_ARM64 || V8_TARGET_ARCH_MIPS64 || \
++#endif  /* V8_TARGET_ARCH_ARM64 || V8_TARGET_ARCH_MIPS64 || \ */
+         // V8_TARGET_ARCH_LOONG64 || V8_TARGET_ARCH_RISCV64
+ 
+   // Convert back void return type (i.e. no return).
+--- a/deps/v8/src/objects/map-updater.h
++++ b/deps/v8/src/objects/map-updater.h
+@@ -69,7 +69,7 @@
+   // `{__proto__: foo, a: 1}.__proto__ = bar` produces the following graph:
+   //
+   //   foo {} -- foo {a}
+-  //    \
++  /*    \ */
+   //     bar {} -- bar {a}
+   //
+   // and JSObject::UpdatePrototype performs a map update and instance migration.
+--- a/deps/v8/src/torque/utils.h
++++ b/deps/v8/src/torque/utils.h
+@@ -267,13 +267,13 @@
+     return result;
+   }
+   std::vector<T> PopMany(size_t count) {
+-    DCHECK_GE(elements_.size(), count);
++    CHECK_GE(elements_.size(), count);
+     std::vector<T> result;
+     result.reserve(count);
+     for (auto it = elements_.end() - count; it != elements_.end(); ++it) {
+       result.push_back(std::move(*it));
+     }
+-    elements_.resize(elements_.size() - count);
++    elements_.erase(elements_.end() - count, elements_.end());
+     return result;
+   }
+   // The invalid offset above the top element. This is useful for StackRange.
+--- a/deps/v8/src/wasm/wasm-subtyping.h
++++ b/deps/v8/src/wasm/wasm-subtyping.h
+@@ -49,7 +49,7 @@
+ //                   any               func         extern
+ //               /        \             |             |
+ //             eq          \          nofunc       noextern
+-//          /   |   \       \
++/*          /   |   \       \ */
+ //       i31  array  struct  string
+ //          \___|______|_____/
+ //                  |

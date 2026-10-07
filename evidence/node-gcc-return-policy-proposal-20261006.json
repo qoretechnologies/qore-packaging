@@ -1,0 +1,1780 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-06",
+  "status": "User approved the proposed compiler policy on 2026-10-06; added to RPM build/check flags. Full qualification and complete diagnostic review remain required.",
+  "proposal": {
+    "flag": "-Wno-error=return-type",
+    "placement": "Append after distribution CXXFLAGS, in both %build and %check. Preserve the distribution CFLAGS and LDFLAGS.",
+    "scope": "Permit reviewed GCC diagnostics for V8 exhaustive enum switches; retain warnings in build logs. Other warning families, actual missing valid-input returns and the uninstantiable CodeAssembler template require separate resolution.",
+    "qualification": "Review the completed warning inventory, run all packaged native/JavaScript tests and installed V8 bridge tests, and retain the existing valid/invalid boundary controls. No source upload or publication before qualification."
+  },
+  "primary_sources": {
+    "opensuse_spec": "https://api.opensuse.org/source/openSUSE:Factory/nodejs24/nodejs24.spec?rev=13",
+    "opensuse_revision": "13",
+    "opensuse_srcmd5": "ddb39e56256ba5b2e96ede9b1b785539",
+    "opensuse_local_copy": "results/nodejs24-opensuse-factory-20261006.spec",
+    "opensuse_policy_lines": "579 appends -Wno-error=return-type; this proposal does not adopt its separate class-memaccess suppression or other flags.",
+    "v8_policy": "Pinned Node v24.18.1 deps/v8/BUILD.gn:1712-1714 documents GCC exhaustive-switch diagnostics and sets -Wno-return-type."
+  },
+  "existing_controls": "evidence/node-v8-return-path-controls-20261006.json",
+  "partial_return_diagnostic_sites": [
+    {
+      "file": "deps/v8/src/codegen/machine-type.h",
+      "line": 356
+    },
+    {
+      "file": "deps/v8/src/common/globals.h",
+      "line": 1415
+    },
+    {
+      "file": "deps/v8/src/common/globals.h",
+      "line": 2588
+    },
+    {
+      "file": "deps/v8/src/compiler/access-info.cc",
+      "line": 377
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/instruction-selector.cc",
+      "line": 1524
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/instruction-selector.cc",
+      "line": 655
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/instruction-selector.cc",
+      "line": 735
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/instruction.cc",
+      "line": 1068
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/instruction.cc",
+      "line": 1370
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/register-allocation.h",
+      "line": 27
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/register-allocation.h",
+      "line": 39
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/register-allocation.h",
+      "line": 51
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/register-allocation.h",
+      "line": 84
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/register-allocator-verifier.cc",
+      "line": 59
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/register-allocator.cc",
+      "line": 2935
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/x64/code-generator-x64.cc",
+      "line": 81
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc",
+      "line": 1018
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc",
+      "line": 908
+    },
+    {
+      "file": "deps/v8/src/compiler/code-assembler.h",
+      "line": 1273
+    },
+    {
+      "file": "deps/v8/src/compiler/fast-api-calls.cc",
+      "line": 63
+    },
+    {
+      "file": "deps/v8/src/compiler/globals.h",
+      "line": 59
+    },
+    {
+      "file": "deps/v8/src/compiler/js-type-hint-lowering.cc",
+      "line": 147
+    },
+    {
+      "file": "deps/v8/src/compiler/linkage.h",
+      "line": 246
+    },
+    {
+      "file": "deps/v8/src/compiler/machine-operator.cc",
+      "line": 1876
+    },
+    {
+      "file": "deps/v8/src/compiler/machine-operator.cc",
+      "line": 1891
+    },
+    {
+      "file": "deps/v8/src/compiler/machine-operator.cc",
+      "line": 1900
+    },
+    {
+      "file": "deps/v8/src/compiler/machine-operator.cc",
+      "line": 1910
+    },
+    {
+      "file": "deps/v8/src/compiler/machine-operator.cc",
+      "line": 1920
+    },
+    {
+      "file": "deps/v8/src/compiler/machine-operator.cc",
+      "line": 1930
+    },
+    {
+      "file": "deps/v8/src/compiler/machine-operator.cc",
+      "line": 2160
+    },
+    {
+      "file": "deps/v8/src/compiler/machine-operator.cc",
+      "line": 2209
+    },
+    {
+      "file": "deps/v8/src/compiler/machine-operator.cc",
+      "line": 2230
+    },
+    {
+      "file": "deps/v8/src/compiler/machine-operator.cc",
+      "line": 298
+    },
+    {
+      "file": "deps/v8/src/compiler/machine-operator.cc",
+      "line": 315
+    },
+    {
+      "file": "deps/v8/src/compiler/simplified-lowering.cc",
+      "line": 185
+    },
+    {
+      "file": "deps/v8/src/compiler/simplified-operator.cc",
+      "line": 1476
+    },
+    {
+      "file": "deps/v8/src/compiler/turbofan-typer.cc",
+      "line": 1240
+    },
+    {
+      "file": "deps/v8/src/compiler/turbofan-typer.cc",
+      "line": 272
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/assembler.h",
+      "line": 2277
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/assembler.h",
+      "line": 2322
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/dataview-lowering-reducer.h",
+      "line": 55
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/dead-code-elimination-reducer.h",
+      "line": 117
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/fast-api-call-lowering-reducer.h",
+      "line": 355
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/fast-api-call-lowering-reducer.h",
+      "line": 397
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/graph.cc",
+      "line": 98
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/js-generic-lowering-reducer.h",
+      "line": 48
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/js-generic-lowering-reducer.h",
+      "line": 61
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+      "line": 244
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+      "line": 278
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+      "line": 301
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+      "line": 343
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+      "line": 363
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+      "line": 538
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+      "line": 554
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+      "line": 577
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+      "line": 2133
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+      "line": 2195
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+      "line": 2491
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+      "line": 2534
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+      "line": 3201
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+      "line": 3419
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+      "line": 3847
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+      "line": 62
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/machine-optimization-reducer.h",
+      "line": 1585
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1188
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1200
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1221
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1240
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1261
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1276
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1285
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1296
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1312
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1327
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1345
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1368
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1380
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1395
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1404
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1413
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1422
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1447
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1458
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1465
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1474
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1484
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1496
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1505
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1521
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1557
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1568
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1579
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1619
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1648
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1658
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1668
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1678
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1688
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1698
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1708
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1890
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1900
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1910
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1920
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1930
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 194
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 1949
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 204
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 2148
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 230
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 237
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 296
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 328
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 347
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 364
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 379
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 412
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 435
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 444
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 457
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 468
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 477
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 496
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 519
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+      "line": 530
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 1641
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 1660
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 1731
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 1855
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 1873
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 1934
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 2053
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 2067
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 2261
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 2337
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 2355
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 2401
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 2464
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 2680
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 2809
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 2848
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 2911
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 3223
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 3333
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 3584
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 3716
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 4521
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 4936
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 4995
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 5060
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 5098
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 5823
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 6057
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 6456
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 6655
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 7895
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 8020
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 8135
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/operations.h",
+      "line": 9199
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.cc",
+      "line": 30
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.cc",
+      "line": 79
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.h",
+      "line": 107
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.h",
+      "line": 123
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.h",
+      "line": 156
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.h",
+      "line": 179
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.h",
+      "line": 202
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.h",
+      "line": 312
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.h",
+      "line": 465
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.h",
+      "line": 473
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.h",
+      "line": 686
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.h",
+      "line": 721
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.h",
+      "line": 743
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.h",
+      "line": 805
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.h",
+      "line": 850
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.h",
+      "line": 891
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/representations.h",
+      "line": 930
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/string-escape-analysis-reducer.h",
+      "line": 147
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+      "line": 4758
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+      "line": 4782
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+      "line": 4807
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+      "line": 5580
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+      "line": 84
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/typer.h",
+      "line": 1162
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/typer.h",
+      "line": 1310
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/typer.h",
+      "line": 1375
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/typer.h",
+      "line": 1429
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/typer.h",
+      "line": 1486
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/typer.h",
+      "line": 1505
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.cc",
+      "line": 145
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.cc",
+      "line": 173
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.cc",
+      "line": 189
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.cc",
+      "line": 207
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.cc",
+      "line": 231
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.cc",
+      "line": 409
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.cc",
+      "line": 482
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.cc",
+      "line": 49
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.cc",
+      "line": 504
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.cc",
+      "line": 534
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.cc",
+      "line": 75
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.h",
+      "line": 471
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.h",
+      "line": 480
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.h",
+      "line": 699
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.h",
+      "line": 715
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.h",
+      "line": 740
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.h",
+      "line": 752
+    },
+    {
+      "file": "deps/v8/src/compiler/turboshaft/types.h",
+      "line": 904
+    },
+    {
+      "file": "deps/v8/src/maglev/maglev-graph-processor.h",
+      "line": 240
+    },
+    {
+      "file": "deps/v8/src/maglev/maglev-graph-processor.h",
+      "line": 300
+    },
+    {
+      "file": "deps/v8/src/maglev/maglev-graph-processor.h",
+      "line": 324
+    },
+    {
+      "file": "deps/v8/src/maglev/maglev-inlining.h",
+      "line": 252
+    },
+    {
+      "file": "deps/v8/src/maglev/maglev-ir.h",
+      "line": 1626
+    },
+    {
+      "file": "deps/v8/src/maglev/maglev-ir.h",
+      "line": 1656
+    },
+    {
+      "file": "deps/v8/src/maglev/maglev-ir.h",
+      "line": 5651
+    },
+    {
+      "file": "deps/v8/src/wasm/value-type.h",
+      "line": 873
+    }
+  ],
+  "limits": [
+    "Not all listed sites are approved as enum diagnostics; the uninstantiable CodeAssembler template is a distinct compile-time diagnostic.",
+    "The previous complete local GCC13 build passed before OBS flag matching, but cannot qualify this proposed configuration with LTO and hardening.",
+    "The proposed flag retains diagnostic output. It does not claim all possible invalid underlying enum values are safe in unchanged upstream code."
+  ],
+  "approval": {
+    "date": "2026-10-06",
+    "answer": "Allow this compiler policy",
+    "scope": "-Wno-error=return-type for reviewed V8 exhaustive-enum diagnostics, preserving warning output, all tests and all other checks."
+  },
+  "diagnostic3_end_path_review": {
+    "count": 220,
+    "sites": [
+      {
+        "file": "deps/v8/src/api/api.cc",
+        "line": 8366
+      },
+      {
+        "file": "deps/v8/src/codegen/machine-type.h",
+        "line": 356
+      },
+      {
+        "file": "deps/v8/src/common/globals.h",
+        "line": 1376
+      },
+      {
+        "file": "deps/v8/src/common/globals.h",
+        "line": 1415
+      },
+      {
+        "file": "deps/v8/src/common/globals.h",
+        "line": 2588
+      },
+      {
+        "file": "deps/v8/src/compiler/access-info.cc",
+        "line": 377
+      },
+      {
+        "file": "deps/v8/src/compiler/backend/instruction-selector.cc",
+        "line": 655
+      },
+      {
+        "file": "deps/v8/src/compiler/backend/instruction-selector.cc",
+        "line": 735
+      },
+      {
+        "file": "deps/v8/src/compiler/backend/instruction-selector.cc",
+        "line": 1524
+      },
+      {
+        "file": "deps/v8/src/compiler/backend/instruction.cc",
+        "line": 1068
+      },
+      {
+        "file": "deps/v8/src/compiler/backend/instruction.cc",
+        "line": 1370
+      },
+      {
+        "file": "deps/v8/src/compiler/backend/register-allocation.h",
+        "line": 27
+      },
+      {
+        "file": "deps/v8/src/compiler/backend/register-allocation.h",
+        "line": 39
+      },
+      {
+        "file": "deps/v8/src/compiler/backend/register-allocation.h",
+        "line": 51
+      },
+      {
+        "file": "deps/v8/src/compiler/backend/register-allocation.h",
+        "line": 84
+      },
+      {
+        "file": "deps/v8/src/compiler/backend/register-allocator-verifier.cc",
+        "line": 59
+      },
+      {
+        "file": "deps/v8/src/compiler/backend/register-allocator.cc",
+        "line": 2935
+      },
+      {
+        "file": "deps/v8/src/compiler/backend/x64/code-generator-x64.cc",
+        "line": 81
+      },
+      {
+        "file": "deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc",
+        "line": 908
+      },
+      {
+        "file": "deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc",
+        "line": 1018
+      },
+      {
+        "file": "deps/v8/src/compiler/code-assembler.h",
+        "line": 1273
+      },
+      {
+        "file": "deps/v8/src/compiler/fast-api-calls.cc",
+        "line": 63
+      },
+      {
+        "file": "deps/v8/src/compiler/globals.h",
+        "line": 59
+      },
+      {
+        "file": "deps/v8/src/compiler/js-type-hint-lowering.cc",
+        "line": 147
+      },
+      {
+        "file": "deps/v8/src/compiler/linkage.h",
+        "line": 246
+      },
+      {
+        "file": "deps/v8/src/compiler/machine-operator.cc",
+        "line": 298
+      },
+      {
+        "file": "deps/v8/src/compiler/machine-operator.cc",
+        "line": 315
+      },
+      {
+        "file": "deps/v8/src/compiler/machine-operator.cc",
+        "line": 1876
+      },
+      {
+        "file": "deps/v8/src/compiler/machine-operator.cc",
+        "line": 1891
+      },
+      {
+        "file": "deps/v8/src/compiler/machine-operator.cc",
+        "line": 1900
+      },
+      {
+        "file": "deps/v8/src/compiler/machine-operator.cc",
+        "line": 1910
+      },
+      {
+        "file": "deps/v8/src/compiler/machine-operator.cc",
+        "line": 1920
+      },
+      {
+        "file": "deps/v8/src/compiler/machine-operator.cc",
+        "line": 1930
+      },
+      {
+        "file": "deps/v8/src/compiler/machine-operator.cc",
+        "line": 2160
+      },
+      {
+        "file": "deps/v8/src/compiler/machine-operator.cc",
+        "line": 2209
+      },
+      {
+        "file": "deps/v8/src/compiler/machine-operator.cc",
+        "line": 2230
+      },
+      {
+        "file": "deps/v8/src/compiler/simplified-lowering.cc",
+        "line": 185
+      },
+      {
+        "file": "deps/v8/src/compiler/simplified-operator.cc",
+        "line": 1476
+      },
+      {
+        "file": "deps/v8/src/compiler/turbofan-typer.cc",
+        "line": 272
+      },
+      {
+        "file": "deps/v8/src/compiler/turbofan-typer.cc",
+        "line": 1240
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/assembler.h",
+        "line": 2277
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/assembler.h",
+        "line": 2322
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/dataview-lowering-reducer.h",
+        "line": 55
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/dead-code-elimination-reducer.h",
+        "line": 117
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/fast-api-call-lowering-reducer.h",
+        "line": 355
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/fast-api-call-lowering-reducer.h",
+        "line": 397
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/graph.cc",
+        "line": 98
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/js-generic-lowering-reducer.h",
+        "line": 48
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/js-generic-lowering-reducer.h",
+        "line": 61
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+        "line": 244
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+        "line": 278
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+        "line": 301
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+        "line": 343
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+        "line": 363
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+        "line": 538
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+        "line": 554
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/loop-unrolling-reducer.cc",
+        "line": 577
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+        "line": 62
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+        "line": 2133
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+        "line": 2195
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+        "line": 2491
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+        "line": 2534
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+        "line": 3201
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+        "line": 3419
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/machine-lowering-reducer-inl.h",
+        "line": 3847
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/machine-optimization-reducer.h",
+        "line": 1585
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 194
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 204
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 230
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 237
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 296
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 328
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 347
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 364
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 379
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 412
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 435
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 444
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 457
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 468
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 477
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 496
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 519
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 530
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1188
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1200
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1221
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1240
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1261
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1276
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1285
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1296
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1312
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1327
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1345
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1368
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1380
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1395
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1404
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1413
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1422
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1447
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1458
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1465
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1474
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1484
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1496
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1505
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1521
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1557
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1568
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1579
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1619
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1648
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1658
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1668
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1678
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1688
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1698
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1708
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1890
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1900
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1910
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1920
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1930
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 1949
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.cc",
+        "line": 2148
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 1641
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 1660
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 1731
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 1855
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 1873
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 1934
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 2053
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 2067
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 2261
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 2337
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 2355
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 2401
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 2464
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 2680
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 2809
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 2848
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 2911
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 3223
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 3333
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 3584
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 3716
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 4521
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 4936
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 4995
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 5060
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 5098
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 5823
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 6057
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 6456
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 6655
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 7895
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 8020
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 8135
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 8891
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 9199
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/operations.h",
+        "line": 9212
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.cc",
+        "line": 30
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.cc",
+        "line": 79
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.h",
+        "line": 107
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.h",
+        "line": 123
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.h",
+        "line": 156
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.h",
+        "line": 179
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.h",
+        "line": 202
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.h",
+        "line": 312
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.h",
+        "line": 465
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.h",
+        "line": 473
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.h",
+        "line": 686
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.h",
+        "line": 721
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.h",
+        "line": 743
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.h",
+        "line": 805
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.h",
+        "line": 850
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.h",
+        "line": 891
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/representations.h",
+        "line": 930
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/string-escape-analysis-reducer.h",
+        "line": 147
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+        "line": 84
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+        "line": 4758
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+        "line": 4782
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+        "line": 4807
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/turbolev-graph-builder.cc",
+        "line": 5580
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/typer.h",
+        "line": 1162
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/typer.h",
+        "line": 1310
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/typer.h",
+        "line": 1375
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/typer.h",
+        "line": 1429
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/typer.h",
+        "line": 1486
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/typer.h",
+        "line": 1505
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.cc",
+        "line": 49
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.cc",
+        "line": 75
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.cc",
+        "line": 145
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.cc",
+        "line": 173
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.cc",
+        "line": 189
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.cc",
+        "line": 207
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.cc",
+        "line": 231
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.cc",
+        "line": 409
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.cc",
+        "line": 482
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.cc",
+        "line": 504
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.cc",
+        "line": 534
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.h",
+        "line": 471
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.h",
+        "line": 480
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.h",
+        "line": 699
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.h",
+        "line": 715
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.h",
+        "line": 740
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.h",
+        "line": 752
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/types.h",
+        "line": 904
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/wasm-in-js-inlining-reducer-inl.h",
+        "line": 1134
+      },
+      {
+        "file": "deps/v8/src/compiler/turboshaft/wasm-lowering-reducer.h",
+        "line": 564
+      },
+      {
+        "file": "deps/v8/src/maglev/maglev-graph-processor.h",
+        "line": 240
+      },
+      {
+        "file": "deps/v8/src/maglev/maglev-graph-processor.h",
+        "line": 300
+      },
+      {
+        "file": "deps/v8/src/maglev/maglev-graph-processor.h",
+        "line": 324
+      },
+      {
+        "file": "deps/v8/src/maglev/maglev-inlining.h",
+        "line": 252
+      },
+      {
+        "file": "deps/v8/src/maglev/maglev-ir.h",
+        "line": 1626
+      },
+      {
+        "file": "deps/v8/src/maglev/maglev-ir.h",
+        "line": 1656
+      },
+      {
+        "file": "deps/v8/src/maglev/maglev-ir.h",
+        "line": 5651
+      },
+      {
+        "file": "deps/v8/src/wasm/value-type.h",
+        "line": 873
+      }
+    ],
+    "result": "Reviewed enum/macro-switch endings and the exceptional template/lambda cases; CodeAssembler forbidden template is fixed separately. Completed candidate4 warning inventory remains required.",
+    "special_cases": {
+      "api.cc:8366": "Exhaustive ElementsKind dispatch; SBXCHECK(false) remains fatal when sandboxing is enabled and becomes a debug check for the documented no-corruption invariant in the nonsandbox build. No sandbox setting is changed.",
+      "machine-optimization-reducer.h:1585": "Diagnostic locates a lambda declaration; the lambda contains the exhaustive ComparisonOp kind switch.",
+      "types.cc:409": "Intersect ends in the exhaustive three-value ResolutionMode switch."
+    }
+  }
+}
