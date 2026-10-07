@@ -97,6 +97,26 @@ class BundleTest(unittest.TestCase):
                 self.assertEqual(expected, record["artifacts"])
                 self.assertEqual("build log\n", (output / "build.log").read_text())
 
+    def test_retention_is_opt_in_and_preserves_build_failure_status(self):
+        self.verify()
+        for keep in (False, True):
+            for status in (0, 7):
+                with self.subTest(keep=keep, status=status), \
+                        patch.object(builder.subprocess, "check_output",
+                                     return_value=json.dumps([{"Id": "sha256:" + "a" * 64}])), \
+                        patch.object(builder.subprocess, "run",
+                                     return_value=SimpleNamespace(returncode=status)) as run:
+                    output = self.root / f"retain-{keep}-{status}"
+                    self.assertEqual(builder.build(self.root, "image", output, keep_build=keep), status)
+                    record = json.loads((output / "build.json").read_text())
+                    self.assertEqual(record["keep_build"], keep)
+                    self.assertEqual(record["exit_code"], status)
+                    command = run.call_args.args[0]
+                    self.assertEqual(command.count("--noclean"), int(keep))
+                    self.assertEqual(record["command"], command)
+                    self.assertIn("-ba", command)
+                    self.assertNotIn("--nocheck", command)
+
     def test_tmpfs_capacity_validation_precedes_engine_and_filesystem_changes(self):
         self.verify()
         for size in (0, -1, 127, 32769, True, 1024.5, "1024m,exec"):
@@ -135,7 +155,7 @@ class BundleTest(unittest.TestCase):
         with patch.object(builder.subprocess, "check_output", return_value=json.dumps([{"Id": image_id}])), \
              patch.object(builder.os, "posix_spawn", return_value=12345) as start:
             result = builder.launch_background(self.root, "mutable-tag", output, source_only=True,
-                                               internal_interface=True, tmpfs_mib=4096)
+                                               internal_interface=True, tmpfs_mib=4096, keep_build=True)
             command = start.call_args.args[1]
             options = start.call_args.kwargs
             self.assertIn(image_id, command)
@@ -143,6 +163,7 @@ class BundleTest(unittest.TestCase):
             self.assertNotIn("--background", command)
             self.assertIn("--source-only", command)
             self.assertIn("--internal-interface", command)
+            self.assertIn("--keep-build", command)
             self.assertEqual(command[command.index("--tmpfs-mib") + 1], "4096")
             self.assertTrue(options["setsid"])
             actions = options["file_actions"]
@@ -187,18 +208,22 @@ else:
     raise SystemExit(2)
 ''')
         engine.chmod(0o755)
-        output = self.root / "detached"
-        with patch.dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"]):
-            result = builder.launch_background(self.root, image_id, output)
-        # Reap our direct child using its completion event; no timed polling.
-        _, status = os.waitpid(result["pid"], 0)
-        self.assertEqual(os.waitstatus_to_exitcode(status), 0)
-        record = json.loads((output / "build.json").read_text())
-        self.assertEqual(record["exit_code"], 0)
-        self.assertEqual(record["image"], image_id)
-        self.assertEqual(record["artifacts"], {"probe.rpm": hashlib.sha256(b"artifact").hexdigest()})
-        self.assertEqual((output / "build.log").read_text(), "offline build completed\n")
-        self.assertEqual(Path(result["driver_log"]).read_text(), "")
+        for keep in (False, True):
+            with self.subTest(keep=keep):
+                output = self.root / f"detached-{keep}"
+                with patch.dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"]):
+                    result = builder.launch_background(self.root, image_id, output, keep_build=keep)
+                # Reap our direct child using its completion event; no timed polling.
+                _, status = os.waitpid(result["pid"], 0)
+                self.assertEqual(os.waitstatus_to_exitcode(status), 0)
+                record = json.loads((output / "build.json").read_text())
+                self.assertEqual(record["exit_code"], 0)
+                self.assertEqual(record["image"], image_id)
+                self.assertEqual(record["keep_build"], keep)
+                self.assertEqual(record["command"].count("--noclean"), int(keep))
+                self.assertEqual(record["artifacts"], {"probe.rpm": hashlib.sha256(b"artifact").hexdigest()})
+                self.assertEqual((output / "build.log").read_text(), "offline build completed\n")
+                self.assertEqual(Path(result["driver_log"]).read_text(), "")
 
 
 class IsolatedNetworkTest(unittest.TestCase):

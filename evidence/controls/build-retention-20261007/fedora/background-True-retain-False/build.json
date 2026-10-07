@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "image": "sha256:f1f889474f303ffe6f98b381e3061e812daa34e9018a00c4a25cb65f9a82fee9",
+  "source": {
+    "schema": 1,
+    "spec": "probe.spec",
+    "source_date_epoch": 1791331200,
+    "sources": {
+      "probe.spec": "63b26e4d409aab8c69c1244f88ecd30290415f5e1774778ce993fb6beb27fe83"
+    }
+  },
+  "jobs": 2,
+  "network": "none",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "--hostname",
+    "qore-rpm-builder",
+    "--user",
+    "1019:100",
+    "-e",
+    "HOME=/work/home",
+    "-e",
+    "SOURCE_DATE_EPOCH=1791331200",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/build-retention-fedora-20261007/source:/sources:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/build-retention-fedora-20261007/background-True-retain-False:/work",
+    "sha256:f1f889474f303ffe6f98b381e3061e812daa34e9018a00c4a25cb65f9a82fee9",
+    "sh",
+    "-c",
+    "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+    "build-local",
+    "-ba",
+    "--define",
+    "_topdir /work/rpmbuild",
+    "--define",
+    "_sourcedir /sources",
+    "--define",
+    "_smp_build_ncpus 2",
+    "--define",
+    "_buildhost qore-rpm-builder",
+    "/sources/probe.spec"
+  ],
+  "source_only": false,
+  "tmpfs_mib": null,
+  "keep_build": false,
+  "exit_code": 0,
+  "artifacts": {
+    "rpmbuild/RPMS/noarch/qore-rpm-retention-probe-1-1.noarch.rpm": "6192517d568a33b8c6245c26ce6377e636fe09aa024f7b3afca273b897d83995",
+    "rpmbuild/SRPMS/qore-rpm-retention-probe-1-1.src.rpm": "a467af40809da7e325133c41c6bdeecc7a0c7d59ba90a069f4040444da1e1077"
+  }
+}

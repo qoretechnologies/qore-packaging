@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "image": "sha256:0bc68ce99e4cd1340c79149a0601d7496351acd655a537ddae23116f036370c5",
+  "source": {
+    "schema": 1,
+    "spec": "probe.spec",
+    "source_date_epoch": 1791331200,
+    "sources": {
+      "probe.spec": "63b26e4d409aab8c69c1244f88ecd30290415f5e1774778ce993fb6beb27fe83"
+    }
+  },
+  "jobs": 2,
+  "network": "none",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "--hostname",
+    "qore-rpm-builder",
+    "--user",
+    "1019:100",
+    "-e",
+    "HOME=/work/home",
+    "-e",
+    "SOURCE_DATE_EPOCH=1791331200",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/build-retention-el10-20261007/source:/sources:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/build-retention-el10-20261007/background-False-retain-False:/work",
+    "sha256:0bc68ce99e4cd1340c79149a0601d7496351acd655a537ddae23116f036370c5",
+    "sh",
+    "-c",
+    "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+    "build-local",
+    "-ba",
+    "--define",
+    "_topdir /work/rpmbuild",
+    "--define",
+    "_sourcedir /sources",
+    "--define",
+    "_smp_build_ncpus 2",
+    "--define",
+    "_buildhost qore-rpm-builder",
+    "/sources/probe.spec"
+  ],
+  "source_only": false,
+  "tmpfs_mib": null,
+  "keep_build": false,
+  "exit_code": 0,
+  "artifacts": {
+    "rpmbuild/RPMS/noarch/qore-rpm-retention-probe-1-1.noarch.rpm": "75871630c00defdafd172c3d58def7875e47cbbd6af699317ce7faa677c9f1a6",
+    "rpmbuild/SRPMS/qore-rpm-retention-probe-1-1.src.rpm": "1fd3a6e123ffa3b7c1cb1c98ae912db416f6180e89b71fc21585d408886d2cec"
+  }
+}

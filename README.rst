@@ -489,6 +489,15 @@ normal account, since Qore also tests system user lookup.
 Use ``--background`` for durable local builds that can outlive the launching
 terminal. It returns the driver PID, immutable image and output paths; the
 completed ``build.json`` records the exit status and artifact hashes.
+Use ``--keep-build`` when post-build diagnostics need native test binaries or
+compiler intermediates. This passes RPM's ``--noclean`` option and records the
+choice in ``build.json``; normal compilation, tests and packaging still run.
+The retained tree can be large. The default lets RPM clean up normally.
+The real foreground/background retention and cleanup regression runs with::
+
+    python3 -B -W error tests/check_build_retention.py \
+      --image BUILD_DEPENDENCY_IMAGE --output results/retention-probe
+
 The container runs with ``--init`` so orphaned child processes are reaped.
 Running ``rpmbuild`` itself as PID 1 leaves zombies after interrupted process
 groups and makes the system/backquote cleanup tests fail.

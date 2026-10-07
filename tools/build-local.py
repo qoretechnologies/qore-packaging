@@ -80,7 +80,7 @@ def temporary_filesystem_options(size_mib):
 
 
 def build(source, image, output, jobs=2, engine="docker", source_only=False, internal_interface=False,
-          tmpfs_mib=None):
+          tmpfs_mib=None, keep_build=False):
     manifest = verify_bundle(source)
     if jobs < 1 or jobs > 16:
         raise ValueError("Use between 1 and 16 build jobs")
@@ -108,12 +108,13 @@ exec rpmbuild "$@"
                "-e", f"SOURCE_DATE_EPOCH={manifest['source_date_epoch']}",
                "-v", f"{source}:/sources:ro", "-v", f"{output}:/work", *temporary_options, image_id,
                "sh", "-c", script, "build-local", "-bs" if source_only else "-ba",
+               *(["--noclean"] if keep_build else []),
                "--define", "_topdir /work/rpmbuild", "--define", "_sourcedir /sources",
                "--define", f"_smp_build_ncpus {jobs}", "--define", "_buildhost qore-rpm-builder",
                "/sources/" + manifest["spec"]]
     record = {"schema": 1, "image": image_id, "source": manifest, "jobs": jobs,
               "network": "none", "command": command, "source_only": source_only,
-              "tmpfs_mib": tmpfs_mib}
+              "tmpfs_mib": tmpfs_mib, "keep_build": keep_build}
     with build_network(engine, internal_interface) as (network, network_info):
         command[command.index("--network") + 1] = network
         record["network"] = "isolated-bridge" if internal_interface else "none"
@@ -132,7 +133,7 @@ exec rpmbuild "$@"
 
 
 def launch_background(source, image, output, jobs=2, engine="docker", source_only=False,
-                      internal_interface=False, tmpfs_mib=None):
+                      internal_interface=False, tmpfs_mib=None, keep_build=False):
     """Keep the driver and its completion record alive across terminal closure."""
     verify_bundle(source)
     if jobs < 1 or jobs > 16:
@@ -155,6 +156,8 @@ def launch_background(source, image, output, jobs=2, engine="docker", source_onl
         command.append("--internal-interface")
     if tmpfs_mib is not None:
         command.extend(["--tmpfs-mib", str(tmpfs_mib)])
+    if keep_build:
+        command.append("--keep-build")
     output.parent.mkdir(parents=True, exist_ok=True)
     driver_log = output.with_name(output.name + "-driver.log")
     # Exclusive creation prevents launching a second driver for this output.
@@ -178,6 +181,8 @@ def main():
     parser.add_argument("--jobs", type=int, default=2)
     parser.add_argument("--engine", choices=("docker", "podman"), default="docker")
     parser.add_argument("--source-only", action="store_true")
+    parser.add_argument("--keep-build", action="store_true",
+                        help="retain RPM build files for post-build diagnostics (rpmbuild --noclean)")
     parser.add_argument("--internal-interface", action="store_true",
                         help="Docker only: private internal bridge for tests requiring a non-loopback interface")
     parser.add_argument("--tmpfs-mib", type=int,
@@ -188,10 +193,10 @@ def main():
     if args.background:
         print(json.dumps(launch_background(args.source, args.image, args.output, args.jobs,
                                            args.engine, args.source_only, args.internal_interface,
-                                           args.tmpfs_mib), indent=2))
+                                           args.tmpfs_mib, args.keep_build), indent=2))
         return
     sys.exit(build(args.source, args.image, args.output, args.jobs, args.engine, args.source_only,
-                   args.internal_interface, args.tmpfs_mib))
+                   args.internal_interface, args.tmpfs_mib, args.keep_build))
 
 
 if __name__ == "__main__":

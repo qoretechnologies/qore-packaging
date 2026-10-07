@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-07",
+  "change": "Optional --keep-build forwards supported rpmbuild --noclean in foreground and detached launches; normal cleanup remains the default.",
+  "root_cause": "Successful RPM builds removed the native control binaries before the post-build Valgrind driver started. That driver also failed to propagate its command failures.",
+  "prior_failed_run": "results/node-candidate10-memory-20261007/status.json: all five commands exited 125; no memory qualification occurred.",
+  "correction": "Explicit retention for builds needing native diagnostics; the replacement Node driver validates retained binaries and propagates nonzero exits.",
+  "tests": {
+    "unit_tests": 189,
+    "rpm_checks": [
+      {
+        "distribution": "fedora",
+        "checks": [
+          {
+            "background": false,
+            "keep_build": false,
+            "passed": true
+          },
+          {
+            "background": false,
+            "keep_build": true,
+            "passed": true
+          },
+          {
+            "background": true,
+            "keep_build": false,
+            "passed": true
+          },
+          {
+            "background": true,
+            "keep_build": true,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "distribution": "leap",
+        "checks": [
+          {
+            "background": false,
+            "keep_build": false,
+            "passed": true
+          },
+          {
+            "background": false,
+            "keep_build": true,
+            "passed": true
+          },
+          {
+            "background": true,
+            "keep_build": false,
+            "passed": true
+          },
+          {
+            "background": true,
+            "keep_build": true,
+            "passed": true
+          }
+        ]
+      },
+      {
+        "distribution": "el10",
+        "checks": [
+          {
+            "background": false,
+            "keep_build": false,
+            "passed": true
+          },
+          {
+            "background": false,
+            "keep_build": true,
+            "passed": true
+          },
+          {
+            "background": true,
+            "keep_build": false,
+            "passed": true
+          },
+          {
+            "background": true,
+            "keep_build": true,
+            "passed": true
+          }
+        ]
+      }
+    ]
+  },
+  "limits": [
+    "This change does not certify the queued Node Valgrind tests; those require their own completed results."
+  ],
+  "files": {
+    "tools/build-local.py": "7fb38406bc8da1c76692b290ff4e639455cb5263eccca5349cb1a5eda8e585dc",
+    "tests/test_build_local.py": "ea718c191851a155ec2c697a7383aadfbe30e36f4f83920f0f4707df93d7bdd7",
+    "tests/check_build_retention.py": "44109087bd40949bf11de777b442d68d954c02c342797cc2a543e276127f50c5"
+  }
+}

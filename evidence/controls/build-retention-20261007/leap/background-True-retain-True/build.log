@@ -1,0 +1,53 @@
+Building target platforms: noarch
+Building for target noarch
+Executing(%mkbuilddir): /usr/bin/bash -e /var/tmp/rpm-tmp.Ec1dA6
+Executing(%prep): /usr/bin/bash -e /var/tmp/rpm-tmp.G5DiPG
++ umask 022
++ cd /work/rpmbuild/BUILD/qore-rpm-retention-probe-1-build
++ cd /work/rpmbuild/BUILD/qore-rpm-retention-probe-1-build
++ rm -rf qore-rpm-retention-probe-1
++ /usr/bin/mkdir -p qore-rpm-retention-probe-1
++ cd qore-rpm-retention-probe-1
++ /usr/bin/chmod -Rf a+rX,u+w,g-w,o-w .
++ RPM_EC=0
+++ jobs -p
++ exit 0
+Executing(%build): /usr/bin/bash -e /var/tmp/rpm-tmp.C5jFpz
++ umask 022
++ cd /work/rpmbuild/BUILD/qore-rpm-retention-probe-1-build
++ /usr/bin/rm -rf /work/rpmbuild/BUILD/qore-rpm-retention-probe-1-build/BUILDROOT
+++ dirname /work/rpmbuild/BUILD/qore-rpm-retention-probe-1-build/BUILDROOT
++ /usr/bin/mkdir -p /work/rpmbuild/BUILD/qore-rpm-retention-probe-1-build
++ /usr/bin/mkdir /work/rpmbuild/BUILD/qore-rpm-retention-probe-1-build/BUILDROOT
++ cd qore-rpm-retention-probe-1
++ printf 'retained build data
+'
++ RPM_EC=0
+++ jobs -p
++ exit 0
+Executing(%install): /usr/bin/bash -e /var/tmp/rpm-tmp.uqijNX
++ umask 022
++ cd /work/rpmbuild/BUILD/qore-rpm-retention-probe-1-build
++ /usr/bin/rm -rf /work/rpmbuild/BUILD/qore-rpm-retention-probe-1-build/BUILDROOT
++ /usr/bin/mkdir -p /work/rpmbuild/BUILD/qore-rpm-retention-probe-1-build
++ /usr/bin/mkdir /work/rpmbuild/BUILD/qore-rpm-retention-probe-1-build/BUILDROOT
++ cd qore-rpm-retention-probe-1
++ install -Dm644 retention-marker /work/rpmbuild/BUILD/qore-rpm-retention-probe-1-build/BUILDROOT/usr/share/qore-rpm-retention-probe/data
++ /usr/lib/rpm/brp-compress
++ /usr/lib/rpm/brp-suse
+Executing(%check): /usr/bin/bash -e /var/tmp/rpm-tmp.oXiaQM
++ umask 022
++ cd /work/rpmbuild/BUILD/qore-rpm-retention-probe-1-build
++ cd qore-rpm-retention-probe-1
++ cmp retention-marker /work/rpmbuild/BUILD/qore-rpm-retention-probe-1-build/BUILDROOT/usr/share/qore-rpm-retention-probe/data
++ echo RETENTION_CHECK_PASSED
++ RPM_EC=0
+RETENTION_CHECK_PASSED
+++ jobs -p
++ exit 0
+Processing files: qore-rpm-retention-probe-1-1.noarch
+Provides: qore-rpm-retention-probe = 1-1
+Requires(rpmlib): rpmlib(CompressedFileNames) <= 3.0.4-1 rpmlib(FileDigests) <= 4.6.0-1 rpmlib(PayloadFilesHavePrefix) <= 4.0-1
+Checking for unpackaged file(s): /usr/lib/rpm/check-files /work/rpmbuild/BUILD/qore-rpm-retention-probe-1-build/BUILDROOT
+Wrote: /work/rpmbuild/SRPMS/qore-rpm-retention-probe-1-1.src.rpm
+Wrote: /work/rpmbuild/RPMS/noarch/qore-rpm-retention-probe-1-1.noarch.rpm
