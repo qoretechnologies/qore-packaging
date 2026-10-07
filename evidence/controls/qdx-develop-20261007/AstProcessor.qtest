@@ -1,0 +1,587 @@
+#!/usr/bin/env qore
+# -*- mode: qore; indent-tabs-mode: nil -*-
+
+/*  AstProcessor.qtest Copyright 2026 Qore Technologies, s.r.o.
+
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the "Software"),
+    to deal in the Software without restriction, including without limitation
+    the rights to use, copy, modify, merge, publish, distribute, sublicense,
+    and/or sell copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+*/
+
+%modern
+%exec-class AstProcessorTests
+
+%prepend-module-path "${SCRIPT_DIR}/../../../../qlib"
+%requires ../../../../qlib/Qdx.qm
+%requires astparser
+%requires ../../../../qlib/QUnit.qm
+%requires ../../../../qlib/FsUtil.qm
+
+public class AstProcessorTests inherits QUnit::Test {
+    constructor() : Test("AstProcessorTests", "1.0", ARGV) {
+        addTestCase("Basic namespace processing", \testNamespaceBasic());
+        addTestCase("Class processing", \testClassBasic());
+        addTestCase("Class with inheritance", \testClassInheritance());
+        addTestCase("Hashdecl processing", \testHashdeclBasic());
+        addTestCase("Function processing", \testFunctionBasic());
+        addTestCase("Constant processing", \testConstantBasic());
+        addTestCase("Global variable processing", \testGlobalVariables());
+        addTestCase("Doc comment conversion", \testDocCommentConversion());
+        addTestCase("Block comment handling", \testBlockComments());
+        addTestCase("Soft type formatting", \testSoftTypeFormatting());
+        addTestCase("Doxygen indexes nested callable field types", \testCallableTypes());
+        addTestCase("Abstract method parameter declarations", \testAbstractMethodParameters());
+        addTestCase("Nested namespaces", \testNestedNamespaces());
+        addTestCase("Access modifiers", \testAccessModifiers());
+        addTestCase("Class with members", \testClassWithMembers());
+        addTestCase("Hashdecl with doc comment", \testHashdeclDocComment());
+        addTestCase("Namespace with doc comment", \testNamespaceDocComment());
+        addTestCase("Mainpage doc association", \testMainpageAssociation());
+        addTestCase("Doc association with same-line loc", \testDocAssociationWithSameLineLoc());
+        addTestCase("Endcond association with comments", \testDocEndcondWithComment());
+        addTestCase("Conditional parsing ifdef/endif", \testConditionalIfdef());
+        addTestCase("Conditional parsing if/elif/else/endif", \testConditionalIfElif());
+        addTestCase("Nested conditionals", \testNestedConditionals());
+        addTestCase("Format parse diagnostics", \testFormatParseDiagnostics());
+        addTestCase("Doc prose containing \"/*\" survives", \testDocProseWithBlockCommentChars());
+        addTestCase("Comment markers render literally in prose and examples", \testDocCommentLiteralRendering());
+        addTestCase("Escaped literal commands preserve documentation", \testEscapedDocCommands());
+        addTestCase("Unicode documentation retains literal boundaries", \testUnicodeDocLiterals());
+        addTestCase("A real block comment still ends collection", \testNonDocBlockCommentStops());
+        set_return_value(main());
+    }
+
+    private list<auto> parseCode(string code) {
+        # Strip conditional directives so all branches are visible to tree-sitter
+        code = Qdx::stripConditionalDirectives(code);
+        AstParser parser();
+        auto tree = parser.parseString(code);
+        if (!tree) {
+            throw "PARSE-ERROR", sprintf("Failed to parse code: %d errors", parser.getErrorCount());
+        }
+        return tree.getNodesInfo();
+    }
+
+    private string processCode(string code) {
+        # Strip conditional directives so all branches are visible to tree-sitter
+        string stripped = Qdx::stripConditionalDirectives(code);
+        list<auto> nodes = parseCode(stripped);
+        AstProcessor proc(nodes, {"source": stripped});
+        return proc.process();
+    }
+
+    testNamespaceBasic() {
+        string code = "namespace Test { }";
+        string output = processCode(code);
+
+        assertTrue(output =~ /namespace Test \{/, "namespace declaration");
+        assertTrue(output =~ /\}\s*;?/, "namespace closing brace");
+    }
+
+    testClassBasic() {
+        string code = "class MyClass { }";
+        string output = processCode(code);
+
+        assertTrue(output =~ /class MyClass \{/, "class declaration");
+        assertTrue(output =~ /public:/, "public access specifier");
+        assertTrue(output =~ /\};/, "class closing brace");
+    }
+
+    testClassInheritance() {
+        string code = "class Child inherits Parent { }";
+        string output = processCode(code);
+
+        assertTrue(output =~ /class Child : public Parent \{/, "class with public inheritance");
+    }
+
+    testHashdeclBasic() {
+        string code = "hashdecl MyStruct { int x; }";
+        string output = processCode(code);
+
+        assertTrue(output =~ /struct MyStruct \{/, "hashdecl becomes struct");
+        assertTrue(output =~ /int x;/, "member preserved");
+        assertTrue(output =~ /\};/, "struct closing brace");
+    }
+
+    testFunctionBasic() {
+        string code = "sub myFunc() { }";
+        string output = processCode(code);
+
+        assertTrue(output =~ /myFunc\(\);/, "function declaration");
+    }
+
+    testGlobalVariables() {
+        string code = "namespace N {
+#! the counter
+our int counter;
+#! the per-thread value
+thread_local string value;
+#! the connection
+our Foo conn();
+}";
+        string output = processCode(code);
+
+        assertTrue(output =~ /extern int counter;/, "our variable is documented as extern: " + output);
+        assertTrue(output =~ /(?:^|\n)\s*string value;/, "thread_local variable is not extern: " + output);
+        assertTrue(output =~ /extern Foo conn;/, "variable with constructor arguments is documented: " + output);
+    }
+
+    testConstantBasic() {
+        string code = "const MyConst = 42;";
+        string output = processCode(code);
+
+        assertTrue(output =~ /const int MyConst = \.\.\.;/, "constant with simplified value");
+    }
+
+    testDocCommentConversion() {
+        string code = "
+#! This is a doc comment
+class MyClass { }
+";
+        string output = processCode(code);
+
+        assertTrue(output =~ /\/\/! This is a doc comment/, "doc comment converted from #! to //!");
+    }
+
+    testBlockComments() {
+        string code = '
+/** This is a block doc comment
+    @param x the parameter
+*/
+class MyClass { }
+';
+        string output = processCode(code);
+
+        assertTrue(output =~ /\/\*\* This is a block doc comment/, "block comment preserved");
+        assertTrue(output =~ /@param x the parameter/, "param tag preserved");
+    }
+
+    testDocAssociationWithSameLineLoc() {
+        string code = '
+class Demo {
+    #! doc for output
+    /** @param data output payload */
+    abstract private nothing writeOutput(string data);
+
+    #! doc for header
+    /** @param info header info */
+    writeInterchangeHeader(hash info) {}
+}
+';
+        string output = processCode(code);
+
+        assertTrue(output =~ /doc for output/, "writeOutput doc preserved");
+        assertTrue(output =~ /@param data output payload/, "writeOutput param preserved");
+        assertTrue(output =~ /doc for header/, "writeInterchangeHeader doc preserved");
+        assertTrue(output =~ /@param info header info/, "writeInterchangeHeader param preserved");
+    }
+
+    testSoftTypeFormatting() {
+        string code = "sub softParam(*string name, *hash<auto> opts) { }";
+        string output = processCode(code);
+
+        # Doxygen output uses __7_ placeholder for * (nullable) prefix
+        # while preserving template delimiters in declarations.
+        assertTrue(output =~ /__7_ string name/, "nullable string param in doxygen format");
+        assertTrue(output =~ /__7_ hash<auto> opts/, "nullable hash param in doxygen format");
+    }
+
+    testAbstractMethodParameters() {
+        string output = processCode("class Transport {\n"
+            "    abstract sendClose(int code = 1000, string reason = \"\");\n"
+            "    abstract bool accepts(string value);\n"
+            "    abstract shutdown();\n}\n");
+        assertTrue(output =~ /sendClose\(int code, string reason\)/,
+            "defaulted abstract method parameters retain their types and names");
+        assertTrue(output =~ /accepts\(string value\)/, "required abstract parameter is retained");
+        assertTrue(output =~ /shutdown\(\)/, "empty abstract parameter list remains empty");
+    }
+
+    testCallableTypes() {
+        if (system("command -v doxygen >/dev/null 2>&1")) {
+            testSkip("doxygen is required for generated declaration integration tests");
+        }
+        string output = processCode("/** Callback options. */\nhashdecl CallbackOptions {\n"
+            "    /** Dispatch an API request. */\n"
+            "    *code<hash<auto>(string, string, hash<auto>)> api_callback;\n"
+            "    /** Decide whether to accept an item. */\n"
+            "    code<bool(int)> accept_item;\n}\n"
+            "/** A transport accepting multipart/* media. */\nclass Transport {\n"
+            "    /** Close a transport. @param code close status @param reason explanation */\n"
+            "    abstract sendClose(int code = 1000, string reason = \"\");\n}\n");
+        TmpDir dir();
+        string input = dir.path + "/callbacks.h";
+        string config = dir.path + "/Doxyfile";
+        string tag = dir.path + "/callbacks.tag";
+        string log = dir.path + "/doxygen.log";
+        {
+            File f();
+            f.open2(input, O_CREAT | O_WRONLY | O_TRUNC);
+            f.write(output);
+        }
+        {
+            File f();
+            f.open2(config, O_CREAT | O_WRONLY | O_TRUNC);
+            f.write(sprintf("INPUT = \"%s\"\nOUTPUT_DIRECTORY = \"%s\"\nGENERATE_TAGFILE = \"%s\"\n"
+                "GENERATE_HTML = NO\nGENERATE_LATEX = NO\nQUIET = YES\nEXTRACT_ALL = YES\n", input, dir.path, tag));
+        }
+        int rc = system("doxygen " + shellQuote(config) + " >" + shellQuote(log) + " 2>&1");
+        string diagnostics = ReadOnlyFile::readTextFile(log);
+        assertEq(0, rc, diagnostics);
+        assertEq("", diagnostics, "Doxygen parses complete callable declarations without warnings");
+        string indexed = ReadOnlyFile::readTextFile(tag);
+        assertTrue(indexed.find("<name>api_callback</name>") >= 0, "the nullable nested callback is indexed");
+        assertTrue(indexed.find("<name>accept_item</name>") >= 0, "the scalar callback is indexed");
+        assertTrue(indexed.find("<arglist>(int code, string reason)</arglist>") >= 0,
+            "Doxygen indexes abstract parameters without losing declarations after MIME prose");
+    }
+
+    private static string shellQuote(string value) {
+        return "'" + replace(value, "'", "'\\''") + "'";
+    }
+
+    testDocCommentLiteralRendering() {
+        if (system("command -v doxygen >/dev/null 2>&1")) {
+            testSkip("doxygen is required for rendered comment tests");
+        }
+        string output = processCode('/** @mainpage Literal comment markers
+PROSE multipart/* and <tt>/v1/*</tt> and image/*.
+
+@code
+string mime = "audio/*";
+@endcode
+
+@verbatim
+/raw/*
+@endverbatim
+
+INLINE @code string mime = "font/*"; @endcode application/*.
+
+\code
+string mime = "text/*";
+\endcode
+
+\verbatim
+/escaped/*
+\endverbatim
+
+AFTER */
+class LiteralTransport { }
+');
+        assertTrue(output.find('"audio/*"') >= 0, "code example bytes are preserved");
+        assertTrue(output.find("/raw/*") >= 0, "verbatim example bytes are preserved");
+        TmpDir dir();
+        string input = dir.path + "/literals.h";
+        string config = dir.path + "/Doxyfile";
+        string log = dir.path + "/doxygen.log";
+        {
+            File f();
+            f.open2(input, O_CREAT | O_WRONLY | O_TRUNC);
+            f.write(output);
+        }
+        {
+            File f();
+            f.open2(config, O_CREAT | O_WRONLY | O_TRUNC);
+            f.write(sprintf("INPUT = \"%s\"\nOUTPUT_DIRECTORY = \"%s\"\n"
+                "GENERATE_HTML = YES\nGENERATE_LATEX = NO\nQUIET = YES\n"
+                "MARKDOWN_SUPPORT = NO\nEXTRACT_ALL = YES\n", input, dir.path));
+        }
+        int rc = system("doxygen " + shellQuote(config) + " >" + shellQuote(log) + " 2>&1");
+        string diagnostics = ReadOnlyFile::readTextFile(log);
+        assertEq(0, rc, diagnostics);
+        assertEq("", diagnostics, "nested comment markers produce no Doxygen diagnostics");
+        string html = ReadOnlyFile::readTextFile(dir.path + "/html/index.html");
+        string text = regex_subst(html, "<[^>]*>", "");
+        foreach string literal in (("multipart/*", "/v1/*", "image/*", "audio/*", "/raw/*",
+                "font/*", "application/*", "text/*", "/escaped/*")) {
+            assertTrue(text.find(literal) >= 0, sprintf("HTML displays %y literally", literal));
+        }
+        assertTrue(text.find("AFTER") >= 0, "content after both literal block forms survives");
+        assertFalse(text.find("&#42;") >= 0 || text.find("&amp;#42;") >= 0,
+            "numeric entity text is never substituted for the star");
+        assertFalse(text.find("&lt;!--") >= 0, "HTML separators do not leak into code examples");
+    }
+
+    testUnicodeDocLiterals() {
+        string prefix = "";
+        for (int i = 0; i < 4096; ++i) {
+            prefix += "α漢🙂";
+        }
+        string output = processCode("/** @mainpage Unicode literal boundaries\n" + prefix
+            + ' \@code image/*'
+            + "\n@code\nstring value = \"α漢🙂/*\";\n@endcode\n"
+            + "AFTER λ/*\n*/\nclass UnicodeTransport { }\n");
+        assertTrue(output.find(prefix) >= 0, "all multibyte characters survive the scan");
+        assertTrue(output.find('image/<!-- -->*') >= 0, "escaped commands leave prose mode active");
+        assertTrue(output.find('"α漢🙂/*"') >= 0, "Unicode code examples are unchanged");
+        assertTrue(output.find('AFTER λ/<!-- -->*') >= 0, "the literal block ends after multibyte text");
+        assertTrue(output.find("class UnicodeTransport") >= 0, "the following declaration survives");
+        foreach string suffix in (("\\", "@", "α", "🙂", "@codeword", "\\verbatimword")) {
+            output = processCode("/** @mainpage Unicode boundary\nλ " + suffix
+                + "\n*/\nclass UnicodeBoundary { }\n");
+            assertTrue(output.find("@mainpage Unicode boundary") >= 0,
+                sprintf("trailing sequence %y does not change literal state", suffix));
+        }
+    }
+
+    testEscapedDocCommands() {
+        foreach string command in (('\@code', '\@endcode', '\@verbatim', '\@endverbatim',
+                '\\code', '\\endcode', '\\verbatim', '\\endverbatim', '@codeword', '@verbatimword')) {
+            string output = processCode(sprintf("/** @mainpage Escaped commands\n"
+                "Literal command <tt>%s</tt> and image/* prose.\n*/\nclass EscapedTransport { }\n", command));
+            assertTrue(output.find("@mainpage Escaped commands") >= 0,
+                sprintf("escaped or longer command %y does not unbalance the comment collector", command));
+            assertTrue(output.find("class EscapedTransport") >= 0, "the following declaration survives");
+        }
+    }
+
+    testNestedNamespaces() {
+        string code = "
+namespace Outer {
+    namespace Inner {
+        class MyClass { }
+    }
+}
+";
+        string output = processCode(code);
+
+        assertTrue(output =~ /namespace Outer \{/, "outer namespace");
+        assertTrue(output =~ /namespace Inner \{/, "inner namespace");
+        assertTrue(output =~ /class MyClass/, "class in inner namespace");
+    }
+
+    testAccessModifiers() {
+        string code = "
+class MyClass {
+    public { int x; }
+    private { int y; }
+}
+";
+        string output = processCode(code);
+
+        # The class should have members processed
+        assertTrue(output =~ /class MyClass/, "class declaration");
+    }
+
+    testClassWithMembers() {
+        string code = "
+class MyClass {
+    public {
+        int count;
+    }
+    constructor() { }
+}
+";
+        string output = processCode(code);
+
+        assertTrue(output =~ /class MyClass/, "class declaration");
+        assertTrue(output =~ /int count;/, "member variable");
+        assertTrue(output =~ /constructor\(\);/, "constructor declaration");
+    }
+
+    testHashdeclDocComment() {
+        string code = "
+#! This is a hashdecl doc comment
+hashdecl MyStruct {
+    int x;
+}
+";
+        string output = processCode(code);
+
+        assertTrue(output =~ /\/\/! This is a hashdecl doc comment/, "hashdecl doc comment converted");
+        assertTrue(output =~ /struct MyStruct \{/, "hashdecl becomes struct");
+    }
+
+    testNamespaceDocComment() {
+        string code = "
+#! This is a namespace doc comment
+namespace MyNamespace {
+    class MyClass { }
+}
+";
+        string output = processCode(code);
+
+        assertTrue(output =~ /\/\/! This is a namespace doc comment/, "namespace doc comment converted");
+        assertTrue(output =~ /namespace MyNamespace \{/, "namespace declaration");
+        assertTrue(output =~ /class MyClass/, "class inside namespace");
+    }
+
+    #! A MIME type, URL path or SQL hint in doc prose must not be read as the start of a block comment
+    /** The doc comment collector scanned backwards for the block's opening \c "/**" and stopped at any
+        line containing \c "/*", to avoid scanning past a non-doc comment.  The test was unanchored, so
+        a line of prose containing those two characters - \c "multipart/*" in RestClient's release notes,
+        \c "/v1/*" in SGLangRestClient's - discarded the entire doc comment: three modules published no
+        main page at all, intro and release notes included, with no warning from the docs build.
+    */
+    testDocProseWithBlockCommentChars() {
+        string code = '
+%modern
+module TestModule {
+    version = "1.0";
+}
+/** @mainpage Test Module
+
+    @section test_intro Introduction
+
+    - fixed a charset parameter appended to a "multipart/*" Content-Type header
+    - the HTTP API lives at `/v1/*` on the server
+*/
+#! Public namespace docs
+public namespace TestModule {
+    #! Converts a value
+    /** Maps MIME types to content blocks:
+        - image/* -> an image block
+    */
+    class MyClass { }
+}
+';
+        string output = processCode(code);
+
+        # the regression: the whole main page vanished, and with it every release note
+        assertTrue(output =~ /@mainpage Test Module/, "mainpage survives \"multipart/*\" in its prose");
+        assertTrue(output =~ /@section test_intro Introduction/, "and so does its content");
+        assertTrue(output =~ /v1/, "including the line with the URL path");
+        assertTrue(output =~ /Maps MIME types to content blocks/, "a declaration doc survives it too");
+        assertTrue(output =~ /class MyClass/, "and the declaration is still emitted");
+    }
+
+    #! The anchored test must still stop at a real block comment, or it would collect unrelated text
+    testNonDocBlockCommentStops() {
+        string code = '
+/** Documentation that belongs to nothing here
+*/
+/* an ordinary comment between the doc comment and the class */
+class MyClass { }
+';
+        string output = processCode(code);
+
+        assertFalse(output =~ /Documentation that belongs to nothing here/,
+            "a non-doc comment still ends the backwards scan");
+        assertTrue(output =~ /class MyClass/, "and the class is still emitted");
+    }
+
+    testMainpageAssociation() {
+        string code = '
+%modern
+module TestModule {
+    version = "1.0";
+}
+/** @mainpage Test Module
+
+    @section test_intro Introduction
+*/
+#! Public namespace docs
+public namespace TestModule {
+    class MyClass { }
+}
+';
+        string output = processCode(code);
+
+        assertTrue(output =~ /@mainpage Test Module/, "mainpage preserved");
+        assertTrue(output =~ /namespace TestModule \{/, "namespace declared");
+        assertTrue(output =~ /class MyClass/, "class declared");
+    }
+
+    testDocEndcondWithComment() {
+        string code = "
+#! @cond nodoc
+sub hidden() { }
+#! @endcond
+# regular comment
+sub visible() { }
+";
+        string output = processCode(code);
+
+        assertFalse(output =~ /@cond/, "cond marker removed");
+        assertFalse(output =~ /@endcond/, "endcond marker removed");
+        assertTrue(output =~ /hidden\(\);/, "hidden function emitted");
+        assertTrue(output =~ /visible\(\);/, "visible function emitted");
+    }
+
+    testConditionalIfdef() {
+        # Test that code from all branches of %ifdef/%else/%endif is included
+        string code = "
+%ifdef SOME_DEFINE
+class DefinedClass { }
+%else
+class UndefinedClass { }
+%endif
+class AlwaysClass { }
+";
+        string output = processCode(code);
+
+        # All classes should be in the output - astparser includes all branches
+        assertTrue(output =~ /class DefinedClass/, "class from ifdef branch");
+        assertTrue(output =~ /class UndefinedClass/, "class from else branch");
+        assertTrue(output =~ /class AlwaysClass/, "class after endif");
+    }
+
+    testConditionalIfElif() {
+        # Test %if/%elif/%else/%endif
+        string code = "
+%if defined(OPTION_A)
+class OptionA { }
+%elif defined(OPTION_B)
+class OptionB { }
+%else
+class DefaultOption { }
+%endif
+";
+        string output = processCode(code);
+
+        # All classes should be in the output
+        assertTrue(output =~ /class OptionA/, "class from if branch");
+        assertTrue(output =~ /class OptionB/, "class from elif branch");
+        assertTrue(output =~ /class DefaultOption/, "class from else branch");
+    }
+
+    testNestedConditionals() {
+        # Test nested %ifdef/%endif
+        string code = "
+%ifdef OUTER
+class OuterClass { }
+%ifdef INNER
+class InnerClass { }
+%endif
+%endif
+class AfterNested { }
+";
+        string output = processCode(code);
+
+        # All classes should be in the output
+        assertTrue(output =~ /class OuterClass/, "class from outer ifdef");
+        assertTrue(output =~ /class InnerClass/, "class from inner ifdef");
+        assertTrue(output =~ /class AfterNested/, "class after nested endif");
+    }
+
+    testFormatParseDiagnostics() {
+        string code = "%modern\nmodule Test {\n    version = \"1.0\";\n    desc = \"missing semicolon\"\n}\n";
+        AstParser parser();
+        *AstTree tree = parser.parseString(code);
+        # tree-sitter always returns a tree via error recovery, even with parse errors
+        assertTrue(exists(tree), "tree returned with error recovery");
+        assertTrue(parser.getErrorCount() > 0, "parse errors reported");
+
+        *list<auto> diagnostics = parser.getDiagnostics();
+        assertTrue(exists(diagnostics), "diagnostics available");
+
+        string output = Qdx::formatParseDiagnostics("test.qm", code, diagnostics);
+        assertTrue(output =~ /test\.qm:/, "path included");
+        assertTrue(output =~ /Missing/, "error message included");
+        assertTrue(output =~ /missing semicolon/, "line text included");
+    }
+}

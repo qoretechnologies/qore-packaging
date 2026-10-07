@@ -1,0 +1,17 @@
+QUnit Test "AstProcessorTests" v1.0
+FAILURE: Comment markers render literally in prose and examples: 1 assertion, 0 succeeded
+2026-10-07 17:12:44.251122: Assertion "code example bytes are preserved" failure at /home/david/src/qore/git/qore-packaging/results/qdx-develop-negative-20261007/source/examples/test/qlib/Qdx/AstProcessor.qtest:285 [AstProcessorTests::testDocCommentLiteralRendering()] <- /home/david/src/qore/git/qore-packaging/results/qdx-develop-negative-20261007/source/examples/test/qlib/Qdx/AstProcessor.qtest:65 [AstProcessorTests::constructor()]
+-----
+	>> Expected: True, Actual: False
+-----
+FAILURE: Escaped literal commands preserve documentation: 1 assertion, 0 succeeded
+2026-10-07 17:12:44.254718: Assertion "escaped or longer command \"\\\\@code\" does not unbalance the comment collector" failure at /home/david/src/qore/git/qore-packaging/results/qdx-develop-negative-20261007/source/examples/test/qlib/Qdx/AstProcessor.qtest:346 [AstProcessorTests::testEscapedDocCommands()] <- /home/david/src/qore/git/qore-packaging/results/qdx-develop-negative-20261007/source/examples/test/qlib/Qdx/AstProcessor.qtest:65 [AstProcessorTests::constructor()]
+-----
+	>> Expected: True, Actual: False
+-----
+FAILURE: Unicode documentation retains literal boundaries: 1 assertion, 0 succeeded
+2026-10-07 17:12:44.305326: Assertion "all multibyte characters survive the scan" failure at /home/david/src/qore/git/qore-packaging/results/qdx-develop-negative-20261007/source/examples/test/qlib/Qdx/AstProcessor.qtest:328 [AstProcessorTests::testUnicodeDocLiterals()] <- /home/david/src/qore/git/qore-packaging/results/qdx-develop-negative-20261007/source/examples/test/qlib/Qdx/AstProcessor.qtest:65 [AstProcessorTests::constructor()]
+-----
+	>> Expected: True, Actual: False
+-----
+Ran 29 test cases, 26 succeeded, 3 errors (75 assertions, 72 succeeded)

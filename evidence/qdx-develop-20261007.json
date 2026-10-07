@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "status": "Local develop fix qualified for commit; complete RPM rollout continues separately.",
+  "base_commit": "e99ffc98ca14c3b8b97bf5c3e2a5723b68af4f9a",
+  "fix": [
+    "Render interior comment markers with a Doxygen HTML separator only in prose; preserve code/verbatim bytes.",
+    "Recognize both command spellings and ignore escaped/longer names while collecting documentation.",
+    "Decode Unicode once per line and use constant-size lookahead rather than repeated character-index prefix scans."
+  ],
+  "tests": {
+    "aot": {
+      "cases": 68,
+      "assertions": 372
+    },
+    "source": {
+      "cases": 68,
+      "assertions": 372
+    }
+  },
+  "negative_control": {
+    "test_cases": 29,
+    "passed": 26,
+    "expected_failures": 3,
+    "exit_code": 3
+  },
+  "build": {
+    "type": "Release",
+    "prefix": "/usr",
+    "target": "Qdx-qmod",
+    "rebuilt_before_tests": true
+  },
+  "notes": [
+    "The initial local test harness omitted the XML binary that the existing QUnit.qmod requires. Adding module-xml/build to the test module path removed its fallback warning; only the complete warning-free second run is accepted.",
+    "The global CMake regeneration printed two configuration notices for unavailable optional ngtcp2 quictls/LibreSSL backends. They are unrelated to Qdx; Qdx compilation and all affected tests emit no diagnostics. No TLS configuration changed.",
+    "The first negative-control result parser expected the word FAILED; QUnit reports errors. The actual program returned exactly three expected assertion failures, now validated against its real summary.",
+    "No C++ implementation changed; Valgrind is not required."
+  ],
+  "files_sha256": {
+    "evidence/controls/qdx-develop-20261007/AstProcessor.qtest": "93b3c2d98ed373551abda37270efc48ef118b0befe7f848354772c18e57dd68d",
+    "evidence/controls/qdx-develop-20261007/Qdx.qm": "ab28497c462cdf5651e7bc47916ca7eedcddc051b4d7b5d486ba22399485d2e0",
+    "evidence/controls/qdx-develop-20261007/aot-AstProcessor.log": "6ec23b7b36ee86ebd15df6f4551c67222e9bfaa5d559be65073776577ac56b76",
+    "evidence/controls/qdx-develop-20261007/aot-DocumentTable.log": "d1096c8be4132d39f3823f6d5e87c2c33604a1e7cf1047a1eb9a09c6f6c33934",
+    "evidence/controls/qdx-develop-20261007/aot-QoreTokenizer.log": "32556c0592200668b97a92756739fab07df1dfe61396511dcd93c1a9d5f7701c",
+    "evidence/controls/qdx-develop-20261007/original-Qdx.qm": "d2c239a12bfaa6d4854d303bf2e4077fe0d481d01057c3c57173e06d849d5d4b",
+    "evidence/controls/qdx-develop-20261007/original-status.json": "1576336fcfb6168616ee755984fd6f6f005632f435df1c733a6346653b84b64e",
+    "evidence/controls/qdx-develop-20261007/original-test.log": "e5393b87a37463d71bc233f5de2e3368ac9e7ed0268447a3868ac11669f0c81f",
+    "evidence/controls/qdx-develop-20261007/qmod-build.log.gz": "83f41e5540c89bc112bfbfb02b485c26faa1299195d3d1ec1549c45ffcfe63f7",
+    "evidence/controls/qdx-develop-20261007/source-AstProcessor.log": "6ec23b7b36ee86ebd15df6f4551c67222e9bfaa5d559be65073776577ac56b76",
+    "evidence/controls/qdx-develop-20261007/source-DocumentTable.log": "d1096c8be4132d39f3823f6d5e87c2c33604a1e7cf1047a1eb9a09c6f6c33934",
+    "evidence/controls/qdx-develop-20261007/source-QoreTokenizer.log": "32556c0592200668b97a92756739fab07df1dfe61396511dcd93c1a9d5f7701c",
+    "evidence/controls/qdx-develop-20261007/status.json": "7ba5f3272ce382b0698fceffe115b7d4936f8e1364a1d32625a12c6fdbac3252",
+    "evidence/controls/qdx-develop-20261007/test-negative.py": "59396d7e2885964b5cafe617e225b74727778c8cbb17ac338911cdd9936b618c",
+    "evidence/controls/qdx-develop-20261007/test.py": "649a6d0a6544e98a820fcc37ef956ce0439ab1478e0f9d6642c4e48e93178209",
+    "evidence/controls/qdx-develop-20261007/LiteralDocumentation.audit.rst": "27852ddca883c753e17d5a1db9c104af05f609fc905bba35940ce31d70b23d74"
+  },
+  "commit": "73c28461884b0601c5f2fa8b9aba15ed1bd9665b",
+  "branch": "develop"
+}
