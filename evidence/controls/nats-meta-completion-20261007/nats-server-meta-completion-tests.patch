@@ -1,0 +1,120 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Join committed metadata application before reading a remote consumer assignment or retention state.
+--- a/server/jetstream_cluster_4_test.go
++++ b/server/jetstream_cluster_4_test.go
+@@ -994,6 +994,10 @@
+ 		AckPolicy:     nats.AckExplicitPolicy,
+ 	})
+ 	require_NoError(t, err)
++
++	// The consumer leader replies before every meta follower applies the update.
++	// Join that update on the stream leader before checking its retained messages.
++	awaitClusterMetaApplied(t, c)
+ 
+ 	// we should now have only one message left
+ 	nfo, err = js.StreamInfo("INTEREST")
+@@ -9716,6 +9720,8 @@
+ 
+ 	// A server that only holds the assignment, not the consumer itself.
+ 	s := c.randomNonConsumerLeader(globalAccountName, "TEST", "C")
++	// Creation replies do not establish that a non-hosting peer has its assignment.
++	awaitClusterMetaApplied(t, c)
+ 	sjs := s.getJetStream()
+ 	sjs.mu.RLock()
+ 	ca := sjs.consumerAssignment(globalAccountName, "TEST", "C")
+@@ -10240,3 +10246,95 @@
+ 	defer standalone.Shutdown()
+ 	require_Error(t, awaitGhostMetaHealth(context.Background(), standalone))
+ }
++
++// Join metadata application after an API response, without assuming which peer replied.
++func awaitClusterMetaApplied(t testing.TB, c *cluster) {
++	t.Helper()
++	leader := c.leader()
++	require_NotNil(t, leader)
++	meta := leader.getJetStream().getMetaGroup().(*raft)
++	meta.RLock()
++	committed := meta.commit
++	meta.RUnlock()
++	for _, server := range c.servers {
++		awaitRaftProgress(t, server.getJetStream().getMetaGroup().(*raft), committed, 0, false)
++	}
++}
++
++func TestConsumerFilterReplyPrecedesRemoteMetadataApply(t *testing.T) {
++	c := createJetStreamClusterExplicit(t, "META-COMPLETION", 3)
++	defer c.shutdown()
++	nc, js := jsClientConnect(t, c.leader())
++	defer nc.Close()
++	_, err := js.AddStream(&nats.StreamConfig{Name: "INTEREST", Retention: nats.InterestPolicy,
++		Subjects: []string{"interest.>"}, Replicas: 3})
++	require_NoError(t, err)
++	_, err = js.AddConsumer("INTEREST", &nats.ConsumerConfig{Durable: "C0", FilterSubject: "interest.>",
++		AckPolicy: nats.AckExplicitPolicy})
++	require_NoError(t, err)
++	target := c.randomNonLeader()
++	c.stepDownStreamLeader(nc, globalAccountName, "INTEREST", target)
++	require_NotNil(t, target)
++	c.stepDownConsumerLeader(nc, globalAccountName, "INTEREST", "C0", c.leader())
++	awaitClusterMetaApplied(t, c)
++	awaitStreamRouteInterest(t, c, nc, "INTEREST")
++	for i := 0; i < 10; i++ {
++		_, err = js.Publish(fmt.Sprintf("interest.%d", i), []byte(strconv.Itoa(i)))
++		require_NoError(t, err)
++	}
++	info, err := js.StreamInfo("INTEREST")
++	require_NoError(t, err)
++	require_Equal(t, info.State.Msgs, uint64(10))
++	meta := target.getJetStream().getMetaGroup().(*raft)
++	require_NoError(t, meta.PauseApply())
++	defer meta.ResumeApply()
++	_, err = js.UpdateConsumer("INTEREST", &nats.ConsumerConfig{Durable: "C0", FilterSubject: "interest.1",
++		AckPolicy: nats.AckExplicitPolicy})
++	require_NoError(t, err)
++	info, err = js.StreamInfo("INTEREST")
++	require_NoError(t, err)
++	// The successful update response has arrived, but this real follower remains unchanged.
++	require_Equal(t, info.State.Msgs, uint64(10))
++	meta.ResumeApply()
++	awaitClusterMetaApplied(t, c)
++	info, err = js.StreamInfo("INTEREST")
++	require_NoError(t, err)
++	require_Equal(t, info.State.Msgs, uint64(1))
++}
++
++func TestConsumerCreateReplyPrecedesRemoteMetadataApply(t *testing.T) {
++	c := createJetStreamClusterExplicit(t, "META-CREATE", 3)
++	defer c.shutdown()
++	nc, js := jsClientConnect(t, c.leader())
++	defer nc.Close()
++	// R1 pins the consumer to the stream's sole member, keeping the paused
++	// metadata peer out of its placement without injecting an assignment.
++	_, err := js.AddStream(&nats.StreamConfig{Name: "TEST", Subjects: []string{"foo"}, Replicas: 1})
++	require_NoError(t, err)
++	awaitClusterMetaApplied(t, c)
++	metaLeader, streamLeader := c.leader(), c.streamLeader(globalAccountName, "TEST")
++	var target *Server
++	for _, server := range c.servers {
++		if server != metaLeader && server != streamLeader {
++			target = server
++			break
++		}
++	}
++	require_NotNil(t, target)
++	jsTarget := target.getJetStream()
++	meta := jsTarget.getMetaGroup().(*raft)
++	require_NoError(t, meta.PauseApply())
++	defer meta.ResumeApply()
++	_, err = js.AddConsumer("TEST", &nats.ConsumerConfig{Durable: "C", Replicas: 1, AckPolicy: nats.AckExplicitPolicy})
++	require_NoError(t, err)
++	jsTarget.mu.RLock()
++	before := jsTarget.consumerAssignment(globalAccountName, "TEST", "C")
++	jsTarget.mu.RUnlock()
++	require_True(t, before == nil)
++	meta.ResumeApply()
++	awaitClusterMetaApplied(t, c)
++	jsTarget.mu.RLock()
++	after := jsTarget.consumerAssignment(globalAccountName, "TEST", "C")
++	jsTarget.mu.RUnlock()
++	require_NotNil(t, after)
++}

@@ -1,0 +1,151 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Preserve ephemeral listener settings between independent TLS warning fixtures.
+--- a/server/server_test.go
++++ b/server/server_test.go
+@@ -1750,36 +1750,41 @@
+ 	}
+ }
+ 
+-func TestInsecureSkipVerifyWarning(t *testing.T) {
+-	checkWarnReported := func(t *testing.T, o *Options, expectedWarn string) {
+-		t.Helper()
+-		s, err := NewServer(o)
+-		if err != nil {
+-			t.Fatalf("Error on new server: %v", err)
+-		}
+-		l := &captureWarnLogger{warn: make(chan string, 1)}
+-		s.SetLogger(l, false, false)
+-		wg := sync.WaitGroup{}
+-		wg.Add(1)
+-		go func() {
+-			s.Start()
+-			wg.Done()
+-		}()
+-		if err := s.readyForConnections(time.Second); err != nil {
+-			t.Fatal(err)
+-		}
+-		select {
+-		case w := <-l.warn:
+-			if !strings.Contains(w, expectedWarn) {
+-				t.Fatalf("Expected warning %q, got %q", expectedWarn, w)
+-			}
+-		case <-time.After(2 * time.Second):
+-			t.Fatalf("Did not get warning %q", expectedWarn)
+-		}
++func checkTLSInsecureWarning(t *testing.T, o *Options, expectedWarn string) string {
++	t.Helper()
++	// Server startup writes assigned listener ports into its options. Each
++	// warning case needs an independent copy of the reusable caller configuration.
++	s, err := NewServer(o.Clone())
++	if err != nil {
++		t.Fatalf("Error on new server: %v", err)
++	}
++	l := &captureWarnLogger{warn: make(chan string, 1)}
++	s.SetLogger(l, false, false)
++	wg := sync.WaitGroup{}
++	wg.Add(1)
++	defer func() {
+ 		s.Shutdown()
+ 		wg.Wait()
+-	}
+-
++	}()
++	go func() {
++		s.Start()
++		wg.Done()
++	}()
++	if err := s.readyForConnections(time.Second); err != nil {
++		t.Fatal(err)
++	}
++	select {
++	case w := <-l.warn:
++		if !strings.Contains(w, expectedWarn) {
++			t.Fatalf("Expected warning %q, got %q", expectedWarn, w)
++		}
++	case <-time.After(2 * time.Second):
++		t.Fatalf("Did not get warning %q", expectedWarn)
++	}
++	return s.ClientURL()
++}
++
++func TestInsecureSkipVerifyWarning(t *testing.T) {
+ 	tc := &TLSConfigOpts{}
+ 	tc.CertFile = "../test/configs/certs/server-cert.pem"
+ 	tc.KeyFile = "../test/configs/certs/server-key.pem"
+@@ -1794,7 +1799,7 @@
+ 	o.Cluster.Name = "A"
+ 	o.Cluster.Port = -1
+ 	o.Cluster.TLSConfig = config.Clone()
+-	checkWarnReported(t, o, clusterTLSInsecureWarning)
++	checkTLSInsecureWarning(t, o, clusterTLSInsecureWarning)
+ 
+ 	// Remove the route setting
+ 	o.Cluster.Port = 0
+@@ -1809,15 +1814,15 @@
+ 			TLSConfig: config.Clone(),
+ 		},
+ 	}
+-	checkWarnReported(t, o, leafnodeTLSInsecureWarning)
++	checkTLSInsecureWarning(t, o, leafnodeTLSInsecureWarning)
+ 
+ 	// Now add to main block.
+ 	o.LeafNode.TLSConfig = config.Clone()
+-	checkWarnReported(t, o, leafnodeTLSInsecureWarning)
++	checkTLSInsecureWarning(t, o, leafnodeTLSInsecureWarning)
+ 
+ 	// Now remove remote and check warning still reported
+ 	o.LeafNode.Remotes = nil
+-	checkWarnReported(t, o, leafnodeTLSInsecureWarning)
++	checkTLSInsecureWarning(t, o, leafnodeTLSInsecureWarning)
+ 
+ 	// Remove the LN setting
+ 	o.LeafNode.Port = 0
+@@ -1834,15 +1839,15 @@
+ 			TLSConfig: config.Clone(),
+ 		},
+ 	}
+-	checkWarnReported(t, o, gatewayTLSInsecureWarning)
++	checkTLSInsecureWarning(t, o, gatewayTLSInsecureWarning)
+ 
+ 	// Now add to main block.
+ 	o.Gateway.TLSConfig = config.Clone()
+-	checkWarnReported(t, o, gatewayTLSInsecureWarning)
++	checkTLSInsecureWarning(t, o, gatewayTLSInsecureWarning)
+ 
+ 	// Now remove remote and check warning still reported
+ 	o.Gateway.Gateways = nil
+-	checkWarnReported(t, o, gatewayTLSInsecureWarning)
++	checkTLSInsecureWarning(t, o, gatewayTLSInsecureWarning)
+ }
+ 
+ func TestConnectErrorReports(t *testing.T) {
+@@ -2526,3 +2531,29 @@
+ 		})
+ 	}
+ }
++
++// A completed warning fixture must not reuse the previous kernel-assigned port.
++func TestTLSInsecureWarningUsesFreshEphemeralListeners(t *testing.T) {
++	config, err := GenTLSConfig(&TLSConfigOpts{
++		CertFile: "../test/configs/certs/server-cert.pem",
++		KeyFile:  "../test/configs/certs/server-key.pem",
++		CaFile:   "../test/configs/certs/ca.pem",
++		Insecure: true,
++	})
++	require_NoError(t, err)
++	opts := DefaultOptions()
++	opts.Cluster.Name = "TLS-WARNING"
++	opts.Cluster.Port = -1
++	opts.Cluster.TLSConfig = config
++	address, err := url.Parse(checkTLSInsecureWarning(t, opts, clusterTLSInsecureWarning))
++	require_NoError(t, err)
++	// Reserve the released client address, forcing any stale-port reuse to fail.
++	listener, err := net.Listen("tcp", address.Host)
++	require_NoError(t, err)
++	defer listener.Close()
++	next, err := url.Parse(checkTLSInsecureWarning(t, opts, clusterTLSInsecureWarning))
++	require_NoError(t, err)
++	require_NotEqual(t, address.Host, next.Host)
++	require_Equal(t, opts.Port, -1)
++	require_Equal(t, opts.Cluster.Port, -1)
++}

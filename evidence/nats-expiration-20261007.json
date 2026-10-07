@@ -1,0 +1,140 @@
+{
+  "date": "2026-10-07",
+  "status": "900 race-enabled boundary/failure checks, nine rejected timing/update mutations and the complete JWT directory-store test selection pass across three distributions. Full RPM qualification remains required.",
+  "root_cause": "createTestAccount rounds the current time to a whole second before adding expiry. A one-second token can therefore expire almost 1.5 seconds later. The background 50ms timer may next check after the fixture's fixed 1500ms sleep; that sleep never joined deletion.",
+  "fix": "Extract the existing one-entry expiration step without changing its predicate, locking, deletion, heap/hash updates or timer loop. The update fixture stops and joins its scheduler and exercises that exact step with explicit timestamps instead of sleeping. Existing automatic-expiry integration tests remain enabled.",
+  "coverage": [
+    "Non-expiring JWT, enabling expiry, removing expiry, re-enabling expiry, one nanosecond before and exactly at deadline, empty queue and cleared hash/index/LRU.",
+    "A legal rounding/timer phase reproduces the file-present state at the old read point, then removes it at the next check.",
+    "Nonempty-directory deletion failure preserves tracking and hash; restoring the JWT file permits successful cleanup.",
+    "Three independent mutations reject one-nanosecond early/late expiration and failure to update an existing deadline."
+  ],
+  "results": {
+    "fedora": {
+      "fixed": {
+        "exit_code": 0,
+        "reported_passes": 300,
+        "reported_failures": 0
+      },
+      "late": {
+        "exit_code": 1,
+        "reported_passes": 1,
+        "reported_failures": 2
+      },
+      "early": {
+        "exit_code": 1,
+        "reported_passes": 2,
+        "reported_failures": 1
+      },
+      "update": {
+        "exit_code": 1,
+        "reported_passes": 2,
+        "reported_failures": 1
+      },
+      "integration": {
+        "exit_code": 0,
+        "reported_passes": 28,
+        "reported_failures": 0
+      }
+    },
+    "leap": {
+      "fixed": {
+        "exit_code": 0,
+        "reported_passes": 300,
+        "reported_failures": 0
+      },
+      "late": {
+        "exit_code": 1,
+        "reported_passes": 1,
+        "reported_failures": 2
+      },
+      "early": {
+        "exit_code": 1,
+        "reported_passes": 2,
+        "reported_failures": 1
+      },
+      "update": {
+        "exit_code": 1,
+        "reported_passes": 2,
+        "reported_failures": 1
+      },
+      "integration": {
+        "exit_code": 0,
+        "reported_passes": 28,
+        "reported_failures": 0
+      }
+    },
+    "el10": {
+      "fixed": {
+        "exit_code": 0,
+        "reported_passes": 300,
+        "reported_failures": 0
+      },
+      "late": {
+        "exit_code": 1,
+        "reported_passes": 1,
+        "reported_failures": 2
+      },
+      "early": {
+        "exit_code": 1,
+        "reported_passes": 2,
+        "reported_failures": 1
+      },
+      "update": {
+        "exit_code": 1,
+        "reported_passes": 2,
+        "reported_failures": 1
+      },
+      "integration": {
+        "exit_code": 0,
+        "reported_passes": 28,
+        "reported_failures": 0
+      }
+    }
+  },
+  "limits": [
+    "The deterministic timing control establishes the fixture ordering defect; the historical failure did not record its exact timer phase.",
+    "Initial focused controls predated the final failure-path assertions; their 300 passes are excluded from the final counts.",
+    "Historical unrelated NATS failures and full package/native qualification remain release gates."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-expiration-20261007/dirstore.go": "34c35de6189951e0d72d9b01c49b846fd71f1accf5296e8fc2ef27391d0f99f3",
+    "evidence/controls/nats-expiration-20261007/dirstore_test.go": "94da98edc7dcf96bac23ce60eaefc0a07a3a7247958a55f59d1f6800ba196054",
+    "evidence/controls/nats-expiration-20261007/early_dirstore.go": "26e8c8708f4f2e44ef2dd9b5739320d3d4ffe5f9aa4e155ef424b0391ae32e08",
+    "evidence/controls/nats-expiration-20261007/el10-early-status.json": "f6aef487f8bbd2ef2da500e3b0fbbd07d2dcbf0997173b5c76e1e9665fada8c6",
+    "evidence/controls/nats-expiration-20261007/el10-early.log.gz": "8865584d207911faa25d8c1a51755dbd2aaa9f86e1a71d8b52da5e68116aa4d8",
+    "evidence/controls/nats-expiration-20261007/el10-fixed-status.json": "31f755f8ecd369dae6139b55761406dee34344c131f777dca82ab504d5db9e0d",
+    "evidence/controls/nats-expiration-20261007/el10-fixed.log.gz": "42bc94f970fefb29fc054a756fd4d34a5b1ae8981cff434f35ff19d093910cee",
+    "evidence/controls/nats-expiration-20261007/el10-integration-status.json": "31d854438357b6e5605329fd786329b989f2e9dfe0af251ca97500e79f23ba78",
+    "evidence/controls/nats-expiration-20261007/el10-integration.log.gz": "d3a3255d0f268c0894b32f3a93b4ccdcc0c1a1f39fd7a4bbe1198d903fbdb833",
+    "evidence/controls/nats-expiration-20261007/el10-late-status.json": "1576929f668bc1ee3772f7e37ffacfd8185a9d708525d5a4111706bdda584247",
+    "evidence/controls/nats-expiration-20261007/el10-late.log.gz": "084a1739162d6bb04f0a6317028142858091d07ef9994eaf9b5edf225aabff23",
+    "evidence/controls/nats-expiration-20261007/el10-update-status.json": "1b82e78d30348f2b4c50c7304d7582a9c68c0ba4ef4c9de8343e274b216a886e",
+    "evidence/controls/nats-expiration-20261007/el10-update.log.gz": "2fbf1d18d9935712b6a8c02e603249301194279c46117d6418eb8392d845acc0",
+    "evidence/controls/nats-expiration-20261007/fedora-early-status.json": "cc23df4656823878e71811380443e55367fbe812451af82e468bba402bfeda3d",
+    "evidence/controls/nats-expiration-20261007/fedora-early.log.gz": "91740b036cf8140294ea10fa598cd68a5750e4011087542a64e3488ea6612da7",
+    "evidence/controls/nats-expiration-20261007/fedora-fixed-status.json": "c72bb9b59af010200f58521d576d4a5de3c4052e39a1f550ca9e5efa9d67a3e2",
+    "evidence/controls/nats-expiration-20261007/fedora-fixed.log.gz": "835bca726f857648cf1fcc4fc1d84308dc8e557e5be293306e7a045870e7119b",
+    "evidence/controls/nats-expiration-20261007/fedora-integration-status.json": "a1b40bc4764c8b740ef1dd56c261fa0c8849e86990e231e6d743bcb4e285e613",
+    "evidence/controls/nats-expiration-20261007/fedora-integration.log.gz": "86ad8c81159e92086c0a16b0f3b4b3a016305c9016415d4da178a4513887c044",
+    "evidence/controls/nats-expiration-20261007/fedora-late-status.json": "421477e15c48ff03923dbcc7dd7b82383886f09f228726627409e1ffef542e87",
+    "evidence/controls/nats-expiration-20261007/fedora-late.log.gz": "0b2a0a301bd951f3aa7db0d44b0851328fb4a59c5a28af762850fe07320f055e",
+    "evidence/controls/nats-expiration-20261007/fedora-update-status.json": "b4a64608d5367866c073cce9dffdfe321892a831153dd5e2cd9b279e7d808be5",
+    "evidence/controls/nats-expiration-20261007/fedora-update.log.gz": "2fbf1d18d9935712b6a8c02e603249301194279c46117d6418eb8392d845acc0",
+    "evidence/controls/nats-expiration-20261007/finish-nats-expiration-229.py": "3e99b41c2ce9ce0b841657e8cffd6042fbc626ff8c03fd92694be6fa3002cc8f",
+    "evidence/controls/nats-expiration-20261007/late_dirstore.go": "1116b264d27b53bc939570aa710d3ba5ed9864bb0e622a1811abef0fbc7654f8",
+    "evidence/controls/nats-expiration-20261007/leap-early-status.json": "30e91c872fe5c5bc263cbef32cb09dd9ca171362c89f1dc344c44e3a78f466b5",
+    "evidence/controls/nats-expiration-20261007/leap-early.log.gz": "da4dd2309e4dbb1a2c911969726b67207c5d2f97057648e8eaad58e466ad419a",
+    "evidence/controls/nats-expiration-20261007/leap-fixed-status.json": "ef03a563f37f66929c044a26c7702fc4f75dc6dc7057ec1a7ca23324b2194cf0",
+    "evidence/controls/nats-expiration-20261007/leap-fixed.log.gz": "f0b594dc04fe4eab7c4354bb11bea815a5aa3fe48f12935d80ba46abb0e59f59",
+    "evidence/controls/nats-expiration-20261007/leap-integration-status.json": "9f04fbd5e7fb47ed4ec6545152932cfc69a1e87b64742a26b432a821aee3a97e",
+    "evidence/controls/nats-expiration-20261007/leap-integration.log.gz": "e82f58eaf801c2565dd790416dfbc2a9b757f1100180a10056f6fd3d81d89525",
+    "evidence/controls/nats-expiration-20261007/leap-late-status.json": "4c794a8e2cda5927c12263f96d371cfa533abcdbe6a4cc1988e640c324fe53c8",
+    "evidence/controls/nats-expiration-20261007/leap-late.log.gz": "f005dbaeeb99b3dfbab6bdaf1f67dda4d555003b99ccfe90369a8dbf87e35a83",
+    "evidence/controls/nats-expiration-20261007/leap-update-status.json": "def174f5f74aecc99be05ddb25f301c170ea8ad28d73d422c4c87040eefca998",
+    "evidence/controls/nats-expiration-20261007/leap-update.log.gz": "7c8b99420496c62e6b9bed63362c7ee88fb5cde9d348ac5f87759e9fc88d1cea",
+    "evidence/controls/nats-expiration-20261007/nats-server-expiration-boundary-tests.patch": "ad02a6f4e59c169c6c6e759f2c58d6b3cc98a70164a13c154813e636dcc9e49e",
+    "evidence/controls/nats-expiration-20261007/run-nats-expiration-229-remaining.py": "3ce9d9e91c066fd845804ea8e990f32c04ee988668cbdf637881ba2eea537d3a",
+    "evidence/controls/nats-expiration-20261007/update_dirstore.go": "c2b2a2f28e06079d55066b2578d4e09895dafe5bbc2bc4c0a74b35351c60ef75"
+  }
+}

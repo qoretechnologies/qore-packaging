@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-07",
+  "status": "360 race-enabled cases pass; six original immediate-read expectations fail under controlled follower delay. Complete RPM qualification remains required.",
+  "root_causes": [
+    "The consumer leader can send a successful creation reply before a non-hosting metadata follower installs the consumer assignment. An immediate lookup on that follower can return nil.",
+    "The consumer leader can reply to a filter update before the stream leader applies the same metadata update and removes messages without interest. Immediate StreamInfo can still return the previous ten-message state."
+  ],
+  "fix": "Join the committed metadata index on all fixture peers using the existing lock-protected Raft progress observer before checking remote assignment or retention state. No runtime behavior, API deadlines or retries change.",
+  "controls": [
+    "Pause a real metadata follower that is the stream leader, keep consumer leadership elsewhere, update the filter through the real API and observe ten messages after the successful reply; resume and join application, then observe one.",
+    "Use an R1 stream to pin consumer placement away from a paused metadata follower; a real creation succeeds while its assignment is absent on that peer. Resume/join application and verify the assignment arrives."
+  ],
+  "results": {
+    "fedora": {
+      "fixed": {
+        "exit_code": 0,
+        "reported_passes": 120,
+        "reported_failures": 0
+      },
+      "negative": {
+        "exit_code": 1,
+        "reported_passes": 0,
+        "reported_failures": 2
+      }
+    },
+    "leap": {
+      "fixed": {
+        "exit_code": 0,
+        "reported_passes": 120,
+        "reported_failures": 0
+      },
+      "negative": {
+        "exit_code": 1,
+        "reported_passes": 0,
+        "reported_failures": 2
+      }
+    },
+    "el10": {
+      "fixed": {
+        "exit_code": 0,
+        "reported_passes": 120,
+        "reported_failures": 0
+      },
+      "negative": {
+        "exit_code": 1,
+        "reported_passes": 0,
+        "reported_failures": 2
+      }
+    }
+  },
+  "limits": [
+    "The creation control uses R1 stream placement to exclude the paused peer deterministically; the original removal test retains its R3 stream and randomly chosen non-hosting peer.",
+    "Initial control incorrectly treated preferred-leader helpers as exclusion helpers and failed setup with raft: already leader. Final controls select explicit preferred roles; no results from the failed setup are counted.",
+    "Historical unrelated NATS failures and final/native/package qualification remain open."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-meta-completion-20261007/el10-fixed-status.json": "4e39f73068edeb686cdb9e0c79a957ba3af1e4f872b7d0ff8044656c594f64da",
+    "evidence/controls/nats-meta-completion-20261007/el10-fixed.log.gz": "9763edcfc1ad1cac326d8f58f4cef113952ffaa6d38a61fef988a9006c7b2afa",
+    "evidence/controls/nats-meta-completion-20261007/el10-negative-status.json": "daba4b9aee0703084b70d779fb6132129af5c7e8c0fcbb946ec4c42f1ac980d3",
+    "evidence/controls/nats-meta-completion-20261007/el10-negative.log.gz": "ea892d2b8eae999b86af583475e906ca76b55c447f1454997ee6662e52373619",
+    "evidence/controls/nats-meta-completion-20261007/fedora-fixed-status.json": "33a875b58c9b055907e71ffd21320291a158d130ac1f31bbff8130340f069a4e",
+    "evidence/controls/nats-meta-completion-20261007/fedora-fixed.log.gz": "cfefc86f32c807bb0e648be70f4d50b799cf5b8b816f1b423c8a466e69952245",
+    "evidence/controls/nats-meta-completion-20261007/fedora-negative-status.json": "0a89fae17ca0a84682f1cc94c461f5f8e69b5a25de1ae9b2c17960d7168a0a1b",
+    "evidence/controls/nats-meta-completion-20261007/fedora-negative.log.gz": "894477561fea0801a6596fe08eb1eccb8f2ad0ac6a138abfb031f0dc9251995e",
+    "evidence/controls/nats-meta-completion-20261007/finish.py": "af6659c6b1e47777523265087bfc57353a17fa708610044d367d8539622585db",
+    "evidence/controls/nats-meta-completion-20261007/jetstream_cluster_4_test.go": "105b4d7d6ae1ab97879470c9b4dd7303a0a0358bfc20009546c33a7e7db67d35",
+    "evidence/controls/nats-meta-completion-20261007/leap-fixed-status.json": "f7375c8aad1b126bedbcd3099b9e7e447c1b2ab53a4ac4b0f560daf27cf4256b",
+    "evidence/controls/nats-meta-completion-20261007/leap-fixed.log.gz": "282a80b59e06200877bde15c712f6e53cbc5075eb1a109c9e0564d21d1a1698b",
+    "evidence/controls/nats-meta-completion-20261007/leap-negative-status.json": "f75aa873b51fa1acd88b5a591eb7113bf7f103bbfac533478aa7be5be7743271",
+    "evidence/controls/nats-meta-completion-20261007/leap-negative.log.gz": "8e200fb303cbbf4136531b85063ce605dea91e57d8c64c95e8ee4050b8e9d401",
+    "evidence/controls/nats-meta-completion-20261007/nats-server-meta-completion-tests.patch": "4bef5923f3087bcdc4cf94f38ada4af684af3a611e22734d06eefb53e8bd6b47",
+    "evidence/controls/nats-meta-completion-20261007/negative_jetstream_cluster_4_test.go": "16867d9428224e7a0bb2cb8877984afd7492145816ec987b2513b9b7b43d9c13"
+  }
+}

@@ -1,0 +1,12 @@
+QUnit Test "AstProcessorTests" v1.0
+FAILURE: Comment markers render literally in prose and examples: 1 assertion, 0 succeeded
+2026-10-07 14:05:15.183821: Assertion "code example bytes are preserved" failure at /out/src/examples/test/qlib/Qdx/AstProcessor.qtest:284 [AstProcessorTests::testDocCommentLiteralRendering()] <- /out/src/examples/test/qlib/Qdx/AstProcessor.qtest:64 [AstProcessorTests::constructor()]
+-----
+	>> Expected: True, Actual: False
+-----
+FAILURE: Escaped literal commands preserve documentation: 1 assertion, 0 succeeded
+2026-10-07 14:05:15.186058: Assertion "escaped or longer command \"\\\\@code\" does not unbalance the comment collector" failure at /out/src/examples/test/qlib/Qdx/AstProcessor.qtest:323 [AstProcessorTests::testEscapedDocCommands()] <- /out/src/examples/test/qlib/Qdx/AstProcessor.qtest:64 [AstProcessorTests::constructor()]
+-----
+	>> Expected: True, Actual: False
+-----
+Ran 28 test cases, 26 succeeded, 2 errors (74 assertions, 72 succeeded)

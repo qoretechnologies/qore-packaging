@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "status": "Focused source/AOT regression and documentation rendering pass; complete RPM qualification remains required.",
+  "root_causes": [
+    "The comment generator replaced interior stars with a numeric entity that Doxygen renders as literal entity text. Applying the same replacement inside code/verbatim blocks also changes example bytes.",
+    "The backward comment collector treated escaped code/verbatim command names as block boundaries and could discard a complete documentation block."
+  ],
+  "correction": [
+    "Use an empty HTML separator for interior comment markers only in prose, preserving real documentation openers and literal block contents.",
+    "Recognize both supported command introducers and exclude escaped or longer command names; retain local block state while writing comments."
+  ],
+  "tests": {
+    "source_and_aot": {
+      "aot": {
+        "cases": 67,
+        "assertions": 361
+      },
+      "source": {
+        "cases": 67,
+        "assertions": 361
+      }
+    },
+    "paired_original_exit_code": 2,
+    "paired_fixed_exit_code": 0,
+    "rendered_modules": 106,
+    "index_failures": 0,
+    "render_failures": 0,
+    "render_diagnostics": []
+  },
+  "source_review": [
+    "Only Qdx executable tokens changed among the 111 source files in the final documentation correction review.",
+    "Command recognition examines at most twelve following characters; it does not copy the remaining line on every character.",
+    "All parse state is local to one generation call; new tests use temporary directories and quoted paths.",
+    "Tests retain relative imports, executable mode and debug-enabled Qore. Newly compiled Qdx.qmod and explicit source loading were tested separately."
+  ],
+  "limits": [
+    "Targeted tests use the installed Leap SDK22; the complete Fedora, Leap and AlmaLinux RPM matrix is still running.",
+    "The qualified Qdx snapshot predates two comment-only changelog hyperlink quote corrections; final RPM source contains those corrections.",
+    "The initial suite skipped qpp-dependent cases. Only the complete second suite with the installed qpp SDK helper is counted.",
+    "No C++ runtime code changes are part of this fix; Valgrind is not required by the supplied instructions."
+  ],
+  "files_sha256": {
+    "evidence/controls/qdx-literals-20261007/AstProcessor.qtest": "4139828d879be5600a5232f56b24eb91e38c48f33acecc7ff662dc06963ca0bf",
+    "evidence/controls/qdx-literals-20261007/Qdx.qm": "fd8f88fdca08bf5c5db7a98c584ea665a1d0758128050b0bf3c55b111b5f053c",
+    "evidence/controls/qdx-literals-20261007/aot-AstProcessor.log": "269563583e697d500a745e8af1a1d751a7b21fae2987fafa41fb96cae20670fa",
+    "evidence/controls/qdx-literals-20261007/aot-DocumentTable.log": "d1096c8be4132d39f3823f6d5e87c2c33604a1e7cf1047a1eb9a09c6f6c33934",
+    "evidence/controls/qdx-literals-20261007/aot-QoreTokenizer.log": "32556c0592200668b97a92756739fab07df1dfe61396511dcd93c1a9d5f7701c",
+    "evidence/controls/qdx-literals-20261007/fixed-0.log": "9e6fba1ec3e947b510e0bfed12223eaf509108f0810deb4204a7fc6c097aa9f4",
+    "evidence/controls/qdx-literals-20261007/fixed-1.log": "269563583e697d500a745e8af1a1d751a7b21fae2987fafa41fb96cae20670fa",
+    "evidence/controls/qdx-literals-20261007/original-0.log": "992457150aad74623b189c78bf1318c573cb39f3dddd608eb5501b9660386a81",
+    "evidence/controls/qdx-literals-20261007/original-1.log": "400d799f80815d6fc6d79d225b995c34d3e929bef538999881b481f5df5211ea",
+    "evidence/controls/qdx-literals-20261007/original-Qdx.qm": "2a49c40e088b4bc8f372df0aebbea2effc91a9599638ce6208ad68fee59a9656",
+    "evidence/controls/qdx-literals-20261007/paired-status.json": "a8c80eea1c28bde3511421ec60b2bcf0c17e49a7f5be404dd2f4d38274ec6182",
+    "evidence/controls/qdx-literals-20261007/render-review.json": "e2592e43cf7e0b6db4674ee00ec491bf68d15a8f90ff9a2a7a7f952089fd5ff7",
+    "evidence/controls/qdx-literals-20261007/source-AstProcessor.log": "269563583e697d500a745e8af1a1d751a7b21fae2987fafa41fb96cae20670fa",
+    "evidence/controls/qdx-literals-20261007/source-DocumentTable.log": "d1096c8be4132d39f3823f6d5e87c2c33604a1e7cf1047a1eb9a09c6f6c33934",
+    "evidence/controls/qdx-literals-20261007/source-QoreTokenizer.log": "32556c0592200668b97a92756739fab07df1dfe61396511dcd93c1a9d5f7701c",
+    "evidence/controls/qdx-literals-20261007/suite-status.json": "7ba5f3272ce382b0698fceffe115b7d4936f8e1364a1d32625a12c6fdbac3252",
+    "evidence/controls/qdx-literals-20261007/test-qdx-literal-fix4-20261007.py": "7358902b7852d8690c2ae5e4124e0feba2647f990593b585064a828f2c878774",
+    "evidence/controls/qdx-literals-20261007/test-qdx-literal-suite2-20261007.py": "be6104700bf20e933911cef9b6400b34d39bacb1687e89951fa61b7c33ecefcd"
+  }
+}

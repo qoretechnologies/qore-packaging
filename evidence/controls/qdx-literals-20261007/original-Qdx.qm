@@ -1,0 +1,2658 @@
+# -*- mode: qore; indent-tabs-mode: nil -*-
+#! @file Qdx.qm Qore user module for documentation generation with doxygen
+
+/*  Qdx.qm Copyright 2016 - 2026 Qore Technologies, s.r.o.
+
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the "Software"),
+    to deal in the Software without restriction, including without limitation
+    the rights to use, copy, modify, merge, publish, distribute, sublicense,
+    and/or sell copies of the Software, and to permit persons to whom the
+    Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in
+    all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
+*/
+
+%requires qore >= 0.9.13
+
+%modern
+
+%requires Util
+%requires QoreCodeFormat
+
+module Qdx {
+    version = "1.1.3";
+    desc    = "module providing support for documentation generation with doxygen";
+    author  = "David Nichols <david@qore.org>";
+    url     = "http://qore.org";
+    license = "MIT";
+}
+
+/** @mainpage Qdx Module
+
+    @tableofcontents
+
+    @section qdxintro Qdx Module Introduction
+
+    The %Qdx module provides support for documentation generation with doxygen from %Qore sources.
+
+    To use this module, use \c "%requires Qdx" in your code.
+
+    All the public symbols in the module are defined in the Qdx namespace
+
+    Classes:
+    - @ref Qdx::DocumentTableHelper "DocumentTableHelper"
+    - @ref Qdx::DocumentTableInputStreamLineIterator "DocumentTableInputStreamLineIterator"
+    - @ref Qdx::QorePostProcessingInputStreamLineIterator "QorePostProcessingInputStreamLineIterator"
+    - @ref Qdx::QorePostProcessingTexInputStreamLineIterator "QorePostProcessingTexInputStreamLineIterator"
+
+    Functions:
+    - @ref Qdx::formatParseDiagnostics() "formatParseDiagnostics()"
+
+    @section qdxrelnotes Release Notes
+
+    @subsection qdx_1_1_3 Qdx v1.1.3
+    - preserve MIME wildcard text in generated comments without starting nested Doxygen comments
+    - respect conditional parse directives during documentation builds using QORE_DOC_DEFINES
+    - preserve generic and callable type syntax in generated declarations so Doxygen indexes typed callback fields
+
+    @subsection qdx_1_1_2 Qdx v1.1.2
+    - added formatted astparser diagnostics for tooling that consumes Qore source
+
+    @subsection qdx_1_1_1 Qdx v1.1.1
+    - fixed stripping the final <tt>\\</tt> character in multi-line entries in tables
+      (<a href="https://github.com/qoretechnologies/qore/issues/4195>issue 4195</a>)
+
+    @subsection qdx_1_1 Qdx v1.1
+    - do not apply %Qore-specific post-processing doc fixes to non-Qore docs
+      (<a href="https://github.com/qoretechnologies/qore/issues/3985>issue 3985</a>)
+
+    @subsection qdx_1_0 Qdx v1.0
+    - the initial version of the Qdx module
+*/
+
+#! the Qdx namespace contains all the objects in the Qdx module
+public namespace Qdx {
+    #! @defgroup token_types Token Type Constants
+    #! These constants define the different token types recognized by @ref QoreTokenizer
+    #!@{
+
+    #! Single-quoted string literal ('...')
+    public const TOK_STRING_SINGLE = 1;
+    #! Double-quoted string literal ("...")
+    public const TOK_STRING_DOUBLE = 2;
+    #! Heredoc string (<<END...END)
+    public const TOK_HEREDOC = 3;
+    #! Regex pattern (/pattern/flags)
+    public const TOK_REGEX = 4;
+    #! Regex substitution (s/pattern/replacement/flags)
+    public const TOK_SUBSTITUTION = 5;
+    #! Transliteration (tr/chars/replacements/ or y/.../)
+    public const TOK_TRANSLITERATION = 6;
+    #! Line comment (# to end of line)
+    public const TOK_LINE_COMMENT = 7;
+    #! Block comment (/* ... */)
+    public const TOK_BLOCK_COMMENT = 8;
+    #! Left brace ({)
+    public const TOK_LBRACE = 9;
+    #! Right brace (})
+    public const TOK_RBRACE = 10;
+    #! Left parenthesis (()
+    public const TOK_LPAREN = 11;
+    #! Right parenthesis ())
+    public const TOK_RPAREN = 12;
+    #! Left bracket ([)
+    public const TOK_LBRACKET = 13;
+    #! Right bracket (])
+    public const TOK_RBRACKET = 14;
+    #! Regex match operator (=~)
+    public const TOK_REGEX_MATCH = 15;
+    #! Regex not-match operator (!~)
+    public const TOK_REGEX_NOT_MATCH = 16;
+    #! Loop iteration index ($#)
+    public const TOK_DOLLAR_HASH = 17;
+    #! Identifier (variable/function names)
+    public const TOK_IDENTIFIER = 18;
+    #! Whitespace (spaces, tabs)
+    public const TOK_WHITESPACE = 19;
+    #! Newline character
+    public const TOK_NEWLINE = 20;
+    #! Any other single character
+    public const TOK_OTHER = 21;
+    #! End of input
+    public const TOK_EOF = 22;
+
+    #!@}
+
+    #! Token information structure returned by @ref QoreTokenizer
+    public hashdecl TokenInfo {
+        #! Token type (one of the TOK_* constants)
+        int type;
+        #! The actual text of the token
+        string value;
+        #! Line number where the token starts (1-based)
+        int line;
+        #! Column number where the token starts (1-based)
+        int column;
+    }
+
+    #! Tokenizer for Qore source code
+    /** This class provides lexical analysis of Qore source code, correctly handling:
+        - String literals (single and double quoted)
+        - Heredoc strings
+        - Regular expressions and substitutions
+        - Comments (line and block)
+        - All bracket types
+        - Special tokens like $# (loop iteration index)
+
+        @par Example:
+        @code{.py}
+QoreTokenizer tok("if (x == 1) { # comment\n    return x;\n}");
+while (!tok.atEnd()) {
+    hash<TokenInfo> t = tok.next();
+    printf("Token: type=%d value=%y line=%d\n", t.type, t.value, t.line);
+}
+        @endcode
+    */
+    public class QoreTokenizer {
+        private {
+            #! Input text
+            string input;
+            #! Current position (byte index)
+            /** Switched from a character index to a byte index in %Qore 3.0 to
+                eliminate the O(N) UTF-8 walk that @c input[pos] performed on
+                every call (was O(N^2) over a tokenizer scan).  All accesses
+                go through @ref Qore::zzz8stringzzz9::getByte() which is O(1)
+                per call.  Multi-byte UTF-8 codepoints in the source are
+                preserved correctly because tokens of interest (delimiters,
+                operators, identifiers) are all ASCII-anchored, and multi-byte
+                bodies (string literals, comments) are passed through to the
+                token value byte-for-byte. */
+            int pos = 0;
+            #! Current line number (1-based)
+            int line = 1;
+            #! Current column number (1-based)
+            int column = 1;
+            #! Input length in bytes
+            int len;
+            #! Cached next token for peek()
+            *hash<TokenInfo> peeked;
+        }
+
+        #! Creates a tokenizer for the given input text
+        /** @param text the Qore source code to tokenize.  Converted to UTF-8
+            internally if necessary; the byte-indexed scan loop relies on the
+            UTF-8 invariant that ASCII bytes (0x00..0x7F) only appear as
+            themselves and never as part of a multi-byte sequence.  Source in
+            UTF-16 / UTF-32 / other non-ASCII-compatible encodings would
+            produce garbage tokens under byte-wise scanning, so we convert
+            once up front.
+        */
+        constructor(string text) {
+            input = text.encoding() == "UTF-8" ? text : convert_encoding(text, "UTF-8");
+            len = input.size();
+        }
+
+        #! Returns True if at end of input
+        bool atEnd() {
+            return !peeked && pos >= len;
+        }
+
+        #! Returns the next token without consuming it
+        /** @return the next token, or a TOK_EOF token if at end of input
+        */
+        hash<TokenInfo> peek() {
+            if (!peeked) {
+                peeked = scanToken();
+            }
+            return peeked;
+        }
+
+        #! Returns the next token and advances the position
+        /** @return the next token, or a TOK_EOF token if at end of input
+        */
+        hash<TokenInfo> next() {
+            if (peeked) {
+                hash<TokenInfo> result = peeked;
+                delete peeked;
+                return result;
+            }
+            return scanToken();
+        }
+
+        #! Skips tokens until a matching close brace is found
+        /** Starts with brace count of 1 (assumes we just passed an open brace).
+            Correctly handles nested braces and skips braces inside strings,
+            comments, and regex patterns.
+
+            @return the number of lines consumed (0-based, so 0 means same line)
+        */
+        int skipToCloseBrace() {
+            int start_line = line;
+            int brace_count = 1;
+
+            while (!atEnd()) {
+                hash<TokenInfo> tok = next();
+                switch (tok.type) {
+                    case TOK_LBRACE:
+                        ++brace_count;
+                        break;
+                    case TOK_RBRACE:
+                        if (!--brace_count) {
+                            return line - start_line;
+                        }
+                        break;
+                    case TOK_EOF:
+                        return line - start_line;
+                }
+            }
+            return line - start_line;
+        }
+
+        #! Returns the current line number
+        int getLine() {
+            return line;
+        }
+
+        #! Returns the current column number
+        int getColumn() {
+            return column;
+        }
+
+        #! Returns the byte at the current position as a 1-byte string, or NOTHING.
+        /** Replaces the old @c input[pos] indexing with the O(1)
+            @ref Qore::zzz8stringzzz9::getByte() primitive.  Returns a 1-byte
+            string (via @c chr) so existing comparisons like
+            @code{.py}c == "\n"@endcode and concatenations like
+            @code{.py}value += currentChar()@endcode continue to work
+            unchanged.
+
+            For UTF-8 multi-byte codepoints, the per-byte concat builds the
+            same target string as the original char-at-a-time concat — UTF-8
+            continuation bytes (0x80..0xBF) accumulate into the same byte
+            sequence the source contains.
+        */
+        private:internal *string currentChar() {
+            *int b = input.getByte(pos);
+            if (!exists b) {
+                return NOTHING;
+            }
+            return chr(b);
+        }
+
+        #! Returns the byte at offset from current position as a 1-byte string, or NOTHING.
+        private:internal *string peekChar(int offset = 1) {
+            *int b = input.getByte(pos + offset);
+            if (!exists b) {
+                return NOTHING;
+            }
+            return chr(b);
+        }
+
+        #! Advances position by count bytes, updating line/column.
+        /** Newline tracking: only ASCII LF (0x0A) increments the line
+            counter; any other byte advances the column.  This matches the
+            original behaviour because UTF-8 continuation bytes never have
+            value 0x0A. */
+        private:internal advance(int count = 1) {
+            for (int i = 0; i < count && pos < len; ++i) {
+                *int b = input.getByte(pos);
+                if (!exists b) {
+                    break;
+                }
+                if (b == 0x0a) {
+                    ++line;
+                    column = 1;
+                } else {
+                    ++column;
+                }
+                ++pos;
+            }
+        }
+
+        #! Scans and returns the next token
+        private:internal hash<TokenInfo> scanToken() {
+            if (pos >= len) {
+                return <TokenInfo>{
+                    "type": TOK_EOF,
+                    "value": "",
+                    "line": line,
+                    "column": column,
+                };
+            }
+
+            int start_line = line;
+            int start_column = column;
+            *string c = currentChar();
+
+            # Newline
+            if (c == "\n") {
+                advance();
+                return <TokenInfo>{
+                    "type": TOK_NEWLINE,
+                    "value": "\n",
+                    "line": start_line,
+                    "column": start_column,
+                };
+            }
+
+            # Whitespace (not newline)
+            if (c == " " || c == "\t" || c == "\r") {
+                string ws = "";
+                while (pos < len) {
+                    c = currentChar();
+                    if (c != " " && c != "\t" && c != "\r") {
+                        break;
+                    }
+                    ws += c;
+                    advance();
+                }
+                return <TokenInfo>{
+                    "type": TOK_WHITESPACE,
+                    "value": ws,
+                    "line": start_line,
+                    "column": start_column,
+                };
+            }
+
+            # Single-quoted string
+            if (c == "'") {
+                return scanSingleQuotedString();
+            }
+
+            # Double-quoted string
+            if (c == '"') {
+                return scanDoubleQuotedString();
+            }
+
+            # Line comment or $#
+            if (c == "#") {
+                return scanLineComment();
+            }
+
+            # Block comment or division
+            if (c == "/") {
+                if (peekChar() == "*") {
+                    return scanBlockComment();
+                }
+                # Just a forward slash (division, etc.)
+                advance();
+                return <TokenInfo>{
+                    "type": TOK_OTHER,
+                    "value": "/",
+                    "line": start_line,
+                    "column": start_column,
+                };
+            }
+
+            # $# (loop iteration index) or other $ usage
+            if (c == "$") {
+                if (peekChar() == "#") {
+                    advance(2);
+                    return <TokenInfo>{
+                        "type": TOK_DOLLAR_HASH,
+                        "value": "$#",
+                        "line": start_line,
+                        "column": start_column,
+                    };
+                }
+                advance();
+                return <TokenInfo>{
+                    "type": TOK_OTHER,
+                    "value": "$",
+                    "line": start_line,
+                    "column": start_column,
+                };
+            }
+
+            # Regex match operators
+            if (c == "=" && peekChar() == "~") {
+                advance(2);
+                return scanAfterRegexOperator(TOK_REGEX_MATCH, "=~", start_line, start_column);
+            }
+
+            if (c == "!" && peekChar() == "~") {
+                advance(2);
+                return scanAfterRegexOperator(TOK_REGEX_NOT_MATCH, "!~", start_line, start_column);
+            }
+
+            # Braces and brackets
+            if (c == "{") {
+                advance();
+                return <TokenInfo>{
+                    "type": TOK_LBRACE,
+                    "value": "{",
+                    "line": start_line,
+                    "column": start_column,
+                };
+            }
+            if (c == "}") {
+                advance();
+                return <TokenInfo>{
+                    "type": TOK_RBRACE,
+                    "value": "}",
+                    "line": start_line,
+                    "column": start_column,
+                };
+            }
+            if (c == "(") {
+                advance();
+                return <TokenInfo>{
+                    "type": TOK_LPAREN,
+                    "value": "(",
+                    "line": start_line,
+                    "column": start_column,
+                };
+            }
+            if (c == ")") {
+                advance();
+                return <TokenInfo>{
+                    "type": TOK_RPAREN,
+                    "value": ")",
+                    "line": start_line,
+                    "column": start_column,
+                };
+            }
+            if (c == "[") {
+                advance();
+                return <TokenInfo>{
+                    "type": TOK_LBRACKET,
+                    "value": "[",
+                    "line": start_line,
+                    "column": start_column,
+                };
+            }
+            if (c == "]") {
+                advance();
+                return <TokenInfo>{
+                    "type": TOK_RBRACKET,
+                    "value": "]",
+                    "line": start_line,
+                    "column": start_column,
+                };
+            }
+
+            # Heredoc
+            if (c == "<" && peekChar() == "<") {
+                return scanHeredoc();
+            }
+
+            # Identifier (starts with letter or underscore)
+            if (c =~ /[a-zA-Z_]/) {
+                return scanIdentifier();
+            }
+
+            # Any other character
+            advance();
+            return <TokenInfo>{
+                "type": TOK_OTHER,
+                "value": c,
+                "line": start_line,
+                "column": start_column,
+            };
+        }
+
+        #! Scans an identifier (variable/function/class names, keywords)
+        private:internal hash<TokenInfo> scanIdentifier() {
+            int start_line = line;
+            int start_column = column;
+            string value = "";
+
+            while (pos < len) {
+                *string c = currentChar();
+                if (c =~ /[a-zA-Z0-9_]/) {
+                    value += c;
+                    advance();
+                } else if (c == ":" && peekChar() == ":") {
+                    # Handle :: namespace separator
+                    value += "::";
+                    advance(2);
+                } else {
+                    break;
+                }
+            }
+
+            return <TokenInfo>{
+                "type": TOK_IDENTIFIER,
+                "value": value,
+                "line": start_line,
+                "column": start_column,
+            };
+        }
+
+        #! Scans a single-quoted string
+        private:internal hash<TokenInfo> scanSingleQuotedString() {
+            int start_line = line;
+            int start_column = column;
+            string value = "'";
+            advance();  # skip opening quote
+
+            while (pos < len) {
+                *string c = currentChar();
+                if (c == "'") {
+                    value += c;
+                    advance();
+                    break;
+                }
+                if (c == "\\") {
+                    value += c;
+                    advance();
+                    # In single-quoted strings, only \' and \\ are escapes
+                    if (pos < len) {
+                        value += currentChar();
+                        advance();
+                    }
+                } else {
+                    value += c;
+                    advance();
+                }
+            }
+
+            return <TokenInfo>{
+                "type": TOK_STRING_SINGLE,
+                "value": value,
+                "line": start_line,
+                "column": start_column,
+            };
+        }
+
+        #! Scans a double-quoted string
+        private:internal hash<TokenInfo> scanDoubleQuotedString() {
+            int start_line = line;
+            int start_column = column;
+            string value = '"';
+            advance();  # skip opening quote
+
+            while (pos < len) {
+                *string c = currentChar();
+                if (c == '"') {
+                    value += c;
+                    advance();
+                    break;
+                }
+                if (c == "\\") {
+                    value += c;
+                    advance();
+                    if (pos < len) {
+                        value += currentChar();
+                        advance();
+                    }
+                } else {
+                    value += c;
+                    advance();
+                }
+            }
+
+            return <TokenInfo>{
+                "type": TOK_STRING_DOUBLE,
+                "value": value,
+                "line": start_line,
+                "column": start_column,
+            };
+        }
+
+        #! Scans a line comment (# to end of line)
+        private:internal hash<TokenInfo> scanLineComment() {
+            int start_line = line;
+            int start_column = column;
+            string value = "#";
+            advance();  # skip #
+
+            while (pos < len) {
+                *string c = currentChar();
+                if (c == "\n") {
+                    break;
+                }
+                value += c;
+                advance();
+            }
+
+            return <TokenInfo>{
+                "type": TOK_LINE_COMMENT,
+                "value": value,
+                "line": start_line,
+                "column": start_column,
+            };
+        }
+
+        #! Scans a block comment (/* ... */)
+        private:internal hash<TokenInfo> scanBlockComment() {
+            int start_line = line;
+            int start_column = column;
+            string value = "/*";
+            advance(2);  # skip /*
+
+            while (pos < len) {
+                *string c = currentChar();
+                if (c == "*" && peekChar() == "/") {
+                    value += "*/";
+                    advance(2);
+                    break;
+                }
+                value += c;
+                advance();
+            }
+
+            return <TokenInfo>{
+                "type": TOK_BLOCK_COMMENT,
+                "value": value,
+                "line": start_line,
+                "column": start_column,
+            };
+        }
+
+        #! Scans after a regex operator (=~ or !~) to find the pattern
+        private:internal hash<TokenInfo> scanAfterRegexOperator(int op_type, string op_value, int start_line, int start_column) {
+            # Skip whitespace to find the regex
+            while (pos < len) {
+                *string c = currentChar();
+                if (c != " " && c != "\t") {
+                    break;
+                }
+                advance();
+            }
+
+            if (pos >= len) {
+                return <TokenInfo>{
+                    "type": op_type,
+                    "value": op_value,
+                    "line": start_line,
+                    "column": start_column,
+                };
+            }
+
+            *string c = currentChar();
+
+            # Check for s (substitution), tr or y (transliteration)
+            if (c == "s" && peekChar() =~ /[^a-zA-Z0-9_]/) {
+                return scanSubstitution(start_line, start_column);
+            }
+            if ((c == "t" && peekChar() == "r" && peekChar(2) =~ /[^a-zA-Z0-9_]/) ||
+                (c == "y" && peekChar() =~ /[^a-zA-Z0-9_]/)) {
+                return scanTransliteration(start_line, start_column);
+            }
+
+            # Regular regex pattern
+            if (c == "/") {
+                return scanRegex(start_line, start_column);
+            }
+
+            # Not followed by a regex - just return the operator
+            return <TokenInfo>{
+                "type": op_type,
+                "value": op_value,
+                "line": start_line,
+                "column": start_column,
+            };
+        }
+
+        #! Scans a regex pattern (/pattern/flags)
+        private:internal hash<TokenInfo> scanRegex(int start_line, int start_column) {
+            string value = "/";
+            advance();  # skip opening /
+
+            while (pos < len) {
+                *string c = currentChar();
+                if (c == "/") {
+                    value += c;
+                    advance();
+                    # Scan flags
+                    while (pos < len && currentChar() =~ /[gimsxn]/) {
+                        value += currentChar();
+                        advance();
+                    }
+                    break;
+                }
+                if (c == "\\") {
+                    value += c;
+                    advance();
+                    if (pos < len) {
+                        value += currentChar();
+                        advance();
+                    }
+                } else if (c == "\n") {
+                    # Regex can't span lines without escape
+                    break;
+                } else {
+                    value += c;
+                    advance();
+                }
+            }
+
+            return <TokenInfo>{
+                "type": TOK_REGEX,
+                "value": value,
+                "line": start_line,
+                "column": start_column,
+            };
+        }
+
+        #! Scans a substitution (s/pattern/replacement/flags)
+        private:internal hash<TokenInfo> scanSubstitution(int start_line, int start_column) {
+            string value = "s";
+            advance();  # skip 's'
+
+            *string delim = currentChar();
+            if (!delim) {
+                return <TokenInfo>{
+                    "type": TOK_OTHER,
+                    "value": value,
+                    "line": start_line,
+                    "column": start_column,
+                };
+            }
+
+            value += delim;
+            advance();
+
+            # Scan pattern
+            int pattern_count = 0;
+            while (pos < len) {
+                *string c = currentChar();
+                if (c == "\\") {
+                    value += c;
+                    advance();
+                    if (pos < len) {
+                        value += currentChar();
+                        advance();
+                    }
+                } else if (c == delim) {
+                    value += c;
+                    advance();
+                    ++pattern_count;
+                    if (pattern_count >= 2) {
+                        # Scan flags
+                        while (pos < len && currentChar() =~ /[gimsxn]/) {
+                            value += currentChar();
+                            advance();
+                        }
+                        break;
+                    }
+                } else {
+                    value += c;
+                    advance();
+                }
+            }
+
+            return <TokenInfo>{
+                "type": TOK_SUBSTITUTION,
+                "value": value,
+                "line": start_line,
+                "column": start_column,
+            };
+        }
+
+        #! Scans a transliteration (tr/chars/replacements/ or y/.../)
+        private:internal hash<TokenInfo> scanTransliteration(int start_line, int start_column) {
+            string value = "";
+            *string c = currentChar();
+
+            if (c == "t") {
+                value = "tr";
+                advance(2);
+            } else {
+                value = "y";
+                advance();
+            }
+
+            *string delim = currentChar();
+            if (!delim) {
+                return <TokenInfo>{
+                    "type": TOK_OTHER,
+                    "value": value,
+                    "line": start_line,
+                    "column": start_column,
+                };
+            }
+
+            value += delim;
+            advance();
+
+            # Scan two patterns
+            int pattern_count = 0;
+            while (pos < len) {
+                c = currentChar();
+                if (c == "\\") {
+                    value += c;
+                    advance();
+                    if (pos < len) {
+                        value += currentChar();
+                        advance();
+                    }
+                } else if (c == delim) {
+                    value += c;
+                    advance();
+                    ++pattern_count;
+                    if (pattern_count >= 2) {
+                        break;
+                    }
+                } else {
+                    value += c;
+                    advance();
+                }
+            }
+
+            return <TokenInfo>{
+                "type": TOK_TRANSLITERATION,
+                "value": value,
+                "line": start_line,
+                "column": start_column,
+            };
+        }
+
+        #! Scans a heredoc (<<MARKER...MARKER)
+        private:internal hash<TokenInfo> scanHeredoc() {
+            int start_line = line;
+            int start_column = column;
+            string value = "<<";
+            advance(2);  # skip <<
+
+            # Get the marker
+            string marker = "";
+            while (pos < len) {
+                *string c = currentChar();
+                if (c =~ /[a-zA-Z0-9_]/) {
+                    marker += c;
+                    value += c;
+                    advance();
+                } else {
+                    break;
+                }
+            }
+
+            if (marker == "") {
+                # Not a heredoc, just <<
+                return <TokenInfo>{
+                    "type": TOK_OTHER,
+                    "value": "<<",
+                    "line": start_line,
+                    "column": start_column,
+                };
+            }
+
+            # Find the end marker (must be at start of line)
+            bool at_line_start = False;
+            while (pos < len) {
+                *string c = currentChar();
+
+                if (c == "\n") {
+                    value += c;
+                    at_line_start = True;
+                    advance();
+                    continue;
+                }
+
+                if (at_line_start) {
+                    # Check if this line starts with the marker.
+                    # Marker is ASCII (only [a-zA-Z0-9_] chars), so byte-wise
+                    # comparison is correct and matches the original
+                    # character-wise compare.  Both pos and marker are now
+                    # byte-indexed; size() == length() for ASCII markers.
+                    int marker_size = marker.size();
+                    bool found = True;
+                    for (int i = 0; i < marker_size; ++i) {
+                        if (pos + i >= len || input.getByte(pos + i) != marker.getByte(i)) {
+                            found = False;
+                            break;
+                        }
+                    }
+                    if (found) {
+                        # Check that marker is followed by non-identifier char or EOL
+                        int end_pos = pos + marker_size;
+                        if (end_pos >= len) {
+                            # Include the marker in the value (don't add 'c' first)
+                            value += marker;
+                            advance(marker_size);
+                            break;
+                        }
+                        # ASCII identifier-byte test: [a-zA-Z0-9_]
+                        int b = input.getByte(end_pos);
+                        bool is_ident = (b >= ord("a") && b <= ord("z"))
+                            || (b >= ord("A") && b <= ord("Z"))
+                            || (b >= ord("0") && b <= ord("9"))
+                            || b == ord("_");
+                        if (!is_ident) {
+                            value += marker;
+                            advance(marker_size);
+                            break;
+                        }
+                    }
+                }
+
+                # Only add character if not part of end marker
+                value += c;
+                at_line_start = False;
+                advance();
+            }
+
+            return <TokenInfo>{
+                "type": TOK_HEREDOC,
+                "value": value,
+                "line": start_line,
+                "column": start_column,
+            };
+        }
+    }
+
+    #! Counts open and close braces in a string using proper tokenization
+    /** This function correctly handles braces inside strings, comments, and regex patterns,
+        and correctly handles $# (loop iteration index) vs # (line comment start).
+
+        @param text the text to analyze
+        @return a hash with "open" and "close" keys containing the brace counts
+
+        @par Example:
+        @code{.py}
+hash<auto> counts = count_braces("if (x) { list[$#] }");
+printf("open: %d, close: %d\n", counts.open, counts.close);  # open: 1, close: 1
+        @endcode
+    */
+    public hash<auto> sub count_braces(string text) {
+        QoreTokenizer tok(text);
+        int open_braces = 0;
+        int close_braces = 0;
+
+        while (!tok.atEnd()) {
+            hash<TokenInfo> t = tok.next();
+            switch (t.type) {
+                case TOK_LBRACE:
+                    ++open_braces;
+                    break;
+                case TOK_RBRACE:
+                    ++close_braces;
+                    break;
+            }
+        }
+
+        return {
+            "open": open_braces,
+            "close": close_braces,
+        };
+    }
+
+    #! Counts all bracket types in a string using proper tokenization
+    /** This function correctly handles brackets inside strings, comments, and regex patterns,
+        and correctly handles $# (loop iteration index) vs # (line comment start).
+
+        @param text the text to analyze
+        @return a hash with counts for braces, parentheses, and brackets
+
+        @par Example:
+        @code{.py}
+hash<auto> counts = count_all_brackets("if (x[$#]) { y; }");
+printf("open_braces: %d, close_braces: %d\n", counts.open_braces, counts.close_braces);
+printf("open_parens: %d, close_parens: %d\n", counts.open_parens, counts.close_parens);
+        @endcode
+    */
+    public hash<auto> sub count_all_brackets(string text) {
+        QoreTokenizer tok(text);
+        int open_braces = 0;
+        int close_braces = 0;
+        int open_parens = 0;
+        int close_parens = 0;
+        int open_brackets = 0;
+        int close_brackets = 0;
+
+        while (!tok.atEnd()) {
+            hash<TokenInfo> t = tok.next();
+            switch (t.type) {
+                case TOK_LBRACE:
+                    ++open_braces;
+                    break;
+                case TOK_RBRACE:
+                    ++close_braces;
+                    break;
+                case TOK_LPAREN:
+                    ++open_parens;
+                    break;
+                case TOK_RPAREN:
+                    ++close_parens;
+                    break;
+                case TOK_LBRACKET:
+                    ++open_brackets;
+                    break;
+                case TOK_RBRACKET:
+                    ++close_brackets;
+                    break;
+            }
+        }
+
+        return {
+            "open_braces": open_braces,
+            "close_braces": close_braces,
+            "open_parens": open_parens,
+            "close_parens": close_parens,
+            "open_brackets": open_brackets,
+            "close_brackets": close_brackets,
+        };
+    }
+
+    #! converts specially-formatted text in the input to HTML tables
+    /** A table row is a line whose first non-whitespace character is \c "|"; cells are separated by
+        \c "|", and a header cell is marked by a leading \c "!". The format and both of its
+        implementations (this class and \c get_table_cells() in \c lib/qpp.cpp) are described in
+        \c design/doc-tables.md.
+
+        Rows that do not follow the format are reported by @ref takeWarnings(); note that this class
+        converts any \c "|"-led line to a table, while \c qpp only recognizes a table whose header
+        row starts with \c "|!", so a table written without a header row renders as literal text in
+        \c .qpp and \c .dox.tmpl sources.
+     */
+    public class DocumentTableHelper {
+        private:internal {
+            bool css = False;
+            bool inTable = False;
+            #! @ref True "True" while inside a <tt>\@code</tt> or <tt>\@verbatim</tt> block
+            bool inCode = False;
+            #! the number of cells in the current table's header row
+            int headerCells = 0;
+            #! the name of the source being processed, used in warning text
+            *string source;
+            #! warnings accumulated since the last takeWarnings() call
+            list<string> warnings();
+        }
+
+        # no public members
+        public {}
+
+        #! Creates the object
+        /** @param source the name of the source being processed; used in warning text
+         */
+        constructor(*string source) {
+            self.source = source;
+        }
+
+        #! Returns and clears the table format warnings accumulated so far
+        /** @return the warnings accumulated since the last call to this method
+
+            @note each warning is a self-contained message that already identifies the source and
+            line where possible
+         */
+        list<string> takeWarnings() {
+            list<string> rv = warnings;
+            warnings = ();
+            return rv;
+        }
+
+        #! Splits a table row into its cells
+        /** the rules implemented here must stay in sync with \c get_table_cells() in
+            \c lib/qpp.cpp; see \c design/doc-tables.md:
+            - a backslash escapes the following character, so \c "\|" is a literal pipe in cell text
+            - text between \c "@code" and \c "@endcode" is not scanned for delimiters
+            - text in double quotes is not scanned for delimiters
+            - any other \c "|" separates two cells
+
+            @param row the row text with the leading \c "|" already removed
+
+            @return the cell text in row order; cells are not trimmed
+         */
+        static list<string> getCells(string row) {
+            list<string> cells();
+            string cur = "";
+            bool code = False;
+            bool quote = False;
+            int len = row.length();
+            for (int i = 0; i < len;) {
+                string c = row[i];
+                if (c == "@") {
+                    if (code) {
+                        if (row.substr(i, 8) == "@endcode") {
+                            code = False;
+                            cur += "@endcode";
+                            i += 8;
+                            continue;
+                        }
+                    } else if (row.substr(i, 5) == "@code") {
+                        code = True;
+                        cur += "@code";
+                        i += 5;
+                        continue;
+                    }
+                    cur += c;
+                    ++i;
+                    continue;
+                }
+                if (!code) {
+                    if (c == "\\") {
+                        cur += row.substr(i, 2);
+                        i += 2;
+                        continue;
+                    }
+                    if (c == "\"") {
+                        quote = !quote;
+                    } else if (!quote && c == "|") {
+                        cells += cur;
+                        cur = "";
+                        ++i;
+                        continue;
+                    }
+                }
+                cur += c;
+                ++i;
+            }
+            cells += cur;
+            return cells;
+        }
+
+        #! Returns @ref True "True" if the row is a Markdown column-alignment row (ex: \c "---|---")
+        /** @param row the row text with the leading \c "|" already removed
+
+            @return @ref True "True" if the row is a Markdown column-alignment row
+         */
+        static bool isMarkdownSeparatorRow(string row) {
+            return row =~ /^[-:+| \t]*-[-:+| \t]*$/;
+        }
+
+        #! accepts an input line and returns the formatted output line
+        /** @param line the input line
+            @param lineno the 1-based line number of \a line in the source, if known; used in
+            warning text
+
+            @return the formatted output line
+         */
+        string process(string line, *int lineno) {
+            if (line =~ /@page/) {
+                #printf("PAGE: css: %n %s", css, line);#exit(1);
+                css = False;
+            }
+            #printf("XXX %s", line);
+
+            # text in @code and @verbatim blocks is passed through unchanged; ASCII art there
+            # regularly uses "|" and must not be converted to a table
+            if (inCode) {
+                if (line =~ /[@\\]end(code|verbatim)\b/) {
+                    inCode = False;
+                }
+                return line;
+            }
+            if (line =~ /[@\\](code|verbatim)\b/ && line !~ /[@\\]end(code|verbatim)\b/) {
+                inCode = True;
+                if (inTable) {
+                    inTable = False;
+                    return "    </table>\n" + line;
+                }
+                return line;
+            }
+
+            if (line !~ /^(\s)*\|/) {
+                if (inTable) {
+                    inTable = False;
+                    return "    </table>\n" + line;
+                }
+                return line;
+            }
+
+            string str;
+
+            bool header = !inTable;
+            if (header) {
+                if (!css) {
+                    str = "    @htmlonly <style><!-- td.qore { background-color: #5b9409; color: white; } --></style> @endhtmlonly\n";
+                    css = True;
+                }
+                str += "    <table>\n";
+            }
+
+            inTable = True;
+
+            str += "      <tr>\n";
+
+            trim line;
+            splice line, 0, 1;
+
+            list<string> cells = getCells(line);
+            checkRow(line, cells, header, lineno);
+
+            foreach string cell in (cells) {
+                trim cell;
+                if (cell =~ /^!/)
+                    str += sprintf("        <td class=\"qore\"><b>%s</b></td>\n", substr(cell, 1));
+                else
+                    str += sprintf("        <td>%s</td>\n", cell);
+            }
+            str += "      </tr>\n";
+            return str;
+        }
+
+        #! Reports any table format problems in the given row
+        /** @param row the row text with the leading \c "|" already removed
+            @param cells the cells parsed from \a row
+            @param header @ref True "True" if \a row is the first row of a table
+            @param lineno the 1-based line number of \a row in the source, if known
+         */
+        private:internal checkRow(string row, list<string> cells, bool header, *int lineno) {
+            if (isMarkdownSeparatorRow(row)) {
+                warn(lineno, row, "Markdown column-alignment row in a Qore table; delete it and "
+                    "mark header cells with \"|!\" instead");
+                return;
+            }
+
+            # a trailing delimiter emits a spurious empty final cell
+            if (row =~ /(^|[^\\])\|[ \t]*$/) {
+                warn(lineno, row, "row ends with \"|\"; the Qore table format has no trailing "
+                    "delimiter, so an empty final cell is emitted");
+            }
+
+            if (header) {
+                headerCells = cells.size();
+                if (!(cells[0] =~ /^!/)) {
+                    if (trim(cells[0]) =~ /^!/) {
+                        warn(lineno, row, "header cell has whitespace before \"!\"; qpp only "
+                            "recognizes a header cell when \"!\" immediately follows \"|\"");
+                    } else {
+                        warn(lineno, row, "table has no header row; qpp does not convert a table "
+                            "at all unless its header row starts with \"|!\"");
+                    }
+                }
+            } else if (cells.size() != headerCells) {
+                warn(lineno, row, sprintf("row has %d cells but the header row has %d; escape "
+                    "literal delimiters in cell text as \"\\|\"", cells.size(), headerCells));
+            }
+        }
+
+        #! Adds a table format warning
+        /** @param lineno the 1-based line number of \a row in the source, if known
+            @param row the offending row text
+            @param msg the warning text
+         */
+        private:internal warn(*int lineno, string row, string msg) {
+            string loc = source ?? "<input>";
+            if (lineno) {
+                loc += sprintf(":%d", lineno);
+            }
+            warnings += sprintf("%s: doc table: %s\n    row: |%s", loc, msg, row);
+        }
+    }
+
+    #! a line-based input stream iterator that converts specially-formatted input line text to HTML table output
+    public class DocumentTableInputStreamLineIterator inherits Qore::InputStreamLineIterator, private:internal DocumentTableHelper {
+        private {
+            #! Trim the input text
+            bool do_trim;
+        }
+
+        /** Creates the DocumentTableInputStreamLineIterator for iterating over the given
+            @ref Qore::InputStream "InputStream"
+
+            @param is the @ref Qore::InputStream "InputStream" to iterate over
+            @param encoding character encoding of the data from input stream; if not ASCII-compatible, all data will
+            be converted to UTF-8; if not present, the @ref default_encoding "default character encoding" is assumed
+            @param eol the optional end of line character(s) to use to detect lines in the data; if this string is not
+            passed, then the end of line character(s) are detected automatically, and can be either \c "\n", \c "\r",
+            or \c "\r\n"
+            @param do_trim if @ref True "True" the string return values for the lines iterated will be trimmed of the
+            \a eol bytes
+
+            @throw ENCODING-CONVERSION-ERROR this exception could be thrown if the \a eol argument has a different
+            @ref character_encoding "character encoding" from the data's and an error occurs during encoding
+            conversion
+
+            @param source the name of the source being iterated; used in table format warning text
+
+            @note table cell docs may span multiple lines as long as the lines end in a <tt>\\</tt> character
+        */
+        constructor(Qore::InputStream is, *string encoding, *string eol, bool do_trim = True,
+                    *string source)
+                : InputStreamLineIterator(input_stream: is, encoding: encoding, line_separator: eol,
+                    trim_line: do_trim), DocumentTableHelper(source) {
+            self.do_trim = do_trim;
+        }
+
+        #! Returns and clears the table format warnings accumulated so far
+        /** @return the warnings accumulated since the last call to this method
+
+            @see @ref Qdx::DocumentTableHelper::takeWarnings() "DocumentTableHelper::takeWarnings()"
+         */
+        list<string> takeTableWarnings() {
+            return takeWarnings();
+        }
+
+        #! Returns the current line in the data or throws an \c ITERATOR-ERROR exception if the iterator is invalid
+        /** @par Example:
+            @code
+            map printf("+ %y\n", i.getLine()), i;
+            @endcode
+
+            @return the current line in the data or throws an \c ITERATOR-ERROR exception if the iterator is invalid
+
+            @throw ITERATOR-ERROR the iterator is not pointing at a valid element
+            @throw ITERATOR-THREAD-ERROR this exception is thrown if this method is called from any thread other than
+            the thread that created the object
+            @throw LINE-CONTINUATION-ERROR thrown if the last line ends in a line continuation character (<tt>\\</tt>)
+
+            @see getValue()
+
+            @note table cell docs may span multiple lines as long as the lines end in a <tt>\\</tt> character
+        */
+        string getLine() {
+            return getValue();
+        }
+
+        #! Returns the current line in the data or throws an \c ITERATOR-ERROR exception if the iterator is invalid
+        /** @par Example:
+            @code
+            map printf("+ %y\n", i.getValue()), i;
+            @endcode
+
+            @return the current line in the data or throws an \c ITERATOR-ERROR exception if the iterator is invalid
+
+            @throw ITERATOR-ERROR the iterator is not pointing at a valid element
+            @throw ITERATOR-THREAD-ERROR this exception is thrown if this method is called from any thread other than
+            the thread that created the object
+            @throw LINE-CONTINUATION-ERROR thrown if the last line ends in a line continuation character (<tt>\\</tt>)
+
+            @see getLine()
+
+            @note table cell docs may span multiple lines as long as the lines end in a <tt>\\</tt> character
+        */
+        string getValue() {
+            int lineno = index();
+            string line = InputStreamLineIterator::getValue();
+            while (line =~ /\\$/) {
+                if (!next()) {
+                    throw "LINE-CONTINUATION-ERROR", "line ends in '\\' at the end of the input stream";
+                }
+
+                splice line, (do_trim ? -1 : -2), 1;
+                line += InputStreamLineIterator::getValue();
+            }
+            return process(line, lineno);
+        }
+    }
+
+    #! a line-based input stream iterator for post-processing HTML and JS files created for Qore documentation
+    public class QorePostProcessingInputStreamLineIterator inherits Qore::InputStreamLineIterator {
+        private:internal {
+            bool checkFile;
+            bool isQore = True;
+        }
+
+        /** Creates the object for iterating over the given @ref Qore::InputStream "InputStream"
+
+            @param is the @ref Qore::InputStream "InputStream" to iterate over
+            @param encoding character encoding of the data from input stream; if not ASCII-compatible, all data will
+            be converted to UTF-8; if not present, the @ref default_encoding "default character encoding" is assumed
+            @param eol the optional end of line character(s) to use to detect lines in the data; if this string is not
+            passed, then the end of line character(s) are detected automatically, and can be either \c "\n", \c "\r",
+            or \c "\r\n"
+            @param do_trim if @ref True "True" the string return values for the lines iterated will be trimmed of the
+            \a eol bytes
+
+            @throw ENCODING-CONVERSION-ERROR this exception could be thrown if the \a eol argument has a different
+            @ref character_encoding "character encoding" from the data's and an error occurs during encoding
+            conversion
+         */
+        constructor(Qore::InputStream is, *string encoding, *string eol, bool do_trim = False)
+                : InputStreamLineIterator(input_stream: is, encoding: encoding, line_separator: eol,
+                    trim_line: do_trim) {
+        }
+
+        /** Creates the object for iterating over the given @ref Qore::StreamReader "StreamReader"
+
+            @param sr the @ref Qore::StreamReader "StreamReader" to iterate over
+            @param eol the optional end of line character(s) to use to detect lines in the data; if this string is not
+            passed, then the end of line character(s) are detected automatically, and can be either \c "\n", \c "\r",
+            or \c "\r\n"
+            @param do_trim if @ref True "True" the string return values for the lines iterated will be trimmed of the
+            \a eol bytes
+
+            @throw ENCODING-CONVERSION-ERROR this exception could be thrown if the \a eol argument has a different
+            @ref character_encoding "character encoding" from the data's and an error occurs during encoding
+            conversion
+         */
+        constructor(Qore::StreamReader sr, *string eol, bool do_trim = False)
+                : InputStreamLineIterator(stream_reader: sr, line_separator: eol, trim_line: do_trim) {
+        }
+
+        #! Returns the processed version of the current line in the input data or throws an \c ITERATOR-ERROR exception if the iterator is invalid
+        /** @par Example:
+            @code
+            map printf("+ %y\n", i.getLine()), i;
+            @endcode
+
+            @return the current line in the data or throws an \c ITERATOR-ERROR exception if the iterator is invalid
+
+            @throw ITERATOR-ERROR the iterator is not pointing at a valid element
+            @throw ITERATOR-THREAD-ERROR this exception is thrown if this method is called from any thread other than
+            the thread that created the object
+
+            @see getValue()
+         */
+        string getLine() {
+            return getValue();
+        }
+
+        #! Returns the processed version of the current line in the input data or throws an \c ITERATOR-ERROR exception if the iterator is invalid
+        /** @par Example:
+            @code
+            map printf("+ %y\n", i.getValue()), i;
+            @endcode
+
+            @return the current line in the data or throws an \c ITERATOR-ERROR exception if the iterator is invalid
+
+            @throw ITERATOR-ERROR the iterator is not pointing at a valid element
+            @throw ITERATOR-THREAD-ERROR this exception is thrown if this method is called from any thread other than
+            the thread that created the object
+
+            @see getLine()
+         */
+        string getValue() {
+            string line = InputStreamLineIterator::getValue();
+
+            if (isQore) {
+                if (!checkFile && line =~ /was generated from the following file:/) {
+                    checkFile = True;
+                } else if (checkFile && line =~ /\.(java|py)<\/li>/) {
+                    isQore = False;
+                }
+                /*
+                if (isQore && line =~ /\w+_1_1[a-z]/) {
+                    isQore = False;
+                }
+                */
+            }
+
+            if (isQore) {
+                line =~ s/__1_/[/g;
+                line =~ s/__2_/]/g;
+                line =~ s/__3_/*/g; #//;
+                line =~ s/__4_/./g;
+                line =~ s/__5_/-/g;
+                line =~ s/__6_//g;
+                line =~ s/__7_ /*/g; #//;
+                line =~ s/__8_/$/g;
+
+                # remove "inline" tags
+                line =~ s/\[inline\]//g;
+                line =~ s/, inline\]/]/g;
+                line =~ s/\[inline, /[/g;
+
+                line =~ s/"Qore::zzz8([a-z]+)zzz9"/"<$1>"/g;
+                line =~ s/>([^<>]*)Qore::zzz8([a-z]+)zzz9([^<>]*)<\//>$1&lt;$2&gt;$3<\//g;
+                line =~ s/>([^<>]*)zzz8([a-z]+)zzz9([^<>]*)<\//>$1&lt;$2&gt;$3<\//g;
+                line =~ s/for Qore::zzz8([a-z]+)zzz9:/for Qore::&lt;$1&gt;:/g;
+                line =~ s/'Qore::zzz8([a-z]+)zzz9'/'&lt;$1&gt;'/g;
+                line =~ s/"zzz8([a-z]+)zzz9"/"<$1>"/g;
+                line =~ s/'Qore::zzz8([a-z]+)zzz9::([^']+)\(([^\)]*)\)'/'Qore::&lt;$1&gt;::$2($3)'/g;
+                line =~ s/'zzz8([a-z]+)zzz9'/'$1'/g;
+                line =~ s/([^a-zA-Z0-9_])[Ss]truct /$1hashdecl /g;
+
+                # rename "Member Functions" to "Member Methods"
+                line =~ s/Member Functions/Member Methods/g;
+
+                # convert private -> private:internal
+                line =~ s/<span class="mlabel">private<\/span>/<span class="mlabel">private:internal<\/span>/g;
+                line =~ s/Private (Member|Attribute)/Private:Internal $1/g;
+
+                # convert protected -> private
+                line =~ s/<span class="mlabel">protected<\/span>/<span class="mlabel">private<\/span>/g;
+                line =~ s/Protected (Member|Attribute)/Private $1/g;
+            }
+
+            # remove <%-- ... --%> comments to allow for invisible spacing, to allow for "*/" to be output in
+            # particular places, for example
+            line =~ s/&lt;%--.*--%&gt;//g;
+            line =~ s/&lt;!--%.*%--&gt;//g;
+
+            return line;
+        }
+    }
+
+    #! a line-based input stream iterator for post-processing HTML and JS files created for Qore documentation
+    public class QorePostProcessingTexInputStreamLineIterator inherits QorePostProcessingInputStreamLineIterator {
+        /** Creates the object for iterating over the given @ref Qore::InputStream "InputStream"
+
+            @param is the @ref Qore::InputStream "InputStream" to iterate over
+            @param encoding character encoding of the data from input stream; if not ASCII-compatible, all data will
+            be converted to UTF-8; if not present, the @ref default_encoding "default character encoding" is assumed
+            @param eol the optional end of line character(s) to use to detect lines in the data; if this string is not
+            passed, then the end of line character(s) are detected automatically, and can be either \c "\n", \c "\r",
+            or \c "\r\n"
+            @param do_trim if @ref True "True" the string return values for the lines iterated will be trimmed of the
+             \a eol bytes
+
+            @throw ENCODING-CONVERSION-ERROR this exception could be thrown if the \a eol argument has a different
+            @ref character_encoding "character encoding" from the data's and an error occurs during encoding conversion
+         */
+        constructor(Qore::InputStream is, *string encoding, *string eol, bool do_trim = False) : QorePostProcessingInputStreamLineIterator(is, encoding, eol, do_trim) {
+        }
+
+        /** Creates the object for iterating over the given @ref Qore::StreamReader "StreamReader"
+
+            @param sr the @ref Qore::StreamReader "StreamReader" to iterate over
+            @param eol the optional end of line character(s) to use to detect lines in the data; if this string is not
+            passed, then the end of line character(s) are detected automatically, and can be either \c "\n", \c "\r",
+            or \c "\r\n"
+            @param do_trim if @ref True "True" the string return values for the lines iterated will be trimmed of the
+            \a eol bytes
+
+            @throw ENCODING-CONVERSION-ERROR this exception could be thrown if the \a eol argument has a different
+            @ref character_encoding "character encoding" from the data's and an error occurs during encoding
+            conversion
+         */
+        constructor(Qore::StreamReader sr, *string eol, bool do_trim = False) : QorePostProcessingInputStreamLineIterator(sr, eol, do_trim) {
+        }
+
+        #! Returns the processed version of the current line in the input data or throws an \c ITERATOR-ERROR exception if the iterator is invalid
+        /** @par Example:
+            @code
+            map printf("+ %y\n", i.getLine()), i;
+            @endcode
+
+            @return the current line in the data or throws an \c ITERATOR-ERROR exception if the iterator is invalid
+
+            @throw ITERATOR-ERROR the iterator is not pointing at a valid element
+            @throw ITERATOR-THREAD-ERROR this exception is thrown if this method is called from any thread other than
+            the thread that created the object
+
+            @see getValue()
+         */
+        string getLine() {
+            return getValue();
+        }
+
+        #! Returns the processed version of the current line in the input data or throws an \c ITERATOR-ERROR exception if the iterator is invalid
+        /** @par Example:
+            @code
+            map printf("+ %y\n", i.getValue()), i;
+            @endcode
+
+            @return the current line in the data or throws an \c ITERATOR-ERROR exception if the iterator is invalid
+
+            @throw ITERATOR-ERROR the iterator is not pointing at a valid element
+            @throw ITERATOR-THREAD-ERROR this exception is thrown if this method is called from any thread other than
+            the thread that created the object
+
+            @see getLine()
+         */
+        string getValue() {
+            string line = QorePostProcessingInputStreamLineIterator::getValue();
+
+            line =~ s/\\_\\-\\_\\-1\\_\\-/[/g;
+            line =~ s/\\_\\-\\_\\-2\\_\\-/]/g;
+            line =~ s/\\_\\-\\_\\-4\\_\\-/./g;
+            line =~ s/\\_\\-\\_\\-5\\_\\-/-/g;
+            line =~ s/\\_\\-\\_\\-6\\_\\-/\$/g;
+            line =~ s/\\_\\-\\_\\-7\\_\\-/*/g; #//;
+
+            return line;
+        }
+    }
+
+    #! Strips conditional compilation directives from source code
+    /** Removes \c %ifdef, \c %ifndef, \c %if, \c %elif, \c %else, and \c %endif
+        lines from the source while preserving line numbers (lines are replaced
+        with empty strings).
+
+        This is needed for the tree-sitter backend where conditional directives are
+        handled as extras and cause code between \c %ifdef and \c %else / \c %endif
+        to be invisible to the parser. Stripping these directives ensures all code
+        branches are parsed.
+
+        @param source the Qore source code
+        @return the source with conditional directive lines replaced by empty lines
+    */
+    public string sub stripConditionalDirectives(string source) {
+        return regex_subst(source, "^%(ifdef|ifndef|if |elif |else|endif).*", "",
+            RE_MultiLine | RE_Global);
+    }
+
+    #! Formats astparser diagnostics for output
+    /** @param path source path used in formatted output
+        @param code source contents
+        @param diagnostics list of diagnostics from \c AstParser::getDiagnostics()
+        @param max_entries optional max number of diagnostics to format
+        @return formatted diagnostics string for logging
+        @par Example:
+        @code{.py}
+AstParser parser();
+parser.parseString(code);
+*list diagnostics = parser.getDiagnostics();
+if (exists(diagnostics)) {
+    string message = Qdx::formatParseDiagnostics("example.qm", code, diagnostics);
+    printf("%s", message);
+}
+        @endcode
+    */
+    public string sub formatParseDiagnostics(string path, string code, list<auto> diagnostics, *int max_entries) {
+        list<string> lines = code.split("\n");
+        int limit = max_entries ?? diagnostics.size();
+        if (limit < 0) {
+            limit = 0;
+        }
+
+        string output = "";
+        int count = 0;
+        foreach hash<auto> diag in (diagnostics) {
+            if (count >= limit) {
+                break;
+            }
+
+            hash<auto> range = diag.range;
+            hash<auto> start = range.start;
+            int line_index = start.line;
+            int col_index = start.character;
+            if (line_index < 0) {
+                line_index = 0;
+            }
+            if (col_index < 0) {
+                col_index = 0;
+            }
+
+            int line_no = line_index + 1;
+            int col_no = col_index + 1;
+            string message = diag.message;
+            string line_text = "";
+            if (line_index < lines.size()) {
+                line_text = lines[line_index];
+            }
+
+            output += sprintf("%s:%d:%d: %s\n", path, line_no, col_no, message);
+            if (line_text != "") {
+                output += sprintf("  %s\n", line_text);
+                output += "  " + Priv::buildDiagnosticCaret(col_index) + "\n";
+            }
+            count++;
+        }
+
+        int remaining = diagnostics.size() - limit;
+        if (remaining > 0) {
+            output += sprintf("... %d more diagnostics omitted\n", remaining);
+        }
+
+        return output;
+    }
+
+    #! Processes Qore AST to generate doxygen-compatible output
+    /** This class uses astparser AST nodes to transform Qore code
+        into explicit Doxygen command blocks (\c \@namespace, \c \@class, \c \@fn, etc.)
+        so that Doxygen can document Qore sources without relying on C++ parsing heuristics.
+
+        @par Example:
+        @code{.py}
+%requires Qdx
+%requires astparser
+
+string qore_source = File::readTextFile("MyModule.qm");
+AstParser parser();
+AstTree tree = parser.parseString(qore_source);
+list<auto> nodes = tree.getNodesInfo();
+
+AstProcessor proc(nodes, {"source": qore_source});
+string doxygen_output = proc.process();
+        @endcode
+    */
+    public class AstProcessor {
+        private {
+            #! The AST nodes to process
+            list<auto> nodes;
+            #! Options for processing
+            hash<auto> opts;
+            #! Output buffer
+            string output = "";
+            #! Current indentation level
+            int indent = 0;
+            #! Source lines for doc comment association
+            list<string> lines = ();
+            #! Full source text for label scanning
+            string source_text = "";
+            #! Document table helper for processing tables in doc comments
+            DocumentTableHelper dth();
+        }
+
+        #! Creates an AstProcessor for the given AST nodes
+        /** @param nodes the AST nodes from AstTree::getNodesInfo()
+            @param opts processing options:
+            - \c no_mainpage: convert \@mainpage to \@page
+            - \c source_name: the name of the source file; used in table format warning text
+        */
+        constructor(list<auto> nodes, *hash<auto> opts) {
+            self.opts = opts ?? {};
+            dth = new DocumentTableHelper(self.opts.source_name);
+            # Translate tree-sitter CST nodes to old AST format if needed
+            if (nodes.size() > 0 && exists nodes[0].type && !exists nodes[0].nodetype) {
+                self.nodes = QoreCodeFormat::CSTTranslator::translate(
+                    cast<list<hash<auto>>>(nodes), self.opts.source ?? "");
+            } else {
+                self.nodes = nodes;
+            }
+            if (self.opts.source) {
+                self.source_text = self.opts.source;
+                self.lines = self.source_text.split("\n");
+            }
+        }
+
+        #! Returns and clears the documentation table format warnings accumulated so far
+        /** @return the warnings accumulated since the last call to this method
+
+            @see @ref Qdx::DocumentTableHelper::takeWarnings() "DocumentTableHelper::takeWarnings()"
+        */
+        list<string> takeTableWarnings() {
+            return dth.takeWarnings();
+        }
+
+        #! Processes the AST nodes and returns doxygen-compatible output
+        /** @return the processed output suitable for doxygen
+        */
+        string process() {
+            # Process each top-level node
+            foreach auto node in (nodes) {
+                processNode(node);
+            }
+
+            # Check for trailing @mainpage/@page doc comments not attached to any declaration
+            # This handles directory modules where the @mainpage comment follows the last code block
+            if (!lines.empty()) {
+                emitTrailingDocComments();
+            }
+
+            return output;
+        }
+
+        #! Emits trailing <tt>\@mainpage</tt>/<tt>\@page</tt> doc comments that are not attached to any declaration
+        private emitTrailingDocComments() {
+            # Find the last declaration's end line
+            int last_decl_end = 0;
+            foreach auto node in (nodes) {
+                if (node.loc) {
+                    int end_line = node.loc.end_line;
+                    if (end_line > last_decl_end) {
+                        last_decl_end = end_line;
+                    }
+                }
+            }
+
+            # Scan remaining lines for /** ... */ block comments containing @mainpage or @page
+            int i = last_decl_end;
+            while (i < lines.size()) {
+                string line = trim(lines[i]);
+                if (line =~ /^\/\*\*\s/) {
+                    # Found a block comment start — collect the entire comment
+                    string comment = lines[i];
+                    while (i < lines.size() && comment.find("*/") < 0) {
+                        i++;
+                        if (i < lines.size()) {
+                            comment += "\n" + lines[i];
+                        }
+                    }
+
+                    # Only emit if it contains @mainpage or @page
+                    if (comment =~ /@mainpage|@page/) {
+                        writeDocComment(comment);
+                    }
+                }
+                i++;
+            }
+        }
+
+        #! Processes a single AST node
+        private processNode(hash<auto> node) {
+            # Skip parse options
+            if (node.nodetype == QoreCodeFormat::ANT_ParseOption) {
+                return;
+            }
+
+            # Handle declarations
+            if (node.nodetype == QoreCodeFormat::ANT_Declaration) {
+                processDeclaration(node);
+            }
+        }
+
+        #! Processes a declaration node
+        private processDeclaration(hash<auto> decl) {
+            switch (decl.kind) {
+                case QoreCodeFormat::ADK_Namespace:
+                    processNamespace(decl);
+                    break;
+                case QoreCodeFormat::ADK_Class:
+                    processClass(decl);
+                    break;
+                case QoreCodeFormat::ADK_Function:
+                    processFunction(decl);
+                    break;
+                case QoreCodeFormat::ADK_Constant:
+                    processConstant(decl);
+                    break;
+                case QoreCodeFormat::ADK_Hash:
+                    processHashdecl(decl);
+                    break;
+                case QoreCodeFormat::ADK_Typedef:
+                    processTypedef(decl);
+                    break;
+                case QoreCodeFormat::ADK_Variable:
+                    processVariable(decl);
+                    break;
+                case QoreCodeFormat::ADK_Enum:
+                    processEnum(decl);
+                    break;
+            }
+        }
+
+        #! Processes a namespace declaration
+        private processNamespace(hash<auto> ns) {
+            *string doc = getDocForNode(ns);
+            if (exists doc) {
+                # @mainpage content is resolved in global scope by doxygen, so
+                # unqualified @ref targets must be qualified with the namespace
+                if (doc =~ /@mainpage/) {
+                    doc = qualifyMainpageRefs(doc, ns.name.name);
+                }
+                writeDocComment(doc);
+            }
+
+            # Output namespace declaration
+            writeLine(sprintf("namespace %s {", ns.name.name));
+            indent++;
+
+            # Process nested declarations
+            if (ns.declarations) {
+                foreach auto decl in (ns.declarations) {
+                    processDeclaration(decl);
+                }
+            }
+
+            indent--;
+            writeLine("}");
+            writeLine("");
+        }
+
+        #! Processes a class declaration
+        private processClass(hash<auto> cls) {
+            # Output doc comment if present
+            *string doc = getDocForNode(cls);
+            if (exists doc) {
+                writeDocComment(doc);
+            }
+
+            # Build class declaration
+            string decl = "";
+            if (cls.modifiers) {
+                # Remove 'public' from class modifiers for doxygen
+                string mods = cls.modifiers;
+                mods =~ s/public\s*//g;
+                trim mods;
+                if (mods.val()) {
+                    decl += mods + " ";
+                }
+            }
+            decl += "class " + cls.name.name;
+
+            # Handle inheritance
+            if (cls.inherits && cls.inherits.size() > 0) {
+                list<string> bases;
+                foreach auto base in (cls.inherits) {
+                    string access = "public";
+                    if (base.modifiers) {
+                        if (base.modifiers =~ /private:internal/) {
+                            access = "private";
+                        } else if (base.modifiers =~ /private:hierarchy/) {
+                            access = "protected";
+                        } else if (base.modifiers =~ /private/) {
+                            access = "protected";
+                        }
+                    }
+                    bases += access + " " + base.name.name;
+                }
+                decl += " : " + bases.join(", ");
+            }
+
+            decl += " {";
+            writeLine(decl);
+            writeLine("public:");
+            indent++;
+
+            # Process class members
+            if (cls.declarations) {
+                foreach auto member in (cls.declarations) {
+                    processClassMember(member);
+                }
+            }
+            indent--;
+            writeLine("};");
+            writeLine("");
+        }
+
+        #! Processes a class member (method, variable, etc.)
+        private processClassMember(hash<auto> member) {
+            switch (member.kind) {
+                case QoreCodeFormat::ADK_Function:
+                    processMethod(member);
+                    break;
+                case QoreCodeFormat::ADK_MemberGroup:
+                    processMemberGroup(member);
+                    break;
+                case QoreCodeFormat::ADK_Constant:
+                    processConstant(member);
+                    break;
+                case QoreCodeFormat::ADK_Variable:
+                    processVariable(member);
+                    break;
+                case QoreCodeFormat::ADK_Hash:
+                    processHashdecl(member);
+                    break;
+                case QoreCodeFormat::ADK_Typedef:
+                    processTypedef(member);
+                    break;
+                case QoreCodeFormat::ADK_Enum:
+                    processEnum(member);
+                    break;
+            }
+        }
+
+        #! Processes a member group (public/private block)
+        private processMemberGroup(hash<auto> group) {
+            # Determine access level
+            string access = "public";
+            if (group.modifiers) {
+                if (group.modifiers =~ /private:internal/) {
+                    access = "private";
+                } else if (group.modifiers =~ /private:hierarchy/) {
+                    access = "protected";
+                } else if (group.modifiers =~ /private/) {
+                    access = "protected";
+                }
+            }
+
+            if (access != "public") {
+                indent--;
+                writeLine(access + ":");
+                indent++;
+            }
+
+            # Process members
+            if (group.members) {
+                foreach auto member in (group.members) {
+                    if (member.declaration) {
+                        # member is an expression containing a declaration
+                        processDeclaration(member.declaration);
+                    } else if (member.nodetype == ANT_Declaration) {
+                        # CSTTranslator emits class constants (and other declarations) directly
+                        # as top-level nodes in the members list, not wrapped in .declaration
+                        processDeclaration(member);
+                    }
+                }
+            }
+
+            if (access != "public") {
+                indent--;
+                writeLine("public:");
+                indent++;
+            }
+        }
+
+        #! Processes a method declaration
+        private processMethod(hash<auto> method) {
+            # Determine access level from modifiers (default: public)
+            string access = "public";
+            if (method.modifiers) {
+                if (method.modifiers =~ /private:internal/) {
+                    access = "private";
+                } else if (method.modifiers =~ /private:hierarchy/) {
+                    access = "protected";
+                } else if (method.modifiers =~ /private/) {
+                    access = "protected";
+                }
+            }
+
+            # Emit access specifier if not public
+            if (access != "public") {
+                indent--;
+                writeLine(access + ":");
+                indent++;
+            }
+
+            # Output doc comment if present
+            *string doc = getDocForNode(method);
+            if (exists doc) {
+                writeDocComment(doc);
+            }
+
+            # Build method signature
+            string sig = "";
+
+            # Add modifiers (but filter out access modifiers)
+            if (method.modifiers) {
+                string mods = method.modifiers;
+                mods =~ s/public\s*//g;
+                mods =~ s/private:internal\s*//g;
+                mods =~ s/private:hierarchy\s*//g;
+                mods =~ s/private\s*//g;
+                trim mods;
+                if (mods.val()) {
+                    sig += mods + " ";
+                }
+            }
+            if (method.returnType && method.returnType.name) {
+                sig += formatType(method.returnType.name.name) + " ";
+            } else {
+                sig += "void ";
+            }
+
+            sig += method.name.name;
+
+            # Parameters
+            sig += "(";
+            if (method.params) {
+                sig += formatParams(method.params);
+            }
+            sig += ");";
+
+            writeLine(sig);
+            writeLine("");
+
+            # Restore public access if we switched
+            if (access != "public") {
+                indent--;
+                writeLine("public:");
+                indent++;
+            }
+        }
+
+        #! Processes a function declaration
+        private processFunction(hash<auto> func) {
+            # Output doc comment if present
+            *string doc = getDocForNode(func);
+            if (exists doc) {
+                writeDocComment(doc);
+            }
+
+            # Build function signature
+            string sig = "";
+
+            # Return type
+            if (func.returnType && func.returnType.name) {
+                sig += formatType(func.returnType.name.name) + " ";
+            } else {
+                sig += "void ";
+            }
+
+            # Function name (remove 'sub' prefix if present in name)
+            string name = func.name.name;
+            name =~ s/^sub\s+//;
+            sig += name;
+
+            # Parameters
+            sig += "(";
+            if (func.params) {
+                sig += formatParams(func.params);
+            }
+            sig += ");";
+
+            writeLine(sig);
+            writeLine("");
+        }
+
+        #! Processes a constant declaration
+        private processConstant(hash<auto> con) {
+            *string doc = getDocForNode(con);
+            if (exists doc) {
+                writeDocComment(doc);
+            }
+
+            # Infer a C++ type from the value so doxygen indexes the constant;
+            # "auto" is not recognized by doxygen and causes the symbol to
+            # be skipped entirely (Qore constants have no type declarations)
+            writeLine(sprintf("const %s %s = ...;", inferConstType(con.value), con.name.name));
+        }
+
+        #! Processes a hashdecl declaration
+        private processHashdecl(hash<auto> hd) {
+            *string doc = getDocForNode(hd);
+            if (exists doc) {
+                writeDocComment(doc);
+            }
+
+            # Use 'struct' instead of 'hashdecl'
+            writeLine(sprintf("struct %s {", hd.name.name));
+            indent++;
+
+            # Process members
+            if (hd.declarations) {
+                foreach auto member in (hd.declarations) {
+                    if (member.kind == QoreCodeFormat::ADK_HashMember) {
+                        *string mdoc = getDocForNode(member);
+                        if (exists mdoc) {
+                            writeDocComment(mdoc);
+                        }
+                        string memberDecl = "";
+                        if (member.typeName && member.typeName.name) {
+                            memberDecl += formatType(member.typeName.name) + " ";
+                        }
+                        memberDecl += member.name.name + ";";
+                        writeLine(memberDecl);
+                    }
+                }
+            }
+
+            indent--;
+            writeLine("};");
+            writeLine("");
+        }
+
+        #! Processes a typedef declaration
+        private processTypedef(hash<auto> td) {
+            *string doc = getDocForNode(td);
+            if (exists doc) {
+                writeDocComment(doc);
+            }
+
+            string typeName = td.typeName && td.typeName.name ? td.typeName.name : "auto";
+            writeLine(sprintf("typedef %s %s;", formatType(typeName), td.name.name));
+            writeLine("");
+        }
+
+        #! Processes a variable declaration
+        private processVariable(hash<auto> var) {
+            *string doc = getDocForNode(var);
+            if (exists doc) {
+                writeDocComment(doc);
+            }
+
+            string typeName = var.typeName && var.typeName.name ? var.typeName.name : "auto";
+            string varDecl = "";
+            if (var.scope == "our") {
+                varDecl += "extern ";
+            }
+            varDecl += formatType(typeName) + " " + var.name.name + ";";
+            writeLine(varDecl);
+            writeLine("");
+        }
+
+        #! Processes an enum declaration
+        private processEnum(hash<auto> en) {
+            # Skip enums with no name (should not happen with fixed astparser)
+            if (!en.name || !en.name.name) {
+                return;
+            }
+
+            *string doc = getDocForNode(en);
+            if (exists doc) {
+                writeDocComment(doc);
+            }
+
+            writeLine(sprintf("enum %s {", en.name.name));
+            indent++;
+            if (en.declarations) {
+                foreach auto member in (en.declarations) {
+                    if (member.kind == QoreCodeFormat::ADK_EnumMember && member.name && member.name.name) {
+                        *string mdoc = getDocForNode(member);
+                        if (exists mdoc) {
+                            writeDocComment(mdoc);
+                        }
+                        writeLine(member.name.name + ",");
+                    }
+                }
+            }
+            indent--;
+            writeLine("};");
+            writeLine("");
+        }
+
+        #! Formats a type name for doxygen
+        /** Converts nullable <tt>*type</tt> prefix to <tt>__7_ type</tt> placeholder for doxygen compatibility.
+            The <tt>qdx --post</tt> step converts <tt>__7_ </tt> back to <tt>*</tt> in the final HTML output.
+            Without this, doxygen misparses <tt>*name</tt> as a pointer declarator.
+        */
+        private string formatType(string typeName) {
+            # Remove $ from type names
+            typeName =~ s/\$//g;
+            # Convert nullable prefix * to __7_ placeholder for doxygen compatibility
+            # (qdx --post converts __7_ back to * in HTML output)
+            if (typeName =~ /^\*/) {
+                typeName = "__7_ " + typeName.substr(1);
+            }
+            # These are C++ declarations, not documentation prose. Escaping template
+            # delimiters makes Doxygen misparse callable types and lose their field names.
+            return typeName;
+        }
+
+        #! Formats function/method parameters
+        private string formatParams(hash<auto> params) {
+            if (!params) {
+                return "";
+            }
+
+            list<string> paramStrs = ();
+
+            list<hash<auto>> stack = ();
+            push stack, params;
+            while (stack) {
+                hash<auto> node = shift stack;
+                if (!node) {
+                    continue;
+                }
+
+                if (node.declaration || node.typeName || node.name) {
+                    string val = formatParam(node);
+                    if (val != "") {
+                        paramStrs += val;
+                    }
+                    continue;
+                }
+
+                if (node.left) {
+                    push stack, node.left;
+                }
+
+                if (node.right && node.right.elements) {
+                    foreach auto inner in (node.right.elements) {
+                        push stack, inner;
+                    }
+                }
+
+                if (node.elements) {
+                    foreach auto inner in (node.elements) {
+                        push stack, inner;
+                    }
+                }
+            }
+            return paramStrs.join(", ");
+        }
+
+        #! Formats a single parameter
+        private string formatParam(hash<auto> param) {
+            # param could be a declaration expression or variable declaration
+            if (param.declaration) {
+                return formatParam(param.declaration);
+            }
+            if (param.left && param.left.declaration) {
+                return formatParam(param.left);
+            }
+
+            string result = "";
+            if (param.typeName && param.typeName.name) {
+                result += formatType(param.typeName.name) + " ";
+            }
+            if (param.name && param.name.name) {
+                string name = param.name.name;
+                name =~ s/\$//g;
+                result += name;
+            }
+            return result;
+        }
+
+        #! Returns a doc comment for the declaration based on source position
+        private *string getDocForNode(hash<auto> node) {
+            if (node.docComment && node.docComment.val()) {
+                return node.docComment;
+            }
+            if (lines.empty() || !node.loc) {
+                return node.docComment;
+            }
+            int start_line = resolveDocStartLine(node);
+            if (start_line <= 0) {
+                return node.docComment;
+            }
+
+            list<string> docs = getDocCommentsBeforeLine(start_line);
+            if (docs.empty()) {
+                return node.docComment;
+            }
+            return docs.join("\n");
+        }
+
+        #! Resolve the best line number to use for doc comment association
+        private int resolveDocStartLine(hash<auto> node) {
+            int start_line = node.loc.start_line;
+            if (start_line <= 0 || lines.empty()) {
+                return start_line;
+            }
+            if (node.name && node.name.name) {
+                if (node.name.loc && node.name.loc.start_line > 0) {
+                    return node.name.loc.start_line;
+                }
+                string name = node.name.name;
+                int idx = start_line - 1;
+                if (idx >= 0 && idx < lines.size()) {
+                    string line = lines[idx];
+                    if ((node.kind == QoreCodeFormat::ADK_Function && line.find(name + "(") >= 0)
+                        || (node.kind != QoreCodeFormat::ADK_Function && line.find(name) >= 0)) {
+                        return start_line;
+                    }
+                }
+                int max_line = start_line + 12;
+                if (max_line > lines.size()) {
+                    max_line = lines.size();
+                }
+                for (int i = start_line - 1; i < max_line; ++i) {
+                    string line = lines[i];
+                    if ((node.kind == QoreCodeFormat::ADK_Function && line.find(name + "(") >= 0)
+                        || (node.kind != QoreCodeFormat::ADK_Function && line.find(name) >= 0)) {
+                        return i;
+                    }
+                }
+            }
+            return start_line;
+        }
+
+        #! Returns doc comment blocks immediately preceding the given line
+        private list<string> getDocCommentsBeforeLine(int start_line) {
+            list<string> docs = ();
+            int line = start_line - 1;
+            while (line >= 0) {
+                string cur = lines[line];
+                if (isSkippableLine(cur)) {
+                    line--;
+                    continue;
+                }
+                if (isLineDocLine(cur)) {
+                    list<string> ld = collectLineDoc(line);
+                    docs = (ld.join("\n"),) + docs;
+                    line -= ld.size();
+                    continue;
+                }
+                if (isBlockCommentEnd(cur)) {
+                    list<string> bd = collectBlockDoc(line);
+                    if (bd.size()) {
+                        docs = (bd.join("\n"),) + docs;
+                        line -= bd.size();
+                        continue;
+                    }
+                }
+                break;
+            }
+            return docs;
+        }
+
+        private bool isSkippableLine(string line) {
+            string trimmed = trim(line);
+            if (!trimmed.length()) {
+                return True;
+            }
+            if (trimmed =~ /^#/ && !(trimmed =~ /^#!/)) {
+                return True;
+            }
+            return trimmed =~ /^%/;
+        }
+
+        private bool isLineDocLine(string line) {
+            string trimmed = trim(line);
+            return trimmed =~ /^(#!|\/\/!|\/\/\/)/;
+        }
+
+        private bool isBlockCommentEnd(string line) {
+            return line =~ /\*\//;
+        }
+
+        private bool isBlockCommentStart(string line) {
+            # anchored at the start of the line: "/**" appearing in the middle of a line is prose inside a
+            # doc comment (or a "#" comment mentioning one), not the start of a new block comment
+            return trim(line) =~ /^\/\*\*/;
+        }
+
+        private list<string> collectLineDoc(int end_line) {
+            list<string> result = ();
+            int line = end_line;
+            while (line >= 0) {
+                string cur = lines[line];
+                if (!isLineDocLine(cur)) {
+                    break;
+                }
+                result = (cur,) + result;
+                line--;
+            }
+            return result;
+        }
+
+        private list<string> collectBlockDoc(int end_line) {
+            list<string> result = ();
+            int line = end_line;
+            # Track @verbatim nesting: scanning backward, @endverbatim increments
+            # and @verbatim decrements; /** inside a verbatim block is example code
+            int verbatim_depth = 0;
+            # Track @code nesting: scanning backward, @endcode increments
+            # and @code decrements; /* inside a code block is example code
+            int code_depth = 0;
+            while (line >= 0) {
+                string cur = lines[line];
+                result = (cur,) + result;
+                # Count @verbatim and @endverbatim separately since a line may
+                # contain both (e.g. "@verbatim ... @endverbatim")
+                if (cur =~ /@endverbatim\b/) {
+                    ++verbatim_depth;
+                }
+                if (cur =~ /@verbatim\b/) {
+                    --verbatim_depth;
+                }
+                # Count @code and @endcode separately since a line may contain both
+                # (e.g. "@code{.py} ... @endcode"); use word boundary to avoid
+                # @code matching inside @endcode
+                if (cur =~ /@endcode\b/) {
+                    ++code_depth;
+                }
+                if (cur =~ /@code\b/) {
+                    --code_depth;
+                }
+                if (verbatim_depth == 0 && code_depth == 0) {
+                    if (isBlockCommentStart(cur)) {
+                        return result;
+                    }
+                    # Stop at non-doc block comment start (/* without **) to prevent
+                    # scanning past non-doc comments like /* FIXME ... */; the test is anchored at the
+                    # start of the line, since "/*" anywhere else is prose in the doc comment being
+                    # collected - a MIME type ("multipart/*"), a URL path ("/v1/*"), or an SQL hint -
+                    # and discarding the block for it silently deletes the whole doc comment
+                    if (trim(cur) =~ /^\/\*/) {
+                        return ();
+                    }
+                }
+                line--;
+            }
+            return ();
+        }
+
+        #! Writes a doc comment to output
+        private writeDocComment(string comment) {
+            # Handle @mainpage conversion if requested
+            if (opts.no_mainpage && comment =~ /@mainpage/) {
+                if (*string page = (comment =~ x/@mainpage\s+(\w.*)/)[0]) {
+                    string link = page.lwr();
+                    link =~ s/\s+/_/g;
+                    comment = regex_subst(comment, "@mainpage\\s+\\w.*", "@page " + link + " " + page);
+                }
+            }
+
+            # Process each line
+            list<string> lines;
+            list<string> src = comment.split("\n");
+            for (int i = 0; i < src.size(); ++i) {
+                string line = src[i];
+                # Convert #! to //! (line doc comments)
+                line =~ s/^(\s*)#!/$1\/\/!/;
+                # Doxygen treats an interior /* as a nested C++ comment even in prose such as
+                # multipart/*. Keep the actual doc opener and encode interior stars for rendering.
+                int content_start = 0;
+                if (line =~ /^\s*\/\*\*/) {
+                    content_start = line.find("/**") + 3;
+                }
+                line = line.substr(0, content_start)
+                    + replace(line.substr(content_start), "/*", "/&#42;");
+                # Drop @cond/@endcond so Doxygen does not hide all members
+                if (line =~ /@cond\b/ || line =~ /@endcond\b/) {
+                    continue;
+                }
+                # Join table row continuations; a table row may span multiple lines as long as each
+                # line but the last ends in a "\" character (see design/doc-tables.md)
+                if (line =~ /^\s*\|/) {
+                    while (line =~ /\\$/ && i < (src.size() - 1)) {
+                        splice line, -1, 1;
+                        line += src[++i];
+                    }
+                }
+                # Normalize @ref function references by stripping trailing ()
+                # When () is followed by ':', add display text to prevent the colon
+                # from being treated as part of the @ref target by doxygen
+                line =~ s/@ref\s+([A-Za-z0-9_:]+)\(\):/@ref $1 "$1():"/g;
+                line =~ s/@ref\s+([A-Za-z0-9_:]+)\(\)/@ref $1/g;
+                # Process tables in doc comments
+                line = dth.process(line);
+
+                if (line =~ /\/\/!\s*@file\s+\S+/) {
+                    int file_pos = line.find("@file");
+                    string prefix = file_pos >= 0 ? line.substr(0, file_pos) : "";
+                    string rest = trim(line.substr(file_pos + 5));
+                    int space_pos = rest.find(" ");
+                    string desc = space_pos >= 0 ? trim(rest.substr(space_pos + 1)) : "";
+                    lines += prefix + "@file";
+                    if (desc.length()) {
+                        lines += prefix + "@brief " + desc;
+                    }
+                    continue;
+                }
+
+                lines += line;
+            }
+
+            # Write each line with proper indentation
+            foreach string line in (lines) {
+                writeLine(line);
+            }
+        }
+
+        #! Qualifies unqualified <tt>\@ref</tt> targets in a <tt>\@mainpage</tt> doc block
+        /** Doxygen resolves <tt>\@ref</tt> targets in <tt>\@mainpage</tt> content in global scope,
+            so references to namespace members must be fully qualified.
+
+            This method prepends the namespace prefix to every <tt>\@ref</tt> target that
+            does not already contain "::" and is not a doxygen label defined in
+            the same block.
+
+            @param doc the doc comment text containing <tt>\@mainpage</tt>
+            @param ns_name the namespace name to use as prefix
+
+            @return the doc text with qualified <tt>\@ref</tt> targets
+        */
+        private string qualifyMainpageRefs(string doc, string ns_name) {
+            # Collect all identifiers defined in the module's source files
+            # Only qualify refs whose targets are actual declarations in this module
+            hash<string, bool> module_symbols;
+            # Scan the .qm source and any sibling .qc files for declarations
+            list<string> source_files = (source_text,);
+            if (opts.source_dir.val()) {
+                foreach string f in (glob(opts.source_dir + "/*.qc")) {
+                    source_files += ReadOnlyFile::readTextFile(f);
+                }
+            }
+            foreach string src in (source_files) {
+                foreach string line in (src.split("\n")) {
+                    *string sym;
+                    # Match class, hashdecl, const, sub/function, enum declarations
+                    if (*list<string> m0 = (line =~ x/^\s*(?:public\s+)?(?:abstract\s+)?(?:class|hashdecl|struct)\s+(?:[A-Za-z_:]+::)?([A-Za-z_][A-Za-z0-9_]*)/)) {
+                        sym = m0[0];
+                    } else if (*list<string> m1 = (line =~ x/^\s*(?:public\s+)?const\s+([A-Za-z_][A-Za-z0-9_]*)\s*=/)) {
+                        sym = m1[0];
+                    } else if (*list<string> m2 = (line =~ x/^\s*(?:public\s+)?(?:deprecated\s+)?(?:synchronized\s+)?(?:\*?[A-Za-z_][A-Za-z0-9_<>:, ]*\s+)?sub\s+([A-Za-z_][A-Za-z0-9_]*)/)) {
+                        sym = m2[0];
+                    } else if (*list<string> m3 = (line =~ x/^\s*(?:public\s+)?enum\s+([A-Za-z_][A-Za-z0-9_]*)/)) {
+                        sym = m3[0];
+                    }
+                    if (sym.val()) {
+                        module_symbols{sym} = True;
+                    }
+                }
+            }
+
+            list<string> result;
+            foreach string line in (doc.split("\n")) {
+                # Split on @ref and rebuild with qualified targets
+                list<string> parts = line.split("@ref ");
+                if (parts.size() > 1) {
+                    string out = parts[0];
+                    for (int i = 1; i < parts.size(); i++) {
+                        string part = parts[i];
+                        # Extract the ref target (identifier chars, may include ::)
+                        if (*list<string> m = (part =~ x/^([A-Za-z_][A-Za-z0-9_:.-]*)(.*)/s)) {
+                            string target = m[0];
+                            string rest = m[1];
+                            # Only qualify if the target is a known module symbol
+                            if (target.find("::") == -1 && module_symbols{target}) {
+                                target = ns_name + "::" + target;
+                            }
+                            out += "@ref " + target + rest;
+                        } else {
+                            out += "@ref " + part;
+                        }
+                    }
+                    result += out;
+                } else {
+                    result += line;
+                }
+            }
+            return result.join("\n");
+        }
+
+        #! Infers a C++-compatible type string from a constant's value AST node
+        /** @param value the value expression node from the AST
+            @return a type string suitable for doxygen (e.g., "int", "string", "hash")
+        */
+        private static string inferConstType(*hash<auto> value) {
+            if (!value) {
+                return "int";
+            }
+            switch (value.kind) {
+                case QoreCodeFormat::AEK_Literal:
+                    switch (value.literalKind) {
+                        case "string": return "string";
+                        case "int": return "int";
+                        case "float": return "double";
+                        case "number": return "number";
+                        case "bool": return "bool";
+                        case "binary": return "binary";
+                        default: return "int";
+                    }
+                case QoreCodeFormat::AEK_Hash:
+                    return "hash";
+                case QoreCodeFormat::AEK_List:
+                    # List expressions often wrap a sub-expression; check first element
+                    if (value.elements.size() == 1) {
+                        return inferConstType(value.elements[0]);
+                    }
+                    return "list";
+                default:
+                    return "int";
+            }
+        }
+
+        #! Scans text for doxygen label definitions (<tt>\@section</tt>, <tt>\@defgroup</tt>, <tt>\@anchor</tt>, etc.)
+        /** @param text the source text to scan
+            @return a hash of label names for O(1) lookup
+        */
+        private static hash<string, bool> scanDoxygenLabels(string text) {
+            hash<string, bool> labels;
+            foreach string line in (text.split("\n")) {
+                if (*list<string> m = (line =~ x/@(?:section|subsection|anchor|defgroup|page|mainpage)\s+([A-Za-z_][A-Za-z0-9_-]*)/)) {
+                    labels{m[0]} = True;
+                }
+            }
+            return labels;
+        }
+
+        #! Writes a line to output with current indentation
+        private writeLine(string line) {
+            string indentStr = strmul("    ", indent);
+            output += indentStr + line + "\n";
+        }
+    }
+}
+
+# private, non-exported namespace
+namespace Priv {
+    string sub buildDiagnosticCaret(int col_index) {
+        @assert(col_index >= 0);
+        string caret = "";
+        for (int i = 0; i < col_index; i++) {
+            caret += " ";
+        }
+        caret += "^";
+        return caret;
+    }
+}

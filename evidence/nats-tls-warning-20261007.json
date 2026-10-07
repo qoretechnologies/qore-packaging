@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-07",
+  "status": "150 race-enabled positive cases pass; three stale-port controls fail with the exact original bind diagnostic. Full RPM matrix remains required.",
+  "root_cause": "The TLS warning fixture reused one Options object. Server startup replaces random listener port sentinels with assigned ports, so later independent fixtures reused closed addresses that can be claimed elsewhere. The failure path also omitted shutdown/join.",
+  "fix": "Clone the caller options for each warning fixture and defer server shutdown plus startup-goroutine joining, including fatal test failures. Preserve warning expectations, listener policy and readiness budgets.",
+  "control": "After the first real server stops, bind its released client address. The next fixture must select a different ephemeral port while still producing its TLS warning. Removing only the Options clone reproduces the recorded bind failure.",
+  "results": {
+    "fedora": {
+      "fixed": {
+        "exit_code": 0,
+        "passed_cases": 50,
+        "failed_cases": 0
+      },
+      "negative": {
+        "exit_code": 1,
+        "passed_cases": 0,
+        "failed_cases": 1
+      }
+    },
+    "leap": {
+      "fixed": {
+        "exit_code": 0,
+        "passed_cases": 50,
+        "failed_cases": 0
+      },
+      "negative": {
+        "exit_code": 1,
+        "passed_cases": 0,
+        "failed_cases": 1
+      }
+    },
+    "el10": {
+      "fixed": {
+        "exit_code": 0,
+        "passed_cases": 50,
+        "failed_cases": 0
+      },
+      "negative": {
+        "exit_code": 1,
+        "passed_cases": 0,
+        "failed_cases": 1
+      }
+    }
+  },
+  "limits": [
+    "Original group-wide RPM diagnostics and historical NATS timeout/performance gates remain unresolved until their separate qualification completes."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-tls-warning-20261007/el10-fixed-status.json": "3cd2ef73850cb77bc608197719b257ab74f9a2d10caf26915f9b735483e09650",
+    "evidence/controls/nats-tls-warning-20261007/el10-fixed.log.gz": "b4dc41e8d6272efc4c9529d9827eed3f223e2ef6c4acb77d2e4eb13b81e7473b",
+    "evidence/controls/nats-tls-warning-20261007/el10-negative-status.json": "18d17932a7822d441cf1299cfcc9db85ba5b9b428f4958d3438c533dd088c0bd",
+    "evidence/controls/nats-tls-warning-20261007/el10-negative.log.gz": "7056e849cbfb952a36c424da4d7cc62522760b3e19432fb8465a50c7924d28c4",
+    "evidence/controls/nats-tls-warning-20261007/fedora-fixed-status.json": "80541c174366d52ee099fa86d88da2d601926be8f2c133289d48f034e03a3fae",
+    "evidence/controls/nats-tls-warning-20261007/fedora-fixed.log.gz": "7ec038de07aee2940b122d5ab7ea69dbcce73dc87f42e2e0abedb878d9d0ee0e",
+    "evidence/controls/nats-tls-warning-20261007/fedora-negative-status.json": "85cbc2e8d182a2d86579e3e3234391a6b9e4cdfd22904838f3540b5e5732a7bd",
+    "evidence/controls/nats-tls-warning-20261007/fedora-negative.log.gz": "395edd0263e2024d1f4aaf80d9222511b0d78e9245b5e630ac741ac1394783bf",
+    "evidence/controls/nats-tls-warning-20261007/leap-fixed-status.json": "fd1cc71abf9b94bf36faeb1258b3c8203aa321724866b97caa3766cb41d4176a",
+    "evidence/controls/nats-tls-warning-20261007/leap-fixed.log.gz": "0abc212c38cd6bf403a266acbc30e0424792e7d854861593b20cbfb6dfd92a16",
+    "evidence/controls/nats-tls-warning-20261007/leap-negative-status.json": "582cbde1b3654afd6e8199050da99c934af531367e55e7978df0c5cdd97dea95",
+    "evidence/controls/nats-tls-warning-20261007/leap-negative.log.gz": "f9ab9db249f303f24487f7f61103ccdefb874184fd7bf0ab935fd98c1b9bfa3c",
+    "evidence/controls/nats-tls-warning-20261007/nats-server-tls-warning-listeners-tests.patch": "39b8478445255026f47a7ea810e8373155561532788e1e66e2a294ff112647a1",
+    "evidence/controls/nats-tls-warning-20261007/negative_server_test.go": "df7fd49b506a54431d389f9cbe7c79a770055b81fba8e50b70deeef57923e81f",
+    "evidence/controls/nats-tls-warning-20261007/prepare.py": "0be28c297e45e8b87defa707a2a8dba702fe63ede77c4d35b5e94f9d3913be3e",
+    "evidence/controls/nats-tls-warning-20261007/server_test.go": "5be24234487922e0e3c8080880e3b8731c91d0c4a149dbabf82dbe02d4ff3fda"
+  }
+}

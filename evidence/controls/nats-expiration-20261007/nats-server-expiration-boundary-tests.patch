@@ -1,0 +1,254 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Test JWT expiry updates at exact boundaries using the unchanged timer expiry step.
+--- a/server/dirstore.go
++++ b/server/dirstore.go
+@@ -704,19 +704,11 @@
+ 		for {
+ 			now := time.Now().UnixNano()
+ 			store.Lock()
+-			if pq.Len() > 0 {
+-				if it := pq.heap[0]; it.expiration <= now {
+-					path := store.pathForKey(it.publicKey)
+-					if err := os.Remove(path); err == nil {
+-						heap.Pop(pq)
+-						pq.unTrack(it.publicKey)
+-						xorAssign(&pq.hash, it.hash)
+-						store.Unlock()
+-						continue // we removed an entry, check next one right away
+-					}
+-				}
+-			}
++			removed := store.expireOneLocked(pq, now)
+ 			store.Unlock()
++			if removed {
++				continue // check the next entry immediately, with a fresh time snapshot
++			}
+ 			select {
+ 			case <-t.C:
+ 			case <-quit:
+@@ -725,3 +717,19 @@
+ 		}
+ 	}()
+ }
++
++// Remove one due JWT using the caller's time snapshot. Store lock must be held.
++func (store *DirJWTStore) expireOneLocked(pq *expirationTracker, now int64) bool {
++	if pq.Len() > 0 {
++		if it := pq.heap[0]; it.expiration <= now {
++			path := store.pathForKey(it.publicKey)
++			if err := os.Remove(path); err == nil {
++				heap.Pop(pq)
++				pq.unTrack(it.publicKey)
++				xorAssign(&pq.hash, it.hash)
++				return true
++			}
++		}
++	}
++	return false
++}
+--- a/server/dirstore_test.go
++++ b/server/dirstore_test.go
+@@ -758,59 +758,67 @@
+ 
+ func TestExpirationUpdate(t *testing.T) {
+ 	t.Parallel()
+-	dir := t.TempDir()
+-
+-	dirStore, err := NewExpiringDirJWTStore(dir, false, false, NoDelete, time.Millisecond*50, 10, true, 0, nil)
++	dirStore, err := NewExpiringDirJWTStore(t.TempDir(), false, false, NoDelete, time.Hour, 10, true, 0, nil)
+ 	require_NoError(t, err)
+ 	defer dirStore.Close()
+-
++	// Stop and join the scheduler; test the same expiry step with exact timestamps.
++	// Round(time.Second) can put a one-second JWT expiry almost 1.5 seconds
++	// ahead, and the periodic check runs later still. Sleeping 1.5 seconds
++	// never established that the expiration step had completed.
++	dirStore.Lock()
++	tracker := dirStore.expiration
++	tracker.close()
++	dirStore.Unlock()
++	tracker.wg.Wait()
+ 	accountKey, err := nkeys.CreateAccount()
+ 	require_NoError(t, err)
+-
+-	h := dirStore.Hash()
+-
+-	createTestAccount(t, dirStore, 0, accountKey)
+-	nh := dirStore.Hash()
+-	require_NotEqual(t, h, nh)
+-	h = nh
+-
+-	time.Sleep(1500 * time.Millisecond)
+-	f, err := os.ReadDir(dir)
+-	require_NoError(t, err)
+-	require_Len(t, len(f), 1)
+-
+-	createTestAccount(t, dirStore, 2, accountKey)
+-	nh = dirStore.Hash()
+-	require_NotEqual(t, h, nh)
+-	h = nh
+-
+-	time.Sleep(1500 * time.Millisecond)
+-	f, err = os.ReadDir(dir)
+-	require_NoError(t, err)
+-	require_Len(t, len(f), 1)
+-
+-	createTestAccount(t, dirStore, 0, accountKey)
+-	nh = dirStore.Hash()
+-	require_NotEqual(t, h, nh)
+-	h = nh
+-
+-	time.Sleep(1500 * time.Millisecond)
+-	f, err = os.ReadDir(dir)
+-	require_NoError(t, err)
+-	require_Len(t, len(f), 1)
+-
+-	createTestAccount(t, dirStore, 1, accountKey)
+-	nh = dirStore.Hash()
+-	require_NotEqual(t, h, nh)
+-
+-	time.Sleep(1500 * time.Millisecond)
+-	f, err = os.ReadDir(dir)
+-	require_NoError(t, err)
+-	require_Len(t, len(f), 0)
+-
++	publicKey, err := accountKey.PublicKey()
++	require_NoError(t, err)
++	base := time.Unix(2000000000, 0)
++	save := func(expiration int64) {
++		t.Helper()
++		before := dirStore.Hash()
++		claims := jwt.NewAccountClaims(publicKey)
++		claims.Expires = expiration
++		token, err := claims.Encode(accountKey)
++		require_NoError(t, err)
++		require_NoError(t, dirStore.SaveAcc(publicKey, token))
++		after := dirStore.Hash()
++		require_NotEqual(t, before, after)
++		assertStoreSize(t, dirStore, 1)
++	}
++	expire := func(at time.Time, removed bool) {
++		t.Helper()
++		dirStore.Lock()
++		actual := dirStore.expireOneLocked(tracker, at.UnixNano())
++		dirStore.Unlock()
++		require_Equal(t, actual, removed)
++		count := 1
++		if removed {
++			count = 0
++		}
++		assertStoreSize(t, dirStore, count)
++	}
++	save(0)
++	expire(base, false)
++	save(base.Add(2 * time.Second).Unix())
++	expire(base.Add(2*time.Second-time.Nanosecond), false)
++	// Removing expiry must supersede the prior heap deadline.
++	save(0)
++	expire(base.Add(3*time.Second), false)
++	save(base.Add(4 * time.Second).Unix())
++	expire(base.Add(4*time.Second-time.Nanosecond), false)
++	expire(base.Add(4*time.Second), true)
++	dirStore.Lock()
++	tracked, indexed, cached := tracker.Len(), len(tracker.idx), tracker.lru.Len()
++	removed := dirStore.expireOneLocked(tracker, base.Add(5*time.Second).UnixNano())
++	dirStore.Unlock()
++	require_Equal(t, tracked, 0)
++	require_Equal(t, indexed, 0)
++	require_Equal(t, cached, 0)
++	require_False(t, removed)
+ 	empty := [32]byte{}
+-	h = dirStore.Hash()
+-	require_Equal(t, string(h[:]), string(empty[:]))
++	require_Equal(t, dirStore.Hash(), empty)
+ }
+ 
+ func TestTTL(t *testing.T) {
+@@ -1018,3 +1026,87 @@
+ 		store[i].Close()
+ 	}
+ }
++
++func TestExpirationRoundedTimerBoundary(t *testing.T) {
++	store, err := NewExpiringDirJWTStore(t.TempDir(), false, false, NoDelete, time.Hour, 10, true, 0, nil)
++	require_NoError(t, err)
++	defer store.Close()
++	store.Lock()
++	tracker := store.expiration
++	tracker.close()
++	store.Unlock()
++	tracker.wg.Wait()
++	key, err := nkeys.CreateAccount()
++	require_NoError(t, err)
++	pub, err := key.PublicKey()
++	require_NoError(t, err)
++	// The original helper rounds its current time before adding one second.
++	created := time.Unix(2000000000, 500000001)
++	expires := created.Round(time.Second).Add(time.Second)
++	claims := jwt.NewAccountClaims(pub)
++	claims.Expires = expires.Unix()
++	token, err := claims.Encode(key)
++	require_NoError(t, err)
++	require_NoError(t, store.SaveAcc(pub, token))
++	// A legal 50ms timer phase puts one check just before expiry and the next
++	// after the old test's 1500ms sleep. No scheduler delay is needed to fail.
++	before := expires.Add(-10 * time.Millisecond)
++	after := before.Add(50 * time.Millisecond)
++	require_True(t, before.Before(created.Add(1500*time.Millisecond)))
++	require_True(t, after.After(created.Add(1500*time.Millisecond)))
++	store.Lock()
++	removed := store.expireOneLocked(tracker, before.UnixNano())
++	store.Unlock()
++	require_False(t, removed)
++	assertStoreSize(t, store, 1)
++	store.Lock()
++	removed = store.expireOneLocked(tracker, after.UnixNano())
++	store.Unlock()
++	require_True(t, removed)
++	assertStoreSize(t, store, 0)
++}
++
++func TestExpirationRemovalFailurePreservesState(t *testing.T) {
++	store, err := NewExpiringDirJWTStore(t.TempDir(), false, false, NoDelete, time.Hour, 10, true, 0, nil)
++	require_NoError(t, err)
++	defer store.Close()
++	store.Lock()
++	tracker := store.expiration
++	tracker.close()
++	store.Unlock()
++	tracker.wg.Wait()
++	key, err := nkeys.CreateAccount()
++	require_NoError(t, err)
++	pub, err := key.PublicKey()
++	require_NoError(t, err)
++	claims := jwt.NewAccountClaims(pub)
++	claims.Expires = 2000000000
++	token, err := claims.Encode(key)
++	require_NoError(t, err)
++	require_NoError(t, store.SaveAcc(pub, token))
++	before := store.Hash()
++	path := store.pathForKey(pub)
++	require_NoError(t, os.Remove(path))
++	require_NoError(t, os.Mkdir(path, 0700))
++	// Removing a nonempty directory fails consistently, including for root.
++	child := filepath.Join(path, "occupied")
++	require_NoError(t, os.WriteFile(child, []byte("keep"), 0600))
++	store.Lock()
++	removed := store.expireOneLocked(tracker, time.Unix(claims.Expires, 0).UnixNano())
++	tracked, indexed, cached := tracker.Len(), len(tracker.idx), tracker.lru.Len()
++	store.Unlock()
++	require_False(t, removed)
++	require_Equal(t, tracked, 1)
++	require_Equal(t, indexed, 1)
++	require_Equal(t, cached, 1)
++	require_Equal(t, store.Hash(), before)
++	require_NoError(t, os.Remove(child))
++	require_NoError(t, os.Remove(path))
++	require_NoError(t, os.WriteFile(path, []byte(token), 0600))
++	store.Lock()
++	removed = store.expireOneLocked(tracker, time.Unix(claims.Expires, 0).UnixNano())
++	store.Unlock()
++	require_True(t, removed)
++	assertStoreSize(t, store, 0)
++	require_Equal(t, store.Hash(), [32]byte{})
++}

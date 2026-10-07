@@ -1,0 +1,95 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "9a03b5017fab014392efd7571cb6d932b1b2a769fbed73ff04e31a544fa13184",
+    "--tmpfs",
+    "/tmp:rw,exec,size=4g,mode=1777",
+    "--user",
+    "1019:100",
+    "-e",
+    "GOMAXPROCS=2",
+    "-e",
+    "GOTOOLCHAIN=local",
+    "-e",
+    "GOPROXY=off",
+    "-e",
+    "GOSUMDB=off",
+    "-e",
+    "GOFLAGS=-mod=vendor",
+    "-e",
+    "GOCACHE=/cache",
+    "-e",
+    "GOPATH=/gopath",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-prepared-43/nats-server-2.15.0:/source:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-go-cache:/cache",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-go-path:/gopath",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-prepared-43/nats-server-2.15.0/server/sublist.go:/source/server/sublist.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-expiration-229-final/dirstore_test.go:/source/server/dirstore_test.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-expiration-229-final/dirstore.go:/source/server/dirstore.go:ro",
+    "-w",
+    "/source",
+    "sha256:2b44d9f9636b4e454c93b06c95cd9ff9f23136b159e80ac2ded68b32d7f1190b",
+    "go",
+    "test",
+    "-race",
+    "-v",
+    "-short",
+    "-count=1",
+    "-timeout=20m",
+    "-run",
+    "^(TestShardedDirStoreWriteAndReadonly|TestUnshardedDirStoreWriteAndReadonly|TestNoCreateRequiresDir|TestCreateMakesDir|TestDirStoreInaccessibleParent|TestShardedDirStorePackMerge|TestShardedToUnsharedDirStorePackMerge|TestMergeOnlyOnNewer|TestExpiration|TestLimit|TestLimitNoEvict|TestLruLoad|TestLruVolume|TestLru|TestReload|TestExpirationUpdate|TestTTL|TestRemove|TestNotificationOnPack|TestNotificationOnPackWalk|TestExpirationRoundedTimerBoundary|TestExpirationRemovalFailurePreservesState)$",
+    "./server"
+  ],
+  "network": {
+    "Name": "qore-rpm-isolated-db37e8d5e8a242848e2035175919891e",
+    "Id": "9a03b5017fab014392efd7571cb6d932b1b2a769fbed73ff04e31a544fa13184",
+    "Created": "2026-10-07T16:39:29.858308405+02:00",
+    "Scope": "local",
+    "Driver": "bridge",
+    "EnableIPv4": true,
+    "EnableIPv6": false,
+    "IPAM": {
+      "Driver": "default",
+      "Options": {},
+      "Config": [
+        {
+          "Subnet": "172.31.0.0/16"
+        }
+      ]
+    },
+    "Internal": true,
+    "Attachable": false,
+    "Ingress": false,
+    "ConfigFrom": {
+      "Network": ""
+    },
+    "ConfigOnly": false,
+    "Options": {
+      "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+      "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+    },
+    "Labels": {},
+    "Containers": {},
+    "Status": {
+      "IPAM": {
+        "Subnets": {
+          "172.31.0.0/16": {
+            "IPsInUse": 2,
+            "DynamicIPsAvailable": 65534
+          }
+        }
+      }
+    }
+  }
+}

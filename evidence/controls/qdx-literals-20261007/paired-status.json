@@ -1,0 +1,52 @@
+[
+  {
+    "variant": "fixed",
+    "steps": [
+      {
+        "command": [
+          "qcc",
+          "-O3",
+          "-m",
+          "/out/src/qlib/Qdx.qm",
+          "-o",
+          "/out/src/qlib/Qdx.qmod"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "/out/src/examples/test/qlib/Qdx/AstProcessor.qtest"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  {
+    "variant": "original",
+    "steps": [
+      {
+        "command": [
+          "qcc",
+          "-O3",
+          "-m",
+          "/out/src/qlib/Qdx.qm",
+          "-o",
+          "/out/src/qlib/Qdx.qmod"
+        ],
+        "exit_code": 0
+      },
+      {
+        "command": [
+          "qore",
+          "-b",
+          "--enable-debug",
+          "/out/src/examples/test/qlib/Qdx/AstProcessor.qtest"
+        ],
+        "exit_code": 2
+      }
+    ]
+  }
+]
