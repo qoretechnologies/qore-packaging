@@ -1142,7 +1142,7 @@
   },
   "remaining": [
     "Review all upstream skip reasons and diagnostics against source and approved scope.",
-    "Root-cause the prior ConsumerInfo restart timeout and historical sparse-consumer performance, atomic-batch, workqueue and fail-tracking failures; a fresh pass alone does not resolve them.",
+    "Root-cause the prior TEST2 stream-create timeout after restart and historical sparse-consumer performance, atomic-batch, workqueue and fail-tracking failures; a fresh pass alone does not resolve them.",
     "Qualify NATS client and Qore module packages, debugger/lint and repository lifecycle, then native OBS builds."
   ],
   "files_sha256": {
@@ -1152,5 +1152,63 @@
     "evidence/controls/nats-candidate45-final-20261007/fedora-build.log.gz": "756e4f478e177b4212a51b8b0806f1ed49a0b8201d9a36deb2952690a59de84e",
     "evidence/controls/nats-candidate45-final-20261007/leap-build.json": "8212e27c74f19329d23eec628a98f84161005a93f3e46ab5f7dfee437301c392",
     "evidence/controls/nats-candidate45-final-20261007/leap-build.log.gz": "4179e9fa5e92a799bce35021d05a71f1d2f413811fb60146a2d1d54da29807b8"
+  },
+  "triage_correction": {
+    "previous_label": "ConsumerInfo restart timeout",
+    "actual_failure": "js.AddStream(TEST2) followed by require_NoError at line 5784",
+    "retained_source": "results/fedora-nats-server-candidate-44/rpmbuild/BUILD/nats-server-2.15.0-build/nats-server-2.15.0/server/jetstream_cluster_2_test.go",
+    "prepared_source": "work/nats-prepared-44/nats-server-2.15.0/server/jetstream_cluster_2_test.go",
+    "identical_source_sha256": "465192ac1dfdab24c8746753201224e2206eece31acba23c8a838df6ad1740d8",
+    "source_excerpt": [
+      {
+        "line": 5774,
+        "source": "\tci, err := js.ConsumerInfo(\"TEST\", \"dlc\")"
+      },
+      {
+        "line": 5775,
+        "source": "\trequire_NoError(t, err)"
+      },
+      {
+        "line": 5776,
+        "source": ""
+      },
+      {
+        "line": 5777,
+        "source": "\tif ci.AckFloor.Consumer != 5 {"
+      },
+      {
+        "line": 5778,
+        "source": "\t\tt.Fatalf(\"Bad ack floor: %+v\", ci.AckFloor)"
+      },
+      {
+        "line": 5779,
+        "source": "\t}"
+      },
+      {
+        "line": 5780,
+        "source": ""
+      },
+      {
+        "line": 5781,
+        "source": "\t// Now delete and make sure consumer does not come back."
+      },
+      {
+        "line": 5782,
+        "source": "\t// First add a delete something else."
+      },
+      {
+        "line": 5783,
+        "source": "\t_, err = js.AddStream(&nats.StreamConfig{Name: \"TEST2\"})"
+      },
+      {
+        "line": 5784,
+        "source": "\trequire_NoError(t, err)"
+      },
+      {
+        "line": 5785,
+        "source": "\trequire_NoError(t, js.DeleteStream(\"TEST2\"))"
+      }
+    ],
+    "limit": "This establishes the failing operation, not its root cause."
   }
 }
