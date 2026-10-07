@@ -1,0 +1,32 @@
+[
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 2603,
+    "body": "  enum class Kind : uint8_t {\n    kWord32,\n    kWord64,\n    kFloat32,\n    kFloat64,\n    kSmi,\n    kNumber,  // TODO(tebbi): See if we can avoid number constants.\n    kTaggedIndex,\n    kExternal,\n    kHeapObject,\n    kCompressedHeapObject,\n    kTrustedHeapObject,\n    kRelocatableWasmCall,\n    kRelocatableWasmStubCall,\n    kRelocatableWasmIndirectCallTarget,\n    kRelocatableWasmCanonicalSignatureId\n  };",
+    "sha256": "6f42421708d2ac9701b90c88497765dd29c61f393086bc650ea6f8c60dd352d4"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 2699,
+    "body": "  int64_t signed_integral() const {\n    DCHECK(IsIntegral());\n    switch (kind) {\n      case Kind::kWord32:\n      case Kind::kRelocatableWasmCanonicalSignatureId:\n        return static_cast<int32_t>(storage.integral);\n      case Kind::kWord64:\n        return static_cast<int64_t>(storage.integral);\n      default:\n        UNREACHABLE();\n    }\n  }",
+    "sha256": "12bcc8eafdb685196d88573b4a67d70df072b1bd2e9b5e58f62646b3f4a91660"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operation-matcher.h",
+    "line": 306,
+    "body": "  bool MatchSignedIntegralConstant(V<Any> matched, int64_t* constant) const {\n    if (const ConstantOp* c = TryCast<ConstantOp>(matched)) {\n      if (c->kind == ConstantOp::Kind::kWord32 ||\n          c->kind == ConstantOp::Kind::kWord64) {\n        *constant = c->signed_integral();\n        return true;\n      }\n    }\n    return false;\n  }",
+    "sha256": "cb9751e9163a8994d6e2f940ca2bc5133860bfcd1ebd346cddfa4ff31a91ecd9"
+  },
+  {
+    "file": "deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc",
+    "line": 3216,
+    "body": "bool IsIntConstant(InstructionSelectorT* selector, OpIndex node) {\n  if (auto constant = selector->Get(node).TryCast<ConstantOp>()) {\n    return constant->kind == ConstantOp::Kind::kWord32 ||\n           constant->kind == ConstantOp::Kind::kWord64;\n  }\n  return false;\n}",
+    "sha256": "d5349426a2bc9673d38e9b9817fd66cd6a8cfdc63901885ad2356b3d545f301a"
+  },
+  {
+    "file": "deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc",
+    "line": 3233,
+    "body": "MachineType MachineTypeForNarrowWordAnd(InstructionSelectorT* selector,\n                                        OpIndex and_node,\n                                        OpIndex constant_node) {\n  DCHECK_EQ(selector->value_input_count(and_node), 2);\n  auto and_left = selector->input_at(and_node, 0);\n  auto and_right = selector->input_at(and_node, 1);\n  auto and_constant_node = IsIntConstant(selector, and_right)  ? and_right\n                           : IsIntConstant(selector, and_left) ? and_left\n                                                               : OpIndex{};\n\n  if (and_constant_node.valid()) {\n    int64_t and_constant, cmp_constant;\n    selector->MatchSignedIntegralConstant(and_constant_node, &and_constant);\n    selector->MatchSignedIntegralConstant(constant_node, &cmp_constant);\n    if (and_constant >= 0 && cmp_constant >= 0) {\n      int64_t constant =\n          and_constant > cmp_constant ? and_constant : cmp_constant;\n      if (constant <= std::numeric_limits<int8_t>::max()) {\n        return MachineType::Int8();\n      } else if (constant <= std::numeric_limits<uint8_t>::max()) {\n        return MachineType::Uint8();\n      } else if (constant <= std::numeric_limits<int16_t>::max()) {\n        return MachineType::Int16();\n      } else if (constant <= std::numeric_limits<uint16_t>::max()) {\n        return MachineType::Uint16();\n      } else if (constant <= std::numeric_limits<int32_t>::max()) {\n        return MachineType::Int32();\n      } else if (constant <= std::numeric_limits<uint32_t>::max()) {\n        return MachineType::Uint32();\n      }\n    }\n  }\n\n  return MachineType::None();\n}",
+    "sha256": "4aab265cab8eea0d381c4d7fd7b81adea94dd0b30bafb43a4c60df1bb7e45b7c"
+  }
+]

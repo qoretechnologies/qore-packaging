@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "User accepted both exact integer-constant matcher diagnostics on 2026-10-07. Full RPM and native architecture qualification remain separate gates.",
+  "diagnostics": [
+    {
+      "file": "deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc",
+      "line": 3244,
+      "diagnostic": "../deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc:3244:13: warning: \u2018and_constant\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "3234:                                         OpIndex and_node,\n3235:                                         OpIndex constant_node) {\n3236:   DCHECK_EQ(selector->value_input_count(and_node), 2);\n3237:   auto and_left = selector->input_at(and_node, 0);\n3238:   auto and_right = selector->input_at(and_node, 1);\n3239:   auto and_constant_node = IsIntConstant(selector, and_right)  ? and_right\n3240:                            : IsIntConstant(selector, and_left) ? and_left\n3241:                                                                : OpIndex{};\n3242: \n3243:   if (and_constant_node.valid()) {\n3244:     int64_t and_constant, cmp_constant;\n3245:     selector->MatchSignedIntegralConstant(and_constant_node, &and_constant);\n3246:     selector->MatchSignedIntegralConstant(constant_node, &cmp_constant);\n3247:     if (and_constant >= 0 && cmp_constant >= 0) {\n3248:       int64_t constant =\n3249:           and_constant > cmp_constant ? and_constant : cmp_constant;\n3250:       if (constant <= std::numeric_limits<int8_t>::max()) {\n3251:         return MachineType::Int8();\n3252:       } else if (constant <= std::numeric_limits<uint8_t>::max()) {\n3253:         return MachineType::Uint8();\n3254:       } else if (constant <= std::numeric_limits<int16_t>::max()) {"
+    },
+    {
+      "file": "deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc",
+      "line": 3244,
+      "diagnostic": "../deps/v8/src/compiler/backend/x64/instruction-selector-x64.cc:3244:27: warning: \u2018cmp_constant\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "context": "3234:                                         OpIndex and_node,\n3235:                                         OpIndex constant_node) {\n3236:   DCHECK_EQ(selector->value_input_count(and_node), 2);\n3237:   auto and_left = selector->input_at(and_node, 0);\n3238:   auto and_right = selector->input_at(and_node, 1);\n3239:   auto and_constant_node = IsIntConstant(selector, and_right)  ? and_right\n3240:                            : IsIntConstant(selector, and_left) ? and_left\n3241:                                                                : OpIndex{};\n3242: \n3243:   if (and_constant_node.valid()) {\n3244:     int64_t and_constant, cmp_constant;\n3245:     selector->MatchSignedIntegralConstant(and_constant_node, &and_constant);\n3246:     selector->MatchSignedIntegralConstant(constant_node, &cmp_constant);\n3247:     if (and_constant >= 0 && cmp_constant >= 0) {\n3248:       int64_t constant =\n3249:           and_constant > cmp_constant ? and_constant : cmp_constant;\n3250:       if (constant <= std::numeric_limits<int8_t>::max()) {\n3251:         return MachineType::Int8();\n3252:       } else if (constant <= std::numeric_limits<uint8_t>::max()) {\n3253:         return MachineType::Uint8();\n3254:       } else if (constant <= std::numeric_limits<int16_t>::max()) {"
+    }
+  ],
+  "root_cause": "The compiler does not preserve the relationship between the IsIntConstant preconditions and the output assignments in MatchSignedIntegralConstant. Both predicates accept exactly the same Word32/Word64 kinds; accepted calls initialize the output before returning true.",
+  "source_review": [
+    "TryNarrowOpcodeSize calls MachineTypeForNarrowWordAnd at two sites, each guarding the comparison operand with IsIntConstant.",
+    "MachineTypeForNarrowWordAnd selects an AND operand with the same IsIntConstant guard and only enters the matching branch when that index is valid.",
+    "The unchanged matcher assigns signed_integral() and returns true for exactly Word32 and Word64. All rejected kinds leave the output untouched. Graph inputs are read from the same compiler graph during selection.",
+    "For nonnegative inputs, the selected width covers both constants; negative or out-of-range values retain the original full-width instruction."
+  ],
+  "coverage": {
+    "native_checks": 1555600,
+    "checks_per_run": 388900,
+    "matrix": "All combinations of 22 signed/boundary values, Word32/Word64 on each constant and both AND input positions, repeated 100 times. Every declared constant kind tests predicate/matcher agreement and unchanged rejected output; no-constant AND and two-constant priority are covered.",
+    "native_modes": "Release/debug, normally and under Valgrind; both memory runs have zero errors and all allocations freed.",
+    "compiler": "The cmp_constant diagnostic reproduces in both builds; the smaller control does not reproduce and_constant.",
+    "javascript_checks": 806400,
+    "javascript": "576 functions cover eight masks, twelve boundary constants and six comparison operators over fourteen signed inputs. Results match an independent BigInt reference; TurboFan optimization is requested and verified.",
+    "javascript_command": "node --no-turbolev --allow-natives-syntax /work/control.js",
+    "node_image": "qore-rpm-keep:leap-node-compaction-baseline2-20261006"
+  },
+  "limits": [
+    "The original constant-kind enum, signed conversion, predicate, matcher and narrowing body are verbatim. Typed graph/index and MachineType adapters do not emit machine code.",
+    "Native tests cover 64-bit matching; actual JavaScript masked comparisons exercise 32-bit bitwise semantics. No claim of actual generated-code coverage for all 64-bit native cases is made.",
+    "Only one of the two full-build warnings reproduces in the smaller control. The second is supported by the identical predicate/matcher contract and source call-path review.",
+    "No runtime patch, diagnostic suppression or compiler-flag change is proposed."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-narrow-match-20261007/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-narrow-match-20261007/control.cc": "3fd9822ab8195ef287e37ecf3e1968f34456340486763607e83174af4bc0220e",
+    "evidence/controls/node-narrow-match-20261007/control.js": "8644554de96199bd6b1ff83362c3a8fa8ca698fa6d8e256ac711adb7a93b609c",
+    "evidence/controls/node-narrow-match-20261007/debug-compile.log.gz": "2fe72146cdde99af1ccb108334055b073f6b669038022eca304cbc8d4aeb3702",
+    "evidence/controls/node-narrow-match-20261007/debug-memory.log.gz": "1d42df31557e7157a94bc26a081b804c800822e12b4091439ade0894eb6f3eda",
+    "evidence/controls/node-narrow-match-20261007/debug-normal.log.gz": "1d42df31557e7157a94bc26a081b804c800822e12b4091439ade0894eb6f3eda",
+    "evidence/controls/node-narrow-match-20261007/debug-valgrind.log.gz": "943cb6bf0e2b828d4bd736692e8d29ee0642f1b7f24596247535420ab3a36d72",
+    "evidence/controls/node-narrow-match-20261007/javascript.log.gz": "46a2194bbbc4f4cd54e0cca04eadcb4031f1c57481c965f579fce9586bb3aab3",
+    "evidence/controls/node-narrow-match-20261007/prepare.py": "8c60400b0e45be3b88023336df3ec31fda9405a6c9e5810a4a9969531a4dfd37",
+    "evidence/controls/node-narrow-match-20261007/release-compile.log.gz": "2fe72146cdde99af1ccb108334055b073f6b669038022eca304cbc8d4aeb3702",
+    "evidence/controls/node-narrow-match-20261007/release-memory.log.gz": "1d42df31557e7157a94bc26a081b804c800822e12b4091439ade0894eb6f3eda",
+    "evidence/controls/node-narrow-match-20261007/release-normal.log.gz": "1d42df31557e7157a94bc26a081b804c800822e12b4091439ade0894eb6f3eda",
+    "evidence/controls/node-narrow-match-20261007/release-valgrind.log.gz": "d7fc669edd5e0c015b67301aae3da0190d2426ea48baf69925fd1ade0cab65ca",
+    "evidence/controls/node-narrow-match-20261007/run.py": "18340988507ce7915915adb6c1c8794f1883faf19950729ca1a5476ef71dbc1f",
+    "evidence/controls/node-narrow-match-20261007/source-extracts.json": "257e4f7e1cadb4138de5bddf88ce3486643acbfd57e2f7daaa29474a1b675841",
+    "evidence/controls/node-narrow-match-20261007/status.json": "d4498ee556a820ac1c3199b446ab3e7661b6f3442e8f90fd46e978fa6188fd23"
+  },
+  "approval": "Allow these two exact diagnostics",
+  "approval_date": "2026-10-07"
+}
