@@ -1,0 +1,241 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Audited, committed and pushed to Qore develop; also applied to the frozen RPM checkout. Full canonical RPM/native requalification remains pending.",
+  "qore_commit": "7dac94b249a3c71ef7a79ccc1f53840d0c1fe7db",
+  "tested_base": "9951c7d3e7d797a113e1c1274ce1aa7dcc34a376",
+  "rebase": "Initial push rejected because develop gained 7886364b6 (SqlUtil transaction deadlines). Rebased without conflict; all five implementation/test/spec files remained byte-identical. Both local regression modes passed again; normal push succeeded. No force push.",
+  "root_cause": "Arrow 24 deprecated the four output-parameter FileReader reads and introduced Result-returning overloads. The same operations are selected with Result on Arrow >=24; older SDKs retain their supported API.",
+  "implementation": "Status is checked before moving the shared table; original Qore exception conversion, reader selection and ownership semantics remain.",
+  "upstream": [
+    "https://github.com/apache/arrow/blob/apache-arrow-24.0.0/cpp/src/parquet/arrow/reader.h",
+    "https://github.com/apache/arrow/blob/apache-arrow-23.0.1/cpp/src/parquet/arrow/reader.h"
+  ],
+  "matrix": {
+    "fedora": "Arrow 23.0.1, distribution flags",
+    "leap": "Arrow 25.0.1, distribution flags",
+    "el10": "Arrow 17.0.0, distribution flags",
+    "release": "host Arrow 23.0.1, Release -O3 -DNDEBUG, /usr prefix",
+    "debug": "host Arrow 23.0.1, Debug, /usr prefix"
+  },
+  "build_scope": "The actual changed translation unit was compiled with each existing build configuration and -Werror=deprecated-declarations; each module was relinked with its remaining original objects. Qualified full-build source/RPM directories were mounted read-only. This is delta qualification, not a claim that new full RPMs have been built.",
+  "tests": {
+    "executed_cases": 45,
+    "assertions": 445,
+    "each_configuration": "8 new cases/30 assertions plus existing parquetTest/59 assertions; the other 38 existing suite cases were deliberately excluded by the supported --include option.",
+    "negative_compile": "Original source fails on Arrow 25 at exactly four deprecated calls. Updated compile and link have zero diagnostics on all five configurations.",
+    "rpm_metadata_methods": 24,
+    "rpm_metadata_skips": 0,
+    "post_rebase": "16 additional cases/60 assertions pass in Release and Debug."
+  },
+  "valgrind": {
+    "fedora": {
+      "reported_errors": 1,
+      "classified_pcre_matches": [
+        {
+          "pattern": "\\.qm$",
+          "length": 124,
+          "subject": "/work/rpmbuild/BUILD/qore-3.0.0_git20261008.22-build/qore-3.0.0~git20261008.22/modules/dataframe/test/parquet-read-api.qtest"
+        }
+      ],
+      "lost_bytes": 0,
+      "unclassified_errors": 0,
+      "debug_symbol_warning": true,
+      "regression_cases": 8,
+      "assertions": 30
+    },
+    "leap": {
+      "reported_errors": 1,
+      "classified_pcre_matches": [
+        {
+          "pattern": "\\.qm$",
+          "length": 124,
+          "subject": "/work/rpmbuild/BUILD/qore-3.0.0_git20261008.22-build/qore-3.0.0~git20261008.22/modules/dataframe/test/parquet-read-api.qtest"
+        }
+      ],
+      "lost_bytes": 0,
+      "unclassified_errors": 0,
+      "debug_symbol_warning": false,
+      "regression_cases": 8,
+      "assertions": 30
+    },
+    "el10": {
+      "reported_errors": 1,
+      "classified_pcre_matches": [
+        {
+          "pattern": "\\.qm$",
+          "length": 92,
+          "subject": "/work/rpmbuild/BUILD/qore-3.0.0~git20261008.22/modules/dataframe/test/parquet-read-api.qtest"
+        }
+      ],
+      "lost_bytes": 0,
+      "unclassified_errors": 0,
+      "debug_symbol_warning": true,
+      "regression_cases": 8,
+      "assertions": 30
+    },
+    "release": {
+      "reported_errors": 1,
+      "classified_pcre_matches": [
+        {
+          "pattern": "\\.qm$",
+          "length": 75,
+          "subject": "/home/david/src/qore/git/qore/modules/dataframe/test/parquet-read-api.qtest"
+        }
+      ],
+      "lost_bytes": 0,
+      "unclassified_errors": 0,
+      "debug_symbol_warning": true,
+      "regression_cases": 8,
+      "assertions": 30
+    },
+    "debug": {
+      "reported_errors": 1,
+      "classified_pcre_matches": [
+        {
+          "pattern": "\\.qm$",
+          "length": 75,
+          "subject": "/home/david/src/qore/git/qore/modules/dataframe/test/parquet-read-api.qtest"
+        }
+      ],
+      "lost_bytes": 0,
+      "unclassified_errors": 0,
+      "debug_symbol_warning": true,
+      "regression_cases": 8,
+      "assertions": 30
+    }
+  },
+  "existing_approvals": [
+    "evidence/core-separated-pcre-diagnostic-20261008.json (existing exact QUnit .qm$ scope)",
+    "evidence/core-postpull-20261008.json (unchanged runtime TLS debug-symbol notice)"
+  ],
+  "diagnostic_policy": "No new exception requested or inferred. Call tracing proves every conditional report occurs inside the already-approved QUnit .qm$ match. No suppression or JIT disabling. All definite/indirect/possible losses are zero; no other memory-error contexts. Compiler and functional logs are warning-free.",
+  "tool_image": "Fedora original build image lacks valgrind. Existing qualified XML debug-tools image provides Valgrind 3.27.1; every common non-Qore dependency has the identical version. Only installed Qore baseline RPMs differ (core12/core15); explicit built qore, LD_LIBRARY_PATH and local module paths select the qualified core22 runtime and changed module.",
+  "harness_corrections": [
+    "Initial single-file bind inside a read-only source mount failed before compilation; corrected to mounting the complete test directory.",
+    "Initial -t test selection was invalid; use the documented --include=parquetTest.",
+    "Distribution link specs need the original RPM_* variables; supplied the package metadata instead of changing compiler/linker flags.",
+    "Fedora base has valgrind-devel but no valgrind executable; used existing verified tool image.",
+    "An initial follow-up sliced out three already-qualified Valgrind steps; the separate trace driver explicitly completed those runs. Earlier intermediate status zero is not taken as proof of memory qualification."
+  ],
+  "audit": {
+    "file": "modules/dataframe/test/audits/parquet-read-api.rst",
+    "pass": 18,
+    "na": 44,
+    "fail": 0
+  },
+  "frozen_backport": "work/checkouts/qore-documentation-sdk-20261006. Source/test/audit files are byte-identical; inserted RPM regression after ML while preserving the checkout's additional CSV tests. Initial full patch check failed at that adjacent spec context without applying changes; remaining paths then applied cleanly and exact spec stanza was integrated.",
+  "source_sha256": {
+    "modules/dataframe/src/df_parquet.cpp": "617b021e1706c877f8bd37a2506211f93f07a1dc91a680e2c5d0b0eada0edf6a",
+    "modules/dataframe/test/parquet-read-api.qtest": "7d586e4deaef978fed7da4c8f29028c51ab225c970df015e801fb2e9e9a351ba",
+    "modules/dataframe/test/parquet-read-api.rst": "c12803f99ad74657cbde2e8016a0925f0fa55470c8d938e6b30b0097f9543cfa",
+    "modules/dataframe/test/audits/parquet-read-api.rst": "11cf29aebcefd9ed7ce1dcbf04f25378e551bb92ac20137f0ad9c0e9c8717b5a",
+    "qore.spec-multi": "0be60006e0beb9c694929cf017847fef0dc947d847f3563aa8f919eb7515973f",
+    "doxygen/lang/900_release_notes.dox.tmpl": "21571af4bb1bfa4673d88f5d2ba1f6fa4391a97e9df0b2d8eb19cb6f1622797c"
+  },
+  "files_sha256": {
+    "evidence/controls/parquet-read-api-20261008/parquet-post-rebase-20261008/debug.log.gz": "62caea88e531195839f9606b8edee6cfe4310ae56116200a22809f7718022cd9",
+    "evidence/controls/parquet-read-api-20261008/parquet-post-rebase-20261008/release.log.gz": "62caea88e531195839f9606b8edee6cfe4310ae56116200a22809f7718022cd9",
+    "evidence/controls/parquet-read-api-20261008/parquet-post-rebase-20261008/status.json": "942a7940135ce75c2c48b528096bca1f0eb31db881a27e762379261a1f7fc7a6",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/debug/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/debug/link.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/debug/parquet-existing.log.gz": "91e5372d6496b934f946bea5061f8cfe7f1a37fe8cae8066e9ed39178cd5ffa1",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/debug/regression.log.gz": "62caea88e531195839f9606b8edee6cfe4310ae56116200a22809f7718022cd9",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/debug/status.json": "7c6b4649e5f4457a44f936526c4a4caa792549f9bb11ed99d654c65a9f54101d",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/el10/compile.log.gz": "6139df4856d8dce8c73ec096df993cd0df80f0ae19a2f8a910dfe9cc75d5e60d",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/el10/status.json": "0ca5e877609d054da605b5b3f4c1d24423746dd72cdba4d9f8bc65647e8782a5",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/fedora/compile.log.gz": "8b82847ec924e0aa48ba6e752ad157d84027068e5dc864bbaf78e5da7b74cb56",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/fedora/status.json": "817e2df0bb90d66cc5a94d717d2d6ec881c6bb77b028ab96d533354b68cb32cf",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/leap/compile.log.gz": "8b82847ec924e0aa48ba6e752ad157d84027068e5dc864bbaf78e5da7b74cb56",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/leap/status.json": "c1d4a8cc2a7a07fe3ce2adae9c6eabee47d627da7b84a11d147fcf073ee0f023",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/release/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/release/link.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/release/parquet-existing.log.gz": "f863b2025eb96fbe48544f5ae4bfabba822a1846827b9968abb40be701157033",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/release/regression.log.gz": "62caea88e531195839f9606b8edee6cfe4310ae56116200a22809f7718022cd9",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/release/status.json": "177e24fa84143f4aba20d1c160dabb426adb48ac03a07f2d40361ccbafe3c6dd",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/source-hashes.json": "aef8df62a46d8532597b82ef2f9e0119fd0330bc7e9dc1f755f3296c623d1f3a",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-20261008/status.json": "40ac7bc5bdad716abdeb152a0b17f09d268b3cd99f4c8289e08559cb6f496895",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/debug/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/debug/link.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/debug/parquet-existing.log.gz": "6c5bd758bb8e09b0adc1f17e4a16110f73a2c0fc6779075ab1ce5aeb49a2f97d",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/debug/regression.log.gz": "62caea88e531195839f9606b8edee6cfe4310ae56116200a22809f7718022cd9",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/debug/status.json": "a1f77d581eace9a03eb1ac49d15fffb71e9e2423b03af5a75c6321ebc2ed80da",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/debug/trace-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/el10/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/el10/link.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/el10/parquet-existing.log.gz": "6c5bd758bb8e09b0adc1f17e4a16110f73a2c0fc6779075ab1ce5aeb49a2f97d",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/el10/regression.log.gz": "62caea88e531195839f9606b8edee6cfe4310ae56116200a22809f7718022cd9",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/el10/status.json": "84274322871ca721d26da4b180cc2c7bb16f801f8bebbb52927ea84657d487e6",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/el10/trace-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/el10/valgrind-traced.log.gz": "0c8c6192867781fd9ac1bdf874285f6760ef9a67633218592bf34f0e9faf32c0",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/fedora/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/fedora/link.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/fedora/parquet-existing.log.gz": "6c5bd758bb8e09b0adc1f17e4a16110f73a2c0fc6779075ab1ce5aeb49a2f97d",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/fedora/regression.log.gz": "62caea88e531195839f9606b8edee6cfe4310ae56116200a22809f7718022cd9",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/fedora/status.json": "d12064f3fc4d2a3dc41d0938814abc18d0aae2f4efc8562347d29a20ee1ca6a4",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/fedora/trace-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/fedora/valgrind-traced.log.gz": "d64efb606fa28c591e0e47083eca4ce3a14bb709e2a79126aaccd61f6665699f",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/leap/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/leap/link.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/leap/original-compile.log.gz": "e5891502ee80a54dd4d0a8aa1651a478a088f9bac3c62e7086352230ce685312",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/leap/original-negative.json": "0e75581146af7710b46928bea0effe305691c9062549738d44c7961a874e1949",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/leap/parquet-existing.log.gz": "6c5bd758bb8e09b0adc1f17e4a16110f73a2c0fc6779075ab1ce5aeb49a2f97d",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/leap/regression.log.gz": "62caea88e531195839f9606b8edee6cfe4310ae56116200a22809f7718022cd9",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/leap/status.json": "88146adf9b42362c30f4b9f7b3bdeb2ae425c2a90e391a8401f4f59d5e067573",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/leap/trace-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/release/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/release/link.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/release/parquet-existing.log.gz": "6c5bd758bb8e09b0adc1f17e4a16110f73a2c0fc6779075ab1ce5aeb49a2f97d",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/release/regression.log.gz": "62caea88e531195839f9606b8edee6cfe4310ae56116200a22809f7718022cd9",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/release/status.json": "87fea54c06d6da052e582c0c02acf179d204c9e23e8ad797307109753f10e765",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/release/trace-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/source-hashes.json": "aef8df62a46d8532597b82ef2f9e0119fd0330bc7e9dc1f755f3296c623d1f3a",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-complete-20261008/status.json": "587d554a4bc07bf889d0dbc057c7dd0fe8bf469aeecc481d5494579c8997c42a",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/debug/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/debug/link.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/debug/parquet-existing.log.gz": "6c5bd758bb8e09b0adc1f17e4a16110f73a2c0fc6779075ab1ce5aeb49a2f97d",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/debug/regression.log.gz": "62caea88e531195839f9606b8edee6cfe4310ae56116200a22809f7718022cd9",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/debug/status.json": "6d5775494bd4961da384fbf4aae98d8c765c22a3bebe39c1ce826d6c970634bb",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/debug/valgrind.log.gz": "7165516d8f84609300f458de71250d98a470f5b3816576fb9abd6ef5854ed0c4",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/el10/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/el10/link.log.gz": "09474c3ed966361007dc61407cea15b9d5a22ba9e2d4ad32ed039a6d130f0855",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/el10/status.json": "6bdf97050573ce1e0df8d2a6c64687cade2316e308349df044e5bb944e8bb2d3",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/fedora/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/fedora/link.log.gz": "09474c3ed966361007dc61407cea15b9d5a22ba9e2d4ad32ed039a6d130f0855",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/fedora/status.json": "652e7d7eac6d209bf02c096a4a5556f4d80ef9358c7286e3b250a9caa47125be",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/leap/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/leap/link.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/leap/parquet-existing.log.gz": "6c5bd758bb8e09b0adc1f17e4a16110f73a2c0fc6779075ab1ce5aeb49a2f97d",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/leap/regression.log.gz": "62caea88e531195839f9606b8edee6cfe4310ae56116200a22809f7718022cd9",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/leap/status.json": "59c74e8cd6a843fcb02bc921d9a7d07cd6108b850bcd0de2db672039d5cd6bd5",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/leap/valgrind.log.gz": "edd0ba6ee908dedfd4d7ed1eea9194b1e83faa075caf34d4f60110e6f305fab6",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/release/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/release/link.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/release/parquet-existing.log.gz": "6c5bd758bb8e09b0adc1f17e4a16110f73a2c0fc6779075ab1ce5aeb49a2f97d",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/release/regression.log.gz": "62caea88e531195839f9606b8edee6cfe4310ae56116200a22809f7718022cd9",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/release/status.json": "9a0d3143c3f4721d30680987af0959330160eac64d5a40277b851f5f86bb5296",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/release/valgrind.log.gz": "e77ee6ee5ad49b6798b9da65ed3993800b2891ef4342479b4eafd4f25ec95b9d",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/source-hashes.json": "aef8df62a46d8532597b82ef2f9e0119fd0330bc7e9dc1f755f3296c623d1f3a",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-final-20261008/status.json": "fd591ff070bb02194f17acecadacc80760ca4b386d9089a5d73e84d429e7096d",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-traces-20261008/debug.json": "f9e1274073bf7903a9076120087d32446871c0211ecaf8b7f73b15822e7b7162",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-traces-20261008/debug.log.gz": "867a5d20aff710ceb175fbf8aa19c3802b7121e53bc07dbaf8234815924fcb4f",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-traces-20261008/fedora.json": "ee018f4fbabeda8ef80bdb1ff79ecb5636f85b8cf6b6f92571af9f20b7bea492",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-traces-20261008/fedora.log.gz": "0ac6ebbc6de006df4835860b877bac357294380dd219ae0dd589a36e90038a90",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-traces-20261008/leap.json": "3b1dd292ecdf6aa92e6ce0a2a0ef6a62bd4b3a36dff29865588c59d1427e1bb1",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-traces-20261008/leap.log.gz": "65598fc3acdc65b99b28c7fb106f0e68e25f7c23c4b3bc8baf9a4503ccd5ec22",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-traces-20261008/release.json": "473ab92f8614b6dbe4346d1c5c58c98e2a3348cb34943918a768f1914e1dd7f8",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-traces-20261008/release.log.gz": "cc7f4c9db198a7926f800972ac59f8fc6dea88f2246b0ba95815963f75b32089",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-traces-20261008/status.json": "93010abf48f18f027645b1ebdd20c1f811f04791287c6b105054cc45b88b475e",
+    "evidence/controls/parquet-read-api-20261008/parquet-read-api-traces-20261008/verified.json": "c62eb766e6e3bb85304aefd48b08668c11313b3d774a3853b7af7d31991baa38",
+    "evidence/controls/parquet-read-api-20261008/parquet-spec-target-tests-20261008/el10.log.gz": "9b0d2037ed2862ef14f12a4ce5b5fb8a22c11e02df0d3252251e2a05374ad795",
+    "evidence/controls/parquet-read-api-20261008/parquet-spec-target-tests-20261008/fedora.log.gz": "46eae5882d1a9a30b5776eb37f2d40b1bc6eb3eba9378ad1dac454714b51d3ff",
+    "evidence/controls/parquet-read-api-20261008/parquet-spec-target-tests-20261008/leap.log.gz": "869f252c77c5582061674c953edfcd7a0a2d829ef0f70c37d9ce372d8a0c7038",
+    "evidence/controls/parquet-read-api-20261008/parquet-spec-target-tests-20261008/status.json": "3e8eaa1651c2dbc697ee98ddbdf4b9f0e090a461d3cd0578c3eae8192b5293c4",
+    "evidence/controls/parquet-read-api-20261008/qualify-parquet-read-api-20261008.py": "fc6d44fd39907143b34ff02c0632365dbcc39a5651fdff7508b056475dab4ea5",
+    "evidence/controls/parquet-read-api-20261008/qualify-parquet-read-api-complete-20261008.py": "42c8ae2f27477add79d3394091808678c17cfce1818a5e6a92686c4393169fd8",
+    "evidence/controls/parquet-read-api-20261008/qualify-parquet-read-api-final-20261008.py": "1f3a7f4451adebc81c0f84851564a20623a07b4a19aae5255cb43ce576859551",
+    "evidence/controls/parquet-read-api-20261008/trace-parquet-read-api-20261008.py": "1306e39e11dbabfd4ec299969e112e9b61460a5a02f70b585284290ad4c7d121",
+    "evidence/controls/parquet-read-api-20261008/trace.c": "ce9106169b5ec39bdf7e5ef2a85dbf8ad1be67655dcf6fc4109e3f6b82e4f1e4"
+  }
+}

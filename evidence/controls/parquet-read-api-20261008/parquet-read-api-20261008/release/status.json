@@ -1,0 +1,96 @@
+[
+  {
+    "name": "compile",
+    "command": [
+      "/usr/lib64/ccache/c++",
+      "-DNDEBUG",
+      "-DPACKAGE_VERSION=\"3.0.0\"",
+      "-Ddataframe_EXPORTS",
+      "-I/home/david/src/qore/git/qore/build",
+      "-I/home/david/src/qore/git/qore/build/include",
+      "-I/home/david/src/qore/git/qore/include",
+      "-I/home/david/src/qore/git/qore/modules/dataframe/src",
+      "-I/home/david/src/qore/git/qore/build/modules/dataframe",
+      "-isystem",
+      "/usr/include/eigen3",
+      "-fno-strict-aliasing",
+      "-std=c++20",
+      "-DBUILDING_DLL=1",
+      "-O3",
+      "-DNDEBUG",
+      "-g",
+      "-fPIC",
+      "-Werror=deprecated-declarations",
+      "-c",
+      "/home/david/src/qore/git/qore/modules/dataframe/src/df_parquet.cpp",
+      "-o",
+      "/home/david/src/qore/git/qore-packaging/results/parquet-read-api-20261008/release/df_parquet.cpp.o"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "link",
+    "command": [
+      "/usr/lib64/ccache/c++",
+      "-fPIC",
+      "-fno-strict-aliasing",
+      "-std=c++20",
+      "-DBUILDING_DLL=1",
+      "-O3",
+      "-DNDEBUG",
+      "-g",
+      "-shared",
+      "-Wl,--dependency-file=/home/david/src/qore/git/qore-packaging/results/parquet-read-api-20261008/release/link.d",
+      "-o",
+      "/home/david/src/qore/git/qore-packaging/results/parquet-read-api-20261008/release/dataframe-api-2.0.qmod",
+      "CMakeFiles/dataframe.dir/src/dataframe-module.cpp.o",
+      "CMakeFiles/dataframe.dir/src/DataFrameExpr.cpp.o",
+      "CMakeFiles/dataframe.dir/src/df_plugin.cpp.o",
+      "CMakeFiles/dataframe.dir/src/df_column.cpp.o",
+      "CMakeFiles/dataframe.dir/src/DataFrame.cpp.o",
+      "CMakeFiles/dataframe.dir/src/GroupedDataFrame.cpp.o",
+      "CMakeFiles/dataframe.dir/src/df_csv.cpp.o",
+      "CMakeFiles/dataframe.dir/src/df_join.cpp.o",
+      "CMakeFiles/dataframe.dir/src/df_window.cpp.o",
+      "CMakeFiles/dataframe.dir/src/df_db.cpp.o",
+      "/home/david/src/qore/git/qore-packaging/results/parquet-read-api-20261008/release/df_parquet.cpp.o",
+      "CMakeFiles/dataframe.dir/QC_DataFrame.cpp.o",
+      "CMakeFiles/dataframe.dir/QC_DataFrameExpr.cpp.o",
+      "CMakeFiles/dataframe.dir/QC_GroupedDataFrame.cpp.o",
+      "CMakeFiles/dataframe.dir/ql_dataframe.cpp.o",
+      "/usr/lib64/libparquet.so.2300.1.0",
+      "/usr/lib64/libarrow.so.2300.1.0",
+      "-ldl",
+      "-lrt"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "regression",
+    "command": [
+      "env",
+      "LD_LIBRARY_PATH=/home/david/src/qore/git/qore/build",
+      "QORE_MODULE_DIR=/home/david/src/qore/git/qore-packaging/results/parquet-read-api-20261008/release:/home/david/src/qore/git/qore/qlib:/home/david/src/qore/git/qore/build/modules/linenoise:/home/david/src/qore/git/qore/build/modules/logger_bin:/home/david/src/qore/git/qore/build/modules/yaml:/home/david/src/qore/git/qore/build/modules/astparser:/home/david/src/qore/git/qore/build/modules/avro:/home/david/src/qore/git/qore/build/modules/cppapitest:/home/david/src/qore/git/qore/build/modules/cppapiuser:/home/david/src/qore/git/qore/build/modules/reflection:/home/david/src/qore/git/qore/build/modules/krb5:/home/david/src/qore/git/qore/build/modules/tokenizer:/home/david/src/qore/git/qore/build/modules/i18n:/home/david/src/qore/git/qore/build/modules/avrocppapi:/home/david/src/qore/git/qore/build/modules/mongodb:/home/david/src/qore/git/qore/build/modules/dataframe:/home/david/src/qore/git/qore/build/modules/sshutil:/home/david/src/qore/git/qore/build/modules/protobuf:/home/david/src/qore/git/qore/build/modules/ocr:/home/david/src/qore/git/qore/build/modules/staticpgm:/home/david/src/qore/git/qore/build/modules/json:/home/david/src/qore/git/qore/build/modules/ml:/home/david/src/qore/git/qore/build/modules/dbi_test",
+      "/home/david/src/qore/git/qore/build/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore/modules/dataframe/test/parquet-read-api.qtest"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "parquet-existing",
+    "command": [
+      "env",
+      "LD_LIBRARY_PATH=/home/david/src/qore/git/qore/build",
+      "QORE_MODULE_DIR=/home/david/src/qore/git/qore-packaging/results/parquet-read-api-20261008/release:/home/david/src/qore/git/qore/qlib:/home/david/src/qore/git/qore/build/modules/linenoise:/home/david/src/qore/git/qore/build/modules/logger_bin:/home/david/src/qore/git/qore/build/modules/yaml:/home/david/src/qore/git/qore/build/modules/astparser:/home/david/src/qore/git/qore/build/modules/avro:/home/david/src/qore/git/qore/build/modules/cppapitest:/home/david/src/qore/git/qore/build/modules/cppapiuser:/home/david/src/qore/git/qore/build/modules/reflection:/home/david/src/qore/git/qore/build/modules/krb5:/home/david/src/qore/git/qore/build/modules/tokenizer:/home/david/src/qore/git/qore/build/modules/i18n:/home/david/src/qore/git/qore/build/modules/avrocppapi:/home/david/src/qore/git/qore/build/modules/mongodb:/home/david/src/qore/git/qore/build/modules/dataframe:/home/david/src/qore/git/qore/build/modules/sshutil:/home/david/src/qore/git/qore/build/modules/protobuf:/home/david/src/qore/git/qore/build/modules/ocr:/home/david/src/qore/git/qore/build/modules/staticpgm:/home/david/src/qore/git/qore/build/modules/json:/home/david/src/qore/git/qore/build/modules/ml:/home/david/src/qore/git/qore/build/modules/dbi_test",
+      "/home/david/src/qore/git/qore/build/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore/modules/dataframe/test/dataframe.qtest",
+      "-t",
+      "parquetTest"
+    ],
+    "exit_code": 3
+  }
+]
