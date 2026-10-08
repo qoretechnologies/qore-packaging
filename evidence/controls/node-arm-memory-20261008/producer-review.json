@@ -1,0 +1,86 @@
+[
+  {
+    "file": "deps/v8/src/compiler/backend/arm64/instruction-selector-arm64.cc",
+    "sha256": "02d8a4f1a57b65f9370a6530a7701735abb6dc1385719c480e6353d1ddda8bbb",
+    "excerpts": [
+      {
+        "line": 834,
+        "text": "}\n\nstd::tuple<InstructionCode, ImmediateMode> GetStoreOpcodeAndImmediate(\n    MemoryRepresentation stored_rep, bool paired) {\n  switch (stored_rep) {\n    case MemoryRepresentation::Int8():\n    case MemoryRepresentation::Uint8():\n      CHECK(!paired);\n      return {kArm64Strb, kLoadStoreImm8};\n    case MemoryRepresentation::Int16():\n    case MemoryRepresentation::Uint16():\n      CHECK(!paired);\n      return {kArm64Strh, kLoadStoreImm16};\n    case MemoryRepresentation::Int32():\n    case MemoryRepresentation::Uint32():\n      return {paired ? kArm64StrWPair : kArm64StrW, kLoadStoreImm32};"
+      },
+      {
+        "line": 1139,
+        "text": "#endif  // V8_ENABLE_WEBASSEMBLY\n\nstd::tuple<InstructionCode, ImmediateMode> GetLoadOpcodeAndImmediate(\n    MemoryRepresentation loaded_rep, RegisterRepresentation result_rep) {\n  // NOTE: The meaning of `loaded_rep` = `MemoryRepresentation::AnyTagged()` is\n  // we are loading a compressed tagged field, while `result_rep` =\n  // `RegisterRepresentation::Tagged()` refers to an uncompressed tagged value.\n  switch (loaded_rep) {\n    case MemoryRepresentation::Int8():\n      DCHECK_EQ(result_rep, RegisterRepresentation::Word32());\n      return {kArm64LdrsbW, kLoadStoreImm8};\n    case MemoryRepresentation::Uint8():\n      DCHECK_EQ(result_rep, RegisterRepresentation::Word32());\n      return {kArm64Ldrb, kLoadStoreImm8};\n    case MemoryRepresentation::Int16():\n      DCHECK_EQ(result_rep, RegisterRepresentation::Word32());"
+      },
+      {
+        "line": 1213,
+        "text": "}\n\nstd::tuple<InstructionCode, ImmediateMode> GetLoadOpcodeAndImmediate(\n    LoadRepresentation load_rep) {\n  switch (load_rep.representation()) {\n    case MachineRepresentation::kFloat16:\n      return {kArm64LdrH, kLoadStoreImm16};\n    case MachineRepresentation::kFloat32:\n      return {kArm64LdrS, kLoadStoreImm32};\n    case MachineRepresentation::kFloat64:\n      return {kArm64LdrD, kLoadStoreImm64};\n    case MachineRepresentation::kBit:  // Fall through.\n    case MachineRepresentation::kWord8:\n      return {load_rep.IsUnsigned()                            ? kArm64Ldrb\n              : load_rep.semantic() == MachineSemantic::kInt32 ? kArm64LdrsbW\n                                                               : kArm64Ldrsb,"
+      },
+      {
+        "line": 1278,
+        "text": "  MachineRepresentation rep = load_rep.representation();\n  std::tie(opcode, immediate_mode) =\n      GetLoadOpcodeAndImmediate(load.ts_loaded_rep(), load.ts_result_rep());\n  bool traps_on_null;\n  if (load.is_protected(&traps_on_null)) {\n    if (traps_on_null) {\n      opcode |= AccessModeField::encode(kMemoryAccessProtectedNullDereference);\n    } else {\n      opcode |= AccessModeField::encode(kMemoryAccessProtectedMemOutOfBounds);\n    }\n  }\n  EmitLoad(this, node, opcode, immediate_mode, rep);\n}\n\nvoid InstructionSelectorT::VisitProtectedLoad(OpIndex node) { VisitLoad(node); }\n"
+      },
+      {
+        "line": 1356,
+        "text": "  ImmediateMode immediate_mode;\n    std::tie(opcode, immediate_mode) =\n        GetStoreOpcodeAndImmediate(store_view.ts_stored_rep(), false);\n\n  if (v8_flags.enable_unconditional_write_barriers) {\n    if (CanBeTaggedOrCompressedPointer(representation)) {\n      write_barrier_kind = kFullWriteBarrier;\n    }\n  }\n\n  std::optional<ExternalReference> external_base;\n    ExternalReference value;\n    if (this->MatchExternalConstant(store_view.base(), &value)) {\n      external_base = value;\n    }\n"
+      }
+    ]
+  },
+  {
+    "file": "deps/v8/src/compiler/backend/instruction-selector-adapter.h",
+    "sha256": "aba502bdce1c9c24fb0f8efe7a0eae06197c9f2d4b76a4035eaeaa6eff4eca32",
+    "excerpts": [
+      {
+        "line": 56,
+        "text": "      return load_->machine_type();\n    }\n    turboshaft::MemoryRepresentation ts_loaded_rep() const {\n      DCHECK_NOT_NULL(load_);\n      return load_->loaded_rep;\n    }\n    turboshaft::RegisterRepresentation ts_result_rep() const {\n      DCHECK_NOT_NULL(load_);\n      return load_->result_rep;\n    }\n    bool is_protected(bool* traps_on_null) const {\n      if (kind().with_trap_handler) {\n        if (load_) {\n          *traps_on_null = load_->kind.trap_on_null;\n#if V8_ENABLE_WEBASSEMBLY\n        } else {"
+      },
+      {
+        "line": 60,
+        "text": "      return load_->loaded_rep;\n    }\n    turboshaft::RegisterRepresentation ts_result_rep() const {\n      DCHECK_NOT_NULL(load_);\n      return load_->result_rep;\n    }\n    bool is_protected(bool* traps_on_null) const {\n      if (kind().with_trap_handler) {\n        if (load_) {\n          *traps_on_null = load_->kind.trap_on_null;\n#if V8_ENABLE_WEBASSEMBLY\n        } else {\n#if V8_ENABLE_WASM_SIMD256_REVEC\n          DCHECK(\n              (load_transform_ && !load_transform_->load_kind.trap_on_null) ||\n              (load_transform256_ &&"
+      },
+      {
+        "line": 183,
+        "text": "              op_->write_barrier};\n    }\n    turboshaft::MemoryRepresentation ts_stored_rep() const {\n      return op_->stored_rep;\n    }\n    std::optional<AtomicMemoryOrder> memory_order() const {\n      // TODO(nicohartmann@): Currently we don't support memory orders.\n      if (op_->kind.is_atomic) return AtomicMemoryOrder::kSeqCst;\n      return std::nullopt;\n    }\n    MemoryAccessKind access_kind() const {\n      return op_->kind.with_trap_handler\n                 ? MemoryAccessKind::kProtectedByTrapHandler\n                 : MemoryAccessKind::kNormal;\n    }\n    bool is_atomic() const { return op_->kind.is_atomic; }"
+      }
+    ]
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "sha256": "87cbcc904c95cef042e748fbb61140275f4055fec9f6b4a5e4c6aac32296078e",
+    "excerpts": [
+      {
+        "line": 3042,
+        "text": "  }\n\n  LoadOp(OpIndex base, OptionalOpIndex index, Kind kind,\n         MemoryRepresentation loaded_rep, RegisterRepresentation result_rep,\n         int32_t offset, uint8_t element_size_log2)\n      : Base(1 + index.valid()),\n        kind(kind),\n        loaded_rep(loaded_rep),\n        result_rep(result_rep),\n        element_size_log2(element_size_log2),\n        offset(offset) {\n    input(0) = base;\n    if (index.valid()) {\n      input(1) = index.value();\n    }\n  }"
+      },
+      {
+        "line": 3064,
+        "text": "\n  void Validate(const Graph& graph) const {\n    DCHECK(loaded_rep.ToRegisterRepresentation() == result_rep ||\n           (loaded_rep.IsCompressibleTagged() &&\n            result_rep == RegisterRepresentation::Compressed()) ||\n           kind.is_atomic);\n    DCHECK_IMPLIES(element_size_log2 > 0, index().valid());\n    DCHECK_IMPLIES(kind.maybe_unaligned,\n                   !SupportedOperations::IsUnalignedLoadSupported(loaded_rep));\n    DCHECK(OffsetIsValid(offset, kind.tagged_base));\n  }\n  static LoadOp& New(Graph* graph, OpIndex base, OptionalOpIndex index,\n                     Kind kind, MemoryRepresentation loaded_rep,\n                     RegisterRepresentation result_rep, int32_t offset,\n                     uint8_t element_size_log2) {\n    return Base::New(graph, 1 + index.valid(), base, index, kind, loaded_rep,"
+      },
+      {
+        "line": 3385,
+        "text": "  using Kind = LoadOp::Kind;\n  Kind kind;\n  MemoryRepresentation stored_rep;\n  WriteBarrierKind write_barrier;\n  uint8_t element_size_log2;  // multiply index with 2^element_size_log2\n  int32_t offset;             // add offset to scaled index\n  bool maybe_initializing_or_transitioning;\n  uint16_t\n      shifted_indirect_pointer_tag;  // for indirect pointer stores, the\n                                     // IndirectPointerTag of the store shifted\n                                     // to the right by kIndirectPointerTagShift\n                                     // (so it fits into 16 bits).\n  // TODO(saelo): now that we have a pointer tag in these low-level operations,\n  // we could also consider passing the external pointer tag (for external\n  // pointers) through to the macro assembler (where we have routines to work\n  // with external pointers) instead of handling those earlier in the compiler."
+      },
+      {
+        "line": 3447,
+        "text": "  StoreOp(\n      OpIndex base, OptionalOpIndex index, OpIndex value, Kind kind,\n      MemoryRepresentation stored_rep, WriteBarrierKind write_barrier,\n      int32_t offset, uint8_t element_size_log2,\n      bool maybe_initializing_or_transitioning,\n      IndirectPointerTag maybe_indirect_pointer_tag = kIndirectPointerNullTag)\n      : Base(2 + index.valid()),\n        kind(kind),\n        stored_rep(stored_rep),\n        write_barrier(write_barrier),\n        element_size_log2(element_size_log2),\n        offset(offset),\n        maybe_initializing_or_transitioning(\n            maybe_initializing_or_transitioning),\n        shifted_indirect_pointer_tag(maybe_indirect_pointer_tag >>\n                                     kIndirectPointerTagShift) {"
+      },
+      {
+        "line": 3484,
+        "text": "  static StoreOp& New(\n      Graph* graph, OpIndex base, OptionalOpIndex index, OpIndex value,\n      Kind kind, MemoryRepresentation stored_rep,\n      WriteBarrierKind write_barrier, int32_t offset, uint8_t element_size_log2,\n      bool maybe_initializing_or_transitioning,\n      IndirectPointerTag maybe_indirect_pointer_tag = kIndirectPointerNullTag) {\n    return Base::New(graph, 2 + index.valid(), base, index, value, kind,\n                     stored_rep, write_barrier, offset, element_size_log2,\n                     maybe_initializing_or_transitioning,\n                     maybe_indirect_pointer_tag);\n  }\n\n  void PrintInputs(std::ostream& os, const std::string& op_index_prefix) const;\n  void PrintOptions(std::ostream& os) const;\n  auto options() const {\n    return std::tuple{"
+      }
+    ]
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/representations.h",
+    "sha256": "e8d421736310c7aac2a2ab525c84b30f38a420f7dc0afeff0b7bf0a1e35dbcb3",
+    "excerpts": [
+      {
+        "line": 540,
+        "text": "  };\n\n  explicit constexpr MemoryRepresentation(Enum value) : value_(value) {}\n  constexpr MemoryRepresentation() : value_(kInvalid) {}\n\n  constexpr bool is_valid() const { return value_ != kInvalid; }\n\n  constexpr Enum value() const {\n    DCHECK(is_valid());\n    return value_;\n  }\n  constexpr operator Enum() const { return value(); }\n\n  static constexpr MemoryRepresentation Int8() {\n    return MemoryRepresentation(Enum::kInt8);\n  }"
+      },
+      {
+        "line": 541,
+        "text": "\n  explicit constexpr MemoryRepresentation(Enum value) : value_(value) {}\n  constexpr MemoryRepresentation() : value_(kInvalid) {}\n\n  constexpr bool is_valid() const { return value_ != kInvalid; }\n\n  constexpr Enum value() const {\n    DCHECK(is_valid());\n    return value_;\n  }\n  constexpr operator Enum() const { return value(); }\n\n  static constexpr MemoryRepresentation Int8() {\n    return MemoryRepresentation(Enum::kInt8);\n  }\n  static constexpr MemoryRepresentation Uint8() {"
+      }
+    ]
+  }
+]

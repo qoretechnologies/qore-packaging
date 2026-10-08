@@ -1,0 +1,129 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Three exhaustive-enum ARM selector diagnostics reviewed and qualified under the existing policy; native package/runtime qualification remains open.",
+  "diagnostics": [
+    "../deps/v8/src/compiler/backend/arm64/instruction-selector-arm64.cc:900:1: warning: control reaches end of non-void function [-Wreturn-type]",
+    "../deps/v8/src/compiler/backend/arm64/instruction-selector-arm64.cc:1211:1: warning: control reaches end of non-void function [-Wreturn-type]",
+    "../deps/v8/src/compiler/backend/arm64/instruction-selector-arm64.cc:1269:1: warning: control reaches end of non-void function [-Wreturn-type]"
+  ],
+  "root_cause": "All declared representation values either select an opcode tuple or terminate through CHECK/UNREACHABLE. GCC also considers unnamed fixed-underlying-type enum values, which the typed internal graph producers must not supply.",
+  "producer_invariants": [
+    "The active load selector receives loaded_rep and result_rep directly from the typed LoadOp via LoadView; LoadOp validation checks their consistency.",
+    "The active store selector receives typed StoreOp.stored_rep and explicitly paired=false. The controls also cover the helper's paired branches.",
+    "The legacy one-argument load overload has no call in this ARM translation unit; its entire named representation/semantic cross-product is nevertheless checked.",
+    "Invalid/default MemoryRepresentation sentinels are not a legal graph representation. Tests do not execute undefined fallthrough for fabricated enum values."
+  ],
+  "qualification": {
+    "configurations": [
+      {
+        "mode": "release",
+        "pointer_compression": false,
+        "sandbox": false,
+        "cases_per_execution": 451,
+        "rejected_per_execution": 128,
+        "normal_exit": 0,
+        "valgrind_exit": 0,
+        "compiler_diagnostics": 3
+      },
+      {
+        "mode": "debug",
+        "pointer_compression": false,
+        "sandbox": false,
+        "cases_per_execution": 451,
+        "rejected_per_execution": 226,
+        "normal_exit": 0,
+        "valgrind_exit": 0,
+        "compiler_diagnostics": 3
+      },
+      {
+        "mode": "release",
+        "pointer_compression": true,
+        "sandbox": false,
+        "cases_per_execution": 451,
+        "rejected_per_execution": 106,
+        "normal_exit": 0,
+        "valgrind_exit": 0,
+        "compiler_diagnostics": 3
+      },
+      {
+        "mode": "debug",
+        "pointer_compression": true,
+        "sandbox": false,
+        "cases_per_execution": 451,
+        "rejected_per_execution": 222,
+        "normal_exit": 0,
+        "valgrind_exit": 0,
+        "compiler_diagnostics": 3
+      },
+      {
+        "mode": "release",
+        "pointer_compression": true,
+        "sandbox": true,
+        "cases_per_execution": 451,
+        "rejected_per_execution": 87,
+        "normal_exit": 0,
+        "valgrind_exit": 0,
+        "compiler_diagnostics": 3
+      },
+      {
+        "mode": "debug",
+        "pointer_compression": true,
+        "sandbox": true,
+        "cases_per_execution": 451,
+        "rejected_per_execution": 203,
+        "normal_exit": 0,
+        "valgrind_exit": 0,
+        "compiler_diagnostics": 3
+      }
+    ],
+    "cases_per_execution": 451,
+    "total_normal_and_valgrind_cases": 5412,
+    "valgrind_errors": 0,
+    "all_allocations_freed": true
+  },
+  "approval": {
+    "basis": "Existing user-approved V8 exhaustive-enum policy; no new approval is claimed.",
+    "evidence": "evidence/node-gcc-return-policy-proposal-20261006.json"
+  },
+  "limits": [
+    "Exact enum declarations, ImmediateMode, IsUnsigned and selector bodies are extracted unchanged. Graph/storage wrapper classes and numeric opcode values are replaced by typed adapters preserving selection identities; no ARM instructions are emitted or executed.",
+    "CHECK and UNREACHABLE throw only in the control to verify rejection. Production fatal behavior is unchanged. The release DCHECK adapter uses an unevaluated sizeof comparison, preserving runtime non-evaluation while checking adapter types.",
+    "The initial release adapter erased DCHECK arguments and introduced one unused-parameter warning under -Wextra. The final type-checked adapter removes that harness artifact; initial output is retained. Final compilations contain only the three reproduced policy-covered warnings.",
+    "Release-mode register mismatches exercise the selector's unchecked output, not a supported public input contract. Debug mode independently rejects mismatches.",
+    "Only supported compression/sandbox combinations (off/off, on/off, on/on) are tested.",
+    "Full native x86_64/aarch64 OBS revision6 builds and installed V8 module checks remain required."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-arm-memory-20261008/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-arm-memory-20261008/audit.rst": "24ecc339b6344bad27c88a88e104bd29d6e0b2c4dd988460ed759564b223449d",
+    "evidence/controls/node-arm-memory-20261008/case-counts.json": "b5edadeec689f79f15c5415ceadf3aa7616bb5502fe4d50bd3bfd6db1d50271e",
+    "evidence/controls/node-arm-memory-20261008/control.cc": "0619783a644e7c1f900fceeb89c5d643ace0fb4632b81b98b1518660765ce7da",
+    "evidence/controls/node-arm-memory-20261008/debug-c0-s0-compile.log.gz": "dcaf052d003afb6917068922353613f3f47746db7ddeb731c3be7ff32ab64a51",
+    "evidence/controls/node-arm-memory-20261008/debug-c0-s0-normal.log.gz": "f87490429f517d498b7ddf1dacae3026bd6c09fa600fdcd691a784a9c8fbfa10",
+    "evidence/controls/node-arm-memory-20261008/debug-c0-s0-valgrind.log.gz": "4024dd0bb41eee9fc957bea959469771a5697d804c5f4441a6a3b7e47ed1c638",
+    "evidence/controls/node-arm-memory-20261008/debug-c1-s0-compile.log.gz": "dcaf052d003afb6917068922353613f3f47746db7ddeb731c3be7ff32ab64a51",
+    "evidence/controls/node-arm-memory-20261008/debug-c1-s0-normal.log.gz": "08f5849ce6addef21a079eee8bbb9877b02248d07fca8841bb6b2d8a6aeb943a",
+    "evidence/controls/node-arm-memory-20261008/debug-c1-s0-valgrind.log.gz": "58f48ca6558ac30014ef7395689b46b7e1686eafbbeb0cabc9938e16ab15c623",
+    "evidence/controls/node-arm-memory-20261008/debug-c1-s1-compile.log.gz": "dcaf052d003afb6917068922353613f3f47746db7ddeb731c3be7ff32ab64a51",
+    "evidence/controls/node-arm-memory-20261008/debug-c1-s1-normal.log.gz": "9c08e41224240348a3ccd156319485b4cb1de484d9469545a97fc219284a72dd",
+    "evidence/controls/node-arm-memory-20261008/debug-c1-s1-valgrind.log.gz": "86bd7538d672da77f7a1961282b939961c30c301ceeebeef17ee50cd16792076",
+    "evidence/controls/node-arm-memory-20261008/initial-release-unused-parameter.log.gz": "02059415f028643cd0933a93f25403ba6bf5e186393740ecce9dc2512e5160ae",
+    "evidence/controls/node-arm-memory-20261008/prepare-node-arm-memory-control-20261008.py": "43c2faf1656519a283ef6b8368dedbba10e68eb1ed65d385d30b5fcaa0ef64d3",
+    "evidence/controls/node-arm-memory-20261008/producer-review.json": "3fa5089d55b06a9dbf8011194c44b59e8af0b2de5c1e3f6f041e1b9780cc4466",
+    "evidence/controls/node-arm-memory-20261008/record-node-arm-memory-20261008.py": "f589b1726a6816382d2c3afd1e79b0546e7a85259b497b1934fdd08ea662b1b4",
+    "evidence/controls/node-arm-memory-20261008/release-c0-s0-compile.log.gz": "dcaf052d003afb6917068922353613f3f47746db7ddeb731c3be7ff32ab64a51",
+    "evidence/controls/node-arm-memory-20261008/release-c0-s0-normal.log.gz": "dd5cfb10c40e7f49188c85572a2923c09163c409301bdb837600d42f4eb6c800",
+    "evidence/controls/node-arm-memory-20261008/release-c0-s0-valgrind.log.gz": "3f10bb84ba5de25f01e443138bc118a88e1e690a7072b0114fb0318a40758613",
+    "evidence/controls/node-arm-memory-20261008/release-c1-s0-compile.log.gz": "dcaf052d003afb6917068922353613f3f47746db7ddeb731c3be7ff32ab64a51",
+    "evidence/controls/node-arm-memory-20261008/release-c1-s0-normal.log.gz": "eca8b6a7ea03eb36a71bb78c2d45001e30cb418816dc442fad8b2bf3a353d7cb",
+    "evidence/controls/node-arm-memory-20261008/release-c1-s0-valgrind.log.gz": "baafac402191844f38db1b20fa1b847c592fb6e3267344a78dcdf86738aee216",
+    "evidence/controls/node-arm-memory-20261008/release-c1-s1-compile.log.gz": "dcaf052d003afb6917068922353613f3f47746db7ddeb731c3be7ff32ab64a51",
+    "evidence/controls/node-arm-memory-20261008/release-c1-s1-normal.log.gz": "6bc63c46b90981dc5f96e2f21249b5c12e06d4718e0df595e4e6ebba975fd89c",
+    "evidence/controls/node-arm-memory-20261008/release-c1-s1-valgrind.log.gz": "1ac82cfb1d9d9b27748567089274ce00c5c283735a013de1c2d13a3a9c0b9aa3",
+    "evidence/controls/node-arm-memory-20261008/run.py": "44f839cc64eac4b658fdf74ff7df39aceec2b452d2e95b3ea4b4a486aa3aaaa8",
+    "evidence/controls/node-arm-memory-20261008/source-extracts.json": "d9221fb303916daf6736a127193331e83d77b3891703a2215ebc1cd7c0fdc396",
+    "evidence/controls/node-arm-memory-20261008/status.json": "4ea3abefc0e3273972ed034db453b76ae19418f7ff6cb5c29cc70762dc533c87"
+  }
+}

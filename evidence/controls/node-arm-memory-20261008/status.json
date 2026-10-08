@@ -1,0 +1,234 @@
+[
+  {
+    "name": "release-c0-s0-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Wswitch-enum",
+      "-Werror=switch-enum",
+      "-DSANDBOX=0",
+      "-DNDEBUG",
+      "/control/control.cc",
+      "-o",
+      "/control/release-c0-s0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "release-c0-s0-normal",
+    "command": [
+      "/control/release-c0-s0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "release-c0-s0-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "/control/release-c0-s0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-c0-s0-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Wswitch-enum",
+      "-Werror=switch-enum",
+      "-DSANDBOX=0",
+      "-DDEBUG",
+      "/control/control.cc",
+      "-o",
+      "/control/debug-c0-s0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-c0-s0-normal",
+    "command": [
+      "/control/debug-c0-s0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-c0-s0-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "/control/debug-c0-s0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "release-c1-s0-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Wswitch-enum",
+      "-Werror=switch-enum",
+      "-DSANDBOX=0",
+      "-DV8_COMPRESS_POINTERS",
+      "-DNDEBUG",
+      "/control/control.cc",
+      "-o",
+      "/control/release-c1-s0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "release-c1-s0-normal",
+    "command": [
+      "/control/release-c1-s0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "release-c1-s0-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "/control/release-c1-s0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-c1-s0-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Wswitch-enum",
+      "-Werror=switch-enum",
+      "-DSANDBOX=0",
+      "-DV8_COMPRESS_POINTERS",
+      "-DDEBUG",
+      "/control/control.cc",
+      "-o",
+      "/control/debug-c1-s0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-c1-s0-normal",
+    "command": [
+      "/control/debug-c1-s0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-c1-s0-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "/control/debug-c1-s0"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "release-c1-s1-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Wswitch-enum",
+      "-Werror=switch-enum",
+      "-DSANDBOX=1",
+      "-DV8_COMPRESS_POINTERS",
+      "-DNDEBUG",
+      "/control/control.cc",
+      "-o",
+      "/control/release-c1-s1"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "release-c1-s1-normal",
+    "command": [
+      "/control/release-c1-s1"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "release-c1-s1-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "/control/release-c1-s1"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-c1-s1-compile",
+    "command": [
+      "g++",
+      "-std=c++20",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Wswitch-enum",
+      "-Werror=switch-enum",
+      "-DSANDBOX=1",
+      "-DV8_COMPRESS_POINTERS",
+      "-DDEBUG",
+      "/control/control.cc",
+      "-o",
+      "/control/debug-c1-s1"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-c1-s1-normal",
+    "command": [
+      "/control/debug-c1-s1"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "debug-c1-s1-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=all",
+      "/control/debug-c1-s1"
+    ],
+    "exit_code": 0
+  }
+]
