@@ -177,13 +177,16 @@ os.write(2, b'diagnostic\\n')
 
     def add_modules(self):
         self.manifest['modules'] = []
-        for name in ('qore-jni-tools', 'qore-jni-kotlin'):
+        for name in ('qore-jni-tools', 'qore-jni-kotlin', 'libpdfium-qore-devel'):
             self.manifest['packages'].append({'name': name,
                 'filename': name + '-1-1.noarch.rpm', 'phase': 'sdk',
                 'sha256': 'f' * 64, 'url': 'https://example.org/' + name})
         self.manifest['packages'].append({'name': 'litmus',
             'filename': 'litmus-0.18-1.aarch64.rpm', 'phase': 'runtime',
             'sha256': 'f' * 64, 'url': 'https://example.org/litmus'})
+        self.manifest['packages'].append({'name': 'libpdfium-qore148-0',
+            'filename': 'libpdfium-qore148-0-148-1.aarch64.rpm', 'phase': 'runtime',
+            'sha256': 'f' * 64, 'url': 'https://example.org/pdfium'})
         for name in module.MODULE_FIXTURES:
             commit = module.installed_xml.COMMIT if name == 'xml' else 'd' * 40
             repository = module.MODULE_REPOSITORIES.get(name, name)

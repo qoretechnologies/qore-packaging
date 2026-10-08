@@ -23,6 +23,9 @@ import core_lifecycle
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'pdf': {'debian/tests/compiler'} | {'test/' + name + '.qtest' for name in
+        ('pdf', 'pdf-editor', 'pdf-encryption', 'pdf-forms', 'pdf-renderer', 'pdf-signatures',
+         'PdfDataProvider')},
     'v8': {'debian/tests/compiler', 'debian/tests/cli', 'test/example.js', 'test/test.js',
            'test/google-discovery-fixture.q', 'test/PetStore.openapi3.yaml', 'test/PetStore.swagger.yaml'}
         | {'test/' + name + '.qtest' for name in
@@ -128,6 +131,7 @@ MODULE_FIXTURES = {
     'xml': set(),  # The complete fixture tree comes from the reviewed source archive.
 }
 MODULE_PRELOADS = {
+    'pdf': ('/PdfDataProvider/PdfDataProvider.qmod',),
     'v8': ('/TypeScriptProxy/TypeScriptProxy.qmod',
            '/TypeScriptActionInterface/TypeScriptActionInterface.qmod'),
     'grpc': ('/GrpcUtil/GrpcUtil.qmod', '/GrpcDataProvider/GrpcDataProvider.qmod',
@@ -147,7 +151,7 @@ SIMPLE_MODULES = ('markdown', 'sysconf', 'magic', 'sqlite3', 'kalman', 'msgpack'
                   'fsevent', 'tar', 'zip', 'cairo', 'geos', 'git', 'imagemagick', 'proj')
 MODULE_REPOSITORIES = {'freetds': 'sybase'}
 SDK_PACKAGES = {'qore-devel', 'qore-rpm-macros', 'qore-misc-tools', 'qore-debug-tools',
-                'qore-jni-tools', 'qore-jni-kotlin'}
+                'qore-jni-tools', 'qore-jni-kotlin', 'libpdfium-qore-devel'}
 
 
 def validate_modules(manifest):
@@ -181,6 +185,10 @@ def validate_modules(manifest):
             for dependency in ('qore-process-module', 'qore-uuid-module'):
                 if packages.get(dependency, {}).get('phase') != 'runtime':
                     raise ValueError('V8 qualification requires a pinned runtime RPM: ' + dependency)
+        if name == 'pdf':
+            for dependency, phase in (('libpdfium-qore148-0', 'runtime'), ('libpdfium-qore-devel', 'sdk')):
+                if packages.get(dependency, {}).get('phase') != phase:
+                    raise ValueError('PDF qualification requires a pinned ' + phase + ' RPM: ' + dependency)
         if name == 'grpc' and packages.get('qore-process-module', {}).get('phase') != 'runtime':
             raise ValueError('gRPC interoperability requires the process runtime RPM')
         if name == 'xmlsec' and packages.get('qore-xml-module', {}).get('phase') != 'runtime':
@@ -250,6 +258,11 @@ def module_dependencies(name, phase, family):
         raise ValueError('Unknown module suite or phase')
     if family not in ('fedora', 'suse', 'el'):
         raise ValueError('Unsupported fixture distribution')
+    if name == 'pdf':
+        if phase == 'sdk':
+            return ['valgrind']
+        return ['qpdf', 'openssl', 'ImageMagick',
+                'dejavu-fonts' if family == 'suse' else 'dejavu-sans-fonts']
     if name == 'v8':
         return ['openssl', 'which'] if phase == 'runtime' else ['valgrind']
     if name == 'grpc' and phase == 'runtime':
@@ -293,6 +306,30 @@ def module_commands(name, phase, directory, binary=None, driver=None, installed_
                               str(directory / 'rpm/run-tests.py'), '--installed'])]
         if phase == 'sdk':
             commands.append(('compiler', [str(directory / 'debian/tests/compiler')]))
+        return commands
+    if name == 'pdf':
+        if (binary is None or not binary.is_absolute() or binary.suffix != '.qmod'
+                or not binary.name.startswith('pdf-api-') or '..' in binary.parts):
+            raise ValueError('PDF checks require the installed native module path')
+        provider = installed_module_file(name, installed_files, MODULE_PRELOADS[name][0])
+        if provider.parent.parent != binary.parent:
+            raise ValueError('PDF native and AOT modules must share their installed module directory')
+        environment = ['env', '-u', 'PDF_FONT_MODE', 'QORE_PDF_REQUIRE_PDFIUM=1']
+        preloads = ['-l', str(binary), '-l', str(provider)]
+        commands = [(Path(path).stem, environment + ['timeout', '300', 'qore', '-b', '--enable-debug',
+                    *preloads, str(directory / path), '-v'])
+                    for path in sorted(MODULE_FIXTURES[name]) if path.endswith('.qtest')]
+        if phase == 'sdk':
+            api = directory / 'pdfium-api'
+            commands.extend([
+                ('compiler', environment + [str(directory / 'debian/tests/compiler')]),
+                ('pdfium-api-build', ['python3', '-B', '-W', 'error',
+                    str(Path(__file__).with_name('installed_pdf.py')), str(api)]),
+                ('pdfium-api', [str(api)]),
+                ('pdfium-api-valgrind', ['valgrind', '--error-exitcode=99', '--leak-check=full',
+                    '--show-leak-kinds=definite,indirect,possible',
+                    '--errors-for-leak-kinds=definite,indirect,possible', str(api)]),
+            ])
         return commands
     if name == 'v8':
         if (binary is None or not binary.is_absolute() or binary.suffix != '.qmod'
@@ -669,7 +706,8 @@ def qualify(manifest, output, jni_phase=None, jni_fixtures=None, repository_inst
                 run(phase + '-inventory', ['rpm', '-qa', '--qf', '%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n'])
                 if phase == 'runtime':
                     for name in ('qore-devel', 'gcc', 'gcc-c++', 'unixODBC-devel',
-                                 'qore-jni-tools', 'qore-jni-kotlin', 'java-21-openjdk-devel'):
+                                 'qore-jni-tools', 'qore-jni-kotlin', 'java-21-openjdk-devel',
+                                 'libpdfium-qore-devel'):
                         if subprocess.run(['rpm', '-q', name], stdout=subprocess.DEVNULL).returncode != 1:
                             raise ValueError('Runtime unexpectedly installed the compiler: ' + name)
                 if jni_phase == 'sdk' and phase == 'runtime':
@@ -704,7 +742,7 @@ def qualify(manifest, output, jni_phase=None, jni_fixtures=None, repository_inst
                         driver_package = 'psqlODBC' if manifest['family'] == 'suse' else 'postgresql-odbc'
                         files = subprocess.check_output(['rpm', '-ql', driver_package], text=True)
                         driver = installed_module_file('PostgreSQL ODBC driver', files, '/psqlodbcw.so')
-                    if name in ('jni', 'grpc', 'v8'):
+                    if name in ('jni', 'grpc', 'v8', 'pdf'):
                         files = subprocess.check_output(['rpm', '-ql', 'qore-' + name + '-module'], text=True)
                         api = subprocess.check_output(['qore', '--latest-module-api'], text=True).strip()
                         binary = installed_module_file(name, files, '/' + name + '-api-' + api + '.qmod')

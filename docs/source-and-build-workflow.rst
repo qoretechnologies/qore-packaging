@@ -175,6 +175,24 @@ paths, and explicitly loads the installed AOT helpers. The SDK phase also
 compiles and runs the message-conversion and provider-registration consumer.
 These offline checks do not replace connected broker and TLS/mTLS qualification.
 
+PDF qualification pins the PDFium runtime and development RPMs separately,
+alongside eight fixture files from the module revision used to build the RPM.
+Both runtime and SDK phases execute all seven PDF suites against the installed
+native module and compiled ``PdfDataProvider``. The runner requires PDFium
+rendering, clears the optional font-mode override, and installs the image and
+font tools needed to exercise JPEG and font fixtures. Duplicate module paths
+or native and provider modules from different directories are rejected.
+
+The SDK phase additionally compiles and runs the module's Qore consumer and a
+C consumer using only the installed ``pdfium-qore`` pkg-config interface.
+The C consumer creates a document, extracts text, renders pixels, rejects a
+malformed document, and releases every handle. It also runs under Valgrind
+with invalid accesses and definite, indirect or possible losses treated as
+failures. No suppression is used. All Qore suites enable debugging and run
+as the unprivileged fixture user; the runtime phase excludes both the compiler
+and PDFium development headers. These runner checks do not replace the final
+signed RPM manifests, native ARM jobs or repository lifecycle qualification.
+
 V8 qualification pins its process and UUID module dependencies and all 21
 fixture files from the module revision used to build the RPM. Both runtime and
 SDK phases run the command-line check and all 14 JavaScript/TypeScript suites.
