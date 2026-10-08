@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-08",
+  "status": "Committed corrected fixture requirements uploaded; six native builds enabled; publication disabled.",
+  "root_cause": "Native Leap grpcio-tools provides python3-grpcio-tools but no python3dist(grpcio-tools). The spec requested the absent capability; PyArrow also had not been delivered to OBS.",
+  "fix": "SUSE resolves all three Python fixtures by the normal python3-* package aliases. Fedora/EL preserve their original distribution capabilities. All existing interoperability suites remain enabled.",
+  "module_commit": "91714602e4c7d8bda5e7222a9e65dc99a045dbdd",
+  "module_branch": "rpm/native-dependencies-20261008",
+  "module_audit": "test/audits/rpm-native-dependencies.rst: 11 Pass, 51 N/A, 0 Fail",
+  "source": {
+    "schema": 1,
+    "commit": "91714602e4c7d8bda5e7222a9e65dc99a045dbdd",
+    "source_date_epoch": 1791433296,
+    "name": "qore-grpc-module",
+    "version": "1.0.0",
+    "exclusions": [],
+    "sources": {
+      "qore-grpc-module-1.0.0.tar.xz": "09c4016e0ccac0fb232d79126e87f37841070d30a34e0a890ece3bec31f583d1",
+      "qore-grpc-module.spec": "d8dd0ab8b608a47e5d08d258f2b8a78b6462953f12ba7951f7704d01a7934cdc",
+      "qore-grpc-module.changes": "2a0b9943b4288e8f735b43e7d98b6a46e977567a3bc400260099aa9e7f453a55"
+    },
+    "spec": "qore-grpc-module.spec"
+  },
+  "obs": {
+    "name": "qore-grpc-module",
+    "rev": "2",
+    "vrev": "2",
+    "srcmd5": "48243e31b67baef88ffe0c0b3dbab59b"
+  },
+  "tests": {
+    "rpm_parser_methods": 3,
+    "rpm_parser_platforms": [
+      "Fedora",
+      "Leap"
+    ],
+    "packaging": 227,
+    "negative_control": "The original spec fails exactly the SUSE alias regression."
+  },
+  "harness_correction": "Cross-family RPM parser controls set the matching dist suffix together with family macros, avoiding the host Fedora suffix referencing an intentionally undefined Fedora macro.",
+  "pyarrow": "evidence/pyarrow-obs-submission-20261008.json",
+  "pending": "Native RPM tests/lint, signed installed ARM qualification and source integration into develop; no publication claim.",
+  "files_sha256": {
+    "evidence/controls/grpc-native-dependencies-20261008/source.xml": "ccfe3b95572a1648c6c7529e7d386e86bb09bda62c8e2f0ff0353584bdb0ee99",
+    "evidence/controls/grpc-native-dependencies-20261008/metadata-after.xml": "3fdcf16d5b9edf8e46176500ee204fe353a3d034e1a91fe23a77c6fe1a0e699e",
+    "evidence/controls/grpc-native-dependencies-20261008/manifest.json": "9969615b9b8769c75d3c79a5b45d39156eebe4df1e82cb7697aaa32c67b5576a",
+    "evidence/controls/grpc-native-dependencies-20261008/grpc-leap-arm-prerequisite-20261008.xml.gz": "d80248fd08ee75901ed7f4972a796c5e0420a3626fe8747674943fde1d261a86",
+    "evidence/controls/grpc-native-dependencies-20261008/upload.log.gz": "c0064c872ff24376af2a4e290432527e5681120c8f6301c0757d6932a4660c98",
+    "evidence/controls/grpc-native-dependencies-20261008/metadata-before.xml": "dbcfbe9639cb4ebecd48e8ac1c45cdf330696702073f71a7225f0bda1cd34004",
+    "evidence/controls/grpc-native-dependencies-20261008/grpc-leap-current-sdk-capabilities-20261008.log.gz": "19ef5e89e0de9a1d2c9c66687b07ba2f80b47653f31ecca763bf661db5482758",
+    "evidence/controls/grpc-native-dependencies-20261008/grpc-original-dependencies-20261008.log.gz": "6541e8b21953825acad05eba91ec55693f1de55563413bd68c02a88c8f253203",
+    "evidence/controls/grpc-native-dependencies-20261008/grpc-rpm-dependency-final-tests-20261008.log.gz": "a812010c411aa2da336fbc1486d55e4ed2fb030ad2056a71e50100830f40dfe1",
+    "evidence/controls/grpc-native-dependencies-20261008/upload.py": "25f3c78abc0762b283aff2a3ada84ec804d72d7e5d2cccace21db3d1babc8757",
+    "evidence/controls/grpc-native-dependencies-20261008/grpc-native-catalog-tests-20261008.log.gz": "290442b98d4e66a1ecd2050a5433902298b90f526a7e61f0feaddff111ee40c7",
+    "evidence/controls/grpc-native-dependencies-20261008/native-grpcio-tools-provides.txt": "2ff836e6b13a28b5c777c9ad764f2b7883b9692d73509442fbf439ab4018d8d2",
+    "evidence/controls/grpc-native-dependencies-20261008/grpc-rpm-dependency-leap-tests-20261008.log.gz": "793f10d534a4291de9768b90a7cac58bc4ca15efd43561d2632ebbb50688dfbf"
+  }
+}
