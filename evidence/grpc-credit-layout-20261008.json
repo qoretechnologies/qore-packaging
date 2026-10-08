@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Qualified combined runtime and packaging fixes committed/pushed and uploaded as revision5; native and signed installed ARM gates pending.",
+  "module_commit": "c008b67e10fe91c3c5268926f44f59c521babba5",
+  "root_causes": [
+    "Event callbacks ran before applying server credit. A manual grant could use stale state or be overwritten by delivery completion.",
+    "Request enqueue and accounting were separate from the subscription lock; concurrent default grants could claim the same deficit.",
+    "The documentation RPM copied repository/build-test files and PATH-based interpreters; duplicate licenses and metadata were not hardlinked.",
+    "The source archive had no public download URL in Source0."
+  ],
+  "fix": [
+    "Apply server credit before callbacks, preserve grants during delivery and serialize default-deficit selection/write enqueue/accounting.",
+    "Retain only20 runtime example files, pin their distribution interpreter paths, retain all license/metadata paths with deduplicated storage, and identify the actual OBS source URL."
+  ],
+  "tests": {
+    "fedora": {
+      "exit_code": 0,
+      "suites": 13,
+      "cases": 379,
+      "assertions": 1790,
+      "layout_tests": 3,
+      "parser_tests": 4,
+      "uninstall_tests": 6
+    },
+    "leap": {
+      "exit_code": 0,
+      "suites": 13,
+      "cases": 379,
+      "assertions": 1790,
+      "layout_tests": 3,
+      "parser_tests": 4,
+      "uninstall_tests": 6
+    },
+    "el10": {
+      "exit_code": 0,
+      "suites": 13,
+      "cases": 379,
+      "assertions": 1790,
+      "layout_tests": 3,
+      "parser_tests": 4,
+      "uninstall_tests": 6
+    }
+  },
+  "controls": {
+    "old_runtime": "The deterministic barrier exposes outstanding10 where the server reported2; the original implementation fails.",
+    "concurrent": "20 additional runs with 22 assertions each. Eight concurrent callers grant the remaining credit exactly once. Stopped/full-window calls send nothing.",
+    "layout": "Six corrupted RPM payloads are rejected; positive and restored payloads pass all three checks.",
+    "lint": "Complete Leap binary, documentation and final source RPM lint: zero errors and warnings. Normal distribution filters are unchanged.",
+    "source_url": "All three parsers and source RPM builds pass; the public archive SHA-256 matches the committed manifest after upload."
+  },
+  "audit": "test/audits/credit-and-rpm-layout.rst: all 62 checks, 19 Pass, 43 N/A, 0 Fail. No C++ changes; Valgrind is not required.",
+  "retained_diagnostics": "Only the previously approved Fedora/AlmaLinux grpc_tools pkg_resources deprecation. No new warning filters or compilerflags.",
+  "source_equivalence": "All 173 final candidate source files match the canonical archive, with one additional audit. The full binary build differs only in the final Source0 URL/changelog and source guide, separately verified by all three source RPM builds.",
+  "harness_corrections": [
+    "Load separated source modules by name through QORE_MODULE_DIR; loading only their .qm entry directly omitted sibling .qc files.",
+    "The initial concurrent regression used a nonexistent Queue.shift method; corrected to typed Queue.get(-1), then reran the full suite and 20 controls."
+  ],
+  "obs": {
+    "revision": 5,
+    "srcmd5": "2f9526bbf3fc2b152ea2fce4bf451cf8"
+  },
+  "publication": "Disabled; package metadata unchanged.",
+  "files_sha256": {
+    "evidence/controls/grpc-credit-layout-20261008/grpc-credit-layout-public-source-20261008.json.gz": "3d39ffc0171038e789741341444d9d0a4f9ff53f2d1fd638080094619141a0c3",
+    "evidence/controls/grpc-credit-layout-20261008/check-grpc-layout-controls-20261008.py": "c4c7cb0c3a134fe20171596347fb2170b94a4f42ead32f9379f34bd3dd08b72b",
+    "evidence/controls/grpc-credit-layout-20261008/previous-leap-x86_64.log.gz": "af092b8b5928183e428598b97ff5156a995069708ce01dc4af9f48d2906d639b",
+    "evidence/controls/grpc-credit-layout-20261008/upload-grpc-credit-layout-20261008.py": "b529475d9e5319edfcd9ce61802fcf18024addcedf0429829b226ba1acb7c993",
+    "evidence/controls/grpc-credit-layout-20261008/grpc-credit-layout-source-equivalence-20261008.json.gz": "e1ce4af005bb478c41eac3766aa42b508877723c2f455bb151f051bab4ef5ab8",
+    "evidence/controls/grpc-credit-layout-20261008/grpc-credit-original-control-20261008.log.gz": "d738a4c34e31e6ae7e95a9299a6623a63c4b58e1e1b70991e63448e2f054f03f",
+    "evidence/controls/grpc-credit-layout-20261008/previous-leap-aarch64.log.gz": "862f1b692f4b40b3134990f8de3d5e4027a312af8c20e0c5ec2805b7821b053d",
+    "evidence/controls/grpc-credit-layout-20261008/grpc-credit-layout-final-lint-20261008.log.gz": "7b994d63ca62958684d698dffc0e99a8daf49b6161b73361e1d2f9f96c90942e",
+    "evidence/controls/grpc-credit-layout-20261008/grpc-credit-original-subscription-20261008.qc.gz": "bc90466610454dc2c8d45d3409150d3435fcae24673b7986b7fb8bf1fe240bb9",
+    "evidence/controls/grpc-credit-layout-20261008/grpc-credit-concurrent-final-source-20261008.log.gz": "3072c5bd69f54e8f131043a08e8b6a6bf0566597df44229144b4f4cd5ed06526",
+    "evidence/controls/grpc-credit-layout-20261008/prepare-grpc-credit-layout-candidate-20261008.py": "38ee39c004c64bf3866f0d4490a955c8e22550e75f595b1219da152bb0e44591",
+    "evidence/controls/grpc-credit-layout-20261008/grpc-credit-concurrent-20-controls-20261008.log.gz": "6e21c3b575a41c8b7c10f3ce9ff853f02ae5d052cb129bf41be61053227eaf0d",
+    "evidence/controls/grpc-credit-layout-20261008/layout/negative-version-control-file.log.gz": "7e9a8ef5948b224201a9f6520f528768db1241a1f6165a5565bc0cb50646e7e8",
+    "evidence/controls/grpc-credit-layout-20261008/layout/status.json": "9aafd83cfe9126f7387adb2fe5b4c97d93895706e1a99a3bb61ed10bf98f9bb2",
+    "evidence/controls/grpc-credit-layout-20261008/layout/negative-duplicate-license.log.gz": "08a6e7dc76278959c80a96b3b58d0daefd2b4d907f34e450cba7158335f8ffc9",
+    "evidence/controls/grpc-credit-layout-20261008/layout/negative-duplicate-metadata.log.gz": "fa741e41c2cc010f2b09b71245ea5c03d92000bcee33bfc4961bc395e8b47ae3",
+    "evidence/controls/grpc-credit-layout-20261008/layout/restored.log.gz": "a326b34093eaf559f4e82db8e81870bb8d44f76efc7fb59bdb22f77bec853e8e",
+    "evidence/controls/grpc-credit-layout-20261008/layout/negative-nonexecutable.log.gz": "dff581bfd26296011e03ee3e0994ff86641e7563f03ebb93dde8ac1c91122c0b",
+    "evidence/controls/grpc-credit-layout-20261008/layout/negative-missing-license.log.gz": "08ef88ed2d1617975b1af9817c34cc6d78ef87fb59a1b79f3ebc2cd632c2d238",
+    "evidence/controls/grpc-credit-layout-20261008/layout/extract.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/grpc-credit-layout-20261008/layout/negative-interpreter.log.gz": "9fd8787306d46bb6b1ad6c15e82374f616e5836887cba4c00eae89ca4ee9bd6e",
+    "evidence/controls/grpc-credit-layout-20261008/layout/positive.log.gz": "a326b34093eaf559f4e82db8e81870bb8d44f76efc7fb59bdb22f77bec853e8e",
+    "evidence/controls/grpc-credit-layout-20261008/upload/source.xml": "91706ffe82c1fd374529bafa7c244892e61095237857f5daa491c0f3c3c94238",
+    "evidence/controls/grpc-credit-layout-20261008/upload/metadata-after.xml": "3fdcf16d5b9edf8e46176500ee204fe353a3d034e1a91fe23a77c6fe1a0e699e",
+    "evidence/controls/grpc-credit-layout-20261008/upload/manifest.json": "78342a1422e5a09d6740b9aeeb90fd0c91180bea71dbe42223979bfa4060654f",
+    "evidence/controls/grpc-credit-layout-20261008/upload/metadata-before.xml": "3fdcf16d5b9edf8e46176500ee204fe353a3d034e1a91fe23a77c6fe1a0e699e",
+    "evidence/controls/grpc-credit-layout-20261008/upload/upload.log": "a3a27574e7246b6f45ce86b8c44673391120dbd64549c45746d1d6072df5e96f",
+    "evidence/controls/grpc-credit-layout-20261008/fedora/build.log.gz": "798b42ff937ab436e2345c271ad3ec5f6185bb4b7558831213bf1080c7f601ba",
+    "evidence/controls/grpc-credit-layout-20261008/fedora/source-url-srpm.json.gz": "1ff177bf029659903f9bdf359f03d22fa2be318f697b673b3771dc8582e7f007",
+    "evidence/controls/grpc-credit-layout-20261008/fedora/build.json.gz": "bfaaca1dc23b67f7ef6ae987922261495c79dda93c4f156db6da2ce79241dc60",
+    "evidence/controls/grpc-credit-layout-20261008/leap/build.log.gz": "ca219d2446374488fcd9da6d80c95900cc5a7fc9dbeba4cf16a1c47a8d0789f8",
+    "evidence/controls/grpc-credit-layout-20261008/leap/source-url-srpm.json.gz": "4e0c494d71bee51fa19bb5546f416c19505ca81af16850179b3d704bd6c991f9",
+    "evidence/controls/grpc-credit-layout-20261008/leap/build.json.gz": "17d7a6adeee19c21f1071679d19cd1311dd00d9aba0601bf9223bd23d5c5cdbc",
+    "evidence/controls/grpc-credit-layout-20261008/el10/build.log.gz": "7567187f94c933cb0ecc2c139ad7522b2d7c49b434b0d7816d29c23effc8fd64",
+    "evidence/controls/grpc-credit-layout-20261008/el10/source-url-srpm.json.gz": "43e77c5cb8e3311ce451cc3673292decc8be7e5508de3c40013682210d5e5f0b",
+    "evidence/controls/grpc-credit-layout-20261008/el10/build.json.gz": "840a94745dce48c90d7055cafe05ebeb6918083ed99899d3b002b47eb50f507f"
+  },
+  "tests_summary": "Each full RPM passes 13 suites / 379 cases / 1,790 assertions, plus three layout, four parser and six uninstall tests."
+}
