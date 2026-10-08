@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Qualified, audited, committed and pushed to Qore develop.",
+  "base_commit": "6e0837c0cb6c1a85831931db1b88064c299648ef",
+  "root_causes": [
+    "Source archives lack .git metadata, producing an empty BUILD string; rev-parse may instead discover an unrelated enclosing repository.",
+    "Standalone cmake -P does not inherit CMP0007 from the main project, producing a developer warning for the trailing empty input-list entry."
+  ],
+  "fixes": [
+    "Export an immutable revision via Git attributes; read only a source-root worktree or the exported marker and reject corrupt identities. Use the same checked helper during configure and build.",
+    "Set CMP0007 NEW in the standalone digest script and retain explicit blank-line filtering."
+  ],
+  "qualification": {
+    "fedora": {
+      "cmake_version": "cmake version 4.3.0",
+      "tests": 12,
+      "exit_code": 0,
+      "image": "sha256:a437efbf23f3bf7b180f7d58a5ad3dd70d524372ae60a57380dff115a2b5feda"
+    },
+    "leap": {
+      "cmake_version": "cmake version 3.31.7",
+      "tests": 12,
+      "exit_code": 0,
+      "image": "sha256:a3a4d38d5db8770fccc4a460aedd5f49f76bf5226825c0d051ecae4422d99b19"
+    },
+    "el10": {
+      "cmake_version": "cmake version 3.31.8",
+      "tests": 12,
+      "exit_code": 0,
+      "image": "sha256:50db5ec21c50dffb918d77c420f6c39d0c3c2c4c286b6150741de8c3dd80baeb"
+    }
+  },
+  "audit": {
+    "pass": 10,
+    "na": 52,
+    "fail": 0,
+    "path": "examples/test/cmake/audits/source-revision.rst"
+  },
+  "limits": [
+    "No C++ change; no Valgrind run is required.",
+    "Full updated RPM builds and their native/publication gates remain separate requirements.",
+    "Unversioned source copies report unknown; only archives actually processed by git archive contain an exported commit."
+  ],
+  "source_sha256": {
+    ".gitattributes": "47992f3e79d50da19b926b126c6bf9648cce4ac464aa21fa3f14f1e0bc915acb",
+    ".git-archive-revision": "0c4bacdcc88331f125b9da9fa3d76257dc4859197bf9802838129e3c1ac25f12",
+    "cmake/UpdateGitRevision.cmake": "83ad5a3a1df299b2a3d3e52357ddf377c6fff472132b95e3da9da676e335c2d4",
+    "cmake/QoreMacrosIntern.cmake": "4d6453a4a57db44db7a23ae987a58ac9d0cb8ee43df70654664a9f4451ab5480",
+    "cmake/QoreWriteContentDigest.cmake": "1aed7b64f1fb60dcb55d6bffa66d4a0e4c2616fd663a399a8c79fce8e859f196",
+    "examples/test/cmake/test_git_revision.py": "61a1198568da8e8d9d45f249060721cfdb966d263873c96cda1629b4d2de3ca6",
+    "examples/test/cmake/test_compiler_fingerprint.py": "f362a9618653ac0d400c01b07c1ddb8d990450d2c7ba36947f979e9986c59abb",
+    "BUILDING": "7c813878d958fbb4bf7fbac2914ad9f8c6b9f886f7899c198a49697fdad5e5f3",
+    "doxygen/lang/900_release_notes.dox.tmpl": "8c4f1a8815f05f772cf38a480f6d09d8208da22a39f29d71efdbdffd11758114",
+    "examples/test/cmake/audits/source-revision.rst": "4859976f90d6f3efc69a4ee954ebb5a7752960652ef4fd9f982bf45839a30ec3"
+  },
+  "files_sha256": {
+    "evidence/controls/core-cmake-source-20261008/audit.rst": "4859976f90d6f3efc69a4ee954ebb5a7752960652ef4fd9f982bf45839a30ec3",
+    "evidence/controls/core-cmake-source-20261008/core-cmake-source-20261008/el10.json": "208c430ed2958f943d7f9b5fc6afc1c30fbf87272564da34c7a1337edae30cd6",
+    "evidence/controls/core-cmake-source-20261008/core-cmake-source-20261008/el10.log.gz": "7a0e900b9decf735acd4439056ac9e163ffb78eb44d6ce6d4df2abebaf1d430a",
+    "evidence/controls/core-cmake-source-20261008/core-cmake-source-20261008/fedora.json": "6c08d55e3b333418d091c24816dac7bfa2266e7427d8a66c1f278b4488166811",
+    "evidence/controls/core-cmake-source-20261008/core-cmake-source-20261008/fedora.log.gz": "23a96b62eba7c8d75bfe9c4641dd6950ccf7388158eccd5024221ab74863f7a9",
+    "evidence/controls/core-cmake-source-20261008/core-cmake-source-20261008/leap.json": "24fca80534de098654487340a47f09380b36edbab5b64b9af22025f75d544ea4",
+    "evidence/controls/core-cmake-source-20261008/core-cmake-source-20261008/leap.log.gz": "a4acc7710e10151113160c722b6ae3e20750849fa21ea28df5108647a441a10a",
+    "evidence/controls/core-cmake-source-20261008/core-cmake-source-20261008/source.json": "aa14ef9ac9c734bc6d59e15c12322013b84bda533a7d963484bf394911541420",
+    "evidence/controls/core-cmake-source-20261008/core-cmake-source-20261008/status.json": "39998a9235a8452cc95070b26bbd16c93dc31babe67189dd440973de38551bd1",
+    "evidence/controls/core-cmake-source-20261008/core-cmake-source-negative-20261008/archive-headers.json": "9138b8ece2926d2e177c6e25d391c5dfb0cbc09879f056b5c6abd17e0dc8bfd5",
+    "evidence/controls/core-cmake-source-20261008/core-cmake-source-negative-20261008/parent-repository.json": "880a37bfbe7562eac26d4f13f493270705edd6935c50215a2a2c0a106349b325",
+    "evidence/controls/core-cmake-source-20261008/committed-archive.json": "3ebee0ed7cb4918f5e455835c129471aab6ff39560978c58f37d91396a392118"
+  },
+  "commit": "e897fe2524fcb95f6fe3c1de85b270e147aa655a",
+  "remote_confirmed": "e897fe2524fcb95f6fe3c1de85b270e147aa655a"
+}

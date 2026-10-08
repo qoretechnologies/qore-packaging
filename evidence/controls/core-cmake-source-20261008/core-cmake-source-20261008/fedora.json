@@ -1,0 +1,20 @@
+{
+  "image": "sha256:a437efbf23f3bf7b180f7d58a5ad3dd70d524372ae60a57380dff115a2b5feda",
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore:/source:ro",
+    "-w",
+    "/source",
+    "sha256:a437efbf23f3bf7b180f7d58a5ad3dd70d524372ae60a57380dff115a2b5feda",
+    "sh",
+    "-c",
+    "set -eu\ncmake --version\npython3 -B -W error -m unittest discover -s examples/test/cmake -p test_git_revision.py -v\npython3 -B -W error -m unittest discover -s examples/test/cmake -p test_compiler_fingerprint.py -v\n"
+  ]
+}
