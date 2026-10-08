@@ -1,0 +1,95 @@
+{
+  "targets": {
+    "fedora": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/checkouts/packaging-xml-installed-20261008:/packaging:ro",
+        "-w",
+        "/packaging",
+        "sha256:fe45118a3c91979c8b5fef9726a80f7b40aadc427eeaa28457dbd00c4139560b",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_installed_xml.py",
+        "-v"
+      ]
+    },
+    "leap": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/checkouts/packaging-xml-installed-20261008:/packaging:ro",
+        "-w",
+        "/packaging",
+        "sha256:eba82b9b3966e12c8363455ca8c89fa8b5d9f50d9741739280040422b5ebb4a0",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_installed_xml.py",
+        "-v"
+      ]
+    },
+    "el10": {
+      "exit_code": 0,
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/checkouts/packaging-xml-installed-20261008:/packaging:ro",
+        "-w",
+        "/packaging",
+        "sha256:652e598d89b0e53fd57de3b96ca1a99d8dea8c35760386892646d817679e88dc",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_installed_xml.py",
+        "-v"
+      ]
+    }
+  },
+  "source_sha256": {
+    "tools/installed_xml.py": "1a4a63b8687d24d613270ac1c2654b6f8235ebea2aeddcf16168632813cfc2e8",
+    "tests/test_installed_xml.py": "fadfbe36242db00260927a7ed9a2d1859cbabcc16f05b3b50e7ab6c73e9d2e23"
+  }
+}

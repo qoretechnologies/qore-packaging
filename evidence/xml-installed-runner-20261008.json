@@ -1,0 +1,200 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Installed XML runner implementation qualified locally on Fedora, Leap and AlmaLinux; native installed jobs and final metadata revision remain pending.",
+  "source_commit": "d32601505b85b07823f98cc006fe438baa6dd3bc",
+  "obs_revision": "d672a36fd359885da3559de45cb2482d",
+  "source_archive_sha256": "1be5b414fec3dae283823aa8985f2d4704d538fb059842c20f692e71131aa297",
+  "fixtures": {
+    "files": 1721,
+    "bytes": 91940823,
+    "top_level_suites": 304
+  },
+  "targets": {
+    "fedora": {
+      "runtime": {
+        "exit_code": 0,
+        "suites": 304,
+        "reported_cases": 3809,
+        "reported_assertions": 178368,
+        "external_service_skips": [
+          "Skipped: account: 0 assertions (no Salesforce.com connection)",
+          "Skipped: Full enterprise and partner descriptions parse with their original bytes: 0 assertions (Salesforce WSDL fixtures are unavailable (omitted from repacked sources))"
+        ],
+        "image": "sha256:019014d774cf75057908e69b917e222a9b5b2b33de5e2e6fa73e21b44712f35c"
+      },
+      "sdk": {
+        "exit_code": 0,
+        "suites": 304,
+        "reported_cases": 3809,
+        "reported_assertions": 178368,
+        "external_service_skips": [
+          "Skipped: account: 0 assertions (no Salesforce.com connection)",
+          "Skipped: Full enterprise and partner descriptions parse with their original bytes: 0 assertions (Salesforce WSDL fixtures are unavailable (omitted from repacked sources))"
+        ],
+        "image": "sha256:fe45118a3c91979c8b5fef9726a80f7b40aadc427eeaa28457dbd00c4139560b",
+        "compiler": {
+          "exit_code": 0,
+          "approved_aot_diagnostic_occurrences": 10,
+          "features": [
+            "DataProvider",
+            "OpenApi3",
+            "RestClient",
+            "RestSchemaValidator",
+            "Swagger"
+          ]
+        }
+      }
+    },
+    "leap": {
+      "runtime": {
+        "exit_code": 0,
+        "suites": 304,
+        "reported_cases": 3809,
+        "reported_assertions": 178368,
+        "external_service_skips": [
+          "Skipped: account: 0 assertions (no Salesforce.com connection)",
+          "Skipped: Full enterprise and partner descriptions parse with their original bytes: 0 assertions (Salesforce WSDL fixtures are unavailable (omitted from repacked sources))"
+        ],
+        "image": "sha256:f7756d35c36f3c04542b9dcfef93d3322b126df4673e183b40e9fa804f601a3c"
+      },
+      "sdk": {
+        "exit_code": 0,
+        "suites": 304,
+        "reported_cases": 3809,
+        "reported_assertions": 178368,
+        "external_service_skips": [
+          "Skipped: account: 0 assertions (no Salesforce.com connection)",
+          "Skipped: Full enterprise and partner descriptions parse with their original bytes: 0 assertions (Salesforce WSDL fixtures are unavailable (omitted from repacked sources))"
+        ],
+        "image": "sha256:eba82b9b3966e12c8363455ca8c89fa8b5d9f50d9741739280040422b5ebb4a0",
+        "compiler": {
+          "exit_code": 0,
+          "approved_aot_diagnostic_occurrences": 10,
+          "features": [
+            "DataProvider",
+            "OpenApi3",
+            "RestClient",
+            "RestSchemaValidator",
+            "Swagger"
+          ]
+        }
+      }
+    },
+    "el10": {
+      "runtime": {
+        "exit_code": 0,
+        "suites": 304,
+        "reported_cases": 3809,
+        "reported_assertions": 178368,
+        "external_service_skips": [
+          "Skipped: account: 0 assertions (no Salesforce.com connection)",
+          "Skipped: Full enterprise and partner descriptions parse with their original bytes: 0 assertions (Salesforce WSDL fixtures are unavailable (omitted from repacked sources))"
+        ],
+        "image": "sha256:055f1bde3ec83b653ac9ce34c8e3713f0108bb7736a24dd788df28f36e9531ea"
+      },
+      "sdk": {
+        "exit_code": 0,
+        "suites": 304,
+        "reported_cases": 3809,
+        "reported_assertions": 178368,
+        "external_service_skips": [
+          "Skipped: account: 0 assertions (no Salesforce.com connection)",
+          "Skipped: Full enterprise and partner descriptions parse with their original bytes: 0 assertions (Salesforce WSDL fixtures are unavailable (omitted from repacked sources))"
+        ],
+        "image": "sha256:652e598d89b0e53fd57de3b96ca1a99d8dea8c35760386892646d817679e88dc",
+        "compiler": {
+          "exit_code": 0,
+          "approved_aot_diagnostic_occurrences": 10,
+          "features": [
+            "DataProvider",
+            "OpenApi3",
+            "RestClient",
+            "RestSchemaValidator",
+            "Swagger"
+          ]
+        }
+      }
+    }
+  },
+  "units": {
+    "host_methods": 260,
+    "final_xml_helper_methods_per_distribution": 10,
+    "distributions": 3
+  },
+  "native_inputs": {
+    "signed_rpms": 58,
+    "fedora": 16,
+    "leap": 23,
+    "el10": 19,
+    "signature_check_exit_code": 0,
+    "ci_lint_valid": true
+  },
+  "audit": {
+    "path": "audits/xml-installed-runner-20261008.rst",
+    "pass": 9,
+    "not_applicable": 53,
+    "fail": 0
+  },
+  "diagnostic_approval": "evidence/xml-library-aot-diagnostics-20261006.json; only the five recorded features appear in these SDK runs.",
+  "limits": [
+    "Local images use the earlier retained core baseline. Native manifests use core21 and require clean signed ARM runtime/SDK qualification.",
+    "Two Salesforce tests explicitly skip without the separately provisioned service/proprietary WSDL fixtures; external Salesforce/Java integration remains a separate gate.",
+    "Reported QUnit assertion totals include intentional negative comparison probes; the complete suite return codes and case results pass.",
+    "The full local run began with stricter extension-based fixture modes. The final helper preserves archive executable bits; every final fixture byte/mode and final helper unit suite was independently checked. Native jobs must use the final helper.",
+    "Existing XML RPM hidden-directory/duplicate-metadata lint diagnostics are not approved by this runner audit. The Release2 metadata candidate is qualified separately.",
+    "No native installed job or repository publication is claimed by this record."
+  ],
+  "implementation_sha256": {
+    "tools/installed_xml.py": "1a4a63b8687d24d613270ac1c2654b6f8235ebea2aeddcf16168632813cfc2e8",
+    "tools/qualify-installed.py": "4beda483f2bb2c0e6578fb0ad5e10ac97ee91abd8a304a29af5526731af1b8f7",
+    "tests/test_installed_xml.py": "fadfbe36242db00260927a7ed9a2d1859cbabcc16f05b3b50e7ab6c73e9d2e23",
+    "tests/test_installed_qualification.py": "c17fae16d81738be918ef1bc9dbd3435593d00627864bc511e1370a7fba1f290",
+    ".gitlab-ci.yml": "93e527fb12a30dee192814a53a9a0850be2fd30bd592b05c203ea3f34477e2e8",
+    "docs/source-and-build-workflow.rst": "f04dad4b84ed69af3d33ad834884e274c8bffa5c830d289e4f8a5f11f6dc0ebb",
+    "audits/xml-installed-runner-20261008.rst": "cfc8c5903444d5161f46bd3f414e97cf2f1e8623f274a3a4a95e4ed3b7440f47",
+    "qualification/xml-fixtures.json": "64c5e850b73bd6d460ce3451dc1426299f4695e1cedffc3c343b84af402cfb1b",
+    "qualification/xml-fedora-aarch64.json": "2f96e648412f10b72841de29db3eb9efa7ae7d43afe028ce5dccf3540349ebc4",
+    "qualification/xml-leap-aarch64.json": "68a5901f5e38642ce6c08a96042fe77b1eac1edadedd6c9d188528240d41bceb",
+    "qualification/xml-el10-aarch64.json": "664bf30571c4d796ff8fea944d56965b465ba5a177e95dc27f5b8765aa9a1d64"
+  },
+  "files_sha256": {
+    "evidence/controls/xml-installed-runner-20261008/el10/runtime/driver.log.gz": "f0be498b9d356fa75f3b4995339b17d18c234e67c7b2ade847ebf98a1fce65cb",
+    "evidence/controls/xml-installed-runner-20261008/el10/runtime/status.json": "766d1f8e7c700cf4f67d15661f3a6bb8133107f85ec5fa191dc5eb06be4c2fe2",
+    "evidence/controls/xml-installed-runner-20261008/el10/runtime/tests.log.gz": "cf50351e27c96dfd34705d20883cbcd7074a036a391fd82957a7987d6efdcf74",
+    "evidence/controls/xml-installed-runner-20261008/el10/sdk/compiler.log.gz": "30e921d0691badc576bf9fb4ab1d79026448e0023dbad036ced6fb54ed5b3246",
+    "evidence/controls/xml-installed-runner-20261008/el10/sdk/driver.log.gz": "86bffb0513ad190c799933d52a0a2e6a6b43df37083b451ceb302421c6bebce5",
+    "evidence/controls/xml-installed-runner-20261008/el10/sdk/status.json": "bd77c32c766480a744c3662350a5397b189b91d75a1dc52dc9dc3675690eeee6",
+    "evidence/controls/xml-installed-runner-20261008/el10/sdk/tests.log.gz": "d51d32407f34b8102d8c0a3d65752547294990ee77656ad1d868bfda83a25c26",
+    "evidence/controls/xml-installed-runner-20261008/el10/status.json": "a6a62ac7eb47b69ec0f261fd23b6ded72c8785515b38f735dbfb0ba97f28ce19",
+    "evidence/controls/xml-installed-runner-20261008/fedora/runtime/driver.log.gz": "f0be498b9d356fa75f3b4995339b17d18c234e67c7b2ade847ebf98a1fce65cb",
+    "evidence/controls/xml-installed-runner-20261008/fedora/runtime/status.json": "766d1f8e7c700cf4f67d15661f3a6bb8133107f85ec5fa191dc5eb06be4c2fe2",
+    "evidence/controls/xml-installed-runner-20261008/fedora/runtime/tests.log.gz": "7f3a11ad91b8349fa41f1300b4287b03ed711b1c7109280bcc20fdae933bd937",
+    "evidence/controls/xml-installed-runner-20261008/fedora/sdk/compiler.log.gz": "f015464ea2a2705e50383540b596f8844ae408e7880227210fe4efc2049b2dba",
+    "evidence/controls/xml-installed-runner-20261008/fedora/sdk/driver.log.gz": "86bffb0513ad190c799933d52a0a2e6a6b43df37083b451ceb302421c6bebce5",
+    "evidence/controls/xml-installed-runner-20261008/fedora/sdk/status.json": "bd77c32c766480a744c3662350a5397b189b91d75a1dc52dc9dc3675690eeee6",
+    "evidence/controls/xml-installed-runner-20261008/fedora/sdk/tests.log.gz": "5ba19b5394b886d5fe0d8830219438bb1787e7bfc485f75a91e5496994d60225",
+    "evidence/controls/xml-installed-runner-20261008/fedora/status.json": "8bc856d73a5bf3349558a169e7537d049271cb6108e34b49d72e4aa2717631da",
+    "evidence/controls/xml-installed-runner-20261008/leap/runtime/driver.log.gz": "f0be498b9d356fa75f3b4995339b17d18c234e67c7b2ade847ebf98a1fce65cb",
+    "evidence/controls/xml-installed-runner-20261008/leap/runtime/status.json": "766d1f8e7c700cf4f67d15661f3a6bb8133107f85ec5fa191dc5eb06be4c2fe2",
+    "evidence/controls/xml-installed-runner-20261008/leap/runtime/tests.log.gz": "872708b4d77e8b9b1301bcae60b8871263c1b2cf1964b00141ec5e9dc7ba9018",
+    "evidence/controls/xml-installed-runner-20261008/leap/sdk/compiler.log.gz": "262812b1077537b11b54f9a32e1857fe240b93cbe5a7473cd137f8edf4fecdbe",
+    "evidence/controls/xml-installed-runner-20261008/leap/sdk/driver.log.gz": "86bffb0513ad190c799933d52a0a2e6a6b43df37083b451ceb302421c6bebce5",
+    "evidence/controls/xml-installed-runner-20261008/leap/sdk/status.json": "bd77c32c766480a744c3662350a5397b189b91d75a1dc52dc9dc3675690eeee6",
+    "evidence/controls/xml-installed-runner-20261008/leap/sdk/tests.log.gz": "e01e9109e5dc0656c643980a48f47a4fc247629ead62617c339aca0f10fa52cd",
+    "evidence/controls/xml-installed-runner-20261008/leap/status.json": "85ec81486a3c56db4891684263c73db74fe35125d24f1d3d4c90052340cf733c",
+    "evidence/controls/xml-installed-runner-20261008/qualify.py": "9821aa5dc82512f085c1f7d63caf4c6bcc2c9b9ccc1c9bebc9652a1b9cd01689",
+    "evidence/controls/xml-installed-runner-20261008/record.py": "ab84f608219d139c21d818a6c2c6a9bef64a59e3e4dcc65559b11e476668a8fc",
+    "evidence/controls/xml-installed-runner-20261008/units/el10.log.gz": "ca43db7dd7060a01b55bd023b0240c9ecfe8b3030ab6a30407db89161fb87ebc",
+    "evidence/controls/xml-installed-runner-20261008/units/fedora.log.gz": "98d76cc8e8800bdccc3c8fbd36d0d69c878df669b9df02f91824a66f6e0b243d",
+    "evidence/controls/xml-installed-runner-20261008/units/host.log.gz": "d5972867a79be14d8a6ba1f17c0218829c4e12b27d1f43ab2b7505ff74188a08",
+    "evidence/controls/xml-installed-runner-20261008/units/leap.log.gz": "140a3ba9916f77bb0ed6ebc7af36e148b903159f40ce4e2be62f446e8a639094",
+    "evidence/controls/xml-installed-runner-20261008/units/status.json": "9acd7393d38fa50e24ba8e640399761554321ade68952db912e11c43fdd90e2e",
+    "evidence/controls/xml-installed-runner-20261008/xml-arm-inputs-20261008/status.json": "013a22fdf696d00a592c0709ffa81961d7fc2faf1f4356c12512307b41137555",
+    "evidence/controls/xml-installed-runner-20261008/xml-final-fixture-inventory-20261008.json": "6268ccfff35ac48fa4842e370239611238617bb66573c9fb4da7df174566e482",
+    "evidence/controls/xml-installed-runner-20261008/xml-native-ci-lint-20261008/response3.json": "919ad8944b6f0d7a134ca7012e9cfb22468c8bdfc00e8d8c50424228a54464c1",
+    "evidence/controls/xml-installed-runner-20261008/xml-native-signatures-20261008/signatures.log.gz": "c730991de9f7a35b1539407f45a967474def5b9386a640ae2cc6ecf1766faf0d",
+    "evidence/controls/xml-installed-runner-20261008/xml-native-signatures-20261008/status.json": "1fa3676cbcabe7db34670ce881c0fec715eb2b848be09dd4b5c6e9a3b6894298"
+  }
+}

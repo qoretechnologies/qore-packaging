@@ -201,3 +201,24 @@ the private shared Node library. Ordinary packaging commits do not start these
 jobs. Source revision 1 inputs qualify runtime behavior while the example
 interpreter metadata correction is being prepared; final acceptance requires
 refreshing the manifests to the corrected native RPMs.
+
+
+``RPM_NATIVE_QUALIFICATION=xml`` selects the three native ARM XML jobs.
+The runtime and SDK phases execute all 304 module suites, mandatory Litmus
+WebDAV compliance, and CLI startup/shutdown checks. The SDK also compiles and
+runs the XML consumer. Manifests pin the XML, Process, UUID and Litmus RPMs
+before installing the minimal runtime; the compiler is introduced only in the
+SDK phase. Salesforce and separately provisioned Java peers retain their
+explicit external-service gates.
+
+XML's 1,721 fixture files are taken from the immutable OBS source archive used
+for its RPM build. ``tools/installed_xml.py`` pins the archive revision and
+SHA-256; ``qualification/xml-fixtures.json`` records the complete reviewed
+inventory. Extraction rejects missing or additional tests, unsafe paths,
+duplicates, links, special files and excessive expansion before making fixtures
+available. It preserves ordinary executable bits while removing privileged
+permissions. Only tests, documentation examples and the four installed-test
+entry files are extracted; checkout modules and build binaries are excluded.
+Changing the XML source pin requires updating and reviewing this fixture
+inventory. The installed runner verifies loaded module paths and keeps loader
+diagnostics visible; a successful source fallback is recorded, not suppressed.

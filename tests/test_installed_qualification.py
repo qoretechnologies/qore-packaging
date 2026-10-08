@@ -181,11 +181,11 @@ os.write(2, b'diagnostic\\n')
             self.manifest['packages'].append({'name': name,
                 'filename': name + '-1-1.noarch.rpm', 'phase': 'sdk',
                 'sha256': 'f' * 64, 'url': 'https://example.org/' + name})
-        self.manifest['packages'].append({'name': 'qore-xml-module',
-            'filename': 'qore-xml-module-1-1.aarch64.rpm', 'phase': 'runtime',
-            'sha256': 'f' * 64, 'url': 'https://example.org/xml'})
+        self.manifest['packages'].append({'name': 'litmus',
+            'filename': 'litmus-0.18-1.aarch64.rpm', 'phase': 'runtime',
+            'sha256': 'f' * 64, 'url': 'https://example.org/litmus'})
         for name in module.MODULE_FIXTURES:
-            commit = 'd' * 40
+            commit = module.installed_xml.COMMIT if name == 'xml' else 'd' * 40
             repository = module.MODULE_REPOSITORIES.get(name, name)
             self.manifest['modules'].append({'name': name, 'commit': commit,
                 'fixtures': [{'path': path, 'sha256': 'e' * 64,
@@ -664,8 +664,13 @@ os.write(2, b'diagnostic\\n')
         for entry in self.manifest['modules']:
             manifest = copy.deepcopy(self.manifest)
             changed = next(item for item in manifest['modules'] if item['name'] == entry['name'])
-            changed['fixtures'].pop()
-            with self.subTest(module=entry['name']), self.assertRaisesRegex(ValueError, 'complete module fixture'):
+            if entry['name'] == 'xml':
+                changed['commit'] = 'a' * 40
+                error = 'reviewed archive'
+            else:
+                changed['fixtures'].pop()
+                error = 'complete module fixture'
+            with self.subTest(module=entry['name']), self.assertRaisesRegex(ValueError, error):
                 module.validate(manifest)
 
     def test_aot_module_suites_preload_only_installed_inventory_paths(self):

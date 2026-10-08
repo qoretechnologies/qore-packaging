@@ -1,0 +1,20 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/xml-arm-inputs-20261008:/rpms:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/obs/keys/testing.asc:/key.asc:ro",
+    "sha256:1e519817ea6ac069c45edf13518beaf9cb6f800743f908d78787bd3fbaae58a6",
+    "sh",
+    "-c",
+    "set -eu\nmkdir /tmp/xml-rpmdb\nrpm --dbpath /tmp/xml-rpmdb --initdb\nrpm --dbpath /tmp/xml-rpmdb --import /key.asc\nfor p in /rpms/*/*.rpm; do rpmkeys --dbpath /tmp/xml-rpmdb --verbose --checksig \"$p\"; done\n"
+  ],
+  "exit_code": 0,
+  "signed_rpms": 58
+}

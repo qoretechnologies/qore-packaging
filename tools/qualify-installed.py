@@ -16,6 +16,7 @@ import tempfile
 
 from packaging import fetch_source
 import installed_jni
+import installed_xml
 import repository_fixture
 import core_lifecycle
 
@@ -124,6 +125,7 @@ MODULE_FIXTURES = {
              'test/native/run-bind-failure.py', 'test/native/bind-failure.cpp',
              'test/native/bind-failure.qtest', 'test/native/array-size.cpp',
              'src/ODBCArraySize.h'},
+    'xml': set(),  # The complete fixture tree comes from the reviewed source archive.
 }
 MODULE_PRELOADS = {
     'v8': ('/TypeScriptProxy/TypeScriptProxy.qmod',
@@ -161,6 +163,11 @@ def validate_modules(manifest):
         if not re.fullmatch('[0-9a-f]{40}', commit):
             raise ValueError('Module fixtures require an immutable source revision')
         files = entry.get('fixtures', [])
+        if name == 'xml':
+            fixtures.append(installed_xml.validate_entry(entry))
+            for dependency in ('qore-process-module', 'qore-uuid-module', 'litmus'):
+                if packages.get(dependency, {}).get('phase') != 'runtime':
+                    raise ValueError('XML qualification requires a pinned runtime RPM: ' + dependency)
         if ({f.get('path') for f in files} != MODULE_FIXTURES[name]
                 or len(files) != len(MODULE_FIXTURES[name])):
             raise ValueError('Expected complete module fixture inventory')
@@ -281,6 +288,12 @@ def module_commands(name, phase, directory, binary=None, driver=None, installed_
         raise ValueError('Unknown module suite or phase')
     if name == 'jni':
         return installed_jni.commands(phase, directory, binary)
+    if name == 'xml':
+        commands = [('tests', ['python3', '-B', '-W', 'error',
+                              str(directory / 'rpm/run-tests.py'), '--installed'])]
+        if phase == 'sdk':
+            commands.append(('compiler', [str(directory / 'debian/tests/compiler')]))
+        return commands
     if name == 'v8':
         if (binary is None or not binary.is_absolute() or binary.suffix != '.qmod'
                 or not binary.name.startswith('v8-api-') or '..' in binary.parts):
@@ -611,6 +624,8 @@ def qualify(manifest, output, jni_phase=None, jni_fixtures=None, repository_inst
                 fetch_source(entry['url'], entry['sha256'], path)
                 path.chmod(0o755 if entry['path'].startswith('rpm/') else 0o644)
             for entry in manifest.get('modules', []):
+                if entry['name'] == 'xml':
+                    result['xml_fixture_archive'] = installed_xml.stage(source / 'module-xml')
                 for fixture in entry['fixtures']:
                     path = source / ('module-' + entry['name']) / fixture['path']
                     fetch_source(fixture['url'], fixture['sha256'], path)
