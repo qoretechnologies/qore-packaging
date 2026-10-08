@@ -1,0 +1,5 @@
+# Copyright (C) 2026 Qore Technologies, s.r.o.
+# SPDX-License-Identifier: MIT
+%__qoreaot_provides /usr/bin/python3 %{_rpmconfigdir}/qore/qore_aot_identity.py provides "%{?_isa}"
+%__qoreaot_requires /usr/bin/python3 %{_rpmconfigdir}/qore/qore_aot_identity.py requires "%{?_isa}"
+%__qoreaot_path ^%{_libdir}/(libqore\\.so\\.[0-9.]+|qore-modules/.*\\.qmod)$

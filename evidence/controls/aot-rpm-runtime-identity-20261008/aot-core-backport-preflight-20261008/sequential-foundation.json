@@ -1,0 +1,58 @@
+{
+  "status": "All three upstream AOT fixes apply in sequence; only release-note context required manual placement. No production tree changed.",
+  "commits": [
+    {
+      "commit": "715126ba44090ab3106e76a736ab98a41888b3b3",
+      "applied": true
+    },
+    {
+      "commit": "2206399650749ab1be0b02436ab3805935d43d26",
+      "applied": true
+    },
+    {
+      "commit": "1369d1bd538f1c25c04ee5c4db278c3c2d5b90f6",
+      "applied": true
+    }
+  ],
+  "release_note_resolution": "Retained the exact eight added lines immediately after the 3.0.0 heading, preserving all existing frozen release notes.",
+  "source_before_sha256": {
+    "CMakeLists.txt": "2e0c20c63212d1a81ba7764a3084a3710b2751216088a9fa58ed23423c73fc20",
+    "qore.spec-multi": "b990190624afdb4dfcb52d4c2628bd32768ecbb4e6a2d4721ae8287bc35d5f76",
+    "qcc-main.cpp": "24d7ad44f4467c3e4a2be6d5912cf6cdf2f41ea9f1bda8a72c80937258eb6e04",
+    "design/aot-object-files-and-module-artifacts.md": "1afbb0e3f08ec8a390aada8f8dac7e4506602526e6ff9780d14e1c3c00797cd1",
+    "rpm/macros.qore": "f50fdc449b7cf7bdd740847c95c2d52b1d35f42e62790eb491d5f5cd3a7d3c7a",
+    "rpm/README.rst": "6cc7ada97086ac1d49d3687c29ab5db0e1f2d26fbf4d2a40f96b978995f1c81a",
+    "lib/QoreAOT.cpp": "b6358cade22a8a482b9247fdc1356aec602da58487c59e7738a8001ebadd4091",
+    "lib/ModuleManager.cpp": "535713c72e7ee7c89104768463dedf50cb5da1f6b64caff7544307cb6415ab24",
+    "lib/QoreAOTRuntime.cpp": "090a173d89e6885b5b4a0df8240266bba1ba503bf560c089e1aa16da73864a08",
+    "include/qore/ModuleManager.h": "c9c734a54bf058afa200e144d1cda87f6727e24c5d0293f642d3f62089340975",
+    "include/qore/intern/QoreAOT.h": "eda2af6f5acc5f163197be724ebd16ad1afcef1eab51e0ccd04bd690cfddf780",
+    "rpm/tests/qcc-rpm-integration.py": "96b2973e90a310612ef76b4056e554e1e26946dbce2fa00415e2938dc37c07b6",
+    "rpm/tests/test_rpm_post.py": "089a982ab3b9ed2a46807c4281b65f175cebe207071738d7f416cae0f9290681",
+    "doxygen/lang/900_release_notes.dox.tmpl": "6c90ee0a16dd21f5bdc784a186a17d5d0c5b9945cd03399d5271bf888e556bcd",
+    "doxygen/lang/120_modules.dox.tmpl": "2ef1b878ab36095c58d4714328d170f57150e8c9dcd829f3c18795e1219accbd",
+    "examples/test/ir/AOTModuleContextPath.qtest": "193158f1fe1f0ef45e17d14de05f87555a02c97978ab169d490361bfd3cdadf5",
+    "examples/test/qore/misc/module-loader/aot-binary-symbol-resolution.qtest": "d05e02fbc6df5aa57575e67e2f7ef6824900f347103f8a0001d5383d3a3fe5b7"
+  },
+  "prepared_sha256": {
+    "CMakeLists.txt": "7e5c61c54d70de5834aefbe30e3be32c0b2662e018cb5debb27ef0e5337e8040",
+    "qore.spec-multi": "b990190624afdb4dfcb52d4c2628bd32768ecbb4e6a2d4721ae8287bc35d5f76",
+    "qcc-main.cpp": "66c6ff245c4da14962dc4026294cfcc2e9f0e5ff336b0339a95e03404eb4b117",
+    "cmake/QoreWriteAOTRuntimeIdentity.cmake": "f349bdd589ee93ce26a8742c6d1aacec6b9803858cd062e31174c871ef1ac3bf",
+    "design/aot-object-files-and-module-artifacts.md": "4668b410f479f36112da5e7d243c5cc726db116b1f6e72f7d689718d709fc84f",
+    "rpm/macros.qore": "f50fdc449b7cf7bdd740847c95c2d52b1d35f42e62790eb491d5f5cd3a7d3c7a",
+    "rpm/README.rst": "6cc7ada97086ac1d49d3687c29ab5db0e1f2d26fbf4d2a40f96b978995f1c81a",
+    "lib/qore_aot_runtime_identity.cpp": "7ed73a9d3950d0207b9dcaa73db42a15d177debdeee757e6737bf766a89adb09",
+    "lib/QoreAOT.cpp": "b4e0def4d5c8cfea9fb6d2a48904c711df1de412867caf9baf408f8c61740fb9",
+    "lib/ModuleManager.cpp": "0fe1d4d5c1f5cd75e285844b4d29df8d710b9adb52bcd37c22f722893a9ed1df",
+    "lib/QoreAOTRuntime.cpp": "2f5bab37cc8047bc0865c09f85d4c485feed649a313a704c8350b79c55643592",
+    "include/qore/ModuleManager.h": "d28cca4abc6e00d81180b6a2e769ff4d7a5f1c6ead5741deb85fe1a3598ca11c",
+    "include/qore/intern/QoreAOT.h": "88dd8d1fef2d2fe2a651dcfee5977a2dc8ad12996f41bd1accdc9def6ef0b425",
+    "rpm/tests/qcc-rpm-integration.py": "96b2973e90a310612ef76b4056e554e1e26946dbce2fa00415e2938dc37c07b6",
+    "rpm/tests/test_rpm_post.py": "089a982ab3b9ed2a46807c4281b65f175cebe207071738d7f416cae0f9290681",
+    "doxygen/lang/900_release_notes.dox.tmpl": "e6a1fd2b77f8d733e0606c3f3e2a929dc73bb744c6c31e0f81ca712382d1b5c5",
+    "doxygen/lang/120_modules.dox.tmpl": "6dd420d85b523497643bc7ae3acbdc594f2b44b39af982170e1330a9c03cfbd5",
+    "examples/test/ir/AOTModuleContextPath.qtest": "359135be01ad8b54cb43917d9e4fdb5940f5467383641a64c6bb03deeab31eb2",
+    "examples/test/qore/misc/module-loader/aot-binary-symbol-resolution.qtest": "9e034e7f856863aa725a1cd3ebe6479db3c2d1b8df8ce11463f8f87c667ef568"
+  }
+}

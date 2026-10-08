@@ -1,0 +1,44 @@
+{
+  "mode": "debug",
+  "exit_code": 0,
+  "steps": 5,
+  "library_sha256": "c8a482c63848df7691ef4f6539c4a48f7c750b55d210a49d47aefe72b6177fcc",
+  "tests": {
+    "AOTModuleContextPath": {
+      "exit_code": 0,
+      "summary": "Ran 13 test cases, 13 succeeded (67 assertions)"
+    },
+    "IRScalarCSE": {
+      "exit_code": 0,
+      "summary": "Silent success"
+    },
+    "IRScalarCSETemporaryLifetime": {
+      "exit_code": 0,
+      "summary": "Silent success"
+    }
+  },
+  "valgrind": {
+    "mismatching-load-valgrind.log": {
+      "errors": 0,
+      "lost_bytes": 0,
+      "warnings": [
+        "--430081-- Warning: zero subprog, missing DW_AT_abstract_origin in DW_TAG_inlined_subroutine in /home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/build-debug/libqore.so.20.0.0"
+      ]
+    },
+    "compiler-valgrind.log": {
+      "errors": 0,
+      "lost_bytes": 0,
+      "warnings": [
+        "--433713-- Warning: zero subprog, missing DW_AT_abstract_origin in DW_TAG_inlined_subroutine in /home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/build-debug/libqore.so.20.0.0"
+      ]
+    },
+    "matching-load-valgrind.log": {
+      "errors": 0,
+      "lost_bytes": 0,
+      "warnings": [
+        "--423978-- Warning: zero subprog, missing DW_AT_abstract_origin in DW_TAG_inlined_subroutine in /home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/build-debug/libqore.so.20.0.0"
+      ]
+    }
+  },
+  "digest": "385f052116c28c260a1a1372aea9e202b6f52a8bd585add8e02c01192198f673"
+}

@@ -1,0 +1,4 @@
+{
+  "root": "The first control restored the original input mtime before asking Make to observe the restored bytes, marking a changed input older than its output. This was a test restoration defect.",
+  "correction": "Rebuild the producer after byte restoration, then restore the original timestamp in finally. Both source bytes and library files are preserved."
+}

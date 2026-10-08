@@ -1,0 +1,141 @@
+[
+  {
+    "name": "compiler-version",
+    "args": [
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/build/qcc",
+      "--version"
+    ],
+    "exit_code": 0,
+    "expected": 0
+  },
+  {
+    "name": "matching-compile",
+    "args": [
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/build/qore",
+      "-b",
+      "--enable-debug",
+      "--compile-module",
+      "--output",
+      "/home/david/src/qore/git/qore-packaging/results/aot-runtime-origin-release-identity-20261008/modules/matching/RpmIdentityProbe.qmod",
+      "/home/david/src/qore/git/qore-packaging/results/aot-runtime-origin-release-identity-20261008/source/RpmIdentityProbe.qm"
+    ],
+    "exit_code": 0,
+    "expected": 0
+  },
+  {
+    "name": "matching-load",
+    "args": [
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/build/qore",
+      "-b",
+      "--enable-debug",
+      "-l",
+      "/home/david/src/qore/git/qore-packaging/results/aot-runtime-origin-release-identity-20261008/modules/matching/RpmIdentityProbe.qmod",
+      "-nX",
+      "rpm_identity_answer()"
+    ],
+    "exit_code": 0,
+    "expected": 0
+  },
+  {
+    "name": "matching-load-valgrind",
+    "args": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "--track-fds=yes",
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/build/qore",
+      "-b",
+      "--enable-debug",
+      "-l",
+      "/home/david/src/qore/git/qore-packaging/results/aot-runtime-origin-release-identity-20261008/modules/matching/RpmIdentityProbe.qmod",
+      "-nX",
+      "rpm_identity_answer()"
+    ],
+    "exit_code": 0,
+    "expected": 0
+  },
+  {
+    "name": "mismatching-compile",
+    "args": [
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/build/qore",
+      "-b",
+      "--enable-debug",
+      "--compile-module",
+      "--output",
+      "/home/david/src/qore/git/qore-packaging/results/aot-runtime-origin-release-identity-20261008/modules/mismatching/RpmIdentityProbe.qmod",
+      "/home/david/src/qore/git/qore-packaging/results/aot-runtime-origin-release-identity-20261008/source/RpmIdentityProbe.qm"
+    ],
+    "exit_code": 0,
+    "expected": 0
+  },
+  {
+    "name": "mismatching-load",
+    "args": [
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/build/qore",
+      "-b",
+      "--enable-debug",
+      "-l",
+      "/home/david/src/qore/git/qore-packaging/results/aot-runtime-origin-release-identity-20261008/modules/mismatching/RpmIdentityProbe.qmod",
+      "-nX",
+      "rpm_identity_answer()"
+    ],
+    "exit_code": 2,
+    "expected": 2
+  },
+  {
+    "name": "mismatching-load-valgrind",
+    "args": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "--track-fds=yes",
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/build/qore",
+      "-b",
+      "--enable-debug",
+      "-l",
+      "/home/david/src/qore/git/qore-packaging/results/aot-runtime-origin-release-identity-20261008/modules/mismatching/RpmIdentityProbe.qmod",
+      "-nX",
+      "rpm_identity_answer()"
+    ],
+    "exit_code": 2,
+    "expected": 2
+  },
+  {
+    "name": "compiler-valgrind",
+    "args": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "--track-fds=yes",
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/build/qore",
+      "-b",
+      "--enable-debug",
+      "--compile-module",
+      "--output",
+      "/home/david/src/qore/git/qore-packaging/results/aot-runtime-origin-release-identity-20261008/modules/valgrind-compiled/RpmIdentityProbe.qmod",
+      "/home/david/src/qore/git/qore-packaging/results/aot-runtime-origin-release-identity-20261008/source/RpmIdentityProbe.qm"
+    ],
+    "exit_code": 0,
+    "expected": 0
+  },
+  {
+    "name": "valgrind-compiled-load",
+    "args": [
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/build/qore",
+      "-b",
+      "--enable-debug",
+      "-l",
+      "/home/david/src/qore/git/qore-packaging/results/aot-runtime-origin-release-identity-20261008/modules/valgrind-compiled/RpmIdentityProbe.qmod",
+      "-nX",
+      "rpm_identity_answer()"
+    ],
+    "exit_code": 0,
+    "expected": 0
+  }
+]

@@ -1,0 +1,53 @@
+[
+  {
+    "name": "qcc-rpm",
+    "command": [
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/rpm/tests/qcc-rpm-integration.py",
+      "-v"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "AOTModuleContextPath",
+    "command": [
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/examples/test/ir/AOTModuleContextPath.qtest"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "IRScalarCSE",
+    "command": [
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/examples/test/ir/IRScalarCSE.qtest"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "IRScalarCSETemporaryLifetime",
+    "command": [
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/examples/test/ir/IRScalarCSETemporaryLifetime.qtest"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "identity-valgrind",
+    "command": [
+      "python3",
+      "/home/david/src/qore/git/qore-packaging/work/qualify-aot-runtime-origin-identity-20261008.py",
+      "debug"
+    ],
+    "exit_code": 0
+  }
+]

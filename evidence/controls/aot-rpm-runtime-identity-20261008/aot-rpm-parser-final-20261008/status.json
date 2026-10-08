@@ -1,0 +1,105 @@
+{
+  "fedora": {
+    "exit_code": 0,
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008:/source:ro",
+      "-w",
+      "/source",
+      "sha256:1d0b9746139ba0ac3822952a6b7248cb54ab48f7241d879d9cf55ff84c02d7d0",
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "rpm/tests",
+      "-p",
+      "test_*.py",
+      "-v"
+    ]
+  },
+  "leap": {
+    "exit_code": 0,
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008:/source:ro",
+      "-w",
+      "/source",
+      "sha256:a3a4d38d5db8770fccc4a460aedd5f49f76bf5226825c0d051ecae4422d99b19",
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "rpm/tests",
+      "-p",
+      "test_*.py",
+      "-v"
+    ]
+  },
+  "el10": {
+    "exit_code": 0,
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--network",
+      "none",
+      "-v",
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008:/source:ro",
+      "-w",
+      "/source",
+      "sha256:9fd90af337b535190ba8e20c2a709e356cdc041ec9919990d41c69a1499603ec",
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "rpm/tests",
+      "-p",
+      "test_*.py",
+      "-v"
+    ]
+  },
+  "release-qcc": {
+    "exit_code": 0,
+    "command": [
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/rpm/tests/qcc-rpm-integration.py",
+      "-v"
+    ]
+  },
+  "debug-qcc": {
+    "exit_code": 0,
+    "command": [
+      "python3",
+      "-B",
+      "-W",
+      "error",
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-aot-runtime-dependencies-20261008/rpm/tests/qcc-rpm-integration.py",
+      "-v"
+    ]
+  }
+}
