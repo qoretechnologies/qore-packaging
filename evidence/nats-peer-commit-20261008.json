@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Fedora candidate53 peer restart failure root-caused and corrected; all 300 focused race-enabled top-level results pass. Candidate55 prepared; full RPM/native qualification remains required.",
+  "failure": "TestNRGLeaderResurrectsRemovedPeers restarted with three peers after the test observed a speculative two-peer map.",
+  "root_cause": "sendMembershipChange removes the peer speculatively before applyCommit/removePeer writes durable membership. The fixture stops its in-memory WAL before commit when it waits only for Peers() length.",
+  "fix": "Observe a removed-peer commit marker, peer absence and completion of membership change through the existing application-progress notification, retaining the original two-second deadline.",
+  "qualification": [
+    {
+      "target": "fedora",
+      "top_level_results": 100,
+      "subtest_results": 200,
+      "race_enabled": true,
+      "exit_code": 0
+    },
+    {
+      "target": "leap",
+      "top_level_results": 100,
+      "subtest_results": 200,
+      "race_enabled": true,
+      "exit_code": 0
+    },
+    {
+      "target": "el10",
+      "top_level_results": 100,
+      "subtest_results": 200,
+      "race_enabled": true,
+      "exit_code": 0
+    }
+  ],
+  "tool_tests": 223,
+  "runner_tests": 7,
+  "candidate_patches": 118,
+  "limits": [
+    "The manual node reproduces the exact speculative/durable state boundary; it does not reconstruct the historical scheduler trace.",
+    "The manual control drives applyCommit directly. The corrected original three-node restart test separately exercises real proposal, quorum, application and restart behavior.",
+    "Candidate53 remains live to collect any further full-suite failures. Candidate55 has not yet run the complete RPM matrix.",
+    "Native architecture, installed client/module and repository delivery gates remain open."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-peer-commit-20261008/audit.rst": "a14b4e7efa5240e59aca86e9b80ee4a3b5e890122d7a9ce1c32b1471f75cca26",
+    "evidence/controls/nats-peer-commit-20261008/candidate53-failed-test.json": "12d8af94d9b5cf1b61b846479a8c9777decf4f108f49bf7c0343384a20c8d1d6",
+    "evidence/controls/nats-peer-commit-20261008/candidate55-verification.json": "fe846c097c64915fc8c7ee864125491f12e9ffa10d324c065b333e0c8d2e7e58",
+    "evidence/controls/nats-peer-commit-20261008/el10-status.json": "cf305eef6ed805e8d0b8cf5e21537877377df97eaf4a3351d3448b3cb0e579a3",
+    "evidence/controls/nats-peer-commit-20261008/el10.log.gz": "420c080b4be0c3a35ef9843ecffab33d33cde6cf0fbe475d163dfbd698a48ead",
+    "evidence/controls/nats-peer-commit-20261008/fedora-status.json": "d46612e66c71f16410bbc11b73c7f30d168753ea3656fca669b552a5c6e4a679",
+    "evidence/controls/nats-peer-commit-20261008/fedora.log.gz": "e3234c1dd94a46f60fa919f17a22d4a9d73bfa3c155162e21af3c159e2525e7a",
+    "evidence/controls/nats-peer-commit-20261008/leap-status.json": "2630bd8d5cc8d6e779ff6551ee0613b4044e5776db65aa6d276544efbb659a92",
+    "evidence/controls/nats-peer-commit-20261008/leap.log.gz": "c4e736235ac6173a711084b2a4d33aa39985133fd2b46ba71eb6376dc4a0591a",
+    "evidence/controls/nats-peer-commit-20261008/nats-peer-commit-287.json": "95d6e8e4db26c8af7af0513185f3a6abd955355d1c9309f38fc3f77e877486a8",
+    "evidence/controls/nats-peer-commit-20261008/nats-server-peer-commit-tests.patch": "8e8d1fcb84fa2af825fc6f8a745b911ca80a23f66af55fec8b7efda6f5e916db",
+    "evidence/controls/nats-peer-commit-20261008/nats-server.spec": "525881146ca680dbf54b8741832d4b85b41f47aabd7ef4c99ab1054839f90a6c",
+    "evidence/controls/nats-peer-commit-20261008/prepare-nats-candidate55-20261008.py": "f6acf74a9efd4d6fcde6e994822a4483f4387426ac8174097cac20773d6f45df",
+    "evidence/controls/nats-peer-commit-20261008/prepare-nats-peer-commit-287-20261008.py": "d65a08c46639f3fe30861537744c3a49a791618f05dad086018397a117c6c1d3",
+    "evidence/controls/nats-peer-commit-20261008/raft_test.go.gz": "6ebd47fcd2e6f24c76558c06ce2248ffecebb8fa006cdd8cc31537ceafebb0b1",
+    "evidence/controls/nats-peer-commit-20261008/record-nats-peer-commit-287-20261008.py": "f680d77521d955cb494b2af4dbe5efd2f4459132913c4d8940fd35b9902ba5fa",
+    "evidence/controls/nats-peer-commit-20261008/run-nats-focused-38.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a",
+    "evidence/controls/nats-peer-commit-20261008/runner-tests.log.gz": "dec902ed23807fddfa7c9d364fa658d4e7797498def77ba9b331bf2b82e9acad",
+    "evidence/controls/nats-peer-commit-20261008/tools-tests.log.gz": "c1818c862c79ae8adf11af604589f2dda9ea83a73cf0d9db171991cd7b002ba5"
+  }
+}

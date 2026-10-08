@@ -1,0 +1,39 @@
+{
+  "source": "work/nats-prepared-54/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-peer-commit-287",
+      "target": "fedora",
+      "count": 20,
+      "race": true,
+      "pattern": "^(TestNRGLeaderResurrectsRemovedPeers|TestPackagingCommittedPeerRemovalObserver|TestPackagingPeerRemovalCommitBoundary|TestNRGTruncateWALRevertsUncommittedRemovePeer|TestRaftProgressNotification)$",
+      "sublist": "work/nats-prepared-54/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-peer-commit-287-20261008/clean.go": "server/raft_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-peer-commit-287",
+      "target": "leap",
+      "count": 20,
+      "race": true,
+      "pattern": "^(TestNRGLeaderResurrectsRemovedPeers|TestPackagingCommittedPeerRemovalObserver|TestPackagingPeerRemovalCommitBoundary|TestNRGTruncateWALRevertsUncommittedRemovePeer|TestRaftProgressNotification)$",
+      "sublist": "work/nats-prepared-54/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-peer-commit-287-20261008/clean.go": "server/raft_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-peer-commit-287",
+      "target": "el10",
+      "count": 20,
+      "race": true,
+      "pattern": "^(TestNRGLeaderResurrectsRemovedPeers|TestPackagingCommittedPeerRemovalObserver|TestPackagingPeerRemovalCommitBoundary|TestNRGTruncateWALRevertsUncommittedRemovePeer|TestRaftProgressNotification)$",
+      "sublist": "work/nats-prepared-54/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-peer-commit-287-20261008/clean.go": "server/raft_test.go"
+      }
+    }
+  ]
+}
