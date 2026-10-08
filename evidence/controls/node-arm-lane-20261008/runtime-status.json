@@ -1,0 +1,25 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--user",
+    "1019:100",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/leap-nodejs24-canonical-final-20261007/rpmbuild/BUILD/nodejs24-libnode-24.18.1-build/node-v24.18.1:/source:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/node-arm-lane-control-20261008:/control",
+    "-e",
+    "LD_LIBRARY_PATH=/source/out/Release",
+    "sha256:471fb347e0308caa05f79e41ca4813767c6a7a687f03cc823a78b2a8e81a3414",
+    "/source/out/Release/node",
+    "--no-liftoff",
+    "--no-wasm-lazy-compilation",
+    "--experimental-wasm-fp16",
+    "/control/runtime.js",
+    "/source/wasm-deopt-tests/test/mjsunit/wasm/wasm-module-builder.js"
+  ],
+  "exit_code": 0
+}

@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Reviewed exhaustive-enum diagnostic qualified under existing policy; native ARM runtime remains required.",
+  "diagnostic": "../deps/v8/src/compiler/turboshaft/operations.h:8002:3: warning: control reaches end of non-void function [-Wreturn-type]",
+  "function": "Simd128ExtractLaneOp::element_rep(Kind)",
+  "root_cause": "All nine fixed-underlying-type enum members return. GCC also considers unnamed uint8_t values, which the reviewed graph producers do not generate.",
+  "producer_invariants": [
+    "Wasm and legacy graph builders select only named enum constants for validated lane opcodes.",
+    "Assembler and machine-optimization reducers forward the existing Kind unchanged.",
+    "Int64 lowering either forwards Kind or selects the named I32x4 variant."
+  ],
+  "qualification": {
+    "native_declared_kinds_per_run": 9,
+    "native_runs": 4,
+    "compiler_modes": [
+      "release",
+      "debug"
+    ],
+    "valgrind_errors": 0,
+    "all_allocations_freed": true,
+    "actual_node_x86_64": {
+      "node": "v24.18.1",
+      "arch": "x64",
+      "kinds": 9,
+      "checks": 426,
+      "result": "pass"
+    }
+  },
+  "approval": {
+    "basis": "existing user-approved V8 exhaustive-enum policy; no new user response is claimed",
+    "evidence": "evidence/node-gcc-return-policy-proposal-20261006.json"
+  },
+  "limits": [
+    "The native control uses exact enum declarations and unchanged static method; the containing operation base class is omitted because it has no role in this static mapping.",
+    "Actual Wasm execution is x86_64, with Liftoff/lazy compilation disabled and experimental fp16 enabled for the control only. Production defaults are unchanged.",
+    "On hardware without native fp16 the upstream runtime uses its I16 extraction/conversion fallback. The static F16 mapping is separately covered; runtime results do not prove that hardware branch executed.",
+    "Unnamed enum values are excluded by producer invariants, not executed through undefined C++ fallthrough.",
+    "Native ARM package runtime and remaining diagnostics must still be qualified before publication."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-arm-lane-20261008/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-arm-lane-20261008/audit.rst": "ee3af5ddbe862c4b6fa0aa3c4d53d95cd529284d28f2396733bbdcb95f388829",
+    "evidence/controls/node-arm-lane-20261008/control.cc": "96cb532a88a0c33719637a394f0d2baaf3fe697e5b138537b91bc611993789bd",
+    "evidence/controls/node-arm-lane-20261008/debug-compile.log.gz": "cb409d081a061cfa72a50155e13bf78d9f4e7b43bd8fa3bb17807789fde2a77e",
+    "evidence/controls/node-arm-lane-20261008/debug-normal.log.gz": "a2e8f6f6ee30158a9fbabf9544e2afa78c403c613eec7315b6bee3bb97ac6d72",
+    "evidence/controls/node-arm-lane-20261008/debug-valgrind.log.gz": "3e905ca3a1e8d9329e4eec2dc52feb3d1d02ddd629150822dfe90de492e1df75",
+    "evidence/controls/node-arm-lane-20261008/prepare-node-arm-lane-control-20261008.py": "1eb76d025c13b49b750d03d0f4e3b8a0486a6e4c1ec5edcd298699e0e592b9b4",
+    "evidence/controls/node-arm-lane-20261008/producer-review.json": "9e4129f884642263a672f132086101f08917d3fdc7535c02691c342a50893b2d",
+    "evidence/controls/node-arm-lane-20261008/record-node-arm-lane-20261008.py": "6082c810fd60f6de09d2f810e73e7b24448a8d112b3537aa8597fe1bd509f0e6",
+    "evidence/controls/node-arm-lane-20261008/release-compile.log.gz": "cb409d081a061cfa72a50155e13bf78d9f4e7b43bd8fa3bb17807789fde2a77e",
+    "evidence/controls/node-arm-lane-20261008/release-normal.log.gz": "a2e8f6f6ee30158a9fbabf9544e2afa78c403c613eec7315b6bee3bb97ac6d72",
+    "evidence/controls/node-arm-lane-20261008/release-valgrind.log.gz": "4c0c1440f1a4c699f087c3cf7e3026ac2267858fc7512c20a1ce922afedbd618",
+    "evidence/controls/node-arm-lane-20261008/run.py": "f2294e98b86f3687e6a632c35a552bb6afa05e29a0a393327d95479c4569d3e8",
+    "evidence/controls/node-arm-lane-20261008/runtime-status.json": "07bf5313a71dd42823535f5f37f23af8deff5a0f55d7d0446f57e3347cb7de25",
+    "evidence/controls/node-arm-lane-20261008/runtime.js": "cf2332bdce695c5a6a7b7e3220aa2f78be32300f471501ef1609de008570b940",
+    "evidence/controls/node-arm-lane-20261008/runtime.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/node-arm-lane-20261008/runtime.stdout": "0a8dc9d8947b18508460e36cc95c6c91d1554a50d6059d1e75e0cf8cf448f4e4",
+    "evidence/controls/node-arm-lane-20261008/source-extracts.json": "ce7fa55f82c0a5dcb5367e6051161d000541821cbfede34c3de01011d00364df",
+    "evidence/controls/node-arm-lane-20261008/status.json": "0adb20664705c4d40eb486f25536562303b9a929e8464f6024c132992f71db35"
+  }
+}

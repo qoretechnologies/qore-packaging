@@ -1,0 +1,20 @@
+[
+  {
+    "file": "deps/v8/src/codegen/machine-type.h",
+    "line": 19,
+    "text": "enum class MachineRepresentation : uint8_t {\n  kNone,\n  kBit,\n  // Integral representations must be consecutive, in order of increasing order.\n  kWord8,\n  kWord16,\n  kWord32,\n  kWord64,\n  // (uncompressed) MapWord\n  // kMapWord is the representation of a map word, i.e. a map in the header\n  // of a HeapObject.\n  // If V8_MAP_PACKING is disabled, a map word is just the map itself. Hence\n  //     kMapWord is equivalent to kTaggedPointer -- in fact it will be\n  //     translated to kTaggedPointer during memory lowering.\n  // If V8_MAP_PACKING is enabled, a map word is a Smi-like encoding of a map\n  //     and some meta data. Memory lowering of kMapWord loads/stores\n  //     produces low-level kTagged loads/stores plus the necessary\n  //     decode/encode operations.\n  // In either case, the kMapWord representation is not used after memory\n  // lowering.\n  kMapWord,\n  kTaggedSigned,       // (uncompressed) Smi\n  kTaggedPointer,      // (uncompressed) HeapObject\n  kTagged,             // (uncompressed) Object (Smi or HeapObject)\n  kCompressedPointer,  // (compressed) HeapObject\n  kCompressed,         // (compressed) Object (Smi or HeapObject)\n  kProtectedPointer,   // (uncompressed) TrustedObject\n  kIndirectPointer,    // (indirect) HeapObject\n  // A 64-bit pointer encoded in a way (e.g. as offset) that guarantees it will\n  // point into the sandbox.\n  kSandboxedPointer,\n  // kFloat16RawBits is not a real FP representation! It's representation of a\n  // float16 bitcast to a word16, and is used for conversions to and from\n  // Float16Array elements. It is not used after machine lowering.\n  kFloat16RawBits,\n  // FP and SIMD representations must be last, and in order of increasing size.\n  kFloat16,\n  kFloat32,\n  kFloat64,\n  kSimd128,\n  kSimd256,\n  kFirstFPRepresentation = kFloat16,\n  kLastRepresentation = kSimd256\n};",
+    "sha256": "e53dc457bd1be596eb1cad83b7eb318d375e0af6b809725ffbd6e7a7d31f59df"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 7967,
+    "text": "  enum class Kind : uint8_t {\n    kI8x16S,\n    kI8x16U,\n    kI16x8S,\n    kI16x8U,\n    kI32x4,\n    kI64x2,\n    kF16x8,\n    kF32x4,\n    kF64x2,\n  };",
+    "sha256": "f2539a772c6d21b5af3afbe4c258eb320751651dc4c99323e9d883cf718506a5"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 7984,
+    "text": "  static MachineRepresentation element_rep(Kind kind) {\n    switch (kind) {\n      case Kind::kI8x16S:\n      case Kind::kI8x16U:\n        return MachineRepresentation::kWord8;\n      case Kind::kI16x8S:\n      case Kind::kI16x8U:\n        return MachineRepresentation::kWord16;\n      case Kind::kI32x4:\n        return MachineRepresentation::kWord32;\n      case Kind::kI64x2:\n        return MachineRepresentation::kWord64;\n      case Kind::kF16x8:\n      case Kind::kF32x4:\n        return MachineRepresentation::kFloat32;\n      case Kind::kF64x2:\n        return MachineRepresentation::kFloat64;\n    }\n  }",
+    "sha256": "d5a77f5fae617d798c77e397083ecb2cc6d202728a83b83a20aa4423abba196b"
+  }
+]

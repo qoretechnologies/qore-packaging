@@ -1,0 +1,136 @@
+[
+  {
+    "file": "deps/v8/src/wasm/turboshaft-graph-interface.cc",
+    "sha256": "a55a21feb42dc183dc6fade8fb66f6ed5c119f304f35fb9d4326ca71c12712fa",
+    "excerpts": [
+      {
+        "line": 3472,
+        "text": "    V<Simd128> input_val = V<Simd128>::Cast(inputs[0].op);\n    switch (opcode) {\n      case kExprI8x16ExtractLaneS:\n        result->op = __ Simd128ExtractLane(\n            input_val, Simd128ExtractLaneOp::Kind::kI8x16S, imm.lane);\n        break;\n      case kExprI8x16ExtractLaneU:\n        result->op = __ Simd128ExtractLane("
+      },
+      {
+        "line": 3476,
+        "text": "            input_val, Simd128ExtractLaneOp::Kind::kI8x16S, imm.lane);\n        break;\n      case kExprI8x16ExtractLaneU:\n        result->op = __ Simd128ExtractLane(\n            input_val, Simd128ExtractLaneOp::Kind::kI8x16U, imm.lane);\n        break;\n      case kExprI16x8ExtractLaneS:\n        result->op = __ Simd128ExtractLane("
+      },
+      {
+        "line": 3480,
+        "text": "            input_val, Simd128ExtractLaneOp::Kind::kI8x16U, imm.lane);\n        break;\n      case kExprI16x8ExtractLaneS:\n        result->op = __ Simd128ExtractLane(\n            input_val, Simd128ExtractLaneOp::Kind::kI16x8S, imm.lane);\n        break;\n      case kExprI16x8ExtractLaneU:\n        result->op = __ Simd128ExtractLane("
+      },
+      {
+        "line": 3484,
+        "text": "            input_val, Simd128ExtractLaneOp::Kind::kI16x8S, imm.lane);\n        break;\n      case kExprI16x8ExtractLaneU:\n        result->op = __ Simd128ExtractLane(\n            input_val, Simd128ExtractLaneOp::Kind::kI16x8U, imm.lane);\n        break;\n      case kExprI32x4ExtractLane:\n        result->op = __ Simd128ExtractLane("
+      },
+      {
+        "line": 3488,
+        "text": "            input_val, Simd128ExtractLaneOp::Kind::kI16x8U, imm.lane);\n        break;\n      case kExprI32x4ExtractLane:\n        result->op = __ Simd128ExtractLane(\n            input_val, Simd128ExtractLaneOp::Kind::kI32x4, imm.lane);\n        break;\n      case kExprI64x2ExtractLane:\n        result->op = __ Simd128ExtractLane("
+      },
+      {
+        "line": 3492,
+        "text": "            input_val, Simd128ExtractLaneOp::Kind::kI32x4, imm.lane);\n        break;\n      case kExprI64x2ExtractLane:\n        result->op = __ Simd128ExtractLane(\n            input_val, Simd128ExtractLaneOp::Kind::kI64x2, imm.lane);\n        break;\n      case kExprF16x8ExtractLane:\n        if (SupportedOperations::float16()) {"
+      },
+      {
+        "line": 3497,
+        "text": "        break;\n      case kExprF16x8ExtractLane:\n        if (SupportedOperations::float16()) {\n          result->op = __ Simd128ExtractLane(\n              input_val, Simd128ExtractLaneOp::Kind::kF16x8, imm.lane);\n        } else {\n          auto f16 = __ Simd128ExtractLane(\n              input_val, Simd128ExtractLaneOp::Kind::kI16x8S, imm.lane);"
+      },
+      {
+        "line": 3500,
+        "text": "          result->op = __ Simd128ExtractLane(\n              input_val, Simd128ExtractLaneOp::Kind::kF16x8, imm.lane);\n        } else {\n          auto f16 = __ Simd128ExtractLane(\n              input_val, Simd128ExtractLaneOp::Kind::kI16x8S, imm.lane);\n          result->op = CallCStackSlotToStackSlot(\n              f16, ExternalReference::wasm_float16_to_float32(),\n              MemoryRepresentation::Int16(), MemoryRepresentation::Float32());"
+      },
+      {
+        "line": 3508,
+        "text": "        }\n        break;\n      case kExprF32x4ExtractLane:\n        result->op = __ Simd128ExtractLane(\n            input_val, Simd128ExtractLaneOp::Kind::kF32x4, imm.lane);\n        break;\n      case kExprF64x2ExtractLane:\n        result->op = __ Simd128ExtractLane("
+      },
+      {
+        "line": 3512,
+        "text": "            input_val, Simd128ExtractLaneOp::Kind::kF32x4, imm.lane);\n        break;\n      case kExprF64x2ExtractLane:\n        result->op = __ Simd128ExtractLane(\n            input_val, Simd128ExtractLaneOp::Kind::kF64x2, imm.lane);\n        break;\n      case kExprI8x16ReplaceLane:\n        result->op ="
+      },
+      {
+        "line": 3630,
+        "text": "          V<Simd128> value_s128 = V<Simd128>::Cast(value);\n          using Kind = compiler::turboshaft::Simd128ExtractLaneOp::Kind;\n          BuildEncodeException32BitValue(values_array, index,\n                                         V<Word32>::Cast(__ Simd128ExtractLane(\n                                             value_s128, Kind::kI32x4, 0)));\n          index += 2;\n          BuildEncodeException32BitValue(values_array, index,\n                                         V<Word32>::Cast(__ Simd128ExtractLane("
+      },
+      {
+        "line": 3634,
+        "text": "                                             value_s128, Kind::kI32x4, 0)));\n          index += 2;\n          BuildEncodeException32BitValue(values_array, index,\n                                         V<Word32>::Cast(__ Simd128ExtractLane(\n                                             value_s128, Kind::kI32x4, 1)));\n          index += 2;\n          BuildEncodeException32BitValue(values_array, index,\n                                         V<Word32>::Cast(__ Simd128ExtractLane("
+      },
+      {
+        "line": 3638,
+        "text": "                                             value_s128, Kind::kI32x4, 1)));\n          index += 2;\n          BuildEncodeException32BitValue(values_array, index,\n                                         V<Word32>::Cast(__ Simd128ExtractLane(\n                                             value_s128, Kind::kI32x4, 2)));\n          index += 2;\n          BuildEncodeException32BitValue(values_array, index,\n                                         V<Word32>::Cast(__ Simd128ExtractLane("
+      },
+      {
+        "line": 3642,
+        "text": "                                             value_s128, Kind::kI32x4, 2)));\n          index += 2;\n          BuildEncodeException32BitValue(values_array, index,\n                                         V<Word32>::Cast(__ Simd128ExtractLane(\n                                             value_s128, Kind::kI32x4, 3)));\n          index += 2;\n          break;\n        }"
+      }
+    ]
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/graph-builder.cc",
+    "sha256": "74a4441b1efddc6dbe598e5a5ec9c247d96215d5b5ddf903f1a51dd184d77fbc",
+    "excerpts": [
+      {
+        "line": 2596,
+        "text": "\n#define SIMD128_EXTRACT_LANE(name, suffix)                                    \\\n  case IrOpcode::k##name##ExtractLane##suffix:                                \\\n    return __ Simd128ExtractLane(Map<Simd128>(node->InputAt(0)),              \\\n                                 Simd128ExtractLaneOp::Kind::k##name##suffix, \\\n                                 OpParameter<int32_t>(node->op()));\n      SIMD128_EXTRACT_LANE(I8x16, S)\n      SIMD128_EXTRACT_LANE(I8x16, U)"
+      }
+    ]
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/assembler.h",
+    "sha256": "132f40c2a77564aed1d3e651cdc0861887db7d43a5b033dca825de48e6709217",
+    "excerpts": [
+      {
+        "line": 4999,
+        "text": "    return ReduceIfReachableSimd128Ternary(first, second, third, kind);\n  }\n\n  V<Any> Simd128ExtractLane(V<Simd128> input, Simd128ExtractLaneOp::Kind kind,\n                            uint8_t lane) {\n    return ReduceIfReachableSimd128ExtractLane(input, kind, lane);\n  }\n"
+      },
+      {
+        "line": 5001,
+        "text": "\n  V<Any> Simd128ExtractLane(V<Simd128> input, Simd128ExtractLaneOp::Kind kind,\n                            uint8_t lane) {\n    return ReduceIfReachableSimd128ExtractLane(input, kind, lane);\n  }\n\n  V<Simd128> Simd128Reduce(V<Simd128> input, Simd128ReduceOp::Kind kind) {\n    return ReduceIfReachableSimd128Reduce(input, kind);"
+      }
+    ]
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/int64-lowering-reducer.h",
+    "sha256": "f51ed4ea706f93ab92e4d52172c28a5abe17ef4b98a47bd654c0a4e351d0710f",
+    "excerpts": [
+      {
+        "line": 507,
+        "text": "                                    Simd128ExtractLaneOp::Kind kind,\n                                    uint8_t lane) {\n    if (kind != Simd128ExtractLaneOp::Kind::kI64x2) {\n      return Next::ReduceSimd128ExtractLane(input, kind, lane);\n    }\n    V<Word32> low = V<Word32>::Cast(__ Simd128ExtractLane(\n        input, Simd128ExtractLaneOp::Kind::kI32x4, 2 * lane));\n    V<Word32> high = V<Word32>::Cast(__ Simd128ExtractLane("
+      },
+      {
+        "line": 509,
+        "text": "    if (kind != Simd128ExtractLaneOp::Kind::kI64x2) {\n      return Next::ReduceSimd128ExtractLane(input, kind, lane);\n    }\n    V<Word32> low = V<Word32>::Cast(__ Simd128ExtractLane(\n        input, Simd128ExtractLaneOp::Kind::kI32x4, 2 * lane));\n    V<Word32> high = V<Word32>::Cast(__ Simd128ExtractLane(\n        input, Simd128ExtractLaneOp::Kind::kI32x4, 2 * lane + 1));\n    return __ Tuple(low, high);"
+      },
+      {
+        "line": 511,
+        "text": "    }\n    V<Word32> low = V<Word32>::Cast(__ Simd128ExtractLane(\n        input, Simd128ExtractLaneOp::Kind::kI32x4, 2 * lane));\n    V<Word32> high = V<Word32>::Cast(__ Simd128ExtractLane(\n        input, Simd128ExtractLaneOp::Kind::kI32x4, 2 * lane + 1));\n    return __ Tuple(low, high);\n  }\n"
+      }
+    ]
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/machine-optimization-reducer.h",
+    "sha256": "f9f35c2914c4f01693fc6b6c8070c9e7310bca0d471fb85a15785d78b3e8eeb2",
+    "excerpts": [
+      {
+        "line": 2045,
+        "text": "                                    Simd128ExtractLaneOp::Kind kind,\n                                    uint8_t lane) {\n    LABEL_BLOCK(no_change) {\n      return Next::ReduceSimd128ExtractLane(input, kind, lane);\n    }\n    if (ShouldSkipOptimizationStep()) goto no_change;\n\n    if (lane != 0) {"
+      },
+      {
+        "line": 2159,
+        "text": "                  shuffle1, shuffle2, shuffle3, shuffle4)) {\n            V<Simd128> reduce = __ Simd128Reduce(\n                reduce_input, Simd128ReduceOp::Kind::kI8x16AddReduce);\n            return __ Simd128ExtractLane(reduce, kind, 0);\n          }\n        }\n        break;\n      }"
+      },
+      {
+        "line": 2173,
+        "text": "                  shuffle1, shuffle2, shuffle3)) {\n            V<Simd128> reduce = __ Simd128Reduce(\n                reduce_input, Simd128ReduceOp::Kind::kI16x8AddReduce);\n            return __ Simd128ExtractLane(reduce, kind, 0);\n          }\n        }\n        break;\n      }"
+      },
+      {
+        "line": 2186,
+        "text": "                                                                shuffle2)) {\n            V<Simd128> reduce = __ Simd128Reduce(\n                reduce_input, Simd128ReduceOp::Kind::kI32x4AddReduce);\n            return __ Simd128ExtractLane(reduce, kind, 0);\n          }\n        }\n        break;\n      }"
+      },
+      {
+        "line": 2199,
+        "text": "                                                            shuffle2)) {\n            V<Simd128> reduce = __ Simd128Reduce(\n                reduce_input, Simd128ReduceOp::Kind::kF32x4AddReduce);\n            return __ Simd128ExtractLane(reduce, kind, 0);\n          }\n        }\n        break;\n      }"
+      },
+      {
+        "line": 2217,
+        "text": "                                       Simd128ReduceOp::Kind::kI64x2AddReduce)\n                    : __ Simd128Reduce(reduce_input,\n                                       Simd128ReduceOp::Kind::kF64x2AddReduce);\n            return __ Simd128ExtractLane(reduce, kind, 0);\n          }\n        }\n        break;\n      }"
+      }
+    ]
+  }
+]
