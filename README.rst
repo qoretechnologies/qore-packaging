@@ -402,22 +402,23 @@ native aarch64. PDF module revision 2 passes all seven suites, 79 cases and
 histories are recorded in ``evidence/pdfium-native-rev3-20261008.json`` and
 ``evidence/pdf-native-rev2-20261008.json``.
 
-Signed native ARM runtime and SDK installation checks pass on Fedora and
-Leap, including mandatory rendering, both SDK consumers and PDFium Valgrind
-checks. Each installation phase passes the same 79 cases and 616 assertions.
-The AlmaLinux job is configured with 18 verified package inputs; its first
-run stopped before installation when OBS timed out serving the signing key.
-Independent API and website requests then returned HTTP 503. No signature or
-hash verification is bypassed. See
-``evidence/pdf-native-installed-fedora-20261008.json``,
-``evidence/pdf-native-installed-leap-20261008.json`` and
+Signed native ARM runtime and SDK installation checks pass on all three
+distributions, including mandatory rendering, both SDK consumers and PDFium
+Valgrind checks. Each installation phase passes the same 79 cases and 616
+assertions. The jobs verify 15 Fedora, 22 Leap and 18 AlmaLinux package
+signatures against the pinned OBS project key. The first AlmaLinux attempt
+stopped before installation during a temporary OBS API outage; after the exact
+signing key was available again, the unchanged job passed on retry. Both
+attempts are retained. See ``evidence/pdf-native-installed-fedora-20261008.json``,
+``evidence/pdf-native-installed-leap-20261008.json``,
+``evidence/pdf-native-installed-el10-20261008.json`` and
 ``evidence/pdf-alma-installed-service-interruption-20261008.json``.
 
 OBS maintainers attributed the earlier Fedora dependency-fetch failure to a
 certificate change that stopped remote repository synchronization and reported
 it fixed. Both subsequent Fedora PDFium builds succeeded; the maintainer
 explanation and corroborating builds are recorded in
-``evidence/obs-fedora-fetch-resolution-20261008.json``. The later API outage is
+``evidence/obs-fedora-fetch-resolution-20261008.json``. The later, brief API outage was
 a separate observed service interruption. Publication remains disabled. These
 module installation checks use the qualified core revision 21 baseline; the
 updated core, its exact AOT runtime dependencies, coinstallation and repository
