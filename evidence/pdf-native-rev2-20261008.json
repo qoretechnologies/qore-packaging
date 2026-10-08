@@ -1,0 +1,367 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-08",
+  "status": "All six native PDF revision2 builds verified; signed installed Leap ARM is complete, Fedora pipeline60180 also passed, AlmaLinux input refresh remains.",
+  "project": "home:davidnichols:qore:testing",
+  "package": "qore-pdf-module",
+  "revision": 2,
+  "srcmd5": "1e58422b96543fc4a9e4d1a7f3aca3bb",
+  "module_commit": "cc9bb928a6cbf7a475c2c61ca1d8869c92302ff5",
+  "metadata_change": "Archive and spec unchanged; generated OBS changelog sidecar eliminates all six missing SOURCE_DATE_EPOCH metadata warnings on each Leap architecture.",
+  "native_tests": {
+    "builds": 6,
+    "suites_each": 7,
+    "cases_each": 79,
+    "assertions_each": 616,
+    "total_cases": 474,
+    "total_assertions": 3696,
+    "rpm_outputs": 30
+  },
+  "retained_diagnostics": "Only already-approved Leap polkit bootstrap/catalog-directory diagnostics and the AlmaLinux PoDoFo GCC14 array-bounds diagnostic. Exact lines retained per target. No new exception or suppression.",
+  "targets": {
+    "Fedora_44/x86_64": {
+      "repository": "Fedora_44",
+      "architecture": "x86_64",
+      "source_md5": "1e58422b96543fc4a9e4d1a7f3aca3bb",
+      "history": {
+        "rev": "2",
+        "srcmd5": "1e58422b96543fc4a9e4d1a7f3aca3bb",
+        "versrel": "1.0.0-2",
+        "bcnt": "1",
+        "time": "1791480492",
+        "duration": "186"
+      },
+      "suites": 7,
+      "cases": 79,
+      "assertions": 616,
+      "timestamp_warnings": 0,
+      "retained_approved_diagnostics": [],
+      "rpm_outputs": [
+        {
+          "filename": "qore-pdf-module-1.0.0-2.1.src.rpm",
+          "size": "2425362",
+          "mtime": "1791480492"
+        },
+        {
+          "filename": "qore-pdf-module-1.0.0-2.1.x86_64.rpm",
+          "size": "2581576",
+          "mtime": "1791480492"
+        },
+        {
+          "filename": "qore-pdf-module-debuginfo-1.0.0-2.1.x86_64.rpm",
+          "size": "12113682",
+          "mtime": "1791480492"
+        },
+        {
+          "filename": "qore-pdf-module-debugsource-1.0.0-2.1.x86_64.rpm",
+          "size": "2322561",
+          "mtime": "1791480492"
+        },
+        {
+          "filename": "qore-pdf-module-doc-1.0.0-2.1.noarch.rpm",
+          "size": "557780",
+          "mtime": "1791480492"
+        }
+      ],
+      "log": "results/pdf-native-rev2-x86-final-20261008/Fedora_44/build.log",
+      "log_sha256": "16e1b36cf8e347757370e659aa1b69c126e1acf180ebdc58a7eb7f9981b8f2ad",
+      "archived_log": "evidence/controls/pdf-native-rev2-20261008/Fedora_44-x86_64/build.log.gz"
+    },
+    "openSUSE_Leap_16.0/x86_64": {
+      "repository": "openSUSE_Leap_16.0",
+      "architecture": "x86_64",
+      "source_md5": "1e58422b96543fc4a9e4d1a7f3aca3bb",
+      "history": {
+        "rev": "2",
+        "srcmd5": "1e58422b96543fc4a9e4d1a7f3aca3bb",
+        "versrel": "1.0.0-2",
+        "bcnt": "1",
+        "time": "1791480503",
+        "duration": "195"
+      },
+      "suites": 7,
+      "cases": 79,
+      "assertions": 616,
+      "timestamp_warnings": 0,
+      "retained_approved_diagnostics": [
+        "[   10s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2",
+        "[  165s] qore-pdf-module.x86_64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests",
+        "[  165s] qore-pdf-module.x86_64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests"
+      ],
+      "rpm_outputs": [
+        {
+          "filename": "qore-pdf-module-1.0.0-1.1.src.rpm",
+          "size": "2423737",
+          "mtime": "1791480501"
+        },
+        {
+          "filename": "qore-pdf-module-1.0.0-1.1.x86_64.rpm",
+          "size": "2473626",
+          "mtime": "1791480501"
+        },
+        {
+          "filename": "qore-pdf-module-debuginfo-1.0.0-1.1.x86_64.rpm",
+          "size": "12027920",
+          "mtime": "1791480501"
+        },
+        {
+          "filename": "qore-pdf-module-debugsource-1.0.0-1.1.x86_64.rpm",
+          "size": "2320084",
+          "mtime": "1791480501"
+        },
+        {
+          "filename": "qore-pdf-module-doc-1.0.0-1.1.noarch.rpm",
+          "size": "553972",
+          "mtime": "1791480501"
+        }
+      ],
+      "log": "results/pdf-native-rev2-x86-final-20261008/openSUSE_Leap_16.0/build.log",
+      "log_sha256": "d224860a3bc49daa4ca73ee7a3ae46577b0b69fd4c5ca38a11f5ae177fe9f56e",
+      "archived_log": "evidence/controls/pdf-native-rev2-20261008/openSUSE_Leap_16.0-x86_64/build.log.gz"
+    },
+    "AlmaLinux_10/x86_64": {
+      "repository": "AlmaLinux_10",
+      "architecture": "x86_64",
+      "source_md5": "1e58422b96543fc4a9e4d1a7f3aca3bb",
+      "history": {
+        "rev": "2",
+        "srcmd5": "1e58422b96543fc4a9e4d1a7f3aca3bb",
+        "versrel": "1.0.0-2",
+        "bcnt": "1",
+        "time": "1791480876",
+        "duration": "503"
+      },
+      "suites": 7,
+      "cases": 79,
+      "assertions": 616,
+      "timestamp_warnings": 0,
+      "retained_approved_diagnostics": [
+        "[   54s] /usr/include/c++/14/bits/stl_algobase.h:452:30: warning: \u2018memcpy\u2019 forming offset 1 is out of the bounds [0, 1] [-Warray-bounds=]"
+      ],
+      "rpm_outputs": [
+        {
+          "filename": "qore-pdf-module-1.0.0-2.1.src.rpm",
+          "size": "2425277",
+          "mtime": "1791480869"
+        },
+        {
+          "filename": "qore-pdf-module-1.0.0-2.1.x86_64.rpm",
+          "size": "2538074",
+          "mtime": "1791480870"
+        },
+        {
+          "filename": "qore-pdf-module-debuginfo-1.0.0-2.1.x86_64.rpm",
+          "size": "12232044",
+          "mtime": "1791480870"
+        },
+        {
+          "filename": "qore-pdf-module-debugsource-1.0.0-2.1.x86_64.rpm",
+          "size": "2328395",
+          "mtime": "1791480870"
+        },
+        {
+          "filename": "qore-pdf-module-doc-1.0.0-2.1.noarch.rpm",
+          "size": "573593",
+          "mtime": "1791480870"
+        }
+      ],
+      "log": "results/pdf-native-rev2-x86-final-20261008/AlmaLinux_10/build.log",
+      "log_sha256": "060318cfcbe20f92f399d494dfbc3f495b2b063099c041267eb6daaf6d9bb940",
+      "archived_log": "evidence/controls/pdf-native-rev2-20261008/AlmaLinux_10-x86_64/build.log.gz"
+    },
+    "openSUSE_Leap_16.0/aarch64": {
+      "repository": "openSUSE_Leap_16.0",
+      "architecture": "aarch64",
+      "source_md5": "1e58422b96543fc4a9e4d1a7f3aca3bb",
+      "history": {
+        "rev": "2",
+        "srcmd5": "1e58422b96543fc4a9e4d1a7f3aca3bb",
+        "versrel": "1.0.0-2",
+        "bcnt": "1",
+        "time": "1791480258",
+        "duration": "331"
+      },
+      "suites": 7,
+      "cases": 79,
+      "assertions": 616,
+      "timestamp_warnings": 0,
+      "retained_approved_diagnostics": [
+        "[   19s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2",
+        "[  304s] qore-pdf-module.aarch64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests",
+        "[  304s] qore-pdf-module.aarch64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests"
+      ],
+      "rpm_outputs": [
+        {
+          "filename": "qore-pdf-module-1.0.0-1.1.aarch64.rpm",
+          "size": "2398752",
+          "mtime": "1791480255"
+        },
+        {
+          "filename": "qore-pdf-module-1.0.0-1.1.src.rpm",
+          "size": "2423857",
+          "mtime": "1791480255"
+        },
+        {
+          "filename": "qore-pdf-module-debuginfo-1.0.0-1.1.aarch64.rpm",
+          "size": "11561843",
+          "mtime": "1791480255"
+        },
+        {
+          "filename": "qore-pdf-module-debugsource-1.0.0-1.1.aarch64.rpm",
+          "size": "2320116",
+          "mtime": "1791480255"
+        },
+        {
+          "filename": "qore-pdf-module-doc-1.0.0-1.1.noarch.rpm",
+          "size": "554000",
+          "mtime": "1791480255"
+        }
+      ],
+      "log": "results/pdf-native-rev2-20261008/openSUSE_Leap_16.0-aarch64/build.log",
+      "log_sha256": "f1ed05fe887a678c30a09c384b03ddc2d021c6edf0b83b71809cc4e88e7b7537",
+      "archived_log": "evidence/controls/pdf-native-rev2-20261008/openSUSE_Leap_16.0-aarch64/build.log.gz"
+    },
+    "Fedora_44/aarch64": {
+      "repository": "Fedora_44",
+      "architecture": "aarch64",
+      "source_md5": "1e58422b96543fc4a9e4d1a7f3aca3bb",
+      "history": {
+        "rev": "2",
+        "srcmd5": "1e58422b96543fc4a9e4d1a7f3aca3bb",
+        "versrel": "1.0.0-2",
+        "bcnt": "1",
+        "time": "1791481225",
+        "duration": "302"
+      },
+      "suites": 7,
+      "cases": 79,
+      "assertions": 616,
+      "timestamp_warnings": 0,
+      "retained_approved_diagnostics": [],
+      "rpm_outputs": [
+        {
+          "filename": "qore-pdf-module-1.0.0-2.1.aarch64.rpm",
+          "size": "2483875",
+          "mtime": "1791481224"
+        },
+        {
+          "filename": "qore-pdf-module-1.0.0-2.1.src.rpm",
+          "size": "2425208",
+          "mtime": "1791481225"
+        },
+        {
+          "filename": "qore-pdf-module-debuginfo-1.0.0-2.1.aarch64.rpm",
+          "size": "11858267",
+          "mtime": "1791481225"
+        },
+        {
+          "filename": "qore-pdf-module-debugsource-1.0.0-2.1.aarch64.rpm",
+          "size": "2326124",
+          "mtime": "1791481225"
+        },
+        {
+          "filename": "qore-pdf-module-doc-1.0.0-2.1.noarch.rpm",
+          "size": "557744",
+          "mtime": "1791481225"
+        }
+      ],
+      "log": "results/pdf-native-rev2-arm-final-20261008/Fedora_44/build.log",
+      "log_sha256": "a3c62d3f0731d74c42960c873689669f8e06f860c090d625f8750296341f4cbb",
+      "archived_log": "evidence/controls/pdf-native-rev2-20261008/Fedora_44-aarch64/build.log.gz"
+    },
+    "AlmaLinux_10/aarch64": {
+      "repository": "AlmaLinux_10",
+      "architecture": "aarch64",
+      "source_md5": "1e58422b96543fc4a9e4d1a7f3aca3bb",
+      "history": {
+        "rev": "2",
+        "srcmd5": "1e58422b96543fc4a9e4d1a7f3aca3bb",
+        "versrel": "1.0.0-2",
+        "bcnt": "1",
+        "time": "1791482271",
+        "duration": "509"
+      },
+      "suites": 7,
+      "cases": 79,
+      "assertions": 616,
+      "timestamp_warnings": 0,
+      "retained_approved_diagnostics": [
+        "[   69s] /usr/include/c++/14/bits/stl_algobase.h:452:30: warning: \u2018memcpy\u2019 forming offset 1 is out of the bounds [0, 1] [-Warray-bounds=]"
+      ],
+      "rpm_outputs": [
+        {
+          "filename": "qore-pdf-module-1.0.0-2.1.aarch64.rpm",
+          "size": "2427742",
+          "mtime": "1791482267"
+        },
+        {
+          "filename": "qore-pdf-module-1.0.0-2.1.src.rpm",
+          "size": "2425119",
+          "mtime": "1791482267"
+        },
+        {
+          "filename": "qore-pdf-module-debuginfo-1.0.0-2.1.aarch64.rpm",
+          "size": "11894483",
+          "mtime": "1791482267"
+        },
+        {
+          "filename": "qore-pdf-module-debugsource-1.0.0-2.1.aarch64.rpm",
+          "size": "2326844",
+          "mtime": "1791482267"
+        },
+        {
+          "filename": "qore-pdf-module-doc-1.0.0-2.1.noarch.rpm",
+          "size": "573557",
+          "mtime": "1791482267"
+        }
+      ],
+      "log": "results/pdf-el-final-state-20261008/build.log",
+      "log_sha256": "a8798e0c50d78ad36addb498051e3a89343151a6a680c419f0fccc74095e203b",
+      "archived_log": "evidence/controls/pdf-native-rev2-20261008/AlmaLinux_10-aarch64/build.log.gz"
+    }
+  },
+  "publication_enabled": false,
+  "remaining": "Finish AlmaLinux signed native runtime/SDK installation, final core integration including AOT identity dependencies, coinstallation/upgrade/removal and publication gates.",
+  "files_sha256": {
+    "evidence/controls/pdf-native-rev2-20261008/Fedora_44-x86_64/buildinfo.xml.gz": "9d6c584711956ea6ff47a35a86434803b0e74c37cb83ac427c5cc191b88be097",
+    "evidence/controls/pdf-native-rev2-20261008/Fedora_44-x86_64/status.xml.gz": "5243084babacc2cfaadffa33b915ff78a4617e3709b989199fd7f3ed29b9f4bc",
+    "evidence/controls/pdf-native-rev2-20261008/Fedora_44-x86_64/verified.json.gz": "efa376bceecd29bfa5903eef7c044043d73f954a4cc9de4f78ebcff1be76f0a5",
+    "evidence/controls/pdf-native-rev2-20261008/Fedora_44-x86_64/history.xml.gz": "95bb456f888b0ca4ad70731dc38aa534f5f59f21876532e4fb50fcfa70c903a0",
+    "evidence/controls/pdf-native-rev2-20261008/Fedora_44-x86_64/binaries.xml.gz": "70bb8e56a23dd0e0417ad14b008d990d31039474f57a86351ee632b9450e3933",
+    "evidence/controls/pdf-native-rev2-20261008/Fedora_44-x86_64/build.log.gz": "e8ad18512b6eb5d188c322bd0b039cd0f87a51505136399b8edded873dd3f86d",
+    "evidence/controls/pdf-native-rev2-20261008/openSUSE_Leap_16.0-x86_64/buildinfo.xml.gz": "85db24ab597e3108e647fcd437d716af994456ab80dec82e7e2007373ac608c5",
+    "evidence/controls/pdf-native-rev2-20261008/openSUSE_Leap_16.0-x86_64/status.xml.gz": "5243084babacc2cfaadffa33b915ff78a4617e3709b989199fd7f3ed29b9f4bc",
+    "evidence/controls/pdf-native-rev2-20261008/openSUSE_Leap_16.0-x86_64/verified.json.gz": "a1c1189e844bfb26f6b0b0120fad44577ed3bdfa3cfc0f76b702e12af4871628",
+    "evidence/controls/pdf-native-rev2-20261008/openSUSE_Leap_16.0-x86_64/history.xml.gz": "a0e50ce5743a21b7823cc46d9bf24a821d2b3a6745e9b72e18b8072353ccfd86",
+    "evidence/controls/pdf-native-rev2-20261008/openSUSE_Leap_16.0-x86_64/binaries.xml.gz": "25fadaf54a6bd26c1614a4861f6b10bc02825c0107f82359608087fec0ad7a16",
+    "evidence/controls/pdf-native-rev2-20261008/openSUSE_Leap_16.0-x86_64/build.log.gz": "8c28413f1176c308f209286e2c3d3f7079f5a23f7f412ab1a73a07bf0ec3211d",
+    "evidence/controls/pdf-native-rev2-20261008/AlmaLinux_10-x86_64/buildinfo.xml.gz": "a9deefdd1710e148e072fdc326969d61c0b9d9e3fd53d03f397d46ff4dad9b6f",
+    "evidence/controls/pdf-native-rev2-20261008/AlmaLinux_10-x86_64/status.xml.gz": "5243084babacc2cfaadffa33b915ff78a4617e3709b989199fd7f3ed29b9f4bc",
+    "evidence/controls/pdf-native-rev2-20261008/AlmaLinux_10-x86_64/verified.json.gz": "0e105c81db47c2b98c4ed28e58d50a5d3b439eaeca7424c262b7c206c14b7310",
+    "evidence/controls/pdf-native-rev2-20261008/AlmaLinux_10-x86_64/history.xml.gz": "4d7b94981769aa10e6c05a520e6396c38dcfc46f598176cc9e57b44049255ddb",
+    "evidence/controls/pdf-native-rev2-20261008/AlmaLinux_10-x86_64/binaries.xml.gz": "595143182a51e6526e23fac3e4ceb0fd5953810e967af6322aeb98be13011841",
+    "evidence/controls/pdf-native-rev2-20261008/AlmaLinux_10-x86_64/build.log.gz": "8ed29fc6b88262d40f0ad68b5b77ece0bb0bc2b4cb2b00c8a8548b5945892074",
+    "evidence/controls/pdf-native-rev2-20261008/openSUSE_Leap_16.0-aarch64/buildinfo.xml.gz": "fade4d89a3c6a59c32eaa18667903b525e69131295a8980905a818f5fcc854ed",
+    "evidence/controls/pdf-native-rev2-20261008/openSUSE_Leap_16.0-aarch64/status.xml.gz": "5243084babacc2cfaadffa33b915ff78a4617e3709b989199fd7f3ed29b9f4bc",
+    "evidence/controls/pdf-native-rev2-20261008/openSUSE_Leap_16.0-aarch64/verified.json.gz": "28a3ac8b2bb470c86aaa3628e9b5d26df5d8f0e73d2a1d563e0c3fbe02a86cf1",
+    "evidence/controls/pdf-native-rev2-20261008/openSUSE_Leap_16.0-aarch64/history.xml.gz": "61e4b7a5192b79a50d3723b7b59dc6e0fb810b39e008c34cdd602f45a934c9e0",
+    "evidence/controls/pdf-native-rev2-20261008/openSUSE_Leap_16.0-aarch64/binaries.xml.gz": "4c92a338fe4241f337cc2c5a0ffd1ca206da42996a6b2094d2efc95483e6c341",
+    "evidence/controls/pdf-native-rev2-20261008/openSUSE_Leap_16.0-aarch64/build.log.gz": "77f45ed8c908eda7284e4bad0d1cc02efdcfd3153c9a6ec1ffb38a96cc1dfca6",
+    "evidence/controls/pdf-native-rev2-20261008/Fedora_44-aarch64/buildinfo.xml.gz": "661c1e6e9e30d6bdce4960477197f2492a2a32ff53468eb045a4a5683bb58c79",
+    "evidence/controls/pdf-native-rev2-20261008/Fedora_44-aarch64/status.xml.gz": "5243084babacc2cfaadffa33b915ff78a4617e3709b989199fd7f3ed29b9f4bc",
+    "evidence/controls/pdf-native-rev2-20261008/Fedora_44-aarch64/verified.json.gz": "4e66b93ce06263570a2616cda7b6229d66cf62b95e50977f3cfbd62521c7f640",
+    "evidence/controls/pdf-native-rev2-20261008/Fedora_44-aarch64/history.xml.gz": "69bbb4e04646ab673d73a67de2b7636b768fdef36cfe9951b94df32809e11302",
+    "evidence/controls/pdf-native-rev2-20261008/Fedora_44-aarch64/binaries.xml.gz": "33d479af07fc7a4c400a88e4e8e4819c2b7147978464b408912c74372e8f8cd5",
+    "evidence/controls/pdf-native-rev2-20261008/Fedora_44-aarch64/build.log.gz": "a5953bb3b55ce8e448c85bb1cdd7a45822a3c1be56750d437d6224bfbeb7cbf2",
+    "evidence/controls/pdf-native-rev2-20261008/AlmaLinux_10-aarch64/buildinfo.xml.gz": "3ea2c4427bdf9c5b3c921a689015c14d7f49c7808892617a94ec4659ac60e3b3",
+    "evidence/controls/pdf-native-rev2-20261008/AlmaLinux_10-aarch64/status.xml.gz": "5243084babacc2cfaadffa33b915ff78a4617e3709b989199fd7f3ed29b9f4bc",
+    "evidence/controls/pdf-native-rev2-20261008/AlmaLinux_10-aarch64/verified.json.gz": "68ca42b65cc1ce80ddb90cab6a518fd1e7439d3ae24d5961d4f62806abfc84dd",
+    "evidence/controls/pdf-native-rev2-20261008/AlmaLinux_10-aarch64/history.xml.gz": "82898f85eb1fc6b39d9d22029032fab5d386b58053c4a9a7f9c4e6ec8c015fa8",
+    "evidence/controls/pdf-native-rev2-20261008/AlmaLinux_10-aarch64/binaries.xml.gz": "1fc988e8c14415a535c033b6d2753a85009050dd475774c90c288558d288b2b4",
+    "evidence/controls/pdf-native-rev2-20261008/AlmaLinux_10-aarch64/build.log.gz": "54e82854897b32826276709fa1a7b5d1618c4ea0a79d7cc0aa035508a8494919",
+    "evidence/controls/pdf-native-rev2-20261008/verify-pdf-rev2-finished-20261008.py.gz": "3f0eb55c8c66c7d47bcb04611c0888016f02f10fded48a9528b9455384af5983",
+    "evidence/controls/pdf-native-rev2-20261008/prefix.json.gz": "1204cb052b9b7778e80daee595458dbf556aa850adce63b2a267a288fe988705",
+    "evidence/controls/pdf-native-rev2-20261008/verification.json.gz": "54d87c089b1f68c552fde8715e79d1dba01ce33ee193469870191735abbb47c3"
+  }
+}
