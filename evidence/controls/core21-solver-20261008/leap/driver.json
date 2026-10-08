@@ -1,0 +1,32 @@
+{
+  "image": "opensuse/leap@sha256:12891be67d896148576b6d2cef7126152fb20a4b062c78a87a82b30283b66375",
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--name",
+    "qore-core21-solver-leap-20261008",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/check-core21-solver-20261008.py:/check.py:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/qualification/jni-fixtures.json:/qualification/jni-fixtures.json:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/core21-solver-repositories-20261008/leap-x86_64:/repository:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/core21-upgrade-baseline-20261008/leap-x86_64/fixtures:/fixtures:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/core21-solver-repositories-20261008/status.json:/repository-status.json:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/core21-upgrade-baseline-20261008/leap-x86_64/manifest.json:/manifest.json:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/core21-solver-leap-vendor-20261008/leap:/results",
+    "opensuse/leap@sha256:12891be67d896148576b6d2cef7126152fb20a4b062c78a87a82b30283b66375",
+    "sh",
+    "-c",
+    "set -eu\nzypper --non-interactive install --no-recommends python3 ca-certificates shadow util-linux findutils\nexec python3 -B -W error /check.py"
+  ]
+}

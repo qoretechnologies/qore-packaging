@@ -1,0 +1,32 @@
+{
+  "image": "almalinux@sha256:957738702313e6ee452cdb17bc1431542c467be9a4e2f4da3b8e551b0ebb9677",
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--name",
+    "qore-core21-solver-el10-20261008",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/check-core21-solver-20261008.py:/check.py:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/qualification/jni-fixtures.json:/qualification/jni-fixtures.json:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/core21-solver-repositories-20261008/el10-x86_64:/repository:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/core21-upgrade-baseline-20261008/el10-x86_64/fixtures:/fixtures:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/core21-solver-repositories-20261008/status.json:/repository-status.json:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/core21-upgrade-baseline-20261008/el10-x86_64/manifest.json:/manifest.json:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/core21-solver-20261008/el10:/results",
+    "almalinux@sha256:957738702313e6ee452cdb17bc1431542c467be9a4e2f4da3b8e551b0ebb9677",
+    "sh",
+    "-c",
+    "set -eu\ndnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils util-linux findutils dnf-plugins-core epel-release\ndnf config-manager --set-enabled crb\nexec python3 -B -W error /check.py"
+  ]
+}

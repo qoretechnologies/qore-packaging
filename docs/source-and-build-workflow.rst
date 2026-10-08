@@ -83,6 +83,10 @@ Foreground operation remains available for CI and short commands.
 Signed native installed-package checks
 -------------------------------------
 
+See `repository-installation.rst <repository-installation.rst>`_ for qualified
+package-name installation commands, openSUSE vendor selection and the distinction
+between local signed repository checks and production publication.
+
 ``tools/qualify-installed.py`` consumes a reviewed manifest from
 ``qualification/``. It checks every downloaded checksum and RPM signature before
 installation, tests a minimal runtime, then installs the SDK and tests compiler
