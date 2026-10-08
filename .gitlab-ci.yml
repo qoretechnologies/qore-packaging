@@ -513,3 +513,11 @@ rpm-xml-el10-arm64:
     - if: '$RPM_NATIVE_QUALIFICATION == "xml" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
   variables:
     RPM_MANIFEST: qualification/xml-el10-aarch64.json
+
+# PDF rendering and both installed SDK consumers are mandatory.
+rpm-pdf-leap-arm64:
+  extends: rpm-leap-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "pdf" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "leap")'
+  variables:
+    RPM_MANIFEST: qualification/pdf-leap-aarch64.json
