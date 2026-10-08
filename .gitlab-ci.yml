@@ -521,3 +521,10 @@ rpm-pdf-leap-arm64:
     - if: '$RPM_NATIVE_QUALIFICATION == "pdf" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "leap")'
   variables:
     RPM_MANIFEST: qualification/pdf-leap-aarch64.json
+
+rpm-pdf-fedora-arm64:
+  extends: rpm-fedora-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "pdf" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "fedora")'
+  variables:
+    RPM_MANIFEST: qualification/pdf-fedora-aarch64.json

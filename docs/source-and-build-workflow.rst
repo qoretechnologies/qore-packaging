@@ -193,12 +193,13 @@ as the unprivileged fixture user; the runtime phase excludes both the compiler
 and PDFium development headers. These runner checks do not replace the final
 signed RPM manifests, native ARM jobs or repository lifecycle qualification.
 
-``RPM_NATIVE_QUALIFICATION=pdf`` selects the native ARM PDF installation job
-on Leap; ``RPM_NATIVE_TARGET=leap`` makes this selection explicit. Every RPM
-and fixture is hash-pinned, and RPM signatures are checked against the pinned
-OBS project key. Fedora and AlmaLinux native inputs are still being built;
-their jobs will be registered only after those inputs are verified. Ordinary
-packaging commits do not run native installation jobs.
+``RPM_NATIVE_QUALIFICATION=pdf`` selects native ARM PDF installation jobs
+on Fedora and Leap. ``RPM_NATIVE_TARGET`` optionally selects ``fedora`` or
+``leap``; AlmaLinux inputs are still being built. Every RPM and fixture is
+hash-pinned, and RPM signatures are checked against the pinned OBS project
+key. Ordinary packaging commits do not run native installation jobs. These
+module checks use the qualified core revision 21 baseline; final integration
+with the updated core candidate remains required.
 
 V8 qualification pins its process and UUID module dependencies and all 21
 fixture files from the module revision used to build the RPM. Both runtime and
