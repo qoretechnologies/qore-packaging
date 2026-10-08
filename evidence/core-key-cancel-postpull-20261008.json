@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-08",
-  "status": "Qualified and fully audited; ready to commit.",
+  "status": "Qualified, fully audited, committed and pushed to Qore develop.",
   "base_commit": "2e272bdd8beef659ecdb29e88be287d2bfff5e35",
   "root_cause": "The new helper scanned an arbitrarily long non-default ASCII-compatible key without a cancellation point. A pending request was left untouched while a 1 MiB lookup returned its value.",
   "fix": "Scan at most 100 bytes between qore_check_cancel calls and propagate failure before attempting conversion. Default-encoding and inline fast paths are unchanged.",
@@ -79,5 +79,8 @@
     "evidence/controls/core-key-cancel-postpull-20261008/hash-key-cancel.rst": "1fd0b0a1b789b365cf41a40a4c5b3e5ff0a334f94f7020147fd38f3a984e1a78",
     "evidence/controls/core-key-cancel-postpull-20261008/qualify-core-key-cancel-postpull-20261008.py": "aa4f70bcb4a6118ad1336ffdcd7b647045bb81e824311311175aef2be8ac2d65",
     "evidence/controls/core-key-cancel-postpull-20261008/record-core-key-cancel-postpull-20261008.py": "780690082188eca310d03eaa3d633ac8e15115190088085ab098d7a3511f987b"
-  }
+  },
+  "commit": "6e0837c0cb6c1a85831931db1b88064c299648ef",
+  "remote_confirmed": "6e0837c0cb6c1a85831931db1b88064c299648ef",
+  "prerequisite_negative_control_evidence": "evidence/core-key-cancel-20261008.json"
 }
