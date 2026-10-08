@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Six native x86_64 failures root-caused; test prerequisite and assertion corrections pass focused qualification. Complete local check and native RPM qualification remain required.",
+  "native_source": {
+    "project": "home:davidnichols:qore:testing",
+    "package": "nodejs24-libnode",
+    "revision": "5",
+    "srcmd5": "4deae1c099435cb9b5dfa52d0f8f45a2"
+  },
+  "root_causes": [
+    "Without netcfg, OBS creates an IPv4-only hosts file. Four tests pass a family-6 address object without a host field, triggering an IPv6 localhost lookup; a fifth test requires a reverse name for ::1.",
+    "The unprivileged effective-user test allows a missing nobody account but matches the old Error.toString form; the structured ERR_UNKNOWN_CREDENTIAL annotation fails that regex."
+  ],
+  "fixes": [
+    "Declare netcfg as an openSUSE build prerequisite, preserving both localhost address families.",
+    "Match the allowed credential error code and message separately."
+  ],
+  "matrix": {
+    "original-minimal": {
+      "passed": 0,
+      "expected_baseline_failures": [
+        "parallel/test-http2-premature-close",
+        "parallel/test-http2-invalid-last-stream-id",
+        "parallel/test-net-socket-connect-without-cb",
+        "parallel/test-tcp-wrap-listen",
+        "parallel/test-process-euid-egid",
+        "report/test-report-exclude-network"
+      ]
+    },
+    "original-netcfg": {
+      "passed": 5,
+      "expected_baseline_failures": [
+        "parallel/test-process-euid-egid"
+      ]
+    },
+    "original-complete": {
+      "passed": 6,
+      "expected_baseline_failures": []
+    },
+    "fixed-missing-user": {
+      "passed": 6,
+      "expected_baseline_failures": []
+    },
+    "fixed-existing-user": {
+      "passed": 6,
+      "expected_baseline_failures": []
+    }
+  },
+  "fixed_results": 12,
+  "assertion_controls": 7,
+  "tooling_tests": 218,
+  "buildinfo_architectures": [
+    "x86_64",
+    "aarch64"
+  ],
+  "complete_check": "results/node-obs-full-check-20261008/status.json (running when this record was created)",
+  "limits": [
+    "Native rev5 ARM remains in progress; no native success or publication is claimed.",
+    "The first account-removal control still resolved systemds synthetic nobody user. The final controls select the files provider and assert the actual account lookup result before running tests.",
+    "Runtime source and compiler flags are unchanged. Existing native compiler diagnostic review remains a separate gate."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-obs-fixtures-20261008/assertion-negative.json": "b2c2bd1fb2f9fbb792c4d2d33d4feca0b37ae6ac25be14f576e633b58caf2233",
+    "evidence/controls/node-obs-fixtures-20261008/assertion-negative.log.gz": "c2b209450fb49d41557ff79ac36dfecc86f5b89fe0d412c84eb32cb4e63562dc",
+    "evidence/controls/node-obs-fixtures-20261008/audit.rst": "138407ffcbd77d22e5c245aa687b2c03a82455096268867d6da99e27387313ea",
+    "evidence/controls/node-obs-fixtures-20261008/check-node-obs-fixtures-20261008.py": "26ec1162ba083ed70b3b5ad0b7f9f68a1ad67bc6bfb20fba4cde7d06cdcc413a",
+    "evidence/controls/node-obs-fixtures-20261008/check-node-obs-fixtures2-20261008.py": "d2368c800f6db9d3a4ecd0f552f11060f884fc582266abcfb9cf7519a84dafa1",
+    "evidence/controls/node-obs-fixtures-20261008/check-node-obs-full-20261008.py": "99691316e4c436ed328a8054b1f58340e6c62c36d4eef253950264f787ae6f02",
+    "evidence/controls/node-obs-fixtures-20261008/fixed-existing-user.log.gz": "7ed13016f071bc3f796227d5951e1e9694e1f8056194f1a258f1cedc6f74d46b",
+    "evidence/controls/node-obs-fixtures-20261008/fixed-missing-user.log.gz": "248b9754f53f1b996c307e523669a74a12158d9a5e612f730c9859695f6ffb40",
+    "evidence/controls/node-obs-fixtures-20261008/fixed.js": "085988171acc62cbb8d80bb27c75dbbdcdd4328721e41199d5ffd757129ef5ef",
+    "evidence/controls/node-obs-fixtures-20261008/native-x86_64-rev5.log.gz": "28d7e5a4275b46d92f8578667f2352da959d56b61ef814aceda4aba7a3a97a30",
+    "evidence/controls/node-obs-fixtures-20261008/netcfg-hosts": "9a499b96518d59a4295393a16122442eed13d3f86cc9b188e0652ee79c6c9f8d",
+    "evidence/controls/node-obs-fixtures-20261008/netcfg-package-identity.json": "33fe046c12b8690f40e05b2402190bd31b8fcb7a7374d2577d8d73ae9954fe5d",
+    "evidence/controls/node-obs-fixtures-20261008/node-credential-assertion-control-20261008.js": "d94e298f927d35a3c15eec9a44a68f9d440856088ba8e6e6a8ed030144677b21",
+    "evidence/controls/node-obs-fixtures-20261008/node-netcfg-proposed-buildinfo-aarch64-20261008.xml.gz": "c0e987bd7ead7fc0c51aed5813799c0dbc38a347726e9cc04bc643ca74298870",
+    "evidence/controls/node-obs-fixtures-20261008/node-netcfg-proposed-buildinfo-x86_64-20261008.xml.gz": "253806ee722e31a91074edfda4be0d9b233ba6d94d26015ab968e7e7e7398e1b",
+    "evidence/controls/node-obs-fixtures-20261008/nodejs24-credential-test-error.patch": "9e397e113644a61d35fa7741027b8b60dadede62d4e3cb4914014d73e3031261",
+    "evidence/controls/node-obs-fixtures-20261008/nodejs24-libnode.rst": "e16fa2107e5bd618f04200d6b45d112000f2cbc7a0a0aa73ffa469a3abaaf2d9",
+    "evidence/controls/node-obs-fixtures-20261008/nodejs24-libnode.spec": "d7f874ce2ea9ecf5309fca28d3695d15d2b2e219b88ca74bd159d903c49d8414",
+    "evidence/controls/node-obs-fixtures-20261008/original-complete.log.gz": "e2d17700d3fd571ca60e241f40987e29646ff2f1350c4e2844b993a598abc4fb",
+    "evidence/controls/node-obs-fixtures-20261008/original-minimal.log.gz": "d00316c8b4829864ef4ef6b53e1ca587d8f19642004dd96e635b7bccf3d7a25e",
+    "evidence/controls/node-obs-fixtures-20261008/original-netcfg.log.gz": "1cd5d041cd7d01e6725ff5fe5696624ae17cb4480cdfddbec95215096c6b13d7",
+    "evidence/controls/node-obs-fixtures-20261008/original.js": "a1db40bd9a84cb877ca1cbf86f6a53e8ced1051343739888949c7865382bd149",
+    "evidence/controls/node-obs-fixtures-20261008/patch-dry-run.log.gz": "4f8a0dafd50971ea882a3b07789363ef78a2719a2f9e99a98640dd7e77e579ac",
+    "evidence/controls/node-obs-fixtures-20261008/record-node-obs-fixtures-20261008.py": "e1af92b7255712c48911f1bc9cf00e420d87a33859ed273e09f45c36755a04ba",
+    "evidence/controls/node-obs-fixtures-20261008/source-config.json": "e7bb290b6e00071e6c368b55468e14a2e92265f2cc41c8be6a69901d40ce5f59",
+    "evidence/controls/node-obs-fixtures-20261008/status.json": "004a7f07b11c26d2ec464633f40f60b198d7fe2650822b189812041e1cd82b0e",
+    "evidence/controls/node-obs-fixtures-20261008/tools-tests.log.gz": "4ba02e5c7636935a85141706e13a9274d36b08e3700a7108e9febdc051354651"
+  }
+}
