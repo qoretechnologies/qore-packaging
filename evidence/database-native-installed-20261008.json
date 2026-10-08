@@ -1,0 +1,394 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-08",
+  "result": "Fedora and Leap signed native ARM database runtime/SDK qualification pass. AlmaLinux artifact pins are corrected and ready for the required native rerun.",
+  "targets": {
+    "fedora": {
+      "pipeline": 59974,
+      "job": 209696,
+      "steps": 32,
+      "phases": {
+        "runtime": {
+          "freetds": {
+            "cases": 4,
+            "assertions": 14
+          },
+          "mysql": {
+            "cases": 34,
+            "assertions": 203
+          }
+        },
+        "sdk": {
+          "freetds": {
+            "cases": 4,
+            "assertions": 14
+          },
+          "mysql": {
+            "cases": 34,
+            "assertions": 203
+          }
+        }
+      },
+      "signature_verification": "All pinned RPM signatures passed before installation.",
+      "core_sdk": "Runtime/ONNX, SDK compiler, utility and remote debugger checks all pass."
+    },
+    "leap": {
+      "pipeline": 59974,
+      "job": 209697,
+      "steps": 39,
+      "phases": {
+        "runtime": {
+          "freetds": {
+            "cases": 4,
+            "assertions": 14
+          },
+          "mysql": {
+            "cases": 34,
+            "assertions": 203
+          }
+        },
+        "sdk": {
+          "freetds": {
+            "cases": 4,
+            "assertions": 14
+          },
+          "mysql": {
+            "cases": 34,
+            "assertions": 203
+          }
+        }
+      },
+      "signature_verification": "All pinned RPM signatures passed before installation.",
+      "core_sdk": "Runtime/ONNX, SDK compiler, utility and remote debugger checks all pass."
+    }
+  },
+  "el10_initial_failure": {
+    "pipeline": 59974,
+    "job": 209698,
+    "before_installation": true,
+    "error": "HTTP 404 for libqore-3.0.0~git20261003.21-21.1.aarch64.rpm",
+    "root_cause": "The original core21 template retained build counter 1; OBS replaced these outputs after dependency rebuilds with counter 3 (and corresponding dependency counters).",
+    "fix": "Refresh all core/dependency artifact pins from the successful current native builds, retaining core source srcmd5 ba3b6bc9ac8055ee991e334102e7ad16. Download/hash every referenced RPM before rerunning."
+  },
+  "preparation_correction": "An initial optional PostgreSQL refresh incorrectly substituted its packaged commit for the later fixture-only commit, causing an HTTP 404. The corrected preparer preserves the previously qualified fixture commit, verifies its bytes and leaves the PostgreSQL manifest byte-identical. All downloaded RPMs were retained and rehashed.",
+  "el10_sources": {
+    "/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore": {
+      "source_package": "qore",
+      "revision": "16",
+      "srcmd5": "ba3b6bc9ac8055ee991e334102e7ad16",
+      "packages": {
+        "libqore": {
+          "name": "libqore",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/libqore-3.0.0~git20261003.21-21.3.aarch64.rpm",
+          "filename": "libqore-3.0.0~git20261003.21-21.3.aarch64.rpm",
+          "sha256": "b7df46d02f59ee9c8a443c0ca53aa6915b3d28df383206efeaa16b990da6481d",
+          "phase": "runtime"
+        },
+        "qore": {
+          "name": "qore",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-3.0.0~git20261003.21-21.3.aarch64.rpm",
+          "filename": "qore-3.0.0~git20261003.21-21.3.aarch64.rpm",
+          "sha256": "ae46b994498e2c0f15a1ec207739cee5e52773a1616cf2da34811f6fb1763fe5",
+          "phase": "runtime"
+        },
+        "qore-debug-tools": {
+          "name": "qore-debug-tools",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-debug-tools-3.0.0~git20261003.21-21.3.noarch.rpm",
+          "filename": "qore-debug-tools-3.0.0~git20261003.21-21.3.noarch.rpm",
+          "sha256": "261609e1db8526d2da2e0cdcbe7cd4ffdf528a8f2ea483ce231b2e13b4e81e61",
+          "phase": "sdk"
+        },
+        "qore-devel": {
+          "name": "qore-devel",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-devel-3.0.0~git20261003.21-21.3.aarch64.rpm",
+          "filename": "qore-devel-3.0.0~git20261003.21-21.3.aarch64.rpm",
+          "sha256": "3ed2d6876ecf7cd485c11ac5bbfbae4e8edc683299fddccb86d1fc7cf269019a",
+          "phase": "sdk"
+        },
+        "qore-misc-tools": {
+          "name": "qore-misc-tools",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-misc-tools-3.0.0~git20261003.21-21.3.noarch.rpm",
+          "filename": "qore-misc-tools-3.0.0~git20261003.21-21.3.noarch.rpm",
+          "sha256": "6534b180b383c6fdc4954ac59dc2f081798211ad2febd54867231416c5926e7d",
+          "phase": "sdk"
+        },
+        "qore-rpm-macros": {
+          "name": "qore-rpm-macros",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-rpm-macros-3.0.0~git20261003.21-21.3.noarch.rpm",
+          "filename": "qore-rpm-macros-3.0.0~git20261003.21-21.3.noarch.rpm",
+          "sha256": "4316ca8cd487ff18ee4e30f989097f0a4dc92c42abe4380bfdb18d7599bb58cf",
+          "phase": "sdk"
+        },
+        "qore-stdlib": {
+          "name": "qore-stdlib",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore/qore-stdlib-3.0.0~git20261003.21-21.3.aarch64.rpm",
+          "filename": "qore-stdlib-3.0.0~git20261003.21-21.3.aarch64.rpm",
+          "sha256": "c59576847c53a3f68e7b06286b5a88a8f1c044ded0ff16c2e4c36c63a6fd5d6f",
+          "phase": "runtime"
+        }
+      }
+    },
+    "/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/c-ares": {
+      "source_package": "c-ares",
+      "revision": "2",
+      "srcmd5": "9801bab3bbf854dc5f9fb8698f9dbb90",
+      "packages": {
+        "c-ares": {
+          "name": "c-ares",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/c-ares/c-ares-1.34.8-3.4.aarch64.rpm",
+          "filename": "c-ares-1.34.8-3.4.aarch64.rpm",
+          "sha256": "120a157f423f20ffb9f935c9864308fc8c8a93fe1d6ece1b299da0351ef3ab46",
+          "phase": "runtime"
+        }
+      }
+    },
+    "/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/nghttp2": {
+      "source_package": "nghttp2",
+      "revision": "3",
+      "srcmd5": "b3a0abe18c7a7dbc09cadeee76d4b26c",
+      "packages": {
+        "libnghttp2": {
+          "name": "libnghttp2",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/nghttp2/libnghttp2-1.70.0-3.3.aarch64.rpm",
+          "filename": "libnghttp2-1.70.0-3.3.aarch64.rpm",
+          "sha256": "14b9d02b1f00aa1bdc155f7a7117b7338f9f8ddb6557ad9855ef06deb64485dd",
+          "phase": "runtime"
+        }
+      }
+    },
+    "/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/nghttp3": {
+      "source_package": "nghttp3",
+      "revision": "1",
+      "srcmd5": "8f1dce799f63ab378b0958080615ede6",
+      "packages": {
+        "libnghttp3": {
+          "name": "libnghttp3",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/nghttp3/libnghttp3-1.18.0-1.4.aarch64.rpm",
+          "filename": "libnghttp3-1.18.0-1.4.aarch64.rpm",
+          "sha256": "a69477b34fca34ec80093b84930d1cc9764ac23afcc4d36b62af7e79294744b1",
+          "phase": "runtime"
+        }
+      }
+    },
+    "/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/ngtcp2": {
+      "source_package": "ngtcp2",
+      "revision": "1",
+      "srcmd5": "a16bf1fd277bc34159d2f01e3b2b6a45",
+      "packages": {
+        "ngtcp2": {
+          "name": "ngtcp2",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/ngtcp2/ngtcp2-1.25.0-1.4.aarch64.rpm",
+          "filename": "ngtcp2-1.25.0-1.4.aarch64.rpm",
+          "sha256": "daff0d8fc374a2d5f0d089927a14a5336afcb424baf9d6375bffb8a0e519b172",
+          "phase": "runtime"
+        },
+        "ngtcp2-crypto-ossl": {
+          "name": "ngtcp2-crypto-ossl",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/ngtcp2/ngtcp2-crypto-ossl-1.25.0-1.4.aarch64.rpm",
+          "filename": "ngtcp2-crypto-ossl-1.25.0-1.4.aarch64.rpm",
+          "sha256": "1ac29551d19464e5b1b335d1677a0a2b861e471d00714ec872f4a1d69ca15e96",
+          "phase": "runtime"
+        }
+      }
+    },
+    "/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/tree-sitter": {
+      "source_package": "tree-sitter",
+      "revision": "1",
+      "srcmd5": "8826bc92610f3bdb3e2b02aa3bebe501",
+      "packages": {
+        "tree-sitter": {
+          "name": "tree-sitter",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/tree-sitter/tree-sitter-0.26.13-1.4.aarch64.rpm",
+          "filename": "tree-sitter-0.26.13-1.4.aarch64.rpm",
+          "sha256": "c039b81ca0a4e97e68c4c5e317bfa7c2883aa3304de6915ddaa1092b02d13fac",
+          "phase": "runtime"
+        }
+      }
+    },
+    "/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/onnxruntime": {
+      "source_package": "onnxruntime",
+      "revision": "2",
+      "srcmd5": "3baf25480c5f6aecf99b29524d21e9aa",
+      "packages": {
+        "onnxruntime": {
+          "name": "onnxruntime",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/onnxruntime/onnxruntime-1.22.2-2.4.aarch64.rpm",
+          "filename": "onnxruntime-1.22.2-2.4.aarch64.rpm",
+          "sha256": "d84126085bf102af866250e7557f346aad11380f3b8b5acac83034a076736901",
+          "phase": "runtime"
+        }
+      }
+    },
+    "/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-freetds-module": {
+      "source_package": "qore-freetds-module",
+      "revision": "2",
+      "srcmd5": "0a6609cafba14c4f8565406398891349",
+      "packages": {
+        "qore-freetds-module": {
+          "name": "qore-freetds-module",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-freetds-module/qore-freetds-module-1.4-3.1.aarch64.rpm",
+          "filename": "qore-freetds-module-1.4-3.1.aarch64.rpm",
+          "sha256": "d17fbf9c4f3640e7c005ea12aacc318b13911a751ee6c0acc94d49902b6904d9",
+          "phase": "runtime"
+        },
+        "qore-freetds-module-doc": {
+          "name": "qore-freetds-module-doc",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-freetds-module/qore-freetds-module-doc-1.4-3.1.noarch.rpm",
+          "filename": "qore-freetds-module-doc-1.4-3.1.noarch.rpm",
+          "sha256": "d09eddebe1659fac2f1e4b58f33be813617815110bbe431b4de8e204148d101d",
+          "phase": "runtime"
+        }
+      }
+    },
+    "/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-mysql-module": {
+      "source_package": "qore-mysql-module",
+      "revision": "3",
+      "srcmd5": "7dc222c580734eedded83d7b861dda4c",
+      "packages": {
+        "qore-mysql-module": {
+          "name": "qore-mysql-module",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-mysql-module/qore-mysql-module-2.2-4.1.aarch64.rpm",
+          "filename": "qore-mysql-module-2.2-4.1.aarch64.rpm",
+          "sha256": "ef9bc8704b59c9f03b4f4d1668f0ac42cc1a9e73f26ca52170b0fdc07d970a60",
+          "phase": "runtime"
+        },
+        "qore-mysql-module-doc": {
+          "name": "qore-mysql-module-doc",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-mysql-module/qore-mysql-module-doc-2.2-4.1.noarch.rpm",
+          "filename": "qore-mysql-module-doc-2.2-4.1.noarch.rpm",
+          "sha256": "5f472cb7bc7299d9c53ef1420f1ce5e9f77cb0f815f58b4b1b2f8a5b694e70e9",
+          "phase": "runtime"
+        }
+      }
+    },
+    "/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-pgsql-module": {
+      "source_package": "qore-pgsql-module",
+      "revision": "3",
+      "srcmd5": "d5187abe52cb59c644ffc727419ecd38",
+      "packages": {
+        "qore-pgsql-module": {
+          "name": "qore-pgsql-module",
+          "filename": "qore-pgsql-module-3.5.0-3.1.aarch64.rpm",
+          "url": "https://api.opensuse.org/public/build/home:davidnichols:qore:testing/AlmaLinux_10/aarch64/qore-pgsql-module/qore-pgsql-module-3.5.0-3.1.aarch64.rpm",
+          "phase": "runtime",
+          "sha256": "e695a863860cbbfe4307e9da89d3d4c8d5042e08818f7dfd020c910258f2fa7a"
+        }
+      }
+    }
+  },
+  "tests": {
+    "packaging": 227,
+    "audit_pass": 5,
+    "audit_na": 57,
+    "audit_fail": 0
+  },
+  "diagnostics": "Only the previously approved deliberate MySQL negative-authentication message appears in the successful native module suites. No new warning acceptance or suppression.",
+  "publication": "disabled",
+  "pending": "AlmaLinux native installed rerun; repository lifecycle, latest core/module source qualification and publication gates.",
+  "qualified_files_sha256": {
+    "qualification/core21-el10-aarch64.json": "b5d2086e5bbc3b6e3e27b6f6769580355ef3cfcb9bd22544844bcff39162d0ea",
+    "qualification/databases-el10-aarch64.json": "c1e9efd2fe6a5cefbc27d0f444cba3fa79e7f11ed79d73782ceaa6d895db83a9",
+    "audits/database-native-input-refresh-20261008.rst": "566f33e2746bc3f3f55f267ad3ab1e07334c2455fd9ae6583f90b6aa1b2ed5a3"
+  },
+  "files_sha256": {
+    "evidence/controls/database-native-installed-20261008/download-database-installed-20261008.py": "51f95eb3362db95ab598b32072e0340e37766ab86523d00ee320fc622c265a1d",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/c-ares/binaries.xml": "cb94b50d62ae7f9c8520043e3f1b12250f95b1475e01b2bc3911f0146cd88d22",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/c-ares/buildinfo.xml": "e3d3d3aebcc51101f7f9aace6f4fe27aaab57494e5d3580ab8cd2ae98ab6b26d",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/nghttp2/binaries.xml": "095cffcf310d763f52c047b3f2680ad1d47b4eda183f56b0e668f79c5476d555",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/nghttp2/buildinfo.xml": "c0038eedfafcbaa6cd24469c14cfb054789a7d07dd2ba9c9b37583c9007decf5",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/nghttp3/binaries.xml": "f46bd0e5db7b30d1902dc61148d9ca54cc584a0b3600b2f37723a6d21b5d4b35",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/nghttp3/buildinfo.xml": "dfcf369bc80cc5936dbc0a21bf5a49d665847ccfc54e839f5a28e874a6297179",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/ngtcp2/binaries.xml": "8368997997d78c89197f7166ab1a3a1a78ae5cc42b173d429ab5a7c36aba9541",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/ngtcp2/buildinfo.xml": "030704872bfb2b003999454b9a38c18b5e3b58ea458be004468f2fce0313b2ae",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/onnxruntime/binaries.xml": "81f040d219165f882bac748e24522fb304258a111ef0e2c782409dc964386375",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/onnxruntime/buildinfo.xml": "dc21541adba26a80dd38ebce841e73b6522fd3e91f4cf0470e4b80936a4cc515",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/qore/binaries.xml": "08aa9a2114240f8b6831734afd274e235f6b52e92fb069e2a67d6550049b3979",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/qore/buildinfo.xml": "c779be08eae3c9201922bbe2f48e83cdb4adf6ab34b417c31f64a81cf309a822",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/qore-freetds-module/binaries.xml": "20d55b94af773ada8c755bc2ac3ea07afac4aa76a1373eef0f5dac3ab18a827c",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/qore-freetds-module/buildinfo.xml": "f333ffe7baba7871bdb4c94748360a7de936a9b8d316e61694d2bab24fd53bf4",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/qore-mysql-module/binaries.xml": "505c5f406bde1bcf57897ab4c61d95d19036fb6aab33ee37a22dba92a36700ad",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/qore-mysql-module/buildinfo.xml": "feedcc7ab6b0020b961996d77ba9f3c215b47e7c2d0f3a8bea285564dd9948b0",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/qore-pgsql-module/binaries.xml": "32bc07f581135c53f1d1024f2bcd2a250fa5df556c67c693bd27b6dc2c8dc10a",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/qore-pgsql-module/buildinfo.xml": "23f2cb95820f837f78e3ca51b3ab8f278bc3da9a7df86576b943e9d38689280a",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/sources.json": "84c6a615364c4d7d4cdc0bb6ac7e2a511943b00c58c21fd1e848b7f473706bb7",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/tree-sitter/binaries.xml": "d8b126e9379c2d60ddbdddff0ab121361e2b7355ff3185f30bffe6a84b37081d",
+    "evidence/controls/database-native-installed-20261008/el10-refreshed-inputs/tree-sitter/buildinfo.xml": "ff059401ec54e913ec1d835084e00dfc0f8839ab9ddbaa0ca670fdae85737a94",
+    "evidence/controls/database-native-installed-20261008/fedora/create-user.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/database-native-installed-20261008/fedora/import-signing-key.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/database-native-installed-20261008/fedora/qualification.json": "c84af6791df1558fb1cdf3edd3c22d736186e2b00027caa3fcd0a8e795147221",
+    "evidence/controls/database-native-installed-20261008/fedora/runtime-freetds-tests.log.gz": "a044e08ad8a88ac1620c06667046d83433ee50af12613b11fce24d1448ce5afc",
+    "evidence/controls/database-native-installed-20261008/fedora/runtime-install.log.gz": "b51e31bfbc23256e0a21024283481e539fac092a465cbc5f268ddff032a2f2f4",
+    "evidence/controls/database-native-installed-20261008/fedora/runtime-inventory.log.gz": "b45984c2a1ad8380afc1c3cf398717a11c47bc609e426dbc808bd06c81244506",
+    "evidence/controls/database-native-installed-20261008/fedora/runtime-mysql-tests.log.gz": "991f777f62ba2ec4b2d892c3044fb0a3f4b30dd5a5dd5a480e21f84a63b2650c",
+    "evidence/controls/database-native-installed-20261008/fedora/runtime-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/database-native-installed-20261008/fedora/runtime-runtime.log.gz": "6b011af3bf66cfa81d2e98df7af805f1036b1f25a10206ed71b935822ecab0ad",
+    "evidence/controls/database-native-installed-20261008/fedora/sdk-development.log.gz": "debe3cb87b5e13d04a8cca9561008540ff9a4c7be950ee839e0dd9fa7fcbde43",
+    "evidence/controls/database-native-installed-20261008/fedora/sdk-freetds-tests.log.gz": "60b54b9eefe85f569277ace241705fab4c4b14528d320c2a4af705498b4fa1b0",
+    "evidence/controls/database-native-installed-20261008/fedora/sdk-install.log.gz": "2d0463a67e042645a59850fb34f6bf0aa92f3f49261a9703358db02882aea4cb",
+    "evidence/controls/database-native-installed-20261008/fedora/sdk-inventory.log.gz": "86feea8b460afac32e1d883c4bb42f23211f9181c84783725e4135df9aa52493",
+    "evidence/controls/database-native-installed-20261008/fedora/sdk-mysql-tests.log.gz": "bf4a1519a1b88c44bbba8b114f7d3dc5b98161ddb31c934756e9ca4e28d91fea",
+    "evidence/controls/database-native-installed-20261008/fedora/sdk-remote-debuggers.log.gz": "081fb7a0dc26c5b95e1cbea20a8d73178d548186e1a3048b9e1a03c6250441b3",
+    "evidence/controls/database-native-installed-20261008/fedora/sdk-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/database-native-installed-20261008/fedora/sdk-runtime.log.gz": "6b011af3bf66cfa81d2e98df7af805f1036b1f25a10206ed71b935822ecab0ad",
+    "evidence/controls/database-native-installed-20261008/fedora/sdk-tools.log.gz": "14ed071d3a78b76e9055a0d9e841f339d019d5538b3d8e89bb2167528d0bdb26",
+    "evidence/controls/database-native-installed-20261008/fedora/verify-signature-c-ares.log.gz": "4aace63cff078580961ea615b60e3333270ee27667c0ce30853ff1ef6c91c1c9",
+    "evidence/controls/database-native-installed-20261008/fedora/verify-signature-libnghttp2.log.gz": "6468ec8035d96f3a6625c1b853e9e56efa5f7708289c12fb043ed9d7eca184c9",
+    "evidence/controls/database-native-installed-20261008/fedora/verify-signature-libqore.log.gz": "5499d9ef4c1571112b2bd413ce3f65d61099fba99dce823fe136f075639448fc",
+    "evidence/controls/database-native-installed-20261008/fedora/verify-signature-ngtcp2-crypto-ossl.log.gz": "a54757ccb6bbd5247d1c799239dfb31a4c47b10d1c289d6ab77a4af3e19e17b4",
+    "evidence/controls/database-native-installed-20261008/fedora/verify-signature-ngtcp2.log.gz": "3ad6e82857e4d361643f54285caa5508f4de5e1d8ad38f2e31d4a33d262deba3",
+    "evidence/controls/database-native-installed-20261008/fedora/verify-signature-qore-debug-tools.log.gz": "3f1788ccb3b7ed88447dd36017c5add95ff326266e93af61cdb3059421e1f344",
+    "evidence/controls/database-native-installed-20261008/fedora/verify-signature-qore-devel.log.gz": "6321d6c9a019da3b8105bacc450706928e1068ae7511ab22108c913a0bd222e8",
+    "evidence/controls/database-native-installed-20261008/fedora/verify-signature-qore-freetds-module-doc.log.gz": "8ea2f1846d0106607a974485be862c2f40529c4cd4c5fa4f82efa452dadd6090",
+    "evidence/controls/database-native-installed-20261008/fedora/verify-signature-qore-freetds-module.log.gz": "532b4e256d9a4960c610eb75ab04a7575e5b7b9dcda5c0f6b9c612c979b9970d",
+    "evidence/controls/database-native-installed-20261008/fedora/verify-signature-qore-misc-tools.log.gz": "3d8ed2322a27c49a0cf9caac28ce9cb57e4dabe71f937c29d62e7425db70499b",
+    "evidence/controls/database-native-installed-20261008/fedora/verify-signature-qore-mysql-module-doc.log.gz": "0842f4ab62babf5a201f113a48950ffbfccd3a52700b3574f960de0dfccfd3c2",
+    "evidence/controls/database-native-installed-20261008/fedora/verify-signature-qore-mysql-module.log.gz": "dc49aebf17fe2cb721dc1d7ba5e1feb0f61d0fc53049581fc8b942996f770798",
+    "evidence/controls/database-native-installed-20261008/fedora/verify-signature-qore-rpm-macros.log.gz": "b46cdd20526e4913d9f0b0bddb2b437972eba5c33aa4fa7c84e809d61d067cbb",
+    "evidence/controls/database-native-installed-20261008/fedora/verify-signature-qore-stdlib.log.gz": "a54cdbf5e0e0db62aa136e7cd240ba1a5eaeec6ea5ec1b07a7820b7e594bf4e3",
+    "evidence/controls/database-native-installed-20261008/fedora/verify-signature-qore.log.gz": "5337afdab2cace515f8f5853df9378a7072f246416401548bbc9591b4cd50568",
+    "evidence/controls/database-native-installed-20261008/leap/create-user.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/database-native-installed-20261008/leap/import-signing-key.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/database-native-installed-20261008/leap/qualification.json": "303e1090550f68d7abcb12003f8616ce6a4cbbc4005649df7bc199952a15d761",
+    "evidence/controls/database-native-installed-20261008/leap/runtime-freetds-tests.log.gz": "a044e08ad8a88ac1620c06667046d83433ee50af12613b11fce24d1448ce5afc",
+    "evidence/controls/database-native-installed-20261008/leap/runtime-install.log.gz": "bc4d892c064075054f49e18b457b5192316fae04b6c51812eb46ee7fc5459d76",
+    "evidence/controls/database-native-installed-20261008/leap/runtime-inventory.log.gz": "6db1feca1ce7aa9d8d15c6956e4140e8388da9cebf114b4c78ed453438dca46b",
+    "evidence/controls/database-native-installed-20261008/leap/runtime-mysql-tests.log.gz": "436b6784db6b506404d7937b2adf9ebeea8ef0b65da7d6c3496a3843b601b5b6",
+    "evidence/controls/database-native-installed-20261008/leap/runtime-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/database-native-installed-20261008/leap/runtime-runtime.log.gz": "b03d26a1db1a726c819744da05d932e7377450e732f8632ae70cd0131c2cfe9c",
+    "evidence/controls/database-native-installed-20261008/leap/sdk-development.log.gz": "63b4dd3c48a9ec0bb9f1ad9992c0ff8f62c660bec32ba1dfd026fe78128eb064",
+    "evidence/controls/database-native-installed-20261008/leap/sdk-freetds-tests.log.gz": "c525c9917fea4f2130af82ebe6f2a0306423e0d03b61a9572fc325da3cf39614",
+    "evidence/controls/database-native-installed-20261008/leap/sdk-install.log.gz": "73479e1096241b6ed60a6199f8229caa0a5c7818086fb3e75a4b376ae61051bb",
+    "evidence/controls/database-native-installed-20261008/leap/sdk-inventory.log.gz": "06718d44b99289080cb940a2587b92d8dd3e4c1045e9d13aa899b7188448969f",
+    "evidence/controls/database-native-installed-20261008/leap/sdk-mysql-tests.log.gz": "1f91144e4aae0a0bd833d90383a15d46839ecda6bacd1ea2b78b62557d43174d",
+    "evidence/controls/database-native-installed-20261008/leap/sdk-remote-debuggers.log.gz": "081fb7a0dc26c5b95e1cbea20a8d73178d548186e1a3048b9e1a03c6250441b3",
+    "evidence/controls/database-native-installed-20261008/leap/sdk-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/database-native-installed-20261008/leap/sdk-runtime.log.gz": "b03d26a1db1a726c819744da05d932e7377450e732f8632ae70cd0131c2cfe9c",
+    "evidence/controls/database-native-installed-20261008/leap/sdk-tools.log.gz": "14ed071d3a78b76e9055a0d9e841f339d019d5538b3d8e89bb2167528d0bdb26",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-libarrow2500.log.gz": "fd6c739b06391b9923a42c521259941d4252f0451b571f771b66976189392e20",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-libbson2.log.gz": "585d4035a733d0cd62df203c8553bcbf2745d88d3ac70d89d7e9ecadd567faba",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-libcares2.log.gz": "b73d1ecec07bc9b6b8c8b3ea086a10290475004bb41d571cfa09c682ed316974",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-libmongoc2.log.gz": "d6a88f49e899d09f30fbd517db047a5e6c2a6da1c8894fe83036dacedec143a7",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-libnghttp2-14.log.gz": "dc291eba35b1f0bcddde113499ba32b1fa39165ae859ab00141dc15160b74829",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-libnghttp3-9.log.gz": "2b7036981c91c123d4f3e8604376148035333a8deaea7d8211a23ac9786049c9",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-libngtcp2-16.log.gz": "eb9fcd58ea59ffb2c3b2f63fa56520230b556fa9bb2df566a0c69f154d4cb606",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-libngtcp2_crypto_ossl0.log.gz": "06ca313c56470785bff28ad669c4a3d4391ccbd05492a8c968a8c636fb657103",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-libonnxruntime1.log.gz": "054f39213d2e4d460a6917e44bf0c0cbe4b92d67894b19f75c5199e09959fe44",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-libparquet2500.log.gz": "1f2a161a78397206389862a2fac9a4e26bdb8233f813bbc3acf4427fbcb26a2c",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-libqore20.log.gz": "87dec2a4d361b58197da4c5ba4103e8573d017db29e047ed18dfc23e090e7689",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-libtree-sitter0_26.log.gz": "5cac189eccf69b60cc0a8d9cef9e9f4128e5820abea771e71bbac8a8417c9cb9",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-qore-debug-tools.log.gz": "94389ce5a4fd7ba7e3d9bae1f69c9e0735313f66478f71981b700c750090cf47",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-qore-devel.log.gz": "e2b8e34e3bbea4c0b30697f99d3d77a2e39a70e05cedb0cbdf24861a2500a875",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-qore-freetds-module-doc.log.gz": "e0ad4bb097ab58514008c912a9f0b48f95f07c6bfdc2a3cdf47980cde21938d7",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-qore-freetds-module.log.gz": "1aa7d2bd277c56d941e785f8d4cf1e208aa66f9af73c9924dcc8a522bd01f944",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-qore-misc-tools.log.gz": "f14e4d540363da849bacbe3502efaa9e758daaf22a8b2bd1e6cfc2b3025e5847",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-qore-mysql-module-doc.log.gz": "f304656e7306b16b24af631f72c6801712faa9e8e5cc6c22b35258ea8368bb6a",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-qore-mysql-module.log.gz": "13009f0d43d2aadbe618cdeab7a87d8ec15765ff1d0d0ffabc54d57cc150c02d",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-qore-rpm-macros.log.gz": "a2c4d95b7a0e12840d5bf4c9d80ac9c200be2336be529838221e9a8a5b9c4420",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-qore-stdlib.log.gz": "a33b747efb9662651dc9ef60609efafb63dca08192b8a2574ccc58650385a3b8",
+    "evidence/controls/database-native-installed-20261008/leap/verify-signature-qore.log.gz": "cb4733b58630190967a00b7bfff63d2468a5498aff328c970d7f377d333267de",
+    "evidence/controls/database-native-installed-20261008/record-database-native-installed-20261008.py": "c37ea19431e12ff94df56d7a8aea9be3cd69bbd456071c567bb405e7d09e8815",
+    "evidence/controls/database-native-installed-20261008/refresh-el10-installed-inputs-20261008.py": "af473fd14e40b3fedbc48025965ef9fa1a3658d1e0fdce041a7dcf55dcbcbb3f",
+    "evidence/controls/database-native-installed-20261008/unit-tests.log.gz": "9361d8f18884fb481a880bcbb711029b5a1a05539b818269d838777da1585349"
+  }
+}
