@@ -1,0 +1,20 @@
+[
+  "docker",
+  "run",
+  "--rm",
+  "--init",
+  "--network",
+  "none",
+  "--user",
+  "1019:100",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/results/pdfium-gn-20261008/leap:/control",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/work/pdfium-gn-control-20261008.py:/control.py:ro",
+  "-w",
+  "/control/source/qore-pdfium-148.0.7778+ds",
+  "sha256:df65f4a0be8f3694fa55900e3e1c5ef171cdad4a1114c108046245fb2ddd02bd",
+  "python3",
+  "/control.py",
+  "leap"
+]

@@ -117,9 +117,11 @@ def configure(jobs, bundled_freetype=False):
                 use_system_freetype=not bundled_freetype, use_system_lcms2=True, use_system_libopenjpeg2=True,
                 use_system_libpng=True, use_system_libtiff=True, use_system_zlib=True,
                 use_system_libjpeg=True, symbol_level=2, use_dwarf5=True, use_debug_fission=False,
-                forbid_non_component_debug_builds=False, use_thin_lto=False,
-                use_allocator_shim=False, use_partition_alloc_as_malloc=False, enable_rust=False)
-    subprocess.run(["gn-src/out/gn", "gen", "out/Release", "--args="+" ".join(
+                forbid_non_component_debug_builds=False, use_thin_lto=False, enable_rust=False)
+    # PDFium's supported allocator option above controls the standalone library.
+    # Chromium's allocator-shim arguments are not declared in this build graph.
+    # Reject unused arguments so stale options cannot silently change policy.
+    subprocess.run(["gn-src/out/gn", "gen", "out/Release", "--fail-on-unused-args", "--args="+" ".join(
         key+"="+json.dumps(value) for key, value in args.items())], check=True)
 
 

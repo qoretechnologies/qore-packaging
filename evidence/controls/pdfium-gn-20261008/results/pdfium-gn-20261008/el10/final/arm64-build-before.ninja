@@ -1,0 +1,1367 @@
+ninja_required_version = 1.7.2
+
+rule gn
+  command = ../../gn-src/out/gn --root=../.. -q --regeneration gen .
+  pool = console
+  description = Regenerating ninja files
+
+# The 'gn' rule also writes build.ninja, unbeknownst to ninja. The
+# build.ninja edge is separate to prevent ninja from deleting it
+# (due to depfile usage) if interrupted. gn uses atomic writes to
+# ensure that build.ninja is always valid even if interrupted.
+build build.ninja.stamp: gn
+  generator = 1
+  depfile = build.ninja.d
+
+build build.ninja: phony build.ninja.stamp
+  generator = 1
+
+pool build_toolchain_action_pool
+  depth = 32
+
+pool build_toolchain_link_pool
+  depth = 15
+
+subninja toolchain.ninja
+
+build default: phony phony/default
+build freetype_common: phony phony/freetype_common
+build gn_check: phony 
+build pdfium: phony ./libpdfium-qore148.so.0.TOC
+build pdfium_all: phony phony/pdfium_all
+build pdfium_embeddertest_deps: phony phony/pdfium_embeddertest_deps
+build pdfium_public_headers: phony 
+build pdfium_public_headers_impl: phony 
+build pdfium_unittest_deps: phony phony/pdfium_unittest_deps
+build constants: phony 
+build fpdfsdk: phony phony/fpdfsdk/fpdfsdk
+build fxjs: phony phony/fxjs/fxjs
+build absl: phony phony/third_party/abseil-cpp/absl
+build absl_check: phony phony/third_party/abseil-cpp/absl/log/absl_check
+build absl_check_test: phony 
+build absl_component_deps: phony phony/third_party/abseil-cpp/absl_component_deps
+build absl_full: phony phony/third_party/abseil-cpp/absl_full
+build absl_full_deps: phony phony/third_party/abseil-cpp/absl_full_deps
+build absl_log: phony phony/third_party/abseil-cpp/absl/log/absl_log
+build absl_log_basic_test: phony 
+build absl_vlog_is_on: phony phony/third_party/abseil-cpp/absl/log/absl_vlog_is_on
+build algorithm: phony 
+build algorithm_test: phony 
+build all_modules: phony 
+build android_buildflags: phony phony/build/android_buildflags
+build any: phony 
+build any_invocable: phony 
+build any_invocable_test: phony 
+build append_and_overwrite: phony phony/third_party/abseil-cpp/absl/strings/append_and_overwrite
+build append_and_overwrite_test: phony 
+build append_truncated: phony phony/third_party/abseil-cpp/absl/log/internal/append_truncated
+build ascii_test: phony 
+build atomic_hook: phony 
+build attributes_test: phony 
+build barrier_test: phony 
+build base: phony phony/third_party/abseil-cpp/absl/base/base
+build base_internal: phony 
+build bind_front: phony 
+build bit_gen_ref: phony phony/third_party/abseil-cpp/absl/random/bit_gen_ref
+build bits: phony phony/third_party/abseil-cpp/absl/numeric/bits
+build blink_buildflags: phony phony/build/blink_buildflags
+build bounded_utf8_length_sequence: phony phony/third_party/abseil-cpp/absl/debugging/bounded_utf8_length_sequence
+build bounded_utf8_length_sequence_test: phony 
+build branding_buildflags: phony phony/build/branding_buildflags
+build btree: phony phony/third_party/abseil-cpp/absl/container/btree
+build btree_test_common: phony 
+build buildflag_header_h: phony 
+build buildflags: phony phony/build/config/coverage/buildflags
+build casts_test: phony 
+build char_formatting_test: phony 
+build charset: phony 
+build charset_test: phony 
+build check: phony phony/third_party/abseil-cpp/absl/log/check
+build check_impl: phony phony/third_party/abseil-cpp/absl/log/internal/check_impl
+build check_op: phony phony/third_party/abseil-cpp/absl/log/internal/check_op
+build check_test: phony 
+build check_test_impl: phony 
+build chromecast_buildflags: phony phony/build/chromecast_buildflags
+build chromeos_buildflags: phony phony/build/chromeos_buildflags
+build chunked_queue: phony phony/third_party/abseil-cpp/absl/container/chunked_queue
+build chunked_queue_test: phony 
+build city: phony phony/third_party/abseil-cpp/absl/hash/city
+build civil_time: phony phony/third_party/abseil-cpp/absl/time/internal/cctz/civil_time
+build cleanup: phony 
+build cleanup_internal: phony 
+build cleanup_test: phony 
+build clock_interface: phony phony/third_party/abseil-cpp/absl/time/clock_interface
+build clock_interface_test: phony 
+build cmaps: phony phony/core/fpdfapi/cmaps/cmaps
+build commandlineflag: phony phony/third_party/abseil-cpp/absl/flags/commandlineflag
+build commandlineflag_internal: phony phony/third_party/abseil-cpp/absl/flags/commandlineflag_internal
+build common: phony 
+build common_deps: phony 
+build common_deps_without_libcxx: phony 
+build common_policy_traits: phony 
+build common_policy_traits_test: phony 
+build compare: phony 
+build compiler_buildflags: phony phony/build/config/compiler/compiler_buildflags
+build compressed_tuple: phony 
+build compressed_tuple_test: phony 
+build conditions: phony phony/third_party/abseil-cpp/absl/log/internal/conditions
+build config_test: phony 
+build constexpr_testing: phony 
+build constexpr_testing_test: phony 
+build container_memory: phony phony/third_party/abseil-cpp/absl/container/container_memory
+build contentstream_write_utils: phony phony/core/fpdfapi/edit/contentstream_write_utils
+build copy_custom_headers: phony phony/buildtools/third_party/libc++/copy_custom_headers
+build copy_libcxx_headers: phony phony/buildtools/third_party/libc++/copy_libcxx_headers
+build cord: phony phony/third_party/abseil-cpp/absl/strings/cord
+build cord_buffer_test: phony 
+build cord_data_edge_test: phony 
+build cord_internal: phony phony/third_party/abseil-cpp/absl/strings/cord_internal
+build cord_rep_btree_navigator_test: phony 
+build cord_rep_btree_reader_test: phony 
+build cord_rep_btree_test: phony 
+build cord_rep_crc_test: phony 
+build cord_rep_test_util: phony 
+build cord_test: phony 
+build cord_test_helpers: phony 
+build cordz_functions: phony phony/third_party/abseil-cpp/absl/strings/cordz_functions
+build cordz_functions_test: phony 
+build cordz_handle: phony phony/third_party/abseil-cpp/absl/strings/cordz_handle
+build cordz_handle_test: phony 
+build cordz_info: phony phony/third_party/abseil-cpp/absl/strings/cordz_info
+build cordz_info_statistics_test: phony 
+build cordz_info_test: phony 
+build cordz_sample_token: phony phony/third_party/abseil-cpp/absl/strings/cordz_sample_token
+build cordz_sample_token_test: phony 
+build cordz_statistics: phony 
+build cordz_test: phony 
+build cordz_test_helpers: phony 
+build cordz_update_scope: phony phony/third_party/abseil-cpp/absl/strings/cordz_update_scope
+build cordz_update_scope_test: phony 
+build cordz_update_tracker: phony 
+build cordz_update_tracker_test: phony 
+build core_headers: phony 
+build cpu_detect: phony phony/third_party/abseil-cpp/absl/crc/cpu_detect
+build crc32c: phony phony/third_party/abseil-cpp/absl/crc/crc32c
+build crc32c_test: phony 
+build crc_cord_state: phony phony/third_party/abseil-cpp/absl/crc/crc_cord_state
+build crc_cord_state_test: phony 
+build crc_internal: phony phony/third_party/abseil-cpp/absl/crc/crc_internal
+build crc_memcpy_test: phony 
+build custom_headers: phony 
+build cycleclock_internal: phony 
+build damerau_levenshtein_distance_test: phony 
+build debugging_internal: phony phony/third_party/abseil-cpp/absl/debugging/debugging_internal
+build decode_rust_punycode: phony phony/third_party/abseil-cpp/absl/debugging/decode_rust_punycode
+build decode_rust_punycode_test: phony 
+build default_exe_manifest: phony 
+build demangle_internal: phony phony/third_party/abseil-cpp/absl/debugging/demangle_internal
+build demangle_rust: phony phony/third_party/abseil-cpp/absl/debugging/demangle_rust
+build demangle_rust_test: phony 
+build deps: phony 
+build die_if_null: phony phony/third_party/abseil-cpp/absl/log/die_if_null
+build die_if_null_test: phony 
+build distribution_caller: phony 
+build distribution_test_util: phony 
+build distributions: phony phony/third_party/abseil-cpp/absl/random/distributions
+build distributions_test: phony 
+build dlclose_shim: phony 
+build dynamic_annotations: phony 
+build edit: phony phony/core/fpdfapi/edit/edit
+build endian: phony phony/third_party/abseil-cpp/absl/base/endian
+build entropy_pool: phony phony/third_party/abseil-cpp/absl/random/internal/entropy_pool
+build errno_saver: phony 
+build examine_stack: phony phony/third_party/abseil-cpp/absl/debugging/examine_stack
+build exception_testing: phony 
+build executable_deps: phony 
+build explicit_seed_seq: phony 
+build exponential_biased: phony phony/third_party/abseil-cpp/absl/profiling/exponential_biased
+build exponential_biased_test: phony 
+build failure_signal_handler: phony phony/third_party/abseil-cpp/absl/debugging/failure_signal_handler
+build fast_float: phony 
+build fast_type_id: phony 
+build fast_uniform_bits: phony phony/third_party/abseil-cpp/absl/random/internal/fast_uniform_bits
+build fastmath: phony phony/third_party/abseil-cpp/absl/random/internal/fastmath
+build fdrm: phony phony/core/fdrm/fdrm
+build fixed_array: phony phony/third_party/abseil-cpp/absl/container/fixed_array
+build fixed_array_test: phony 
+build flag: phony phony/third_party/abseil-cpp/absl/flags/flag
+build flag_internal: phony phony/third_party/abseil-cpp/absl/flags/flag_internal
+build flag_test: phony 
+build flags_test: phony 
+build flat_hash_map: phony phony/third_party/abseil-cpp/absl/container/flat_hash_map
+build flat_hash_map_test: phony 
+build flat_hash_set: phony phony/third_party/abseil-cpp/absl/container/flat_hash_set
+build flat_hash_set_test: phony 
+build fnmatch: phony phony/third_party/abseil-cpp/absl/log/internal/fnmatch
+build fnmatch_test: phony 
+build font: phony phony/core/fpdfapi/font/font
+build fontconfig: phony 
+build format: phony phony/third_party/abseil-cpp/absl/log/internal/format
+build formfiller: phony phony/fpdfsdk/formfiller/formfiller
+build fpdfdoc: phony phony/core/fpdfdoc/fpdfdoc
+build fpdftext: phony phony/core/fpdftext/fpdftext
+build function_ref: phony 
+build function_ref_test: phony 
+build fuzzer_helper: phony phony/testing/fuzzers/fuzzer_helper
+build fuzzer_init: phony phony/testing/fuzzers/fuzzer_init
+build fuzzer_init_public: phony phony/testing/fuzzers/fuzzer_init_public
+build fuzzer_pdf_templates: phony 
+build fuzzer_utils: phony phony/testing/fuzzers/fuzzer_utils
+build fuzzers: phony phony/testing/fuzzers/fuzzers
+build fx_agg: phony phony/third_party/fx_agg
+build fx_freetype: phony phony/third_party/fx_freetype
+build fx_lcms2: phony phony/third_party/fx_lcms2
+build fx_libopenjpeg: phony phony/third_party/fx_libopenjpeg
+build fxcodec: phony phony/core/fxcodec/fxcodec
+build fxcrt: phony phony/core/fxcrt/fxcrt
+build fxge: phony phony/core/fxge/fxge
+build gen_icui18n_shim: phony phony/third_party/icu/gen_icui18n_shim
+build gen_icuuc_shim: phony phony/third_party/icu/gen_icuuc_shim
+build generate_real: phony phony/third_party/abseil-cpp/absl/random/internal/generate_real
+build generic_printer: phony phony/third_party/abseil-cpp/absl/strings/generic_printer
+build generic_printer_test: phony 
+build globals_test: phony 
+build graphcycles_internal: phony phony/third_party/abseil-cpp/absl/synchronization/graphcycles_internal
+build graphcycles_test: phony 
+build hardening: phony phony/third_party/abseil-cpp/absl/base/hardening
+build hardening_test: phony 
+build harfbuzz: phony obj/third_party/harfbuzz/libharfbuzz.a
+build has_absl_stringify_test: phony 
+build has_ostream_operator: phony 
+build has_ostream_operator_test: phony 
+build hash: phony phony/third_party/abseil-cpp/absl/hash/hash
+build hash_container_defaults: phony phony/third_party/abseil-cpp/absl/container/hash_container_defaults
+build hash_function_defaults: phony phony/third_party/abseil-cpp/absl/container/hash_function_defaults
+build hash_function_defaults_test: phony 
+build hash_generator_testing: phony 
+build hash_instantiated_test: phony 
+build hash_policy_testing: phony 
+build hash_policy_traits: phony phony/third_party/abseil-cpp/absl/container/hash_policy_traits
+build hash_test: phony 
+build hash_testing: phony 
+build hashtable: phony phony/third_party/abseil-cpp/absl/profiling/hashtable
+build hashtable_control_bytes: phony phony/third_party/abseil-cpp/absl/container/hashtable_control_bytes
+build hashtable_debug: phony 
+build hashtable_debug_hooks: phony 
+build hashtablez_sampler: phony phony/third_party/abseil-cpp/absl/container/hashtablez_sampler
+build header: phony 
+build heterogeneous_lookup_testing: phony 
+build icu: phony phony/third_party/icu/icu
+build icui18n: phony phony/third_party/icu/icui18n
+build icui18n_hidden_visibility: phony phony/third_party/icu/icui18n_hidden_visibility
+build icui18n_shim: phony phony/third_party/icu/icui18n_shim
+build icuuc: phony phony/third_party/icu/icuuc
+build icuuc_public: phony phony/third_party/icu/icuuc_public
+build icuuc_shim: phony phony/third_party/icu/icuuc_shim
+build image_diff: phony phony/testing/image_diff/image_diff
+build initialize: phony phony/third_party/abseil-cpp/absl/log/initialize
+build inlined_vector: phony phony/third_party/abseil-cpp/absl/container/inlined_vector
+build inlined_vector_internal: phony phony/third_party/abseil-cpp/absl/container/inlined_vector_internal
+build inlined_vector_test: phony 
+build int128: phony phony/third_party/abseil-cpp/absl/numeric/int128
+build int128_test: phony 
+build internal: phony phony/third_party/abseil-cpp/absl/strings/internal
+build ios_buildflags: phony phony/build/ios_buildflags
+build iostream_state_saver: phony phony/third_party/abseil-cpp/absl/random/internal/iostream_state_saver
+build iterator_traits_internal: phony 
+build iterator_traits_test: phony 
+build iterator_traits_test_helper: phony 
+build jpeg: phony 
+build kernel_timeout_internal: phony phony/third_party/abseil-cpp/absl/synchronization/kernel_timeout_internal
+build kernel_timeout_internal_test: phony 
+build layout: phony phony/third_party/abseil-cpp/absl/container/layout
+build layout_test: phony 
+build lcms2: phony 
+build leak_check: phony phony/third_party/abseil-cpp/absl/debugging/leak_check
+build libc++: phony obj/buildtools/third_party/libc++/libc++.a
+build libc++abi: phony obj/buildtools/third_party/libc++abi/libc++abi.a
+build libcxx_headers: phony 
+build libopenjpeg2: phony 
+build linked_hash_map: phony phony/third_party/abseil-cpp/absl/container/linked_hash_map
+build linked_hash_map_test: phony 
+build linked_hash_set: phony phony/third_party/abseil-cpp/absl/container/linked_hash_set
+build linked_hash_set_test: phony 
+build linux: phony 
+build llvm-libc-shared: phony 
+build llvm-symbolizer_data: phony 
+build loadable_module_deps: phony 
+build log: phony phony/third_party/abseil-cpp/absl/log/log
+build log_basic_test: phony 
+build log_basic_test_impl: phony 
+build log_entry: phony phony/third_party/abseil-cpp/absl/log/log_entry
+build log_entry_test: phony 
+build log_format_test: phony 
+build log_impl: phony phony/third_party/abseil-cpp/absl/log/internal/log_impl
+build log_macro_hygiene_test: phony 
+build log_message: phony phony/third_party/abseil-cpp/absl/log/internal/log_message
+build log_modifier_methods_test: phony 
+build log_severity: phony phony/third_party/abseil-cpp/absl/base/log_severity
+build log_sink: phony phony/third_party/abseil-cpp/absl/log/log_sink
+build log_sink_registry: phony phony/third_party/abseil-cpp/absl/log/log_sink_registry
+build log_sink_set: phony phony/third_party/abseil-cpp/absl/log/internal/log_sink_set
+build log_sink_test: phony 
+build log_streamer: phony phony/third_party/abseil-cpp/absl/log/log_streamer
+build log_streamer_test: phony 
+build low_level_hash_test: phony 
+build malloc_internal: phony phony/third_party/abseil-cpp/absl/base/malloc_internal
+build marshalling: phony phony/third_party/abseil-cpp/absl/flags/marshalling
+build match_test: phony 
+build memory: phony 
+build memory_test: phony 
+build mock_distributions: phony 
+build mock_distributions_test: phony 
+build mock_helpers: phony 
+build mock_overload_set: phony 
+build mock_validators: phony phony/third_party/abseil-cpp/absl/random/internal/mock_validators
+build mocking_bit_gen: phony 
+build mutex_test: phony 
+build no_destructor: phony 
+build no_destructor_test: phony 
+build node_hash_map: phony phony/third_party/abseil-cpp/absl/container/node_hash_map
+build node_hash_map_test: phony 
+build node_hash_set: phony phony/third_party/abseil-cpp/absl/container/node_hash_set
+build node_hash_set_test: phony 
+build node_slot_policy: phony 
+build node_slot_policy_test: phony 
+build non_temporal_arm_intrinsics: phony 
+build non_temporal_memcpy: phony 
+build non_temporal_memcpy_test: phony 
+build nonsecure_base: phony phony/third_party/abseil-cpp/absl/random/internal/nonsecure_base
+build nonsecure_base_test: phony 
+build nullability: phony 
+build nullability_default_nonnull_test: phony 
+build nullability_test: phony 
+build nullability_traits_internal: phony 
+build nullability_traits_test: phony 
+build nullguard: phony phony/third_party/abseil-cpp/absl/log/internal/nullguard
+build nullstream: phony phony/third_party/abseil-cpp/absl/log/internal/nullstream
+build optimization_test: phony 
+build optional: phony 
+build optional_ref: phony 
+build optional_ref_test: phony 
+build options_sources: phony obj/build/config/sanitizers/liboptions_sources.a
+build overload: phony 
+build overload_test: phony 
+build page: phony phony/core/fpdfapi/page/page
+build parse: phony phony/third_party/abseil-cpp/absl/flags/parse
+build parser: phony phony/core/fpdfapi/parser/parser
+build path_service: phony phony/testing/path_service
+build path_util: phony 
+build pcg_engine: phony phony/third_party/abseil-cpp/absl/random/internal/pcg_engine
+build pdf_cmap_fuzzer_src: phony phony/testing/fuzzers/pdf_cmap_fuzzer_src
+build pdf_codec_a85_fuzzer_src: phony phony/testing/fuzzers/pdf_codec_a85_fuzzer_src
+build pdf_codec_fax_fuzzer_src: phony phony/testing/fuzzers/pdf_codec_fax_fuzzer_src
+build pdf_codec_icc_fuzzer_src: phony phony/testing/fuzzers/pdf_codec_icc_fuzzer_src
+build pdf_codec_jbig2_fuzzer_src: phony phony/testing/fuzzers/pdf_codec_jbig2_fuzzer_src
+build pdf_codec_rle_fuzzer_src: phony phony/testing/fuzzers/pdf_codec_rle_fuzzer_src
+build pdf_cpdf_tounicodemap_fuzzer_src: phony phony/testing/fuzzers/pdf_cpdf_tounicodemap_fuzzer_src
+build pdf_font_fuzzer_src: phony phony/testing/fuzzers/pdf_font_fuzzer_src
+build pdf_hint_table_fuzzer_src: phony phony/testing/fuzzers/pdf_hint_table_fuzzer_src
+build pdf_jpx_fuzzer_src: phony phony/testing/fuzzers/pdf_jpx_fuzzer_src
+build pdf_nametree_fuzzer_src: phony phony/testing/fuzzers/pdf_nametree_fuzzer_src
+build pdf_psengine_fuzzer_src: phony phony/testing/fuzzers/pdf_psengine_fuzzer_src
+build pdf_scanlinecompositor_fuzzer_src: phony phony/testing/fuzzers/pdf_scanlinecompositor_fuzzer_src
+build pdf_streamparser_fuzzer_src: phony phony/testing/fuzzers/pdf_streamparser_fuzzer_src
+build pdf_xml_fuzzer_src: phony phony/testing/fuzzers/pdf_xml_fuzzer_src
+build pdfium_fuzzer_src: phony phony/testing/fuzzers/pdfium_fuzzer_src
+build per_thread_sem_test: phony 
+build per_thread_sem_test_common: phony 
+build periodic_sampler: phony phony/third_party/abseil-cpp/absl/profiling/periodic_sampler
+build periodic_sampler_test: phony 
+build pixel_diff_utils: phony phony/testing/pixel_diff_utils
+build platform: phony phony/third_party/abseil-cpp/absl/random/internal/platform
+build png: phony 
+build poison: phony phony/third_party/abseil-cpp/absl/base/poison
+build poison_test: phony 
+build posix: phony 
+build pow10_helper: phony 
+build prefetch: phony 
+build prefetch_test: phony 
+build pretty_function: phony 
+build private_handle_accessor: phony phony/third_party/abseil-cpp/absl/flags/private_handle_accessor
+build profile_builder: phony phony/third_party/abseil-cpp/absl/profiling/profile_builder
+build program_name: phony phony/third_party/abseil-cpp/absl/flags/program_name
+build proto: phony phony/third_party/abseil-cpp/absl/log/internal/proto
+build pwl: phony phony/fpdfsdk/pwl/pwl
+build randen: phony phony/third_party/abseil-cpp/absl/random/internal/randen
+build randen_engine: phony phony/third_party/abseil-cpp/absl/random/internal/randen_engine
+build randen_hwaes: phony phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes
+build randen_hwaes_impl: phony phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes_impl
+build randen_slow: phony phony/third_party/abseil-cpp/absl/random/internal/randen_slow
+build random: phony phony/third_party/abseil-cpp/absl/random/random
+build raw_hash_map: phony phony/third_party/abseil-cpp/absl/container/raw_hash_map
+build raw_hash_set: phony phony/third_party/abseil-cpp/absl/container/raw_hash_set
+build raw_hash_set_allocator_test: phony 
+build raw_hash_set_resize_impl: phony 
+build raw_hash_set_resize_impl_test: phony 
+build raw_logging_internal: phony phony/third_party/abseil-cpp/absl/base/raw_logging_internal
+build raw_logging_test: phony 
+build reflection: phony phony/third_party/abseil-cpp/absl/flags/reflection
+build render: phony phony/core/fpdfapi/render/render
+build representation: phony 
+build requires: phony 
+build requires_test: phony 
+build resize_and_overwrite: phony phony/third_party/abseil-cpp/absl/strings/resize_and_overwrite
+build resize_and_overwrite_test: phony 
+build robolectric_buildflags: phony phony/build/robolectric_buildflags
+build salted_seed_seq: phony phony/third_party/abseil-cpp/absl/random/internal/salted_seed_seq
+build sample_element_size_test: phony 
+build sample_recorder: phony phony/third_party/abseil-cpp/absl/profiling/sample_recorder
+build scoped_mock_log: phony 
+build scoped_mock_log_test: phony 
+build scoped_set_env: phony 
+build seed_gen_exception: phony phony/third_party/abseil-cpp/absl/random/seed_gen_exception
+build seed_material: phony phony/third_party/abseil-cpp/absl/random/internal/seed_material
+build seed_sequences: phony phony/third_party/abseil-cpp/absl/random/seed_sequences
+build sequence_urbg: phony 
+build shared_library_deps: phony 
+build simdutf: phony phony/third_party/simdutf/simdutf
+build simulated_clock: phony 
+build simulated_clock_test: phony 
+build source_location: phony 
+build source_location_test: phony 
+build span: phony phony/third_party/abseil-cpp/absl/types/span
+build span_test: phony 
+build spinlock_test_common: phony 
+build spinlock_wait: phony phony/third_party/abseil-cpp/absl/base/spinlock_wait
+build spy_hash_state: phony 
+build stack_consumption: phony 
+build stacktrace: phony phony/third_party/abseil-cpp/absl/debugging/stacktrace
+build stacktrace_test: phony 
+build status: phony phony/third_party/abseil-cpp/absl/status/status
+build status_matchers: phony 
+build status_matchers_test: phony 
+build status_test: phony 
+build statusor: phony phony/third_party/abseil-cpp/absl/status/statusor
+build statusor_test: phony 
+build stderr_log_sink_test: phony 
+build str_cat_test: phony 
+build str_format: phony phony/third_party/abseil-cpp/absl/strings/str_format
+build str_format_arg_test: phony 
+build str_format_bind_test: phony 
+build str_format_checker_test: phony 
+build str_format_convert_test: phony 
+build str_format_extension_test: phony 
+build str_format_internal: phony phony/third_party/abseil-cpp/absl/strings/str_format_internal
+build str_format_output_test: phony 
+build str_format_parser_test: phony 
+build str_format_test: phony 
+build str_replace_test: phony 
+build strerror: phony phony/third_party/abseil-cpp/absl/base/strerror
+build string_view: phony 
+build string_view_test: phony 
+build strings: phony phony/third_party/abseil-cpp/absl/strings/strings
+build strip: phony phony/third_party/abseil-cpp/absl/log/internal/strip
+build stripping_test: phony 
+build structured_proto: phony phony/third_party/abseil-cpp/absl/log/internal/structured_proto
+build structured_proto_test: phony 
+build structured_test: phony 
+build symbolize: phony phony/third_party/abseil-cpp/absl/debugging/symbolize
+build synchronization: phony phony/third_party/abseil-cpp/absl/synchronization/synchronization
+build sysinfo_test: phony 
+build test_actions: phony 
+build test_allocator: phony 
+build test_environments: phony phony/testing/test_environments
+build test_fonts: phony phony/third_party/test_fonts/test_fonts
+build test_helpers: phony 
+build test_instance_tracker: phony 
+build test_matchers: phony 
+build test_runner_py: phony phony/testing/tools/test_runner_py
+build test_scripts_shared: phony 
+build test_util: phony 
+build thread_identity_test: phony 
+build thread_pool: phony 
+build throw_delegate: phony phony/third_party/abseil-cpp/absl/base/throw_delegate
+build tiff: phony 
+build time: phony phony/third_party/abseil-cpp/absl/time/time
+build time_test: phony 
+build time_zone: phony phony/third_party/abseil-cpp/absl/time/internal/cctz/time_zone
+build toolchain_marker_clang_arm64: phony 
+build tracing_internal: phony phony/third_party/abseil-cpp/absl/base/tracing_internal
+build tracing_internal_strong_test: phony 
+build tracing_internal_weak_test: phony 
+build tracked: phony 
+build traits: phony phony/third_party/abseil-cpp/absl/random/internal/traits
+build type_traits: phony 
+build type_traits_test: phony 
+build uniform_helper: phony phony/third_party/abseil-cpp/absl/random/internal/uniform_helper
+build unordered_map_constructor_test: phony 
+build unordered_map_lookup_test: phony 
+build unordered_map_members_test: phony 
+build unordered_map_modifiers_test: phony 
+build unordered_set_constructor_test: phony 
+build unordered_set_lookup_test: phony 
+build unordered_set_members_test: phony 
+build unordered_set_modifiers_test: phony 
+build usage: phony phony/third_party/abseil-cpp/absl/flags/usage
+build usage_internal: phony phony/third_party/abseil-cpp/absl/flags/usage_internal
+build utf8_for_code_point: phony phony/third_party/abseil-cpp/absl/debugging/utf8_for_code_point
+build utf8_for_code_point_test: phony 
+build utility: phony 
+build variant: phony 
+build variant_test: phony 
+build vlog_config: phony phony/third_party/abseil-cpp/absl/log/internal/vlog_config
+build vlog_is_on: phony phony/third_party/abseil-cpp/absl/log/vlog_is_on
+build vlog_is_on_test: phony 
+build voidify: phony 
+build waiter_test: phony 
+build weakly_mixed_integer: phony 
+build wide_multiply: phony phony/third_party/abseil-cpp/absl/random/internal/wide_multiply
+build zlib: phony 
+build $:default: phony phony/default
+build $:freetype_common: phony phony/freetype_common
+build $:gn_check: phony 
+build $:pdfium: phony ./libpdfium-qore148.so.0.TOC
+build $:pdfium_all: phony phony/pdfium_all
+build $:pdfium_diff: phony ./pdfium_diff
+build $:pdfium_embeddertest_deps: phony phony/pdfium_embeddertest_deps
+build $:pdfium_embeddertests: phony ./pdfium_embeddertests
+build $:pdfium_public_headers: phony 
+build $:pdfium_public_headers_impl: phony 
+build $:pdfium_unittest_deps: phony phony/pdfium_unittest_deps
+build $:pdfium_unittests: phony ./pdfium_unittests
+build build$:android_buildflags: phony phony/build/android_buildflags
+build build$:blink_buildflags: phony phony/build/blink_buildflags
+build build$:branding_buildflags: phony phony/build/branding_buildflags
+build build$:buildflag_header_h: phony 
+build build$:chromecast_buildflags: phony phony/build/chromecast_buildflags
+build build$:chromeos_buildflags: phony phony/build/chromeos_buildflags
+build build$:ios_buildflags: phony phony/build/ios_buildflags
+build build$:robolectric_buildflags: phony phony/build/robolectric_buildflags
+build build/config$:common_deps: phony 
+build build/config$:common_deps_without_libcxx: phony 
+build build/config$:executable_deps: phony 
+build build/config$:loadable_module_deps: phony 
+build build/config$:shared_library_deps: phony 
+build build/config$:toolchain_marker_clang_arm64: phony 
+build build/config/clang$:llvm-symbolizer_data: phony 
+build build/config/compiler$:compiler_buildflags: phony phony/build/config/compiler/compiler_buildflags
+build build/config/coverage$:buildflags: phony phony/build/config/coverage/buildflags
+build build/config/linux$:linux: phony 
+build build/config/linux: phony 
+build build/config/posix$:posix: phony 
+build build/config/posix: phony 
+build build/config/sanitizers$:deps: phony 
+build build/config/sanitizers$:dlclose_shim: phony 
+build build/config/sanitizers$:options_sources: phony obj/build/config/sanitizers/liboptions_sources.a
+build build/win$:default_exe_manifest: phony 
+build buildtools/third_party/libc++$:all_modules: phony 
+build buildtools/third_party/libc++$:copy_custom_headers: phony phony/buildtools/third_party/libc++/copy_custom_headers
+build buildtools/third_party/libc++$:copy_libcxx_headers: phony phony/buildtools/third_party/libc++/copy_libcxx_headers
+build buildtools/third_party/libc++$:custom_headers: phony 
+build buildtools/third_party/libc++$:libc++: phony obj/buildtools/third_party/libc++/libc++.a
+build buildtools/third_party/libc++: phony obj/buildtools/third_party/libc++/libc++.a
+build buildtools/third_party/libc++$:libcxx_headers: phony 
+build buildtools/third_party/libc++abi$:libc++abi: phony obj/buildtools/third_party/libc++abi/libc++abi.a
+build buildtools/third_party/libc++abi: phony obj/buildtools/third_party/libc++abi/libc++abi.a
+build constants$:constants: phony 
+build core/fdrm$:fdrm: phony phony/core/fdrm/fdrm
+build core/fdrm: phony phony/core/fdrm/fdrm
+build core/fdrm$:unittests: phony phony/core/fdrm/unittests
+build core/fpdfapi/cmaps$:cmaps: phony phony/core/fpdfapi/cmaps/cmaps
+build core/fpdfapi/cmaps: phony phony/core/fpdfapi/cmaps/cmaps
+build core/fpdfapi/edit$:contentstream_write_utils: phony phony/core/fpdfapi/edit/contentstream_write_utils
+build core/fpdfapi/edit$:edit: phony phony/core/fpdfapi/edit/edit
+build core/fpdfapi/edit: phony phony/core/fpdfapi/edit/edit
+build core/fpdfapi/edit$:embeddertests: phony phony/core/fpdfapi/edit/embeddertests
+build core/fpdfapi/edit$:unittests: phony phony/core/fpdfapi/edit/unittests
+build core/fpdfapi/font$:font: phony phony/core/fpdfapi/font/font
+build core/fpdfapi/font: phony phony/core/fpdfapi/font/font
+build core/fpdfapi/font$:unittests: phony phony/core/fpdfapi/font/unittests
+build core/fpdfapi/page$:page: phony phony/core/fpdfapi/page/page
+build core/fpdfapi/page: phony phony/core/fpdfapi/page/page
+build core/fpdfapi/page$:unit_test_support: phony phony/core/fpdfapi/page/unit_test_support
+build core/fpdfapi/page$:unittests: phony phony/core/fpdfapi/page/unittests
+build core/fpdfapi/parser$:embeddertests: phony phony/core/fpdfapi/parser/embeddertests
+build core/fpdfapi/parser$:parser: phony phony/core/fpdfapi/parser/parser
+build core/fpdfapi/parser: phony phony/core/fpdfapi/parser/parser
+build core/fpdfapi/parser$:unit_test_support: phony phony/core/fpdfapi/parser/unit_test_support
+build core/fpdfapi/parser$:unittests: phony phony/core/fpdfapi/parser/unittests
+build core/fpdfapi/render$:embeddertests: phony phony/core/fpdfapi/render/embeddertests
+build core/fpdfapi/render$:render: phony phony/core/fpdfapi/render/render
+build core/fpdfapi/render: phony phony/core/fpdfapi/render/render
+build core/fpdfapi/render$:unittests: phony phony/core/fpdfapi/render/unittests
+build core/fpdfdoc$:fpdfdoc: phony phony/core/fpdfdoc/fpdfdoc
+build core/fpdfdoc: phony phony/core/fpdfdoc/fpdfdoc
+build core/fpdfdoc$:unittests: phony phony/core/fpdfdoc/unittests
+build core/fpdftext$:fpdftext: phony phony/core/fpdftext/fpdftext
+build core/fpdftext: phony phony/core/fpdftext/fpdftext
+build core/fpdftext$:unittests: phony phony/core/fpdftext/unittests
+build core/fxcodec$:embeddertests: phony phony/core/fxcodec/embeddertests
+build core/fxcodec$:fxcodec: phony phony/core/fxcodec/fxcodec
+build core/fxcodec: phony phony/core/fxcodec/fxcodec
+build core/fxcodec$:unittests: phony phony/core/fxcodec/unittests
+build core/fxcrt$:fxcrt: phony phony/core/fxcrt/fxcrt
+build core/fxcrt: phony phony/core/fxcrt/fxcrt
+build core/fxcrt$:test_support: phony phony/core/fxcrt/test_support
+build core/fxcrt$:unit_test_support: phony phony/core/fxcrt/unit_test_support
+build core/fxcrt$:unittests: phony phony/core/fxcrt/unittests
+build core/fxge$:embeddertests: phony phony/core/fxge/embeddertests
+build core/fxge$:fxge: phony phony/core/fxge/fxge
+build core/fxge: phony phony/core/fxge/fxge
+build core/fxge$:unittests: phony phony/core/fxge/unittests
+build fpdfsdk$:embeddertests: phony phony/fpdfsdk/embeddertests
+build fpdfsdk$:fpdfsdk: phony phony/fpdfsdk/fpdfsdk
+build fpdfsdk$:unittests: phony phony/fpdfsdk/unittests
+build fpdfsdk/formfiller$:embeddertests: phony phony/fpdfsdk/formfiller/embeddertests
+build fpdfsdk/formfiller$:formfiller: phony phony/fpdfsdk/formfiller/formfiller
+build fpdfsdk/formfiller: phony phony/fpdfsdk/formfiller/formfiller
+build fpdfsdk/pwl$:embedder_test_support: phony phony/fpdfsdk/pwl/embedder_test_support
+build fpdfsdk/pwl$:embeddertests: phony phony/fpdfsdk/pwl/embeddertests
+build fpdfsdk/pwl$:pwl: phony phony/fpdfsdk/pwl/pwl
+build fpdfsdk/pwl: phony phony/fpdfsdk/pwl/pwl
+build fxjs$:fxjs: phony phony/fxjs/fxjs
+build testing$:embedder_test_support: phony phony/testing/embedder_test_support
+build testing$:path_service: phony phony/testing/path_service
+build testing$:pdfium_test: phony ./pdfium_test
+build testing$:pixel_diff_utils: phony phony/testing/pixel_diff_utils
+build testing$:test_environments: phony phony/testing/test_environments
+build testing$:test_scripts_shared: phony 
+build testing$:test_support: phony phony/testing/test_support
+build testing$:unit_test_support: phony phony/testing/unit_test_support
+build testing/fuzzers$:fuzzer_helper: phony phony/testing/fuzzers/fuzzer_helper
+build testing/fuzzers$:fuzzer_init: phony phony/testing/fuzzers/fuzzer_init
+build testing/fuzzers$:fuzzer_init_public: phony phony/testing/fuzzers/fuzzer_init_public
+build testing/fuzzers$:fuzzer_pdf_templates: phony 
+build testing/fuzzers$:fuzzer_utils: phony phony/testing/fuzzers/fuzzer_utils
+build testing/fuzzers$:fuzzers: phony phony/testing/fuzzers/fuzzers
+build testing/fuzzers: phony phony/testing/fuzzers/fuzzers
+build testing/fuzzers$:pdf_cmap_fuzzer_src: phony phony/testing/fuzzers/pdf_cmap_fuzzer_src
+build testing/fuzzers$:pdf_codec_a85_fuzzer_src: phony phony/testing/fuzzers/pdf_codec_a85_fuzzer_src
+build testing/fuzzers$:pdf_codec_fax_fuzzer_src: phony phony/testing/fuzzers/pdf_codec_fax_fuzzer_src
+build testing/fuzzers$:pdf_codec_icc_fuzzer_src: phony phony/testing/fuzzers/pdf_codec_icc_fuzzer_src
+build testing/fuzzers$:pdf_codec_jbig2_fuzzer_src: phony phony/testing/fuzzers/pdf_codec_jbig2_fuzzer_src
+build testing/fuzzers$:pdf_codec_rle_fuzzer_src: phony phony/testing/fuzzers/pdf_codec_rle_fuzzer_src
+build testing/fuzzers$:pdf_cpdf_tounicodemap_fuzzer_src: phony phony/testing/fuzzers/pdf_cpdf_tounicodemap_fuzzer_src
+build testing/fuzzers$:pdf_font_fuzzer_src: phony phony/testing/fuzzers/pdf_font_fuzzer_src
+build testing/fuzzers$:pdf_hint_table_fuzzer_src: phony phony/testing/fuzzers/pdf_hint_table_fuzzer_src
+build testing/fuzzers$:pdf_jpx_fuzzer_src: phony phony/testing/fuzzers/pdf_jpx_fuzzer_src
+build testing/fuzzers$:pdf_nametree_fuzzer_src: phony phony/testing/fuzzers/pdf_nametree_fuzzer_src
+build testing/fuzzers$:pdf_psengine_fuzzer_src: phony phony/testing/fuzzers/pdf_psengine_fuzzer_src
+build testing/fuzzers$:pdf_scanlinecompositor_fuzzer_src: phony phony/testing/fuzzers/pdf_scanlinecompositor_fuzzer_src
+build testing/fuzzers$:pdf_streamparser_fuzzer_src: phony phony/testing/fuzzers/pdf_streamparser_fuzzer_src
+build testing/fuzzers$:pdf_xml_fuzzer_src: phony phony/testing/fuzzers/pdf_xml_fuzzer_src
+build testing/fuzzers$:pdfium_fuzzer_src: phony phony/testing/fuzzers/pdfium_fuzzer_src
+build testing/gmock$:gmock: phony phony/testing/gmock/gmock
+build testing/gmock: phony phony/testing/gmock/gmock
+build testing/gmock$:gmock_main: phony phony/testing/gmock/gmock_main
+build testing/gtest$:gtest: phony obj/testing/gtest/libgtest.a
+build testing/gtest: phony obj/testing/gtest/libgtest.a
+build testing/gtest$:gtest_main: phony phony/testing/gtest/gtest_main
+build testing/image_diff$:image_diff: phony phony/testing/image_diff/image_diff
+build testing/image_diff: phony phony/testing/image_diff/image_diff
+build testing/image_diff$:unittests: phony phony/testing/image_diff/unittests
+build testing/tools$:test_runner_py: phony phony/testing/tools/test_runner_py
+build third_party$:fontconfig: phony 
+build third_party$:fx_agg: phony phony/third_party/fx_agg
+build third_party$:fx_freetype: phony phony/third_party/fx_freetype
+build third_party$:fx_lcms2: phony phony/third_party/fx_lcms2
+build third_party$:fx_libopenjpeg: phony phony/third_party/fx_libopenjpeg
+build third_party$:jpeg: phony 
+build third_party$:lcms2: phony 
+build third_party$:libopenjpeg2: phony 
+build third_party$:png: phony 
+build third_party$:tiff: phony 
+build third_party$:zlib: phony 
+build third_party/abseil-cpp$:absl: phony phony/third_party/abseil-cpp/absl
+build third_party/abseil-cpp$:absl_component_deps: phony phony/third_party/abseil-cpp/absl_component_deps
+build third_party/abseil-cpp$:absl_full: phony phony/third_party/abseil-cpp/absl_full
+build third_party/abseil-cpp$:absl_full_deps: phony phony/third_party/abseil-cpp/absl_full_deps
+build third_party/abseil-cpp$:test_support: phony phony/third_party/abseil-cpp/test_support
+build third_party/abseil-cpp/absl/algorithm$:algorithm: phony 
+build third_party/abseil-cpp/absl/algorithm: phony 
+build third_party/abseil-cpp/absl/algorithm$:algorithm_test: phony 
+build third_party/abseil-cpp/absl/algorithm$:container: phony 
+build third_party/abseil-cpp/absl/algorithm$:container_test: phony 
+build third_party/abseil-cpp/absl/base$:atomic_hook: phony 
+build third_party/abseil-cpp/absl/base$:attributes_test: phony 
+build third_party/abseil-cpp/absl/base$:base: phony phony/third_party/abseil-cpp/absl/base/base
+build third_party/abseil-cpp/absl/base: phony phony/third_party/abseil-cpp/absl/base/base
+build third_party/abseil-cpp/absl/base$:base_internal: phony 
+build third_party/abseil-cpp/absl/base$:casts_test: phony 
+build third_party/abseil-cpp/absl/base$:config: phony 
+build third_party/abseil-cpp/absl/base$:config_test: phony 
+build third_party/abseil-cpp/absl/base$:core_headers: phony 
+build third_party/abseil-cpp/absl/base$:cycleclock_internal: phony 
+build third_party/abseil-cpp/absl/base$:dynamic_annotations: phony 
+build third_party/abseil-cpp/absl/base$:endian: phony phony/third_party/abseil-cpp/absl/base/endian
+build third_party/abseil-cpp/absl/base$:errno_saver: phony 
+build third_party/abseil-cpp/absl/base$:exception_testing: phony 
+build third_party/abseil-cpp/absl/base$:fast_type_id: phony 
+build third_party/abseil-cpp/absl/base$:hardening: phony phony/third_party/abseil-cpp/absl/base/hardening
+build third_party/abseil-cpp/absl/base$:hardening_test: phony 
+build third_party/abseil-cpp/absl/base$:iterator_traits_internal: phony 
+build third_party/abseil-cpp/absl/base$:iterator_traits_test: phony 
+build third_party/abseil-cpp/absl/base$:iterator_traits_test_helper: phony 
+build third_party/abseil-cpp/absl/base$:log_severity: phony phony/third_party/abseil-cpp/absl/base/log_severity
+build third_party/abseil-cpp/absl/base$:malloc_internal: phony phony/third_party/abseil-cpp/absl/base/malloc_internal
+build third_party/abseil-cpp/absl/base$:no_destructor: phony 
+build third_party/abseil-cpp/absl/base$:no_destructor_test: phony 
+build third_party/abseil-cpp/absl/base$:nullability: phony 
+build third_party/abseil-cpp/absl/base$:nullability_default_nonnull_test: phony 
+build third_party/abseil-cpp/absl/base$:nullability_test: phony 
+build third_party/abseil-cpp/absl/base$:nullability_traits_internal: phony 
+build third_party/abseil-cpp/absl/base$:nullability_traits_test: phony 
+build third_party/abseil-cpp/absl/base$:optimization_test: phony 
+build third_party/abseil-cpp/absl/base$:poison: phony phony/third_party/abseil-cpp/absl/base/poison
+build third_party/abseil-cpp/absl/base$:poison_test: phony 
+build third_party/abseil-cpp/absl/base$:prefetch: phony 
+build third_party/abseil-cpp/absl/base$:prefetch_test: phony 
+build third_party/abseil-cpp/absl/base$:pretty_function: phony 
+build third_party/abseil-cpp/absl/base$:raw_logging_internal: phony phony/third_party/abseil-cpp/absl/base/raw_logging_internal
+build third_party/abseil-cpp/absl/base$:raw_logging_test: phony 
+build third_party/abseil-cpp/absl/base$:scoped_set_env: phony 
+build third_party/abseil-cpp/absl/base$:spinlock_test_common: phony 
+build third_party/abseil-cpp/absl/base$:spinlock_wait: phony phony/third_party/abseil-cpp/absl/base/spinlock_wait
+build third_party/abseil-cpp/absl/base$:strerror: phony phony/third_party/abseil-cpp/absl/base/strerror
+build third_party/abseil-cpp/absl/base$:sysinfo_test: phony 
+build third_party/abseil-cpp/absl/base$:thread_identity_test: phony 
+build third_party/abseil-cpp/absl/base$:throw_delegate: phony phony/third_party/abseil-cpp/absl/base/throw_delegate
+build third_party/abseil-cpp/absl/base$:tracing_internal: phony phony/third_party/abseil-cpp/absl/base/tracing_internal
+build third_party/abseil-cpp/absl/base$:tracing_internal_strong_test: phony 
+build third_party/abseil-cpp/absl/base$:tracing_internal_weak_test: phony 
+build third_party/abseil-cpp/absl/cleanup$:cleanup: phony 
+build third_party/abseil-cpp/absl/cleanup: phony 
+build third_party/abseil-cpp/absl/cleanup$:cleanup_internal: phony 
+build third_party/abseil-cpp/absl/cleanup$:cleanup_test: phony 
+build third_party/abseil-cpp/absl/container$:btree: phony phony/third_party/abseil-cpp/absl/container/btree
+build third_party/abseil-cpp/absl/container$:btree_test_common: phony 
+build third_party/abseil-cpp/absl/container$:chunked_queue: phony phony/third_party/abseil-cpp/absl/container/chunked_queue
+build third_party/abseil-cpp/absl/container$:chunked_queue_test: phony 
+build third_party/abseil-cpp/absl/container$:common: phony 
+build third_party/abseil-cpp/absl/container$:common_policy_traits: phony 
+build third_party/abseil-cpp/absl/container$:common_policy_traits_test: phony 
+build third_party/abseil-cpp/absl/container$:compressed_tuple: phony 
+build third_party/abseil-cpp/absl/container$:compressed_tuple_test: phony 
+build third_party/abseil-cpp/absl/container$:container_memory: phony phony/third_party/abseil-cpp/absl/container/container_memory
+build third_party/abseil-cpp/absl/container$:fixed_array: phony phony/third_party/abseil-cpp/absl/container/fixed_array
+build third_party/abseil-cpp/absl/container$:fixed_array_test: phony 
+build third_party/abseil-cpp/absl/container$:flat_hash_map: phony phony/third_party/abseil-cpp/absl/container/flat_hash_map
+build third_party/abseil-cpp/absl/container$:flat_hash_map_test: phony 
+build third_party/abseil-cpp/absl/container$:flat_hash_set: phony phony/third_party/abseil-cpp/absl/container/flat_hash_set
+build third_party/abseil-cpp/absl/container$:flat_hash_set_test: phony 
+build third_party/abseil-cpp/absl/container$:hash_container_defaults: phony phony/third_party/abseil-cpp/absl/container/hash_container_defaults
+build third_party/abseil-cpp/absl/container$:hash_function_defaults: phony phony/third_party/abseil-cpp/absl/container/hash_function_defaults
+build third_party/abseil-cpp/absl/container$:hash_function_defaults_test: phony 
+build third_party/abseil-cpp/absl/container$:hash_generator_testing: phony 
+build third_party/abseil-cpp/absl/container$:hash_policy_testing: phony 
+build third_party/abseil-cpp/absl/container$:hash_policy_traits: phony phony/third_party/abseil-cpp/absl/container/hash_policy_traits
+build third_party/abseil-cpp/absl/container$:hashtable_control_bytes: phony phony/third_party/abseil-cpp/absl/container/hashtable_control_bytes
+build third_party/abseil-cpp/absl/container$:hashtable_debug: phony 
+build third_party/abseil-cpp/absl/container$:hashtable_debug_hooks: phony 
+build third_party/abseil-cpp/absl/container$:hashtablez_sampler: phony phony/third_party/abseil-cpp/absl/container/hashtablez_sampler
+build third_party/abseil-cpp/absl/container$:heterogeneous_lookup_testing: phony 
+build third_party/abseil-cpp/absl/container$:inlined_vector: phony phony/third_party/abseil-cpp/absl/container/inlined_vector
+build third_party/abseil-cpp/absl/container$:inlined_vector_internal: phony phony/third_party/abseil-cpp/absl/container/inlined_vector_internal
+build third_party/abseil-cpp/absl/container$:inlined_vector_test: phony 
+build third_party/abseil-cpp/absl/container$:layout: phony phony/third_party/abseil-cpp/absl/container/layout
+build third_party/abseil-cpp/absl/container$:layout_test: phony 
+build third_party/abseil-cpp/absl/container$:linked_hash_map: phony phony/third_party/abseil-cpp/absl/container/linked_hash_map
+build third_party/abseil-cpp/absl/container$:linked_hash_map_test: phony 
+build third_party/abseil-cpp/absl/container$:linked_hash_set: phony phony/third_party/abseil-cpp/absl/container/linked_hash_set
+build third_party/abseil-cpp/absl/container$:linked_hash_set_test: phony 
+build third_party/abseil-cpp/absl/container$:node_hash_map: phony phony/third_party/abseil-cpp/absl/container/node_hash_map
+build third_party/abseil-cpp/absl/container$:node_hash_map_test: phony 
+build third_party/abseil-cpp/absl/container$:node_hash_set: phony phony/third_party/abseil-cpp/absl/container/node_hash_set
+build third_party/abseil-cpp/absl/container$:node_hash_set_test: phony 
+build third_party/abseil-cpp/absl/container$:node_slot_policy: phony 
+build third_party/abseil-cpp/absl/container$:node_slot_policy_test: phony 
+build third_party/abseil-cpp/absl/container$:raw_hash_map: phony phony/third_party/abseil-cpp/absl/container/raw_hash_map
+build third_party/abseil-cpp/absl/container$:raw_hash_set: phony phony/third_party/abseil-cpp/absl/container/raw_hash_set
+build third_party/abseil-cpp/absl/container$:raw_hash_set_allocator_test: phony 
+build third_party/abseil-cpp/absl/container$:raw_hash_set_resize_impl: phony 
+build third_party/abseil-cpp/absl/container$:raw_hash_set_resize_impl_test: phony 
+build third_party/abseil-cpp/absl/container$:sample_element_size_test: phony 
+build third_party/abseil-cpp/absl/container$:test_allocator: phony 
+build third_party/abseil-cpp/absl/container$:test_instance_tracker: phony 
+build third_party/abseil-cpp/absl/container$:tracked: phony 
+build third_party/abseil-cpp/absl/container$:unordered_map_constructor_test: phony 
+build third_party/abseil-cpp/absl/container$:unordered_map_lookup_test: phony 
+build third_party/abseil-cpp/absl/container$:unordered_map_members_test: phony 
+build third_party/abseil-cpp/absl/container$:unordered_map_modifiers_test: phony 
+build third_party/abseil-cpp/absl/container$:unordered_set_constructor_test: phony 
+build third_party/abseil-cpp/absl/container$:unordered_set_lookup_test: phony 
+build third_party/abseil-cpp/absl/container$:unordered_set_members_test: phony 
+build third_party/abseil-cpp/absl/container$:unordered_set_modifiers_test: phony 
+build third_party/abseil-cpp/absl/crc$:cpu_detect: phony phony/third_party/abseil-cpp/absl/crc/cpu_detect
+build third_party/abseil-cpp/absl/crc$:crc32c: phony phony/third_party/abseil-cpp/absl/crc/crc32c
+build third_party/abseil-cpp/absl/crc$:crc32c_test: phony 
+build third_party/abseil-cpp/absl/crc$:crc_cord_state: phony phony/third_party/abseil-cpp/absl/crc/crc_cord_state
+build third_party/abseil-cpp/absl/crc$:crc_cord_state_test: phony 
+build third_party/abseil-cpp/absl/crc$:crc_internal: phony phony/third_party/abseil-cpp/absl/crc/crc_internal
+build third_party/abseil-cpp/absl/crc$:crc_memcpy_test: phony 
+build third_party/abseil-cpp/absl/crc$:non_temporal_arm_intrinsics: phony 
+build third_party/abseil-cpp/absl/crc$:non_temporal_memcpy: phony 
+build third_party/abseil-cpp/absl/crc$:non_temporal_memcpy_test: phony 
+build third_party/abseil-cpp/absl/debugging$:bounded_utf8_length_sequence: phony phony/third_party/abseil-cpp/absl/debugging/bounded_utf8_length_sequence
+build third_party/abseil-cpp/absl/debugging$:bounded_utf8_length_sequence_test: phony 
+build third_party/abseil-cpp/absl/debugging$:debugging_internal: phony phony/third_party/abseil-cpp/absl/debugging/debugging_internal
+build third_party/abseil-cpp/absl/debugging$:decode_rust_punycode: phony phony/third_party/abseil-cpp/absl/debugging/decode_rust_punycode
+build third_party/abseil-cpp/absl/debugging$:decode_rust_punycode_test: phony 
+build third_party/abseil-cpp/absl/debugging$:demangle_internal: phony phony/third_party/abseil-cpp/absl/debugging/demangle_internal
+build third_party/abseil-cpp/absl/debugging$:demangle_rust: phony phony/third_party/abseil-cpp/absl/debugging/demangle_rust
+build third_party/abseil-cpp/absl/debugging$:demangle_rust_test: phony 
+build third_party/abseil-cpp/absl/debugging$:examine_stack: phony phony/third_party/abseil-cpp/absl/debugging/examine_stack
+build third_party/abseil-cpp/absl/debugging$:failure_signal_handler: phony phony/third_party/abseil-cpp/absl/debugging/failure_signal_handler
+build third_party/abseil-cpp/absl/debugging$:leak_check: phony phony/third_party/abseil-cpp/absl/debugging/leak_check
+build third_party/abseil-cpp/absl/debugging$:stack_consumption: phony 
+build third_party/abseil-cpp/absl/debugging$:stacktrace: phony phony/third_party/abseil-cpp/absl/debugging/stacktrace
+build third_party/abseil-cpp/absl/debugging$:stacktrace_test: phony 
+build third_party/abseil-cpp/absl/debugging$:symbolize: phony phony/third_party/abseil-cpp/absl/debugging/symbolize
+build third_party/abseil-cpp/absl/debugging$:utf8_for_code_point: phony phony/third_party/abseil-cpp/absl/debugging/utf8_for_code_point
+build third_party/abseil-cpp/absl/debugging$:utf8_for_code_point_test: phony 
+build third_party/abseil-cpp/absl/flags$:commandlineflag: phony phony/third_party/abseil-cpp/absl/flags/commandlineflag
+build third_party/abseil-cpp/absl/flags$:commandlineflag_internal: phony phony/third_party/abseil-cpp/absl/flags/commandlineflag_internal
+build third_party/abseil-cpp/absl/flags$:config: phony phony/third_party/abseil-cpp/absl/flags/config
+build third_party/abseil-cpp/absl/flags$:flag: phony phony/third_party/abseil-cpp/absl/flags/flag
+build third_party/abseil-cpp/absl/flags$:flag_internal: phony phony/third_party/abseil-cpp/absl/flags/flag_internal
+build third_party/abseil-cpp/absl/flags$:flag_test: phony 
+build third_party/abseil-cpp/absl/flags$:marshalling: phony phony/third_party/abseil-cpp/absl/flags/marshalling
+build third_party/abseil-cpp/absl/flags$:parse: phony phony/third_party/abseil-cpp/absl/flags/parse
+build third_party/abseil-cpp/absl/flags$:path_util: phony 
+build third_party/abseil-cpp/absl/flags$:private_handle_accessor: phony phony/third_party/abseil-cpp/absl/flags/private_handle_accessor
+build third_party/abseil-cpp/absl/flags$:program_name: phony phony/third_party/abseil-cpp/absl/flags/program_name
+build third_party/abseil-cpp/absl/flags$:reflection: phony phony/third_party/abseil-cpp/absl/flags/reflection
+build third_party/abseil-cpp/absl/flags$:usage: phony phony/third_party/abseil-cpp/absl/flags/usage
+build third_party/abseil-cpp/absl/flags$:usage_internal: phony phony/third_party/abseil-cpp/absl/flags/usage_internal
+build third_party/abseil-cpp/absl/functional$:any_invocable: phony 
+build third_party/abseil-cpp/absl/functional$:any_invocable_test: phony 
+build third_party/abseil-cpp/absl/functional$:bind_front: phony 
+build third_party/abseil-cpp/absl/functional$:function_ref: phony 
+build third_party/abseil-cpp/absl/functional$:function_ref_test: phony 
+build third_party/abseil-cpp/absl/functional$:overload: phony 
+build third_party/abseil-cpp/absl/functional$:overload_test: phony 
+build third_party/abseil-cpp/absl/hash$:city: phony phony/third_party/abseil-cpp/absl/hash/city
+build third_party/abseil-cpp/absl/hash$:hash: phony phony/third_party/abseil-cpp/absl/hash/hash
+build third_party/abseil-cpp/absl/hash: phony phony/third_party/abseil-cpp/absl/hash/hash
+build third_party/abseil-cpp/absl/hash$:hash_instantiated_test: phony 
+build third_party/abseil-cpp/absl/hash$:hash_test: phony 
+build third_party/abseil-cpp/absl/hash$:hash_testing: phony 
+build third_party/abseil-cpp/absl/hash$:low_level_hash_test: phony 
+build third_party/abseil-cpp/absl/hash$:spy_hash_state: phony 
+build third_party/abseil-cpp/absl/hash$:weakly_mixed_integer: phony 
+build third_party/abseil-cpp/absl/log$:absl_check: phony phony/third_party/abseil-cpp/absl/log/absl_check
+build third_party/abseil-cpp/absl/log$:absl_check_test: phony 
+build third_party/abseil-cpp/absl/log$:absl_log: phony phony/third_party/abseil-cpp/absl/log/absl_log
+build third_party/abseil-cpp/absl/log$:absl_log_basic_test: phony 
+build third_party/abseil-cpp/absl/log$:absl_vlog_is_on: phony phony/third_party/abseil-cpp/absl/log/absl_vlog_is_on
+build third_party/abseil-cpp/absl/log$:check: phony phony/third_party/abseil-cpp/absl/log/check
+build third_party/abseil-cpp/absl/log$:check_test: phony 
+build third_party/abseil-cpp/absl/log$:check_test_impl: phony 
+build third_party/abseil-cpp/absl/log$:die_if_null: phony phony/third_party/abseil-cpp/absl/log/die_if_null
+build third_party/abseil-cpp/absl/log$:die_if_null_test: phony 
+build third_party/abseil-cpp/absl/log$:flags: phony phony/third_party/abseil-cpp/absl/log/flags
+build third_party/abseil-cpp/absl/log$:flags_test: phony 
+build third_party/abseil-cpp/absl/log$:globals: phony phony/third_party/abseil-cpp/absl/log/globals
+build third_party/abseil-cpp/absl/log$:globals_test: phony 
+build third_party/abseil-cpp/absl/log$:initialize: phony phony/third_party/abseil-cpp/absl/log/initialize
+build third_party/abseil-cpp/absl/log$:log: phony phony/third_party/abseil-cpp/absl/log/log
+build third_party/abseil-cpp/absl/log: phony phony/third_party/abseil-cpp/absl/log/log
+build third_party/abseil-cpp/absl/log$:log_basic_test: phony 
+build third_party/abseil-cpp/absl/log$:log_basic_test_impl: phony 
+build third_party/abseil-cpp/absl/log$:log_entry: phony phony/third_party/abseil-cpp/absl/log/log_entry
+build third_party/abseil-cpp/absl/log$:log_entry_test: phony 
+build third_party/abseil-cpp/absl/log$:log_format_test: phony 
+build third_party/abseil-cpp/absl/log$:log_macro_hygiene_test: phony 
+build third_party/abseil-cpp/absl/log$:log_modifier_methods_test: phony 
+build third_party/abseil-cpp/absl/log$:log_sink: phony phony/third_party/abseil-cpp/absl/log/log_sink
+build third_party/abseil-cpp/absl/log$:log_sink_registry: phony phony/third_party/abseil-cpp/absl/log/log_sink_registry
+build third_party/abseil-cpp/absl/log$:log_sink_test: phony 
+build third_party/abseil-cpp/absl/log$:log_streamer: phony phony/third_party/abseil-cpp/absl/log/log_streamer
+build third_party/abseil-cpp/absl/log$:log_streamer_test: phony 
+build third_party/abseil-cpp/absl/log$:scoped_mock_log: phony 
+build third_party/abseil-cpp/absl/log$:scoped_mock_log_test: phony 
+build third_party/abseil-cpp/absl/log$:stripping_test: phony 
+build third_party/abseil-cpp/absl/log$:structured: phony 
+build third_party/abseil-cpp/absl/log$:structured_test: phony 
+build third_party/abseil-cpp/absl/log$:vlog_is_on: phony phony/third_party/abseil-cpp/absl/log/vlog_is_on
+build third_party/abseil-cpp/absl/log$:vlog_is_on_test: phony 
+build third_party/abseil-cpp/absl/log/internal$:append_truncated: phony phony/third_party/abseil-cpp/absl/log/internal/append_truncated
+build third_party/abseil-cpp/absl/log/internal$:check_impl: phony phony/third_party/abseil-cpp/absl/log/internal/check_impl
+build third_party/abseil-cpp/absl/log/internal$:check_op: phony phony/third_party/abseil-cpp/absl/log/internal/check_op
+build third_party/abseil-cpp/absl/log/internal$:conditions: phony phony/third_party/abseil-cpp/absl/log/internal/conditions
+build third_party/abseil-cpp/absl/log/internal$:config: phony 
+build third_party/abseil-cpp/absl/log/internal$:container: phony phony/third_party/abseil-cpp/absl/log/internal/container
+build third_party/abseil-cpp/absl/log/internal$:container_test: phony 
+build third_party/abseil-cpp/absl/log/internal$:flags: phony phony/third_party/abseil-cpp/absl/log/internal/flags
+build third_party/abseil-cpp/absl/log/internal$:fnmatch: phony phony/third_party/abseil-cpp/absl/log/internal/fnmatch
+build third_party/abseil-cpp/absl/log/internal$:fnmatch_test: phony 
+build third_party/abseil-cpp/absl/log/internal$:format: phony phony/third_party/abseil-cpp/absl/log/internal/format
+build third_party/abseil-cpp/absl/log/internal$:globals: phony phony/third_party/abseil-cpp/absl/log/internal/globals
+build third_party/abseil-cpp/absl/log/internal$:log_impl: phony phony/third_party/abseil-cpp/absl/log/internal/log_impl
+build third_party/abseil-cpp/absl/log/internal$:log_message: phony phony/third_party/abseil-cpp/absl/log/internal/log_message
+build third_party/abseil-cpp/absl/log/internal$:log_sink_set: phony phony/third_party/abseil-cpp/absl/log/internal/log_sink_set
+build third_party/abseil-cpp/absl/log/internal$:nullguard: phony phony/third_party/abseil-cpp/absl/log/internal/nullguard
+build third_party/abseil-cpp/absl/log/internal$:nullstream: phony phony/third_party/abseil-cpp/absl/log/internal/nullstream
+build third_party/abseil-cpp/absl/log/internal$:proto: phony phony/third_party/abseil-cpp/absl/log/internal/proto
+build third_party/abseil-cpp/absl/log/internal$:stderr_log_sink_test: phony 
+build third_party/abseil-cpp/absl/log/internal$:strip: phony phony/third_party/abseil-cpp/absl/log/internal/strip
+build third_party/abseil-cpp/absl/log/internal$:structured: phony phony/third_party/abseil-cpp/absl/log/internal/structured
+build third_party/abseil-cpp/absl/log/internal$:structured_proto: phony phony/third_party/abseil-cpp/absl/log/internal/structured_proto
+build third_party/abseil-cpp/absl/log/internal$:structured_proto_test: phony 
+build third_party/abseil-cpp/absl/log/internal$:test_actions: phony 
+build third_party/abseil-cpp/absl/log/internal$:test_helpers: phony 
+build third_party/abseil-cpp/absl/log/internal$:test_matchers: phony 
+build third_party/abseil-cpp/absl/log/internal$:vlog_config: phony phony/third_party/abseil-cpp/absl/log/internal/vlog_config
+build third_party/abseil-cpp/absl/log/internal$:voidify: phony 
+build third_party/abseil-cpp/absl/memory$:memory: phony 
+build third_party/abseil-cpp/absl/memory: phony 
+build third_party/abseil-cpp/absl/memory$:memory_test: phony 
+build third_party/abseil-cpp/absl/meta$:constexpr_testing: phony 
+build third_party/abseil-cpp/absl/meta$:constexpr_testing_test: phony 
+build third_party/abseil-cpp/absl/meta$:requires: phony 
+build third_party/abseil-cpp/absl/meta$:requires_test: phony 
+build third_party/abseil-cpp/absl/meta$:type_traits: phony 
+build third_party/abseil-cpp/absl/meta$:type_traits_test: phony 
+build third_party/abseil-cpp/absl/numeric$:bits: phony phony/third_party/abseil-cpp/absl/numeric/bits
+build third_party/abseil-cpp/absl/numeric$:int128: phony phony/third_party/abseil-cpp/absl/numeric/int128
+build third_party/abseil-cpp/absl/numeric$:int128_test: phony 
+build third_party/abseil-cpp/absl/numeric$:representation: phony 
+build third_party/abseil-cpp/absl/profiling$:exponential_biased: phony phony/third_party/abseil-cpp/absl/profiling/exponential_biased
+build third_party/abseil-cpp/absl/profiling$:exponential_biased_test: phony 
+build third_party/abseil-cpp/absl/profiling$:hashtable: phony phony/third_party/abseil-cpp/absl/profiling/hashtable
+build third_party/abseil-cpp/absl/profiling$:periodic_sampler: phony phony/third_party/abseil-cpp/absl/profiling/periodic_sampler
+build third_party/abseil-cpp/absl/profiling$:periodic_sampler_test: phony 
+build third_party/abseil-cpp/absl/profiling$:profile_builder: phony phony/third_party/abseil-cpp/absl/profiling/profile_builder
+build third_party/abseil-cpp/absl/profiling$:sample_recorder: phony phony/third_party/abseil-cpp/absl/profiling/sample_recorder
+build third_party/abseil-cpp/absl/random$:bit_gen_ref: phony phony/third_party/abseil-cpp/absl/random/bit_gen_ref
+build third_party/abseil-cpp/absl/random$:distributions: phony phony/third_party/abseil-cpp/absl/random/distributions
+build third_party/abseil-cpp/absl/random$:distributions_test: phony 
+build third_party/abseil-cpp/absl/random$:mock_distributions: phony 
+build third_party/abseil-cpp/absl/random$:mock_distributions_test: phony 
+build third_party/abseil-cpp/absl/random$:mocking_bit_gen: phony 
+build third_party/abseil-cpp/absl/random$:random: phony phony/third_party/abseil-cpp/absl/random/random
+build third_party/abseil-cpp/absl/random: phony phony/third_party/abseil-cpp/absl/random/random
+build third_party/abseil-cpp/absl/random$:seed_gen_exception: phony phony/third_party/abseil-cpp/absl/random/seed_gen_exception
+build third_party/abseil-cpp/absl/random$:seed_sequences: phony phony/third_party/abseil-cpp/absl/random/seed_sequences
+build third_party/abseil-cpp/absl/random/internal$:distribution_caller: phony 
+build third_party/abseil-cpp/absl/random/internal$:distribution_test_util: phony 
+build third_party/abseil-cpp/absl/random/internal$:entropy_pool: phony phony/third_party/abseil-cpp/absl/random/internal/entropy_pool
+build third_party/abseil-cpp/absl/random/internal$:explicit_seed_seq: phony 
+build third_party/abseil-cpp/absl/random/internal$:fast_uniform_bits: phony phony/third_party/abseil-cpp/absl/random/internal/fast_uniform_bits
+build third_party/abseil-cpp/absl/random/internal$:fastmath: phony phony/third_party/abseil-cpp/absl/random/internal/fastmath
+build third_party/abseil-cpp/absl/random/internal$:gaussian_distribution_gentables: phony ./gaussian_distribution_gentables
+build third_party/abseil-cpp/absl/random/internal$:generate_real: phony phony/third_party/abseil-cpp/absl/random/internal/generate_real
+build third_party/abseil-cpp/absl/random/internal$:iostream_state_saver: phony phony/third_party/abseil-cpp/absl/random/internal/iostream_state_saver
+build third_party/abseil-cpp/absl/random/internal$:mock_helpers: phony 
+build third_party/abseil-cpp/absl/random/internal$:mock_overload_set: phony 
+build third_party/abseil-cpp/absl/random/internal$:mock_validators: phony phony/third_party/abseil-cpp/absl/random/internal/mock_validators
+build third_party/abseil-cpp/absl/random/internal$:nonsecure_base: phony phony/third_party/abseil-cpp/absl/random/internal/nonsecure_base
+build third_party/abseil-cpp/absl/random/internal$:nonsecure_base_test: phony 
+build third_party/abseil-cpp/absl/random/internal$:pcg_engine: phony phony/third_party/abseil-cpp/absl/random/internal/pcg_engine
+build third_party/abseil-cpp/absl/random/internal$:platform: phony phony/third_party/abseil-cpp/absl/random/internal/platform
+build third_party/abseil-cpp/absl/random/internal$:randen: phony phony/third_party/abseil-cpp/absl/random/internal/randen
+build third_party/abseil-cpp/absl/random/internal$:randen_engine: phony phony/third_party/abseil-cpp/absl/random/internal/randen_engine
+build third_party/abseil-cpp/absl/random/internal$:randen_hwaes: phony phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes
+build third_party/abseil-cpp/absl/random/internal$:randen_hwaes_impl: phony phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes_impl
+build third_party/abseil-cpp/absl/random/internal$:randen_slow: phony phony/third_party/abseil-cpp/absl/random/internal/randen_slow
+build third_party/abseil-cpp/absl/random/internal$:salted_seed_seq: phony phony/third_party/abseil-cpp/absl/random/internal/salted_seed_seq
+build third_party/abseil-cpp/absl/random/internal$:seed_material: phony phony/third_party/abseil-cpp/absl/random/internal/seed_material
+build third_party/abseil-cpp/absl/random/internal$:sequence_urbg: phony 
+build third_party/abseil-cpp/absl/random/internal$:traits: phony phony/third_party/abseil-cpp/absl/random/internal/traits
+build third_party/abseil-cpp/absl/random/internal$:uniform_helper: phony phony/third_party/abseil-cpp/absl/random/internal/uniform_helper
+build third_party/abseil-cpp/absl/random/internal$:wide_multiply: phony phony/third_party/abseil-cpp/absl/random/internal/wide_multiply
+build third_party/abseil-cpp/absl/status$:status: phony phony/third_party/abseil-cpp/absl/status/status
+build third_party/abseil-cpp/absl/status: phony phony/third_party/abseil-cpp/absl/status/status
+build third_party/abseil-cpp/absl/status$:status_matchers: phony 
+build third_party/abseil-cpp/absl/status$:status_matchers_test: phony 
+build third_party/abseil-cpp/absl/status$:status_test: phony 
+build third_party/abseil-cpp/absl/status$:statusor: phony phony/third_party/abseil-cpp/absl/status/statusor
+build third_party/abseil-cpp/absl/status$:statusor_test: phony 
+build third_party/abseil-cpp/absl/strings$:append_and_overwrite: phony phony/third_party/abseil-cpp/absl/strings/append_and_overwrite
+build third_party/abseil-cpp/absl/strings$:append_and_overwrite_test: phony 
+build third_party/abseil-cpp/absl/strings$:ascii_test: phony 
+build third_party/abseil-cpp/absl/strings$:char_formatting_test: phony 
+build third_party/abseil-cpp/absl/strings$:charset: phony 
+build third_party/abseil-cpp/absl/strings$:charset_test: phony 
+build third_party/abseil-cpp/absl/strings$:cord: phony phony/third_party/abseil-cpp/absl/strings/cord
+build third_party/abseil-cpp/absl/strings$:cord_buffer_test: phony 
+build third_party/abseil-cpp/absl/strings$:cord_data_edge_test: phony 
+build third_party/abseil-cpp/absl/strings$:cord_internal: phony phony/third_party/abseil-cpp/absl/strings/cord_internal
+build third_party/abseil-cpp/absl/strings$:cord_rep_btree_navigator_test: phony 
+build third_party/abseil-cpp/absl/strings$:cord_rep_btree_reader_test: phony 
+build third_party/abseil-cpp/absl/strings$:cord_rep_btree_test: phony 
+build third_party/abseil-cpp/absl/strings$:cord_rep_crc_test: phony 
+build third_party/abseil-cpp/absl/strings$:cord_rep_test_util: phony 
+build third_party/abseil-cpp/absl/strings$:cord_test: phony 
+build third_party/abseil-cpp/absl/strings$:cord_test_helpers: phony 
+build third_party/abseil-cpp/absl/strings$:cordz_functions: phony phony/third_party/abseil-cpp/absl/strings/cordz_functions
+build third_party/abseil-cpp/absl/strings$:cordz_functions_test: phony 
+build third_party/abseil-cpp/absl/strings$:cordz_handle: phony phony/third_party/abseil-cpp/absl/strings/cordz_handle
+build third_party/abseil-cpp/absl/strings$:cordz_handle_test: phony 
+build third_party/abseil-cpp/absl/strings$:cordz_info: phony phony/third_party/abseil-cpp/absl/strings/cordz_info
+build third_party/abseil-cpp/absl/strings$:cordz_info_statistics_test: phony 
+build third_party/abseil-cpp/absl/strings$:cordz_info_test: phony 
+build third_party/abseil-cpp/absl/strings$:cordz_sample_token: phony phony/third_party/abseil-cpp/absl/strings/cordz_sample_token
+build third_party/abseil-cpp/absl/strings$:cordz_sample_token_test: phony 
+build third_party/abseil-cpp/absl/strings$:cordz_statistics: phony 
+build third_party/abseil-cpp/absl/strings$:cordz_test: phony 
+build third_party/abseil-cpp/absl/strings$:cordz_test_helpers: phony 
+build third_party/abseil-cpp/absl/strings$:cordz_update_scope: phony phony/third_party/abseil-cpp/absl/strings/cordz_update_scope
+build third_party/abseil-cpp/absl/strings$:cordz_update_scope_test: phony 
+build third_party/abseil-cpp/absl/strings$:cordz_update_tracker: phony 
+build third_party/abseil-cpp/absl/strings$:cordz_update_tracker_test: phony 
+build third_party/abseil-cpp/absl/strings$:damerau_levenshtein_distance_test: phony 
+build third_party/abseil-cpp/absl/strings$:generic_printer: phony phony/third_party/abseil-cpp/absl/strings/generic_printer
+build third_party/abseil-cpp/absl/strings$:generic_printer_test: phony 
+build third_party/abseil-cpp/absl/strings$:has_absl_stringify_test: phony 
+build third_party/abseil-cpp/absl/strings$:has_ostream_operator: phony 
+build third_party/abseil-cpp/absl/strings$:has_ostream_operator_test: phony 
+build third_party/abseil-cpp/absl/strings$:internal: phony phony/third_party/abseil-cpp/absl/strings/internal
+build third_party/abseil-cpp/absl/strings$:match_test: phony 
+build third_party/abseil-cpp/absl/strings$:pow10_helper: phony 
+build third_party/abseil-cpp/absl/strings$:resize_and_overwrite: phony phony/third_party/abseil-cpp/absl/strings/resize_and_overwrite
+build third_party/abseil-cpp/absl/strings$:resize_and_overwrite_test: phony 
+build third_party/abseil-cpp/absl/strings$:str_cat_test: phony 
+build third_party/abseil-cpp/absl/strings$:str_format: phony phony/third_party/abseil-cpp/absl/strings/str_format
+build third_party/abseil-cpp/absl/strings$:str_format_arg_test: phony 
+build third_party/abseil-cpp/absl/strings$:str_format_bind_test: phony 
+build third_party/abseil-cpp/absl/strings$:str_format_checker_test: phony 
+build third_party/abseil-cpp/absl/strings$:str_format_convert_test: phony 
+build third_party/abseil-cpp/absl/strings$:str_format_extension_test: phony 
+build third_party/abseil-cpp/absl/strings$:str_format_internal: phony phony/third_party/abseil-cpp/absl/strings/str_format_internal
+build third_party/abseil-cpp/absl/strings$:str_format_output_test: phony 
+build third_party/abseil-cpp/absl/strings$:str_format_parser_test: phony 
+build third_party/abseil-cpp/absl/strings$:str_format_test: phony 
+build third_party/abseil-cpp/absl/strings$:str_replace_test: phony 
+build third_party/abseil-cpp/absl/strings$:string_view: phony 
+build third_party/abseil-cpp/absl/strings$:string_view_test: phony 
+build third_party/abseil-cpp/absl/strings$:strings: phony phony/third_party/abseil-cpp/absl/strings/strings
+build third_party/abseil-cpp/absl/strings: phony phony/third_party/abseil-cpp/absl/strings/strings
+build third_party/abseil-cpp/absl/synchronization$:barrier_test: phony 
+build third_party/abseil-cpp/absl/synchronization$:graphcycles_internal: phony phony/third_party/abseil-cpp/absl/synchronization/graphcycles_internal
+build third_party/abseil-cpp/absl/synchronization$:graphcycles_test: phony 
+build third_party/abseil-cpp/absl/synchronization$:kernel_timeout_internal: phony phony/third_party/abseil-cpp/absl/synchronization/kernel_timeout_internal
+build third_party/abseil-cpp/absl/synchronization$:kernel_timeout_internal_test: phony 
+build third_party/abseil-cpp/absl/synchronization$:mutex_test: phony 
+build third_party/abseil-cpp/absl/synchronization$:per_thread_sem_test: phony 
+build third_party/abseil-cpp/absl/synchronization$:per_thread_sem_test_common: phony 
+build third_party/abseil-cpp/absl/synchronization$:synchronization: phony phony/third_party/abseil-cpp/absl/synchronization/synchronization
+build third_party/abseil-cpp/absl/synchronization: phony phony/third_party/abseil-cpp/absl/synchronization/synchronization
+build third_party/abseil-cpp/absl/synchronization$:thread_pool: phony 
+build third_party/abseil-cpp/absl/synchronization$:waiter_test: phony 
+build third_party/abseil-cpp/absl/time$:clock_interface: phony phony/third_party/abseil-cpp/absl/time/clock_interface
+build third_party/abseil-cpp/absl/time$:clock_interface_test: phony 
+build third_party/abseil-cpp/absl/time$:simulated_clock: phony 
+build third_party/abseil-cpp/absl/time$:simulated_clock_test: phony 
+build third_party/abseil-cpp/absl/time$:test_util: phony 
+build third_party/abseil-cpp/absl/time$:time: phony phony/third_party/abseil-cpp/absl/time/time
+build third_party/abseil-cpp/absl/time: phony phony/third_party/abseil-cpp/absl/time/time
+build third_party/abseil-cpp/absl/time$:time_test: phony 
+build third_party/abseil-cpp/absl/time/internal/cctz$:civil_time: phony phony/third_party/abseil-cpp/absl/time/internal/cctz/civil_time
+build third_party/abseil-cpp/absl/time/internal/cctz$:time_zone: phony phony/third_party/abseil-cpp/absl/time/internal/cctz/time_zone
+build third_party/abseil-cpp/absl/types$:any: phony 
+build third_party/abseil-cpp/absl/types$:compare: phony 
+build third_party/abseil-cpp/absl/types$:optional: phony 
+build third_party/abseil-cpp/absl/types$:optional_ref: phony 
+build third_party/abseil-cpp/absl/types$:optional_ref_test: phony 
+build third_party/abseil-cpp/absl/types$:source_location: phony 
+build third_party/abseil-cpp/absl/types$:source_location_test: phony 
+build third_party/abseil-cpp/absl/types$:span: phony phony/third_party/abseil-cpp/absl/types/span
+build third_party/abseil-cpp/absl/types$:span_test: phony 
+build third_party/abseil-cpp/absl/types$:variant: phony 
+build third_party/abseil-cpp/absl/types$:variant_test: phony 
+build third_party/abseil-cpp/absl/utility$:utility: phony 
+build third_party/abseil-cpp/absl/utility: phony 
+build third_party/fast_float$:fast_float: phony 
+build third_party/fast_float: phony 
+build third_party/googletest$:gmock: phony phony/third_party/googletest/gmock
+build third_party/googletest$:gmock_main: phony obj/third_party/googletest/libgmock_main.a
+build third_party/googletest$:gtest: phony phony/third_party/googletest/gtest
+build third_party/googletest$:gtest_main: phony phony/third_party/googletest/gtest_main
+build third_party/harfbuzz$:harfbuzz: phony obj/third_party/harfbuzz/libharfbuzz.a
+build third_party/harfbuzz: phony obj/third_party/harfbuzz/libharfbuzz.a
+build third_party/icu$:gen_icui18n_shim: phony phony/third_party/icu/gen_icui18n_shim
+build third_party/icu$:gen_icuuc_shim: phony phony/third_party/icu/gen_icuuc_shim
+build third_party/icu$:icu: phony phony/third_party/icu/icu
+build third_party/icu: phony phony/third_party/icu/icu
+build third_party/icu$:icui18n: phony phony/third_party/icu/icui18n
+build third_party/icu$:icui18n_hidden_visibility: phony phony/third_party/icu/icui18n_hidden_visibility
+build third_party/icu$:icui18n_shim: phony phony/third_party/icu/icui18n_shim
+build third_party/icu$:icuuc: phony phony/third_party/icu/icuuc
+build third_party/icu$:icuuc_public: phony phony/third_party/icu/icuuc_public
+build third_party/icu$:icuuc_shim: phony phony/third_party/icu/icuuc_shim
+build third_party/llvm-libc$:llvm-libc-shared: phony 
+build third_party/simdutf$:header: phony 
+build third_party/simdutf$:simdutf: phony phony/third_party/simdutf/simdutf
+build third_party/simdutf: phony phony/third_party/simdutf/simdutf
+build third_party/test_fonts$:test_fonts: phony phony/third_party/test_fonts/test_fonts
+build third_party/test_fonts: phony phony/third_party/test_fonts/test_fonts
+
+build all: phony $
+    phony/default $
+    phony/freetype_common $
+    ./libpdfium-qore148.so.0.TOC $
+    phony/pdfium_all $
+    ./pdfium_diff $
+    phony/pdfium_embeddertest_deps $
+    ./pdfium_embeddertests $
+    phony/pdfium_unittest_deps $
+    ./pdfium_unittests $
+    phony/build/android_buildflags $
+    phony/build/blink_buildflags $
+    phony/build/branding_buildflags $
+    phony/build/chromecast_buildflags $
+    phony/build/chromeos_buildflags $
+    phony/build/ios_buildflags $
+    phony/build/robolectric_buildflags $
+    phony/build/config/compiler/compiler_buildflags $
+    phony/build/config/coverage/buildflags $
+    obj/build/config/sanitizers/liboptions_sources.a $
+    phony/buildtools/third_party/libc++/copy_custom_headers $
+    phony/buildtools/third_party/libc++/copy_libcxx_headers $
+    obj/buildtools/third_party/libc++/libc++.a $
+    obj/buildtools/third_party/libc++abi/libc++abi.a $
+    phony/core/fdrm/fdrm $
+    phony/core/fdrm/unittests $
+    phony/core/fpdfapi/cmaps/cmaps $
+    phony/core/fpdfapi/edit/contentstream_write_utils $
+    phony/core/fpdfapi/edit/edit $
+    phony/core/fpdfapi/edit/embeddertests $
+    phony/core/fpdfapi/edit/unittests $
+    phony/core/fpdfapi/font/font $
+    phony/core/fpdfapi/font/unittests $
+    phony/core/fpdfapi/page/page $
+    phony/core/fpdfapi/page/unit_test_support $
+    phony/core/fpdfapi/page/unittests $
+    phony/core/fpdfapi/parser/embeddertests $
+    phony/core/fpdfapi/parser/parser $
+    phony/core/fpdfapi/parser/unit_test_support $
+    phony/core/fpdfapi/parser/unittests $
+    phony/core/fpdfapi/render/embeddertests $
+    phony/core/fpdfapi/render/render $
+    phony/core/fpdfapi/render/unittests $
+    phony/core/fpdfdoc/fpdfdoc $
+    phony/core/fpdfdoc/unittests $
+    phony/core/fpdftext/fpdftext $
+    phony/core/fpdftext/unittests $
+    phony/core/fxcodec/embeddertests $
+    phony/core/fxcodec/fxcodec $
+    phony/core/fxcodec/unittests $
+    phony/core/fxcrt/fxcrt $
+    phony/core/fxcrt/test_support $
+    phony/core/fxcrt/unit_test_support $
+    phony/core/fxcrt/unittests $
+    phony/core/fxge/embeddertests $
+    phony/core/fxge/fxge $
+    phony/core/fxge/unittests $
+    phony/fpdfsdk/embeddertests $
+    phony/fpdfsdk/fpdfsdk $
+    phony/fpdfsdk/unittests $
+    phony/fpdfsdk/formfiller/embeddertests $
+    phony/fpdfsdk/formfiller/formfiller $
+    phony/fpdfsdk/pwl/embedder_test_support $
+    phony/fpdfsdk/pwl/embeddertests $
+    phony/fpdfsdk/pwl/pwl $
+    phony/fxjs/fxjs $
+    phony/testing/embedder_test_support $
+    phony/testing/path_service $
+    ./pdfium_test $
+    phony/testing/pixel_diff_utils $
+    phony/testing/test_environments $
+    phony/testing/test_support $
+    phony/testing/unit_test_support $
+    phony/testing/fuzzers/fuzzer_helper $
+    phony/testing/fuzzers/fuzzer_init $
+    phony/testing/fuzzers/fuzzer_init_public $
+    phony/testing/fuzzers/fuzzer_utils $
+    phony/testing/fuzzers/fuzzers $
+    phony/testing/fuzzers/pdf_cmap_fuzzer_src $
+    phony/testing/fuzzers/pdf_codec_a85_fuzzer_src $
+    phony/testing/fuzzers/pdf_codec_fax_fuzzer_src $
+    phony/testing/fuzzers/pdf_codec_icc_fuzzer_src $
+    phony/testing/fuzzers/pdf_codec_jbig2_fuzzer_src $
+    phony/testing/fuzzers/pdf_codec_rle_fuzzer_src $
+    phony/testing/fuzzers/pdf_cpdf_tounicodemap_fuzzer_src $
+    phony/testing/fuzzers/pdf_font_fuzzer_src $
+    phony/testing/fuzzers/pdf_hint_table_fuzzer_src $
+    phony/testing/fuzzers/pdf_jpx_fuzzer_src $
+    phony/testing/fuzzers/pdf_nametree_fuzzer_src $
+    phony/testing/fuzzers/pdf_psengine_fuzzer_src $
+    phony/testing/fuzzers/pdf_scanlinecompositor_fuzzer_src $
+    phony/testing/fuzzers/pdf_streamparser_fuzzer_src $
+    phony/testing/fuzzers/pdf_xml_fuzzer_src $
+    phony/testing/fuzzers/pdfium_fuzzer_src $
+    phony/testing/gmock/gmock $
+    phony/testing/gmock/gmock_main $
+    obj/testing/gtest/libgtest.a $
+    phony/testing/gtest/gtest_main $
+    phony/testing/image_diff/image_diff $
+    phony/testing/image_diff/unittests $
+    phony/testing/tools/test_runner_py $
+    phony/third_party/fx_agg $
+    phony/third_party/fx_freetype $
+    phony/third_party/fx_lcms2 $
+    phony/third_party/fx_libopenjpeg $
+    phony/third_party/abseil-cpp/absl $
+    phony/third_party/abseil-cpp/absl_component_deps $
+    phony/third_party/abseil-cpp/absl_full $
+    phony/third_party/abseil-cpp/absl_full_deps $
+    phony/third_party/abseil-cpp/test_support $
+    phony/third_party/abseil-cpp/absl/base/base $
+    phony/third_party/abseil-cpp/absl/base/endian $
+    phony/third_party/abseil-cpp/absl/base/hardening $
+    phony/third_party/abseil-cpp/absl/base/log_severity $
+    phony/third_party/abseil-cpp/absl/base/malloc_internal $
+    phony/third_party/abseil-cpp/absl/base/poison $
+    phony/third_party/abseil-cpp/absl/base/raw_logging_internal $
+    phony/third_party/abseil-cpp/absl/base/spinlock_wait $
+    phony/third_party/abseil-cpp/absl/base/strerror $
+    phony/third_party/abseil-cpp/absl/base/throw_delegate $
+    phony/third_party/abseil-cpp/absl/base/tracing_internal $
+    phony/third_party/abseil-cpp/absl/container/btree $
+    phony/third_party/abseil-cpp/absl/container/chunked_queue $
+    phony/third_party/abseil-cpp/absl/container/container_memory $
+    phony/third_party/abseil-cpp/absl/container/fixed_array $
+    phony/third_party/abseil-cpp/absl/container/flat_hash_map $
+    phony/third_party/abseil-cpp/absl/container/flat_hash_set $
+    phony/third_party/abseil-cpp/absl/container/hash_container_defaults $
+    phony/third_party/abseil-cpp/absl/container/hash_function_defaults $
+    phony/third_party/abseil-cpp/absl/container/hash_policy_traits $
+    phony/third_party/abseil-cpp/absl/container/hashtable_control_bytes $
+    phony/third_party/abseil-cpp/absl/container/hashtablez_sampler $
+    phony/third_party/abseil-cpp/absl/container/inlined_vector $
+    phony/third_party/abseil-cpp/absl/container/inlined_vector_internal $
+    phony/third_party/abseil-cpp/absl/container/layout $
+    phony/third_party/abseil-cpp/absl/container/linked_hash_map $
+    phony/third_party/abseil-cpp/absl/container/linked_hash_set $
+    phony/third_party/abseil-cpp/absl/container/node_hash_map $
+    phony/third_party/abseil-cpp/absl/container/node_hash_set $
+    phony/third_party/abseil-cpp/absl/container/raw_hash_map $
+    phony/third_party/abseil-cpp/absl/container/raw_hash_set $
+    phony/third_party/abseil-cpp/absl/crc/cpu_detect $
+    phony/third_party/abseil-cpp/absl/crc/crc32c $
+    phony/third_party/abseil-cpp/absl/crc/crc_cord_state $
+    phony/third_party/abseil-cpp/absl/crc/crc_internal $
+    phony/third_party/abseil-cpp/absl/debugging/bounded_utf8_length_sequence $
+    phony/third_party/abseil-cpp/absl/debugging/debugging_internal $
+    phony/third_party/abseil-cpp/absl/debugging/decode_rust_punycode $
+    phony/third_party/abseil-cpp/absl/debugging/demangle_internal $
+    phony/third_party/abseil-cpp/absl/debugging/demangle_rust $
+    phony/third_party/abseil-cpp/absl/debugging/examine_stack $
+    phony/third_party/abseil-cpp/absl/debugging/failure_signal_handler $
+    phony/third_party/abseil-cpp/absl/debugging/leak_check $
+    phony/third_party/abseil-cpp/absl/debugging/stacktrace $
+    phony/third_party/abseil-cpp/absl/debugging/symbolize $
+    phony/third_party/abseil-cpp/absl/debugging/utf8_for_code_point $
+    phony/third_party/abseil-cpp/absl/flags/commandlineflag $
+    phony/third_party/abseil-cpp/absl/flags/commandlineflag_internal $
+    phony/third_party/abseil-cpp/absl/flags/config $
+    phony/third_party/abseil-cpp/absl/flags/flag $
+    phony/third_party/abseil-cpp/absl/flags/flag_internal $
+    phony/third_party/abseil-cpp/absl/flags/marshalling $
+    phony/third_party/abseil-cpp/absl/flags/parse $
+    phony/third_party/abseil-cpp/absl/flags/private_handle_accessor $
+    phony/third_party/abseil-cpp/absl/flags/program_name $
+    phony/third_party/abseil-cpp/absl/flags/reflection $
+    phony/third_party/abseil-cpp/absl/flags/usage $
+    phony/third_party/abseil-cpp/absl/flags/usage_internal $
+    phony/third_party/abseil-cpp/absl/hash/city $
+    phony/third_party/abseil-cpp/absl/hash/hash $
+    phony/third_party/abseil-cpp/absl/log/absl_check $
+    phony/third_party/abseil-cpp/absl/log/absl_log $
+    phony/third_party/abseil-cpp/absl/log/absl_vlog_is_on $
+    phony/third_party/abseil-cpp/absl/log/check $
+    phony/third_party/abseil-cpp/absl/log/die_if_null $
+    phony/third_party/abseil-cpp/absl/log/flags $
+    phony/third_party/abseil-cpp/absl/log/globals $
+    phony/third_party/abseil-cpp/absl/log/initialize $
+    phony/third_party/abseil-cpp/absl/log/log $
+    phony/third_party/abseil-cpp/absl/log/log_entry $
+    phony/third_party/abseil-cpp/absl/log/log_sink $
+    phony/third_party/abseil-cpp/absl/log/log_sink_registry $
+    phony/third_party/abseil-cpp/absl/log/log_streamer $
+    phony/third_party/abseil-cpp/absl/log/vlog_is_on $
+    phony/third_party/abseil-cpp/absl/log/internal/append_truncated $
+    phony/third_party/abseil-cpp/absl/log/internal/check_impl $
+    phony/third_party/abseil-cpp/absl/log/internal/check_op $
+    phony/third_party/abseil-cpp/absl/log/internal/conditions $
+    phony/third_party/abseil-cpp/absl/log/internal/container $
+    phony/third_party/abseil-cpp/absl/log/internal/flags $
+    phony/third_party/abseil-cpp/absl/log/internal/fnmatch $
+    phony/third_party/abseil-cpp/absl/log/internal/format $
+    phony/third_party/abseil-cpp/absl/log/internal/globals $
+    phony/third_party/abseil-cpp/absl/log/internal/log_impl $
+    phony/third_party/abseil-cpp/absl/log/internal/log_message $
+    phony/third_party/abseil-cpp/absl/log/internal/log_sink_set $
+    phony/third_party/abseil-cpp/absl/log/internal/nullguard $
+    phony/third_party/abseil-cpp/absl/log/internal/nullstream $
+    phony/third_party/abseil-cpp/absl/log/internal/proto $
+    phony/third_party/abseil-cpp/absl/log/internal/strip $
+    phony/third_party/abseil-cpp/absl/log/internal/structured $
+    phony/third_party/abseil-cpp/absl/log/internal/structured_proto $
+    phony/third_party/abseil-cpp/absl/log/internal/vlog_config $
+    phony/third_party/abseil-cpp/absl/numeric/bits $
+    phony/third_party/abseil-cpp/absl/numeric/int128 $
+    phony/third_party/abseil-cpp/absl/profiling/exponential_biased $
+    phony/third_party/abseil-cpp/absl/profiling/hashtable $
+    phony/third_party/abseil-cpp/absl/profiling/periodic_sampler $
+    phony/third_party/abseil-cpp/absl/profiling/profile_builder $
+    phony/third_party/abseil-cpp/absl/profiling/sample_recorder $
+    phony/third_party/abseil-cpp/absl/random/bit_gen_ref $
+    phony/third_party/abseil-cpp/absl/random/distributions $
+    phony/third_party/abseil-cpp/absl/random/random $
+    phony/third_party/abseil-cpp/absl/random/seed_gen_exception $
+    phony/third_party/abseil-cpp/absl/random/seed_sequences $
+    phony/third_party/abseil-cpp/absl/random/internal/entropy_pool $
+    phony/third_party/abseil-cpp/absl/random/internal/fast_uniform_bits $
+    phony/third_party/abseil-cpp/absl/random/internal/fastmath $
+    ./gaussian_distribution_gentables $
+    phony/third_party/abseil-cpp/absl/random/internal/generate_real $
+    phony/third_party/abseil-cpp/absl/random/internal/iostream_state_saver $
+    phony/third_party/abseil-cpp/absl/random/internal/mock_validators $
+    phony/third_party/abseil-cpp/absl/random/internal/nonsecure_base $
+    phony/third_party/abseil-cpp/absl/random/internal/pcg_engine $
+    phony/third_party/abseil-cpp/absl/random/internal/platform $
+    phony/third_party/abseil-cpp/absl/random/internal/randen $
+    phony/third_party/abseil-cpp/absl/random/internal/randen_engine $
+    phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes $
+    phony/third_party/abseil-cpp/absl/random/internal/randen_hwaes_impl $
+    phony/third_party/abseil-cpp/absl/random/internal/randen_slow $
+    phony/third_party/abseil-cpp/absl/random/internal/salted_seed_seq $
+    phony/third_party/abseil-cpp/absl/random/internal/seed_material $
+    phony/third_party/abseil-cpp/absl/random/internal/traits $
+    phony/third_party/abseil-cpp/absl/random/internal/uniform_helper $
+    phony/third_party/abseil-cpp/absl/random/internal/wide_multiply $
+    phony/third_party/abseil-cpp/absl/status/status $
+    phony/third_party/abseil-cpp/absl/status/statusor $
+    phony/third_party/abseil-cpp/absl/strings/append_and_overwrite $
+    phony/third_party/abseil-cpp/absl/strings/cord $
+    phony/third_party/abseil-cpp/absl/strings/cord_internal $
+    phony/third_party/abseil-cpp/absl/strings/cordz_functions $
+    phony/third_party/abseil-cpp/absl/strings/cordz_handle $
+    phony/third_party/abseil-cpp/absl/strings/cordz_info $
+    phony/third_party/abseil-cpp/absl/strings/cordz_sample_token $
+    phony/third_party/abseil-cpp/absl/strings/cordz_update_scope $
+    phony/third_party/abseil-cpp/absl/strings/generic_printer $
+    phony/third_party/abseil-cpp/absl/strings/internal $
+    phony/third_party/abseil-cpp/absl/strings/resize_and_overwrite $
+    phony/third_party/abseil-cpp/absl/strings/str_format $
+    phony/third_party/abseil-cpp/absl/strings/str_format_internal $
+    phony/third_party/abseil-cpp/absl/strings/strings $
+    phony/third_party/abseil-cpp/absl/synchronization/graphcycles_internal $
+    phony/third_party/abseil-cpp/absl/synchronization/kernel_timeout_internal $
+    phony/third_party/abseil-cpp/absl/synchronization/synchronization $
+    phony/third_party/abseil-cpp/absl/time/clock_interface $
+    phony/third_party/abseil-cpp/absl/time/time $
+    phony/third_party/abseil-cpp/absl/time/internal/cctz/civil_time $
+    phony/third_party/abseil-cpp/absl/time/internal/cctz/time_zone $
+    phony/third_party/abseil-cpp/absl/types/span $
+    phony/third_party/googletest/gmock $
+    obj/third_party/googletest/libgmock_main.a $
+    phony/third_party/googletest/gtest $
+    phony/third_party/googletest/gtest_main $
+    obj/third_party/harfbuzz/libharfbuzz.a $
+    phony/third_party/icu/gen_icui18n_shim $
+    phony/third_party/icu/gen_icuuc_shim $
+    phony/third_party/icu/icu $
+    phony/third_party/icu/icui18n $
+    phony/third_party/icu/icui18n_hidden_visibility $
+    phony/third_party/icu/icui18n_shim $
+    phony/third_party/icu/icuuc $
+    phony/third_party/icu/icuuc_public $
+    phony/third_party/icu/icuuc_shim $
+    phony/third_party/simdutf/simdutf $
+    phony/third_party/test_fonts/test_fonts
+
+default default

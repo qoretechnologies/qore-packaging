@@ -1,0 +1,21 @@
+Distribution compiler does not support -fno-lifetime-dse
+Distribution compiler does not support -fsanitize-ignore-for-ubsan-feature=array-bounds
+Distribution compiler does not support -Wno-unsafe-buffer-usage-in-static-sized-array
+Distribution compiler does not support -fsanitize-ignore-for-ubsan-feature=return
+--- before/build.ninja
++++ after/build.ninja
+@@ -1,7 +1,7 @@
+ ninja_required_version = 1.7.2
+ 
+ rule gn
+-  command = ../../gn-src/out/gn --root=../.. -q --regeneration gen .
++  command = ../../gn-src/out/gn --root=../.. -q --fail-on-unused-args --regeneration gen .
+   pool = console
+   description = Regenerating ninja files
+ 
+
+Traceback (most recent call last):
+  File "/control.py", line 42, in <module>
+    assert not differences,differences
+           ^^^^^^^^^^^^^^^
+AssertionError: ['build.ninja']

@@ -188,6 +188,28 @@ class PdfiumBuildTest(unittest.TestCase):
         with self.assertRaises(subprocess.CalledProcessError):
             self.configure()
 
+    def test_allocator_policy_uses_the_declared_pdfium_argument(self):
+        self.configure()
+        command = self.run.call_args_list[-1].args[0]
+        self.assertIn("--fail-on-unused-args", command)
+        arguments = command[-1].removeprefix("--args=").split()
+        self.assertIn("pdf_use_partition_alloc=false", arguments)
+        names = {argument.split("=", 1)[0] for argument in arguments}
+        self.assertNotIn("use_allocator_shim", names)
+        self.assertNotIn("use_partition_alloc_as_malloc", names)
+
+    def test_gn_argument_error_aborts_configuration(self):
+        def run(command, **kwargs):
+            if command[:2] == ["gn-src/out/gn", "gen"]:
+                self.assertTrue(kwargs["check"])
+                raise subprocess.CalledProcessError(1, command, stderr="Build argument has no effect")
+            return subprocess.CompletedProcess(command, 0)
+        self.run.side_effect = run
+        with self.assertRaises(subprocess.CalledProcessError) as error:
+            self.configure()
+        self.assertEqual(error.exception.returncode, 1)
+        self.assertEqual(error.exception.stderr, "Build argument has no effect")
+
 
 if __name__ == "__main__":
     unittest.main()

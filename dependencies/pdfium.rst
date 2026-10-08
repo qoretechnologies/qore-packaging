@@ -23,6 +23,10 @@ as PDFium itself does. The C API check also selects LLD, so OBS's LTO flags do
 not require an unrelated LLVMgold plugin. Distribution compiler and linker
 flags remain enabled.
 
+GN generation rejects undeclared build arguments. The allocator policy uses
+PDFium's declared ``pdf_use_partition_alloc`` option; Chromium's allocator-shim
+options are not part of this standalone build graph.
+
 Original archive URLs refer to upstream downloads. Generated source repacks
 have immutable OBS download URLs for the already staged source revision;
 their upstream revisions, generation recipes and SHA-256 hashes remain in

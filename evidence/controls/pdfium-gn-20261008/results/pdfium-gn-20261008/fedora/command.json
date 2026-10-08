@@ -1,0 +1,20 @@
+[
+  "docker",
+  "run",
+  "--rm",
+  "--init",
+  "--network",
+  "none",
+  "--user",
+  "1019:100",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/results/pdfium-gn-20261008/fedora:/control",
+  "-v",
+  "/home/david/src/qore/git/qore-packaging/work/pdfium-gn-control-20261008.py:/control.py:ro",
+  "-w",
+  "/control/source/qore-pdfium-148.0.7778+ds",
+  "sha256:b5b631ae11fd308b8fbe57a3998c15a0436e0c86b3d6874a75cfa5af15254859",
+  "python3",
+  "/control.py",
+  "fedora"
+]
