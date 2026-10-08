@@ -1,0 +1,19 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--user",
+    "1019:100",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/node-arm-regexp-control-20261008:/work:ro",
+    "qore-rpm-keep:leap-v8-node-canonical-final-installed-runtime-1",
+    "node",
+    "--regexp-tier-up-ticks=0",
+    "--trace-regexp-tier-up",
+    "/work/runtime.js"
+  ],
+  "exit_code": 0
+}

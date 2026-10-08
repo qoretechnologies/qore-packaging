@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Focused control qualified and reviewed under the existing user-approved V8 exhaustive-enum policy. Native ARM package runtime and complete final OBS warning inventory remain required.",
+  "diagnostic": "[ 4264s] ../deps/v8/src/regexp/arm64/regexp-macro-assembler-arm64.cc:866:1: warning: control reaches end of non-void function [-Wreturn-type]",
+  "function": "RegExpMacroAssemblerARM64::CheckSpecialClassRanges(StandardCharacterSet, Label*)",
+  "root_cause": "The switch returns for all nine declared fixed-underlying-char enum members. GCC keeps a fallthrough path for unnamed char values; reviewed callers supply only declared members.",
+  "source_review": [
+    "regexp-compiler.cc EmitClassRanges calls standard_type() only after is_standard(zone) verifies a recognized standard class.",
+    "regexp-compiler-tonode.cc RegExpClassRanges::is_standard assigns only six named members after exact range comparison. Already-standard CharacterSet instances are constructed with named StandardCharacterSet values.",
+    "regexp-compiler.cc EmitWordCheck selects only kWord/kNotWord; EmitHat supplies kLineTerminator.",
+    "regexp-parser.cc TryParseCharacterClassEscape casts next only inside cases d,D,s,S,w,W; dot parsing supplies named kEverything/kNotLineTerminator. The enum declaration contains exactly the nine cases handled by the ARM64 function."
+  ],
+  "coverage": {
+    "control_checks_per_execution": 461073,
+    "control_executions": 4,
+    "control_total_checks": 1844292,
+    "cases": "All nine declared enum members in LATIN1/UC16; all 256/65,536 code units for emitted paths; implicit backtracking and explicit rejection labels; three generic fallback selections.",
+    "compiler": "GCC 13 reproduces exactly the original return-type warning in each control compilation.",
+    "valgrind": "Both runs report zero errors; all 128 allocations per run are freed. No suppressions.",
+    "actual_node_x86_64": {
+      "node": "v24.18.1",
+      "arch": "x64",
+      "checks": 1179702,
+      "result": "pass"
+    },
+    "actual_node_tiering": "--regexp-tier-up-ticks=0 and --trace-regexp-tier-up confirm native regexp code generation.",
+    "native_arm_runtime": "Not yet performed; current OBS native build remains in progress."
+  },
+  "limits": [
+    "The complete enum declaration and ARM64 method body are verbatim source extracts. Typed instruction recorder/interpreter adapters model the exercised Cmp/Ccmp/Sub/conditional branch/table load operations; these are not ARM64 machine-code execution.",
+    "The independent membership oracle enumerates the character classes without copying the instruction sequence. Explicit-label checks use an inverse final outcome to verify branch destinations.",
+    "The control runs on x86_64. Actual packaged Node checks execute the x86_64 backend; the same runtime.js is ready for native ARM installed-package qualification.",
+    "The two macro configurations use the same unchanged method, which contains no DEBUG-dependent branch; they do not provide distinct algorithm coverage.",
+    "No invalid unnamed enum is passed. Source producer invariants, rather than undefined C++ fallthrough execution, establish that those values cannot reach the method.",
+    "No package compiler flags, suppressions, runtime code or test budgets change. Native architecture/package qualification and final warning inventory remain separate gates."
+  ],
+  "compiler_image": "sha256:471fb347e0308caa05f79e41ca4813767c6a7a687f03cc823a78b2a8e81a3414",
+  "approval": {
+    "basis": "existing user-approved policy; no new user response is claimed",
+    "evidence": "evidence/node-gcc-return-policy-proposal-20261006.json",
+    "scope": "Permit reviewed GCC diagnostics for V8 exhaustive enum switches; retain warnings in build logs. Other warning families, actual missing valid-input returns and the uninstantiable CodeAssembler template require separate resolution.",
+    "applicability": "The unchanged V8 switch returns for all declared enum members; source producers cannot supply unnamed values. Qualified controls cover all declared values. No additional flag, suppression or runtime policy is introduced.",
+    "clarification": "The earlier per-site approval request was unnecessary because this reviewed warning satisfies the already authorized exhaustive-enum policy. The policy qualification gates remain open."
+  },
+  "files_sha256": {
+    "evidence/controls/node-arm-regexp-20261008/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-arm-regexp-20261008/compiler.txt": "c156fdc64a173cd296538baac613497b9b25257e1f6347e8ecd6e3044189da96",
+    "evidence/controls/node-arm-regexp-20261008/control.cc": "11e751018f4ef8f0193fb8e50f99b767c9fe8d30f5c6d3f9089259d99f2d4893",
+    "evidence/controls/node-arm-regexp-20261008/debug-compile.log.gz": "89a576c4f9a74d88803b09d390b12cc48feee3ed14b1eafcf810d19797fd5790",
+    "evidence/controls/node-arm-regexp-20261008/debug-memory.log.gz": "78e76c5b5b0d86cb5cf889e3e98c2b21279ab40b40882ee552140c3daf7400ad",
+    "evidence/controls/node-arm-regexp-20261008/debug-normal.log.gz": "78e76c5b5b0d86cb5cf889e3e98c2b21279ab40b40882ee552140c3daf7400ad",
+    "evidence/controls/node-arm-regexp-20261008/debug-valgrind.log.gz": "947c59142aca0637fcd4d76c2417b31be8252d96fbea3fcab1d179a053add9ba",
+    "evidence/controls/node-arm-regexp-20261008/observed.json": "2669e2f26bee623563cb01e0f9b888824fd9454f3790183b662d1373e64b45b1",
+    "evidence/controls/node-arm-regexp-20261008/prepare.py": "64681c80a16969efd10ef7a4e8c6cf91861bf33d7a8ed29297c935fbde4ed3ad",
+    "evidence/controls/node-arm-regexp-20261008/record.py": "a0d294279ff17d09a0e20206139a7b1e9dbe9da9cbe7f11f3cbfccd5e75b0c4d",
+    "evidence/controls/node-arm-regexp-20261008/release-compile.log.gz": "89a576c4f9a74d88803b09d390b12cc48feee3ed14b1eafcf810d19797fd5790",
+    "evidence/controls/node-arm-regexp-20261008/release-memory.log.gz": "78e76c5b5b0d86cb5cf889e3e98c2b21279ab40b40882ee552140c3daf7400ad",
+    "evidence/controls/node-arm-regexp-20261008/release-normal.log.gz": "78e76c5b5b0d86cb5cf889e3e98c2b21279ab40b40882ee552140c3daf7400ad",
+    "evidence/controls/node-arm-regexp-20261008/release-valgrind.log.gz": "5a74ec8b04bc420612b96e4739074765e0333f37faa0f65db429bfd9e0fe348e",
+    "evidence/controls/node-arm-regexp-20261008/run.py": "18340988507ce7915915adb6c1c8794f1883faf19950729ca1a5476ef71dbc1f",
+    "evidence/controls/node-arm-regexp-20261008/runtime-x86_64-status.json": "503fa4dcc8387c4bb28e149d986fbfcbfe1c57d56ef260d87b253f9d62500960",
+    "evidence/controls/node-arm-regexp-20261008/runtime-x86_64.log.gz": "61b121cdef14d74ae367e1ab018ab9dbc5a4df718db388506a9a77c1859df485",
+    "evidence/controls/node-arm-regexp-20261008/runtime.js": "db87481748d0179fa8788293d5ba556c4b085c8659b2d89ce4277c51794faa8f",
+    "evidence/controls/node-arm-regexp-20261008/source-extracts.json": "b6a86abe03edfffe225d834b252823d6e3ce128c1d0c4ad998194dcca350d0b0",
+    "evidence/controls/node-arm-regexp-20261008/status.json": "d4498ee556a820ac1c3199b446ab3e7661b6f3442e8f90fd46e978fa6188fd23"
+  }
+}

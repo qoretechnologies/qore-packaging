@@ -1,0 +1,16 @@
+# Copyright 2026 Qore Technologies, s.r.o.; BSD-3-Clause.
+# Compile the private ARM feature helper only when a selected platform provides its caller.
+--- a/deps/v8/third_party/zlib/cpu_features.c
++++ b/deps/v8/third_party/zlib/cpu_features.c
+@@ -96,7 +96,10 @@
+ #endif
+ 
+ #if (defined(__ARM_NEON__) || defined(__ARM_NEON))
+-#if !defined(ARMV8_OS_MACOS)
++#if !defined(ARMV8_OS_MACOS) && \
++    (defined(ARMV8_OS_ANDROID) || defined(ARMV8_OS_LINUX) || \
++     defined(ARMV8_OS_FUCHSIA) || defined(ARMV8_OS_WINDOWS) || \
++     defined(ARMV8_OS_IOS))
+ /*
+  * See http://bit.ly/2CcoEsr for run-time detection of ARM features and also
+  * crbug.com/931275 for android_getCpuFeatures() use in the Android sandbox.

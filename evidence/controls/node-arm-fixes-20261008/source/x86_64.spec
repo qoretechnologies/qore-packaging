@@ -1,23 +1,23 @@
-# Copyright (C) 2026 Qore Technologies, s.r.o.
-# SPDX-License-Identifier: MIT
-#!BuildConstraint: hardware:physicalmemory:size unit=G 16
-#!BuildConstraint: hardware:disk:size unit=G 24
-%global source_date_epoch_from_changelog 1
-%global use_source_date_epoch_as_buildtime 1
-%if v"%{rpmversion}" >= v"4.20"
-%global build_mtime_policy clamp_to_source_date_epoch
-%else
-%global clamp_mtime_to_source_date_epoch 1
-%endif
-%global soname 137
+
+
+
+
+
+
+
+
+
+
+
+
 Name: nodejs24-libnode
 Version: 24.18.1
-Release: 1.qore%{?dist}
+Release: 1.qore
 Summary: Shared NodeJS 24 library for embedded JavaScript
 License: MIT AND BSD-2-Clause AND BSD-3-Clause AND Apache-2.0 AND ISC AND BlueOak-1.0.0 AND CC0-1.0 AND blessing
 URL: https://nodejs.org/
-Source0: https://nodejs.org/dist/v%{version}/node-v%{version}.tar.xz
-Source1: https://api.opensuse.org/public/source/home:davidnichols:qore:testing/%{name}/node-v24.18.1-doc-deps.tar.xz
+Source0: https://nodejs.org/dist/v24.18.1/node-v24.18.1.tar.xz
+Source1: https://api.opensuse.org/public/source/home:davidnichols:qore:testing/nodejs24-libnode/node-v24.18.1-doc-deps.tar.xz
 Source2: nodejs24-doc-deps.json
 Source3: nodejs24-localizationData-v77.1.json
 Source4: nodejs24-detached-thread-counter.c
@@ -40,7 +40,7 @@ Source20: nodejs24-timezone-index-test.py
 Source21: nodejs24-external-string-resource-test.cc
 Source22: nodejs24-reschedule-test.cc
 Source23: nodejs24-reschedule-test.py
-Source24: https://api.opensuse.org/public/source/home:davidnichols:qore:testing/%{name}/node-v24.18.1-wasm-deopt-tests.tar.xz
+Source24: https://api.opensuse.org/public/source/home:davidnichols:qore:testing/nodejs24-libnode/node-v24.18.1-wasm-deopt-tests.tar.xz
 Source25: nodejs24-wasm-deopt-test.cc
 Source26: nodejs24-wasm-deopt-test.py
 Source27: nodejs24-wasm-deopt-tests.json
@@ -85,16 +85,16 @@ BuildRequires: pkgconfig(libzstd)
 BuildRequires: procps
 BuildRequires: timezone
 BuildRequires: openssl
-%if 0%{?suse_version}
-# Supply IPv4 and IPv6 localhost names for the offline network/report tests.
+
+
 BuildRequires: netcfg
-%endif
+
 
 %description
 Shared NodeJS runtime and matching headers for applications embedding V8 and
 Node APIs. This source package complements the distribution's Node executable.
 
-%package -n libnode%{soname}
+%package -n libnode137
 Summary: Shared NodeJS 24 runtime
 Provides: bundled(ada) = 3.4.4
 Provides: bundled(libuv) = 1.52.1
@@ -109,7 +109,7 @@ Provides: bundled(simdjson) = 4.6.4
 Provides: bundled(sqlite) = 3.53.1
 Provides: bundled(uvwasi) = 0.0.23
 Provides: bundled(v8) = 13.6.233.17
-%description -n libnode%{soname}
+%description -n libnode137
 NodeJS and V8 shared library, including built-in TypeScript transformation.
 TLS, ICU, compression, HTTP/2 and DNS use system shared libraries.
 SQLite uses Node's private build with the complete Node SQL feature set.
@@ -117,21 +117,130 @@ Bundled components retain their upstream notices in the complete LICENSE file.
 
 %package -n libnode-devel
 Summary: Development headers for the NodeJS 24 shared runtime
-Requires: libnode%{soname} = %{version}-%{release}
+Requires: libnode137 = 24.18.1-1.qore
 %description -n libnode-devel
 Matching development headers and linker files for embedding the shared NodeJS
 runtime in native applications.
 
 %prep
-%autosetup -p1 -n node-v%{version}
-cp %{SOURCE8} SQLITE-LICENSE
-%{__tar} -xf %{SOURCE24}
-cmp %{SOURCE27} wasm-deopt-tests/sources.json
+
+cd '/usr/src/packages/BUILD/nodejs24-libnode-24.18.1-build'
+rm -rf 'node-v24.18.1'
+/usr/lib/rpm/rpmuncompress -x '/sources/node-v24.18.1.tar.xz'
+STATUS=$?
+if [ $STATUS -ne 0 ]; then
+  exit $STATUS
+fi
+cd 'node-v24.18.1'
+/usr/bin/chmod -Rf a+rX,u+w,g-w,o-w .
+
+
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-cxx-visibility.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-cppgc-realm-lifetime.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-compression-cleanup.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-inspector-environments.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-ada-conversion-result.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-sqlite-types.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-sqlite-lengths.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-crypto-test-types.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-platform-priority.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-allocation-status.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-page-permissions.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-zlib-cpu-declaration.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-v8-return-paths.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-v8-diagnostics.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-v8-source-comments.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-compaction-trace.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-timezone-index.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-external-string-resource.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-reschedule-end.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-dns-test-lifetimes.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-wasm-deopt-metadata.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-credential-test-error.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-arm-header-operand.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+/usr/lib/rpm/rpmuncompress /sources/nodejs24-arm-cpu-feature-guard.patch | 
+/usr/bin/patch -p1 -s --fuzz=0 --no-backup-if-mismatch -f
+
+
+cp /sources/nodejs24-SQLITE-LICENSE SQLITE-LICENSE
+/usr/bin/tar -xf /sources/node-v24.18.1-wasm-deopt-tests.tar.xz
+cmp /sources/nodejs24-wasm-deopt-tests.json wasm-deopt-tests/sources.json
 # Locked documentation tools also generate the native addon example tests.
-%{__tar} -xf %{SOURCE1} -C tools/doc
-cp %{SOURCE2} tools/doc/QORE-DEPENDENCIES.json
+/usr/bin/tar -xf /sources/node-v24.18.1-doc-deps.tar.xz -C tools/doc
+cp /sources/nodejs24-doc-deps.json tools/doc/QORE-DEPENDENCIES.json
 # Upstream versioned ICU fixture for the Leap system library.
-cp %{SOURCE3} test/fixtures/icu/localizationData-v77.1.json
+cp /sources/nodejs24-localizationData-v77.1.json test/fixtures/icu/localizationData-v77.1.json
 # The complete dependency tree is supplied as source; mark the Make target
 # current against its package.json prerequisite to keep the build offline.
 touch -r tools/doc/package.json tools/doc/node_modules
@@ -139,36 +248,32 @@ touch -r tools/doc/package.json tools/doc/node_modules
 %build
 # Configure must own LTO so external flags cannot override its assembly handling.
 # The helper also retains the approved openSUSE return-type warning policy.
-python3 %{SOURCE18} --cflags="%{optflags}" --ldflags="%{?build_ldflags}" > node-build-flags.sh
+python3 /sources/nodejs24-build-flags.py --cflags="-O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g" --ldflags="-flto=auto" > node-build-flags.sh
 . ./node-build-flags.sh
-python3 configure ${NODE_LTO_OPTION} --shared --prefix=%{_prefix} --libdir=%{_lib} \
+python3 configure ${NODE_LTO_OPTION} --shared --prefix=/usr --libdir=lib64 \
     --without-npm --without-corepack --shared-openssl --shared-zlib \
     --shared-cares --shared-nghttp2 --shared-brotli --shared-zstd \
     --with-intl=system-icu --openssl-use-def-ca-store
-%make_build
+/usr/bin/make -O -j${RPM_BUILD_NCPUS} V=1 VERBOSE=1
 
 %install
-install -D -m 0755 out/Release/libnode.so.%{soname} %{buildroot}%{_libdir}/libnode.so.%{soname}
-ln -s libnode.so.%{soname} %{buildroot}%{_libdir}/libnode.so
-python3 tools/install.py install --headers-only --dest-dir=%{buildroot} --prefix=%{_prefix}
+install -D -m 0755 out/Release/libnode.so.137 /usr/src/packages/BUILD/nodejs24-libnode-24.18.1-build/BUILDROOT/usr/lib64/libnode.so.137
+ln -s libnode.so.137 /usr/src/packages/BUILD/nodejs24-libnode-24.18.1-build/BUILDROOT/usr/lib64/libnode.so
+python3 tools/install.py install --headers-only --dest-dir=/usr/src/packages/BUILD/nodejs24-libnode-24.18.1-build/BUILDROOT --prefix=/usr
 
 %check
-%ifarch aarch64
-# Keep ARM headers independently usable and test the actual immediate/register types.
-python3 %{SOURCE29} --source . --test-source %{SOURCE28} --output out/arm-operand-control
-%endif
 # Link controls to the built file: Node does not create an unversioned build-tree
 # symlink, and an installed libnode-devel must never satisfy these link inputs.
 # Reject invalid native metadata and exercise all upstream Wasm deoptimization suites.
-python3 %{SOURCE26} --source . --test-source %{SOURCE25} \
-    --native-helper %{SOURCE23} --tests wasm-deopt-tests --output out/wasm-deopt-control
+python3 /sources/nodejs24-wasm-deopt-test.py --source . --test-source /sources/nodejs24-wasm-deopt-test.cc \
+    --native-helper /sources/nodejs24-reschedule-test.py --tests wasm-deopt-tests --output out/wasm-deopt-control
 # Exercise the actual native compiler archives and their generated snapshot.
-python3 %{SOURCE23} --source . --test-source %{SOURCE22} \
+python3 /sources/nodejs24-reschedule-test.py --source . --test-source /sources/nodejs24-reschedule-test.cc \
     --output out/reschedule-control
 # Verify actual external resources and their forwarded one-byte representation.
-g++ %{optflags} -std=c++20 -Wall -Werror=return-type -Ideps/v8/include \
-    %{SOURCE21} -Lout/Release -Wl,-rpath,"$PWD/out/Release" \
-    out/Release/libnode.so.%{soname} -licuuc -lcrypto -ldl -pthread -o out/external-string-resource-control
+g++ -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -std=c++20 -Wall -Werror=return-type -Ideps/v8/include \
+    /sources/nodejs24-external-string-resource-test.cc -Lout/Release -Wl,-rpath,"$PWD/out/Release" \
+    out/Release/libnode.so.137 -licuuc -lcrypto -ldl -pthread -o out/external-string-resource-control
 out/external-string-resource-control ordinary
 out/external-string-resource-control shared
 python3 - <<'EXTERNALCHECK'
@@ -182,28 +287,28 @@ for mode in ('ordinary', 'shared'):
     print('Incorrect external string resource rejected:', mode)
 EXTERNALCHECK
 # Negative internal timezone indexes must fail a CHECK before enumeration.
-python3 %{SOURCE20} --source . --output out/timezone-index-control --cxxflags="%{optflags}"
+python3 /sources/nodejs24-timezone-index-test.py --source . --output out/timezone-index-control --cxxflags="-O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g"
 # Keep the same distribution flags when test-build regenerates native targets.
 . ./node-build-flags.sh
 # Keep the c-ares lint exception safe for every architecture and source update.
-python3 %{SOURCE9} out/Release/libnode.so.%{soname}
+python3 /sources/nodejs24-rpm-symbols.py out/Release/libnode.so.137
 # Node's SQLite implementation must not interpose on an embedding application's
 # independently loaded SQLite library. Its upstream target uses hidden symbols.
-nm -D --defined-only out/Release/libnode.so.%{soname} > out/Release/exported-symbols.txt
+nm -D --defined-only out/Release/libnode.so.137 > out/Release/exported-symbols.txt
 if grep -Eq '[[:space:]]sqlite3_[[:alnum:]_]+' out/Release/exported-symbols.txt; then
     echo 'Node private SQLite symbols escaped into the shared ABI' >&2
     exit 1
 fi
 # Run the native and JavaScript groups from test-ci, including addon examples.
 # The locked documentation tools are supplied in Source1 for offline builds.
-%make_build test-build bench-addons-build
+/usr/bin/make -O -j${RPM_BUILD_NCPUS} V=1 VERBOSE=1 test-build bench-addons-build
 out/Release/cctest
 # Exercise default/forced compaction, heap integrity and optional verbose tracing.
-python3 -B -W error %{SOURCE19} out/Release/node
+python3 -B -W error /sources/nodejs24-compaction-trace-test.py out/Release/node
 # Test the real inline platform priority mapper, including invalid int indexes.
-g++ %{optflags} -std=c++20 -Wall -Werror=return-type -Ideps/v8 -Ideps/v8/include \
-    -Ideps/v8/third_party/abseil-cpp %{SOURCE11} -Lout/Release \
-    -Wl,-rpath,"$PWD/out/Release" out/Release/libnode.so.%{soname} -pthread -o out/platform-priority-control
+g++ -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -std=c++20 -Wall -Werror=return-type -Ideps/v8 -Ideps/v8/include \
+    -Ideps/v8/third_party/abseil-cpp /sources/nodejs24-platform-priority-test.cc -Lout/Release \
+    -Wl,-rpath,"$PWD/out/Release" out/Release/libnode.so.137 -pthread -o out/platform-priority-control
 out/platform-priority-control
 python3 - <<'PRIORITYCHECK'
 import resource, subprocess
@@ -215,11 +320,11 @@ for index in ('-1', '3', '256', '257', '258', '2147483647', '-2147483648'):
     print('Invalid priority index rejected:', index)
 PRIORITYCHECK
 # Exercise the actual allocator status implementation, including unnamed values.
-g++ %{optflags} -std=c++20 -Wall -Werror=return-type -ffunction-sections -fdata-sections \
+g++ -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -std=c++20 -Wall -Werror=return-type -ffunction-sections -fdata-sections \
     -Ideps/v8 -Ideps/v8/include -Ideps/v8/third_party/abseil-cpp \
     deps/v8/src/base/bounded-page-allocator.cc \
-    %{SOURCE12} -Lout/Release -Wl,-rpath,"$PWD/out/Release" -Wl,--gc-sections \
-    out/Release/libnode.so.%{soname} -pthread -o out/allocation-status-control
+    /sources/nodejs24-allocation-status-test.cc -Lout/Release -Wl,-rpath,"$PWD/out/Release" -Wl,--gc-sections \
+    out/Release/libnode.so.137 -pthread -o out/allocation-status-control
 out/allocation-status-control
 python3 - <<'STATUSCHECK'
 import resource, signal, subprocess
@@ -230,11 +335,11 @@ for status in ('-1', '4', '255', '256', '2147483647', '-2147483648'):
         raise AssertionError((status, result.returncode, result.stderr))
     print('Invalid allocation status rejected:', status)
 STATUSCHECK
-g++ %{optflags} -std=c++20 -Wall -Werror=return-type -ffunction-sections -fdata-sections \
+g++ -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -std=c++20 -Wall -Werror=return-type -ffunction-sections -fdata-sections \
     -Ideps/v8 -Ideps/v8/include -Ideps/v8/third_party/abseil-cpp \
     deps/v8/src/base/virtual-address-space.cc \
-    %{SOURCE13} -Lout/Release -Wl,-rpath,"$PWD/out/Release" -Wl,--gc-sections \
-    out/Release/libnode.so.%{soname} -pthread -o out/page-permissions-control
+    /sources/nodejs24-page-permissions-test.cc -Lout/Release -Wl,-rpath,"$PWD/out/Release" -Wl,--gc-sections \
+    out/Release/libnode.so.137 -pthread -o out/page-permissions-control
 out/page-permissions-control
 python3 - <<'PERMISSIONCHECK'
 import resource, signal, subprocess
@@ -246,9 +351,9 @@ for value in ('-1', '5', '255', '256', '2147483647', '-2147483648'):
             raise AssertionError((pair, result.returncode, result.stderr))
         print('Invalid page permissions rejected:', pair)
 PERMISSIONCHECK
-g++ %{optflags} -std=c++20 -Wall -Werror=return-type -Ideps/v8 -Ideps/v8/include \
-    -Ideps/v8/third_party/abseil-cpp %{SOURCE14} -Lout/Release \
-    -Wl,-rpath,"$PWD/out/Release" out/Release/libnode.so.%{soname} -pthread -o out/torque-abort-control
+g++ -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -std=c++20 -Wall -Werror=return-type -Ideps/v8 -Ideps/v8/include \
+    -Ideps/v8/third_party/abseil-cpp /sources/nodejs24-torque-abort-test.cc -Lout/Release \
+    -Wl,-rpath,"$PWD/out/Release" out/Release/libnode.so.137 -pthread -o out/torque-abort-control
 out/torque-abort-control
 python3 - <<'TORQUECHECK'
 import resource, signal, subprocess
@@ -259,10 +364,10 @@ for kind in ('-1', '3', '255', '256', '2147483647', '-2147483648'):
         raise AssertionError((kind, result.returncode, result.stderr))
     print('Invalid Torque abort kind rejected:', kind)
 TORQUECHECK
-g++ %{optflags} -std=c++20 -Wall -Werror=return-type -ffunction-sections -fdata-sections \
+g++ -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -std=c++20 -Wall -Werror=return-type -ffunction-sections -fdata-sections \
     -Ideps/v8 -Ideps/v8/include -Ideps/v8/third_party/abseil-cpp \
-    deps/v8/src/torque/types.cc %{SOURCE15} -Lout/Release \
-    -Wl,-rpath,"$PWD/out/Release" -Wl,--gc-sections out/Release/libnode.so.%{soname} -pthread -o out/torque-handle-control
+    deps/v8/src/torque/types.cc /sources/nodejs24-torque-handle-test.cc -Lout/Release \
+    -Wl,-rpath,"$PWD/out/Release" -Wl,--gc-sections out/Release/libnode.so.137 -pthread -o out/torque-handle-control
 out/torque-handle-control
 python3 - <<'HANDLECHECK'
 import resource, signal, subprocess
@@ -273,10 +378,10 @@ for kind in ('-1', '2', '255', '256', '2147483647', '-2147483648'):
         raise AssertionError((kind, result.returncode, result.stderr))
     print('Invalid Torque handle kind rejected:', kind)
 HANDLECHECK
-g++ %{optflags} -std=c++20 -Wall -Werror=return-type -ffunction-sections -fdata-sections \
+g++ -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -std=c++20 -Wall -Werror=return-type -ffunction-sections -fdata-sections \
     -Ideps/v8 -Ideps/v8/include -Ideps/v8/third_party/abseil-cpp \
-    %{SOURCE16} -Lout/Release -Wl,-rpath,"$PWD/out/Release" \
-    -Wl,--gc-sections out/Release/libnode.so.%{soname} -pthread -o out/torque-prefix-control
+    /sources/nodejs24-torque-prefix-test.cc -Lout/Release -Wl,-rpath,"$PWD/out/Release" \
+    -Wl,--gc-sections out/Release/libnode.so.137 -pthread -o out/torque-prefix-control
 out/torque-prefix-control
 python3 - <<'PREFIXCHECK'
 import resource, signal, subprocess
@@ -287,9 +392,9 @@ for kind in ('-1', '2', '255', '256', '2147483647', '-2147483648'):
         raise AssertionError((kind, result.returncode, result.stderr))
     print('Invalid Torque diagnostic kind rejected:', kind)
 PREFIXCHECK
-g++ %{optflags} -std=c++20 -Wall -Werror=return-type -Ideps/v8 -Ideps/v8/include \
-    -Ideps/v8/third_party/abseil-cpp %{SOURCE17} -Lout/Release \
-    -Wl,-rpath,"$PWD/out/Release" out/Release/libnode.so.%{soname} -pthread -o out/torque-stack-control
+g++ -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -std=c++20 -Wall -Werror=return-type -Ideps/v8 -Ideps/v8/include \
+    -Ideps/v8/third_party/abseil-cpp /sources/nodejs24-torque-stack-test.cc -Lout/Release \
+    -Wl,-rpath,"$PWD/out/Release" out/Release/libnode.so.137 -pthread -o out/torque-stack-control
 out/torque-stack-control
 python3 - <<'STACKCHECK'
 import resource, signal, subprocess
@@ -302,12 +407,12 @@ for count in ('5', '255', '4294967295', '18446744073709551615'):
 STACKCHECK
 # Compile the bundled SQLite source with its actual feature definitions.
 # Cover RTree dimensions, session length overflow, truncated varints and OOM.
-python3 - %{SOURCE7} <<'SQLITECHECK'
+python3 - /sources/nodejs24-sqlite-test.c <<'SQLITECHECK'
 import ast, shlex, subprocess, sys
 from pathlib import Path
 config = ast.literal_eval(Path('deps/sqlite/sqlite.gyp').read_text())
 defines = config['targets'][0]['defines']
-subprocess.run(['gcc', *shlex.split('%{optflags}'), '-Wall', '-Wextra',
+subprocess.run(['gcc', *shlex.split('-O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g'), '-Wall', '-Wextra',
                 '-Wno-unused-parameter', '-Werror', '-D_GNU_SOURCE',
                 *['-D' + value for value in defines], '-Ideps/sqlite',
                 sys.argv[1], '-lm', '-ldl', '-pthread', '-o', 'out/sqlite-control'],
@@ -324,36 +429,36 @@ for mode in simd scalar; do
         ada_flags=-DADA_USE_SIMDUTF
         ada_sources=deps/v8/third_party/simdutf/simdutf.cpp
     fi
-    g++ %{optflags} -std=c++20 -Wall -Wextra -Werror $ada_flags \
+    g++ -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -std=c++20 -Wall -Wextra -Werror $ada_flags \
         -Ideps/ada -Ideps/v8/third_party/simdutf \
-        deps/ada/ada.cpp $ada_sources %{SOURCE6} -o out/ada-control/$mode
+        deps/ada/ada.cpp $ada_sources /sources/nodejs24-ada-conversion-test.cc -o out/ada-control/$mode
     out/ada-control/$mode
 done
 # Repeated embedding must share the signal watchdog; concurrent environments
 # must remain independent. Count successful detached-thread creation directly.
 mkdir -p out/inspector-control
-gcc %{optflags} -UNDEBUG -fPIC -shared %{SOURCE4} \
+gcc -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -UNDEBUG -fPIC -shared /sources/nodejs24-detached-thread-counter.c \
     -o out/inspector-control/counter.so -ldl -pthread
-g++ %{optflags} -UNDEBUG -std=c++20 -isystem src -isystem deps/v8/include \
-    -isystem deps/uv/include %{SOURCE5} -Lout/Release -Lout/inspector-control \
+g++ -O2 -Wall -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=3 -fstack-protector-strong -funwind-tables -fasynchronous-unwind-tables -fstack-clash-protection -Werror=return-type -flto=auto -g -UNDEBUG -std=c++20 -isystem src -isystem deps/v8/include \
+    -isystem deps/uv/include /sources/nodejs24-inspector-lifetimes.cc -Lout/Release -Lout/inspector-control \
     -Wl,-rpath,"$PWD/out/Release:$PWD/out/inspector-control" \
-    -l:counter.so out/Release/libnode.so.%{soname} -pthread -o out/inspector-control/control
+    -l:counter.so out/Release/libnode.so.137 -pthread -o out/inspector-control/control
 LD_PRELOAD="$PWD/out/inspector-control/counter.so" out/inspector-control/control serial 100
 LD_PRELOAD="$PWD/out/inspector-control/counter.so" out/inspector-control/control concurrent 10
-python3 tools/test.py -j %{_smp_build_ncpus} -p tap --mode=release \
+python3 tools/test.py -j 32 -p tap --mode=release \
     --flaky-tests=run default pummel addons ffi js-native-api node-api embedding benchmark
 
-%post -n libnode%{soname} -p /sbin/ldconfig
-%postun -n libnode%{soname} -p /sbin/ldconfig
+%post -n libnode137 -p /sbin/ldconfig
+%postun -n libnode137 -p /sbin/ldconfig
 
-%files -n libnode%{soname}
+%files -n libnode137
 %license LICENSE SQLITE-LICENSE
-%{_libdir}/libnode.so.%{soname}
+/usr/lib64/libnode.so.137
 
 %files -n libnode-devel
 %license LICENSE SQLITE-LICENSE
-%{_includedir}/node/
-%{_libdir}/libnode.so
+/usr/include/node/
+/usr/lib64/libnode.so
 
 %changelog
 * Thu Oct 08 2026 David Nichols <david@qore.org> - 24.18.1-1.qore

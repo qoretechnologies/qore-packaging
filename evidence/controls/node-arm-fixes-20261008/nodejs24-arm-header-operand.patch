@@ -1,0 +1,24 @@
+# Copyright 2026 Qore Technologies, s.r.o.; BSD-3-Clause.
+# Construct the zero Operand at its call site, where the inline constructor is defined.
+--- a/deps/v8/src/regexp/arm64/regexp-macro-assembler-arm64.h
++++ b/deps/v8/src/regexp/arm64/regexp-macro-assembler-arm64.h
+@@ -182,7 +182,7 @@
+   void AssertAboveStackLimitMinusSlack();
+ 
+   void CallCheckStackGuardState(Register scratch,
+-                                Operand extra_space = Operand(0));
++                                Operand extra_space);
+   void CallIsCharacterInRangeArray(const ZoneList<CharacterRange>* ranges);
+ 
+   // Location of a 32 bit position register.
+--- a/deps/v8/src/regexp/arm64/regexp-macro-assembler-arm64.cc
++++ b/deps/v8/src/regexp/arm64/regexp-macro-assembler-arm64.cc
+@@ -1258,7 +1258,7 @@
+ 
+     SaveLinkRegister();
+     PushCachedRegisters();
+-    CallCheckStackGuardState(x10);
++    CallCheckStackGuardState(x10, Operand(0));
+     // Returning from the regexp code restores the stack (sp <- fp)
+     // so we don't need to drop the link register from it before exiting.
+     __ Cbnz(w0, &return_w0);

@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "status": "New native ARM diagnostic observed during compilation; qualification and any required approval remain pending.",
+  "obs": {
+    "project": "home:davidnichols:qore:testing",
+    "package": "nodejs24-libnode",
+    "revision": 5,
+    "srcmd5": "4deae1c099435cb9b5dfa52d0f8f45a2",
+    "repository": "openSUSE_Leap_16.0",
+    "arch": "aarch64"
+  },
+  "diagnostic": "[ 4264s] ../deps/v8/src/regexp/arm64/regexp-macro-assembler-arm64.cc:866:1: warning: control reaches end of non-void function [-Wreturn-type]",
+  "function": "RegExpMacroAssemblerARM64::CheckSpecialClassRanges(StandardCharacterSet, Label*)",
+  "initial_source_review": "All nine declared StandardCharacterSet enumerators appear in the switch. Call-site validity, warning reproduction and native runtime controls are not yet qualified.",
+  "source_sha256": "cc47b018f25b987ddc851da0872de666ff296441f63a56c560f67acb605c2464",
+  "observation_limits": "This was a live log-tail observation, not a complete build diagnostic inventory. Two redundant log-tail CLI readers were stopped after establishing active compilation; OBS builds and the original result watcher continue."
+}
