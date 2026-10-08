@@ -1,0 +1,67 @@
+[
+  {
+    "name": "baseline",
+    "command": [
+      "c++",
+      "-O3",
+      "-g",
+      "-DNDEBUG",
+      "-std=c++20",
+      "-DHAVE_UNIX_CONFIG_H",
+      "-Werror=address",
+      "-I/home/david/src/qore/git/qore-packaging/results/operator-effects-host-initial-20261008/baseline",
+      "-I/home/david/src/qore/git/qore/build/include",
+      "-I/home/david/src/qore/git/qore-packaging/work/checkouts/qore-operator-effects-20261008/include",
+      "-I/home/david/src/qore/git/qore/build",
+      "-I/home/david/src/qore/git/qore-packaging/results/operator-effects-host-initial-20261008",
+      "-c",
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-operator-effects-20261008/examples/test/cmake/operator_root_effect.cpp",
+      "-o",
+      "/home/david/src/qore/git/qore-packaging/results/operator-effects-host-initial-20261008/baseline.o"
+    ],
+    "exit_code": 1
+  },
+  {
+    "name": "fixed-compile",
+    "command": [
+      "c++",
+      "-O3",
+      "-g",
+      "-DNDEBUG",
+      "-std=c++20",
+      "-DHAVE_UNIX_CONFIG_H",
+      "-Werror=address",
+      "-I/home/david/src/qore/git/qore-packaging/results/operator-effects-host-initial-20261008/fixed",
+      "-I/home/david/src/qore/git/qore/build/include",
+      "-I/home/david/src/qore/git/qore-packaging/work/checkouts/qore-operator-effects-20261008/include",
+      "-I/home/david/src/qore/git/qore/build",
+      "-I/home/david/src/qore/git/qore-packaging/results/operator-effects-host-initial-20261008",
+      "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-operator-effects-20261008/examples/test/cmake/operator_root_effect.cpp",
+      "-L/home/david/src/qore/git/qore/build",
+      "-Wl,-rpath,/home/david/src/qore/git/qore/build",
+      "-lqore",
+      "-o",
+      "/home/david/src/qore/git/qore-packaging/results/operator-effects-host-initial-20261008/operator-root-effect"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-run",
+    "command": [
+      "/home/david/src/qore/git/qore-packaging/results/operator-effects-host-initial-20261008/operator-root-effect"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=definite,indirect,possible",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "/home/david/src/qore/git/qore-packaging/results/operator-effects-host-initial-20261008/operator-root-effect"
+    ],
+    "exit_code": 0
+  }
+]
