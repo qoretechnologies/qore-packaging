@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "status": "New candidate46 failure requires root-cause tracing before the combined full build. No fix proposed yet.",
+  "test": "TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart",
+  "target": "leap",
+  "entries": [
+    {
+      "Time": "2026-10-07T23:34:13.96856182Z",
+      "Action": "run",
+      "Package": "github.com/nats-io/nats-server/v2/server",
+      "Test": "TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart"
+    },
+    {
+      "Time": "2026-10-07T23:34:13.968566319Z",
+      "Action": "output",
+      "Package": "github.com/nats-io/nats-server/v2/server",
+      "Test": "TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart",
+      "Output": "=== RUN   TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart\n"
+    },
+    {
+      "Time": "2026-10-07T23:34:44.152924027Z",
+      "Action": "output",
+      "Package": "github.com/nats-io/nats-server/v2/server",
+      "Test": "TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart",
+      "Output": "    norace_2_test.go:2364: require no error, but got: context deadline exceeded\n"
+    },
+    {
+      "Time": "2026-10-07T23:34:44.229537293Z",
+      "Action": "output",
+      "Package": "github.com/nats-io/nats-server/v2/server",
+      "Test": "TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart",
+      "Output": "--- FAIL: TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart (30.26s)\n"
+    },
+    {
+      "Time": "2026-10-07T23:34:44.229556599Z",
+      "Action": "fail",
+      "Package": "github.com/nats-io/nats-server/v2/server",
+      "Test": "TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart",
+      "Elapsed": 30.26
+    }
+  ],
+  "failure_phase": "One or more of the initial 250 concurrent AddStream operations returns context deadline exceeded. This occurs before publication or any restart; each create retains its existing 30-second deadline.",
+  "source_sha256": "98eed41c3592330076831c3e2cd262da316ecc694f30a5a8f54e7db0095b7369",
+  "next_action": "Instrument each real creation request, handler decision and response path to identify lost versus incomplete operations; preserve the 250-stream concurrency and deadlines. Do not revive withdrawn responded-flag proposals or assume restart/API readiness is the cause.",
+  "other_historical_gates": [
+    "candidate26 initial atomic-batch stream creation timeout",
+    "sparse-consumer 500ms performance bound"
+  ],
+  "qualified_candidate": "work/nats-server-candidate-50",
+  "qualified_new_fixes": [
+    "evidence/nats-consumer-apply-20261008.json",
+    "evidence/nats-mqtt-retained-20261008.json"
+  ],
+  "obs_arm_diagnostic": "work/node-arm64-observed-diagnostics-20261008.json"
+}

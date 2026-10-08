@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "All three full candidate46 runs terminated with one failed test each. Failed builds remain failed; two later qualified corrections and a third unresolved create failure prevent release.",
+  "source": "evidence/nats-candidate46-integration-20261008.json",
+  "results": {
+    "fedora": {
+      "build_exit_code": 1,
+      "all_selected_tests_have_terminal_results": true,
+      "groups": 35,
+      "top_level_and_subtest_terminal_counts": {
+        "pass": 10144,
+        "skip": 72,
+        "fail": 1
+      },
+      "failures": [
+        {
+          "Time": "2026-10-07T22:45:45.355989912Z",
+          "Action": "fail",
+          "Package": "github.com/nats-io/nats-server/v2/server",
+          "Test": "TestJetStreamClusterExtendedStreamInfo",
+          "Elapsed": 0.94
+        }
+      ],
+      "error": "Failed or incomplete test groups: github.com/nats-io/nats-server/v2/server TestJetStreamCluster-1"
+    },
+    "leap": {
+      "build_exit_code": 1,
+      "all_selected_tests_have_terminal_results": true,
+      "groups": 35,
+      "top_level_and_subtest_terminal_counts": {
+        "pass": 10144,
+        "skip": 72,
+        "fail": 1
+      },
+      "failures": [
+        {
+          "Time": "2026-10-07T23:34:44.229556599Z",
+          "Action": "fail",
+          "Package": "github.com/nats-io/nats-server/v2/server",
+          "Test": "TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart",
+          "Elapsed": 30.26
+        }
+      ],
+      "error": "Failed or incomplete test groups: github.com/nats-io/nats-server/v2/server TestNoRace-2"
+    },
+    "el10": {
+      "build_exit_code": 1,
+      "all_selected_tests_have_terminal_results": true,
+      "groups": 35,
+      "top_level_and_subtest_terminal_counts": {
+        "pass": 10144,
+        "skip": 72,
+        "fail": 1
+      },
+      "failures": [
+        {
+          "Time": "2026-10-07T23:22:19.336066777Z",
+          "Action": "fail",
+          "Package": "github.com/nats-io/nats-server/v2/server",
+          "Test": "TestMQTTRetainedMessageWithDelSubjectIsNotRestored",
+          "Elapsed": 10.01
+        }
+      ],
+      "error": "Failed or incomplete test groups: github.com/nats-io/nats-server/v2/server TestMQTT-1"
+    }
+  },
+  "qualified_later_fixes": {
+    "fedora": "evidence/nats-extended-interest-20261008.json",
+    "el10": "evidence/nats-mqtt-retained-20261008.json"
+  },
+  "remaining": [
+    "Root-cause the Leap initial 250-concurrent-stream creation timeout; current trace-only controls do not reproduce it.",
+    "Qualify the complete combined candidate50 patch set after resolving the creation failure.",
+    "Historical initial atomic-create timeout and sparse-consumer performance gates remain open.",
+    "Complete NATS client/module, native OBS, installed-package, repository lifecycle and publication gates."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-candidate46-final-20261008/el10-build.json": "4c234c127703cb97d0dc28c84fb43513beeba6d951bfb0e9c858912a5c49fd9d",
+    "evidence/controls/nats-candidate46-final-20261008/el10-build.log.gz": "aea4187b1b1229304540560860bd4abaf8bd5195168b8ebf1ac56878ed6e24ea",
+    "evidence/controls/nats-candidate46-final-20261008/el10-failure.json": "12f3057cf6eceb9676a5448433f303277a384255d6caf381405f932b649bdf76",
+    "evidence/controls/nats-candidate46-final-20261008/el10-tests.json": "12f35c77cdd9618d7536877ddb0a972011faff7d6d5e48357ff0374c12a08f63",
+    "evidence/controls/nats-candidate46-final-20261008/fedora-build.json": "b9b0b39428478e707e4fe5abf87a889368d6db3d7053193f38fe1fa7c275571c",
+    "evidence/controls/nats-candidate46-final-20261008/fedora-build.log.gz": "2029131e0f9a3031fcc103d769be7a15e8ca9fcdfdc31e9e19574c74666fc648",
+    "evidence/controls/nats-candidate46-final-20261008/fedora-failure.json": "ff8b20d44eacc83a07932d15d85aa46a74801b9959c8d7ac50d1a6fad742663d",
+    "evidence/controls/nats-candidate46-final-20261008/fedora-tests.json": "4ffda29342d450778d1c6a518632b0206976396f78a80eedba0a03c630de3856",
+    "evidence/controls/nats-candidate46-final-20261008/leap-build.json": "e3e79c2300730c637aa226a1e26a9c811c47bb2356679cf95845403f9012f6ab",
+    "evidence/controls/nats-candidate46-final-20261008/leap-build.log.gz": "d2eff47cee7cee70abe1ebbef6ea4890fc29ea716a23085498c0cf177cef525e",
+    "evidence/controls/nats-candidate46-final-20261008/leap-failure.json": "91d88b0afef29eb0fdd981a8a58c5b1ddadc8762729b72dd2f9e0323916c6de0",
+    "evidence/controls/nats-candidate46-final-20261008/leap-tests.json": "ccbbb295f372610ef41ef4245ad50058a81a135dc2e1872c52e8d2af50dc2946",
+    "evidence/controls/nats-candidate46-final-20261008/memory-create-triage.json": "97b99e24b12a96d289353ff9bccb2954e2e87159694d0fd5e404e12e11f691d5",
+    "evidence/controls/nats-candidate46-final-20261008/record.py": "a41f0deb0a2c9c694c007f188a744a8fa6498c382ed2c700a438ea52adbdd52c"
+  }
+}

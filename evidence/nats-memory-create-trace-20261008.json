@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Trace-only controls pass; no historical failure reproduced and no fix claimed. Production package source remains unchanged.",
+  "historical_failure": "evidence/nats-candidate46-final-20261008.json",
+  "candidate": "evidence/nats-candidate50-preparation-20261008.json",
+  "coverage": {
+    "initial_create_runs": 15,
+    "streams_per_run": 250,
+    "total_initial_creates": 3750,
+    "api_deadline_seconds": 30,
+    "exact_full_group_tests": 73
+  },
+  "results": {
+    "fedora-nats-memory-create-trace-268": {
+      "exit_code": 0,
+      "top_level_results": {
+        "PASS": 5
+      },
+      "source": "^TestNoRaceRPMConcurrentMemoryCreationTrace$",
+      "test_build": "non-race; upstream target is in a !race file"
+    },
+    "leap-nats-memory-create-trace-268": {
+      "exit_code": 0,
+      "top_level_results": {
+        "PASS": 5
+      },
+      "source": "^TestNoRaceRPMConcurrentMemoryCreationTrace$",
+      "test_build": "non-race; upstream target is in a !race file"
+    },
+    "el10-nats-memory-create-trace-268": {
+      "exit_code": 0,
+      "top_level_results": {
+        "PASS": 5
+      },
+      "source": "^TestNoRaceRPMConcurrentMemoryCreationTrace$",
+      "test_build": "non-race; upstream target is in a !race file"
+    },
+    "leap-nats-memory-create-trace-269-group": {
+      "exit_code": 0,
+      "top_level_results": {
+        "PASS": 62,
+        "SKIP": 11
+      },
+      "source": "^(TestNoRaceAccessTimeLeakCheck|TestNoRaceBinaryStreamSnapshotEncodingBasic|TestNoRaceCheckAckFloorWithVeryLargeFirstSeqAndNewConsumers|TestNoRaceClosedSlowConsumerPendingBytes|TestNoRaceClosedSlowConsumerWriteDeadline|TestNoRaceConnectionObjectReleased|TestNoRaceFetchAccountDoesNotRegisterAccountTwice|TestNoRaceFileStoreFilteredStateWithLargeDeletes|TestNoRaceFileStoreMsgLimitsAndOldRecoverState|TestNoRaceFileStoreMsgLoadNextMsgMultiPerf|TestNoRaceFileStorePurgeExAsyncTombstones|TestNoRaceFileStoreWeakCacheGCRecyclesBuf|TestNoRaceJetStreamAPIDispatchQueuePending|TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot|TestNoRaceJetStreamClusterCheckInterestStatePerformanceInterest|TestNoRaceJetStreamClusterConsumerDeleteInterestPolicyPerf|TestNoRaceJetStreamClusterConsumerDeleteInterestPolicyUniqueFiltersPerf|TestNoRaceJetStreamClusterConsumerListPaging|TestNoRaceJetStreamClusterDifferentRTTInterestBasedStreamPreAck|TestNoRaceJetStreamClusterExtendedStreamPurgeStall|TestNoRaceJetStreamClusterInterestPullConsumerStreamLimitBug|TestNoRaceJetStreamClusterInterestRetentionDeadlock|TestNoRaceJetStreamClusterLargeActiveOnReplica|TestNoRaceJetStreamClusterLargeStreamInlineCatchup|TestNoRaceJetStreamClusterMaxConsumersAndDirect|TestNoRaceJetStreamClusterMemoryStreamConsumerRaftGrowth|TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart|TestNoRaceJetStreamClusterMirrorSkipSequencingBug|TestNoRaceJetStreamClusterSourcesMuxd|TestNoRaceJetStreamClusterStreamDropCLFS|TestNoRaceJetStreamClusterStreamSeqMismatchIssue|TestNoRaceJetStreamClusterStreamSnapshotCatchup|TestNoRaceJetStreamConcurrentPullConsumerBatch|TestNoRaceJetStreamConsumerCreateTimeNumPending|TestNoRaceJetStreamDeleteConsumerWithInterestStreamAndHighSeqs|TestNoRaceJetStreamDeleteStreamManyConsumers|TestNoRaceJetStreamEncryptionEnabledOnRestartWithExpire|TestNoRaceJetStreamFileStoreBufferReuse|TestNoRaceJetStreamFileStoreKeyFileCleanup|TestNoRaceJetStreamKVLock|TestNoRaceJetStreamKVReplaceWithServerRestart|TestNoRaceJetStreamLargeNumConsumersPerfImpact|TestNoRaceJetStreamLargeNumConsumersSparseDelivery|TestNoRaceJetStreamMemoryUsageOnLimitedStreamWithMirror|TestNoRaceJetStreamMemstoreWithLargeInteriorDeletes|TestNoRaceJetStreamMirrorAndSourceConsumerFailBackoff|TestNoRaceJetStreamMsgIdPerfDuringCatchup|TestNoRaceJetStreamOrderedConsumerMissingMsg|TestNoRaceJetStreamPullConsumersAndInteriorDeletes|TestNoRaceJetStreamRebuildDeDupeAndMemoryPerf|TestNoRaceJetStreamServiceImportAccountSwapIssue|TestNoRaceJetStreamSlowFilteredInitialPendingAndFirstMsg|TestNoRaceJetStreamSlowRestartWithManyExpiredMsgs|TestNoRaceJetStreamStalledMirrorsAfterExpire|TestNoRaceJetStreamStreamInfoSubjectDetailsLimits|TestNoRaceJetStreamSuperClusterAccountConnz|TestNoRaceJetStreamSuperClusterMirrors|TestNoRaceJetStreamSuperClusterMixedModeMirrors|TestNoRaceJetStreamSuperClusterMixedModeSources|TestNoRaceJetStreamSuperClusterRIPStress|TestNoRaceJetStreamSuperClusterStreamMoveLongRTT|TestNoRaceLargeNumDeletesStreamCatchups|TestNoRaceLargeStreamCatchups|TestNoRaceMemStoreCompactPerformance|TestNoRaceQueueAutoUnsubscribe|TestNoRaceRouteCache|TestNoRaceRouteMemUsage|TestNoRaceRoutePerAccount|TestNoRaceRoutePoolAndPerAccountConfigReload|TestNoRaceRoutedQueueAutoUnsubscribe|TestNoRaceStoreReverseWalkWithDeletesPerf|TestNoRaceWQAndMultiSubjectFilters|TestNoRaceWQAndMultiSubjectFiltersRace)$",
+      "test_build": "non-race; upstream target is in a !race file"
+    }
+  },
+  "observability": [
+    "API handler entry/return, metadata proposal result, applied assignment, stream leader transition and API response are logged. Failed creates include the stream name.",
+    "The complete 73-test group preserves its upstream execution order and original full target including all publications, snapshots and rolling restarts.",
+    "The isolated control ends after creation and does not qualify publication/restart."
+  ],
+  "limits": [
+    "No pass closes the observed historical timeout. The previous inference that separating publication would remove all creation timeouts is insufficient, as candidate46 demonstrates.",
+    "Trace instrumentation and logger locking can affect scheduling. This is a diagnostic candidate, not a production change.",
+    "The full passing restart test exceeded the bounded logger capacity on one server after creation; it reported the exact dropped count. Initial failing setup uses fewer than that bound in the isolated runs.",
+    "The next diagnostic control tests a real leadership transfer between accepted request and metadata proposal; that possibility is not yet established as the historical cause."
+  ],
+  "audit": {
+    "pass": 10,
+    "na": 52,
+    "fail": 0
+  },
+  "files_sha256": {
+    "evidence/controls/nats-memory-create-trace-20261008/268-jetstream_api.go.gz": "24759de06f696fdd08b51a909fa00b4c4fdedd4b28e23cd4401c6aa1f0df5f35",
+    "evidence/controls/nats-memory-create-trace-20261008/268-jetstream_cluster.go.gz": "270b8754f801d64deba1c78e231b39d4ea1302e1c5f260c93ecea343326fc22b",
+    "evidence/controls/nats-memory-create-trace-20261008/268-norace_2_test.go.gz": "c21f05161a1b66b0b85dae19ffa6c842acb1d34f3cfe057c9d0764d861cda08b",
+    "evidence/controls/nats-memory-create-trace-20261008/269-norace_2_test.go.gz": "6ebf75c43f9f0f28af584175a9b1b855cda1bc0f77300ce752c59d27408cbb06",
+    "evidence/controls/nats-memory-create-trace-20261008/audit.rst": "5b3e12051c8a189478d3d50a19c14ff52191582dac69db04a26a724417067095",
+    "evidence/controls/nats-memory-create-trace-20261008/config-268.json": "1c361815c60fd686f485f5e328652d9aba5faad2e122d45a282e46b90b5657ea",
+    "evidence/controls/nats-memory-create-trace-20261008/config-269.json": "f7d9b5f8ac81823b0952ee15d2c3bb306bb1359b08a8383f1febbd40fc108934",
+    "evidence/controls/nats-memory-create-trace-20261008/el10-nats-memory-create-trace-268-status.json": "d59891ac52b79c6cf5fd267023e278724dd7b7384166d6fd293e831ce519fb23",
+    "evidence/controls/nats-memory-create-trace-20261008/el10-nats-memory-create-trace-268.log.gz": "b00feaf90c18345a698795652cf19b4ad6062e7b4cb5db638d6baabef6001106",
+    "evidence/controls/nats-memory-create-trace-20261008/fedora-nats-memory-create-trace-268-status.json": "e1d74a42543c4b710f7f9143063bcaf15976a4fedfd93df3621c91c5f923b163",
+    "evidence/controls/nats-memory-create-trace-20261008/fedora-nats-memory-create-trace-268.log.gz": "4923d9cf71eb5a97066c515587a47f69c5d5be85e1dc0968f8a2185789281c27",
+    "evidence/controls/nats-memory-create-trace-20261008/leap-nats-memory-create-trace-268-status.json": "2b53c9af1f5bcd8e248c7755337a5eb5b195c822b320d24317c77f9e23b20478",
+    "evidence/controls/nats-memory-create-trace-20261008/leap-nats-memory-create-trace-268.log.gz": "1f9184d9295c8cfddd56d227528031057ca30cd29faf301b6e2a57150cb86ff3",
+    "evidence/controls/nats-memory-create-trace-20261008/leap-nats-memory-create-trace-269-group-status.json": "cd95434e72d5ef416109abefa8e3af8237a558939fc259ac5247ecf6ab5c73b7",
+    "evidence/controls/nats-memory-create-trace-20261008/leap-nats-memory-create-trace-269-group.log.gz": "04829160116815d2ca5004b0c7e08b715031137863044abb5e40e10c28557f71",
+    "evidence/controls/nats-memory-create-trace-20261008/prepare-268.py": "ad60ca074710ba9445ac96289cd1b76c3328dc5be6df4e3e407f1fd8010df1b0",
+    "evidence/controls/nats-memory-create-trace-20261008/prepare-269.py": "3c253632695572a601261994cb47bdc9b50c89cdebae8bf8d9b0e510a17b43a0",
+    "evidence/controls/nats-memory-create-trace-20261008/record.py": "a67d0c03844918bfa6c685a8e8fa9af6669c1a513586f078289d288609d28a1a",
+    "evidence/controls/nats-memory-create-trace-20261008/run.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a"
+  }
+}

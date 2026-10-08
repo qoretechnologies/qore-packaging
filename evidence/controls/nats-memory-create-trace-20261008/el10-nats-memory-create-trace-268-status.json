@@ -1,0 +1,96 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "6645df0a0818633d0c48da71a9a2551f56280e66de899f6e888a210b37a2864a",
+    "--tmpfs",
+    "/tmp:rw,exec,size=4g,mode=1777",
+    "--user",
+    "1019:100",
+    "-e",
+    "GOMAXPROCS=2",
+    "-e",
+    "GOTOOLCHAIN=local",
+    "-e",
+    "GOPROXY=off",
+    "-e",
+    "GOSUMDB=off",
+    "-e",
+    "GOFLAGS=-mod=vendor",
+    "-e",
+    "GOCACHE=/cache",
+    "-e",
+    "GOPATH=/gopath",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-prepared-50/nats-server-2.15.0:/source:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-go-cache:/cache",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-go-path:/gopath",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-prepared-50/nats-server-2.15.0/server/sublist.go:/source/server/sublist.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-memory-create-trace-268-20261008/jetstream_api.go:/source/server/jetstream_api.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-memory-create-trace-268-20261008/jetstream_cluster.go:/source/server/jetstream_cluster.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-memory-create-trace-268-20261008/norace_2_test.go:/source/server/norace_2_test.go:ro",
+    "-w",
+    "/source",
+    "sha256:0bc68ce99e4cd1340c79149a0601d7496351acd655a537ddae23116f036370c5",
+    "go",
+    "test",
+    "-v",
+    "-short",
+    "-count=5",
+    "-timeout=20m",
+    "-run",
+    "^TestNoRaceRPMConcurrentMemoryCreationTrace$",
+    "./server"
+  ],
+  "network": {
+    "Name": "qore-rpm-isolated-59a537f61bb4477ab91933950e769ce8",
+    "Id": "6645df0a0818633d0c48da71a9a2551f56280e66de899f6e888a210b37a2864a",
+    "Created": "2026-10-08T01:50:17.753290827+02:00",
+    "Scope": "local",
+    "Driver": "bridge",
+    "EnableIPv4": true,
+    "EnableIPv6": false,
+    "IPAM": {
+      "Driver": "default",
+      "Options": {},
+      "Config": [
+        {
+          "Subnet": "192.168.64.0/20"
+        }
+      ]
+    },
+    "Internal": true,
+    "Attachable": false,
+    "Ingress": false,
+    "ConfigFrom": {
+      "Network": ""
+    },
+    "ConfigOnly": false,
+    "Options": {
+      "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+      "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+    },
+    "Labels": {},
+    "Containers": {},
+    "Status": {
+      "IPAM": {
+        "Subnets": {
+          "192.168.64.0/20": {
+            "IPsInUse": 2,
+            "DynamicIPsAvailable": 4094
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "126726d1299133119250689c542a4ae19cd0599a4c2f8307f2bc4757d51036cc",
+    "--tmpfs",
+    "/tmp:rw,exec,size=4g,mode=1777",
+    "--user",
+    "1019:100",
+    "-e",
+    "GOMAXPROCS=2",
+    "-e",
+    "GOTOOLCHAIN=local",
+    "-e",
+    "GOPROXY=off",
+    "-e",
+    "GOSUMDB=off",
+    "-e",
+    "GOFLAGS=-mod=vendor",
+    "-e",
+    "GOCACHE=/cache",
+    "-e",
+    "GOPATH=/gopath",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-prepared-50/nats-server-2.15.0:/source:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-go-cache:/cache",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-go-path:/gopath",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-prepared-50/nats-server-2.15.0/server/sublist.go:/source/server/sublist.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-memory-create-trace-268-20261008/jetstream_api.go:/source/server/jetstream_api.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-memory-create-trace-268-20261008/jetstream_cluster.go:/source/server/jetstream_cluster.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-memory-create-trace-269-20261008/norace_2_test.go:/source/server/norace_2_test.go:ro",
+    "-w",
+    "/source",
+    "sha256:2b44d9f9636b4e454c93b06c95cd9ff9f23136b159e80ac2ded68b32d7f1190b",
+    "go",
+    "test",
+    "-v",
+    "-short",
+    "-count=1",
+    "-timeout=20m",
+    "-run",
+    "^(TestNoRaceAccessTimeLeakCheck|TestNoRaceBinaryStreamSnapshotEncodingBasic|TestNoRaceCheckAckFloorWithVeryLargeFirstSeqAndNewConsumers|TestNoRaceClosedSlowConsumerPendingBytes|TestNoRaceClosedSlowConsumerWriteDeadline|TestNoRaceConnectionObjectReleased|TestNoRaceFetchAccountDoesNotRegisterAccountTwice|TestNoRaceFileStoreFilteredStateWithLargeDeletes|TestNoRaceFileStoreMsgLimitsAndOldRecoverState|TestNoRaceFileStoreMsgLoadNextMsgMultiPerf|TestNoRaceFileStorePurgeExAsyncTombstones|TestNoRaceFileStoreWeakCacheGCRecyclesBuf|TestNoRaceJetStreamAPIDispatchQueuePending|TestNoRaceJetStreamAccountLimitsAndRestartForceSnapshot|TestNoRaceJetStreamClusterCheckInterestStatePerformanceInterest|TestNoRaceJetStreamClusterConsumerDeleteInterestPolicyPerf|TestNoRaceJetStreamClusterConsumerDeleteInterestPolicyUniqueFiltersPerf|TestNoRaceJetStreamClusterConsumerListPaging|TestNoRaceJetStreamClusterDifferentRTTInterestBasedStreamPreAck|TestNoRaceJetStreamClusterExtendedStreamPurgeStall|TestNoRaceJetStreamClusterInterestPullConsumerStreamLimitBug|TestNoRaceJetStreamClusterInterestRetentionDeadlock|TestNoRaceJetStreamClusterLargeActiveOnReplica|TestNoRaceJetStreamClusterLargeStreamInlineCatchup|TestNoRaceJetStreamClusterMaxConsumersAndDirect|TestNoRaceJetStreamClusterMemoryStreamConsumerRaftGrowth|TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart|TestNoRaceJetStreamClusterMirrorSkipSequencingBug|TestNoRaceJetStreamClusterSourcesMuxd|TestNoRaceJetStreamClusterStreamDropCLFS|TestNoRaceJetStreamClusterStreamSeqMismatchIssue|TestNoRaceJetStreamClusterStreamSnapshotCatchup|TestNoRaceJetStreamConcurrentPullConsumerBatch|TestNoRaceJetStreamConsumerCreateTimeNumPending|TestNoRaceJetStreamDeleteConsumerWithInterestStreamAndHighSeqs|TestNoRaceJetStreamDeleteStreamManyConsumers|TestNoRaceJetStreamEncryptionEnabledOnRestartWithExpire|TestNoRaceJetStreamFileStoreBufferReuse|TestNoRaceJetStreamFileStoreKeyFileCleanup|TestNoRaceJetStreamKVLock|TestNoRaceJetStreamKVReplaceWithServerRestart|TestNoRaceJetStreamLargeNumConsumersPerfImpact|TestNoRaceJetStreamLargeNumConsumersSparseDelivery|TestNoRaceJetStreamMemoryUsageOnLimitedStreamWithMirror|TestNoRaceJetStreamMemstoreWithLargeInteriorDeletes|TestNoRaceJetStreamMirrorAndSourceConsumerFailBackoff|TestNoRaceJetStreamMsgIdPerfDuringCatchup|TestNoRaceJetStreamOrderedConsumerMissingMsg|TestNoRaceJetStreamPullConsumersAndInteriorDeletes|TestNoRaceJetStreamRebuildDeDupeAndMemoryPerf|TestNoRaceJetStreamServiceImportAccountSwapIssue|TestNoRaceJetStreamSlowFilteredInitialPendingAndFirstMsg|TestNoRaceJetStreamSlowRestartWithManyExpiredMsgs|TestNoRaceJetStreamStalledMirrorsAfterExpire|TestNoRaceJetStreamStreamInfoSubjectDetailsLimits|TestNoRaceJetStreamSuperClusterAccountConnz|TestNoRaceJetStreamSuperClusterMirrors|TestNoRaceJetStreamSuperClusterMixedModeMirrors|TestNoRaceJetStreamSuperClusterMixedModeSources|TestNoRaceJetStreamSuperClusterRIPStress|TestNoRaceJetStreamSuperClusterStreamMoveLongRTT|TestNoRaceLargeNumDeletesStreamCatchups|TestNoRaceLargeStreamCatchups|TestNoRaceMemStoreCompactPerformance|TestNoRaceQueueAutoUnsubscribe|TestNoRaceRouteCache|TestNoRaceRouteMemUsage|TestNoRaceRoutePerAccount|TestNoRaceRoutePoolAndPerAccountConfigReload|TestNoRaceRoutedQueueAutoUnsubscribe|TestNoRaceStoreReverseWalkWithDeletesPerf|TestNoRaceWQAndMultiSubjectFilters|TestNoRaceWQAndMultiSubjectFiltersRace)$",
+    "./server"
+  ],
+  "network": {
+    "Name": "qore-rpm-isolated-40da832c4ade427cbf7b3d4d77ee104d",
+    "Id": "126726d1299133119250689c542a4ae19cd0599a4c2f8307f2bc4757d51036cc",
+    "Created": "2026-10-08T01:53:34.642465712+02:00",
+    "Scope": "local",
+    "Driver": "bridge",
+    "EnableIPv4": true,
+    "EnableIPv6": false,
+    "IPAM": {
+      "Driver": "default",
+      "Options": {},
+      "Config": [
+        {
+          "Subnet": "172.31.0.0/16"
+        }
+      ]
+    },
+    "Internal": true,
+    "Attachable": false,
+    "Ingress": false,
+    "ConfigFrom": {
+      "Network": ""
+    },
+    "ConfigOnly": false,
+    "Options": {
+      "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+      "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+    },
+    "Labels": {},
+    "Containers": {},
+    "Status": {
+      "IPAM": {
+        "Subnets": {
+          "172.31.0.0/16": {
+            "IPsInUse": 2,
+            "DynamicIPsAvailable": 65534
+          }
+        }
+      }
+    }
+  }
+}
