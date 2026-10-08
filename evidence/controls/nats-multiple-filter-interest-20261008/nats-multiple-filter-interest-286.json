@@ -1,0 +1,72 @@
+{
+  "source": "work/nats-prepared-53/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-multiple-filter-interest-286-clean",
+      "target": "fedora",
+      "count": 20,
+      "race": true,
+      "pattern": "^TestJetStreamConsumerMultipleFiltersLastPerSubject$",
+      "sublist": "work/nats-prepared-53/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-multiple-filter-interest-286-20261008/clean.go": "server/jetstream_consumer_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-multiple-filter-interest-286-clean",
+      "target": "leap",
+      "count": 20,
+      "race": true,
+      "pattern": "^TestJetStreamConsumerMultipleFiltersLastPerSubject$",
+      "sublist": "work/nats-prepared-53/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-multiple-filter-interest-286-20261008/clean.go": "server/jetstream_consumer_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-multiple-filter-interest-286-clean",
+      "target": "el10",
+      "count": 20,
+      "race": true,
+      "pattern": "^TestJetStreamConsumerMultipleFiltersLastPerSubject$",
+      "sublist": "work/nats-prepared-53/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-multiple-filter-interest-286-20261008/clean.go": "server/jetstream_consumer_test.go"
+      }
+    },
+    {
+      "name": "fedora-nats-multiple-filter-interest-286-control",
+      "target": "fedora",
+      "count": 10,
+      "race": true,
+      "pattern": "^TestPackagingMultipleFilterPublicationInterest$",
+      "sublist": "work/nats-prepared-53/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-multiple-filter-interest-286-20261008/control.go": "server/jetstream_consumer_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-multiple-filter-interest-286-control",
+      "target": "leap",
+      "count": 10,
+      "race": true,
+      "pattern": "^TestPackagingMultipleFilterPublicationInterest$",
+      "sublist": "work/nats-prepared-53/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-multiple-filter-interest-286-20261008/control.go": "server/jetstream_consumer_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-multiple-filter-interest-286-control",
+      "target": "el10",
+      "count": 10,
+      "race": true,
+      "pattern": "^TestPackagingMultipleFilterPublicationInterest$",
+      "sublist": "work/nats-prepared-53/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-multiple-filter-interest-286-20261008/control.go": "server/jetstream_consumer_test.go"
+      }
+    }
+  ]
+}

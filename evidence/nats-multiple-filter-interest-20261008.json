@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Candidate53 first-publication failure corrected; 90 focused race-enabled results and candidate54 source verification pass. Full package qualification remains required.",
+  "failure": "Fedora candidate53 TestJetStreamConsumerMultipleFiltersLastPerSubject: first sendStreamMsg at line 783 returns no responders before consumer creation.",
+  "root_cause": "The API creation reply and stream subscription travel over independently ordered routes. The random publisher can request an acknowledgement before stream interest reaches its ingress.",
+  "fix": "Join the existing event-driven awaitStreamRouteInterest helper before the first of six setup publications.",
+  "qualification": [
+    {
+      "target": "fedora",
+      "variant": "clean",
+      "race_enabled_results": 20,
+      "exit_code": 0
+    },
+    {
+      "target": "leap",
+      "variant": "clean",
+      "race_enabled_results": 20,
+      "exit_code": 0
+    },
+    {
+      "target": "el10",
+      "variant": "clean",
+      "race_enabled_results": 20,
+      "exit_code": 0
+    },
+    {
+      "target": "fedora",
+      "variant": "control",
+      "race_enabled_results": 10,
+      "exit_code": 0
+    },
+    {
+      "target": "leap",
+      "variant": "control",
+      "race_enabled_results": 10,
+      "exit_code": 0
+    },
+    {
+      "target": "el10",
+      "variant": "control",
+      "race_enabled_results": 10,
+      "exit_code": 0
+    }
+  ],
+  "tool_tests": 223,
+  "runner_tests": 7,
+  "candidate_patches": 117,
+  "limits": [
+    "The diagnostic control models missing ingress interest; it does not reconstruct the historical failed scheduler trace.",
+    "The subscription withdrawal, second client and control function are excluded from the package patch.",
+    "All original request deadlines, publication counts, delivery values and consumer assertions are preserved.",
+    "Candidate53 remains live to collect all failures; candidate54 has not yet been submitted to full builds. Native/installed/repository gates remain open."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-multiple-filter-interest-20261008/audit.rst": "a41791728ec77942ee0fe8008f7a96a85d3fd93c60e8ab84f76129e7eeddda75",
+    "evidence/controls/nats-multiple-filter-interest-20261008/candidate53-failed-test.json": "07057555088fdd836869d028cad57bcea954e314fa10ca2046a455879b3106d4",
+    "evidence/controls/nats-multiple-filter-interest-20261008/candidate54-verification.json": "220025b67af6d3e7d009900ae56b7753c2cdb7bd59c4560ba0d5cbbd62472c90",
+    "evidence/controls/nats-multiple-filter-interest-20261008/clean.go.gz": "78f5f7e4b6a88299e0174921757cfac8be2197064ee7c24c3c020f7e0f77f4fd",
+    "evidence/controls/nats-multiple-filter-interest-20261008/control.go.gz": "b117244da3cb4c753641fa5e4eb4537a6a60fcd231166ef11aea9fa1f6f4a3cb",
+    "evidence/controls/nats-multiple-filter-interest-20261008/el10-clean-status.json": "7e3665e9ea23312b34738f0455dcb449330e584d7c166774dfb2193ecc2fa3db",
+    "evidence/controls/nats-multiple-filter-interest-20261008/el10-clean.log.gz": "a09d3fc09497a2ebc1ef672c3b45a93c91a4232a14eced2da9c4e7ae973ddc73",
+    "evidence/controls/nats-multiple-filter-interest-20261008/el10-control-status.json": "641562a00982ba41558d82231309c258ea1086041832ae558e307a59fa408300",
+    "evidence/controls/nats-multiple-filter-interest-20261008/el10-control.log.gz": "d6ebc2c4220e211c02c36be2051c65776c17b792dfef63c97685f6928f17efbe",
+    "evidence/controls/nats-multiple-filter-interest-20261008/fedora-clean-status.json": "f5836818786c4a36c7381ae1440e86f0bbf87823a481aef9d076dddc18626e59",
+    "evidence/controls/nats-multiple-filter-interest-20261008/fedora-clean.log.gz": "90dfc51d726d1a53b58a0ddad8ad863286be6cee870870d66df0beb4ba7a496c",
+    "evidence/controls/nats-multiple-filter-interest-20261008/fedora-control-status.json": "213efda80e3a887b1a2321088b3d2edd2fc74da3e1121b1058ddf2fe86c20e95",
+    "evidence/controls/nats-multiple-filter-interest-20261008/fedora-control.log.gz": "189e774daa066e825821a75490a70190bf09998bf7a8ffa5918182d9e339d4db",
+    "evidence/controls/nats-multiple-filter-interest-20261008/integrate-nats-multiple-filter-interest-286-20261008.py": "cedde4ec93b67352ed05f61cd300fa69bdc39a09048479e005f145b0490754fc",
+    "evidence/controls/nats-multiple-filter-interest-20261008/leap-clean-status.json": "0247fc201b82d959d7a6feeb09e0a220fde2837eaf8063e0ec05f8c44e14e570",
+    "evidence/controls/nats-multiple-filter-interest-20261008/leap-clean.log.gz": "420149147869d2f776da8f5d4c426bc8f78bdd538035346bab38dca28f435aeb",
+    "evidence/controls/nats-multiple-filter-interest-20261008/leap-control-status.json": "da416eb448f1c4ea9f99ed11050fbbd2edcae6a3da8d30f31bcf7dd632d9ab85",
+    "evidence/controls/nats-multiple-filter-interest-20261008/leap-control.log.gz": "0c72079422ddc431bf2ea53d333fa3c9fa50294c3625e7a9caeaa92afee07048",
+    "evidence/controls/nats-multiple-filter-interest-20261008/nats-multiple-filter-interest-286.json": "b06e8cb807743e80f10e23dc45c9372fa3c8f16e1a36ad14c3a716c41f371af4",
+    "evidence/controls/nats-multiple-filter-interest-20261008/nats-server-multiple-filter-interest-tests.patch": "59934d4f228ccd6515b8ffd04ef8a287f5ee2ce282679468d8c55d313449f8d9",
+    "evidence/controls/nats-multiple-filter-interest-20261008/prepare-nats-candidate54-20261008.py": "3d44cb0cb4a5478c2e50607369a242d145fb95647c3fe65e8c1f0d78fbff2c1c",
+    "evidence/controls/nats-multiple-filter-interest-20261008/prepare-nats-multiple-filter-interest-286-20261008.py": "3d1f7243ad0d14a56fe407343e00e63ec68bb3fed9a84e09199ae870990b37c9",
+    "evidence/controls/nats-multiple-filter-interest-20261008/record-nats-multiple-filter-interest-286-20261008.py": "e67db7c3d984376187e085f49a0e444e2d9f6ad453e74ed3f490c876d62e9469",
+    "evidence/controls/nats-multiple-filter-interest-20261008/run-nats-focused-38.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a",
+    "evidence/controls/nats-multiple-filter-interest-20261008/runner-tests.log.gz": "1263e4a504f9a1488d390728f7922dfca5f52292d5d289d7fb0da780eb3bcb97",
+    "evidence/controls/nats-multiple-filter-interest-20261008/tools-tests.log.gz": "89473a6923a0dee004dcc576b21a64fe6d16a7242aaaa1de8cbc05bdba11fdcd"
+  }
+}

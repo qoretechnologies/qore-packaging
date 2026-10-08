@@ -1,0 +1,13 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Join stream route interest before the multiple-filter fixture publishes its setup messages.
+--- a/server/jetstream_consumer_test.go
++++ b/server/jetstream_consumer_test.go
+@@ -780,6 +780,8 @@
+ 	})
+ 	require_NoError(t, error)
+ 
++	// The creation reply and stream subscriptions travel on separate routes.
++	awaitStreamRouteInterest(t, c, nc, "TEST")
+ 	sendStreamMsg(t, nc, "one", "1")
+ 	sendStreamMsg(t, nc, "one", "2")
+ 	sendStreamMsg(t, nc, "one", "3")
