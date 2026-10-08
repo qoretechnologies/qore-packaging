@@ -42,7 +42,7 @@ for target, job in [('fedora', 209791), ('leap', 209792), ('el10', 209793)]:
     for p in sorted(source.rglob('*')):
         if not p.is_file():
             continue
-        dest = out / target / p.relative_to(source)
+        dest = out / target / (p.relative_to(base) if p.is_relative_to(base) else p.relative_to(source))
         dest.parent.mkdir(parents=True, exist_ok=True)
         if p.suffix == '.log':
             dest.with_suffix('.log.gz').write_bytes(gzip.compress(p.read_bytes(), mtime=0))
