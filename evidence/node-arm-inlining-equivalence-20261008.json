@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Five additional ARM warning locations resolve to existing approved data flows after exact source/declaration/call-chain verification.",
+  "source_log_sha256": "7d80d37977fccee23248384347bc25b4a61cca26d56e71047efcdf08599e0cda",
+  "mappings": [
+    {
+      "diagnostic": "../deps/v8/src/ast/ast-source-ranges.h:322:9: warning: \u2018optional_link_begin\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "declaration": "parsing/parser-base.h:3921:7",
+      "variable": "optional_link_begin",
+      "existing_approval": "evidence/node-optional-link-diagnostic-20261007.json",
+      "existing_approval_sha256": "79b6be0e6d87a935aeac52161247a87b674f86c60892333b25673dac4cc95931",
+      "existing_evidence_files_verified": 21,
+      "same_dataflow": "ParseLeftHandSideContinuation assigns the source position before is_optional becomes true. The ARM diagnostic follows that same value through SourceRange and RecordExpressionSourceRange into ExpressionSourceRanges."
+    },
+    {
+      "diagnostic": "../deps/v8/src/maglev/maglev-ir.h:1342:37: warning: \u2018untagged\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "declaration": "maglev/maglev-phi-representation-selector.cc:632:18",
+      "variable": "untagged",
+      "existing_approval": "evidence/node-phi-diagnostics-20261007.json",
+      "existing_approval_sha256": "33955629dfdae490106843674111c9a44708977df651e2cb8eefa548d200f7ad",
+      "existing_evidence_files_verified": 15,
+      "same_dataflow": "The same ConvertTaggedPhiTo local is assigned by each supported representation or the branch terminates. ARM reports the Input constructor reached through the already-reviewed phi change_input, rather than add_use."
+    },
+    {
+      "diagnostic": "../deps/v8/src/maglev/maglev-ir.h:5924:11: warning: \u2018result\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "declaration": "maglev/maglev-ir.h:5813:20",
+      "variable": "result",
+      "existing_approval": "evidence/node-object-dispatch-diagnostics-20261007.json",
+      "existing_approval_sha256": "b6f07f02a233a1c739cf0e44c24e1125826f1f39cad1993036a2581ff39d1463",
+      "existing_evidence_files_verified": 15,
+      "same_dataflow": "The unchanged VirtualObject::Clone assigns its result for kDefault and terminates for the other declared types. The previously reviewed MergeVirtualObject caller forwards that returned value to VirtualObjectList::Add; the ARM warning names this later store."
+    },
+    {
+      "diagnostic": "../deps/v8/src/objects/js-date-time-format.cc:1830:22: warning: \u2018replacement\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "declaration": "objects/js-date-time-format.cc:1792:12",
+      "variable": "replacement",
+      "existing_approval": "evidence/node-hourcycle-diagnostics-20261006.json",
+      "existing_approval_sha256": "29cf7138059e7ce17c1d758ed28ef14fa09d3995134afa7f8ffffae6b05ce104",
+      "existing_evidence_files_verified": 16,
+      "same_dataflow": "The same ReplaceHourCycleInPattern local is assigned for every concrete HourCycle, while kUndefined returns first. ARM reports the append use after inlining into the cache path instead of the declaration."
+    },
+    {
+      "diagnostic": "../deps/v8/src/tracing/trace-event.h:217:54: warning: \u2018scope_id\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+      "declaration": "heap/heap.cc:1948:30",
+      "variable": "scope_id",
+      "existing_approval": "evidence/node-sweep-serializer-diagnostics-20261007.json",
+      "existing_approval_sha256": "7dc8a1957999c5f4c5fa643376e800ca0c899d7a89dabe6c9804c57b4e3567e5",
+      "existing_evidence_files_verified": 34,
+      "same_dataflow": "Both diagnostics arise from CompleteArrayBufferSweeping, which assigns scope_id for all three GarbageCollector values. The ARM warning names AddTraceEvent in the same macro expansion, one line after the prior TraceID constructor."
+    }
+  ],
+  "approval_basis": "Existing approvals cover these same qualified locals/functions. No additional behavior or diagnostic family is accepted; only compiler inlining locations differ.",
+  "limits": [
+    "All original control limits and source assumptions remain. This evidence does not claim new native ARM execution.",
+    "The five prior native/JavaScript/Valgrind qualification records are reused because their exact production source bodies are unchanged; no duplicate test run is claimed.",
+    "Other ARM warnings remain unresolved and are excluded from these mappings."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-arm-inlining-equivalence-20261008/audit.rst": "42b99522a506c6cf2aa93aa4675a6b139ba504b9dfe7b78bb8658702ef70611c",
+    "evidence/controls/node-arm-inlining-equivalence-20261008/equivalence.json": "ffa25d4d0341754b180abc7e5d6aeabbda0a0d552afc19cefcd406f0c38a9de7",
+    "evidence/controls/node-arm-inlining-equivalence-20261008/record.py": "7d0cc38e39b25e12489e3bdd2e3f6e1264db4b2cab60b645209fc64ee32e9fe8"
+  }
+}
