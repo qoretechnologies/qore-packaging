@@ -1,0 +1,211 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-08",
+  "status": "Local runtime/SDK commands pass on all three x86_64 distributions; signed clean native ARM qualification remains.",
+  "source_commit": "664eaf58a09f5279532f397c7a48de8b467c1907",
+  "runner_scope": [
+    "tools/qualify-installed.py",
+    "tools/v8-reference-control.cpp",
+    "tests/test_installed_v8.py"
+  ],
+  "targets": {
+    "fedora": {
+      "runtime": {
+        "commands": 15,
+        "status": "results/v8-installed-runner-final-20261008/fedora/runtime/status.json",
+        "exit_code": 0
+      },
+      "sdk": {
+        "commands": 19,
+        "status": "results/v8-installed-runner-final-20261008/fedora/sdk/status.json",
+        "exit_code": 0,
+        "reference_control": {
+          "destroyed_objects": 1001,
+          "base_offset": 16,
+          "valgrind_errors": 0,
+          "lost_bytes": 0
+        }
+      }
+    },
+    "leap": {
+      "runtime": {
+        "commands": 15,
+        "status": "results/v8-installed-runner-final-20261008/leap/runtime/status.json",
+        "exit_code": 0
+      },
+      "sdk": {
+        "commands": 19,
+        "status": "results/v8-installed-runner-final-20261008/leap/sdk/status.json",
+        "exit_code": 0,
+        "reference_control": {
+          "destroyed_objects": 1001,
+          "base_offset": 16,
+          "valgrind_errors": 0,
+          "lost_bytes": 0
+        }
+      }
+    },
+    "el10": {
+      "runtime": {
+        "commands": 15,
+        "status": "results/v8-installed-runner-20261008/el10/runtime/status.json",
+        "exit_code": 0
+      },
+      "sdk": {
+        "commands": 19,
+        "status": "results/v8-installed-runner-20261008/el10/sdk/status.json",
+        "exit_code": 0,
+        "reference_control": {
+          "destroyed_objects": 1001,
+          "base_offset": 16,
+          "valgrind_errors": 0,
+          "lost_bytes": 0
+        }
+      }
+    }
+  },
+  "unit_tests": {
+    "passed": 250,
+    "log": "results/v8-installed-runner-audit-unit-20261008.log"
+  },
+  "compiler_diagnostic": {
+    "approval": "Existing approval recorded in evidence/v8-external-diagnostics-20261003.json, compiler_diagnostic; no extension or flag change.",
+    "control_unchanged_from": "evidence/v8-controls-20261003/delete.cpp",
+    "native_arm": "The same control will run on each native SDK target before accepting the existing Fedora ARM warning sites."
+  },
+  "fixture_corrections": [
+    "Initial Fedora/Leap test images lacked python3; installed the same fixture dependency used by native CI and reran both phases successfully. AlmaLinux had already passed both phases.",
+    "Leap local installed images initially lacked the public key and printed NOKEY. Imported the same pinned key in both images and independently verified both Node RPM signatures and installed V8/Node files with zero diagnostics; see results/v8-installed-signatures-20261008/status.json. Native runner imports and verifies the pinned key before any package installation."
+  ],
+  "limitations": [
+    "These local command tests use the previous qualified installed Qore/dependency image, not a clean distribution installation. Native manifest runner must still exercise clean signed installation.",
+    "Metadata-only final description edits do not change these runtime or SDK inputs."
+  ],
+  "sha256": {
+    "results/v8-installed-runner-final-20261008/fedora/runtime/ts-action-interface.log": "f6fe53823d54b07380f8c33da58b9397c5ba49ff512299b1048f6d66a5b305e5",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/v8.log": "c7b19f2f5089b28db92176badcd31a3d16fcfa3a48824b0a0589a82844aa6fde",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/ts-app-initialization.log": "998477895287a6aa3c10235799c706d5f3d74baca920a52a2ccb36b1759759a6",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/js-inprocess-pool.log": "ae69546789c619bebb7e6e160662ab84cfcb3eb1525e3b214fcdd5ebc5ce294a",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/v8-stdio-inheritance.log": "3d5e64f0f6a257ba10703de8d33d1bf3f6a210af630726ae17ced8a433be5d04",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/ts-proxy.log": "76d6aa0d7862ea4d480ab2f7c9dfaf96c0cf27168e2c92e60e4b12c188f2a065",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/js-program-destroy-in-use.log": "26894124930d1f85c088d27b4006639a747a88f36a777ca7976da7d5a5eaeef4",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/typescript.log": "521c5273e00bee75f6575892e062279475aaac3267d0c7b0c55bf7f1b36f3550",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/js-teardown.log": "7aa1c311c56956c2d0a7319b27ec8872e05f797f8950162314ca05b36a804474",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/v8-signal-handling.log": "236f6448530885be5f3488ab8e0a7b427ef355a12a511577ba226320419e5e5a",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/v8-qore-import.log": "c7973d5008cd6606bd4e7d4a6b57b532c833eeb379b8133f2a05645edb301c47",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/driver.log": "1982e1a7283ab5a7d4a9ab279963b2385355432325042da9aefac7dd0bd0fbe7",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/install.log": "2a806d6727d73c62193ff2c59c6c63392f099f3b70bac150bd5749144c394e18",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/ts-schema-request.log": "e11a2f46b6ddf081c663206e515e79bf19cff581dd2c9015a2e6286fbc581798",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/hubspot-oauth.log": "c66ee504eee2748715b6daa794f94ba478fc31f5e93d239433f7f355a948567c",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/ts-schema-cache.log": "a9162a6a145cae334ff6f6174620a1061f3a3a1124ad9b927dd8041b650e06a3",
+    "results/v8-installed-runner-final-20261008/fedora/runtime/cli.log": "1090b195c5534c0294d4807e76d331a5ebca54886ca883254f195176f449df21",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/ts-action-interface.log": "f6fe53823d54b07380f8c33da58b9397c5ba49ff512299b1048f6d66a5b305e5",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/v8.log": "c7b19f2f5089b28db92176badcd31a3d16fcfa3a48824b0a0589a82844aa6fde",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/ts-app-initialization.log": "8bc634f77cc8019516fed857d7c4cf216648c35c428cfa1a1a016db1b637b1eb",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/reference-lifetime.log": "775bcdda12f6b7beb7105ebdc249fcad09da1be7a559dde120acc56d583e8380",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/js-inprocess-pool.log": "ae69546789c619bebb7e6e160662ab84cfcb3eb1525e3b214fcdd5ebc5ce294a",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/v8-stdio-inheritance.log": "3d5e64f0f6a257ba10703de8d33d1bf3f6a210af630726ae17ced8a433be5d04",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/ts-proxy.log": "6b927ce400e19753b59fa3ab2c249a2c19d4fe60626b9a0929a6f10b48f3c5a1",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/js-program-destroy-in-use.log": "26894124930d1f85c088d27b4006639a747a88f36a777ca7976da7d5a5eaeef4",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/reference-valgrind.log": "fd816adb3b08d7b92eeffb3585596dcbf188a5848e3b04724f643c4329c86bea",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/reference-build.log": "0d679c89dff55f862e1344aa6b7f2829348c7e346936ca281d673df5e8c768f5",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/typescript.log": "32e6d2ab33de568cefcfc02ff0b31653589325733a8ba5da638e2e3ef0e5a338",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/compiler.log": "ff894e62cd9d398aca19f616a59665917b1a097de2d502306bde958d9512bbbd",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/js-teardown.log": "7aa1c311c56956c2d0a7319b27ec8872e05f797f8950162314ca05b36a804474",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/v8-signal-handling.log": "236f6448530885be5f3488ab8e0a7b427ef355a12a511577ba226320419e5e5a",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/v8-qore-import.log": "c7973d5008cd6606bd4e7d4a6b57b532c833eeb379b8133f2a05645edb301c47",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/driver.log": "4b5d843595f966b856f83fc34a97004fae31a19b14cde0c5de18b355c88683af",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/install.log": "e761f39fad4b1b2b0c5185548f5648f1245151a9f27d957ed413f5a69d42eba7",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/ts-schema-request.log": "e11a2f46b6ddf081c663206e515e79bf19cff581dd2c9015a2e6286fbc581798",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/hubspot-oauth.log": "3a65e8070624021f471b9066fbe446f8997de0f6784e064e2d7aadd2ff70393c",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/ts-schema-cache.log": "a9162a6a145cae334ff6f6174620a1061f3a3a1124ad9b927dd8041b650e06a3",
+    "results/v8-installed-runner-final-20261008/fedora/sdk/cli.log": "9e4a3f8a1d5a1b31089e10799b523cd8689fb611303158c57f62f323b81b9d4b",
+    "results/v8-installed-runner-final-20261008/leap/runtime/ts-action-interface.log": "f6fe53823d54b07380f8c33da58b9397c5ba49ff512299b1048f6d66a5b305e5",
+    "results/v8-installed-runner-final-20261008/leap/runtime/v8.log": "c7b19f2f5089b28db92176badcd31a3d16fcfa3a48824b0a0589a82844aa6fde",
+    "results/v8-installed-runner-final-20261008/leap/runtime/ts-app-initialization.log": "5d52f10137e22a6d561f7786b0b01a0b3ce1995e56c8dae5031a4558f5c028d0",
+    "results/v8-installed-runner-final-20261008/leap/runtime/js-inprocess-pool.log": "ae69546789c619bebb7e6e160662ab84cfcb3eb1525e3b214fcdd5ebc5ce294a",
+    "results/v8-installed-runner-final-20261008/leap/runtime/v8-stdio-inheritance.log": "3d5e64f0f6a257ba10703de8d33d1bf3f6a210af630726ae17ced8a433be5d04",
+    "results/v8-installed-runner-final-20261008/leap/runtime/ts-proxy.log": "20bf0a4fd19629000150b8116e2c2ff1cff1b7a9206b6c7ec11594ad58003589",
+    "results/v8-installed-runner-final-20261008/leap/runtime/js-program-destroy-in-use.log": "26894124930d1f85c088d27b4006639a747a88f36a777ca7976da7d5a5eaeef4",
+    "results/v8-installed-runner-final-20261008/leap/runtime/typescript.log": "195c354fa8540b5f72ea90cfb2c6be5c55419e5cf4b4a449059461cab7c24993",
+    "results/v8-installed-runner-final-20261008/leap/runtime/js-teardown.log": "7aa1c311c56956c2d0a7319b27ec8872e05f797f8950162314ca05b36a804474",
+    "results/v8-installed-runner-final-20261008/leap/runtime/v8-signal-handling.log": "236f6448530885be5f3488ab8e0a7b427ef355a12a511577ba226320419e5e5a",
+    "results/v8-installed-runner-final-20261008/leap/runtime/v8-qore-import.log": "c7973d5008cd6606bd4e7d4a6b57b532c833eeb379b8133f2a05645edb301c47",
+    "results/v8-installed-runner-final-20261008/leap/runtime/driver.log": "1982e1a7283ab5a7d4a9ab279963b2385355432325042da9aefac7dd0bd0fbe7",
+    "results/v8-installed-runner-final-20261008/leap/runtime/install.log": "a21e46f59da1011dc157d8b0505aa1e3f0e2aca08366e9b89bdba4897b095cfd",
+    "results/v8-installed-runner-final-20261008/leap/runtime/ts-schema-request.log": "e11a2f46b6ddf081c663206e515e79bf19cff581dd2c9015a2e6286fbc581798",
+    "results/v8-installed-runner-final-20261008/leap/runtime/hubspot-oauth.log": "4792d3f47dec4603f64cbda4ee585dc5eec704218e4efee6745b7f80e1985d76",
+    "results/v8-installed-runner-final-20261008/leap/runtime/ts-schema-cache.log": "a9162a6a145cae334ff6f6174620a1061f3a3a1124ad9b927dd8041b650e06a3",
+    "results/v8-installed-runner-final-20261008/leap/runtime/cli.log": "6dd6318104bcd538d30192eefad55c9c6b257bd4272d169db0613b050ed61469",
+    "results/v8-installed-runner-final-20261008/leap/sdk/ts-action-interface.log": "f6fe53823d54b07380f8c33da58b9397c5ba49ff512299b1048f6d66a5b305e5",
+    "results/v8-installed-runner-final-20261008/leap/sdk/v8.log": "c7b19f2f5089b28db92176badcd31a3d16fcfa3a48824b0a0589a82844aa6fde",
+    "results/v8-installed-runner-final-20261008/leap/sdk/ts-app-initialization.log": "12ef6f806009a1168835823b29f09755b82b4a576bd442b7cd1cbfd1ead8a9aa",
+    "results/v8-installed-runner-final-20261008/leap/sdk/reference-lifetime.log": "775bcdda12f6b7beb7105ebdc249fcad09da1be7a559dde120acc56d583e8380",
+    "results/v8-installed-runner-final-20261008/leap/sdk/js-inprocess-pool.log": "ae69546789c619bebb7e6e160662ab84cfcb3eb1525e3b214fcdd5ebc5ce294a",
+    "results/v8-installed-runner-final-20261008/leap/sdk/v8-stdio-inheritance.log": "3d5e64f0f6a257ba10703de8d33d1bf3f6a210af630726ae17ced8a433be5d04",
+    "results/v8-installed-runner-final-20261008/leap/sdk/ts-proxy.log": "86d34b7eec9273a233e685dcec45aab74b0cd9d4169e81db5f7816c97be467e1",
+    "results/v8-installed-runner-final-20261008/leap/sdk/js-program-destroy-in-use.log": "26894124930d1f85c088d27b4006639a747a88f36a777ca7976da7d5a5eaeef4",
+    "results/v8-installed-runner-final-20261008/leap/sdk/reference-valgrind.log": "c152f556aa28c70c32562a7a9dc0420aceb3a3d950c7854c47c118e7105af5ea",
+    "results/v8-installed-runner-final-20261008/leap/sdk/reference-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/v8-installed-runner-final-20261008/leap/sdk/typescript.log": "3f80c6e20921697a3ae6276ca4bd7176c34edde7b3a0712c3b74a035f145495f",
+    "results/v8-installed-runner-final-20261008/leap/sdk/compiler.log": "726d50fd261d82174177ce8d9ca3a32026e36df8d403fc58a5f1a806c17f1f0f",
+    "results/v8-installed-runner-final-20261008/leap/sdk/js-teardown.log": "7aa1c311c56956c2d0a7319b27ec8872e05f797f8950162314ca05b36a804474",
+    "results/v8-installed-runner-final-20261008/leap/sdk/v8-signal-handling.log": "236f6448530885be5f3488ab8e0a7b427ef355a12a511577ba226320419e5e5a",
+    "results/v8-installed-runner-final-20261008/leap/sdk/v8-qore-import.log": "c7973d5008cd6606bd4e7d4a6b57b532c833eeb379b8133f2a05645edb301c47",
+    "results/v8-installed-runner-final-20261008/leap/sdk/driver.log": "4b5d843595f966b856f83fc34a97004fae31a19b14cde0c5de18b355c88683af",
+    "results/v8-installed-runner-final-20261008/leap/sdk/install.log": "bd6b1f36f17d09485dc2501317d571b95d7634604925995d0e3c285a4ca0c880",
+    "results/v8-installed-runner-final-20261008/leap/sdk/ts-schema-request.log": "e11a2f46b6ddf081c663206e515e79bf19cff581dd2c9015a2e6286fbc581798",
+    "results/v8-installed-runner-final-20261008/leap/sdk/hubspot-oauth.log": "1349351a30b6eab5a46bbf941adadb683806836d52dcd17227658764bab8e096",
+    "results/v8-installed-runner-final-20261008/leap/sdk/ts-schema-cache.log": "a9162a6a145cae334ff6f6174620a1061f3a3a1124ad9b927dd8041b650e06a3",
+    "results/v8-installed-runner-final-20261008/leap/sdk/cli.log": "498e87f8393e1dbd3ab2b51b56c53bdc03f9e0ff9f6f08cc58eac91e42836044",
+    "results/v8-installed-runner-20261008/el10/runtime/ts-action-interface.log": "f6fe53823d54b07380f8c33da58b9397c5ba49ff512299b1048f6d66a5b305e5",
+    "results/v8-installed-runner-20261008/el10/runtime/v8.log": "c7b19f2f5089b28db92176badcd31a3d16fcfa3a48824b0a0589a82844aa6fde",
+    "results/v8-installed-runner-20261008/el10/runtime/ts-app-initialization.log": "90e9b75ac2e40fea8cdeb680ef0647947e6c8af4ddcbc738b98750e7c1c08930",
+    "results/v8-installed-runner-20261008/el10/runtime/js-inprocess-pool.log": "ae69546789c619bebb7e6e160662ab84cfcb3eb1525e3b214fcdd5ebc5ce294a",
+    "results/v8-installed-runner-20261008/el10/runtime/v8-stdio-inheritance.log": "3d5e64f0f6a257ba10703de8d33d1bf3f6a210af630726ae17ced8a433be5d04",
+    "results/v8-installed-runner-20261008/el10/runtime/ts-proxy.log": "396407152dd986845ac111bd4c903b2cd27f2b535742d36ad204523e2f5e4161",
+    "results/v8-installed-runner-20261008/el10/runtime/js-program-destroy-in-use.log": "26894124930d1f85c088d27b4006639a747a88f36a777ca7976da7d5a5eaeef4",
+    "results/v8-installed-runner-20261008/el10/runtime/typescript.log": "8fe8077854649b86b1bc43e89715b24f81c8f3bbb3a7c59e5a260742ed248c85",
+    "results/v8-installed-runner-20261008/el10/runtime/js-teardown.log": "7aa1c311c56956c2d0a7319b27ec8872e05f797f8950162314ca05b36a804474",
+    "results/v8-installed-runner-20261008/el10/runtime/v8-signal-handling.log": "236f6448530885be5f3488ab8e0a7b427ef355a12a511577ba226320419e5e5a",
+    "results/v8-installed-runner-20261008/el10/runtime/v8-qore-import.log": "c7973d5008cd6606bd4e7d4a6b57b532c833eeb379b8133f2a05645edb301c47",
+    "results/v8-installed-runner-20261008/el10/runtime/driver.log": "1982e1a7283ab5a7d4a9ab279963b2385355432325042da9aefac7dd0bd0fbe7",
+    "results/v8-installed-runner-20261008/el10/runtime/install.log": "82f90f745b2e0a0f81e9057f65c4819729c1c0264dbf452cdd389de520dd5300",
+    "results/v8-installed-runner-20261008/el10/runtime/ts-schema-request.log": "e11a2f46b6ddf081c663206e515e79bf19cff581dd2c9015a2e6286fbc581798",
+    "results/v8-installed-runner-20261008/el10/runtime/hubspot-oauth.log": "753f7d6a320c7afaabc8e30bf1584acb5a65b64fdf9390f433a02ce33b540ae9",
+    "results/v8-installed-runner-20261008/el10/runtime/ts-schema-cache.log": "a9162a6a145cae334ff6f6174620a1061f3a3a1124ad9b927dd8041b650e06a3",
+    "results/v8-installed-runner-20261008/el10/runtime/cli.log": "4326fd89abb95dae182c6d162ddc67e4d6bcc7cefae969d44b655da312bc3896",
+    "results/v8-installed-runner-20261008/el10/sdk/ts-action-interface.log": "f6fe53823d54b07380f8c33da58b9397c5ba49ff512299b1048f6d66a5b305e5",
+    "results/v8-installed-runner-20261008/el10/sdk/v8.log": "c7b19f2f5089b28db92176badcd31a3d16fcfa3a48824b0a0589a82844aa6fde",
+    "results/v8-installed-runner-20261008/el10/sdk/ts-app-initialization.log": "ddcdac2c7c6fbbf22354b61f221426d96ec6691850bce38bf735dc9079b9a0fa",
+    "results/v8-installed-runner-20261008/el10/sdk/reference-lifetime.log": "775bcdda12f6b7beb7105ebdc249fcad09da1be7a559dde120acc56d583e8380",
+    "results/v8-installed-runner-20261008/el10/sdk/js-inprocess-pool.log": "ae69546789c619bebb7e6e160662ab84cfcb3eb1525e3b214fcdd5ebc5ce294a",
+    "results/v8-installed-runner-20261008/el10/sdk/v8-stdio-inheritance.log": "3d5e64f0f6a257ba10703de8d33d1bf3f6a210af630726ae17ced8a433be5d04",
+    "results/v8-installed-runner-20261008/el10/sdk/ts-proxy.log": "4e88db99a9d4e5c3a5ec3f088ae97c6f7187f54a8befa7658c39e5b74306a552",
+    "results/v8-installed-runner-20261008/el10/sdk/js-program-destroy-in-use.log": "26894124930d1f85c088d27b4006639a747a88f36a777ca7976da7d5a5eaeef4",
+    "results/v8-installed-runner-20261008/el10/sdk/reference-valgrind.log": "69d9c2c59ed67a189f458aa2971d4c195cc33c6e0485415bfcd73a36ed95e7ac",
+    "results/v8-installed-runner-20261008/el10/sdk/reference-build.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "results/v8-installed-runner-20261008/el10/sdk/typescript.log": "32e6d2ab33de568cefcfc02ff0b31653589325733a8ba5da638e2e3ef0e5a338",
+    "results/v8-installed-runner-20261008/el10/sdk/compiler.log": "4016859b16373e1e1e71789f9c0fc187f9f825e0df1abdc350e010134b683df7",
+    "results/v8-installed-runner-20261008/el10/sdk/js-teardown.log": "7aa1c311c56956c2d0a7319b27ec8872e05f797f8950162314ca05b36a804474",
+    "results/v8-installed-runner-20261008/el10/sdk/v8-signal-handling.log": "236f6448530885be5f3488ab8e0a7b427ef355a12a511577ba226320419e5e5a",
+    "results/v8-installed-runner-20261008/el10/sdk/v8-qore-import.log": "c7973d5008cd6606bd4e7d4a6b57b532c833eeb379b8133f2a05645edb301c47",
+    "results/v8-installed-runner-20261008/el10/sdk/driver.log": "4b5d843595f966b856f83fc34a97004fae31a19b14cde0c5de18b355c88683af",
+    "results/v8-installed-runner-20261008/el10/sdk/install.log": "b2ee0f8406136b481e42ab005df71cf9291e9da79dc778a9fac181359cae1f7d",
+    "results/v8-installed-runner-20261008/el10/sdk/ts-schema-request.log": "e11a2f46b6ddf081c663206e515e79bf19cff581dd2c9015a2e6286fbc581798",
+    "results/v8-installed-runner-20261008/el10/sdk/hubspot-oauth.log": "0e98e141f3e523874e760e1f283356f874fb56e25d2d7d6cb4ae946de39662be",
+    "results/v8-installed-runner-20261008/el10/sdk/ts-schema-cache.log": "a9162a6a145cae334ff6f6174620a1061f3a3a1124ad9b927dd8041b650e06a3",
+    "results/v8-installed-runner-20261008/el10/sdk/cli.log": "2e45227db535481139836206b99ca0557b2b2b282d30c32acbe064810dfc2e27",
+    "results/v8-installed-runner-audit-unit-20261008.log": "ada6e3ea5120f1d43009a7cf69da0bf0ffc99b6482d5b8f9fa22c0f2d0fd93d2",
+    "results/v8-installed-signatures-20261008/runtime.log": "e2312245b4f523577d2913c69575ed484e8a2653a166d30dc921ece63ce106de",
+    "results/v8-installed-signatures-20261008/sdk.log": "e2312245b4f523577d2913c69575ed484e8a2653a166d30dc921ece63ce106de",
+    "results/v8-installed-signatures-20261008/status.json": "c9577037e55c5710025f11f2333dd7a9046c011427387b0f0032f6d03b49b804"
+  },
+  "audit": {
+    "path": "evidence/v8-installed-runner-20261008.audit.rst",
+    "pass": 10,
+    "not_applicable": 52,
+    "fail": 0
+  }
+}

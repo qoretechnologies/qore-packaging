@@ -22,6 +22,13 @@ import core_lifecycle
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'v8': {'debian/tests/compiler', 'debian/tests/cli', 'test/example.js', 'test/test.js',
+           'test/google-discovery-fixture.q', 'test/PetStore.openapi3.yaml', 'test/PetStore.swagger.yaml'}
+        | {'test/' + name + '.qtest' for name in
+           ('hubspot-oauth', 'js-inprocess-pool', 'js-program-destroy-in-use', 'js-teardown',
+            'ts-action-interface', 'ts-app-initialization', 'ts-proxy', 'ts-schema-cache',
+            'ts-schema-request', 'typescript', 'v8-qore-import', 'v8-signal-handling',
+            'v8-stdio-inheritance', 'v8')},
     'grpc': {'debian/tests/compiler', 'test/test.proto', 'test/async-stream.proto',
              'test/interop/interop_server.py', 'test/pyarrow_flight_client.py',
              'test/pyarrow_flight_server.py', 'test/certs/server.crt', 'test/certs/server.key'}
@@ -119,6 +126,8 @@ MODULE_FIXTURES = {
              'src/ODBCArraySize.h'},
 }
 MODULE_PRELOADS = {
+    'v8': ('/TypeScriptProxy/TypeScriptProxy.qmod',
+           '/TypeScriptActionInterface/TypeScriptActionInterface.qmod'),
     'grpc': ('/GrpcUtil/GrpcUtil.qmod', '/GrpcDataProvider/GrpcDataProvider.qmod',
              '/ArrowFlightDataProvider/ArrowFlightDataProvider.qmod',
              '/SalesforcePubSubDataProvider/SalesforcePubSubDataProvider.qmod'),
@@ -161,6 +170,10 @@ def validate_modules(manifest):
             raise ValueError('Module fixture URLs must match their pinned repository revision')
         if packages.get('qore-' + name + '-module', {}).get('phase') != 'runtime':
             raise ValueError('Missing module runtime RPM')
+        if name == 'v8':
+            for dependency in ('qore-process-module', 'qore-uuid-module'):
+                if packages.get(dependency, {}).get('phase') != 'runtime':
+                    raise ValueError('V8 qualification requires a pinned runtime RPM: ' + dependency)
         if name == 'grpc' and packages.get('qore-process-module', {}).get('phase') != 'runtime':
             raise ValueError('gRPC interoperability requires the process runtime RPM')
         if name == 'xmlsec' and packages.get('qore-xml-module', {}).get('phase') != 'runtime':
@@ -230,6 +243,8 @@ def module_dependencies(name, phase, family):
         raise ValueError('Unknown module suite or phase')
     if family not in ('fedora', 'suse', 'el'):
         raise ValueError('Unsupported fixture distribution')
+    if name == 'v8':
+        return ['openssl', 'which'] if phase == 'runtime' else ['valgrind']
     if name == 'grpc' and phase == 'runtime':
         return ['python3-grpcio', 'python3-grpcio-tools', 'python3-pyarrow']
     if name == 'ssh' and phase == 'runtime':
@@ -266,6 +281,42 @@ def module_commands(name, phase, directory, binary=None, driver=None, installed_
         raise ValueError('Unknown module suite or phase')
     if name == 'jni':
         return installed_jni.commands(phase, directory, binary)
+    if name == 'v8':
+        if (binary is None or not binary.is_absolute() or binary.suffix != '.qmod'
+                or not binary.name.startswith('v8-api-') or '..' in binary.parts):
+            raise ValueError('V8 checks require the installed native module path')
+        preloads = ['-l', str(binary)]
+        for suffix in MODULE_PRELOADS[name]:
+            path = installed_module_file(name, installed_files, suffix)
+            if path.parent.parent != binary.parent:
+                raise ValueError('V8 native and AOT modules must share their installed module directory')
+            preloads.extend(['-l', str(path)])
+        environment = ['env']
+        for variable in ('NODE_OPTIONS', 'NODE_PATH', 'NODE_INCLUDE_DIR', 'NODE_LIB_DIR',
+                         'V8_CPPGC_INCLUDE_DIR', 'QORE_TYPESCRIPT_MASTER_ACTION_SCRIPT',
+                         'QORE_TYPESCRIPT_ACTION_SCRIPTS', 'QORE_TYPESCRIPT_ACTION_TEST_SCRIPTS',
+                         'QORE_DATA_PROVIDERS', 'QORE_CONNECTION_PROVIDERS',
+                         'QORE_DATASOURCE_PROVIDERS', 'QORE_PROVIDER_INDEX_DIR'):
+            environment.extend(['-u', variable])
+        environment.extend(['QORE_V8_TEST_MODULE_DIR=' + str(binary.parent),
+                            'QORE_V8_TEST_QMOD_DIR=' + str(binary.parent)])
+        commands = [('cli', environment + ['sh', str(directory / 'debian/tests/cli')])]
+        for path in sorted(MODULE_FIXTURES[name]):
+            if path.endswith('.qtest'):
+                commands.append((Path(path).stem, environment + ['timeout', '600', 'qore',
+                    '-b', '--enable-debug', *preloads, str(directory / path), '-v']))
+        if phase == 'sdk':
+            commands.append(('compiler', environment + [str(directory / 'debian/tests/compiler')]))
+            control = directory / 'reference-control'
+            commands.extend([
+                ('reference-build', ['c++', '-std=c++17', '-O2', '-flto', '-g', '-Wall',
+                    str(Path(__file__).with_name('v8-reference-control.cpp').resolve()),
+                    '-lqore', '-o', str(control)]),
+                ('reference-lifetime', [str(control)]),
+                ('reference-valgrind', ['valgrind', '--error-exitcode=99', '--leak-check=full',
+                    '--show-leak-kinds=all', '--errors-for-leak-kinds=definite,indirect,possible', str(control)]),
+            ])
+        return commands
     if name == 'grpc':
         if (binary is None or not binary.is_absolute() or binary.suffix != '.qmod'
                 or not binary.name.startswith('grpc-api-') or '..' in binary.parts):
@@ -638,7 +689,7 @@ def qualify(manifest, output, jni_phase=None, jni_fixtures=None, repository_inst
                         driver_package = 'psqlODBC' if manifest['family'] == 'suse' else 'postgresql-odbc'
                         files = subprocess.check_output(['rpm', '-ql', driver_package], text=True)
                         driver = installed_module_file('PostgreSQL ODBC driver', files, '/psqlodbcw.so')
-                    if name in ('jni', 'grpc'):
+                    if name in ('jni', 'grpc', 'v8'):
                         files = subprocess.check_output(['rpm', '-ql', 'qore-' + name + '-module'], text=True)
                         api = subprocess.check_output(['qore', '--latest-module-api'], text=True).strip()
                         binary = installed_module_file(name, files, '/' + name + '-api-' + api + '.qmod')

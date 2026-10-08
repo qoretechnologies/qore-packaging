@@ -174,3 +174,21 @@ copies tests outside the checkout, clears broker settings and development
 paths, and explicitly loads the installed AOT helpers. The SDK phase also
 compiles and runs the message-conversion and provider-registration consumer.
 These offline checks do not replace connected broker and TLS/mTLS qualification.
+
+V8 qualification pins its process and UUID module dependencies and all 21
+fixture files from the module revision used to build the RPM. Both runtime and
+SDK phases run the command-line check and all 14 JavaScript/TypeScript suites.
+The runner resolves the native V8 module and its two AOT helpers from the RPM
+inventory, rejects duplicate or mismatched module paths, and clears Node and
+provider environment settings before invoking the installed modules. Tests run
+as the unprivileged fixture user; runtime qualification does not install a
+compiler. The separately built TypeScript app catalog and source-only injected
+failure hooks retain their explicit test skips.
+
+The SDK phase also compiles and runs the module's consumer example and the
+multiple-inheritance reference-lifetime control. The latter checks 1,001 object
+destructions and runs under Valgrind, rejecting invalid accesses and definite,
+indirect or possible losses. The known GCC 16 speculative-deletion diagnostic
+is retained for review under the existing documented compiler exception; the
+runner does not suppress warnings or weaken Valgrind checks. These local checks
+do not replace signature verification and qualification on native ARM runners.
