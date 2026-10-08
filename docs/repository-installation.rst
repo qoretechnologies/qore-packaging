@@ -76,7 +76,8 @@ passes package-manager discovery, signature rejection and runtime/SDK checks
 on all six native distribution/architecture combinations. ARM jobs run on
 ``linux/arm64`` runners and verify the selected RPM identities independently.
 
-The separate removal/reinstallation checks prove that dependency protection
+The reusable removal/reinstallation runner passes on all six native targets.
+These checks prove that dependency protection
 rejects removal of the Qore library while consumers remain installed, that
 removing the core packages removes their recorded payloads, and that
 reinstallation restores the package inventory and runtime/SDK behavior. These
@@ -90,7 +91,10 @@ Evidence:
 * ``evidence/repository-runner-20261008.json`` and
   ``evidence/repository-runner-arm-20261008.json``: the reusable runner's unit
   tests, x86_64 qualification and three native ARM jobs.
-* ``evidence/core21-removal-20261008.json``: dependency rejection, removal and
-  reinstallation.
+* ``evidence/core21-removal-20261008.json``: initial dependency rejection, removal
+  and reinstallation controls.
+* ``evidence/core-lifecycle-20261008.json`` and
+  ``evidence/core-lifecycle-arm-20261008.json``: reusable lifecycle runner, 245
+  unit tests and all six native removal/reinstall/runtime/SDK sequences.
 * ``evidence/core21-upgrade-baseline-20261008.json``: frozen signed packages and
   immutable test fixtures for subsequent upgrade checks.
