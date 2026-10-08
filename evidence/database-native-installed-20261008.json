@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-08",
-  "result": "Fedora and Leap signed native ARM database runtime/SDK qualification pass. AlmaLinux artifact pins are corrected and ready for the required native rerun.",
+  "result": "Signed native ARM FreeTDS/MySQL runtime and SDK qualification passes on Fedora, Leap and AlmaLinux, including core ONNX inference, compilers and utility checks.",
   "targets": {
     "fedora": {
       "pipeline": 59974,
@@ -60,6 +60,35 @@
         }
       },
       "signature_verification": "All pinned RPM signatures passed before installation.",
+      "core_sdk": "Runtime/ONNX, SDK compiler, utility and remote debugger checks all pass."
+    },
+    "el10": {
+      "pipeline": 59977,
+      "job": 209701,
+      "steps": 35,
+      "phases": {
+        "runtime": {
+          "freetds": {
+            "cases": 4,
+            "assertions": 14
+          },
+          "mysql": {
+            "cases": 34,
+            "assertions": 203
+          }
+        },
+        "sdk": {
+          "freetds": {
+            "cases": 4,
+            "assertions": 14
+          },
+          "mysql": {
+            "cases": 34,
+            "assertions": 203
+          }
+        }
+      },
+      "signature_verification": "All pinned signatures passed before installation.",
       "core_sdk": "Runtime/ONNX, SDK compiler, utility and remote debugger checks all pass."
     }
   },
@@ -285,7 +314,7 @@
   },
   "diagnostics": "Only the previously approved deliberate MySQL negative-authentication message appears in the successful native module suites. No new warning acceptance or suppression.",
   "publication": "disabled",
-  "pending": "AlmaLinux native installed rerun; repository lifecycle, latest core/module source qualification and publication gates.",
+  "pending": "Repository lifecycle, latest core/module source qualification and publication gates.",
   "qualified_files_sha256": {
     "qualification/core21-el10-aarch64.json": "b5d2086e5bbc3b6e3e27b6f6769580355ef3cfcb9bd22544844bcff39162d0ea",
     "qualification/databases-el10-aarch64.json": "c1e9efd2fe6a5cefbc27d0f444cba3fa79e7f11ed79d73782ceaa6d895db83a9",
@@ -389,6 +418,43 @@
     "evidence/controls/database-native-installed-20261008/leap/verify-signature-qore.log.gz": "cb4733b58630190967a00b7bfff63d2468a5498aff328c970d7f377d333267de",
     "evidence/controls/database-native-installed-20261008/record-database-native-installed-20261008.py": "c37ea19431e12ff94df56d7a8aea9be3cd69bbd456071c567bb405e7d09e8815",
     "evidence/controls/database-native-installed-20261008/refresh-el10-installed-inputs-20261008.py": "af473fd14e40b3fedbc48025965ef9fa1a3658d1e0fdce041a7dcf55dcbcbb3f",
-    "evidence/controls/database-native-installed-20261008/unit-tests.log.gz": "9361d8f18884fb481a880bcbb711029b5a1a05539b818269d838777da1585349"
-  }
+    "evidence/controls/database-native-installed-20261008/unit-tests.log.gz": "9361d8f18884fb481a880bcbb711029b5a1a05539b818269d838777da1585349",
+    "evidence/controls/databases-el10-native-installed-20261008/sdk-inventory.log.gz": "d76d9a97e6bce0bfe031831e49c787d110b1d1b8f705157522948d7d38b9182f",
+    "evidence/controls/databases-el10-native-installed-20261008/sdk-development.log.gz": "a4483d69364db1199f331c9ebef146c052d359a330f9b87af5274db94efe36ec",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-qore-stdlib.log.gz": "cc0881b8117f2647a0b496693d5621c1f57a2a214b59c55e4b054700eeae74c3",
+    "evidence/controls/databases-el10-native-installed-20261008/sdk-runtime.log.gz": "1217bd6f3d527723719158fc27c5a9eec58ec999ee72a4247b448cc299f7abcf",
+    "evidence/controls/databases-el10-native-installed-20261008/sdk-mysql-tests.log.gz": "88bf02127d32e85887328cc75dd2c6b35deb2d951112accc0d745397cdc1f010",
+    "evidence/controls/databases-el10-native-installed-20261008/create-user.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-c-ares.log.gz": "d01132b50d383429d5935a16b08b00d8915affe7f79d5489494f36395838b09d",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-libnghttp2.log.gz": "a91607f7c50106fd7b48fac252a9c1cdc44dc3250158c3247314d44249171452",
+    "evidence/controls/databases-el10-native-installed-20261008/sdk-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-qore-misc-tools.log.gz": "5623cf95278b6013f59f06519a281f5812f20777b2999175d2fe273113880191",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-qore-freetds-module-doc.log.gz": "2854a1dde012bc72529d020273011ed6be8bfa93642cbb1e008151582f280085",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-libqore.log.gz": "67f03ef720bb256b90bf4cef5b00731143f88176fb2d6531b6d9e9343ab1ee89",
+    "evidence/controls/databases-el10-native-installed-20261008/runtime-freetds-tests.log.gz": "a044e08ad8a88ac1620c06667046d83433ee50af12613b11fce24d1448ce5afc",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-qore-mysql-module.log.gz": "fc3c0347fd0649e5e13d22fc953b1f0e79b606f8a6ce7c5d21b44ba0cda53515",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-qore-rpm-macros.log.gz": "9dbc63d0d35414c1e036eb94fe5589f9f372ca681f70f0121341b86f0d97e21f",
+    "evidence/controls/databases-el10-native-installed-20261008/sdk-remote-debuggers.log.gz": "081fb7a0dc26c5b95e1cbea20a8d73178d548186e1a3048b9e1a03c6250441b3",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-qore-freetds-module.log.gz": "bdb15c717ac14faa0e501ef9fdecfa1011b0fa947ba32addc6792ad9760787c9",
+    "evidence/controls/databases-el10-native-installed-20261008/qualification.json": "01b8cb380e47a280ec0640becad9ac5d5249822eb9e12f4801e7516e4c2bcb95",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-onnxruntime.log.gz": "8291c606ae69e6fce258d40036b964205b8c61606f68a9382565b9a24cc9d338",
+    "evidence/controls/databases-el10-native-installed-20261008/runtime-runtime.log.gz": "1217bd6f3d527723719158fc27c5a9eec58ec999ee72a4247b448cc299f7abcf",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-qore-devel.log.gz": "00a9610f2d8757e16843ebb8cf43e805dc31e71fcc3ed033bd7f47e1c457a1f4",
+    "evidence/controls/databases-el10-native-installed-20261008/sdk-tools.log.gz": "14ed071d3a78b76e9055a0d9e841f339d019d5538b3d8e89bb2167528d0bdb26",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-libnghttp3.log.gz": "a953bdb0935217aa9a102a875f905320d669f64733f0a7051bd446e634b05efd",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-tree-sitter.log.gz": "decabeda60b764b8ff617c5392edadeb2fccff672601cb59944e7ebbdde65663",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-ngtcp2-crypto-ossl.log.gz": "2d7ef397c7e0ec228ea436e3a5d14c6ce5147ce2afde5fe1bff68e0c2bf23a42",
+    "evidence/controls/databases-el10-native-installed-20261008/runtime-inventory.log.gz": "479e1dffcf56964942a99fd29a0403b87f05bad9723366e576138611f2fd6838",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-qore-mysql-module-doc.log.gz": "732d715a80109f587de5590e2adb3ff7f60f531c062581254cb46c2365365d67",
+    "evidence/controls/databases-el10-native-installed-20261008/sdk-install.log.gz": "758bd031073cf3c829b73ebc5c62a591a869c49b6e08ef1fd04f7f06805a1636",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-qore.log.gz": "130ca5fa7f59ce0a786cf3eb92d6e8fd77af6daf35ada2ddf8d4cf9fc575e1cb",
+    "evidence/controls/databases-el10-native-installed-20261008/runtime-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-qore-debug-tools.log.gz": "0d1c6ee7c8a16f75af1861c1532e7763d4c233d31e1d0d3969226c2c35e203b1",
+    "evidence/controls/databases-el10-native-installed-20261008/runtime-mysql-tests.log.gz": "ab438bb7f8f7e232b27ebfd8508be53d9644f907e5034e45b605723f1191adc4",
+    "evidence/controls/databases-el10-native-installed-20261008/verify-signature-ngtcp2.log.gz": "45ae0a839145c09909fc2893cbc99e73b745a460e4cb317a743ed4b2db971ed7",
+    "evidence/controls/databases-el10-native-installed-20261008/import-signing-key.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/databases-el10-native-installed-20261008/sdk-freetds-tests.log.gz": "f15838372e03f7fc440665a623c99bf7fff167ed2e30c38f10153bebdcf24e09",
+    "evidence/controls/databases-el10-native-installed-20261008/runtime-install.log.gz": "16df638ed2f8ed1234b5b51704bf3a588a9dd8d61aef055b1bf0f8765748a9ae"
+  },
+  "updated_utc_date": "2026-10-08"
 }

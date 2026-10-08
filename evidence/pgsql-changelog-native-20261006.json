@@ -165,12 +165,92 @@
         "[   18s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2"
       ],
       "log_sha256": "b84890ef687a4ddb8a9e612082d4a5bd681e2e5367884e20a33ea8c1ad928018"
+    },
+    {
+      "target": "el10",
+      "arch": "x86_64",
+      "history": {
+        "rev": "3",
+        "srcmd5": "d5187abe52cb59c644ffc727419ecd38",
+        "versrel": "3.5.0-3",
+        "bcnt": "1",
+        "time": "1791300205",
+        "duration": "74"
+      },
+      "tests": [
+        [
+          "2",
+          "2",
+          "5"
+        ],
+        [
+          "4",
+          "4",
+          "34"
+        ],
+        [
+          "7",
+          "7",
+          "27"
+        ],
+        [
+          "19",
+          "19",
+          "270"
+        ]
+      ],
+      "timestamp_warnings_removed": true,
+      "diagnostics": [
+        "[   17s] useradd: Warning: missing or non-executable shell '/usr/sbin/nologin'",
+        "[   55s] Warning: mkbaselibs missing in build root, skipping baselibs"
+      ],
+      "log_sha256": "2e67105d5f557bfb23a7d86a665344e1e844387d476577ea6d51b8120fd3305f"
+    },
+    {
+      "target": "el10",
+      "arch": "aarch64",
+      "history": {
+        "rev": "3",
+        "srcmd5": "d5187abe52cb59c644ffc727419ecd38",
+        "versrel": "3.5.0-3",
+        "bcnt": "1",
+        "time": "1791303863",
+        "duration": "79"
+      },
+      "tests": [
+        [
+          "2",
+          "2",
+          "5"
+        ],
+        [
+          "4",
+          "4",
+          "34"
+        ],
+        [
+          "7",
+          "7",
+          "27"
+        ],
+        [
+          "19",
+          "19",
+          "270"
+        ]
+      ],
+      "timestamp_warnings_removed": true,
+      "diagnostics": [
+        "[   19s] useradd: Warning: missing or non-executable shell '/usr/sbin/nologin'",
+        "[   68s] Warning: mkbaselibs missing in build root, skipping baselibs"
+      ],
+      "log_sha256": "11d584b672128b5b78adee2fad69b4f8bd3b6f137eb424e0091a3477ac65ca97"
     }
   ],
-  "result": "Native Fedora and Leap x86_64/aarch64 builds pass. Generated .changes is consumed by OBS, and all earlier missing SOURCE_DATE_EPOCH warnings are gone. All four database suites pass on every build.",
+  "result": "Native Fedora, Leap and AlmaLinux x86_64/aarch64 builds pass, with generated changelog metadata and all four database suites. Signed native ARM runtime/SDK qualification also passes on all three distributions.",
   "retained_diagnostics": "Only previously approved service/bootstrap diagnostics: Fedora optional mkbaselibs and Leap polkit-default-privs. No package compiler/test/rpmlint warnings.",
   "ci": "Packaging tools pipeline 59627 passed for 3e918e0a86e9e71a374cece75e1fc50547d4f02b.",
-  "pending": "AlmaLinux native/installed builds blocked on dependency rebuilds; whole-repository lifecycle remains a publication gate.",
+  "pending": "Latest core integration, whole-repository lifecycle and publication gates remain pending.",
   "files_sha256": {
     "evidence/controls/pgsql-changelog-native-20261006/fedora-aarch64-_history.txt.gz": "cf46df179762a7b9d3624a3a901bb1f506cd4446d6ef489eeebbfdf1538dfda8",
     "evidence/controls/pgsql-changelog-native-20261006/fedora-aarch64-_log.txt.gz": "367a44e0b0aa2da5f5845fd7cd060f2da31021d5e3ef44b024e9f18e44e26f51",
@@ -200,6 +280,21 @@
     "leap": {
       "pipeline": 59632,
       "job": 208958,
+      "all_steps_passed": true,
+      "phases": {
+        "runtime": {
+          "cases": 32,
+          "assertions": 336
+        },
+        "sdk": {
+          "cases": 32,
+          "assertions": 336
+        }
+      }
+    },
+    "el10": {
+      "pipeline": 59978,
+      "job": 209703,
       "all_steps_passed": true,
       "phases": {
         "runtime": {
@@ -280,6 +375,46 @@
     "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-qore-pgsql-module.log.gz": "27820fc57b1bfe1fbe75af3971e235c1db32317dc167a0d2b22e79b8885ef891",
     "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-qore-rpm-macros.log.gz": "d6d165c1a3e69b9b3a8d7eb15cd0bc4b823e9d5e9ca3e3f558081f1575d2faa2",
     "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-qore-stdlib.log.gz": "75776ac5ec63b94ea0528bc9fa4a40635dc2d71cae9b19a40bab1dd7f4ab3f19",
-    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-qore.log.gz": "1a70e8bc76a3a9c80745a1762c01b85168906219e14738f0b7b92def0b3acb6c"
-  }
+    "evidence/controls/pgsql-changelog-installed-20261006/leap-verify-signature-qore.log.gz": "1a70e8bc76a3a9c80745a1762c01b85168906219e14738f0b7b92def0b3acb6c",
+    "evidence/controls/pgsql-el10-native-installed-20261008/sdk-inventory.log.gz": "14c28573c2f02127b4b99062cf6af4f5912a82384d8b075a5d37dd040d5e417d",
+    "evidence/controls/pgsql-el10-native-installed-20261008/sdk-development.log.gz": "e479fd1b9772558621f1ca2ac529d3afa28165419ef800672978376dd3f41970",
+    "evidence/controls/pgsql-el10-native-installed-20261008/verify-signature-qore-stdlib.log.gz": "d281b5d9595e0d78f3a3372c99d54ca5986dfd11dd82f899d1f1536b07a50550",
+    "evidence/controls/pgsql-el10-native-installed-20261008/sdk-pgsql-compiled-tests.log.gz": "4fddf872680b16c7464930302a380f8bf84501c3d9ca60ca64ea4d193bd7905b",
+    "evidence/controls/pgsql-el10-native-installed-20261008/sdk-runtime.log.gz": "1217bd6f3d527723719158fc27c5a9eec58ec999ee72a4247b448cc299f7abcf",
+    "evidence/controls/pgsql-el10-native-installed-20261008/create-user.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/pgsql-el10-native-installed-20261008/verify-signature-c-ares.log.gz": "51055c04302ea936f946ca8b4bf50ea0fd3fc6834504010c1759efcd7c275136",
+    "evidence/controls/pgsql-el10-native-installed-20261008/verify-signature-libnghttp2.log.gz": "70802ee8e17d69c8f6dd5a3fd98e8a5699c5f8a3b4d92f2fb28b2b1a76afeeeb",
+    "evidence/controls/pgsql-el10-native-installed-20261008/sdk-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/pgsql-el10-native-installed-20261008/verify-signature-qore-misc-tools.log.gz": "09d15174a4eee0e025357f95205efa479f45403206f86cda7f58a03d2092a0c7",
+    "evidence/controls/pgsql-el10-native-installed-20261008/verify-signature-libqore.log.gz": "1f3ebee26ca5e199d9566eb481822c0ef3c72232511610d926900960e89e9d1b",
+    "evidence/controls/pgsql-el10-native-installed-20261008/sdk-pgsql-compiler.log.gz": "2edd47d9555cf8e4de30e04ba0b9cb530110ec1cacaa3af80e1e2afd3e256c6e",
+    "evidence/controls/pgsql-el10-native-installed-20261008/x86_64-_history.xml.gz": "3c3bc37ed20f673dc89d1e2fd6a9bb988fb64b6ab2ba276e9ef708cbab69314e",
+    "evidence/controls/pgsql-el10-native-installed-20261008/aarch64-_buildinfo.xml.gz": "ad8e7f17923cfbb77452eb6447debdb32bb17ae97205e2d60f11042543180848",
+    "evidence/controls/pgsql-el10-native-installed-20261008/verify-signature-qore-rpm-macros.log.gz": "bf4248fe176768d766fcd5534a070f385ad434b21e0c77dbe48e38ef09803bed",
+    "evidence/controls/pgsql-el10-native-installed-20261008/sdk-remote-debuggers.log.gz": "081fb7a0dc26c5b95e1cbea20a8d73178d548186e1a3048b9e1a03c6250441b3",
+    "evidence/controls/pgsql-el10-native-installed-20261008/x86_64-_log.log.gz": "a037b9204e288f90f621c5f1f20a3cd2f9eb4c2247ee7c615eeb2ebfd0560572",
+    "evidence/controls/pgsql-el10-native-installed-20261008/qualification.json": "302aa28959ceabafa35bd88937d1c93d26e26996b58fee719b23ec8dee165d3a",
+    "evidence/controls/pgsql-el10-native-installed-20261008/verify-signature-onnxruntime.log.gz": "a5a2eedb403d43de1b33357003115ee2240074b988add6432af1e5423a4ace85",
+    "evidence/controls/pgsql-el10-native-installed-20261008/runtime-pgsql-tests.log.gz": "436fa2e44e6adf4fe3d09eca7e1dad6fa8f172a806f663e1e922467818885eee",
+    "evidence/controls/pgsql-el10-native-installed-20261008/runtime-runtime.log.gz": "1217bd6f3d527723719158fc27c5a9eec58ec999ee72a4247b448cc299f7abcf",
+    "evidence/controls/pgsql-el10-native-installed-20261008/verify-signature-qore-devel.log.gz": "7203ff58073a6bf5b4c45077d2cf48480ef7d9e12c9e3b0486b56e77d612c173",
+    "evidence/controls/pgsql-el10-native-installed-20261008/verify-signature-qore-pgsql-module.log.gz": "ce64c962aafe99fdf76f48932d382c6a75464737b651328bb1782ad5488f727a",
+    "evidence/controls/pgsql-el10-native-installed-20261008/sdk-tools.log.gz": "14ed071d3a78b76e9055a0d9e841f339d019d5538b3d8e89bb2167528d0bdb26",
+    "evidence/controls/pgsql-el10-native-installed-20261008/verify-signature-libnghttp3.log.gz": "2465d84355b7e9ea82c85442ea68d7c166fc027a65c0c87790bdfe39c283cf81",
+    "evidence/controls/pgsql-el10-native-installed-20261008/verify-signature-tree-sitter.log.gz": "2e80dcc111b7c8b616c003aefbd409be566c9a9f71f938a59816a3da812eb9cd",
+    "evidence/controls/pgsql-el10-native-installed-20261008/verify-signature-ngtcp2-crypto-ossl.log.gz": "10cd7c323d5ae073d9db07abfc980947ef7eb53cfbb07bd448b7619e995234a8",
+    "evidence/controls/pgsql-el10-native-installed-20261008/runtime-inventory.log.gz": "514fef61e39720207eb45d60c6a5f245dae562fe63b9435af334c82653c007f1",
+    "evidence/controls/pgsql-el10-native-installed-20261008/sdk-install.log.gz": "14980649efe24cafea42adc3401a6e2a898c56e3c6dd9bb05ffa0ee44096774f",
+    "evidence/controls/pgsql-el10-native-installed-20261008/verify-signature-qore.log.gz": "36a5133f7af120b9aa26926040d0b01cd33c7616d6fa19cef81458aea6f557a2",
+    "evidence/controls/pgsql-el10-native-installed-20261008/runtime-rpm-verify.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/pgsql-el10-native-installed-20261008/x86_64-_buildinfo.xml.gz": "300c38885f740a1841c4761a93d187bc63764449eda1504ff3c0efc2a503d09c",
+    "evidence/controls/pgsql-el10-native-installed-20261008/verify-signature-qore-debug-tools.log.gz": "eed3d5542cf1c8b4bcd5b2ed97f928616dccc4464ffad370e2eaa0af690ca49b",
+    "evidence/controls/pgsql-el10-native-installed-20261008/aarch64-_history.xml.gz": "4cf5cdf2484557a7e3412faae099adf4f5aa7f53fcee88afdcd192198d29598b",
+    "evidence/controls/pgsql-el10-native-installed-20261008/aarch64-_log.log.gz": "ba067636d85c5a64ce4dbfc3f0961218d44f9fb1a420aaaf3e26a97247034955",
+    "evidence/controls/pgsql-el10-native-installed-20261008/verify-signature-ngtcp2.log.gz": "07baf7df5bd39d774273f0d0dec08c833a0ee95000f75a0988b90220892b297d",
+    "evidence/controls/pgsql-el10-native-installed-20261008/import-signing-key.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/pgsql-el10-native-installed-20261008/sdk-pgsql-tests.log.gz": "d3f1d896a8ba16bdf19baa88c31e5ad387ab672f869a0164d57a5a45844c2952",
+    "evidence/controls/pgsql-el10-native-installed-20261008/runtime-install.log.gz": "35fbacec4a24f359e5e25c3a304c42fed28d52944054156a3d702558c68766ac"
+  },
+  "updated_utc_date": "2026-10-08"
 }
