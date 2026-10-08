@@ -1,0 +1,68 @@
+[
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 2603,
+    "text": "  enum class Kind : uint8_t {\n    kWord32,\n    kWord64,\n    kFloat32,\n    kFloat64,\n    kSmi,\n    kNumber,  // TODO(tebbi): See if we can avoid number constants.\n    kTaggedIndex,\n    kExternal,\n    kHeapObject,\n    kCompressedHeapObject,\n    kTrustedHeapObject,\n    kRelocatableWasmCall,\n    kRelocatableWasmStubCall,\n    kRelocatableWasmIndirectCallTarget,\n    kRelocatableWasmCanonicalSignatureId\n  };",
+    "sha256": "6f42421708d2ac9701b90c88497765dd29c61f393086bc650ea6f8c60dd352d4"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operations.h",
+    "line": 2699,
+    "text": "  int64_t signed_integral() const {\n    DCHECK(IsIntegral());\n    switch (kind) {\n      case Kind::kWord32:\n      case Kind::kRelocatableWasmCanonicalSignatureId:\n        return static_cast<int32_t>(storage.integral);\n      case Kind::kWord64:\n        return static_cast<int64_t>(storage.integral);\n      default:\n        UNREACHABLE();\n    }\n  }",
+    "sha256": "12bcc8eafdb685196d88573b4a67d70df072b1bd2e9b5e58f62646b3f4a91660"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operation-matcher.h",
+    "line": 306,
+    "text": "  bool MatchSignedIntegralConstant(V<Any> matched, int64_t* constant) const {\n    if (const ConstantOp* c = TryCast<ConstantOp>(matched)) {\n      if (c->kind == ConstantOp::Kind::kWord32 ||\n          c->kind == ConstantOp::Kind::kWord64) {\n        *constant = c->signed_integral();\n        return true;\n      }\n    }\n    return false;\n  }",
+    "sha256": "cb9751e9163a8994d6e2f940ca2bc5133860bfcd1ebd346cddfa4ff31a91ecd9"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/operation-matcher.h",
+    "line": 131,
+    "text": "  bool MatchIntegralZero(V<Any> matched) const {\n    int64_t constant;\n    return MatchSignedIntegralConstant(matched, &constant) && constant == 0;\n  }",
+    "sha256": "aff1efe19c3a56a780be498eeababc429d26ac08b86ed1941b028d06db100ca7"
+  },
+  {
+    "file": "deps/v8/src/compiler/backend/instruction.h",
+    "line": 1248,
+    "text": "  bool FitsInInt32() const {\n    if (type() == kInt32) return true;\n    DCHECK(type() == kInt64);\n    return value_ >= std::numeric_limits<int32_t>::min() &&\n           value_ <= std::numeric_limits<int32_t>::max();\n  }",
+    "sha256": "49b09df61238e0082d8fa04f7a044c625462aa6a14a0ef9aff7bbbe221c2ea18"
+  },
+  {
+    "file": "deps/v8/src/compiler/backend/instruction-selector-impl.h",
+    "line": 213,
+    "text": "  InstructionOperand UseImmediate(int immediate) {\n    return sequence()->AddImmediate(Constant(immediate));\n  }",
+    "sha256": "251efb4ba364ae0658a1b62c618d9347f76cf6422151466815c2591fcb888022"
+  },
+  {
+    "file": "deps/v8/src/compiler/backend/instruction-selector-impl.h",
+    "line": 217,
+    "text": "  InstructionOperand UseImmediate64(int64_t immediate) {\n    return sequence()->AddImmediate(Constant(immediate));\n  }",
+    "sha256": "acb9eb8f614de979635e2fb62f5c3160a6c4a131e4f2aec13f4e1cda5c31ed95"
+  },
+  {
+    "file": "deps/v8/src/compiler/backend/arm64/instruction-selector-arm64.cc",
+    "line": 922,
+    "text": "void EmitLoad(InstructionSelectorT* selector, OpIndex node,\n              InstructionCode opcode, ImmediateMode immediate_mode,\n              MachineRepresentation rep, OptionalOpIndex output = {}) {\n  Arm64OperandGeneratorT g(selector);\n  const LoadOp& load = selector->Get(node).Cast<LoadOp>();\n\n  // The LoadStoreSimplificationReducer transforms all loads into\n  // *(base + index).\n  OpIndex base = load.base();\n  OpIndex index = load.index().value();\n  DCHECK_EQ(load.offset, 0);\n  DCHECK_EQ(load.element_size_log2, 0);\n\n  InstructionOperand inputs[3];\n  size_t input_count = 0;\n  InstructionOperand output_op;\n\n  // If output is valid, use that as the output register. This is used when we\n  // merge a conversion into the load.\n  output_op = g.DefineAsRegister(output.valid() ? output.value() : node);\n\n  const Operation& base_op = selector->Get(base);\n  int64_t index_constant;\n  const bool is_index_constant =\n      selector->MatchSignedIntegralConstant(index, &index_constant);\n  if (base_op.Is<Opmask::kExternalConstant>() && is_index_constant) {\n    const ConstantOp& constant_base = base_op.Cast<ConstantOp>();\n    if (selector->CanAddressRelativeToRootsRegister(\n            constant_base.external_reference())) {\n      ptrdiff_t const delta =\n          index_constant +\n          MacroAssemblerBase::RootRegisterOffsetForExternalReference(\n              selector->isolate(), constant_base.external_reference());\n      input_count = 1;\n      // Check that the delta is a 32-bit integer due to the limitations of\n      // immediate operands.\n      if (is_int32(delta)) {\n        inputs[0] = g.UseImmediate(static_cast<int32_t>(delta));\n        opcode |= AddressingModeField::encode(kMode_Root);\n        selector->Emit(opcode, 1, &output_op, input_count, inputs);\n        return;\n      }\n    }\n  }\n\n  if (base_op.Is<LoadRootRegisterOp>()) {\n    DCHECK(is_index_constant);\n    input_count = 1;\n    inputs[0] = g.UseImmediate64(index_constant);\n    opcode |= AddressingModeField::encode(kMode_Root);\n    selector->Emit(opcode, 1, &output_op, input_count, inputs);\n    return;\n  }\n\n  inputs[0] = g.UseRegister(base);\n\n  if (is_index_constant) {\n    if (g.CanBeImmediate(index_constant, immediate_mode)) {\n      input_count = 2;\n      inputs[1] = g.UseImmediate64(index_constant);\n      opcode |= AddressingModeField::encode(kMode_MRI);\n    } else {\n      input_count = 2;\n      inputs[1] = g.UseRegister(index);\n      opcode |= AddressingModeField::encode(kMode_MRR);\n    }\n  } else {\n    if (TryMatchLoadStoreShift(&g, selector, rep, node, index, &inputs[1],\n                               &inputs[2])) {\n      input_count = 3;\n      opcode |= AddressingModeField::encode(kMode_Operand2_R_LSL_I);\n    } else {\n      input_count = 2;\n      inputs[1] = g.UseRegister(index);\n      opcode |= AddressingModeField::encode(kMode_MRR);\n    }\n  }\n  selector->Emit(opcode, 1, &output_op, input_count, inputs);\n}",
+    "sha256": "f479ddac795429ce7b8b9a5da19f949dbc3eb0cf87e5ad55c8b621c04f53a917"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/load-store-simplification-reducer.h",
+    "line": 141,
+    "text": "  void SimplifyLoadStore(OpIndex& base, OptionalOpIndex& index,\n                         LoadOp::Kind& kind, int32_t& offset,\n                         uint8_t& element_size_log2) {\n    if (element_size_log2 > kMaxElementSizeLog2) {\n      DCHECK(index.valid());\n      index = __ WordPtrShiftLeft(index.value(), element_size_log2);\n      element_size_log2 = 0;\n    }\n\n    if (kNeedsUntaggedBase) {\n      if (kind.tagged_base) {\n        kind.tagged_base = false;\n        DCHECK_LE(std::numeric_limits<int32_t>::min() + kHeapObjectTag, offset);\n        offset -= kHeapObjectTag;\n        base = __ BitcastHeapObjectToWordPtr(base);\n      }\n    }\n\n    // TODO(nicohartmann@): Remove the case for atomics once crrev.com/c/5237267\n    // is ported to x64.\n    if (!CanEncodeOffset(offset, kind.tagged_base) ||\n        (kind.is_atomic &&\n         !CanEncodeAtomic(index, element_size_log2, offset))) {\n      // If an index is present, the element_size_log2 is changed to zero.\n      // So any load follows the form *(base + offset). To simplify\n      // instruction selection, both static and dynamic offsets are stored in\n      // the index input.\n      // As tagged loads result in modifying the offset by -1, those loads are\n      // converted into raw loads (above).\n      if (!index.has_value() || matcher_.MatchIntegralZero(index.value())) {\n        index = __ IntPtrConstant(offset);\n        element_size_log2 = 0;\n        offset = 0;\n      } else if (element_size_log2 != 0) {\n        index = __ WordPtrShiftLeft(index.value(), element_size_log2);\n        element_size_log2 = 0;\n      }\n      if (offset != 0) {\n        index = __ WordPtrAdd(index.value(), offset);\n        offset = 0;\n      }\n      DCHECK_EQ(offset, 0);\n      DCHECK_EQ(element_size_log2, 0);\n    }\n  }",
+    "sha256": "e23cecdcc2178945f85bd272de4db6dfc979a638264643dc6b743d580fd6ca37"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/load-store-simplification-reducer.h",
+    "line": 124,
+    "text": "  bool CanEncodeOffset(int32_t offset, bool tagged_base) const {\n    // If the base is tagged we also need to subtract the kHeapObjectTag\n    // eventually.\n    const int32_t min = kMinOffset + (tagged_base ? kHeapObjectTag : 0);\n    if (min <= offset && offset <= kMaxOffset) {\n      DCHECK(LoadOp::OffsetIsValid(offset, tagged_base));\n      return true;\n    }\n    return false;\n  }",
+    "sha256": "cc9d936785492189babfabec3318a209b9df33e376f41d6ca66b126464f0f3a2"
+  },
+  {
+    "file": "deps/v8/src/compiler/turboshaft/load-store-simplification-reducer.h",
+    "line": 135,
+    "text": "  bool CanEncodeAtomic(OptionalOpIndex index, uint8_t element_size_log2,\n                       int32_t offset) const {\n    if (element_size_log2 != 0) return false;\n    return !(index.has_value() && offset != 0);\n  }",
+    "sha256": "01df142c6cd44b59ed810710a0d69ef22b70985d689f1be1ce8015857dabc67c"
+  }
+]

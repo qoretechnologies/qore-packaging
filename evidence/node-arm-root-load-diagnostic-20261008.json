@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Current source invariant and controls qualified; exact diagnostic approved by the user on 2026-10-08.",
+  "diagnostic": "../deps/v8/src/compiler/backend/instruction.h:1251:58: warning: \u2018index_constant\u2019 may be used uninitialized [-Wmaybe-uninitialized]",
+  "source_proof": [
+    "MatchSignedIntegralConstant initializes index_constant for Word32 and Word64. All general/external-base uses guard its boolean result. The root-register branch instead relies on DCHECK(is_index_constant).",
+    "All 40 current LoadRootRegister occurrences were classified, including factories, declarations, forwarding wrappers and stores. Current root-load producers supply integer isolate-field/root-slot/builtin offsets. Runtime pointer-table indexes apply to the loaded table pointer, not to the root register.",
+    "ARM LoadStoreSimplificationConfiguration sets kMinOffset=1 and kMaxOffset=0, forcing even offset zero into an index. An absent index becomes IntPtrConstant(offset); existing integer constants stay or are constant-folded. The unchanged simplifier control verifies raw producer offsets through the full int32 boundaries.",
+    "The compiler cannot infer the producer invariant from the independent base/index graph tags after DCHECK is compiled out. The exact FitsInInt32 -> AddImmediate -> UseImmediate64 -> EmitLoad warning reproduces in Release; Debug checks reject unsupported root indexes.",
+    "VisitLoadRootRegister itself is UNREACHABLE; fabricating a dynamic root-register load violates the current graph contract. A generic-register fallback would not be a justified source fix."
+  ],
+  "qualification": [
+    {
+      "mode": "release",
+      "checks": 627,
+      "invalid_root_indexes_rejected": 0,
+      "warning_reproduced": true,
+      "normal_exit": 0,
+      "valgrind_exit": 0,
+      "valgrind_errors": 0,
+      "all_allocations_freed": true
+    },
+    {
+      "mode": "debug",
+      "checks": 641,
+      "invalid_root_indexes_rejected": 14,
+      "warning_reproduced": false,
+      "normal_exit": 0,
+      "valgrind_exit": 0,
+      "valgrind_errors": 0,
+      "all_allocations_freed": true
+    }
+  ],
+  "coverage": [
+    "Word32/Word64 signed boundaries, 32-bit sign extension and optional output override.",
+    "Raw root integer offsets through unchanged ARM simplifier, including atomic-kind handling and int32 endpoints.",
+    "External-reference root-relative signed-32-bit boundaries, permission denial and fallback, without overflowing signed addition.",
+    "General constant/immediate/register loads and modeled dynamic/shift addressing.",
+    "All 15 ConstantOp kinds; 13 nonintegral matcher rejections preserve the sentinel. Debug additionally rejects those root indexes and one dynamic index before emission."
+  ],
+  "approval": {
+    "state": "approved",
+    "date": "2026-10-08",
+    "user_response": "Allow this exact diagnostic",
+    "scope": "Only this index_constant/FitsInInt32 warning from ARM64 EmitLoad in the reviewed Node 24.18.1 sources. No suppression or flags change."
+  },
+  "limits": [
+    "Host GCC 13 control models ARM instruction selection, not ARM instruction execution. Full native build/runtime qualification remains required.",
+    "Exact upstream matcher, signed-integral accessor, FitsInInt32, immediate wrappers, full EmitLoad and simplifier bodies are unchanged. Graph storage, immediate collection and emission are typed adapters.",
+    "CanBeImmediate models the selected 8-bit-load immediate interval; TryMatchLoadStoreShift models one shifted form. Other instruction encodings and shift matching are not qualified by this control.",
+    "Simplifier coverage is the untagged integer-offset producer path; adapter-only tagged-base and general graph-optimization behavior is not claimed.",
+    "Source proof is bounded to the recorded current producers. A future dynamic root-register index requires revisiting this conclusion. Unsupported Release inputs are not executed; Debug rejection does not imply Release hardening.",
+    "No blanket uninitialized-variable exception; no warning filtering, source initialization workaround or compiler-policy change."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-arm-root-load-20261008/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-arm-root-load-20261008/audit.rst": "0dea49ccb9582f2533c1f4abf3de993f29bd480962d1d0651632f52b6ffe9914",
+    "evidence/controls/node-arm-root-load-20261008/control.cc": "411bd02b027a394f12f577888760d8e1d80be0faac64155723bedc09dacbe1a7",
+    "evidence/controls/node-arm-root-load-20261008/debug-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-arm-root-load-20261008/debug-normal.log.gz": "1aa1e03c5143c980090c8a3e7eba147161c257c2f08045922b6d249af1553ee0",
+    "evidence/controls/node-arm-root-load-20261008/debug-valgrind.log.gz": "bd1c8eed57eb236745bfab07a7612892683a73b96f83323c010dbcfd7a0cf885",
+    "evidence/controls/node-arm-root-load-20261008/native-warning.log.gz": "a09897cdc05695f2b84405dffdcdfeb0928467b478eac13bcc497690e84393d7",
+    "evidence/controls/node-arm-root-load-20261008/prepare.py": "84e45dc8811e600d5594f052055e3f763e38c7413a7d7da43005a5c831bb996e",
+    "evidence/controls/node-arm-root-load-20261008/producer-review.json": "188e4c404b169b0dfefc7416eaf419c7746ac3c10dc3b096d7153ea3623dc2cf",
+    "evidence/controls/node-arm-root-load-20261008/record.py": "537b11606023d91c81c383c6b4b66a8240ba8bd6e90bd0412d343c291acc1430",
+    "evidence/controls/node-arm-root-load-20261008/release-compile.log.gz": "5fd9a76d02ed4c0488f47ffbe9b82ae5994c320b958964df7492a603b0538e1e",
+    "evidence/controls/node-arm-root-load-20261008/release-normal.log.gz": "db979e3b8de62e78527b73863141aa39bca7c4c9676eda7ef1e37f0f8e8bd087",
+    "evidence/controls/node-arm-root-load-20261008/release-valgrind.log.gz": "6a5c014714c27b2118df2a8c46edf9d4967737552f18777315bcc8db28b12823",
+    "evidence/controls/node-arm-root-load-20261008/run.py": "08de2873210febf616c455d7fe27b12472d955d9f823f9a82f58ba6cdb9f92ec",
+    "evidence/controls/node-arm-root-load-20261008/source-extracts.json": "acc4caed6d8964071a09205afafdd6c01fa14cbe8300ce6eb393f9ca2954c56d",
+    "evidence/controls/node-arm-root-load-20261008/status.json": "0adb20664705c4d40eb486f25536562303b9a929e8464f6024c132992f71db35"
+  }
+}
