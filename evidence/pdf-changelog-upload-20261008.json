@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-08",
+  "status": "Metadata-only OBS source revision2 uploaded and byte-verified; native rebuilding remains in progress.",
+  "project": "home:davidnichols:qore:testing",
+  "package": "qore-pdf-module",
+  "module_commit": "cc9bb928a6cbf7a475c2c61ca1d8869c92302ff5",
+  "revision": 2,
+  "srcmd5": "1e58422b96543fc4a9e4d1a7f3aca3bb",
+  "root_cause": "The revision1 bundle predates the source-preparation helper that emits an OBS .changes sidecar. Native Leap ARM therefore reported missing BUILD_CHANGELOG_TIMESTAMP/BUILD_RELEASE while trying to set SOURCE_DATE_EPOCH.",
+  "fix": "Re-prepare the same committed module using the existing tested packaging helper. Archive and spec SHA-256 exactly match the previously qualified bundle; only the .changes sidecar and its manifest entry are added. No code, build flags, dependency or fixture changes.",
+  "tests": "270 packaging unit methods pass, including valid/leap-date/ordering/malformed changelog and OBS source validation controls. All four remote entries match the prepared MD5 values.",
+  "revision1_completed_logs": "Leap ARM and AlmaLinux x86_64 each pass 79 cases and 616 assertions. Their earlier logs are preserved to show the metadata root cause; final release qualification uses revision2.",
+  "publication_enabled": false,
+  "files_sha256": {
+    "evidence/controls/pdf-changelog-upload-20261008/pdf-changelog-final-prepare-20261008.json.gz": "57a006845dbaf5f47418e7fb2d0e3b715f590ef20014eb5680df5ffde57757b9",
+    "evidence/controls/pdf-changelog-upload-20261008/pdf-changelog-identity-20261008.json.gz": "4b132cfbf05288986a15a0a873d603e4c98177e0172414e9f9bb0a42cb4f69b2",
+    "evidence/controls/pdf-changelog-upload-20261008/pdf-changelog-upload-20261008.log.gz": "13dd6ab5579007fa4e00ae096c0de1e7542ee53b0982473b426a38eabec214ef",
+    "evidence/controls/pdf-changelog-upload-20261008/pdf-changelog-native-20261008/source.xml.gz": "d2f34531c552544ec3e4616d121eaa07bc36e7ded747e1a3a9d3f6172dd3a569",
+    "evidence/controls/pdf-changelog-upload-20261008/pdf-changelog-native-20261008/results.xml.gz": "2141a4f61ad667d05afe2660d60252691b0a26c9e06bdcf3b677d4e63ce7803e",
+    "evidence/controls/pdf-changelog-upload-20261008/pdf-changelog-native-20261008/metadata.xml.gz": "222131941abf9f6432445a7d3c14420d8055ce3d181ab86dcd70552ec5ca766a",
+    "evidence/controls/pdf-changelog-upload-20261008/pdf-native-enabled-20261008/AlmaLinux_10-x86_64/build.log.gz": "11b8770a1620af5d1e23ab4e79e77b9dfa0293c9d7bb65c3ad6f87bcc9414f67",
+    "evidence/controls/pdf-changelog-upload-20261008/pdf-native-enabled-20261008/openSUSE_Leap_16.0-aarch64/build.log.gz": "88c35aa35ada5c8fe4f959762989d73e335a8eab085674dc78dec52d188509b3",
+    "evidence/controls/pdf-changelog-upload-20261008/pdf-native-enabled-20261008/reader-status.json.gz": "f8143d06803f76ba0b668b21d10cdc164f30fcb4c542b60c28b91fc302201995",
+    "evidence/controls/pdf-changelog-upload-20261008/pdf-native-enabled-20261008/AlmaLinux_10-x86_64/diagnostic-inventory.json.gz": "adab4fe35eeaf0ce20fba485a76e15310fef472c5adfd8a63590e965e9555c80",
+    "evidence/controls/pdf-changelog-upload-20261008/pdf-native-enabled-20261008/openSUSE_Leap_16.0-aarch64/diagnostic-inventory.json.gz": "47fe1a378a3d95e5536d6ba24157fede6f6a00a56de74eeb9e540f9d34c7c100",
+    "evidence/controls/pdf-changelog-upload-20261008/pdf-obs-changelog-final-20261008/qore-pdf-module.changes.gz": "bb8a5c1c2f53792f2e25ad305e889b841071e43532111772f4bbd796f48ace2d"
+  }
+}
