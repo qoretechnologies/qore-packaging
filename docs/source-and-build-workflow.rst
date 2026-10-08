@@ -106,6 +106,23 @@ material is removed before installation; temporary repository configurations
 are removed on success or failure. The public metadata and key remain in the
 qualification output. No production signing key or repository is changed.
 
+Add ``--core-lifecycle`` to that command to qualify removal and reinstall after
+the clean runtime and SDK phases. This option requires repository mode and a
+core-only manifest containing the seven pinned Qore runtime/SDK packages. The
+fixture requires RPM to reject removing the library while dependents remain,
+then removes all seven packages through the distribution package manager.
+It checks every non-directory payload path, including dangling symlinks, and
+requires every unrelated package to retain its exact epoch/version/release and
+architecture. It reinstalls by package name from the verified repository,
+requires the original package inventory and clean ``rpm -V`` results, and
+repeats runtime, ONNX, SDK, tool and debugger tests as the unprivileged test user.
+Temporary repository configuration is removed even if a lifecycle check fails.
+
+``RPM_NATIVE_QUALIFICATION=core21-lifecycle`` explicitly selects the corresponding
+three native ARM jobs; ``RPM_NATIVE_TARGET`` can select one distribution. These
+jobs qualify same-version removal/reinstall. Cross-version upgrade from the
+preserved core21 baseline to the new core build remains a separate gate.
+
 ``tools/qualify-installed.py`` consumes a reviewed manifest from
 ``qualification/``. It checks every downloaded checksum and RPM signature before
 installation, tests a minimal runtime, then installs the SDK and tests compiler

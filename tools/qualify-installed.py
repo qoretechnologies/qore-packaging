@@ -17,6 +17,7 @@ import tempfile
 from packaging import fetch_source
 import installed_jni
 import repository_fixture
+import core_lifecycle
 
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
@@ -493,8 +494,12 @@ def run_logged(command, path, cwd=None, env=None, owner=None):
                 os.close(write_fd)
 
 
-def qualify(manifest, output, jni_phase=None, jni_fixtures=None, repository_install=False):
+def qualify(manifest, output, jni_phase=None, jni_fixtures=None, repository_install=False, core_lifecycle_check=False):
     validate(manifest)
+    if core_lifecycle_check:
+        if not repository_install:
+            raise ValueError('Core lifecycle requires signed repository installation')
+        core_lifecycle.core_packages(manifest)
     has_jni = any(entry['name'] == 'jni' for entry in manifest.get('modules', []))
     if has_jni:
         if jni_phase not in ('runtime', 'sdk') or jni_fixtures is None:
@@ -519,7 +524,7 @@ def qualify(manifest, output, jni_phase=None, jni_fixtures=None, repository_inst
     if has_jni:
         result['jni_phase'] = jni_phase
 
-    def run(name, command, cwd=None, env=None, fixture=False, reject_signature=False):
+    def run(name, command, cwd=None, env=None, fixture=False, reject_signature=False, reject_dependency=None):
         owner = pwd.getpwnam('qoretester') if fixture else None
         process = run_logged(command, output / (name + '.log'), cwd=cwd, env=env,
                              owner=(owner.pw_uid, owner.pw_gid) if owner else None)
@@ -529,6 +534,11 @@ def qualify(manifest, output, jni_phase=None, jni_fixtures=None, repository_inst
             text = (output / (name + '.log')).read_text()
             repository_fixture.check_signature_rejection(process.returncode, text)
             result['steps'][-1]['expected_signature_rejection'] = True
+            return text
+        if reject_dependency:
+            text = (output / (name + '.log')).read_text()
+            core_lifecycle.check_dependency_rejection(process.returncode, text, reject_dependency)
+            result['steps'][-1]['expected_dependency_rejection'] = True
             return text
         process.check_returncode()
         return (output / (name + '.log')).read_text()
@@ -643,6 +653,15 @@ def qualify(manifest, output, jni_phase=None, jni_fixtures=None, repository_inst
                             cwd=directory, fixture=True)
                     if name == 'jni' and phase == 'sdk':
                         result['jni_fixture_bundle'] = installed_jni.export_bundle(directory, jni_fixtures, manifest)
+            if core_lifecycle_check:
+                result['core_lifecycle'] = core_lifecycle.qualify(manifest, rpms, run, install_env, install_command)
+                for suite in ('runtime', 'development', 'tools', 'remote-debuggers'):
+                    directory = root / ('reinstalled-' + suite)
+                    directory.mkdir()
+                    subprocess.run(['chown', 'qoretester:qoretester', str(directory)], check=True)
+                    run('reinstalled-' + suite, ['runuser', '-u', 'qoretester', '--', 'env',
+                        'QORE_RPM_TEST_TMP=' + str(directory), str(source / 'rpm/tests-installed' / suite)],
+                        fixture=True)
         result['exit_code'] = 0
     except BaseException as error:
         result.update(exit_code=1, error=repr(error))
@@ -660,9 +679,11 @@ def main():
     parser.add_argument('--jni-fixtures', type=Path)
     parser.add_argument('--repository-install', action='store_true',
                         help='test signed local repository discovery and install packages by name')
+    parser.add_argument('--core-lifecycle', action='store_true',
+                        help='also verify core removal and signed reinstall in a core-only repository fixture')
     args = parser.parse_args()
     qualify(json.loads(args.manifest.read_text()), args.output, args.jni_phase, args.jni_fixtures,
-            args.repository_install)
+            args.repository_install, args.core_lifecycle)
 
 
 if __name__ == '__main__':

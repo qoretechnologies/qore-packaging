@@ -1,0 +1,25 @@
+{
+  "image": "opensuse/leap@sha256:12891be67d896148576b6d2cef7126152fb20a4b062c78a87a82b30283b66375",
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--pull=never",
+    "--name",
+    "qore-core-lifecycle-leap-20261008",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/qualification/jni-fixtures.json:/qualification/jni-fixtures.json:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/core21-upgrade-baseline-20261008/leap-x86_64/manifest.json:/manifest.json:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/core-lifecycle-leap-https-20261008/leap:/results",
+    "opensuse/leap@sha256:12891be67d896148576b6d2cef7126152fb20a4b062c78a87a82b30283b66375",
+    "sh",
+    "-c",
+    "set -eu\nsed -i --follow-symlinks 's|http://cdn\\.opensuse\\.org/|https://cdn.opensuse.org/|g' /etc/zypp/repos.d/*.repo /usr/share/zypp/local/service/openSUSE/repo/repoindex.xml\nzypper --non-interactive install --no-recommends python3 ca-certificates shadow util-linux findutils createrepo_c gpg2\nexec python3 -B -W error /tools/qualify-installed.py /manifest.json --repository-install --core-lifecycle --output /results/qualification"
+  ]
+}
