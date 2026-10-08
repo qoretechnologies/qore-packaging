@@ -1,0 +1,198 @@
+test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) ... 
+  test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='fedora', tests=True, depth=1) ... FAIL
+  test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='fedora', tests=True, depth=2) ... FAIL
+  test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='fedora', tests=True, depth=4) ... FAIL
+  test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='fedora', tests=False, depth=1) ... FAIL
+  test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='fedora', tests=False, depth=2) ... FAIL
+  test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='fedora', tests=False, depth=4) ... FAIL
+  test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='el', tests=True, depth=1) ... FAIL
+  test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='el', tests=True, depth=2) ... FAIL
+  test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='el', tests=True, depth=4) ... FAIL
+  test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='el', tests=False, depth=1) ... FAIL
+  test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='el', tests=False, depth=2) ... FAIL
+  test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='el', tests=False, depth=4) ... FAIL
+
+======================================================================
+FAIL: test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='fedora', tests=True, depth=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test/test-rpm-dependencies.py", line 42, in test_inherited_distribution_layers_do_not_change_requirements
+    self.assertEqual(expected, requirements(family, tests, inherited_macros=inherited))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'python3dist(grpcio)'
+'python3dist(grpcio-tools)'
+'python3dist(pyarrow)'
+'util-linux-core'
+Items in the second set but not the first:
+'util-linux'
+'python3-pyarrow'
+'python3-grpcio-tools'
+'python3-grpcio'
+
+======================================================================
+FAIL: test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='fedora', tests=True, depth=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test/test-rpm-dependencies.py", line 42, in test_inherited_distribution_layers_do_not_change_requirements
+    self.assertEqual(expected, requirements(family, tests, inherited_macros=inherited))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'python3dist(grpcio)'
+'python3dist(grpcio-tools)'
+'python3dist(pyarrow)'
+'util-linux-core'
+Items in the second set but not the first:
+'util-linux'
+'python3-pyarrow'
+'python3-grpcio-tools'
+'python3-grpcio'
+
+======================================================================
+FAIL: test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='fedora', tests=True, depth=4)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test/test-rpm-dependencies.py", line 42, in test_inherited_distribution_layers_do_not_change_requirements
+    self.assertEqual(expected, requirements(family, tests, inherited_macros=inherited))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'python3dist(grpcio)'
+'python3dist(grpcio-tools)'
+'python3dist(pyarrow)'
+'util-linux-core'
+Items in the second set but not the first:
+'util-linux'
+'python3-pyarrow'
+'python3-grpcio-tools'
+'python3-grpcio'
+
+======================================================================
+FAIL: test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='fedora', tests=False, depth=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test/test-rpm-dependencies.py", line 42, in test_inherited_distribution_layers_do_not_change_requirements
+    self.assertEqual(expected, requirements(family, tests, inherited_macros=inherited))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'util-linux-core'
+Items in the second set but not the first:
+'util-linux'
+
+======================================================================
+FAIL: test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='fedora', tests=False, depth=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test/test-rpm-dependencies.py", line 42, in test_inherited_distribution_layers_do_not_change_requirements
+    self.assertEqual(expected, requirements(family, tests, inherited_macros=inherited))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'util-linux-core'
+Items in the second set but not the first:
+'util-linux'
+
+======================================================================
+FAIL: test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='fedora', tests=False, depth=4)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test/test-rpm-dependencies.py", line 42, in test_inherited_distribution_layers_do_not_change_requirements
+    self.assertEqual(expected, requirements(family, tests, inherited_macros=inherited))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'util-linux-core'
+Items in the second set but not the first:
+'util-linux'
+
+======================================================================
+FAIL: test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='el', tests=True, depth=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test/test-rpm-dependencies.py", line 42, in test_inherited_distribution_layers_do_not_change_requirements
+    self.assertEqual(expected, requirements(family, tests, inherited_macros=inherited))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'python3dist(grpcio)'
+'python3dist(grpcio-tools)'
+'python3dist(pyarrow)'
+'util-linux-core'
+Items in the second set but not the first:
+'util-linux'
+'python3-pyarrow'
+'python3-grpcio-tools'
+'python3-grpcio'
+
+======================================================================
+FAIL: test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='el', tests=True, depth=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test/test-rpm-dependencies.py", line 42, in test_inherited_distribution_layers_do_not_change_requirements
+    self.assertEqual(expected, requirements(family, tests, inherited_macros=inherited))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'python3dist(grpcio)'
+'python3dist(grpcio-tools)'
+'python3dist(pyarrow)'
+'util-linux-core'
+Items in the second set but not the first:
+'util-linux'
+'python3-pyarrow'
+'python3-grpcio-tools'
+'python3-grpcio'
+
+======================================================================
+FAIL: test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='el', tests=True, depth=4)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test/test-rpm-dependencies.py", line 42, in test_inherited_distribution_layers_do_not_change_requirements
+    self.assertEqual(expected, requirements(family, tests, inherited_macros=inherited))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'python3dist(grpcio)'
+'python3dist(grpcio-tools)'
+'python3dist(pyarrow)'
+'util-linux-core'
+Items in the second set but not the first:
+'util-linux'
+'python3-pyarrow'
+'python3-grpcio-tools'
+'python3-grpcio'
+
+======================================================================
+FAIL: test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='el', tests=False, depth=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test/test-rpm-dependencies.py", line 42, in test_inherited_distribution_layers_do_not_change_requirements
+    self.assertEqual(expected, requirements(family, tests, inherited_macros=inherited))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'util-linux-core'
+Items in the second set but not the first:
+'util-linux'
+
+======================================================================
+FAIL: test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='el', tests=False, depth=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test/test-rpm-dependencies.py", line 42, in test_inherited_distribution_layers_do_not_change_requirements
+    self.assertEqual(expected, requirements(family, tests, inherited_macros=inherited))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'util-linux-core'
+Items in the second set but not the first:
+'util-linux'
+
+======================================================================
+FAIL: test_inherited_distribution_layers_do_not_change_requirements (__main__.RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements) (family='el', tests=False, depth=4)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/source/test/test-rpm-dependencies.py", line 42, in test_inherited_distribution_layers_do_not_change_requirements
+    self.assertEqual(expected, requirements(family, tests, inherited_macros=inherited))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Items in the first set but not the second:
+'util-linux-core'
+Items in the second set but not the first:
+'util-linux'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.215s
+
+FAILED (failures=12)

@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "All three parser qualifications pass; audited packaging-only fix committed and pushed, uploaded as OBS revision4. Native and signed installed gates remain.",
+  "module_commit": "96ccea6d7fa1adcdb410390a983ae342f3ca1686",
+  "root_cause": "RPM --undefine pops one macro definition. Inherited OBS Leap configuration defines suse_version in multiple layers, so simulated Fedora/EL branches still selected SUSE fixture dependencies.",
+  "fix": "Explicit zero definitions for all three numeric family conditionals before selecting the requested family. No production dependencies or tests disabled.",
+  "tests": {
+    "methods_per_parser": 4,
+    "targets": [
+      "Fedora 44",
+      "openSUSE Leap 16",
+      "AlmaLinux 10"
+    ],
+    "inherited_comparisons_per_parser": 18,
+    "negative_control": "Original undefine logic fails the layered-macro regression.",
+    "warnings": 0
+  },
+  "audit": "module-grpc test/audits/rpm-macro-isolation.rst: all62 checks,11Pass51NA0Fail. No C++ or runtime changes.",
+  "obs": {
+    "revision": 4,
+    "srcmd5": "09c91d361c77c0e330b669058ac478f4"
+  },
+  "publication": "Disabled; package metadata unchanged.",
+  "files_sha256": {
+    "evidence/controls/grpc-macro-isolation-20261008/negative-control.log": "25f0406dfd4c9d86968d65bb8b908f450b3a4bc94e12370908166c635831198c",
+    "evidence/controls/grpc-macro-isolation-20261008/source.xml": "215e8084ed441660daa96ef86def5f51e0c2ab6923afc250e0f897a6cf738469",
+    "evidence/controls/grpc-macro-isolation-20261008/metadata-after.xml": "3fdcf16d5b9edf8e46176500ee204fe353a3d034e1a91fe23a77c6fe1a0e699e",
+    "evidence/controls/grpc-macro-isolation-20261008/manifest.json": "3a696617c47ece86b0b6d82152cb1091edf3a719aaf5df57b064fc112fe2ce80",
+    "evidence/controls/grpc-macro-isolation-20261008/fedora.json": "c5c16bc087e08abf92edc4c039ba65c5ac1c89dec615d32118bd7a23ac8a7cf8",
+    "evidence/controls/grpc-macro-isolation-20261008/metadata-before.xml": "3fdcf16d5b9edf8e46176500ee204fe353a3d034e1a91fe23a77c6fe1a0e699e",
+    "evidence/controls/grpc-macro-isolation-20261008/fedora.log": "c59fc8ae06355a5df91a6027504b6674cc1185089d3c4f65f98b3f11b8f572c1",
+    "evidence/controls/grpc-macro-isolation-20261008/grpc-leap-macro-control-20261008.log.gz": "b05f38b088b256087f4947e7c9b2d786c9def3105d77552b6f79f58c0063aad7",
+    "evidence/controls/grpc-macro-isolation-20261008/el10.json": "8a654d5e2069b023597d9fc6aaad57bfd1f39628806f968e83f1f8cc4e26d9b5",
+    "evidence/controls/grpc-macro-isolation-20261008/leap.json": "df9a0e2db2b5dc8a191ae1137b1da04993788bd96183420f30b2e64366f6ef32",
+    "evidence/controls/grpc-macro-isolation-20261008/upload.py": "cc5fdc56ddf4afe062c9906d06112313414a1fbca5a110a3f7f4811e380d58a7",
+    "evidence/controls/grpc-macro-isolation-20261008/el10.log": "b3d2d72dde91fe53b35696649275811845e9cc534ba23d281af59dabf0a4f1a4",
+    "evidence/controls/grpc-macro-isolation-20261008/upload.log": "d36d2e7adaf9aa6bb7726e3c349b460d6827b6d4811e77873ea887f51326a7dc",
+    "evidence/controls/grpc-macro-isolation-20261008/old-undefine.py": "ce1fd69be98bfe7f6111ca33abfb231817c4e0dda4179451776261f769b37b0b",
+    "evidence/controls/grpc-macro-isolation-20261008/negative-control.json": "a3b6e2b91bf651bea0e39ba4cb135f8056b8b55e7bc277e948c56ec87d6585b5",
+    "evidence/controls/grpc-macro-isolation-20261008/aarch64-original-failure.log.gz": "622a4605cf99ed22f34511897083cbab4582cf69d4beb562ba41938d00ba0dc3",
+    "evidence/controls/grpc-macro-isolation-20261008/x86_64-original-failure.log.gz": "a168584bf50db8c256f5315b01c3fb22a7e13d2f69d7a105d6d7dfbada02e767",
+    "evidence/controls/grpc-macro-isolation-20261008/leap.log": "6fb0ead20bdff34af0e39ce611cea84bd5d8d4747c17e6fb2878f768fc65e25e",
+    "evidence/controls/grpc-macro-isolation-20261008/grpc-leap-buildconfig-20261008.txt.gz": "8b5f1ea15979703fd96fb8ac834d554ebd9f877648eb9bb4c336f6bd2999e3e9"
+  }
+}

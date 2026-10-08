@@ -1,0 +1,24 @@
+{
+  "image": "sha256:f7defd82fdad1e43abfcb0aa60b0a4d8dc99279b1ddbbc057f51778aba3398ee",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--user",
+    "1019:100",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/checkouts/module-grpc-native-dependencies-20261008:/source:ro",
+    "-w",
+    "/source",
+    "sha256:f7defd82fdad1e43abfcb0aa60b0a4d8dc99279b1ddbbc057f51778aba3398ee",
+    "python3",
+    "-B",
+    "-W",
+    "error",
+    "test/test-rpm-dependencies.py",
+    "-v"
+  ],
+  "exit_code": 0
+}

@@ -1,0 +1,25 @@
+{
+  "exit_code": 1,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/checkouts/module-grpc-native-dependencies-20261008:/source:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/grpc-macro-isolation-20261008/old-undefine.py:/source/test/test-rpm-dependencies.py:ro",
+    "-w",
+    "/source",
+    "sha256:2241aa54d5750de611a31b29ca8fdf387d6f5083e789e80fc25175d38a371e80",
+    "python3",
+    "-B",
+    "-W",
+    "error",
+    "test/test-rpm-dependencies.py",
+    "RpmFixtureDependencies.test_inherited_distribution_layers_do_not_change_requirements",
+    "-v"
+  ],
+  "diagnostic": "Layered family requirements differ under original --undefine logic"
+}
