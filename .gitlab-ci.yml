@@ -63,6 +63,36 @@ rpm-el10-arm64:
     - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils util-linux findutils dnf-plugins-core epel-release
     - dnf config-manager --set-enabled crb
 
+# Repository discovery and dependency solving use the same pinned core21 inputs.
+# These jobs are opt-in; each creates and destroys its own metadata signing key.
+rpm-repository-fedora-arm64:
+  extends: rpm-fedora-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "core21-solver" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "fedora")'
+  before_script:
+    - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils util-linux findutils createrepo_c gnupg2
+  script:
+    - python3 -B -W error tools/qualify-installed.py "$RPM_MANIFEST" --repository-install --output results/native-installed
+
+rpm-repository-leap-arm64:
+  extends: rpm-leap-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "core21-solver" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "leap")'
+  before_script:
+    - zypper --non-interactive install --no-recommends python3 ca-certificates shadow util-linux findutils createrepo_c gpg2
+  script:
+    - python3 -B -W error tools/qualify-installed.py "$RPM_MANIFEST" --repository-install --output results/native-installed
+
+rpm-repository-el10-arm64:
+  extends: rpm-el10-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "core21-solver" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
+  before_script:
+    - dnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils util-linux findutils createrepo_c gnupg2 dnf-plugins-core epel-release
+    - dnf config-manager --set-enabled crb
+  script:
+    - python3 -B -W error tools/qualify-installed.py "$RPM_MANIFEST" --repository-install --output results/native-installed
+
 # SSH2 uses a private SSH fixture; PROJ uses the pinned installed GEOS module.
 rpm-ssh2-proj-fedora-arm64:
   extends: rpm-fedora-arm64

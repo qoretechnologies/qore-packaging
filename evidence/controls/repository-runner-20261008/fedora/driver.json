@@ -1,0 +1,25 @@
+{
+  "image": "registry.fedoraproject.org/fedora@sha256:80d49c6c7c4303efb5eebc0317e343588d5d482146ca2be48eb82494d2a83060",
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--pull=never",
+    "--name",
+    "qore-repository-runner-fedora-20261008",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/tools:/tools:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/qualification/jni-fixtures.json:/qualification/jni-fixtures.json:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/core21-upgrade-baseline-20261008/fedora-x86_64/manifest.json:/manifest.json:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/repository-runner-local-20261008/fedora:/results",
+    "registry.fedoraproject.org/fedora@sha256:80d49c6c7c4303efb5eebc0317e343588d5d482146ca2be48eb82494d2a83060",
+    "sh",
+    "-c",
+    "set -eu\ndnf -y --setopt=install_weak_deps=False install python3 ca-certificates shadow-utils util-linux findutils createrepo_c gnupg2\nexec python3 -B -W error /tools/qualify-installed.py /manifest.json --repository-install --output /results/qualification"
+  ]
+}

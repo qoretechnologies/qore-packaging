@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 """Qualify pinned OBS RPMs in a disposable native distribution container."""
 import argparse
+from contextlib import ExitStack
 import json
 import os
 from pathlib import Path
@@ -15,6 +16,7 @@ import tempfile
 
 from packaging import fetch_source
 import installed_jni
+import repository_fixture
 
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
@@ -491,7 +493,7 @@ def run_logged(command, path, cwd=None, env=None, owner=None):
                 os.close(write_fd)
 
 
-def qualify(manifest, output, jni_phase=None, jni_fixtures=None):
+def qualify(manifest, output, jni_phase=None, jni_fixtures=None, repository_install=False):
     validate(manifest)
     has_jni = any(entry['name'] == 'jni' for entry in manifest.get('modules', []))
     if has_jni:
@@ -506,6 +508,10 @@ def qualify(manifest, output, jni_phase=None, jni_fixtures=None):
     if os.geteuid() != 0:
         raise ValueError('Use a disposable root container for package installation')
     check_prerequisites(manifest['family'])
+    if repository_install:
+        missing = [name for name in ('createrepo_c', 'gpg', 'gpgconf') if shutil.which(name) is None]
+        if missing:
+            raise ValueError('Missing repository fixture commands: ' + ', '.join(missing))
     output = Path(output).resolve()
     output.mkdir(parents=True, exist_ok=False)
     result = {'manifest': manifest, 'machine': platform.machine(),
@@ -513,18 +519,23 @@ def qualify(manifest, output, jni_phase=None, jni_fixtures=None):
     if has_jni:
         result['jni_phase'] = jni_phase
 
-    def run(name, command, cwd=None, env=None, fixture=False):
+    def run(name, command, cwd=None, env=None, fixture=False, reject_signature=False):
         owner = pwd.getpwnam('qoretester') if fixture else None
         process = run_logged(command, output / (name + '.log'), cwd=cwd, env=env,
                              owner=(owner.pw_uid, owner.pw_gid) if owner else None)
         result['steps'].append({'name': name, 'command': command, 'exit_code': process.returncode})
         print(name, process.returncode, flush=True)
+        if reject_signature:
+            text = (output / (name + '.log')).read_text()
+            repository_fixture.check_signature_rejection(process.returncode, text)
+            result['steps'][-1]['expected_signature_rejection'] = True
+            return text
         process.check_returncode()
         return (output / (name + '.log')).read_text()
 
     try:
         # Verify all downloads before changing the container's package set.
-        with tempfile.TemporaryDirectory(prefix='qore-rpm-native-') as temporary:
+        with tempfile.TemporaryDirectory(prefix='qore-rpm-native-') as temporary, ExitStack() as contexts:
             root = Path(temporary)
             root.chmod(0o755)
             key = root / 'rpm-signing-key.asc'
@@ -557,17 +568,26 @@ def qualify(manifest, output, jni_phase=None, jni_fixtures=None):
                 probe = subprocess.run(['rpm', '-q', name], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 if probe.returncode != 1:
                     raise ValueError('Container is not a clean minimal runtime: ' + name)
+            if repository_install:
+                result['repository'] = contexts.enter_context(repository_fixture.signed_repository(
+                    manifest, rpms, key, output, run, dict(install_env, LC_ALL='C')))
             for phase in ('runtime', 'sdk'):
                 if jni_phase == 'runtime' and phase == 'sdk':
                     break
                 entries = [entry for entry in manifest['packages'] if entry['phase'] == phase]
-                paths = [rpms / entry['filename'] for entry in entries]
+                paths = (repository_fixture.requested_packages(manifest, phase) if repository_install else
+                         [rpms / entry['filename'] for entry in entries])
                 if phase == 'sdk':
                     # cmake is a fixture tool, not a runtime requirement.
                     paths.append('cmake')
                 for entry in manifest.get('modules', []):
                     paths.extend(module_dependencies(entry['name'], phase, manifest['family']))
-                run(phase + '-install', install_command(manifest['family'], paths), env=install_env)
+                command = install_command(manifest['family'], paths)
+                if repository_install and manifest['family'] == 'suse':
+                    command.insert(command.index('install') + 1, '--allow-vendor-change')
+                run(phase + '-install', command, env=install_env)
+                if repository_install:
+                    repository_fixture.verify_selected_versions(entries, rpms, run)
                 names = [entry['name'] for entry in entries]
                 run(phase + '-rpm-verify', ['rpm', '-V', *names])
                 run(phase + '-inventory', ['rpm', '-qa', '--qf', '%{NAME} %{VERSION}-%{RELEASE}.%{ARCH}\n'])
@@ -638,8 +658,11 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--jni-phase', choices=('sdk', 'runtime'))
     parser.add_argument('--jni-fixtures', type=Path)
+    parser.add_argument('--repository-install', action='store_true',
+                        help='test signed local repository discovery and install packages by name')
     args = parser.parse_args()
-    qualify(json.loads(args.manifest.read_text()), args.output, args.jni_phase, args.jni_fixtures)
+    qualify(json.loads(args.manifest.read_text()), args.output, args.jni_phase, args.jni_fixtures,
+            args.repository_install)
 
 
 if __name__ == '__main__':

@@ -87,6 +87,25 @@ See `repository-installation.rst <repository-installation.rst>`_ for qualified
 package-name installation commands, openSUSE vendor selection and the distinction
 between local signed repository checks and production publication.
 
+``RPM_NATIVE_QUALIFICATION=core21-solver`` explicitly selects the three native ARM
+repository-install jobs. They use the same pinned core21 inputs as the ordinary
+installed-package jobs. ``RPM_NATIVE_TARGET`` can select one distribution.
+Locally, the equivalent mode is::
+
+    python3 -B -W error tools/qualify-installed.py qualification/core21-fedora-aarch64.json \
+        --repository-install --output results/native-installed
+
+Run this only in a disposable container of the matching native architecture.
+In addition to the normal fixture tools, the mode requires ``createrepo_c``,
+``gpg`` and ``gpgconf``. It verifies every download and RPM signature, builds
+temporary repository metadata, signs it with a disposable key, and requires
+the package manager to reject tampered metadata. It then installs by package
+name and checks every selected RPM's name, epoch, version, release and
+architecture before running the usual runtime/SDK tests. Private signing
+material is removed before installation; temporary repository configurations
+are removed on success or failure. The public metadata and key remain in the
+qualification output. No production signing key or repository is changed.
+
 ``tools/qualify-installed.py`` consumes a reviewed manifest from
 ``qualification/``. It checks every downloaded checksum and RPM signature before
 installation, tests a minimal runtime, then installs the SDK and tests compiler
