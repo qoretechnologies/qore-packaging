@@ -1,0 +1,1220 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-08T12:45:06.366367+00:00",
+  "authorization": "User requested removal of unneeded packaging build artifacts.",
+  "scope": "36 exited, successful core20/core21 installation and test containers; exact IDs only, no force or volume removal.",
+  "preserved": "All original and installed Docker images, every volume, all live containers, RPMs and source files. Full container logs archived before removal.",
+  "containers": [
+    {
+      "id": "8dbaa3b6522e5c76e54258667477e557397146b10a9aaaa7f8ea277bed426792",
+      "name": "qore-fedora-policy-21-runtime-tests-3",
+      "image": "sha256:293922256d9c52b04ae67c422042996623f84044778f265806cb8540e282a745",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-03T13:34:16.823665143Z",
+        "FinishedAt": "2026-10-03T13:34:20.422119062Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-21",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/fedora-core-policy-21-fixtures-3/qore-3.0.0~git20261003.21",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-fedora-policy-21-runtime-tests-3.log.gz",
+      "log_sha256": "8528ffdd1b4d6e3583fc52c467fcbb81803a85e88cbcaaf4f14026a0792e2d7c"
+    },
+    {
+      "id": "71dc428f5d780d265cc7b77653c32eb94a5a86f50603e0edf9cfc43afd029c9b",
+      "name": "qore-fedora-policy-21-runtime-install-3",
+      "image": "sha256:aaaaf5f3762f55166492464a0d4d5655fd242e4b34393fdd857973aebec6a892",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-03T13:33:50.558931904Z",
+        "FinishedAt": "2026-10-03T13:34:03.329466176Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-21",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/fedora-core-policy-21-fixtures-3/qore-3.0.0~git20261003.21",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-fedora-policy-21-runtime-install-3.log.gz",
+      "log_sha256": "54535cd45a3b184b27b7a7671faae0441cc0c796cb5ff42a32b3a2d396d6c5e4",
+      "retained_installed_image": "sha256:293922256d9c52b04ae67c422042996623f84044778f265806cb8540e282a745"
+    },
+    {
+      "id": "40d9e14812e31744d784b05f10214abfdf849a28608d1f2c444bc1be6732fbb5",
+      "name": "qore-fedora-policy-21-sdk-tests-3",
+      "image": "sha256:475f8d53919b1aee51d9e402158b861498a134473e3144632944e6f546ab6748",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-03T13:33:42.658407727Z",
+        "FinishedAt": "2026-10-03T13:33:50.242350598Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-21",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/fedora-core-policy-21-fixtures-3/qore-3.0.0~git20261003.21",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-fedora-policy-21-sdk-tests-3.log.gz",
+      "log_sha256": "ec8c5836a0e86c810ca08491148be5bf91b2d016843e1314cb53e56d5ee38014"
+    },
+    {
+      "id": "380065ba15f07c18b09105aed9c8e14540fd1225f4cf14820c47129119fbdf05",
+      "name": "qore-fedora-policy-21-sdk-install-3",
+      "image": "sha256:22917630c8cdf6c560df78b09c1f5c3dd28ca6f26e5b00027a895954dc90e64d",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-03T13:33:15.790669389Z",
+        "FinishedAt": "2026-10-03T13:33:28.538294236Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-21",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/fedora-core-policy-21-fixtures-3/qore-3.0.0~git20261003.21",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-fedora-policy-21-sdk-install-3.log.gz",
+      "log_sha256": "ee5e09daaffb51ba4788660255573e3940a1a4d8dcca1d84e2c590ed6132e4b7",
+      "retained_installed_image": "sha256:475f8d53919b1aee51d9e402158b861498a134473e3144632944e6f546ab6748"
+    },
+    {
+      "id": "a6b9ce33155edb6aa4afe29b4c8463bb4c88b33810f0fcf2cf02aa73d78dd781",
+      "name": "qore-el10-policy-21-runtime-tests-3",
+      "image": "sha256:e7f32d8cfdaf33e361a943ce1a0c77550417371444451adfc9f6b8975fc9efab",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-03T13:32:09.468505252Z",
+        "FinishedAt": "2026-10-03T13:32:13.441076108Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-21",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/el10-core-policy-21-fixtures-3/qore-3.0.0~git20261003.21",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-el10-policy-21-runtime-tests-3.log.gz",
+      "log_sha256": "48fbc5431d1873948b3f5754b6881abaa366a26fd517da132c126672ab3626d3"
+    },
+    {
+      "id": "c5cce37afa7497bcbdc8b444825431c6b1349ed5de315b65df8ca86020d91465",
+      "name": "qore-el10-policy-21-runtime-install-3",
+      "image": "sha256:ee0486d8ace5b4222068723f96123f43f39cd5351aaf782ff5026a95612b094b",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-03T13:31:47.261278316Z",
+        "FinishedAt": "2026-10-03T13:31:57.407557486Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-21",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/el10-core-policy-21-fixtures-3/qore-3.0.0~git20261003.21",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-el10-policy-21-runtime-install-3.log.gz",
+      "log_sha256": "7aff13acecc2abdbc5dcb4ac604add88f0d4178db00f90ee67712d81d9ba5e38",
+      "retained_installed_image": "sha256:e7f32d8cfdaf33e361a943ce1a0c77550417371444451adfc9f6b8975fc9efab"
+    },
+    {
+      "id": "1d5caf21344e1335a0ed1f2feb225c070ab8e22d4cd851167ddd826dfaa52730",
+      "name": "qore-el10-policy-21-sdk-tests-3",
+      "image": "sha256:b5550f7c3185c04a789d82695aeea0e88259e246221f5a78a8b15028e60c49ad",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-03T13:31:39.38977463Z",
+        "FinishedAt": "2026-10-03T13:31:46.969914584Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-21",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/el10-core-policy-21-fixtures-3/qore-3.0.0~git20261003.21",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-el10-policy-21-sdk-tests-3.log.gz",
+      "log_sha256": "389909bd364c3b5f63f63713d5b886cc2a16513c5108e0907b4580c39b6d11de"
+    },
+    {
+      "id": "d562555eca8a5fc47c92551d693cdec09f00c27894c5c5b3cf86778de0ab6ee3",
+      "name": "qore-el10-policy-21-sdk-install-3",
+      "image": "sha256:a9af3844ca968f0fa6f2cec1f8c454513bd2f64647194798a9423762c7006041",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-03T13:31:18.360739225Z",
+        "FinishedAt": "2026-10-03T13:31:30.642364466Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-21",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/el10-core-policy-21-fixtures-3/qore-3.0.0~git20261003.21",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-el10-policy-21-sdk-install-3.log.gz",
+      "log_sha256": "d04e8a2b9c5301283e0e2264d7c0808599b27bd295e1d51620e0ee5a130b3a28",
+      "retained_installed_image": "sha256:b5550f7c3185c04a789d82695aeea0e88259e246221f5a78a8b15028e60c49ad"
+    },
+    {
+      "id": "414e6a325ed6e39113d0be5ad18dff4ba882decfcf08ead9d8c491d0e7980282",
+      "name": "qore-leap-policy-21-runtime-tests-3",
+      "image": "sha256:debe19ecf1b227bc936b16e0d8b2ecbfa8097aedd66a2e05bbcd63fc81fa4f80",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-03T12:59:21.839568747Z",
+        "FinishedAt": "2026-10-03T12:59:25.738964057Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-21",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/leap-core-policy-21-fixtures-3/qore-3.0.0~git20261003.21",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-leap-policy-21-runtime-tests-3.log.gz",
+      "log_sha256": "7ce7c05b382b9f405328d77c6436aab22069436afe8a2afac4f9a6875a887eff"
+    },
+    {
+      "id": "c20c39d6efe60438a3ed0e8acdb7c834ad78006bbea219299031d75db332a641",
+      "name": "qore-leap-policy-21-runtime-install-3",
+      "image": "sha256:c28c539e11ebb734b9e64e65303f16f15376437198b9d40efa21da3727ac2e45",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-03T12:57:31.40537684Z",
+        "FinishedAt": "2026-10-03T12:59:12.430910195Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-21",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/leap-core-policy-21-fixtures-3/qore-3.0.0~git20261003.21",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-leap-policy-21-runtime-install-3.log.gz",
+      "log_sha256": "8c15a3ffe3e4d3ff393f2bafc51b1fb757c78493e8aff863e04550ff3cace9ee",
+      "retained_installed_image": "sha256:debe19ecf1b227bc936b16e0d8b2ecbfa8097aedd66a2e05bbcd63fc81fa4f80"
+    },
+    {
+      "id": "e125279f5e260def021a55409ef885d8ed2c3581bd2fcc649b11d092ccea0741",
+      "name": "qore-leap-policy-21-sdk-tests-3",
+      "image": "sha256:3378c3e0bef72e721a03a5beed1ed5640d821ed8cb92fd34dcc52cdd513766a4",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-03T12:57:20.132564191Z",
+        "FinishedAt": "2026-10-03T12:57:30.801549063Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-21",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/leap-core-policy-21-fixtures-3/qore-3.0.0~git20261003.21",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-leap-policy-21-sdk-tests-3.log.gz",
+      "log_sha256": "c43b9f87daef50e3ed6dd84bdbcc68db9e9c889a84a65fcbc7ee0353dfec9908"
+    },
+    {
+      "id": "1d3d4cd037fbdff9707e5af9023da6d988114fbd2adce173d89e2578956ba4df",
+      "name": "qore-leap-policy-21-sdk-install-3",
+      "image": "sha256:348ee8cb2e0a6728e7078bb87253116d34cfd8adb41b306c346f0afc99f02e62",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-03T12:53:47.380995742Z",
+        "FinishedAt": "2026-10-03T12:57:04.884928917Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-21",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/leap-core-policy-21-fixtures-3/qore-3.0.0~git20261003.21",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-leap-policy-21-sdk-install-3.log.gz",
+      "log_sha256": "71017ebd5f9aa6fd4a9de5a3ae76fcbccef82875dcd7100e9d7eb99c611d205f",
+      "retained_installed_image": "sha256:3378c3e0bef72e721a03a5beed1ed5640d821ed8cb92fd34dcc52cdd513766a4"
+    },
+    {
+      "id": "45b48572821133b1b0a5a11d43ee0be3eef76c8d2da12c034902c5940a7ad8fc",
+      "name": "qore-fedora-policy-20-runtime-tests-3",
+      "image": "sha256:aaaaf5f3762f55166492464a0d4d5655fd242e4b34393fdd857973aebec6a892",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T21:30:15.162961378Z",
+        "FinishedAt": "2026-10-02T21:30:18.590561309Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-20",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/fedora-core-policy-20-fixtures-3/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-fedora-policy-20-runtime-tests-3.log.gz",
+      "log_sha256": "db4b35cc20f805704e2b3a7d581532df266af9887de95ccd5c677637367899d2"
+    },
+    {
+      "id": "42fe87096c1c6d5cad521777d37f0f573347d16803b930c61e785d06cd20c30c",
+      "name": "qore-fedora-policy-20-runtime-install-3",
+      "image": "sha256:c785b589f16457f7fb3ebf0e11e5b9d33a04b4fa97162c418585d96cd2c992c3",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T21:29:55.220561638Z",
+        "FinishedAt": "2026-10-02T21:30:06.00079054Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-20",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/fedora-core-policy-20-fixtures-3/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-fedora-policy-20-runtime-install-3.log.gz",
+      "log_sha256": "00c266216ca7bf65c25c60abedb64bcc88c0faf3d78a4f6d4035a88b2f6791e6",
+      "retained_installed_image": "sha256:aaaaf5f3762f55166492464a0d4d5655fd242e4b34393fdd857973aebec6a892"
+    },
+    {
+      "id": "531b37eab13f463e0921cef4d35865f9a1bda560e6f2b0c98bba789981e31c8a",
+      "name": "qore-fedora-policy-20-sdk-tests-3",
+      "image": "sha256:22917630c8cdf6c560df78b09c1f5c3dd28ca6f26e5b00027a895954dc90e64d",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T21:29:47.853163381Z",
+        "FinishedAt": "2026-10-02T21:29:54.708545998Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-20",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/fedora-core-policy-20-fixtures-3/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-fedora-policy-20-sdk-tests-3.log.gz",
+      "log_sha256": "b60f99d730ddb7d6a16790bf414a5bd531b3ff508cee6703a121ef46e4628c31"
+    },
+    {
+      "id": "dc79707a27ef4c7b8008ff1fa900f00913be4a9f7b322e80f74ca295ffcb7015",
+      "name": "qore-fedora-policy-20-sdk-install-3",
+      "image": "sha256:005e14a5056d890cd0bd604241091b911bbd5af4cd67bb967b7699ad4459bf0b",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T21:29:27.29234755Z",
+        "FinishedAt": "2026-10-02T21:29:37.158212949Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-20",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/fedora-core-policy-20-fixtures-3/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-fedora-policy-20-sdk-install-3.log.gz",
+      "log_sha256": "021c5a676a8e2cb259ae64908102ceaa6a4e518bc6d8692fbfc5dbc65ef91538",
+      "retained_installed_image": "sha256:22917630c8cdf6c560df78b09c1f5c3dd28ca6f26e5b00027a895954dc90e64d"
+    },
+    {
+      "id": "ff5af82a00bb1d2de806f8a9974454aaaedb5ba8d16b9c490a5cc1e6bd09f041",
+      "name": "qore-el10-policy-20-runtime-tests-3",
+      "image": "sha256:ee0486d8ace5b4222068723f96123f43f39cd5351aaf782ff5026a95612b094b",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T21:28:12.037566467Z",
+        "FinishedAt": "2026-10-02T21:28:15.439456772Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-20",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/el10-core-policy-20-fixtures-3/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-el10-policy-20-runtime-tests-3.log.gz",
+      "log_sha256": "0bf199f46edcb251374073428c63801325037c5cf9e6049b393711850d7ad9d9"
+    },
+    {
+      "id": "79e142eb738033216da1de1d221785f13e27c004d426547ef5e3fed46bf2c8fa",
+      "name": "qore-el10-policy-20-runtime-install-3",
+      "image": "sha256:dd83d34f9e33c45a0bf7479de106759e86a6a4514f32d264a7648e2999b3168f",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T21:27:45.630348343Z",
+        "FinishedAt": "2026-10-02T21:28:05.215172053Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-20",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/el10-core-policy-20-fixtures-3/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-el10-policy-20-runtime-install-3.log.gz",
+      "log_sha256": "f4dc8e7e21425bfd8fd57f2a9ee5f9e4b6b4ffe7e4fcef9bb6ad5293e4231e0f",
+      "retained_installed_image": "sha256:ee0486d8ace5b4222068723f96123f43f39cd5351aaf782ff5026a95612b094b"
+    },
+    {
+      "id": "71f1ca694f0a66e27a242b78eabee11cdc72ea6464f334b1a9a211e942380c1d",
+      "name": "qore-el10-policy-20-sdk-tests-3",
+      "image": "sha256:a9af3844ca968f0fa6f2cec1f8c454513bd2f64647194798a9423762c7006041",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T21:27:38.040205235Z",
+        "FinishedAt": "2026-10-02T21:27:45.327415399Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-20",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/el10-core-policy-20-fixtures-3/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-el10-policy-20-sdk-tests-3.log.gz",
+      "log_sha256": "551a4e6efb7e5656d6ac3db31dbe6c2809661491605ba4fdc1058b15ec5bbe17"
+    },
+    {
+      "id": "60022fe5dd36cd5767cfc158e78668b3d77aca259392349ade0c2dbeda5626b0",
+      "name": "qore-el10-policy-20-sdk-install-3",
+      "image": "sha256:a4babfcc82227fb71574aec479c85a75ddeebedb9f7d51a8157556e47843347d",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T21:27:08.9613024Z",
+        "FinishedAt": "2026-10-02T21:27:30.235503874Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-20",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/el10-core-policy-20-fixtures-3/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-el10-policy-20-sdk-install-3.log.gz",
+      "log_sha256": "992130f860d2996aef9feb218d7485fac3ca9ed3689c128ac8f08d3b08d63c73",
+      "retained_installed_image": "sha256:a9af3844ca968f0fa6f2cec1f8c454513bd2f64647194798a9423762c7006041"
+    },
+    {
+      "id": "1fa83baed98288c84bf56aa67d872bf066c91494e920a9a34aae053f608b7bc5",
+      "name": "qore-leap-policy-20-runtime-tests-3",
+      "image": "sha256:c28c539e11ebb734b9e64e65303f16f15376437198b9d40efa21da3727ac2e45",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T21:12:38.351615138Z",
+        "FinishedAt": "2026-10-02T21:12:41.783844457Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-20",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/leap-core-policy-20-fixtures-3/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-leap-policy-20-runtime-tests-3.log.gz",
+      "log_sha256": "8f46a67a3af35d25285eeff1d6d30e92b854bbdc2336fba08ae20c372b868e52"
+    },
+    {
+      "id": "bf96372d2915141b901d2864c835d949c6580c595f6e815c850cee99a6b2c560",
+      "name": "qore-leap-policy-20-runtime-install-3",
+      "image": "sha256:f8b671f49dbbf7edf0ff29aa2e146ef465d9a2ac4838e352133920f5c91b4a12",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T21:11:02.997887746Z",
+        "FinishedAt": "2026-10-02T21:12:29.925314221Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-20",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/leap-core-policy-20-fixtures-3/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-leap-policy-20-runtime-install-3.log.gz",
+      "log_sha256": "7384d3140b558df9d7100073cb82013f280eacfaa377919a5037011d6f02fdb9",
+      "retained_installed_image": "sha256:c28c539e11ebb734b9e64e65303f16f15376437198b9d40efa21da3727ac2e45"
+    },
+    {
+      "id": "739b336156bbafb4533682d39f61671b689267f055a61c5cd2effce6a60fdebd",
+      "name": "qore-leap-policy-20-sdk-tests-3",
+      "image": "sha256:348ee8cb2e0a6728e7078bb87253116d34cfd8adb41b306c346f0afc99f02e62",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T21:10:49.336833139Z",
+        "FinishedAt": "2026-10-02T21:11:01.931907616Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-20",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/leap-core-policy-20-fixtures-3/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-leap-policy-20-sdk-tests-3.log.gz",
+      "log_sha256": "d57a73e7aa88fda782f04eefb2953c54bca6268fac1af1b6b6b9f79b2af550b5"
+    },
+    {
+      "id": "927c6cfee47a4dbd590c31dcd2555307742f51e4a80a7d49ecf7e86dddfe1412",
+      "name": "qore-leap-policy-20-sdk-install-3",
+      "image": "sha256:b5a2e03cb123ae277e58ffd792b60b6bb43134b444f0c5f8a9e513b7b8a44b12",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T21:08:37.970604455Z",
+        "FinishedAt": "2026-10-02T21:10:40.191583046Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-20",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/leap-core-policy-20-fixtures-3/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-leap-policy-20-sdk-install-3.log.gz",
+      "log_sha256": "9b7c77ab45b8f260f1d6158232f3d9309d2152ea1c4c992758fabef8f1f7232b",
+      "retained_installed_image": "sha256:348ee8cb2e0a6728e7078bb87253116d34cfd8adb41b306c346f0afc99f02e62"
+    },
+    {
+      "id": "3ec33595f3d1f4e63c4373ab94684e6de2cd9c98df4568d3a6abdba37bb4fbf6",
+      "name": "qore-el10-policy-20-runtime-tests-2",
+      "image": "sha256:194a5f6ed5b3a2466f9eeb69920a5d308a84c2f8b09bc7522e11223546316c1d",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T19:48:44.717764009Z",
+        "FinishedAt": "2026-10-02T19:48:48.490213313Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-20-candidate-2",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/el10-core-policy-20-fixtures-2/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-el10-policy-20-runtime-tests-2.log.gz",
+      "log_sha256": "5bd409ca54750f959dcf7345dddbeda216e5199726170f86837bc2f992ee1d0e"
+    },
+    {
+      "id": "78f6dd5b8172ff1fecddf71349d50eb02568233f912c5f31376707f49d46729d",
+      "name": "qore-el10-policy-20-runtime-install-2",
+      "image": "sha256:dd83d34f9e33c45a0bf7479de106759e86a6a4514f32d264a7648e2999b3168f",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T19:48:00.293891968Z",
+        "FinishedAt": "2026-10-02T19:48:33.513713073Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-20-candidate-2",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/el10-core-policy-20-fixtures-2/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-el10-policy-20-runtime-install-2.log.gz",
+      "log_sha256": "f301eaf95df2850f9d7e0aaf79154af8acba38d67b5ee53b5513442738abc90b",
+      "retained_installed_image": "sha256:194a5f6ed5b3a2466f9eeb69920a5d308a84c2f8b09bc7522e11223546316c1d"
+    },
+    {
+      "id": "1fa607956bfb36e1965ac63d8dba0a095dc64f1709d25fc2e9d0e3b9101ddf6a",
+      "name": "qore-el10-policy-20-sdk-tests-2",
+      "image": "sha256:df9d143dbfccfb0ffe20b0cb1f4f235a857101fce114a31133c986bf60e00ca9",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T19:47:44.186991708Z",
+        "FinishedAt": "2026-10-02T19:47:58.947806616Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-20-candidate-2",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/el10-core-policy-20-fixtures-2/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-el10-policy-20-sdk-tests-2.log.gz",
+      "log_sha256": "c398f465005c09e22603bc34643916a0e8ff9ebe2dd6303c520bb5d0e3f2ab86"
+    },
+    {
+      "id": "3d0e4a4fc011de2ac0d4cbb1ac4a28187c5861762608b088e6f85bd394cac97b",
+      "name": "qore-el10-policy-20-sdk-install-2",
+      "image": "sha256:a4babfcc82227fb71574aec479c85a75ddeebedb9f7d51a8157556e47843347d",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T19:47:08.582510971Z",
+        "FinishedAt": "2026-10-02T19:47:31.810865937Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/el10-qore-policy-20-candidate-2",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/el10-core-policy-20-fixtures-2/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-el10-policy-20-sdk-install-2.log.gz",
+      "log_sha256": "ad607f3a430d9835eca115d2e8481ab6208bc7bd11f698bf1c7a6c2627564fe7",
+      "retained_installed_image": "sha256:df9d143dbfccfb0ffe20b0cb1f4f235a857101fce114a31133c986bf60e00ca9"
+    },
+    {
+      "id": "1da3ad2b7fa7cfe96ae659d3d521e06540bc50dd6359b4e488b0c4cb22a2866b",
+      "name": "qore-fedora-policy-20-runtime-tests-2",
+      "image": "sha256:adb0e0cb4306f4749c79fdd397dbf184270765ba9bad80151163d41efdb31712",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T19:44:34.069456468Z",
+        "FinishedAt": "2026-10-02T19:44:37.488463408Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-20-candidate-2",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/fedora-core-policy-20-fixtures-2/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-fedora-policy-20-runtime-tests-2.log.gz",
+      "log_sha256": "db4a7766526c50b5e997c640bd37314e1fae49d0ca2de504af8dbe58d40ca787"
+    },
+    {
+      "id": "80d82e71e5d1876c9be9ef1dc6db9b0111caf7ce0c24bdc4baf9895a4eaea629",
+      "name": "qore-fedora-policy-20-runtime-install-2",
+      "image": "sha256:c785b589f16457f7fb3ebf0e11e5b9d33a04b4fa97162c418585d96cd2c992c3",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T19:44:13.187302134Z",
+        "FinishedAt": "2026-10-02T19:44:25.864287565Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-20-candidate-2",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/fedora-core-policy-20-fixtures-2/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-fedora-policy-20-runtime-install-2.log.gz",
+      "log_sha256": "558fd7fc8c867621a94c1be9c00856ac53dc9e02965abe124bffd243490437da",
+      "retained_installed_image": "sha256:adb0e0cb4306f4749c79fdd397dbf184270765ba9bad80151163d41efdb31712"
+    },
+    {
+      "id": "4347345c9806982ff3825d3faf8f7fd3bde7a0bdb66a3f780f11e17e531c93d7",
+      "name": "qore-fedora-policy-20-sdk-tests-2",
+      "image": "sha256:d6790bc299e33eb26b84b46beba53dba3d9143facba5ab2a1ae5685253e0a932",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T19:44:05.43673187Z",
+        "FinishedAt": "2026-10-02T19:44:12.755231089Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-20-candidate-2",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/fedora-core-policy-20-fixtures-2/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-fedora-policy-20-sdk-tests-2.log.gz",
+      "log_sha256": "e21c5bab0e4d9ed7c59c410887caf2ebbf6ff4618746fb0d7ebf94acd8c0da44"
+    },
+    {
+      "id": "340f81afbc09581c0fad15613d500091be2d487cdf67508b9837468088e07c98",
+      "name": "qore-fedora-policy-20-sdk-install-2",
+      "image": "sha256:005e14a5056d890cd0bd604241091b911bbd5af4cd67bb967b7699ad4459bf0b",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T19:43:45.117229949Z",
+        "FinishedAt": "2026-10-02T19:43:55.265713565Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/fedora-qore-policy-20-candidate-2",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/fedora-core-policy-20-fixtures-2/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-fedora-policy-20-sdk-install-2.log.gz",
+      "log_sha256": "579906af315bb6ce233ba6804cde7c8be19b2b7a759f22f40b8f1fe41523bdbb",
+      "retained_installed_image": "sha256:d6790bc299e33eb26b84b46beba53dba3d9143facba5ab2a1ae5685253e0a932"
+    },
+    {
+      "id": "3e7dc6762dfc515d85be6f1fe66ef4df729e71e4a4c2fdef635a919c3f5de632",
+      "name": "qore-leap-policy-20-runtime-tests-2",
+      "image": "sha256:3f30899a21c454d6c1ff4c56434a9d71294b2088433ed02ffd0941d81596fe7f",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T19:35:59.743214591Z",
+        "FinishedAt": "2026-10-02T19:36:03.055542822Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-20-candidate-2",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/leap-core-policy-20-fixtures-2/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-leap-policy-20-runtime-tests-2.log.gz",
+      "log_sha256": "9afd9d8d33120da96c0759a4029687f92f42fccdf35da960fe31df8f9ce1a673"
+    },
+    {
+      "id": "ea7d4af4aeec4f3844c38d8d92a4e2c4ae5c389b8788d88351db08e1600f4aed",
+      "name": "qore-leap-policy-20-runtime-install-2",
+      "image": "sha256:f8b671f49dbbf7edf0ff29aa2e146ef465d9a2ac4838e352133920f5c91b4a12",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T19:34:05.348020425Z",
+        "FinishedAt": "2026-10-02T19:35:49.970940032Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-20-candidate-2",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/leap-core-policy-20-fixtures-2/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-leap-policy-20-runtime-install-2.log.gz",
+      "log_sha256": "bf8b0df498aa6f000fb0fa82cdeff8a2b7b13861f1e07a6d44ae22b2c028b20f",
+      "retained_installed_image": "sha256:3f30899a21c454d6c1ff4c56434a9d71294b2088433ed02ffd0941d81596fe7f"
+    },
+    {
+      "id": "7bf66eb21af101553465b34517d5ac983c80d41be2c73951e40170d8b082a811",
+      "name": "qore-leap-policy-20-sdk-tests-2",
+      "image": "sha256:61026119b5a18ace5ab4a573386ec8c8da7e269e6a5237759bf13eb52687a19c",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T19:33:57.976158597Z",
+        "FinishedAt": "2026-10-02T19:34:04.918713937Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-20-candidate-2",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/leap-core-policy-20-fixtures-2/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-leap-policy-20-sdk-tests-2.log.gz",
+      "log_sha256": "489d55e7ed25cd75c9aec444cd581ff1533377e4085e7dbc5e254de2185a4200"
+    },
+    {
+      "id": "e2bccd3d37e3cbd800659264e291e7f2af458a12ca1b86736cbedeff90735819",
+      "name": "qore-leap-policy-20-sdk-install-2",
+      "image": "sha256:b5a2e03cb123ae277e58ffd792b60b6bb43134b444f0c5f8a9e513b7b8a44b12",
+      "state": {
+        "Status": "exited",
+        "Running": false,
+        "Paused": false,
+        "Restarting": false,
+        "OOMKilled": false,
+        "Dead": false,
+        "Pid": 0,
+        "ExitCode": 0,
+        "Error": "",
+        "StartedAt": "2026-10-02T19:31:01.283826511Z",
+        "FinishedAt": "2026-10-02T19:33:49.12472559Z"
+      },
+      "mounts": [
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/results/leap-qore-policy-20-candidate-2",
+          "destination": "/rpms",
+          "type": "bind"
+        },
+        {
+          "source": "/home/david/src/qore/git/qore-packaging/work/leap-core-policy-20-fixtures-2/qore-3.0.0~git20261002.20",
+          "destination": "/source",
+          "type": "bind"
+        }
+      ],
+      "log": "results/core-container-cleanup-20261008-logs/qore-leap-policy-20-sdk-install-2.log.gz",
+      "log_sha256": "4101665d70c357424ce8e386d8866263fae01c05967bbe9f655291221a523288",
+      "retained_installed_image": "sha256:61026119b5a18ace5ab4a573386ec8c8da7e269e6a5237759bf13eb52687a19c"
+    }
+  ],
+  "removed": [
+    "8dbaa3b6522e5c76e54258667477e557397146b10a9aaaa7f8ea277bed426792",
+    "71dc428f5d780d265cc7b77653c32eb94a5a86f50603e0edf9cfc43afd029c9b",
+    "40d9e14812e31744d784b05f10214abfdf849a28608d1f2c444bc1be6732fbb5",
+    "380065ba15f07c18b09105aed9c8e14540fd1225f4cf14820c47129119fbdf05",
+    "a6b9ce33155edb6aa4afe29b4c8463bb4c88b33810f0fcf2cf02aa73d78dd781",
+    "c5cce37afa7497bcbdc8b444825431c6b1349ed5de315b65df8ca86020d91465",
+    "1d5caf21344e1335a0ed1f2feb225c070ab8e22d4cd851167ddd826dfaa52730",
+    "d562555eca8a5fc47c92551d693cdec09f00c27894c5c5b3cf86778de0ab6ee3",
+    "414e6a325ed6e39113d0be5ad18dff4ba882decfcf08ead9d8c491d0e7980282",
+    "c20c39d6efe60438a3ed0e8acdb7c834ad78006bbea219299031d75db332a641",
+    "e125279f5e260def021a55409ef885d8ed2c3581bd2fcc649b11d092ccea0741",
+    "1d3d4cd037fbdff9707e5af9023da6d988114fbd2adce173d89e2578956ba4df",
+    "45b48572821133b1b0a5a11d43ee0be3eef76c8d2da12c034902c5940a7ad8fc",
+    "42fe87096c1c6d5cad521777d37f0f573347d16803b930c61e785d06cd20c30c",
+    "531b37eab13f463e0921cef4d35865f9a1bda560e6f2b0c98bba789981e31c8a",
+    "dc79707a27ef4c7b8008ff1fa900f00913be4a9f7b322e80f74ca295ffcb7015",
+    "ff5af82a00bb1d2de806f8a9974454aaaedb5ba8d16b9c490a5cc1e6bd09f041",
+    "79e142eb738033216da1de1d221785f13e27c004d426547ef5e3fed46bf2c8fa",
+    "71f1ca694f0a66e27a242b78eabee11cdc72ea6464f334b1a9a211e942380c1d",
+    "60022fe5dd36cd5767cfc158e78668b3d77aca259392349ade0c2dbeda5626b0",
+    "1fa83baed98288c84bf56aa67d872bf066c91494e920a9a34aae053f608b7bc5",
+    "bf96372d2915141b901d2864c835d949c6580c595f6e815c850cee99a6b2c560",
+    "739b336156bbafb4533682d39f61671b689267f055a61c5cd2effce6a60fdebd",
+    "927c6cfee47a4dbd590c31dcd2555307742f51e4a80a7d49ecf7e86dddfe1412",
+    "3ec33595f3d1f4e63c4373ab94684e6de2cd9c98df4568d3a6abdba37bb4fbf6",
+    "78f6dd5b8172ff1fecddf71349d50eb02568233f912c5f31376707f49d46729d",
+    "1fa607956bfb36e1965ac63d8dba0a095dc64f1709d25fc2e9d0e3b9101ddf6a",
+    "3d0e4a4fc011de2ac0d4cbb1ac4a28187c5861762608b088e6f85bd394cac97b",
+    "1da3ad2b7fa7cfe96ae659d3d521e06540bc50dd6359b4e488b0c4cb22a2866b",
+    "80d82e71e5d1876c9be9ef1dc6db9b0111caf7ce0c24bdc4baf9895a4eaea629",
+    "4347345c9806982ff3825d3faf8f7fd3bde7a0bdb66a3f780f11e17e531c93d7",
+    "340f81afbc09581c0fad15613d500091be2d487cdf67508b9837468088e07c98",
+    "3e7dc6762dfc515d85be6f1fe66ef4df729e71e4a4c2fdef635a919c3f5de632",
+    "ea7d4af4aeec4f3844c38d8d92a4e2c4ae5c389b8788d88351db08e1600f4aed",
+    "7bf66eb21af101553465b34517d5ac983c80d41be2c73951e40170d8b082a811",
+    "e2bccd3d37e3cbd800659264e291e7f2af458a12ca1b86736cbedeff90735819"
+  ],
+  "free_before": 94809493504,
+  "completed": true,
+  "free_after": 118634782720
+}
