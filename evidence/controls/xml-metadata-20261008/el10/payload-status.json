@@ -1,0 +1,39 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "--user",
+    "1019:100",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/xml-metadata-payload2-20261008/inspect.py:/inspect.py:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/xml-metadata-payload2-20261008/el10:/results",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/el10-xml-final-build-2:/old:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/el10-xml-metadata-candidate-20261008:/new:ro",
+    "sha256:e9f88fde9890db694ae37058e1bc41b34385ea5d04fc4c6cba1d666bd23c0887",
+    "python3",
+    "-B",
+    "-W",
+    "error",
+    "/inspect.py",
+    "/old/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.el10.x86_64.rpm",
+    "/new/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-2.el10.x86_64.rpm"
+  ],
+  "inputs": {
+    "old": {
+      "rpm": "results/el10-xml-final-build-2/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.el10.x86_64.rpm",
+      "sha256": "78dd32e1849a26c0fb1cb9e9db87f376c8a395932b73d0e767bf4a440e4e250d"
+    },
+    "new": {
+      "rpm": "results/el10-xml-metadata-candidate-20261008/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-2.el10.x86_64.rpm",
+      "sha256": "b67fac9b7bfb277b6e77d8e3fecf332ad54d00b465bb808a00b95d2ea8b4c93c"
+    }
+  }
+}

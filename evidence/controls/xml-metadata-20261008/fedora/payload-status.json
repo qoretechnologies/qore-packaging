@@ -1,0 +1,39 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "--user",
+    "1019:100",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/xml-metadata-payload2-20261008/inspect.py:/inspect.py:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/xml-metadata-payload2-20261008/fedora:/results",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/fedora-xml-final-build-2:/old:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/fedora-xml-metadata-candidate-20261008:/new:ro",
+    "sha256:e9f88fde9890db694ae37058e1bc41b34385ea5d04fc4c6cba1d666bd23c0887",
+    "python3",
+    "-B",
+    "-W",
+    "error",
+    "/inspect.py",
+    "/old/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.fc44.x86_64.rpm",
+    "/new/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-2.fc44.x86_64.rpm"
+  ],
+  "inputs": {
+    "old": {
+      "rpm": "results/fedora-xml-final-build-2/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.fc44.x86_64.rpm",
+      "sha256": "e0883c042984614e2907bee093959bc39d0d84863354ab13eadf3053e606cbb3"
+    },
+    "new": {
+      "rpm": "results/fedora-xml-metadata-candidate-20261008/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-2.fc44.x86_64.rpm",
+      "sha256": "f729c4cd9b177123510eaa42a55dfd75a8ad050bd6d9ea5ff0a22d21e3d845d1"
+    }
+  }
+}

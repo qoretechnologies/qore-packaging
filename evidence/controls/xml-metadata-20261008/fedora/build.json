@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "image": "sha256:fe45118a3c91979c8b5fef9726a80f7b40aadc427eeaa28457dbd00c4139560b",
+  "source": {
+    "schema": 1,
+    "commit": "d32601505b85b07823f98cc006fe438baa6dd3bc",
+    "source_date_epoch": 1790887855,
+    "name": "qore-xml-module",
+    "version": "2.3.0",
+    "exclusions": [
+      "test/wsdl-interop/oracle/*.jar",
+      "test/wsdl-interop/axis-peer/jars/*.jar",
+      "test/wsdl-interop/cxf-peer/jars/*.jar",
+      "test/enterprise.wsdl",
+      "test/partner.wsdl",
+      "test/wsdl-interop/normative/rfc2392.txt"
+    ],
+    "sources": {
+      "qore-xml-module-2.3.0.tar.xz": "6528b63b32e56c51f0dec9c00d1be8e03dac309477a3c94e26d5915923414c82",
+      "qore-xml-module.spec": "8b077e6326a2918b819cd145b5fb3805ce4de391431e31f2f137900126358605",
+      "qore-xml-module.changes": "8bbe556bb4f7c4c3b5911a9131f474d8ec7ae27fc97cf630fd3f507287ae619f",
+      "libxml2-2.15.4.tar.xz": "aebc730eae36cd4677255e9d4cb14f26dbf17192ace5aee9e5cba99cb0f09085"
+    },
+    "candidate": true,
+    "packaging_overlay": {
+      "qore-xml-module.spec": "8b077e6326a2918b819cd145b5fb3805ce4de391431e31f2f137900126358605",
+      "rpm/README.rst": "49f11c18ec5affb0ae4f8e259622b9bf46492cc98aa68248ca37f62d9027f8f1",
+      "rpm/audits/metadata.rst": "c8ae3827351771a040823a3de7916de70549e93952e74bdb0c98b4504b8d2dc9",
+      "rpm/test-metadata.py": "66e5d628e6dc4f423a761e8898d1aa197649a0ad179adec1db65a7bec57008a7"
+    },
+    "spec": "qore-xml-module.spec",
+    "vendor_manifest": "rpm/vendor-sources.json",
+    "components": [
+      {
+        "version": "2.15.4",
+        "url": "https://download.gnome.org/sources/libxml2/2.15/libxml2-2.15.4.tar.xz",
+        "sha256": "98087fd181d9070724f3fbc65c7377db03038eb92bd882374daff44940138821",
+        "excluded": [
+          "test",
+          "result"
+        ],
+        "name": "libxml2",
+        "archive": "libxml2-2.15.4.tar.xz",
+        "top": "libxml2-2.15.4",
+        "licenses": [
+          "Copyright"
+        ]
+      }
+    ]
+  },
+  "jobs": 2,
+  "network": "none",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "--hostname",
+    "qore-rpm-builder",
+    "--user",
+    "1019:100",
+    "-e",
+    "HOME=/work/home",
+    "-e",
+    "SOURCE_DATE_EPOCH=1790887855",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/xml-metadata-candidate-20261008:/sources:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/fedora-xml-metadata-candidate-20261008:/work",
+    "sha256:fe45118a3c91979c8b5fef9726a80f7b40aadc427eeaa28457dbd00c4139560b",
+    "sh",
+    "-c",
+    "set -eu\nmkdir -p /work/home /work/rpmbuild\nrpm -qa --qf '%{NAME} %{EPOCHNUM}:%{VERSION}-%{RELEASE}.%{ARCH}\\n' | sort > /work/installed-packages.txt\nexec rpmbuild \"$@\"\n",
+    "build-local",
+    "-ba",
+    "--noclean",
+    "--define",
+    "_topdir /work/rpmbuild",
+    "--define",
+    "_sourcedir /sources",
+    "--define",
+    "_smp_build_ncpus 2",
+    "--define",
+    "_buildhost qore-rpm-builder",
+    "/sources/qore-xml-module.spec"
+  ],
+  "source_only": false,
+  "tmpfs_mib": null,
+  "keep_build": true,
+  "exit_code": 0,
+  "artifacts": {
+    "rpmbuild/RPMS/noarch/qore-xml-module-doc-2.3.0-2.fc44.noarch.rpm": "7c140640a65ccd253354936fac766dd759b172659df5d492e6716f6f3c5f644d",
+    "rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-2.fc44.x86_64.rpm": "f729c4cd9b177123510eaa42a55dfd75a8ad050bd6d9ea5ff0a22d21e3d845d1",
+    "rpmbuild/RPMS/x86_64/qore-xml-module-debuginfo-2.3.0-2.fc44.x86_64.rpm": "40e0cf373246685374c16834b8e1bbffa90bf7f350788f35fe0d35ebf98fa70b",
+    "rpmbuild/RPMS/x86_64/qore-xml-module-debugsource-2.3.0-2.fc44.x86_64.rpm": "72d62624a588d446990957b8611c22d1ff7a679e71c3a26222c9cfc19eac1b7a",
+    "rpmbuild/SRPMS/qore-xml-module-2.3.0-2.fc44.src.rpm": "145d9ad6f5d8c5e11a36e7c70b3b9b621c9acdc041846bf74b990cded675e500"
+  }
+}

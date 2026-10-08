@@ -1,0 +1,39 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "--user",
+    "1019:100",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/xml-metadata-payload2-20261008/inspect.py:/inspect.py:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/xml-metadata-payload2-20261008/leap:/results",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/leap-xml-final-build-2:/old:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/leap-xml-metadata-candidate-20261008:/new:ro",
+    "sha256:e9f88fde9890db694ae37058e1bc41b34385ea5d04fc4c6cba1d666bd23c0887",
+    "python3",
+    "-B",
+    "-W",
+    "error",
+    "/inspect.py",
+    "/old/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.x86_64.rpm",
+    "/new/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-2.x86_64.rpm"
+  ],
+  "inputs": {
+    "old": {
+      "rpm": "results/leap-xml-final-build-2/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-1.x86_64.rpm",
+      "sha256": "91aea0be90122912796a6e59a8f952c45686eba550df237812cd35958cc62e9b"
+    },
+    "new": {
+      "rpm": "results/leap-xml-metadata-candidate-20261008/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-2.x86_64.rpm",
+      "sha256": "8417c42291972899aa2fbdd34b9ece87ec39aaa7c66d633055ad7f26538ef1da"
+    }
+  }
+}

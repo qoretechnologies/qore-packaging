@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Exact XML catalog-directory diagnostic established; user approval pending. Separate native-source correction is under qualification.",
+  "scope": [
+    "qore-xml-module.x86_64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests",
+    "qore-xml-module.aarch64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests"
+  ],
+  "root_cause": "Qore separates catalog ownership manifests from catalog discovery in this hidden directory. The packaged qore-xml-module.manifest safely and exactly lists the 65 catalog JSON files, sorted and unique, on all three distributions.",
+  "proposal": "Retain the required manifest directory and visible diagnostic. Extend only the previously approved catalog-directory exception to XML. No filter or runtime change.",
+  "qualification": {
+    "fedora": {
+      "build_exit_code": 0,
+      "rpms": 5,
+      "suites": 304,
+      "metadata_stanza_methods": 7,
+      "catalogs": 65,
+      "all_module_metadata": 17,
+      "native_and_module_metadata_records": 82,
+      "exact_release_source_path_updates": 11
+    },
+    "leap": {
+      "build_exit_code": 0,
+      "rpms": 5,
+      "suites": 304,
+      "metadata_stanza_methods": 7,
+      "catalogs": 65,
+      "all_module_metadata": 17,
+      "native_and_module_metadata_records": 82,
+      "exact_release_source_path_updates": 0
+    },
+    "el10": {
+      "build_exit_code": 0,
+      "rpms": 5,
+      "suites": 304,
+      "metadata_stanza_methods": 7,
+      "catalogs": 65,
+      "all_module_metadata": 17,
+      "native_and_module_metadata_records": 82,
+      "exact_release_source_path_updates": 11
+    }
+  },
+  "other_diagnostics": "Hardlinking the three identical module metadata files fixes the previous files-duplicate warning. Final openSUSE lint has zero errors and only two occurrences of the exact hidden-directory warning.",
+  "payload_comparison": "All catalog and module metadata bytes/modes match source1; the only native metadata differences are exact source_file paths reflecting RPM release1-to-release2. No other metadata field changes.",
+  "limits": [
+    "The separate missing MakeXmlOpts original debugger source was found during payload review and is being corrected; this diagnostic exception does not approve or waive it.",
+    "The corrected native-source candidate must pass its own full builds, source-package checks and Valgrind before source commitment/upload.",
+    "Final signed native RPM and installed ARM qualification remain required."
+  ],
+  "files_sha256": {
+    "evidence/controls/xml-metadata-20261008/build.py": "673e04198f4db42539c6e91e067ab71fead3bf45742893399ef2db09e46b2bd2",
+    "evidence/controls/xml-metadata-20261008/el10/build.json": "81d3d7ad67c3284638ea8d687d71be6923efa6992dfce10b028fcf645b49b028",
+    "evidence/controls/xml-metadata-20261008/el10/build.log.gz": "ed3514dcfc5f3ee2ad5146cd8de727eea4d71d65c7cd135c7e7db13df0372d90",
+    "evidence/controls/xml-metadata-20261008/el10/payload-checks.log.gz": "462ae5943889280266f43b45af3e6d89edc6db47f61bde27524b777f23ebb97f",
+    "evidence/controls/xml-metadata-20261008/el10/payload-payload.json": "52004550dc09f2885a7cfa59d52f28f4d8f61ae4cc2f08eaa3685f9697e4812c",
+    "evidence/controls/xml-metadata-20261008/el10/payload-status.json": "1f5d8faea3915cf4807d59a45740182a5d1bcf73d162afb2f495c2facf440208",
+    "evidence/controls/xml-metadata-20261008/fedora/build.json": "17b1204e24fccfb19da62cf50f750edd6c744c3c1bd737bd5783de0fd95295e9",
+    "evidence/controls/xml-metadata-20261008/fedora/build.log.gz": "7b5698db5fa69149d4b4921b378a07394d81cd9383216dd2d30ad2e9e0d9202c",
+    "evidence/controls/xml-metadata-20261008/fedora/payload-checks.log.gz": "462ae5943889280266f43b45af3e6d89edc6db47f61bde27524b777f23ebb97f",
+    "evidence/controls/xml-metadata-20261008/fedora/payload-payload.json": "a32d2ffaf54413a4b30331a78c39adb814baf7d9ddb0f232a63c68d3442d4bb5",
+    "evidence/controls/xml-metadata-20261008/fedora/payload-status.json": "b886fa4ab3bad6fb001e5c71299dd36777d73396df9491b9682e4eedd7014d91",
+    "evidence/controls/xml-metadata-20261008/leap/build.json": "0b0ea2fa84e70582a908b6b3d09711e23929e5004c30039ef4ddb0874c965c9f",
+    "evidence/controls/xml-metadata-20261008/leap/build.log.gz": "e976a29ae9b22e2bb06dae0c79b7bfc4f6052e87285e36dbf85cc604a5800e2b",
+    "evidence/controls/xml-metadata-20261008/leap/payload-checks.log.gz": "462ae5943889280266f43b45af3e6d89edc6db47f61bde27524b777f23ebb97f",
+    "evidence/controls/xml-metadata-20261008/leap/payload-payload.json": "ee60903ee1ea2c3a5bb4784207478e6272c5b26145536d9a1eaccf5af347d879",
+    "evidence/controls/xml-metadata-20261008/leap/payload-status.json": "fc43bccf168bafa3f4df5d938ea6b6bf3e9a185fbd3839b4d70d696a2c5891d4",
+    "evidence/controls/xml-metadata-20261008/lint/rpmlint.log.gz": "3c8fff7ed5530cef97b1d21db9b856e91f27a2816d46e5244ae025d9ec45afc8",
+    "evidence/controls/xml-metadata-20261008/lint/status.json": "702770ec78a8307aa7c0fb8dcbc3fe7f44ce04eb03ae6ee4792bfb630ac77fad",
+    "evidence/controls/xml-metadata-20261008/metadata.audit.rst": "c8ae3827351771a040823a3de7916de70549e93952e74bdb0c98b4504b8d2dc9",
+    "evidence/controls/xml-metadata-20261008/payload-check.py": "8b2cef73f3142e1d627bec112a5462100d559a8780fd4b907a6c3af6cc3d3df8",
+    "evidence/controls/xml-metadata-20261008/test-metadata.py": "66e5d628e6dc4f423a761e8898d1aa197649a0ad179adec1db65a7bec57008a7"
+  }
+}

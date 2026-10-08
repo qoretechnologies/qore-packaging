@@ -1,0 +1,21 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/leap-xml-metadata-candidate-20261008:/rpms:ro",
+    "sha256:e9f88fde9890db694ae37058e1bc41b34385ea5d04fc4c6cba1d666bd23c0887",
+    "rpmlint",
+    "/rpms/rpmbuild/RPMS/noarch/qore-xml-module-doc-2.3.0-2.noarch.rpm",
+    "/rpms/rpmbuild/RPMS/x86_64/qore-xml-module-2.3.0-2.x86_64.rpm"
+  ],
+  "exit_code": 0,
+  "diagnostics": [
+    "qore-xml-module.x86_64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests",
+    "qore-xml-module.x86_64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests"
+  ]
+}
