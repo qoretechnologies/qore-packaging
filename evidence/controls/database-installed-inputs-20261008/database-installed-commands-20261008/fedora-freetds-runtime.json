@@ -1,0 +1,31 @@
+{
+  "target": "fedora",
+  "module": "freetds",
+  "phase": "runtime",
+  "image": "sha256:fd7f3879b4e0c6721a5ecf78c136db9e40d5a1cf530cd908e7382f1c49107d1f",
+  "steps": [
+    {
+      "name": "tests",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/freetds:/fixtures:ro",
+        "sha256:fd7f3879b4e0c6721a5ecf78c136db9e40d5a1cf530cd908e7382f1c49107d1f",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "/fixtures/rpm/run-tests.py",
+        "--installed"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

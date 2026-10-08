@@ -1,0 +1,986 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-08",
+  "result": "All twelve refreshed native builds and all twelve installed command integration runs pass. The three new native clean-install jobs are prepared, not yet executed.",
+  "sources": [
+    {
+      "module": "freetds",
+      "source_commit": "2b35358523ff5f397e415203e0df37d38825e8eb",
+      "revision": "2",
+      "srcmd5": "0a6609cafba14c4f8565406398891349",
+      "source_bytes_and_spec_unchanged": true,
+      "normalized_archive_permissions": 118,
+      "change": "Add the generated .changes sidecar; current canonical preparation also removes group/other write permission from source archive entries. All source bytes, other metadata and spec are unchanged.",
+      "source": "work/freetds-obs-changelog-20261008"
+    },
+    {
+      "module": "mysql",
+      "source_commit": "c7ba6b020d76a463d047608eafee5218da0f3c97",
+      "revision": "3",
+      "srcmd5": "7dc222c580734eedded83d7b861dda4c",
+      "source_bytes_and_spec_unchanged": true,
+      "normalized_archive_permissions": 72,
+      "change": "Add the generated .changes sidecar; current canonical preparation also removes group/other write permission from source archive entries. All source bytes, other metadata and spec are unchanged.",
+      "source": "work/mysql-obs-changelog-20261008"
+    }
+  ],
+  "native_builds": [
+    {
+      "module": "freetds",
+      "repository": "AlmaLinux_10",
+      "arch": "aarch64",
+      "revision": "2",
+      "srcmd5": "0a6609cafba14c4f8565406398891349",
+      "tests": [
+        [
+          4,
+          4,
+          14
+        ]
+      ],
+      "log_sha256": "929a2f31f088acc1be8a1581daaaad79f0fa285aa446f1d1b74475963476df3b",
+      "diagnostic_lines": [
+        "[   15s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   18s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   34s] useradd: Warning: missing or non-executable shell '/usr/sbin/nologin'",
+        "[  138s] Warning: mkbaselibs missing in build root, skipping baselibs",
+        "[  139s] \u001b[0;1;38:5:185mFailed to write wtmp record, ignoring: Read-only file system\u001b[0m",
+        "[  139s] \u001b[0;1;38:5:185mFailed to write utmp record: Read-only file system\u001b[0m"
+      ]
+    },
+    {
+      "module": "freetds",
+      "repository": "AlmaLinux_10",
+      "arch": "x86_64",
+      "revision": "2",
+      "srcmd5": "0a6609cafba14c4f8565406398891349",
+      "tests": [
+        [
+          4,
+          4,
+          14
+        ]
+      ],
+      "log_sha256": "7dd31da1f86defdb64c361a96d9ccbeefc28f3c7cf13786f041feb349149de10",
+      "diagnostic_lines": [
+        "[    8s] [    0.733690][    T1] systemd[1]: Failed to start Virtual Console Setup.",
+        "[    8s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   10s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   17s] useradd: Warning: missing or non-executable shell '/usr/sbin/nologin'",
+        "[   54s] Warning: mkbaselibs missing in build root, skipping baselibs",
+        "[   54s] \u001b[0;1;38:5:185mFailed to write wtmp record, ignoring: Read-only file system\u001b[0m",
+        "[   54s] \u001b[0;1;38:5:185mFailed to write utmp record: Read-only file system\u001b[0m"
+      ]
+    },
+    {
+      "module": "freetds",
+      "repository": "Fedora_44",
+      "arch": "aarch64",
+      "revision": "2",
+      "srcmd5": "0a6609cafba14c4f8565406398891349",
+      "tests": [
+        [
+          4,
+          4,
+          14
+        ]
+      ],
+      "log_sha256": "881af554f70e7e5f02030e6b057a0bd3e17c29842655f9493212551351b452c3",
+      "diagnostic_lines": [
+        "[   14s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   16s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[  156s] Warning: mkbaselibs missing in build root, skipping baselibs",
+        "[  156s] \u001b[0;1;38:5:185mFailed to write wtmp record, ignoring: Read-only file system\u001b[0m",
+        "[  156s] \u001b[0;1;38:5:185mFailed to write utmp record: Read-only file system\u001b[0m"
+      ]
+    },
+    {
+      "module": "freetds",
+      "repository": "Fedora_44",
+      "arch": "x86_64",
+      "revision": "2",
+      "srcmd5": "0a6609cafba14c4f8565406398891349",
+      "tests": [
+        [
+          4,
+          4,
+          14
+        ]
+      ],
+      "log_sha256": "e704debbf544e15ffaa9beaa68375a9b01a198df24aae31d8ccf56aca2e19003",
+      "diagnostic_lines": [
+        "[    8s] [    0.737173][    T1] systemd[1]: Failed to start Virtual Console Setup.",
+        "[    8s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   10s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   61s] Warning: mkbaselibs missing in build root, skipping baselibs",
+        "[   61s] \u001b[0;1;38:5:185mFailed to write wtmp record, ignoring: Read-only file system\u001b[0m",
+        "[   61s] \u001b[0;1;38:5:185mFailed to write utmp record: Read-only file system\u001b[0m"
+      ]
+    },
+    {
+      "module": "freetds",
+      "repository": "openSUSE_Leap_16.0",
+      "arch": "aarch64",
+      "revision": "2",
+      "srcmd5": "0a6609cafba14c4f8565406398891349",
+      "tests": [
+        [
+          4,
+          4,
+          14
+        ]
+      ],
+      "log_sha256": "3fca988ca4aa67d3e894e2464f6e292ab787eac4e902b55d315dc2edaa7ff7c5",
+      "diagnostic_lines": [
+        "[    6s] \u001b[!p\u001b]104\u0007\u001b[?7h[    0.664359][    T1] systemd[1]: Failed to start Virtual Console Setup.",
+        "[    6s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[    8s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   13s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2"
+      ]
+    },
+    {
+      "module": "freetds",
+      "repository": "openSUSE_Leap_16.0",
+      "arch": "x86_64",
+      "revision": "2",
+      "srcmd5": "0a6609cafba14c4f8565406398891349",
+      "tests": [
+        [
+          4,
+          4,
+          14
+        ]
+      ],
+      "log_sha256": "cd061f98c0319d2b8d0bd5df29c0a93aea08377a6b5667c71a0bcad81b4619e0",
+      "diagnostic_lines": [
+        "[    5s] \u001b[!p\u001b]104\u0007\u001b[?7h[    0.573780][    T1] systemd[1]: Failed to start Virtual Console Setup.",
+        "[    5s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[    6s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   10s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2"
+      ]
+    },
+    {
+      "module": "mysql",
+      "repository": "AlmaLinux_10",
+      "arch": "aarch64",
+      "revision": "3",
+      "srcmd5": "7dc222c580734eedded83d7b861dda4c",
+      "tests": [
+        [
+          6,
+          6,
+          47
+        ],
+        [
+          12,
+          12,
+          50
+        ],
+        [
+          16,
+          16,
+          106
+        ]
+      ],
+      "log_sha256": "0d3f44156d117c8d25d43c75b428269f1e6f332fb46abe3163c47783addb37ba",
+      "diagnostic_lines": [
+        "[   14s] [    1.238378][    T1] systemd[1]: Failed to start Virtual Console Setup.",
+        "[   14s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   17s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   35s] useradd: Warning: missing or non-executable shell '/usr/sbin/nologin'",
+        "[   93s] 2026-10-08  3:53:35 0 [Warning] failed to retrieve the MAC address",
+        "[   93s] 2026-10-08  3:53:36 0 [Warning] failed to retrieve the MAC address",
+        "[   98s] 2026-10-08  3:53:36 9 [Warning] Access denied for user 'root'@'localhost' (using password: YES)",
+        "[  100s] Warning: mkbaselibs missing in build root, skipping baselibs",
+        "[  100s] \u001b[0;1;38:5:185mFailed to write wtmp record, ignoring: Read-only file system\u001b[0m",
+        "[  100s] \u001b[0;1;38:5:185mFailed to write utmp record: Read-only file system\u001b[0m"
+      ]
+    },
+    {
+      "module": "mysql",
+      "repository": "AlmaLinux_10",
+      "arch": "x86_64",
+      "revision": "3",
+      "srcmd5": "7dc222c580734eedded83d7b861dda4c",
+      "tests": [
+        [
+          6,
+          6,
+          47
+        ],
+        [
+          12,
+          12,
+          50
+        ],
+        [
+          16,
+          16,
+          106
+        ]
+      ],
+      "log_sha256": "f8820262d1e12276a690714a62e210b57596bb3a97c0410a901eeffc46b1cdee",
+      "diagnostic_lines": [
+        "[    8s] [    0.749526][    T1] systemd[1]: Failed to start Virtual Console Setup.",
+        "[    8s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[    9s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   17s] useradd: Warning: missing or non-executable shell '/usr/sbin/nologin'",
+        "[   47s] 2026-10-08  3:52:10 0 [Warning] failed to retrieve the MAC address",
+        "[   48s] 2026-10-08  3:52:11 0 [Warning] failed to retrieve the MAC address",
+        "[   50s] 2026-10-08  3:52:11 9 [Warning] Access denied for user 'root'@'localhost' (using password: YES)",
+        "[   52s] Warning: mkbaselibs missing in build root, skipping baselibs",
+        "[   52s] \u001b[0;1;38:5:185mFailed to write wtmp record, ignoring: Read-only file system\u001b[0m",
+        "[   52s] \u001b[0;1;38:5:185mFailed to write utmp record: Read-only file system\u001b[0m"
+      ]
+    },
+    {
+      "module": "mysql",
+      "repository": "Fedora_44",
+      "arch": "aarch64",
+      "revision": "3",
+      "srcmd5": "7dc222c580734eedded83d7b861dda4c",
+      "tests": [
+        [
+          6,
+          6,
+          47
+        ],
+        [
+          12,
+          12,
+          50
+        ],
+        [
+          16,
+          16,
+          106
+        ]
+      ],
+      "log_sha256": "347d8b0dfcbfe1566021401777555fe8b7604da3b393c1b87762957229d28f0b",
+      "diagnostic_lines": [
+        "[   15s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   18s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[  176s] 2026-10-08  3:54:19 0 [Warning] failed to retrieve the MAC address",
+        "[  178s] 2026-10-08  3:54:21 0 [Warning] failed to retrieve the MAC address",
+        "[  184s] 2026-10-08  3:54:23 9 [Warning] Access denied for user 'root'@'localhost' (using password: YES)",
+        "[  187s] Warning: mkbaselibs missing in build root, skipping baselibs",
+        "[  187s] \u001b[0;1;38:5:185mFailed to write wtmp record, ignoring: Read-only file system\u001b[0m",
+        "[  187s] \u001b[0;1;38:5:185mFailed to write utmp record: Read-only file system\u001b[0m"
+      ]
+    },
+    {
+      "module": "mysql",
+      "repository": "Fedora_44",
+      "arch": "x86_64",
+      "revision": "3",
+      "srcmd5": "7dc222c580734eedded83d7b861dda4c",
+      "tests": [
+        [
+          6,
+          6,
+          47
+        ],
+        [
+          12,
+          12,
+          50
+        ],
+        [
+          16,
+          16,
+          106
+        ]
+      ],
+      "log_sha256": "145056a3f5e883a7407a00860c1eb623fbe758df06254a32d000273a2757f53b",
+      "diagnostic_lines": [
+        "[    8s] [    0.738419][    T1] systemd[1]: Failed to start Virtual Console Setup.",
+        "[    8s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   10s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   66s] 2026-10-08  3:52:30 0 [Warning] failed to retrieve the MAC address",
+        "[   67s] 2026-10-08  3:52:30 0 [Warning] failed to retrieve the MAC address",
+        "[   70s] 2026-10-08  3:52:31 9 [Warning] Access denied for user 'root'@'localhost' (using password: YES)",
+        "[   71s] Warning: mkbaselibs missing in build root, skipping baselibs",
+        "[   71s] \u001b[0;1;38:5:185mFailed to write wtmp record, ignoring: Read-only file system\u001b[0m",
+        "[   71s] \u001b[0;1;38:5:185mFailed to write utmp record: Read-only file system\u001b[0m"
+      ]
+    },
+    {
+      "module": "mysql",
+      "repository": "openSUSE_Leap_16.0",
+      "arch": "aarch64",
+      "revision": "3",
+      "srcmd5": "7dc222c580734eedded83d7b861dda4c",
+      "tests": [
+        [
+          6,
+          6,
+          47
+        ],
+        [
+          12,
+          12,
+          50
+        ],
+        [
+          16,
+          16,
+          106
+        ]
+      ],
+      "log_sha256": "2db4682c641c1c343893f265f7cf98556bc89ac8c1d6f42d736a78ecef54355d",
+      "diagnostic_lines": [
+        "[    6s] \u001b[!p\u001b]104\u0007\u001b[?7h[    0.646885][    T1] systemd[1]: Failed to start Virtual Console Setup.",
+        "[    6s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   12s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2",
+        "[   39s] 2026-10-08  3:51:59 0 [Warning] failed to retrieve the MAC address",
+        "[   44s] 2026-10-08  3:51:59 0 [Warning] failed to retrieve the MAC address",
+        "[   49s] 2026-10-08  3:52:05 9 [Warning] Access denied for user 'root'@'localhost' (using password: YES)"
+      ]
+    },
+    {
+      "module": "mysql",
+      "repository": "openSUSE_Leap_16.0",
+      "arch": "x86_64",
+      "revision": "3",
+      "srcmd5": "7dc222c580734eedded83d7b861dda4c",
+      "tests": [
+        [
+          6,
+          6,
+          47
+        ],
+        [
+          12,
+          12,
+          50
+        ],
+        [
+          16,
+          16,
+          106
+        ]
+      ],
+      "log_sha256": "a4033ddfa4c82e3efbe54ef4005676c5593654313b173195e8a2be4878f26491",
+      "diagnostic_lines": [
+        "[    5s] \u001b[!p\u001b]104\u0007\u001b[?7h[    0.537429][    T1] systemd[1]: Failed to start Virtual Console Setup.",
+        "[    5s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[    6s] [\u001b[0;1;31mFAILED\u001b[0m] Failed to start \u001b[0;1;39mVirtual Console Setup\u001b[0m.",
+        "[   10s] warning: %post(polkit-default-privs-1550+20260709.b1b58aa-160000.1.1.noarch) scriptlet failed, exit status 2",
+        "[   29s] 2026-10-08  3:51:47 0 [Warning] failed to retrieve the MAC address",
+        "[   30s] 2026-10-08  3:51:48 0 [Warning] failed to retrieve the MAC address",
+        "[   33s] 2026-10-08  3:51:49 9 [Warning] Access denied for user 'root'@'localhost' (using password: YES)"
+      ]
+    }
+  ],
+  "installed_command_runs": [
+    {
+      "target": "fedora",
+      "module": "freetds",
+      "phase": "runtime",
+      "image": "sha256:fd7f3879b4e0c6721a5ecf78c136db9e40d5a1cf530cd908e7382f1c49107d1f",
+      "steps": [
+        {
+          "name": "tests",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--user",
+            "1019:100",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/freetds:/fixtures:ro",
+            "sha256:fd7f3879b4e0c6721a5ecf78c136db9e40d5a1cf530cd908e7382f1c49107d1f",
+            "python3",
+            "-B",
+            "-W",
+            "error",
+            "/fixtures/rpm/run-tests.py",
+            "--installed"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "cases": 4,
+      "assertions": 14,
+      "log_sha256": "46515e9b8c1510f60c0de0066bfe01dc020fc80e88e31e0f16400c390e9b3e29"
+    },
+    {
+      "target": "fedora",
+      "module": "freetds",
+      "phase": "sdk",
+      "image": "sha256:d09c18e1b981714c2e4a44971882957337c91ee698a2f820e4d99e5f786d55d8",
+      "steps": [
+        {
+          "name": "tests",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--user",
+            "1019:100",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/freetds:/fixtures:ro",
+            "sha256:d09c18e1b981714c2e4a44971882957337c91ee698a2f820e4d99e5f786d55d8",
+            "python3",
+            "-B",
+            "-W",
+            "error",
+            "/fixtures/rpm/run-tests.py",
+            "--installed",
+            "--compiler"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "cases": 4,
+      "assertions": 14,
+      "log_sha256": "12376f670978d41e7ccd28c6541e4016773afa489c0e190686e46a9ab22baa1b"
+    },
+    {
+      "target": "fedora",
+      "module": "mysql",
+      "phase": "runtime",
+      "image": "sha256:7e3db3eb09a83d0d87c26d077426cf1b8c543dc31a436df47c6f50386b295974",
+      "steps": [
+        {
+          "name": "tests",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--user",
+            "1019:100",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/mysql:/fixtures:ro",
+            "sha256:7e3db3eb09a83d0d87c26d077426cf1b8c543dc31a436df47c6f50386b295974",
+            "python3",
+            "-B",
+            "-W",
+            "error",
+            "/fixtures/rpm/run-tests.py",
+            "--installed"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "cases": 34,
+      "assertions": 203,
+      "log_sha256": "86b222c883c0fbb942ee315f905fb0eeed3b418e6021b3223bd707cffe4522d9"
+    },
+    {
+      "target": "fedora",
+      "module": "mysql",
+      "phase": "sdk",
+      "image": "sha256:7c393291e0e5db41ca6f28b2f84b1360870383777603cf622bb6df15d8d5de69",
+      "steps": [
+        {
+          "name": "tests",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--user",
+            "1019:100",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/mysql:/fixtures:ro",
+            "sha256:7c393291e0e5db41ca6f28b2f84b1360870383777603cf622bb6df15d8d5de69",
+            "python3",
+            "-B",
+            "-W",
+            "error",
+            "/fixtures/rpm/run-tests.py",
+            "--installed",
+            "--compiler"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "cases": 34,
+      "assertions": 203,
+      "log_sha256": "e5ee9bd343267188baf0606a19060ffee1ff700ee0a43920ef9b22c903ac8967"
+    },
+    {
+      "target": "leap",
+      "module": "freetds",
+      "phase": "runtime",
+      "image": "sha256:4ba86130443cbe9edf2cf66dcf1cac2d2ab78bae25d1f66af7e4fb9886f8586a",
+      "steps": [
+        {
+          "name": "tests",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--user",
+            "1019:100",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/freetds:/fixtures:ro",
+            "sha256:4ba86130443cbe9edf2cf66dcf1cac2d2ab78bae25d1f66af7e4fb9886f8586a",
+            "python3",
+            "-B",
+            "-W",
+            "error",
+            "/fixtures/rpm/run-tests.py",
+            "--installed"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "cases": 4,
+      "assertions": 14,
+      "log_sha256": "46515e9b8c1510f60c0de0066bfe01dc020fc80e88e31e0f16400c390e9b3e29"
+    },
+    {
+      "target": "leap",
+      "module": "freetds",
+      "phase": "sdk",
+      "image": "sha256:d3ea9a5de02ca3e46113dfdca7088371f2e958142168a64869ddd29f7d1a7772",
+      "steps": [
+        {
+          "name": "tests",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--user",
+            "1019:100",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/freetds:/fixtures:ro",
+            "sha256:d3ea9a5de02ca3e46113dfdca7088371f2e958142168a64869ddd29f7d1a7772",
+            "python3",
+            "-B",
+            "-W",
+            "error",
+            "/fixtures/rpm/run-tests.py",
+            "--installed",
+            "--compiler"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "cases": 4,
+      "assertions": 14,
+      "log_sha256": "9f2f26e5c0ef3a4106234de0e1eca2f169108c2c05b965de02703e84ee2d4876"
+    },
+    {
+      "target": "leap",
+      "module": "mysql",
+      "phase": "runtime",
+      "image": "sha256:6fc039d358b428c097eb5785163b9a272747ec0c6f974002a4f9fdfce62211f4",
+      "steps": [
+        {
+          "name": "tests",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--user",
+            "1019:100",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/mysql:/fixtures:ro",
+            "sha256:6fc039d358b428c097eb5785163b9a272747ec0c6f974002a4f9fdfce62211f4",
+            "python3",
+            "-B",
+            "-W",
+            "error",
+            "/fixtures/rpm/run-tests.py",
+            "--installed"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "cases": 34,
+      "assertions": 203,
+      "log_sha256": "174ca74beeb53cbc0e56da02bd38166b5c5e25c07375d8a45cb531c26b294203"
+    },
+    {
+      "target": "leap",
+      "module": "mysql",
+      "phase": "sdk",
+      "image": "sha256:91da01f76ffeade27a98d56e245b86cb8b4eadb2fb74d0528daf259d2b025fff",
+      "steps": [
+        {
+          "name": "tests",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--user",
+            "1019:100",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/mysql:/fixtures:ro",
+            "sha256:91da01f76ffeade27a98d56e245b86cb8b4eadb2fb74d0528daf259d2b025fff",
+            "python3",
+            "-B",
+            "-W",
+            "error",
+            "/fixtures/rpm/run-tests.py",
+            "--installed",
+            "--compiler"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "cases": 34,
+      "assertions": 203,
+      "log_sha256": "71e96116507b6ca24b237355f2e8286aef24bbcb0a484ed9c7c9c13eb156f244"
+    },
+    {
+      "target": "el10",
+      "module": "freetds",
+      "phase": "runtime",
+      "image": "sha256:ca1e20fcf763d69a3ccb01bb751f8826047517c385214bfac73851ee0cdfb6ec",
+      "steps": [
+        {
+          "name": "tests",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--user",
+            "1019:100",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/freetds:/fixtures:ro",
+            "sha256:ca1e20fcf763d69a3ccb01bb751f8826047517c385214bfac73851ee0cdfb6ec",
+            "python3",
+            "-B",
+            "-W",
+            "error",
+            "/fixtures/rpm/run-tests.py",
+            "--installed"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "cases": 4,
+      "assertions": 14,
+      "log_sha256": "46515e9b8c1510f60c0de0066bfe01dc020fc80e88e31e0f16400c390e9b3e29"
+    },
+    {
+      "target": "el10",
+      "module": "freetds",
+      "phase": "sdk",
+      "image": "sha256:4073c7f66658d552f80364e561cdfe802c40d9131e570472c5fd0c52f917bc2b",
+      "steps": [
+        {
+          "name": "tests",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--user",
+            "1019:100",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/freetds:/fixtures:ro",
+            "sha256:4073c7f66658d552f80364e561cdfe802c40d9131e570472c5fd0c52f917bc2b",
+            "python3",
+            "-B",
+            "-W",
+            "error",
+            "/fixtures/rpm/run-tests.py",
+            "--installed",
+            "--compiler"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "cases": 4,
+      "assertions": 14,
+      "log_sha256": "6294b37a3f7ca1537fcace8ec956edb283febda069ee9ab4d86e574c7f87230b"
+    },
+    {
+      "target": "el10",
+      "module": "mysql",
+      "phase": "runtime",
+      "image": "sha256:2529e9fcd147d1486d3ed269d3f33b63ca552de09654202c18087030209b20eb",
+      "steps": [
+        {
+          "name": "tests",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--user",
+            "1019:100",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/mysql:/fixtures:ro",
+            "sha256:2529e9fcd147d1486d3ed269d3f33b63ca552de09654202c18087030209b20eb",
+            "python3",
+            "-B",
+            "-W",
+            "error",
+            "/fixtures/rpm/run-tests.py",
+            "--installed"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "cases": 34,
+      "assertions": 203,
+      "log_sha256": "f739427d74ac1e350732d467440f9b61e1efd69641939ac2bd3340ad070a0c9a"
+    },
+    {
+      "target": "el10",
+      "module": "mysql",
+      "phase": "sdk",
+      "image": "sha256:5c2a95fa1f9215ff8ee5ba4133b9a99849130518f0e5849facfae9878783361d",
+      "steps": [
+        {
+          "name": "tests",
+          "command": [
+            "docker",
+            "run",
+            "--rm",
+            "--init",
+            "--network",
+            "none",
+            "--user",
+            "1019:100",
+            "-v",
+            "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/mysql:/fixtures:ro",
+            "sha256:5c2a95fa1f9215ff8ee5ba4133b9a99849130518f0e5849facfae9878783361d",
+            "python3",
+            "-B",
+            "-W",
+            "error",
+            "/fixtures/rpm/run-tests.py",
+            "--installed",
+            "--compiler"
+          ],
+          "exit_code": 0
+        }
+      ],
+      "cases": 34,
+      "assertions": 203,
+      "log_sha256": "d63f915a97a608da31e97749b49f1fac42421ccf2a53bd2b2c534484cccc11af"
+    }
+  ],
+  "installed_command_scope": "Existing qualified x86_64 runtime/SDK images, unprivileged and offline. Fresh signed ARM installation remains a separate next gate.",
+  "qualification_manifests": {
+    "fedora": {
+      "manifest": "qualification/databases-fedora-aarch64.json",
+      "sources": {
+        "freetds": {
+          "commit": "2b35358523ff5f397e415203e0df37d38825e8eb",
+          "srcmd5": "0a6609cafba14c4f8565406398891349",
+          "build_revision": "2"
+        },
+        "mysql": {
+          "commit": "c7ba6b020d76a463d047608eafee5218da0f3c97",
+          "srcmd5": "7dc222c580734eedded83d7b861dda4c",
+          "build_revision": "3"
+        }
+      }
+    },
+    "leap": {
+      "manifest": "qualification/databases-leap-aarch64.json",
+      "sources": {
+        "freetds": {
+          "commit": "2b35358523ff5f397e415203e0df37d38825e8eb",
+          "srcmd5": "0a6609cafba14c4f8565406398891349",
+          "build_revision": "2"
+        },
+        "mysql": {
+          "commit": "c7ba6b020d76a463d047608eafee5218da0f3c97",
+          "srcmd5": "7dc222c580734eedded83d7b861dda4c",
+          "build_revision": "3"
+        }
+      }
+    },
+    "el10": {
+      "manifest": "qualification/databases-el10-aarch64.json",
+      "sources": {
+        "freetds": {
+          "commit": "2b35358523ff5f397e415203e0df37d38825e8eb",
+          "srcmd5": "0a6609cafba14c4f8565406398891349",
+          "build_revision": "2"
+        },
+        "mysql": {
+          "commit": "c7ba6b020d76a463d047608eafee5218da0f3c97",
+          "srcmd5": "7dc222c580734eedded83d7b861dda4c",
+          "build_revision": "3"
+        }
+      }
+    }
+  },
+  "unit_tests": {
+    "passed": 227,
+    "warnings": 0
+  },
+  "gitlab_lint": {
+    "valid": true,
+    "errors": [],
+    "warnings": []
+  },
+  "audit": {
+    "pass": 10,
+    "not_applicable": 52,
+    "fail": 0,
+    "path": "audits/database-installed-tools-20261008.rst"
+  },
+  "diagnostics": {
+    "package": "No compiler or rpmlint diagnostics. MySQL retains only the previously approved MAC-address and negative-authentication fixture messages; FreeTDS tests have none.",
+    "infrastructure": "Existing OBS VM console startup/read-only accounting, AlmaLinux bootstrap nologin ordering and optional mkbaselibs notices remain outside package tests. Exact Leap polkit bootstrap diagnostic was approved.",
+    "references": [
+      "evidence/process-state-qualification-20261003.json",
+      "evidence/obs-polkit-bootstrap-diagnostic-20261006.json",
+      "evidence/obs-changelog-metadata-20261006.json"
+    ],
+    "fixed": "Adding generated .changes removes missing changelog/SOURCE_DATE_EPOCH messages. Canonical archive preparation also removes group/other write bits; source bytes, specs and all other archive fields match the previous uploads."
+  },
+  "handoff": "The initial manifest preparation refused OBS finished/scheduling status before signing finalized. That snapshot is preserved. A subsequent independent snapshot confirms all twelve succeeded; no builds were restarted and no guard was weakened.",
+  "publication": "disabled",
+  "limits": [
+    "FreeTDS offline behavior only; no live SQL Server/ASE/OCS claim.",
+    "Native clean ARM runtime/SDK installation still pending.",
+    "Repository lifecycle and publication gates remain open."
+  ],
+  "qualified_files_sha256": {
+    "tools/qualify-installed.py": "7bd568770ee464a6ed11f75b17cc93d58bc5ec1e04c024d67d92edfb88fa1ce5",
+    "tests/test_installed_qualification.py": "ecba3e5dff19015e7f091fe934447a0566230b7df15bf3f9dc7fbb99b1468a7a",
+    ".gitlab-ci.yml": "34536835b3d538dddd1f657147c3e8a2862a90631c6c06bbd3a47b5f64e43f15",
+    "qualification/databases.rst": "f05820ec43edba5076ff3192d4a70b84804c57abc1810537dd24d1deeaa021f0",
+    "audits/database-installed-tools-20261008.rst": "84c636dd19edd187fefbc0bff8f782b00bff9e1a4678c6b67ebff4fc57191597",
+    "qualification/databases-fedora-aarch64.json": "52c6a7fb2b97cd4f2d6aa8d58352b31d1f8e210c40e086a145bd7acc26b8d76b",
+    "qualification/databases-leap-aarch64.json": "787302ed0f6557c2125d8eb98b322e0b8f725974c47e482aa3835567a857fbfe",
+    "qualification/databases-el10-aarch64.json": "da1b55027bd7d7d62de6c2a020d4a53841fcaf8b6eda5a47f4eecb5d40df4aca"
+  },
+  "files_sha256": {
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-initial-transition-20261008/freetds-results.xml": "284afb3a2fffc04fa8747cfd7e8e3cf0bf63058b49f682bf612ef7fadb7c6a02",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-initial-transition-20261008/mysql-results.xml": "916265f07d6c490055fbf97d759af909f2ec9ff597eb938d19c0535026df1ee9",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-inputs-20261008/el10/freetds-binaries.xml": "20d55b94af773ada8c755bc2ac3ea07afac4aa76a1373eef0f5dac3ab18a827c",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-inputs-20261008/el10/freetds-buildinfo.xml": "f333ffe7baba7871bdb4c94748360a7de936a9b8d316e61694d2bab24fd53bf4",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-inputs-20261008/el10/mysql-binaries.xml": "505c5f406bde1bcf57897ab4c61d95d19036fb6aab33ee37a22dba92a36700ad",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-inputs-20261008/el10/mysql-buildinfo.xml": "feedcc7ab6b0020b961996d77ba9f3c215b47e7c2d0f3a8bea285564dd9948b0",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-inputs-20261008/fedora/freetds-binaries.xml": "2c6115331b0c645ca80700eab00d953bfbe102d13210c3481e6dd4c6e2130022",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-inputs-20261008/fedora/freetds-buildinfo.xml": "a142c3979193bdb0b831a41a904286bd9ac611a73ab9b4855893c44fff8ee97f",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-inputs-20261008/fedora/mysql-binaries.xml": "13409c5ae0631b5c602b0252fca01d4a722c288bfd0bc519727e0622a9ec3668",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-inputs-20261008/fedora/mysql-buildinfo.xml": "856c7be15d0395e13015b2060f47e5e7c6d84f76489abfe90717dbc907c4335e",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-inputs-20261008/freetds-results.xml": "6c1481a2644eeb52ed0dd6f9e12d20ccfcb94f90217d06bf3d88069788416901",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-inputs-20261008/leap/freetds-binaries.xml": "19a9c01211ccfda31b2ddba2f6b6f5e3d86d5ddc73c604ac29b2ac961943e04c",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-inputs-20261008/leap/freetds-buildinfo.xml": "c485b87ecfe5e40b3185081b537ca68a8b97f29abac4b3d20d68e1f0615ba20c",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-inputs-20261008/leap/mysql-binaries.xml": "23cafa71e426e9709d2aaf86f5d7090ca950f800a0121d9e8608bdf019694a1f",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-inputs-20261008/leap/mysql-buildinfo.xml": "659dfd66c73f6c3295dc4896071facc253c8d807c63f1116beac6f2e8b44fa52",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-inputs-20261008/mysql-results.xml": "5628a3af6941d113e19150209d398d09625c22dab66e4ea7700a7871266c6b4d",
+    "evidence/controls/database-installed-inputs-20261008/database-arm-final-inputs-20261008/status.json": "226360f5d0591d53a6032a33b249e6ca2ae6ee9e7a59782826672d1f2942e072",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-AlmaLinux_10-aarch64-buildinfo.xml": "f333ffe7baba7871bdb4c94748360a7de936a9b8d316e61694d2bab24fd53bf4",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-AlmaLinux_10-aarch64.log.gz": "9b9ed734ffd4de94b4b69abc2264b8064b8d7af009580bd458fdd2682ab15730",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-AlmaLinux_10-aarch64.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-AlmaLinux_10-x86_64-buildinfo.xml": "5eb10bb3388d637a7957b0845508b1c4ed6f4494f7326c69d4fbc689f420c1f1",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-AlmaLinux_10-x86_64.log.gz": "2adaaec73ff3af72208b99a901f202df23d6ce6d09f079d60e514d2b86127757",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-AlmaLinux_10-x86_64.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-Fedora_44-aarch64-buildinfo.xml": "04d332f897ac6fa6991f625b26689a85e122255d020e9ce3b67124c533ed7d6f",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-Fedora_44-aarch64.log.gz": "05da92a910e7106e7cb31fbc1f446ca180968f49719a94668fe15d0710170efc",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-Fedora_44-aarch64.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-Fedora_44-x86_64-buildinfo.xml": "ae418fc83676aafda541d047246550bed3b9101b429d72c0694402602709319d",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-Fedora_44-x86_64.log.gz": "96a7a7929c4ef3fdd47606cb2da49ed85bc896151c4e6fcc1658a74ca1b61741",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-Fedora_44-x86_64.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-openSUSE_Leap_16.0-aarch64-buildinfo.xml": "c485b87ecfe5e40b3185081b537ca68a8b97f29abac4b3d20d68e1f0615ba20c",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-openSUSE_Leap_16.0-aarch64.log.gz": "8c8cabc8143866a7eb80a56457070edf919406e366cff392638a9eae10791f61",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-openSUSE_Leap_16.0-aarch64.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-openSUSE_Leap_16.0-x86_64-buildinfo.xml": "701aa68196e85338f356bf3af9383c7f664b1c422ce46f2f19b5a5ba6cab99de",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-openSUSE_Leap_16.0-x86_64.log.gz": "d3d247de4f304227aa53d46f5b32c7fc061884b8ca34e31e85111221efa5570a",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/freetds-openSUSE_Leap_16.0-x86_64.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-AlmaLinux_10-aarch64-buildinfo.xml": "feedcc7ab6b0020b961996d77ba9f3c215b47e7c2d0f3a8bea285564dd9948b0",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-AlmaLinux_10-aarch64.log.gz": "16f3bf05029efe0b102cd3f850a4ee9d5a04a482d0b5d5b2e3cc9c7761f164a9",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-AlmaLinux_10-aarch64.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-AlmaLinux_10-x86_64-buildinfo.xml": "f8b38c5a88bb7ada07cf0b0a233f2bb910ceb6bcc274b830f538f03913e35269",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-AlmaLinux_10-x86_64.log.gz": "2f56913814812f34128bd082e9f2090a7a9af195886cdaf5f67ba9c1879cbea2",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-AlmaLinux_10-x86_64.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-Fedora_44-aarch64-buildinfo.xml": "2fb85bb3bd44701c91c015253c815dab6a6e9e3508c37de2be6b64021a9f063b",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-Fedora_44-aarch64.log.gz": "690ca4087be5fe6d3cddfaa557c57a8b471430f549293b9c75ba7c867460b35b",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-Fedora_44-aarch64.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-Fedora_44-x86_64-buildinfo.xml": "411925c0c663ba6dec1842b271206ceed27c3da82b5502c6823992691fbaf0ac",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-Fedora_44-x86_64.log.gz": "eb0306318ade7303ea5da5f837b0052dd1b6becf75c39d696dd7c8d80205ef66",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-Fedora_44-x86_64.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-openSUSE_Leap_16.0-aarch64-buildinfo.xml": "659dfd66c73f6c3295dc4896071facc253c8d807c63f1116beac6f2e8b44fa52",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-openSUSE_Leap_16.0-aarch64.log.gz": "8228980f9b5e331df1ebce7f9964021cfeeab5ab12629e2981544848ddc5f319",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-openSUSE_Leap_16.0-aarch64.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-openSUSE_Leap_16.0-x86_64-buildinfo.xml": "af20576a0498bf5ad7a71fb8017a79c24938f916c9dd679846688ae62003076a",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-openSUSE_Leap_16.0-x86_64.log.gz": "77e642f3c1577eaf7c535febf90f1aae9b71fbae28f9796eef9c68d7fbf98104",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/mysql-openSUSE_Leap_16.0-x86_64.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "evidence/controls/database-installed-inputs-20261008/database-changelog-builds-20261008/reader-status.json": "ee07791eeb9440c3cd6ca9489156a20951f47d9c71ce7cbb403d20f2f720d394",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-ci-lint-20261008/request.json": "0de9b52d9ac34358c09dd6a64b271336a1b1093b01d86c01376a8f5d73b9e13e",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-ci-lint-20261008/response.json": "0c7d31b4f4727c8c0136bb5eb55c7c5021a9827c1d084978ce6b752aded72066",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-ci-lint-20261008/status.json": "70200a76c93db79ae2cbf579bf422471322158a6ca11bb10bfb3f5c8ead3882a",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-ci-lint-20261008/stderr.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/el10-freetds-runtime-tests.log.gz": "a044e08ad8a88ac1620c06667046d83433ee50af12613b11fce24d1448ce5afc",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/el10-freetds-runtime.json": "1b0ed5ef68da069da7f9a8d8c420641d90620a7724ea8834f43d6ec43e853cba",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/el10-freetds-sdk-tests.log.gz": "4901c8b93c55c8858b850772e609b2c72d20b181eaadca71d5ad550c4e787215",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/el10-freetds-sdk.json": "9031ff92cdc4e080bf7dc1ebe38a670cdbf36d26b5da6eb02d34fc0f7873c962",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/el10-mysql-runtime-tests.log.gz": "9adbe6db8c27c02c34754ceb754995bb84e888586390c6fe86b4aa05df21fa52",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/el10-mysql-runtime.json": "b1da879878a62580dd8c09c27a7194d5d7620eed5208f4740c9cd7257c929f5b",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/el10-mysql-sdk-tests.log.gz": "606d229c7dc5b60b549ab569b88eefd64a53d722e5cd4c5b5b1c40bc579b78e2",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/el10-mysql-sdk.json": "aac92fdd25754933fda09dceb29e223789430ea102d875cd185afa2a315975ec",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/fedora-freetds-runtime-tests.log.gz": "a044e08ad8a88ac1620c06667046d83433ee50af12613b11fce24d1448ce5afc",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/fedora-freetds-runtime.json": "39dbc961a76b5801f93390094c8d2100e7a69b6a2a24f12cfa891dcca5f724a8",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/fedora-freetds-sdk-tests.log.gz": "18e41e8edb61db663ad09196db650b1f6ee1396cc70b318b0f6de6c32e289c00",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/fedora-freetds-sdk.json": "bd7185a575fbcadff3c804b3058fcf373ae7a0ae28f00a1b648ac589cb7bc838",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/fedora-mysql-runtime-tests.log.gz": "9d869cc03e6af1bc7f7cb0676156bbd062f4e1ad4b761834b58a65746dc2b06b",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/fedora-mysql-runtime.json": "8bd116c380c734354ea5b378a6878ee76378bb8786840066f6ae971e4d9f94c2",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/fedora-mysql-sdk-tests.log.gz": "b351b60f0895a86c12888e6d5da6ba310e388a6ab5734e650285e3e0a57e2030",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/fedora-mysql-sdk.json": "2e94aeb1cf9ffbf4f8f3e92002d6c46ae11541358325998e6d19823b38f4ca1a",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/fixture-hashes.json": "82ccd71781547433a54e44f948dc17c98e5fe84df3f1a472295becd9a7609b92",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/leap-freetds-runtime-tests.log.gz": "a044e08ad8a88ac1620c06667046d83433ee50af12613b11fce24d1448ce5afc",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/leap-freetds-runtime.json": "99f7781cb30abfde0ecc019fc17727f9e90f207303746d6add9db24e94e9d7d4",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/leap-freetds-sdk-tests.log.gz": "f9d79bb3e35088930e02f9f683dbfa245d2e57b74306d993fa662f9b19ee2e49",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/leap-freetds-sdk.json": "1a8466c6660d2f820d430d67642c08f513185201a1ae01f5e28aa22f2ac97366",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/leap-mysql-runtime-tests.log.gz": "5119ac7eba54786fb676f823866bbad3f5532af32dc785f4696784fa5339b11c",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/leap-mysql-runtime.json": "2d6ba268ff28169ee8fa9e02f6b7895edbf0371e1014a8ca32fcda8fb9470104",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/leap-mysql-sdk-tests.log.gz": "7fdd73804b938c1bc62a84598fc15147049475cde6d5731c8bf846deec0fa411",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/leap-mysql-sdk.json": "243babc5c61c3d157d6bd2794fd2e4b925a4534f75432689dc9a1d22c206a4da",
+    "evidence/controls/database-installed-inputs-20261008/database-installed-commands-20261008/status.json": "3a15294a2679fffbe8e4434d14362c44e6536c5701caefe06552299d44891a59",
+    "evidence/controls/database-installed-inputs-20261008/database-obs-changelogs-20261008/freetds-archive-permission-changes.json": "8a01bfa4e044c96d16e8fafba574f88c1d65c409dd9fa09f55cb1d8b2c55407d",
+    "evidence/controls/database-installed-inputs-20261008/database-obs-changelogs-20261008/freetds-build-status.xml": "4c12816581fc007a236b42a6aea2c98e3f37cf17a8788ab246f647538f30614f",
+    "evidence/controls/database-installed-inputs-20261008/database-obs-changelogs-20261008/freetds-manifest.json": "7e56e87e8705975a35255749c8f2349669b50e3a9b39efa884f18f8bf315eb18",
+    "evidence/controls/database-installed-inputs-20261008/database-obs-changelogs-20261008/freetds-meta.xml": "1acaf351a1c3d9bda44155762ce0372797b6eea87ee151cac78585de16f11240",
+    "evidence/controls/database-installed-inputs-20261008/database-obs-changelogs-20261008/freetds-source.xml": "8fbf91b59dd4c30826d65e45f05d1ca402c08929c5dae4194f0c19853c2fc026",
+    "evidence/controls/database-installed-inputs-20261008/database-obs-changelogs-20261008/freetds-upload.log.gz": "27c9cb0f3acf78854389fa0bd43a44482d986198133e0e88a80742800bf658b7",
+    "evidence/controls/database-installed-inputs-20261008/database-obs-changelogs-20261008/mysql-archive-permission-changes.json": "695eb5342d655a85ef0c88116544a29278fab977d7be4f2d91bb9a38b4b5344f",
+    "evidence/controls/database-installed-inputs-20261008/database-obs-changelogs-20261008/mysql-build-status.xml": "a536eed275e1635580f4442fe91602eff760578313c13e6c47df9cfc802669a2",
+    "evidence/controls/database-installed-inputs-20261008/database-obs-changelogs-20261008/mysql-manifest.json": "12808275582e636af0047d132a4ff207cef9d132606f52e1afccf1729b45179d",
+    "evidence/controls/database-installed-inputs-20261008/database-obs-changelogs-20261008/mysql-meta.xml": "94eaf0ae76f49e8f95db35d8073b1d5850df049057443c7d0c9b6c5d74cf54cd",
+    "evidence/controls/database-installed-inputs-20261008/database-obs-changelogs-20261008/mysql-source.xml": "f8dec598bea2823abfe9b1de9d8dd67d8acd0e7c352ed7a687fe3f6ba6280c9d",
+    "evidence/controls/database-installed-inputs-20261008/database-obs-changelogs-20261008/mysql-upload.log.gz": "e85bc666094ed2bbd3eda3ebb61e6d1f3db2a3951e1402b9eaafb93013f93474",
+    "evidence/controls/database-installed-inputs-20261008/database-obs-changelogs-20261008/status.json": "a52a834bbdc7e27fa1d132a201dc87a0043070653d16aa70d3572772f406e956",
+    "evidence/controls/database-installed-inputs-20261008/prepare-database-arm-final-manifests-20261008.py": "8dddc2ec2c534365c69e0479aa03552c707bf9db01ca221b18c7b90c1fad26e7",
+    "evidence/controls/database-installed-inputs-20261008/record-database-installed-20261008.py": "2838bbf680ab721b5774b0b0700a54678810d84f8bb93258833419593a5f1855",
+    "evidence/controls/database-installed-inputs-20261008/refresh-database-obs-changelogs-20261008.py": "0b2ca7ae5b0fb81dbfb6656e6d2a36bfc7f6e24e47e9f93ba8c75a287ae0f205",
+    "evidence/controls/database-installed-inputs-20261008/test-database-installed-commands-20261008.py": "f2e67407c812d7c5d32e629c10fccad0e09cddf5354c8394894bba105e7fea3e",
+    "evidence/controls/database-installed-inputs-20261008/unit-tests.log.gz": "a47aa7a8aa620fe4117f7045ce04fd0c9ec23b84ecb2976e0cf0b8f51116117b"
+  }
+}

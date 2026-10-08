@@ -1,0 +1,380 @@
+[
+  {
+    "target": "fedora",
+    "module": "freetds",
+    "phase": "runtime",
+    "image": "sha256:fd7f3879b4e0c6721a5ecf78c136db9e40d5a1cf530cd908e7382f1c49107d1f",
+    "steps": [
+      {
+        "name": "tests",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--user",
+          "1019:100",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/freetds:/fixtures:ro",
+          "sha256:fd7f3879b4e0c6721a5ecf78c136db9e40d5a1cf530cd908e7382f1c49107d1f",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/fixtures/rpm/run-tests.py",
+          "--installed"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  {
+    "target": "fedora",
+    "module": "freetds",
+    "phase": "sdk",
+    "image": "sha256:d09c18e1b981714c2e4a44971882957337c91ee698a2f820e4d99e5f786d55d8",
+    "steps": [
+      {
+        "name": "tests",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--user",
+          "1019:100",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/freetds:/fixtures:ro",
+          "sha256:d09c18e1b981714c2e4a44971882957337c91ee698a2f820e4d99e5f786d55d8",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/fixtures/rpm/run-tests.py",
+          "--installed",
+          "--compiler"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  {
+    "target": "fedora",
+    "module": "mysql",
+    "phase": "runtime",
+    "image": "sha256:7e3db3eb09a83d0d87c26d077426cf1b8c543dc31a436df47c6f50386b295974",
+    "steps": [
+      {
+        "name": "tests",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--user",
+          "1019:100",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/mysql:/fixtures:ro",
+          "sha256:7e3db3eb09a83d0d87c26d077426cf1b8c543dc31a436df47c6f50386b295974",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/fixtures/rpm/run-tests.py",
+          "--installed"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  {
+    "target": "fedora",
+    "module": "mysql",
+    "phase": "sdk",
+    "image": "sha256:7c393291e0e5db41ca6f28b2f84b1360870383777603cf622bb6df15d8d5de69",
+    "steps": [
+      {
+        "name": "tests",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--user",
+          "1019:100",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/mysql:/fixtures:ro",
+          "sha256:7c393291e0e5db41ca6f28b2f84b1360870383777603cf622bb6df15d8d5de69",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/fixtures/rpm/run-tests.py",
+          "--installed",
+          "--compiler"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  {
+    "target": "leap",
+    "module": "freetds",
+    "phase": "runtime",
+    "image": "sha256:4ba86130443cbe9edf2cf66dcf1cac2d2ab78bae25d1f66af7e4fb9886f8586a",
+    "steps": [
+      {
+        "name": "tests",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--user",
+          "1019:100",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/freetds:/fixtures:ro",
+          "sha256:4ba86130443cbe9edf2cf66dcf1cac2d2ab78bae25d1f66af7e4fb9886f8586a",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/fixtures/rpm/run-tests.py",
+          "--installed"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  {
+    "target": "leap",
+    "module": "freetds",
+    "phase": "sdk",
+    "image": "sha256:d3ea9a5de02ca3e46113dfdca7088371f2e958142168a64869ddd29f7d1a7772",
+    "steps": [
+      {
+        "name": "tests",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--user",
+          "1019:100",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/freetds:/fixtures:ro",
+          "sha256:d3ea9a5de02ca3e46113dfdca7088371f2e958142168a64869ddd29f7d1a7772",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/fixtures/rpm/run-tests.py",
+          "--installed",
+          "--compiler"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  {
+    "target": "leap",
+    "module": "mysql",
+    "phase": "runtime",
+    "image": "sha256:6fc039d358b428c097eb5785163b9a272747ec0c6f974002a4f9fdfce62211f4",
+    "steps": [
+      {
+        "name": "tests",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--user",
+          "1019:100",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/mysql:/fixtures:ro",
+          "sha256:6fc039d358b428c097eb5785163b9a272747ec0c6f974002a4f9fdfce62211f4",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/fixtures/rpm/run-tests.py",
+          "--installed"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  {
+    "target": "leap",
+    "module": "mysql",
+    "phase": "sdk",
+    "image": "sha256:91da01f76ffeade27a98d56e245b86cb8b4eadb2fb74d0528daf259d2b025fff",
+    "steps": [
+      {
+        "name": "tests",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--user",
+          "1019:100",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/mysql:/fixtures:ro",
+          "sha256:91da01f76ffeade27a98d56e245b86cb8b4eadb2fb74d0528daf259d2b025fff",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/fixtures/rpm/run-tests.py",
+          "--installed",
+          "--compiler"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  {
+    "target": "el10",
+    "module": "freetds",
+    "phase": "runtime",
+    "image": "sha256:ca1e20fcf763d69a3ccb01bb751f8826047517c385214bfac73851ee0cdfb6ec",
+    "steps": [
+      {
+        "name": "tests",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--user",
+          "1019:100",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/freetds:/fixtures:ro",
+          "sha256:ca1e20fcf763d69a3ccb01bb751f8826047517c385214bfac73851ee0cdfb6ec",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/fixtures/rpm/run-tests.py",
+          "--installed"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  {
+    "target": "el10",
+    "module": "freetds",
+    "phase": "sdk",
+    "image": "sha256:4073c7f66658d552f80364e561cdfe802c40d9131e570472c5fd0c52f917bc2b",
+    "steps": [
+      {
+        "name": "tests",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--user",
+          "1019:100",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/freetds:/fixtures:ro",
+          "sha256:4073c7f66658d552f80364e561cdfe802c40d9131e570472c5fd0c52f917bc2b",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/fixtures/rpm/run-tests.py",
+          "--installed",
+          "--compiler"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  {
+    "target": "el10",
+    "module": "mysql",
+    "phase": "runtime",
+    "image": "sha256:2529e9fcd147d1486d3ed269d3f33b63ca552de09654202c18087030209b20eb",
+    "steps": [
+      {
+        "name": "tests",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--user",
+          "1019:100",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/mysql:/fixtures:ro",
+          "sha256:2529e9fcd147d1486d3ed269d3f33b63ca552de09654202c18087030209b20eb",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/fixtures/rpm/run-tests.py",
+          "--installed"
+        ],
+        "exit_code": 0
+      }
+    ]
+  },
+  {
+    "target": "el10",
+    "module": "mysql",
+    "phase": "sdk",
+    "image": "sha256:5c2a95fa1f9215ff8ee5ba4133b9a99849130518f0e5849facfae9878783361d",
+    "steps": [
+      {
+        "name": "tests",
+        "command": [
+          "docker",
+          "run",
+          "--rm",
+          "--init",
+          "--network",
+          "none",
+          "--user",
+          "1019:100",
+          "-v",
+          "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/mysql:/fixtures:ro",
+          "sha256:5c2a95fa1f9215ff8ee5ba4133b9a99849130518f0e5849facfae9878783361d",
+          "python3",
+          "-B",
+          "-W",
+          "error",
+          "/fixtures/rpm/run-tests.py",
+          "--installed",
+          "--compiler"
+        ],
+        "exit_code": 0
+      }
+    ]
+  }
+]

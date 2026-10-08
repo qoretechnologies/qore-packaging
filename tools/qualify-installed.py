@@ -19,6 +19,9 @@ import installed_jni
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'freetds': {'rpm/run-tests.py', 'test/freetds-offline.qtest', 'debian/tests/compiler'},
+    'mysql': {'rpm/run-tests.py', 'debian/tests/compiler', 'test/mysql.qtest',
+              'test/mysql-error-info.qtest', 'test/mysql-native-bulk-load.qtest'},
     'jni': installed_jni.FIXTURES,
     'python': {'rpm/run-tests.py', 'debian/tests/compiler', 'debian/tests/standalone.py',
                'test/python.qtest', 'test/fib.py', 'test/standalone-lifecycle.py'},
@@ -117,6 +120,7 @@ MODULE_PRELOADS = {
 }
 SIMPLE_MODULES = ('markdown', 'sysconf', 'magic', 'sqlite3', 'kalman', 'msgpack',
                   'fsevent', 'tar', 'zip', 'cairo', 'geos', 'git', 'imagemagick', 'proj')
+MODULE_REPOSITORIES = {'freetds': 'sybase'}
 SDK_PACKAGES = {'qore-devel', 'qore-rpm-macros', 'qore-misc-tools', 'qore-debug-tools',
                 'qore-jni-tools', 'qore-jni-kotlin'}
 
@@ -137,7 +141,8 @@ def validate_modules(manifest):
         if ({f.get('path') for f in files} != MODULE_FIXTURES[name]
                 or len(files) != len(MODULE_FIXTURES[name])):
             raise ValueError('Expected complete module fixture inventory')
-        prefix = f'https://raw.githubusercontent.com/qoretechnologies/module-{name}/{commit}/'
+        repository = MODULE_REPOSITORIES.get(name, name)
+        prefix = f'https://raw.githubusercontent.com/qoretechnologies/module-{repository}/{commit}/'
         if any(f.get('url') != prefix + f['path'] for f in files):
             raise ValueError('Module fixture URLs must match their pinned repository revision')
         if packages.get('qore-' + name + '-module', {}).get('phase') != 'runtime':
@@ -220,6 +225,8 @@ def module_dependencies(name, phase, family):
                 if phase == 'runtime' else ['unixODBC-devel'])
     if name == 'pgsql' and phase == 'runtime':
         return ['postgresql-server'] + (['pgvector'] if family == 'fedora' else [])
+    if name == 'mysql' and phase == 'runtime':
+        return ['mariadb', 'mariadb-client'] if family == 'suse' else ['mariadb-server', 'mariadb']
     if name == 'zip' and phase == 'runtime':
         return ['unzip', 'diffutils']
     if name in ('cairo', 'imagemagick') and phase == 'runtime':
@@ -287,7 +294,7 @@ def module_commands(name, phase, directory, binary=None, driver=None, installed_
         if phase == 'sdk':
             commands.append(('compiler', [str(directory / 'debian/tests/compiler')]))
         return commands
-    if name in ('ssh', 'xmlsec', 'python'):
+    if name in ('ssh', 'xmlsec', 'python', 'mysql', 'freetds'):
         command = ['python3', '-B', '-W', 'error', str(directory / 'rpm/run-tests.py'), '--installed']
         if phase == 'sdk':
             command.append('--compiler')

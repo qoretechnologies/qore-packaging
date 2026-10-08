@@ -373,3 +373,25 @@ rpm-jni-el10-runtime-arm64:
   needs:
     - job: rpm-jni-el10-sdk-arm64
       artifacts: true
+
+# FreeTDS validates offline driver behavior; MySQL uses an isolated MariaDB.
+rpm-databases-fedora-arm64:
+  extends: rpm-fedora-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "databases" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "fedora")'
+  variables:
+    RPM_MANIFEST: qualification/databases-fedora-aarch64.json
+
+rpm-databases-leap-arm64:
+  extends: rpm-leap-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "databases" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "leap")'
+  variables:
+    RPM_MANIFEST: qualification/databases-leap-aarch64.json
+
+rpm-databases-el10-arm64:
+  extends: rpm-el10-arm64
+  rules:
+    - if: '$RPM_NATIVE_QUALIFICATION == "databases" && ($RPM_NATIVE_TARGET == null || $RPM_NATIVE_TARGET == "el10")'
+  variables:
+    RPM_MANIFEST: qualification/databases-el10-aarch64.json

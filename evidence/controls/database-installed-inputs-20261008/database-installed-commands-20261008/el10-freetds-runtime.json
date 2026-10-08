@@ -1,0 +1,31 @@
+{
+  "target": "el10",
+  "module": "freetds",
+  "phase": "runtime",
+  "image": "sha256:ca1e20fcf763d69a3ccb01bb751f8826047517c385214bfac73851ee0cdfb6ec",
+  "steps": [
+    {
+      "name": "tests",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/freetds:/fixtures:ro",
+        "sha256:ca1e20fcf763d69a3ccb01bb751f8826047517c385214bfac73851ee0cdfb6ec",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "/fixtures/rpm/run-tests.py",
+        "--installed"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

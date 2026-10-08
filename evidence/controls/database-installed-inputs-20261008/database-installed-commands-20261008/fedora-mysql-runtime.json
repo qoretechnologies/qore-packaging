@@ -1,0 +1,31 @@
+{
+  "target": "fedora",
+  "module": "mysql",
+  "phase": "runtime",
+  "image": "sha256:7e3db3eb09a83d0d87c26d077426cf1b8c543dc31a436df47c6f50386b295974",
+  "steps": [
+    {
+      "name": "tests",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/mysql:/fixtures:ro",
+        "sha256:7e3db3eb09a83d0d87c26d077426cf1b8c543dc31a436df47c6f50386b295974",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "/fixtures/rpm/run-tests.py",
+        "--installed"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

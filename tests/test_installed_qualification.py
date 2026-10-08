@@ -186,9 +186,10 @@ os.write(2, b'diagnostic\\n')
             'sha256': 'f' * 64, 'url': 'https://example.org/xml'})
         for name in module.MODULE_FIXTURES:
             commit = 'd' * 40
+            repository = module.MODULE_REPOSITORIES.get(name, name)
             self.manifest['modules'].append({'name': name, 'commit': commit,
                 'fixtures': [{'path': path, 'sha256': 'e' * 64,
-                    'url': f'https://raw.githubusercontent.com/qoretechnologies/module-{name}/{commit}/{path}'}
+                    'url': f'https://raw.githubusercontent.com/qoretechnologies/module-{repository}/{commit}/{path}'}
                     for path in sorted(module.MODULE_FIXTURES[name])]})
             self.manifest['packages'].append({'name': 'qore-' + name + '-module',
                 'filename': 'qore-' + name + '-module-1-1.aarch64.rpm', 'phase': 'runtime',
@@ -197,6 +198,52 @@ os.write(2, b'diagnostic\\n')
     def test_complete_module_manifest(self):
         self.add_modules()
         self.assertEqual(module.validate(self.manifest), self.manifest)
+
+    def test_database_fixture_sources_are_complete_and_repository_pinned(self):
+        self.add_modules()
+        for name, repository in [('freetds', 'sybase'), ('mysql', 'mysql')]:
+            suite = next(row for row in self.manifest['modules'] if row['name'] == name)
+            expected_suites = {'test/freetds-offline.qtest'} if name == 'freetds' else {
+                'test/mysql.qtest', 'test/mysql-error-info.qtest', 'test/mysql-native-bulk-load.qtest'}
+            self.assertEqual({f['path'] for f in suite['fixtures'] if f['path'].endswith('.qtest')}, expected_suites)
+            for mutation in ('missing', 'duplicate', 'wrong-repository', 'moving-revision', 'missing-runtime'):
+                manifest = copy.deepcopy(self.manifest)
+                changed = next(row for row in manifest['modules'] if row['name'] == name)
+                if mutation == 'missing':
+                    changed['fixtures'].pop()
+                elif mutation == 'duplicate':
+                    changed['fixtures'].append(changed['fixtures'][0])
+                elif mutation == 'wrong-repository':
+                    changed['fixtures'][0]['url'] = changed['fixtures'][0]['url'].replace(
+                        '/module-' + repository + '/', '/module-' + ('freetds' if name == 'freetds' else 'sybase') + '/')
+                elif mutation == 'moving-revision':
+                    changed['commit'] = 'develop'
+                else:
+                    manifest['packages'] = [p for p in manifest['packages'] if p['name'] != 'qore-' + name + '-module']
+                with self.subTest(name=name, mutation=mutation), self.assertRaises(ValueError):
+                    module.validate(manifest)
+
+    def test_database_fixtures_use_installed_modules_and_compile_only_in_sdk(self):
+        directory = Path('/tmp/database fixtures with spaces')
+        for name in ('freetds', 'mysql'):
+            for phase in ('runtime', 'sdk'):
+                commands = module.module_commands(name, phase, directory)
+                with self.subTest(name=name, phase=phase):
+                    self.assertEqual(len(commands), 1)
+                    command = commands[0][1]
+                    self.assertEqual(command[:4], ['python3', '-B', '-W', 'error'])
+                    self.assertIn(str(directory / 'rpm/run-tests.py'), command)
+                    self.assertIn('--installed', command)
+                    self.assertNotIn('--build-dir', command)
+                    self.assertEqual('--compiler' in command, phase == 'sdk')
+
+    def test_database_fixture_dependencies_do_not_install_development_tools(self):
+        for family in ('fedora', 'suse', 'el'):
+            expected = ['mariadb', 'mariadb-client'] if family == 'suse' else ['mariadb-server', 'mariadb']
+            self.assertEqual(module.module_dependencies('mysql', 'runtime', family), expected)
+            self.assertEqual(module.module_dependencies('mysql', 'sdk', family), [])
+            for phase in ('runtime', 'sdk'):
+                self.assertEqual(module.module_dependencies('freetds', phase, family), [])
 
     def test_jni_requires_complete_runtime_and_sdk_dependencies(self):
         self.add_modules()

@@ -1,0 +1,31 @@
+{
+  "target": "el10",
+  "module": "mysql",
+  "phase": "runtime",
+  "image": "sha256:2529e9fcd147d1486d3ed269d3f33b63ca552de09654202c18087030209b20eb",
+  "steps": [
+    {
+      "name": "tests",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--init",
+        "--network",
+        "none",
+        "--user",
+        "1019:100",
+        "-v",
+        "/home/david/src/qore/git/qore-packaging/work/database-installed-fixtures-20261008/mysql:/fixtures:ro",
+        "sha256:2529e9fcd147d1486d3ed269d3f33b63ca552de09654202c18087030209b20eb",
+        "python3",
+        "-B",
+        "-W",
+        "error",
+        "/fixtures/rpm/run-tests.py",
+        "--installed"
+      ],
+      "exit_code": 0
+    }
+  ]
+}
