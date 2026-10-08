@@ -1,0 +1,28 @@
+{
+  "date_utc": "2026-10-08T10:21:10.383529+00:00",
+  "candidate": "work/core-fixes-combined-candidate-20261008",
+  "overlay_paths": 65,
+  "scope": "Configuration of the exact combined candidate; full RPM build qualification is separate.",
+  "change": "Stop passing the unused FETCHCONTENT_FULLY_DISCONNECTED option. QORE_REQUIRE_SYSTEM_DEPENDENCIES rejects missing required libraries before entering FetchContent; the entire control runs with networking disabled.",
+  "tests": {
+    "fedora": {
+      "image": "sha256:a437efbf23f3bf7b180f7d58a5ad3dd70d524372ae60a57380dff115a2b5feda",
+      "exit_code": 0,
+      "normal_configuration": "No CMake warnings; explicit unknown revision for this uncommitted candidate archive.",
+      "negative_configuration": "Missing c-ares is rejected before fallback downloads."
+    },
+    "leap": {
+      "image": "sha256:a3a4d38d5db8770fccc4a460aedd5f49f76bf5226825c0d051ecae4422d99b19",
+      "exit_code": 0,
+      "normal_configuration": "No CMake warnings; explicit unknown revision for this uncommitted candidate archive.",
+      "negative_configuration": "Missing c-ares is rejected before fallback downloads."
+    },
+    "el10": {
+      "image": "sha256:50db5ec21c50dffb918d77c420f6c39d0c3c2c4c286b6150741de8c3dd80baeb",
+      "exit_code": 0,
+      "normal_configuration": "No CMake warnings; explicit unknown revision for this uncommitted candidate archive.",
+      "negative_configuration": "Missing c-ares is rejected before fallback downloads."
+    }
+  },
+  "control_corrections": "The initial fixture looked for git-revision.h at the build root rather than include/qore/intern. The first missing-library probe hid pkg-config only and correctly found the installed c-ares through find_library. The final probe removes both discovery mechanisms and confirms the explicit system-dependency error. Earlier results remain in results/core-combined-config-20261008."
+}

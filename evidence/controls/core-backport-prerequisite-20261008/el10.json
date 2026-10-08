@@ -1,0 +1,22 @@
+{
+  "image": "sha256:50db5ec21c50dffb918d77c420f6c39d0c3c2c4c286b6150741de8c3dd80baeb",
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "none",
+    "--user",
+    "1019:100",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/checkouts/qore-documentation-sdk-20261006:/source:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/results/el10-core-fixes-candidate-20261008:/work:ro",
+    "sha256:50db5ec21c50dffb918d77c420f6c39d0c3c2c4c286b6150741de8c3dd80baeb",
+    "sh",
+    "-c",
+    "set -eu\nexport LD_LIBRARY_PATH='/work/rpmbuild/BUILD/qore-3.0.0~git20261008.22/build'\nexport QORE_MODULE_DIR='/source/qlib'\nfor module in '/work/rpmbuild/BUILD/qore-3.0.0~git20261008.22/build'/modules/*; do\n    test -d \"$module\" || continue\n    QORE_MODULE_DIR=\"$QORE_MODULE_DIR:$module\"\ndone\ncd /tmp\n'/work/rpmbuild/BUILD/qore-3.0.0~git20261008.22/build/qore' -b --enable-debug /source/examples/test/qlib/CsvUtil/CsvEncoding.qtest -v\n'/work/rpmbuild/BUILD/qore-3.0.0~git20261008.22/build/qore' -b --enable-debug /source/examples/test/qlib/CsvUtil/csvutil.qtest -v\ncd /source\npython3 -B -W error -m unittest discover -s examples/test/cmake -p test_git_revision.py -v\npython3 -B -W error -m unittest discover -s examples/test/cmake -p test_compiler_fingerprint.py -v\n"
+  ]
+}
