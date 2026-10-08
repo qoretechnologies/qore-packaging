@@ -1,12 +1,16 @@
 <!-- Copyright (C) 2026 Qore Technologies, s.r.o. -->
 <package name="qore-v8-module" project="home:davidnichols:qore:testing">
   <title>Qore JavaScript and TypeScript bridge</title>
-  <description>Pinned V8 module with installed runtime, SDK and AOT artifact qualification on Fedora and AlmaLinux. Leap and native ARM qualification remain pending; publication is disabled.</description>
+  <description>Pinned V8 module with native builds enabled on all six testing targets. Installed runtime, SDK and AOT qualification remains required; publication is disabled.</description>
   <url>https://github.com/qoretechnologies/module-v8</url>
   <build>
     <disable />
     <enable repository="Fedora_44" arch="x86_64" />
     <enable repository="AlmaLinux_10" arch="x86_64" />
+    <enable repository="Fedora_44" arch="aarch64" />
+    <enable repository="AlmaLinux_10" arch="aarch64" />
+    <enable repository="openSUSE_Leap_16.0" arch="x86_64" />
+    <enable repository="openSUSE_Leap_16.0" arch="aarch64" />
   </build>
   <publish>
     <disable />
