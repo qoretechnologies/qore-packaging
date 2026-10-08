@@ -394,31 +394,34 @@ remains a separate gate.
 No target may silently omit
 ONNX to produce an apparently successful package.
 
-PDF packaging now requires the pinned PDFium renderer and retains the private
-PoDoFo library with complete notices. Canonical x86_64 builds and installed
-runtime/SDK/artifact checks pass on all three distributions: 79 cases and
-616 assertions per distribution. Serialization, split-error and content-view
-ownership fixes have separate native regression/Valgrind evidence. See
-``evidence/pdf-rpm-candidate-20261003.json`` and
-``evidence/pdf-native-fixes-20261003.json``. Sources are staged in OBS with
-publication disabled; native OBS and ARM module qualification remain pending.
-PDFium itself has passed all 1,819 upstream tests on both AlmaLinux OBS
-architectures. Fedora's previously missing OBS dependencies are now retrievable
-and verified on both architectures; a single rebuild was triggered. See
-``evidence/fedora-pdfium-obs-retrieval-20261003.json``. Leap's bootstrap now
-selects its matching LLVM archiver/linker with the full OBS LTO flags;
-all 1,819 upstream tests and installed API, debugger and Valgrind checks pass
-on all three local targets. The committed rebuilds and installed checks also
-pass, including source and binary lint. The exact sources are staged as OBS
-revision 2 with publication disabled. Both Leap and AlmaLinux native
-architectures pass all 1,819 upstream tests. Fedora's two builds still fail
-before compilation because OBS cannot retrieve dependency RPMs, despite their
-verified availability upstream. The single explicit rebuild reproduced that
-infrastructure failure. See ``evidence/pdfium-lto-qualification-20261003.json``.
-A further retrieval review verifies exact binary header IDs through OBS itself,
-including batch/public CPIO and binary-version APIs. Workers still fail on the
-same four inputs before compilation; no dependency bypass is applied. See
-``evidence/pdfium-obs-recovery-20261003.json``.
+PDF packaging requires the pinned PDFium renderer and retains the private
+PoDoFo library with complete notices. PDFium revision 3 passes all 1,819
+upstream tests on Fedora 44, AlmaLinux 10 and Leap 16.0, on both x86_64 and
+native aarch64. PDF module revision 2 passes all seven suites, 79 cases and
+616 assertions on each of those six targets. Exact source revisions and build
+histories are recorded in ``evidence/pdfium-native-rev3-20261008.json`` and
+``evidence/pdf-native-rev2-20261008.json``.
+
+Signed native ARM runtime and SDK installation checks pass on Fedora and
+Leap, including mandatory rendering, both SDK consumers and PDFium Valgrind
+checks. Each installation phase passes the same 79 cases and 616 assertions.
+The AlmaLinux job is configured with 18 verified package inputs; its first
+run stopped before installation when OBS timed out serving the signing key.
+Independent API and website requests then returned HTTP 503. No signature or
+hash verification is bypassed. See
+``evidence/pdf-native-installed-fedora-20261008.json``,
+``evidence/pdf-native-installed-leap-20261008.json`` and
+``evidence/pdf-alma-installed-service-interruption-20261008.json``.
+
+OBS maintainers attributed the earlier Fedora dependency-fetch failure to a
+certificate change that stopped remote repository synchronization and reported
+it fixed. Both subsequent Fedora PDFium builds succeeded; the maintainer
+explanation and corroborating builds are recorded in
+``evidence/obs-fedora-fetch-resolution-20261008.json``. The later API outage is
+a separate observed service interruption. Publication remains disabled. These
+module installation checks use the qualified core revision 21 baseline; the
+updated core, its exact AOT runtime dependencies, coinstallation and repository
+upgrade/removal qualification remain required.
 
 Oracle now has canonical local RPM builds and offline runtime/SDK checks on all
 three distributions, including source/AOT extensions, compiler metadata,
