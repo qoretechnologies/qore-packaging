@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-08",
+  "status": "Inputs verified and native CI configuration validated; executions pending.",
+  "source_commit": "664eaf58a09f5279532f397c7a48de8b467c1907",
+  "obs_revision": 1,
+  "obs_srcmd5": "473afd71b4fbc170c1c80a27d1d65d62",
+  "packages": {
+    "fedora": 15,
+    "leap": 23,
+    "el10": 18
+  },
+  "fixtures": 21,
+  "signatures_verified": 56,
+  "unit_methods_passed": 250,
+  "gitlab_ci_lint": {
+    "valid": true,
+    "warnings": [],
+    "errors": []
+  },
+  "audit": {
+    "path": "evidence/v8-native-inputs-20261008.audit.rst",
+    "pass": 7,
+    "not_applicable": 55,
+    "fail": 0
+  },
+  "limitations": [
+    "Source revision 1 still has documented example-interpreter lint errors on Leap. The corrected local RPMs already pass; final manifests must be refreshed after canonical upload and native rebuild.",
+    "Catalog-directory approval and Node dependency diagnostic decisions remain separate; these jobs do not publish packages."
+  ],
+  "sha256": {
+    "qualification/v8-fedora-aarch64.json": "43302b49372316a3f076a13c0615b0ccfb3c78b25ffcdb735ea73544dae667ef",
+    "qualification/v8-leap-aarch64.json": "87c9cabe82e99a641ef1a075b9d40b607b07014d3a5f6684642486a8bb6f8b27",
+    "qualification/v8-el10-aarch64.json": "88bebe8c985fb221a13e61096e222911fe9d02542ed1d35a360fdc0de717653a",
+    "results/v8-native-inputs-unit-20261008.log": "51e5c556f3231aa1f8e386f402320c3539bad312312816037e77060a3125ece1",
+    "results/v8-native-ci-lint-20261008/response.json": "ddcfc781ab24ff749a13f91ecb3467aa3de13a34811d27be9dd6d54573bdf237",
+    "results/v8-native-signatures-20261008/status.json": "87bfe8da45dc9b0fdef1d430fc41f301b8c34d2c3a928be8a7796b4680fc4ee6",
+    "results/v8-native-signatures-20261008/signatures.log": "ae231aa803e892db499616f0d87e03875310dd3b6eaa612dbf7b434b0a35bf92"
+  },
+  "provenance": {
+    "fedora": {
+      "qore-v8-module": {
+        "srcmd5": "473afd71b4fbc170c1c80a27d1d65d62",
+        "revision": "1"
+      },
+      "qore-process-module": {
+        "srcmd5": "3d18f54085dd5ff18db026be4f737283",
+        "revision": "2"
+      },
+      "qore-uuid-module": {
+        "srcmd5": "e4b8c96934783a448e979334a2d0585a",
+        "revision": "3"
+      }
+    },
+    "leap": {
+      "qore-v8-module": {
+        "srcmd5": "473afd71b4fbc170c1c80a27d1d65d62",
+        "revision": "1"
+      },
+      "qore-process-module": {
+        "srcmd5": "3d18f54085dd5ff18db026be4f737283",
+        "revision": "2"
+      },
+      "qore-uuid-module": {
+        "srcmd5": "e4b8c96934783a448e979334a2d0585a",
+        "revision": "3"
+      },
+      "nodejs24-libnode": {
+        "srcmd5": "68633aee6138c8992573ca51eddf282f",
+        "revision": "7"
+      }
+    },
+    "el10": {
+      "qore-v8-module": {
+        "srcmd5": "473afd71b4fbc170c1c80a27d1d65d62",
+        "revision": "1"
+      },
+      "qore-process-module": {
+        "srcmd5": "3d18f54085dd5ff18db026be4f737283",
+        "revision": "2"
+      },
+      "qore-uuid-module": {
+        "srcmd5": "e4b8c96934783a448e979334a2d0585a",
+        "revision": "3"
+      }
+    }
+  }
+}

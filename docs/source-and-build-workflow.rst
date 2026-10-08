@@ -192,3 +192,12 @@ indirect or possible losses. The known GCC 16 speculative-deletion diagnostic
 is retained for review under the existing documented compiler exception; the
 runner does not suppress warnings or weaken Valgrind checks. These local checks
 do not replace signature verification and qualification on native ARM runners.
+
+``RPM_NATIVE_QUALIFICATION=v8`` selects the three native ARM V8 jobs;
+``RPM_NATIVE_TARGET`` optionally selects ``fedora``, ``leap`` or ``el10``.
+They import the pinned OBS signing key and verify every RPM signature before
+installing packages into fresh distribution containers. Leap additionally pins
+the private shared Node library. Ordinary packaging commits do not start these
+jobs. Source revision 1 inputs qualify runtime behavior while the example
+interpreter metadata correction is being prepared; final acceptance requires
+refreshing the manifests to the corrected native RPMs.
