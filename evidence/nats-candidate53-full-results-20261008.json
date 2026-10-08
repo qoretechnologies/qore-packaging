@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Candidate53 complete: Leap and AlmaLinux RPM builds succeed; Fedora has exactly the two separately fixed fixture failures. Candidate55 matrix has started.",
+  "results": {
+    "fedora": {
+      "build_exit_code": 1,
+      "terminal_results": {
+        "pass": 10160,
+        "skip": 72,
+        "fail": 2
+      },
+      "failures": [
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestJetStreamConsumerMultipleFiltersLastPerSubject",
+          "output": "=== RUN   TestJetStreamConsumerMultipleFiltersLastPerSubject\n    jetstream_consumer_test.go:783: No response for \"1\" (error: nats: no responders available for request)\n--- FAIL: TestJetStreamConsumerMultipleFiltersLastPerSubject (1.85s)\n"
+        },
+        {
+          "package": "github.com/nats-io/nats-server/v2/server",
+          "test": "TestNRGLeaderResurrectsRemovedPeers",
+          "output": "=== RUN   TestNRGLeaderResurrectsRemovedPeers\n    raft_test.go:6069: require int equal, but got: 3 != 2\n--- FAIL: TestNRGLeaderResurrectsRemovedPeers (0.29s)\n"
+        }
+      ],
+      "artifacts": {}
+    },
+    "leap": {
+      "build_exit_code": 0,
+      "terminal_results": {
+        "pass": 10162,
+        "skip": 72
+      },
+      "failures": [],
+      "artifacts": {
+        "rpmbuild/RPMS/x86_64/nats-server-2.15.0-1.qore.x86_64.rpm": "de53d4385ab22fa8ed36e2f0aa7dda4fb95a0214c60eaf4814eb66bc700f387b",
+        "rpmbuild/RPMS/x86_64/nats-server-debuginfo-2.15.0-1.qore.x86_64.rpm": "fd10fa795c42d83a8ab4c8b0f12d954cacd7f6d9db8a4ecca7a8107615e72e06",
+        "rpmbuild/RPMS/x86_64/nats-server-debugsource-2.15.0-1.qore.x86_64.rpm": "be717f49dc6eb2192878a7719b9e79f51473b621da5685f1baa71b79d5dfbc73",
+        "rpmbuild/SRPMS/nats-server-2.15.0-1.qore.src.rpm": "3bdf92d9873fbaf3faf8c429caf9703b16099cc4cc5e0bac50ac022ec3ec79e3"
+      }
+    },
+    "el10": {
+      "build_exit_code": 0,
+      "terminal_results": {
+        "pass": 10162,
+        "skip": 72
+      },
+      "failures": [],
+      "artifacts": {
+        "rpmbuild/RPMS/x86_64/nats-server-2.15.0-1.qore.el10.x86_64.rpm": "338b4fafd591a02aa173ac9881e3343f55ae9e960f492048a597da4b5094ba20",
+        "rpmbuild/RPMS/x86_64/nats-server-debuginfo-2.15.0-1.qore.el10.x86_64.rpm": "2e669878b8cf811b41a891b7ee9a43a35f491483e42f5714f6dc275ee8bae0e9",
+        "rpmbuild/RPMS/x86_64/nats-server-debugsource-2.15.0-1.qore.el10.x86_64.rpm": "44b4b7802ed49a176c4fce4e7ccde4bde0174cbb06c737c8a725475bc7aebc50",
+        "rpmbuild/SRPMS/nats-server-2.15.0-1.qore.el10.src.rpm": "05e2f9f3166ae4583cb802574f23ac2d3c1ddae975587a9ba8e5bb8c921b6ce4"
+      }
+    }
+  },
+  "corrected_failures": {
+    "TestJetStreamConsumerMultipleFiltersLastPerSubject": "evidence/nats-multiple-filter-interest-20261008.json",
+    "TestNRGLeaderResurrectsRemovedPeers": "evidence/nats-peer-commit-20261008.json"
+  },
+  "source_candidate": 53,
+  "source_patches": 116,
+  "next_candidate": 55,
+  "next_patches": 118,
+  "limits": [
+    "Counts include nested Go test results. All 72 skips and their exact reasons are retained; skipped tests are not claimed as executed passes.",
+    "This records configured RPM build results. Candidate55, complete diagnostic reconciliation, native OBS, installed client/module and repository lifecycle gates remain required.",
+    "The next build starts through pidfd completion of the prior driver, after verifying exact failure sets, source checksums and focused test evidence; no timer-based polling or duplicate live build was used."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-candidate53-20261008/candidate53-review.json": "a5a32256fd80ac289fd462d75f9158559dda3d768863d495491f243beec2ae0d",
+    "evidence/controls/nats-candidate53-20261008/candidate55-started.json": "cbb152bcbe3cff43e62af1843544b4d7ab07a17bc0888c67e6a1026d80569b96",
+    "evidence/controls/nats-candidate53-20261008/continue.py": "a126c403535cd07f6a1b381100a2833b3b9e62ca060c3c1c1eab1d03750fbd0b",
+    "evidence/controls/nats-candidate53-20261008/el10-build.json": "ff0506ed6a5eaf0b1872f6e9856fd856693e62ec5a292b94a84b1754f0e7c7c3",
+    "evidence/controls/nats-candidate53-20261008/el10-build.log.gz": "4f9d8cfc4b3bf51367b973c133cfa1ce3ed67ec49c5dcded484a57d3c6ff4de7",
+    "evidence/controls/nats-candidate53-20261008/el10-skips.json": "1ed6b7dbc398069256065b65089c21e97a52c5420e97279da1a7438a9486ba67",
+    "evidence/controls/nats-candidate53-20261008/fedora-build.json": "98f945b89676b8ee9247713e0e172d5076546c32f5282f5d7c18caa2f6cfa698",
+    "evidence/controls/nats-candidate53-20261008/fedora-build.log.gz": "7ec88080070369f770d228fb7e7c61c1b7a69f10a1e0d7484f3629cd5c3b39f9",
+    "evidence/controls/nats-candidate53-20261008/fedora-skips.json": "1ed6b7dbc398069256065b65089c21e97a52c5420e97279da1a7438a9486ba67",
+    "evidence/controls/nats-candidate53-20261008/joined-driver.json": "466a8f60ecbf62c4e14d7928b4352025e6771dedb8692919e80fe97420fc7396",
+    "evidence/controls/nats-candidate53-20261008/leap-build.json": "87cb7e9e562192e2cd5ed130f5c4b3b0892a3db4a931b767c39094ea429158a1",
+    "evidence/controls/nats-candidate53-20261008/leap-build.log.gz": "ef7e45a6ede7a739c273e2cc9fb4900ec42e9f9da755c26623983bd540539a72",
+    "evidence/controls/nats-candidate53-20261008/leap-skips.json": "1ed6b7dbc398069256065b65089c21e97a52c5420e97279da1a7438a9486ba67",
+    "evidence/controls/nats-candidate53-20261008/source-manifest.json": "b06aa864cb16387b0f2d54325bb2f41f8973fc9da289dbfb3ea629c6ff63762d"
+  }
+}
