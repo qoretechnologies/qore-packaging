@@ -1,0 +1,335 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Committed and pushed to Qore develop; all post-pull tests and three full audits pass with the two exact external diagnostics approved.",
+  "base_commit": "9f94a962fefd7de5d4e2720e6d541ae334a2a959",
+  "fixes": [
+    "Clear hash exists output on conversion/member-validation failure; retain the remote QoreHashKeyHelper.",
+    "Normalize directory modules found through cwd-relative search paths before constructing module metadata.",
+    "Consume and assert the UTF-16 validation result in CsvProfiler without changing its UTF-8/Latin-1 decision."
+  ],
+  "qualification": {
+    "debug": {
+      "native_checks": 348,
+      "tests": {
+        "TabularProfiler": {
+          "cases_reported": 22,
+          "assertions": 248,
+          "skipped": 0
+        },
+        "separated-module-path": {
+          "cases_reported": 4,
+          "assertions": 46,
+          "skipped": 0
+        },
+        "CsvEncoding": {
+          "cases_reported": 7,
+          "assertions": 2852,
+          "skipped": 0
+        },
+        "hash-key-encoding": {
+          "cases_reported": 3,
+          "assertions": 1721,
+          "skipped": 0
+        },
+        "modules": {
+          "cases_reported": 4,
+          "assertions": 7,
+          "skipped": 0
+        },
+        "separated-module-shadow": {
+          "cases_reported": 2,
+          "assertions": 5,
+          "skipped": 0
+        },
+        "hash": {
+          "cases_reported": 1,
+          "assertions": 2,
+          "skipped": 0
+        },
+        "CsvByteOrderMark": {
+          "cases_reported": 10,
+          "assertions": 51,
+          "skipped": 0
+        },
+        "module-path-directive": {
+          "cases_reported": 15,
+          "assertions": 15,
+          "skipped": 0
+        },
+        "hashdecl": {
+          "cases_reported": 13,
+          "assertions": 298,
+          "skipped": 0
+        },
+        "hash-lookup-native": {
+          "cases_reported": 1,
+          "assertions": 2,
+          "skipped": 0
+        },
+        "csvtest2": {
+          "cases_reported": 1,
+          "assertions": 2,
+          "skipped": 0
+        },
+        "CsvProfiler": {
+          "cases_reported": 11,
+          "assertions": 211,
+          "skipped": 0
+        },
+        "CsvReadOptionMetadata": {
+          "cases_reported": 4,
+          "assertions": 139,
+          "skipped": 0
+        },
+        "csvutil": {
+          "cases_reported": 20,
+          "assertions": 181,
+          "skipped": 0
+        }
+      },
+      "functional_cases": 118,
+      "functional_assertions": 5780,
+      "valgrind_runs": 5,
+      "memory_errors": 0,
+      "definite_indirect_possible_lost_bytes": 0,
+      "salesforce_offline_cases": 34,
+      "salesforce_assertions": 356,
+      "salesforce_live_skips": 5
+    },
+    "release": {
+      "native_checks": 348,
+      "tests": {
+        "TabularProfiler": {
+          "cases_reported": 22,
+          "assertions": 248,
+          "skipped": 0
+        },
+        "separated-module-path": {
+          "cases_reported": 4,
+          "assertions": 46,
+          "skipped": 0
+        },
+        "CsvEncoding": {
+          "cases_reported": 7,
+          "assertions": 2852,
+          "skipped": 0
+        },
+        "hash-key-encoding": {
+          "cases_reported": 3,
+          "assertions": 1721,
+          "skipped": 0
+        },
+        "modules": {
+          "cases_reported": 4,
+          "assertions": 7,
+          "skipped": 0
+        },
+        "separated-module-shadow": {
+          "cases_reported": 2,
+          "assertions": 5,
+          "skipped": 0
+        },
+        "hash": {
+          "cases_reported": 1,
+          "assertions": 2,
+          "skipped": 0
+        },
+        "CsvByteOrderMark": {
+          "cases_reported": 10,
+          "assertions": 51,
+          "skipped": 0
+        },
+        "module-path-directive": {
+          "cases_reported": 15,
+          "assertions": 15,
+          "skipped": 0
+        },
+        "hashdecl": {
+          "cases_reported": 13,
+          "assertions": 298,
+          "skipped": 0
+        },
+        "hash-lookup-native": {
+          "cases_reported": 1,
+          "assertions": 2,
+          "skipped": 0
+        },
+        "csvtest2": {
+          "cases_reported": 1,
+          "assertions": 2,
+          "skipped": 0
+        },
+        "CsvProfiler": {
+          "cases_reported": 11,
+          "assertions": 211,
+          "skipped": 0
+        },
+        "CsvReadOptionMetadata": {
+          "cases_reported": 4,
+          "assertions": 139,
+          "skipped": 0
+        },
+        "csvutil": {
+          "cases_reported": 20,
+          "assertions": 181,
+          "skipped": 0
+        }
+      },
+      "functional_cases": 118,
+      "functional_assertions": 5780,
+      "valgrind_runs": 5,
+      "memory_errors": 0,
+      "definite_indirect_possible_lost_bytes": 0,
+      "salesforce_offline_cases": 34,
+      "salesforce_assertions": 356,
+      "salesforce_live_skips": 5
+    }
+  },
+  "audit": {
+    "hash": {
+      "pass": 19,
+      "na": 43,
+      "fail": 0
+    },
+    "loader": {
+      "pass": 16,
+      "na": 46,
+      "fail": 0
+    },
+    "csv": {
+      "pass": 17,
+      "na": 45,
+      "fail": 0
+    }
+  },
+  "approved_diagnostic": "The existing exact GCC/Valgrind missing-DW_AT_abstract_origin diagnostic remains visible; no suppressions.",
+  "limits": [
+    "Loader memory runs use the documented PCRE2 interpreter mode; ordinary tests use JIT. The user approved the exact external JIT diagnostic on 2026-10-08; no suppression or production setting change.",
+    "Salesforce live tests require credentials and are skipped; offline module loading and protocol integration are covered.",
+    "Updated RPM/OBS builds and full repository qualification remain separate gates.",
+    "Initial CSV fixture failures and strict configure-warning checker stop are preserved; no production bypass was added."
+  ],
+  "source_sha256": {
+    "CMakeLists.txt": "6be48f3f89fce05ed82e619af5b87f97c676db3961b5635a29e29f496c8d485e",
+    "design/qore-module-structure.md": "d86c7c24b942ae0302f81ff67141da7c2ab0748115980f0a889011345e95b03f",
+    "doxygen/lang/900_release_notes.dox.tmpl": "7e8c63b2c305042c3fb230e13f9fdb71717adb978e2ab70a98bde7607ce2674b",
+    "examples/test/qlib/CsvUtil/CsvProfiler.qtest": "6bb851f7e17da5a0c0319b0b8c5ed7b1817b0455b757c3ef750b6962a6ac8086",
+    "include/qore/QoreHashNode.h": "291192a36dee949cf97042fff6d597245f71a4780b665c70c8329ce22c902674",
+    "lib/ModuleManager.cpp": "5c2046e51896db7d6715eee901ab4c7225b46e411bea8184563ca156205a5539",
+    "lib/QoreHashNode.cpp": "82e1f5e61988b9f16b16f81933b2fe723a1f31708d4ee26771ae2bc9b29c06da",
+    "qlib/CsvUtil/CsvProfiler.qc": "a5d3c8420d5c268adc4f769e95a6590b2202baa7204200bd88ac8e13bfbd2dff",
+    "examples/test/qlib/CsvUtil/audits/CsvProfiler.rst": "c68f5e61985ad15506bf86d89203d13b876aaf28f8484e203926594beeaa1560",
+    "examples/test/qore/misc/audits/hash-lookup-native.rst": "317f81a4513e76d83c5fe307ea5dec2a9a10a98da825cc29afdba93ac20c8382",
+    "examples/test/qore/misc/hash-lookup-native.qtest": "42c75ebac5a41c62ed5af0d6783b635f9482aeb07e7f32d777fe90ed9964c588",
+    "examples/test/qore/misc/hash-lookup-native.rst": "687f21beefbf6dd46ef7e75d10716de61d3e4b10b04934df19ebc3bf3427d218",
+    "examples/test/qore/misc/hash_lookup.cpp": "95d046e5d859eb24d2cfda95222351ceb23b04058871371ba01b3028d4f3771b",
+    "examples/test/qore/misc/module-loader/audits/separated-module-path.rst": "b4a00b56d85aa6fede23f0fedcd0defba2f72e13739279c6339955200393001d",
+    "examples/test/qore/misc/module-loader/separated-module-path.qtest": "63771ddeb6af23eb3fdc9fb41561fcd7915c901b257faa5460d85e8289e04acc"
+  },
+  "files_sha256": {
+    "evidence/controls/core-postpull-20261008/audit-core-postpull-20261008.py": "d25b82347d17f40d18c699055aabd2291e50d3e85a64a112b693278041ccb02d",
+    "evidence/controls/core-postpull-20261008/audits/CsvProfiler.rst": "c68f5e61985ad15506bf86d89203d13b876aaf28f8484e203926594beeaa1560",
+    "evidence/controls/core-postpull-20261008/audits/hash-lookup-native.rst": "317f81a4513e76d83c5fe307ea5dec2a9a10a98da825cc29afdba93ac20c8382",
+    "evidence/controls/core-postpull-20261008/audits/separated-module-path.rst": "b4a00b56d85aa6fede23f0fedcd0defba2f72e13739279c6339955200393001d",
+    "evidence/controls/core-postpull-20261008/check-core-hash-docs-postpull-20261008.py": "f3f895922ba290fb41a0e9fb734f9444cfde1eb0284f92844ff3011b787e875c",
+    "evidence/controls/core-postpull-20261008/core-csv-final-20261008/debug/CsvByteOrderMark.log.gz": "6b106df8558604db297353bc12583f87158ea0acaef335d14d3ebb592d97a4f0",
+    "evidence/controls/core-postpull-20261008/core-csv-final-20261008/debug/CsvEncoding.log.gz": "075eba95e5ba9f0ac22a25c100c4aa0e195649dcf7d65a13dc1931e8df8c322d",
+    "evidence/controls/core-postpull-20261008/core-csv-final-20261008/debug/CsvProfiler.log.gz": "865015d33b55a3c9800e59f77c8d16d23f1223626f2aef4c5834d46328a440a4",
+    "evidence/controls/core-postpull-20261008/core-csv-final-20261008/status.json": "9b133a52e95be803c7c4e47d6bf0dc2356d5b589c0214efd209e20d0a33d26d2",
+    "evidence/controls/core-postpull-20261008/core-csv-final-20261008/steps.json": "626b70e6ab571b1e374ffaad941d21937557acf4b53ed5aa596fa7b9762913cb",
+    "evidence/controls/core-postpull-20261008/core-csv-final2-20261008/debug/CsvByteOrderMark.log.gz": "6b106df8558604db297353bc12583f87158ea0acaef335d14d3ebb592d97a4f0",
+    "evidence/controls/core-postpull-20261008/core-csv-final2-20261008/debug/CsvEncoding.log.gz": "075eba95e5ba9f0ac22a25c100c4aa0e195649dcf7d65a13dc1931e8df8c322d",
+    "evidence/controls/core-postpull-20261008/core-csv-final2-20261008/debug/CsvProfiler.log.gz": "662917e1ca21ae2dd4b352f098b02ae2e6c8dd9cb21ef9dc7945f8b1348fedd1",
+    "evidence/controls/core-postpull-20261008/core-csv-final2-20261008/status.json": "bd2d3647c10cc36fb1d32237ebcf997c7918e8a3e1b2cebb52fee9f436964d06",
+    "evidence/controls/core-postpull-20261008/core-csv-final2-20261008/steps.json": "626b70e6ab571b1e374ffaad941d21937557acf4b53ed5aa596fa7b9762913cb",
+    "evidence/controls/core-postpull-20261008/core-csv-final3-20261008/debug/CsvByteOrderMark.log.gz": "6b106df8558604db297353bc12583f87158ea0acaef335d14d3ebb592d97a4f0",
+    "evidence/controls/core-postpull-20261008/core-csv-final3-20261008/debug/CsvEncoding.log.gz": "075eba95e5ba9f0ac22a25c100c4aa0e195649dcf7d65a13dc1931e8df8c322d",
+    "evidence/controls/core-postpull-20261008/core-csv-final3-20261008/debug/CsvProfiler.log.gz": "2bd59a110a72e8fc7c08370c593533d74384d08688e3fab69bdfbcae9150744b",
+    "evidence/controls/core-postpull-20261008/core-csv-final3-20261008/debug/CsvReadOptionMetadata.log.gz": "7bfbf3014cf358d40d3aa086787749166b98b7ff5ff28b3088ee5e351c96f786",
+    "evidence/controls/core-postpull-20261008/core-csv-final3-20261008/debug/csvtest2.log.gz": "eded7a831ce0ae72e6907726fe3154c2bd8501090dbf5ca664bc8da8a2051b82",
+    "evidence/controls/core-postpull-20261008/core-csv-final3-20261008/debug/csvutil.log.gz": "55a133be57f9496ccd17d49e9b8a78da2501486a01d264c133fc2366ea622fe6",
+    "evidence/controls/core-postpull-20261008/core-csv-final3-20261008/release/CsvByteOrderMark.log.gz": "6b106df8558604db297353bc12583f87158ea0acaef335d14d3ebb592d97a4f0",
+    "evidence/controls/core-postpull-20261008/core-csv-final3-20261008/release/CsvEncoding.log.gz": "075eba95e5ba9f0ac22a25c100c4aa0e195649dcf7d65a13dc1931e8df8c322d",
+    "evidence/controls/core-postpull-20261008/core-csv-final3-20261008/release/CsvProfiler.log.gz": "2bd59a110a72e8fc7c08370c593533d74384d08688e3fab69bdfbcae9150744b",
+    "evidence/controls/core-postpull-20261008/core-csv-final3-20261008/release/CsvReadOptionMetadata.log.gz": "7bfbf3014cf358d40d3aa086787749166b98b7ff5ff28b3088ee5e351c96f786",
+    "evidence/controls/core-postpull-20261008/core-csv-final3-20261008/release/build.log.gz": "d046fdb421c3120c34a95521e991975a5b3081303bcd76505bae8d46e26f852b",
+    "evidence/controls/core-postpull-20261008/core-csv-final3-20261008/release/csvtest2.log.gz": "eded7a831ce0ae72e6907726fe3154c2bd8501090dbf5ca664bc8da8a2051b82",
+    "evidence/controls/core-postpull-20261008/core-csv-final3-20261008/release/csvutil.log.gz": "55a133be57f9496ccd17d49e9b8a78da2501486a01d264c133fc2366ea622fe6",
+    "evidence/controls/core-postpull-20261008/core-csv-final3-20261008/status.json": "639accc01f8e4486571298cd429f259ee6ca7114df02fe4ce1436d979fae2597",
+    "evidence/controls/core-postpull-20261008/core-csv-final3-20261008/steps.json": "c89046b9ce0f91fedebd9bd258606532eb787010bc7f049a6c03d7908caee8cb",
+    "evidence/controls/core-postpull-20261008/core-csv-postpull-20261008/debug/build.log.gz": "254291fa9c16c0b6544c144d5e7a9a15c0c331d3c1655da612939b583eb77701",
+    "evidence/controls/core-postpull-20261008/core-csv-postpull-20261008/source.json": "58879ccba653aa408c6d3fed52fbd0ff8c9b3bd65eb74f7e05e731930d03ab9e",
+    "evidence/controls/core-postpull-20261008/core-csv-postpull-20261008/status.json": "e55f75b0497b3ecfc81a1cd0ccd5842c868f304071025b67efb0d780257ce0b1",
+    "evidence/controls/core-postpull-20261008/core-csv-postpull-20261008/steps.json": "c5a6a6d97fc2d2194a2f7ce470c958de03f8bc83a9fef2ddd393ca29b550b5f4",
+    "evidence/controls/core-postpull-20261008/core-hash-docs-postpull-20261008/debug-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/core-postpull-20261008/core-hash-docs-postpull-20261008/debug-run.log.gz": "24ed4b1a6e828ecf2a8040cadfcce1a4799af7fcb6cf281aed48fa7c3d942301",
+    "evidence/controls/core-postpull-20261008/core-hash-docs-postpull-20261008/example.cpp": "d1ffd4869ef4e571f1235ddff35d925fddc1b490253db8a4806cddfbeff83cd3",
+    "evidence/controls/core-postpull-20261008/core-hash-docs-postpull-20261008/release-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/core-postpull-20261008/core-hash-docs-postpull-20261008/release-run.log.gz": "24ed4b1a6e828ecf2a8040cadfcce1a4799af7fcb6cf281aed48fa7c3d942301",
+    "evidence/controls/core-postpull-20261008/core-hash-docs-postpull-20261008/status.json": "9e8ad444eb7f7ca74e1eb379b719f42a4c2a7491b5911cd31754ea349eb6798d",
+    "evidence/controls/core-postpull-20261008/core-loader-integration-postpull-20261008/debug.log.gz": "685232244559675e8a80b41b772e235f973b246e5ac6c9d003bfe66073fc16d7",
+    "evidence/controls/core-postpull-20261008/core-loader-integration-postpull-20261008/release.log.gz": "232043b9b164508d4303b53e7f2f16f6bf7897e57a3c540075b51be6f696de96",
+    "evidence/controls/core-postpull-20261008/core-loader-integration-postpull-20261008/status.json": "fe7a9854a8f0a7e14bd04e4f10bcce6cf9dda66b288fb2a406753e12912d7cd4",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/CsvByteOrderMark.log.gz": "6b106df8558604db297353bc12583f87158ea0acaef335d14d3ebb592d97a4f0",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/CsvEncoding.log.gz": "075eba95e5ba9f0ac22a25c100c4aa0e195649dcf7d65a13dc1931e8df8c322d",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/TabularProfiler.log.gz": "700c12c4a1d223d885e456b22956e829e0519a7bb594e4ac38347f73c1c2bc49",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/build.log.gz": "2e6b77395d7400f803c76b5643353d44162ab6b3449c6e230be781416f5fe754",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/configure.log.gz": "c5b1538269649e90cd47d4df158e7324b6cbf158c795687185c4d18f8062b3ea",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/hash-key-encoding.log.gz": "758143610cc784c3923c341b0a8372e0ca2f92e9e0998b7c4141284ef01b3a5c",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/hash-lookup-native.log.gz": "d5809f9fbbea434c3aadc6e0ebbb3420fe1a04fb42eb56bcb9ba22ae15a00f83",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/hash.log.gz": "bade03c20083f745906cf620adb74b38cd88b145f9ad6e204a527e8edb17184e",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/hashdecl.log.gz": "6610a5a595559a1c387a68d47302caceba387b8c87f30d861f7b676e37ad693c",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/module-path-directive-valgrind.log.gz": "6229c219fe094e48d33df32e5144fd566463cd0d0b40d340659145779ab3753f",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/module-path-directive.log.gz": "c617aa544fabc70591beb679a30826daf32fd6d60923d4dadd9d2f924c9fa9a4",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/modules-valgrind.log.gz": "a3d3d8d77f668aa94af3ee98e50e16796d3105927b540f38bd0424d001667e4c",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/modules.log.gz": "c0f2029e38fd9b9efcc0fa0d187b3ea4331a9d23eff90717787ade55d56e95d1",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/native-valgrind.log.gz": "8ccad7dc1dc7ace718d06b2c81672c051ddf4cd28c5194592623e043b809bf0b",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/native.log.gz": "5fa05e54d563ccc4cb4f6d4836a184ebd8f1419b0ecb4e300b1d0b0bd868065f",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/separated-module-path-valgrind.log.gz": "75887f3af23a3583a6323cd6491553e38cabdc9f133500a85022daef63ccbacd",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/separated-module-path.log.gz": "270b71d4b40f3fc335940b823019bb219c0056b41d23d9eade81b63d9f07f31e",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/separated-module-shadow-valgrind.log.gz": "cc0d0c232311a38c697f01e3bd2a3054a8559cfa05d71b70f619d02ddb0d682d",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/separated-module-shadow.log.gz": "aa17bec819c2ebb25574e60ddda4fc4d75e03458b9b3f0eb25e714b714806e71",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/steps.json": "46b74030ec87f56ca4f4d21cd2e2323b543f5b58af6c53cdc1a1ca5c77ea88c2",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/debug/updated-qlib-build.log.gz": "1c7e39528d782ad7c7469f13d609438c7e045eb23a6fb054dfbf3a5d9dd8bb63",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/CsvByteOrderMark.log.gz": "6b106df8558604db297353bc12583f87158ea0acaef335d14d3ebb592d97a4f0",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/CsvEncoding.log.gz": "075eba95e5ba9f0ac22a25c100c4aa0e195649dcf7d65a13dc1931e8df8c322d",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/TabularProfiler.log.gz": "700c12c4a1d223d885e456b22956e829e0519a7bb594e4ac38347f73c1c2bc49",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/build.log.gz": "34fed6ce17264801c253f83aa549d4f56e478968779d463113cd8217868abacc",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/configure.log.gz": "8ef71c5fa76c965789169f51962d61cc446963caf8a4b33d78817cd629c4bb6d",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/hash-key-encoding.log.gz": "758143610cc784c3923c341b0a8372e0ca2f92e9e0998b7c4141284ef01b3a5c",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/hash-lookup-native.log.gz": "d5809f9fbbea434c3aadc6e0ebbb3420fe1a04fb42eb56bcb9ba22ae15a00f83",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/hash.log.gz": "bade03c20083f745906cf620adb74b38cd88b145f9ad6e204a527e8edb17184e",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/hashdecl.log.gz": "6610a5a595559a1c387a68d47302caceba387b8c87f30d861f7b676e37ad693c",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/module-path-directive-valgrind.log.gz": "39c2888fb973e8378c75492eec523d6e4a2c0308efc86e982df54158bd93a532",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/module-path-directive.log.gz": "c617aa544fabc70591beb679a30826daf32fd6d60923d4dadd9d2f924c9fa9a4",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/modules-valgrind.log.gz": "d6e8026baf6d9afdd0f028a7d1a4e00d9798b47f53c79c5de7efad6bdf4166d2",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/modules.log.gz": "c0f2029e38fd9b9efcc0fa0d187b3ea4331a9d23eff90717787ade55d56e95d1",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/native-valgrind.log.gz": "ab464425c00666e82c3a89c7dcbf0e2f36db4ec68e3ba87a2c03344c186b5d4c",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/native.log.gz": "5fa05e54d563ccc4cb4f6d4836a184ebd8f1419b0ecb4e300b1d0b0bd868065f",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/separated-module-path-valgrind.log.gz": "702a805f08a8415e3abba13b8842e1318f50ffd0bc78cd0dddd24548d791b985",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/separated-module-path.log.gz": "270b71d4b40f3fc335940b823019bb219c0056b41d23d9eade81b63d9f07f31e",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/separated-module-shadow-valgrind.log.gz": "c81071406da29af95c4a90ab5b9467019eaec3ce30d3efe9cf97bfe722498c12",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/separated-module-shadow.log.gz": "aa17bec819c2ebb25574e60ddda4fc4d75e03458b9b3f0eb25e714b714806e71",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/steps.json": "01ebd81cb091a0a174e21b401db732ff351a67812e96ca022229896d4f8a6fbf",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/release/updated-qlib-build.log.gz": "8c5517ce067a8b11a1cddb3752cb18cd5d943b98dab7a3789c6049138e9fb5e4",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/source.json": "9609f06a9dbc17b8a77a5c8036a8ceddcc50927ff1865fde711d58814fd80f9d",
+    "evidence/controls/core-postpull-20261008/core-postpull-20261008/status.json": "9276e2515cd3af850e9b44376d69a317a89571d1639f01916297008337f65516",
+    "evidence/controls/core-postpull-20261008/finish-core-csv-postpull-20261008.py": "df51d843315c60d561336cb12a4d9e91aec808358d33e1d988098a81af7bc522",
+    "evidence/controls/core-postpull-20261008/qualify-core-csv-final-20261008.py": "791c41cd28d4664b2874e646b5f239c8cb076946a2048a88650498d5c528dd60",
+    "evidence/controls/core-postpull-20261008/qualify-core-csv-final2-20261008.py": "803b2d5f9bec734f30b59a4d9bdd1d74d02340618e4bab7895c8e923615b2fdd",
+    "evidence/controls/core-postpull-20261008/qualify-core-csv-final3-20261008.py": "13db8d909c323b2ee683fbd0eaf274a074748f4d0fa9231779a248ec7f9e7e45",
+    "evidence/controls/core-postpull-20261008/qualify-core-postpull-20261008.py": "3b90d57660842156f7072f271f26276a674ff84bc16c9518d6479a08cb835aeb",
+    "evidence/controls/core-postpull-20261008/record-core-postpull-20261008.py": "33797c4d5c46e164e92750901b7cb0c38b74baed44fd6bd2aaf38ace7815a890"
+  },
+  "approved_decisions": [
+    "evidence/ngtcp2-backend-diagnostics-20261008.json",
+    "evidence/core-separated-pcre-diagnostic-20261008.json"
+  ],
+  "pending_decisions": [],
+  "approval": "Approved by the user on 2026-10-08: \"allow both\"; acceptance is limited to the exact documented diagnostics, with no suppression or production behavior change.",
+  "commit": "94e1c50c34d9fb44c424dd201f7cf969bacbd859",
+  "branch": "develop",
+  "remote_verified": true
+}

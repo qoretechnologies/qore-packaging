@@ -1,0 +1,393 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Historical pre-pull qualification and negative controls; superseded by evidence/core-postpull-20261008.json. Exact external diagnostics approved and final fixes pushed on 2026-10-08.",
+  "base_commit": "298fdb595c982b6c621cdabeed163198639dd696",
+  "root_causes": [
+    "Both exception-aware QoreString lookup overloads ignored the converted key and used the original encoded bytes.",
+    "Conversion and invalid-hashdecl-member errors could return without assigning the exists output."
+  ],
+  "fixes": [
+    "Use the temporary default-encoding key for both lookup APIs.",
+    "Assign false to exists on both error paths."
+  ],
+  "qualification": [
+    {
+      "mode": "debug",
+      "native_checks": 348,
+      "valgrind_errors": 0,
+      "lost_bytes": 0,
+      "suites": [
+        {
+          "name": "hash-lookup-native",
+          "cases": 1,
+          "assertions": 2
+        },
+        {
+          "name": "hash",
+          "cases": 1,
+          "assertions": 2
+        },
+        {
+          "name": "hashdecl",
+          "cases": 13,
+          "assertions": 298
+        }
+      ],
+      "steps": [
+        {
+          "name": "configure",
+          "command": [
+            "cmake",
+            "-S",
+            "/home/david/src/qore/git/qore",
+            "-B",
+            "/home/david/src/qore/git/qore/build-debug",
+            "-DCMAKE_BUILD_TYPE=Debug",
+            "-DCMAKE_INSTALL_PREFIX=/usr"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "build",
+          "command": [
+            "cmake",
+            "--build",
+            "/home/david/src/qore/git/qore/build-debug",
+            "--target",
+            "qore",
+            "qore-hash-lookup-test",
+            "-j2"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "native",
+          "command": [
+            "/home/david/src/qore/git/qore/build-debug/qore-hash-lookup-test"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "native-valgrind",
+          "command": [
+            "valgrind",
+            "--error-exitcode=99",
+            "--leak-check=full",
+            "--show-leak-kinds=all",
+            "--errors-for-leak-kinds=definite,indirect,possible",
+            "/home/david/src/qore/git/qore/build-debug/qore-hash-lookup-test"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "hash-lookup-native",
+          "command": [
+            "/home/david/src/qore/git/qore/build-debug/qore",
+            "-b",
+            "--enable-debug",
+            "/home/david/src/qore/git/qore/examples/test/qore/misc/hash-lookup-native.qtest"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "hash",
+          "command": [
+            "/home/david/src/qore/git/qore/build-debug/qore",
+            "-b",
+            "--enable-debug",
+            "/home/david/src/qore/git/qore/examples/test/qore/misc/hash.qtest"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "hashdecl",
+          "command": [
+            "/home/david/src/qore/git/qore/build-debug/qore",
+            "-b",
+            "--enable-debug",
+            "/home/david/src/qore/git/qore/examples/test/qore/misc/hashdecl.qtest"
+          ],
+          "exit_code": 0
+        }
+      ]
+    },
+    {
+      "mode": "release",
+      "native_checks": 348,
+      "valgrind_errors": 0,
+      "lost_bytes": 0,
+      "suites": [
+        {
+          "name": "hash-lookup-native",
+          "cases": 1,
+          "assertions": 2
+        },
+        {
+          "name": "hash",
+          "cases": 1,
+          "assertions": 2
+        },
+        {
+          "name": "hashdecl",
+          "cases": 13,
+          "assertions": 298
+        }
+      ],
+      "steps": [
+        {
+          "name": "configure",
+          "command": [
+            "cmake",
+            "-S",
+            "/home/david/src/qore/git/qore",
+            "-B",
+            "/home/david/src/qore/git/qore/build",
+            "-DCMAKE_BUILD_TYPE=Release",
+            "-DCMAKE_INSTALL_PREFIX=/usr"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "build",
+          "command": [
+            "cmake",
+            "--build",
+            "/home/david/src/qore/git/qore/build",
+            "--target",
+            "qore",
+            "qore-hash-lookup-test",
+            "-j2"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "native",
+          "command": [
+            "/home/david/src/qore/git/qore/build/qore-hash-lookup-test"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "native-valgrind",
+          "command": [
+            "valgrind",
+            "--error-exitcode=99",
+            "--leak-check=full",
+            "--show-leak-kinds=all",
+            "--errors-for-leak-kinds=definite,indirect,possible",
+            "/home/david/src/qore/git/qore/build/qore-hash-lookup-test"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "hash-lookup-native",
+          "command": [
+            "/home/david/src/qore/git/qore/build/qore",
+            "-b",
+            "--enable-debug",
+            "/home/david/src/qore/git/qore/examples/test/qore/misc/hash-lookup-native.qtest"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "hash",
+          "command": [
+            "/home/david/src/qore/git/qore/build/qore",
+            "-b",
+            "--enable-debug",
+            "/home/david/src/qore/git/qore/examples/test/qore/misc/hash.qtest"
+          ],
+          "exit_code": 0
+        },
+        {
+          "name": "hashdecl",
+          "command": [
+            "/home/david/src/qore/git/qore/build/qore",
+            "-b",
+            "--enable-debug",
+            "/home/david/src/qore/git/qore/examples/test/qore/misc/hashdecl.qtest"
+          ],
+          "exit_code": 0
+        }
+      ]
+    }
+  ],
+  "source_sha256": {
+    "lib/QoreHashNode.cpp": "eb6915ac9d977900d59c4d640745ca51e3f631489b9964de5fc380ef2927211d",
+    "include/qore/QoreHashNode.h": "291192a36dee949cf97042fff6d597245f71a4780b665c70c8329ce22c902674",
+    "CMakeLists.txt": "6be48f3f89fce05ed82e619af5b87f97c676db3961b5635a29e29f496c8d485e",
+    "examples/test/qore/misc/hash_lookup.cpp": "95d046e5d859eb24d2cfda95222351ceb23b04058871371ba01b3028d4f3771b",
+    "examples/test/qore/misc/hash-lookup-native.qtest": "42c75ebac5a41c62ed5af0d6783b635f9482aeb07e7f32d777fe90ed9964c588",
+    "examples/test/qore/misc/hash-lookup-native.rst": "acf49dae7094bbb9e6deac75de7faf37c05c85ef0266388ad204df0232c6e776",
+    "doxygen/lang/900_release_notes.dox.tmpl": "a5c69ec6ab946315f06942096a31e6fefe79614e7ea56ec637d5a2a569ca75ae"
+  },
+  "negative_controls": [
+    {
+      "command": [
+        "g++",
+        "-std=c++17",
+        "-Wall",
+        "-Werror",
+        "-O2",
+        "-g",
+        "-I",
+        "build/include",
+        "-I",
+        "include",
+        "examples/test/qore/misc/hash_lookup.cpp",
+        "-L",
+        "build",
+        "-lqore",
+        "-o",
+        "/home/david/src/qore/git/qore-packaging/work/hash-lookup-native-original-20261008"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/home/david/src/qore/git/qore-packaging/work/hash-lookup-native-original-20261008",
+        "encoded"
+      ],
+      "exit_code": 1
+    },
+    {
+      "command": [
+        "/home/david/src/qore/git/qore-packaging/work/hash-lookup-native-original-20261008",
+        "conversion"
+      ],
+      "exit_code": 1
+    },
+    {
+      "command": [
+        "/home/david/src/qore/git/qore-packaging/work/hash-lookup-native-original-20261008",
+        "declaration"
+      ],
+      "exit_code": 1
+    }
+  ],
+  "documentation_example": [
+    {
+      "mode": "debug",
+      "step": "compile",
+      "command": [
+        "g++",
+        "-std=c++17",
+        "-Wall",
+        "-Werror",
+        "-O2",
+        "-g",
+        "-I",
+        "/home/david/src/qore/git/qore/build-debug/include",
+        "-I",
+        "/home/david/src/qore/git/qore/include",
+        "/home/david/src/qore/git/qore-packaging/results/core-hash-docs-20261008/example.cpp",
+        "-L",
+        "/home/david/src/qore/git/qore/build-debug",
+        "-lqore",
+        "-o",
+        "/home/david/src/qore/git/qore-packaging/results/core-hash-docs-20261008/debug"
+      ],
+      "exit_code": 0
+    },
+    {
+      "mode": "debug",
+      "step": "run",
+      "command": [
+        "/home/david/src/qore/git/qore-packaging/results/core-hash-docs-20261008/debug"
+      ],
+      "exit_code": 0
+    },
+    {
+      "mode": "release",
+      "step": "compile",
+      "command": [
+        "g++",
+        "-std=c++17",
+        "-Wall",
+        "-Werror",
+        "-O2",
+        "-g",
+        "-I",
+        "/home/david/src/qore/git/qore/build/include",
+        "-I",
+        "/home/david/src/qore/git/qore/include",
+        "/home/david/src/qore/git/qore-packaging/results/core-hash-docs-20261008/example.cpp",
+        "-L",
+        "/home/david/src/qore/git/qore/build",
+        "-lqore",
+        "-o",
+        "/home/david/src/qore/git/qore-packaging/results/core-hash-docs-20261008/release"
+      ],
+      "exit_code": 0
+    },
+    {
+      "mode": "release",
+      "step": "run",
+      "command": [
+        "/home/david/src/qore/git/qore-packaging/results/core-hash-docs-20261008/release"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "audit": {
+    "pass": 19,
+    "not_applicable": 43,
+    "fail": 0
+  },
+  "diagnostics": [
+    "Previously approved GCC/Valgrind DW_AT_abstract_origin site; exact library path verified.",
+    "Two alternative ngtcp2 backend configure warnings: evidence/ngtcp2-backend-diagnostics-20261008.json; approval pending."
+  ],
+  "limits": [
+    "No full updated RPM or native OBS qualification is claimed.",
+    "The initial make target-dispatch failure was corrected by explicit CMake configuration; no source or test change.",
+    "A preliminary -Wextra build rejected unused parameters in unchanged public virtual method headers; native fixture compilation uses normal -Wall -Werror."
+  ],
+  "files_sha256": {
+    "evidence/controls/core-hash-fix-20261008/check-core-hash-docs-20261008.py": "e6caefeb0b9572621fa02c05dbb14724c80c3b36e2bee2146225bab2b65c7580",
+    "evidence/controls/core-hash-fix-20261008/core-hash-docs-20261008/debug-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/core-hash-fix-20261008/core-hash-docs-20261008/debug-run.log.gz": "24ed4b1a6e828ecf2a8040cadfcce1a4799af7fcb6cf281aed48fa7c3d942301",
+    "evidence/controls/core-hash-fix-20261008/core-hash-docs-20261008/example.cpp": "d1ffd4869ef4e571f1235ddff35d925fddc1b490253db8a4806cddfbeff83cd3",
+    "evidence/controls/core-hash-fix-20261008/core-hash-docs-20261008/release-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/core-hash-fix-20261008/core-hash-docs-20261008/release-run.log.gz": "24ed4b1a6e828ecf2a8040cadfcce1a4799af7fcb6cf281aed48fa7c3d942301",
+    "evidence/controls/core-hash-fix-20261008/core-hash-docs-20261008/status.json": "38683c19904fa0f8c9d3864e2919420ddead59a9f89fc2ba6282cb25704e8b23",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-20261008/debug/build.log.gz": "9bc7268ef186680bc9878564f635685f01d448d991bf8896dab49706ca6e3808",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-20261008/debug/status.json": "44514933d03b776689ddc68b934d52c2f4c4d9d48b5e5b1456a1426c27c2317f",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-20261008/release/build.log.gz": "75aa68bee57dd3e5abe66eb4b3c38dd8b1a4f60457d8204620368e836f203cb4",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-20261008/release/status.json": "b51f610d23b5a1726ef097d4198fd48304dab3c665d9c98e420b391f0a0bc0ed",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-20261008/source-hashes.json": "1b6f38375238433b1f300562d82bfd9e18a519e25836666e28272dd1739ab6b7",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-20261008/status.json": "7c26d29d1dd1991996452cd43ca9597e5b4328850f56ea391860740748f59f5c",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/debug/build.log.gz": "1bd1a9d7b6d4badb7850a65ef01526ae207167410af9abe26caa5c02899ad190",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/debug/configure.log.gz": "acb9053922e3346c8083ff1a36f189c59800860ea3a51f6450dab4653aa4a27e",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/debug/hash-lookup-native.log.gz": "e78b332a77a827a5f3d5a6e70c65aa176a841e84ee0c04e4377d8cf24d45a8a4",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/debug/hash.log.gz": "719f1aa3d9304af651712cf9356b785e79ddb485d6aaacfb9ed4eb0c9d8ebb31",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/debug/hashdecl.log.gz": "9b451a16e89370b61c21a1b977d8bb2a5595bf6082e3763fd53af916c455898e",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/debug/native-valgrind.log.gz": "abf95938ce859e2adb3031f0ed7b89e0cfd1b11610e254c47ad39e1e570b7a08",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/debug/native.log.gz": "5fa05e54d563ccc4cb4f6d4836a184ebd8f1419b0ecb4e300b1d0b0bd868065f",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/debug/status.json": "c0fe903b07fc427d2f0976822557b47fb3b223e8b23131a4a945f954677bbf43",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/release/build.log.gz": "49e7f4831e8c472e360cb3b8e673907c2f90ef5294a9071ba5e1753d550e561f",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/release/configure.log.gz": "bf691f16ef7792b21a16ec81046db48260ce9443263be79fd03fa43672926860",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/release/hash-lookup-native.log.gz": "e78b332a77a827a5f3d5a6e70c65aa176a841e84ee0c04e4377d8cf24d45a8a4",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/release/hash.log.gz": "719f1aa3d9304af651712cf9356b785e79ddb485d6aaacfb9ed4eb0c9d8ebb31",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/release/hashdecl.log.gz": "9b451a16e89370b61c21a1b977d8bb2a5595bf6082e3763fd53af916c455898e",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/release/native-valgrind.log.gz": "88a62af045c8ceb9addc6ec7e85e86f17335a867bad6d8836b0a3ebfa1be0dd0",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/release/native.log.gz": "5fa05e54d563ccc4cb4f6d4836a184ebd8f1419b0ecb4e300b1d0b0bd868065f",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/release/status.json": "b796e4e914f0198791b978fbaef67914ce4384eefb9d3412e9ded312bf442e91",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/source-hashes.json": "1b6f38375238433b1f300562d82bfd9e18a519e25836666e28272dd1739ab6b7",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-final-20261008/status.json": "6da3f6012af73a0d26512ac7311ab737ecf4723111befa6a8f971ea694817f04",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-original-20261008/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-original-20261008/conversion.log.gz": "12882c4e582f6844f460df41e9121712f752b326eb40c107743c27add78ff4cb",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-original-20261008/declaration.log.gz": "e8853d3eb7f5bfbcf7e9087352ef8bb912863f619ae2e6c9c93fef26d087bc11",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-original-20261008/encoded.log.gz": "95bc3dd267e7be8da91734bb24ca7572d8c098fe27fd2ed15ed2a535f009aa49",
+    "evidence/controls/core-hash-fix-20261008/core-hash-lookup-original-20261008/status.json": "338be508d6fefb2ca86be0c5270dcf523598c54f11e25826cb535d66bf591d1e",
+    "evidence/controls/core-hash-fix-20261008/main-audit.rst": "7441425d3dc81d0197a979b71633ed14d85c678119f54ed14c80b477c362aced",
+    "evidence/controls/core-hash-fix-20261008/qualify-core-hash-lookup-20261008.py": "f6f9d0ef72b17f5b2b1fc6b2ca58f09b142dedb24bba650d61e756a3f800799d",
+    "evidence/controls/core-hash-fix-20261008/qualify-core-hash-lookup-final-20261008.py": "96b8b0ee82290b38a557fbcd9216f4c6742bb3fa05e1d6415744f8ddd503c60a",
+    "evidence/controls/core-hash-fix-20261008/record.py": "e8ba3882b1845d88756648d11299cb5a450a92e22bad23e01da95d8e917be893"
+  },
+  "historical_status": "Runtime fix and all affected tests pass; ngtcp2 configure diagnostic decision pending. Not committed.",
+  "superseded_by": "evidence/core-postpull-20261008.json",
+  "final_commit": "94e1c50c34d9fb44c424dd201f7cf969bacbd859"
+}

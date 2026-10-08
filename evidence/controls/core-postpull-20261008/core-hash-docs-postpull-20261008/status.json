@@ -1,0 +1,64 @@
+[
+  {
+    "mode": "debug",
+    "step": "compile",
+    "command": [
+      "g++",
+      "-std=c++17",
+      "-Wall",
+      "-Werror",
+      "-O2",
+      "-g",
+      "-I",
+      "/home/david/src/qore/git/qore/build-debug/include",
+      "-I",
+      "/home/david/src/qore/git/qore/include",
+      "/home/david/src/qore/git/qore-packaging/results/core-hash-docs-postpull-20261008/example.cpp",
+      "-L",
+      "/home/david/src/qore/git/qore/build-debug",
+      "-lqore",
+      "-o",
+      "/home/david/src/qore/git/qore-packaging/results/core-hash-docs-postpull-20261008/debug"
+    ],
+    "exit_code": 0
+  },
+  {
+    "mode": "debug",
+    "step": "run",
+    "command": [
+      "/home/david/src/qore/git/qore-packaging/results/core-hash-docs-postpull-20261008/debug"
+    ],
+    "exit_code": 0
+  },
+  {
+    "mode": "release",
+    "step": "compile",
+    "command": [
+      "g++",
+      "-std=c++17",
+      "-Wall",
+      "-Werror",
+      "-O2",
+      "-g",
+      "-I",
+      "/home/david/src/qore/git/qore/build/include",
+      "-I",
+      "/home/david/src/qore/git/qore/include",
+      "/home/david/src/qore/git/qore-packaging/results/core-hash-docs-postpull-20261008/example.cpp",
+      "-L",
+      "/home/david/src/qore/git/qore/build",
+      "-lqore",
+      "-o",
+      "/home/david/src/qore/git/qore-packaging/results/core-hash-docs-postpull-20261008/release"
+    ],
+    "exit_code": 0
+  },
+  {
+    "mode": "release",
+    "step": "run",
+    "command": [
+      "/home/david/src/qore/git/qore-packaging/results/core-hash-docs-postpull-20261008/release"
+    ],
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,265 @@
+[
+  {
+    "name": "configure",
+    "command": [
+      "cmake",
+      "-S",
+      "/home/david/src/qore/git/qore",
+      "-B",
+      "/home/david/src/qore/git/qore/build-debug",
+      "-DCMAKE_BUILD_TYPE=Debug",
+      "-DCMAKE_INSTALL_PREFIX=/usr"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "build",
+    "command": [
+      "cmake",
+      "--build",
+      "/home/david/src/qore/git/qore/build-debug",
+      "--target",
+      "qore",
+      "qore-hash-lookup-test",
+      "-j2"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "updated-qlib-build",
+    "command": [
+      "cmake",
+      "--build",
+      "/home/david/src/qore/git/qore/build-debug",
+      "--target",
+      "CsvUtil-qmod",
+      "DataProvider-qmod",
+      "-j2"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "native",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore-hash-lookup-test"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "native-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "/home/david/src/qore/git/qore/build-debug/qore-hash-lookup-test"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "hash-lookup-native",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "examples/test/qore/misc/hash-lookup-native.qtest",
+      "-v"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "hash",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "examples/test/qore/misc/hash.qtest",
+      "-v"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "hashdecl",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "examples/test/qore/misc/hashdecl.qtest",
+      "-v"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "hash-key-encoding",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "examples/test/qore/misc/hash-key-encoding/hash-key-encoding.qtest",
+      "-v"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "CsvByteOrderMark",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "examples/test/qlib/CsvUtil/CsvByteOrderMark.qtest",
+      "-v"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "CsvEncoding",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "examples/test/qlib/CsvUtil/CsvEncoding.qtest",
+      "-v"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "TabularProfiler",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "examples/test/qlib/DataProvider/TabularProfiler.qtest",
+      "-v"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "separated-module-path",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "examples/test/qore/misc/module-loader/separated-module-path.qtest",
+      "-v"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "separated-module-path-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "examples/test/qore/misc/module-loader/separated-module-path.qtest",
+      "-v"
+    ],
+    "exit_code": 0,
+    "regex_engine": "interpreter"
+  },
+  {
+    "name": "separated-module-shadow",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "examples/test/qore/misc/module-loader/separated-module-shadow.qtest",
+      "-v"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "separated-module-shadow-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "examples/test/qore/misc/module-loader/separated-module-shadow.qtest",
+      "-v"
+    ],
+    "exit_code": 0,
+    "regex_engine": "interpreter"
+  },
+  {
+    "name": "modules",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "examples/test/qore/misc/module-loader/modules.qtest",
+      "-v"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "modules-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "examples/test/qore/misc/module-loader/modules.qtest",
+      "-v"
+    ],
+    "exit_code": 0,
+    "regex_engine": "interpreter"
+  },
+  {
+    "name": "module-path-directive",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "examples/test/qore/parser/module-path-directive.qtest",
+      "-v"
+    ],
+    "exit_code": 0,
+    "regex_engine": "default JIT"
+  },
+  {
+    "name": "module-path-directive-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "examples/test/qore/parser/module-path-directive.qtest",
+      "-v"
+    ],
+    "exit_code": 0,
+    "regex_engine": "interpreter"
+  }
+]

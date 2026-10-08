@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Qualified; exact diagnostic exception approved by the user on 2026-10-08",
+  "root_cause": "ngtcp2 1.25.0 uses ENABLE_OPENSSL for three alternative TLS implementations and independently warns for each missing variant. Its own discovery makes quictls and LibreSSL mutually exclusive. OpenSSL 3.5 selects the required ossl backend correctly.",
+  "scope": [
+    "libngtcp2_crypto_quictls library is disabled due to lack of good quictls",
+    "libngtcp2_crypto_libressl library is disabled due to lack of good LibreSSL"
+  ],
+  "controls": [
+    {
+      "backend": "ossl",
+      "selected": [
+        "includes",
+        "ossl"
+      ],
+      "warnings": [
+        "quictls",
+        "libressl"
+      ],
+      "exit_code": 0
+    },
+    {
+      "backend": "quictls",
+      "selected": [
+        "includes",
+        "quictls"
+      ],
+      "warnings": [
+        "libressl",
+        "ossl"
+      ],
+      "exit_code": 0
+    },
+    {
+      "backend": "libressl",
+      "selected": [
+        "includes",
+        "quictls"
+      ],
+      "warnings": [
+        "quictls",
+        "ossl"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "qualification": "Debug and Release configurations select and link libngtcp2_crypto_ossl.a. Hash fix: 348 native checks and 302 Qore assertions each; native Valgrind zero errors or lost allocations.",
+  "proposal": "Retain the two exact optional-backend configure warnings during local bundled dependency qualification. No backend, compiler flag, test or logging change. RPMs require system ngtcp2 and do not use this FetchContent path.",
+  "limits": "CMake controls validate backend dispatch and diagnostics, not a new end-to-end QUIC protocol qualification.",
+  "files_sha256": {
+    "evidence/controls/ngtcp2-backend-diagnostics-20261008/crypto-CMakeLists.txt": "9f811ab052e0e4d57b87dabdafefa0fc8a1c0adfefa74cb3b88f3a438a38606d",
+    "evidence/controls/ngtcp2-backend-diagnostics-20261008/debug-link.txt": "0d0758c81d08d893c0ca41fe53b3ea4a8f6567dd4d0f9362ddd35a87ea94b9e8",
+    "evidence/controls/ngtcp2-backend-diagnostics-20261008/libressl.cmake": "63e03b80e0f2f8c0690b6b21096cf1d67c7ff9f7dbca31cbd4a3593210aa8cc0",
+    "evidence/controls/ngtcp2-backend-diagnostics-20261008/ngtcp2-CMakeLists.txt": "2e41fb387295df475b87ee0ad958d02a75125a536761c8646a86b04b176543b2",
+    "evidence/controls/ngtcp2-backend-diagnostics-20261008/ossl.cmake": "bd753c0ee1129f17b995aed3e456735b9919303a99dd94a9d6927568c5cbe20e",
+    "evidence/controls/ngtcp2-backend-diagnostics-20261008/quictls.cmake": "13b86f11efddef2410ac1f6836796017bce6818232796dfd44b8b714ed8ba4e6",
+    "evidence/controls/ngtcp2-backend-diagnostics-20261008/release-link.txt": "eccc0f5850026c12c7f6167c0b2d936e439fdde70ed398b77fce9b11b4bd26d6",
+    "evidence/controls/ngtcp2-backend-diagnostics-20261008/debug-configure.log.gz": "acb9053922e3346c8083ff1a36f189c59800860ea3a51f6450dab4653aa4a27e",
+    "evidence/controls/ngtcp2-backend-diagnostics-20261008/libressl.stderr.gz": "8fc30c30a56dd46b074dd46524e9526a7252c68161691e251caee446fbb68800",
+    "evidence/controls/ngtcp2-backend-diagnostics-20261008/libressl.stdout.gz": "12cf1aa8c04568335159700cd3082f7af180743114462eb7c8afb17a1037fc86",
+    "evidence/controls/ngtcp2-backend-diagnostics-20261008/ossl.stderr.gz": "d912c8b17de0cd3f3667e6bc6eb51268951f0866241b9d6d4a0858c98eaf9cb8",
+    "evidence/controls/ngtcp2-backend-diagnostics-20261008/ossl.stdout.gz": "ab5c315d4eb9dfda56936ca6cd8404b7d50f5c4796e7f9a368c4d0c11378372f",
+    "evidence/controls/ngtcp2-backend-diagnostics-20261008/quictls.stderr.gz": "5a521f99b89450dd8efa842718cb19a4c5bc8210dda4c8b12051f8728e83b9bb",
+    "evidence/controls/ngtcp2-backend-diagnostics-20261008/quictls.stdout.gz": "12cf1aa8c04568335159700cd3082f7af180743114462eb7c8afb17a1037fc86",
+    "evidence/controls/ngtcp2-backend-diagnostics-20261008/release-configure.log.gz": "bf691f16ef7792b21a16ec81046db48260ce9443263be79fd03fa43672926860"
+  },
+  "approval": "Approved by the user on 2026-10-08: \"allow both\"; acceptance is limited to the exact documented diagnostics, with no suppression or production behavior change."
+}

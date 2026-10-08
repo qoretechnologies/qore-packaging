@@ -1,0 +1,77 @@
+[
+  {
+    "name": "configure",
+    "command": [
+      "cmake",
+      "-S",
+      "/home/david/src/qore/git/qore",
+      "-B",
+      "/home/david/src/qore/git/qore/build",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DCMAKE_INSTALL_PREFIX=/usr"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "build",
+    "command": [
+      "cmake",
+      "--build",
+      "/home/david/src/qore/git/qore/build",
+      "--target",
+      "qore",
+      "qore-hash-lookup-test",
+      "-j2"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "native",
+    "command": [
+      "/home/david/src/qore/git/qore/build/qore-hash-lookup-test"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "native-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "/home/david/src/qore/git/qore/build/qore-hash-lookup-test"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "hash-lookup-native",
+    "command": [
+      "/home/david/src/qore/git/qore/build/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore/examples/test/qore/misc/hash-lookup-native.qtest"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "hash",
+    "command": [
+      "/home/david/src/qore/git/qore/build/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore/examples/test/qore/misc/hash.qtest"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "hashdecl",
+    "command": [
+      "/home/david/src/qore/git/qore/build/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore/examples/test/qore/misc/hashdecl.qtest"
+    ],
+    "exit_code": 0
+  }
+]

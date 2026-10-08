@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "approval": "Approved by the user on 2026-10-08: \"allow both\"; acceptance is limited to the exact documented diagnostics, with no suppression or production behavior change.",
+  "scope": "PCRE2 10.47-1.fc44.1.x86_64 JIT scan for the exact .+\\.(qc|ql)$ directory-module source filter. Existing .qm$ QUnit diagnostic remains under its prior approval.",
+  "root_cause": "Tracing the unchanged PCRE2 match calls associates all nine reports in the new loader regression with scanning resource.txt against .+\\.(qc|ql)$. Undefined alignment/capacity padding triggers intermediate JIT scan branches; every result and capture agrees with the interpreter and the explicit match expectations.",
+  "checks_each_run": 57344,
+  "runs": [
+    "defined padding normally",
+    "defined padding under Valgrind",
+    "undefined padding under Valgrind"
+  ],
+  "dimensions": "10 matching/nonmatching/empty/newline/case-sensitive filename inputs, 16 alignments and 256 padding bytes; compare results and captures with PCRE2_NO_JIT.",
+  "memory": "Defined padding: zero errors, all170allocations freed. Undefined padding: JIT conditional reports only; all170allocations freed.",
+  "qore": "Both builds pass all four loader suites with default regex JIT. The separately documented QORE_PCRE2_NO_JIT=1 test mode validates Qore loader memory independently; all eight such Valgrind runs have zero memory errors and zero definite/indirect/possible loss. Default-JIT reports remain archived, without suppression.",
+  "proposal": "Extend the existing exact PCRE2 diagnostic exception to this source-file filter. No loader algorithm, production regex setting, dependency replacement or warning suppression is proposed.",
+  "related": [
+    "evidence/zmq-pcre2-diagnostic-20261006.json",
+    "evidence/amqp-pcre2-diagnostics-20261006.json"
+  ],
+  "files_sha256": {
+    "evidence/controls/core-separated-pcre-20261008/control.c": "7abf6f08758a65da2b02789273e26c6e4077fb13da691845363a0522c473a0ed",
+    "evidence/controls/core-separated-pcre-20261008/trace.c": "ce9106169b5ec39bdf7e5ef2a85dbf8ad1be67655dcf6fc4109e3f6b82e4f1e4",
+    "evidence/controls/core-separated-pcre-20261008/core-separated-pcre-trace-20261008.log.gz": "a09f17d589ebe36454706bf9fd3f435f88c0fc6c463bba28d56aa3457ab6fbce",
+    "evidence/controls/core-separated-pcre-20261008/undefined-valgrind.log.gz": "c9f4ff2d56d404d1b2a6f699eaa12155a00755b98a352627760db67cbac2b3d6",
+    "evidence/controls/core-separated-pcre-20261008/defined-valgrind.log.gz": "28e18816d89ea1c5498eda8db88b62864813afa9cdaeffd462ce84c7658e94af",
+    "evidence/controls/core-separated-pcre-20261008/functional.log.gz": "d538b30aaddfb586ccec75f2137a0d53f33d374da23d97b5536bce14d4f5ae12"
+  }
+}
