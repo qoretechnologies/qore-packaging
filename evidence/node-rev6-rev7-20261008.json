@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Revision6 full native tests and lint pass on both architectures. Prepared constructor fix uploaded as revision7 for native verification; publication disabled.",
+  "revision6": {
+    "srcmd5": "446c131b67f27e8cdbeae0887574f61f",
+    "architectures": {
+      "x86_64": {
+        "results": 5249,
+        "plan": [
+          "5249"
+        ],
+        "failed": [],
+        "native192": true,
+        "unique_warnings": 571,
+        "warning_occurrences": 4755,
+        "new": [],
+        "gone": [],
+        "skipped": 81
+      },
+      "aarch64": {
+        "results": 5245,
+        "plan": [
+          "5245"
+        ],
+        "failed": [],
+        "native192": true,
+        "unique_warnings": 565,
+        "warning_occurrences": 4699,
+        "new": [],
+        "gone": [
+          "../deps/v8/src/codegen/arm64/assembler-arm64.h:94:10: warning: inline function \u2018v8::internal::Operand::Operand(T) [with T = int]\u2019 used but never defined",
+          "../deps/v8/third_party/zlib/cpu_features.c:104:13: warning: \u2018_cpu_check_features\u2019 defined but not used [-Wunused-function]"
+        ],
+        "skipped": 80
+      }
+    }
+  },
+  "warning_review": "No new unique compiler diagnostics versus revision5. The two corrected ARM declaration diagnostics disappear. Eight constructor diagnostics remain in rev6 and are addressed by rev7; pio2/BTI and VM experimental-notice decisions remain pending. Exact ARM root-load diagnostic approved.",
+  "revision7": {
+    "name": "nodejs24-libnode",
+    "rev": "7",
+    "vrev": "7",
+    "srcmd5": "68633aee6138c8992573ca51eddf282f"
+  },
+  "source_commit": "0997787ef8c0c8564640b9faa7bea71166ec206e",
+  "source_files_verified": 59,
+  "changed_sources": [
+    "nodejs24-arm-header-test.py",
+    "nodejs24-arm-initialization-test.cc",
+    "nodejs24-arm-operand-initialization.patch",
+    "nodejs24-libnode.changes",
+    "nodejs24-libnode.spec"
+  ],
+  "qualification": "evidence/node-arm-initialization-fix-20261008.json",
+  "limits": [
+    "JavaScript totals include 81 x86_64 and 80 ARM upstream skips; 192 native tests pass on each.",
+    "Matching diagnostic text is not a blanket approval for every ARM code path.",
+    "Revision7 native and installed module checks remain required before publication."
+  ],
+  "files_sha256": {
+    "evidence/controls/node-rev6-rev7-20261008/aarch64-rev6-buildinfo.xml": "2bb96ade481931e555b2d13833cd6d80ac2b69986e2a0d301db9019b7b43c617",
+    "evidence/controls/node-rev6-rev7-20261008/metadata-after.xml": "f9cf1745c0d3ebdbe405021ec1c4090969dba5b7ac40b2e5b941b390b2951e3e",
+    "evidence/controls/node-rev6-rev7-20261008/new-source.xml": "a61cebefd66774f1aebb01dd89e929b400c7989f7e3816afa9480159181a6490",
+    "evidence/controls/node-rev6-rev7-20261008/rev6-state.xml": "1024862d32972b01aded702e72a9d3cb1d58fbf88868175bb73b6f4558d9ac4e",
+    "evidence/controls/node-rev6-rev7-20261008/metadata-before.xml": "f9cf1745c0d3ebdbe405021ec1c4090969dba5b7ac40b2e5b941b390b2951e3e",
+    "evidence/controls/node-rev6-rev7-20261008/old-source.xml": "026dfd5b0bcc6858af1a499b850eeac80d90b3321ba8d131c19e6f0640a9f27a",
+    "evidence/controls/node-rev6-rev7-20261008/aarch64-rev6.log.gz": "5708539bf00a8d219b1548b645134d355d99fc087560d4a9ef98d5135f571636",
+    "evidence/controls/node-rev6-rev7-20261008/upload.py": "c0b611e95ca73101c8fff5c324dbdc9bceb9041ad528983ef2f0ceec6703ab5d",
+    "evidence/controls/node-rev6-rev7-20261008/x86_64-rev6-buildinfo.xml": "ea615cbb394e0e63628e53459d1a561b9e05fbc989e53ed207568186d330ea1b",
+    "evidence/controls/node-rev6-rev7-20261008/upload.log": "2dda4a5854388aeb800299feaa587099c5697e0a65507556709e034cb06dea0a",
+    "evidence/controls/node-rev6-rev7-20261008/x86_64-rev6.log.gz": "120fd66d322505083fea2e71fcc8f166c7f7c8ef080914ae661338e49c4c35d4",
+    "evidence/controls/node-rev6-rev7-20261008/source-manifest.json": "871e6502077a4377eaeb0007377959e39c800ecedfee232017a6ab97ef189257"
+  }
+}
