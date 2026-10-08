@@ -245,6 +245,80 @@ os.write(2, b'diagnostic\\n')
             for phase in ('runtime', 'sdk'):
                 self.assertEqual(module.module_dependencies('freetds', phase, family), [])
 
+    def test_grpc_fixture_manifest_requires_complete_pinned_sources_and_process(self):
+        self.add_modules()
+        self.manifest['modules'] = [m for m in self.manifest['modules'] if m['name'] == 'grpc']
+        fixture = self.manifest['modules'][0]
+        self.assertEqual(len([f for f in fixture['fixtures'] if f['path'].endswith('.qtest')]), 13)
+        self.assertTrue({'test/test.proto', 'test/async-stream.proto',
+                         'test/certs/server.crt', 'test/certs/server.key',
+                         'test/interop/interop_server.py'} <= {f['path'] for f in fixture['fixtures']})
+        for mutation in ('missing-fixture', 'duplicate-fixture', 'moving-source',
+                         'wrong-repository', 'missing-process', 'sdk-process'):
+            manifest = copy.deepcopy(self.manifest)
+            changed = manifest['modules'][0]
+            if mutation == 'missing-fixture':
+                changed['fixtures'].pop()
+            elif mutation == 'duplicate-fixture':
+                changed['fixtures'].append(changed['fixtures'][0])
+            elif mutation == 'moving-source':
+                changed['commit'] = 'develop'
+            elif mutation == 'wrong-repository':
+                changed['fixtures'][0]['url'] = changed['fixtures'][0]['url'].replace('/module-grpc/', '/module-process/')
+            elif mutation == 'missing-process':
+                manifest['packages'] = [p for p in manifest['packages'] if p['name'] != 'qore-process-module']
+            else:
+                next(p for p in manifest['packages'] if p['name'] == 'qore-process-module')['phase'] = 'sdk'
+            with self.subTest(mutation=mutation), self.assertRaises(ValueError):
+                module.validate(manifest)
+
+    def test_grpc_commands_run_all_installed_suites_and_sdk_consumer(self):
+        directory = Path('/tmp/grpc fixtures with spaces')
+        binary = Path('/usr/lib64/qore-modules/grpc-api-2.0.qmod')
+        files = '\n'.join(str(binary.parent) + suffix for suffix in module.MODULE_PRELOADS['grpc'])
+        for phase in ('runtime', 'sdk'):
+            commands = dict(module.module_commands('grpc', phase, directory, binary, installed_files=files))
+            with self.subTest(phase=phase):
+                self.assertEqual('compiler' in commands, phase == 'sdk')
+                self.assertEqual(commands['process-fixture'],
+                                 ['qore', '-b', '--enable-debug', '-l', 'process', '-e', 'exit(0);'])
+                self.assertIn('--python_out=' + str(directory / 'test/interop'), commands['protobuf-fixtures'])
+                self.assertIn('--grpc_python_out=' + str(directory / 'test/interop'), commands['protobuf-fixtures'])
+                self.assertIn('PYTHONPATH=' + str(directory / 'test/interop'), commands['python-stubs'])
+                suites = {Path(f).stem for f in module.MODULE_FIXTURES['grpc'] if f.endswith('.qtest')}
+                self.assertEqual(len(suites), 13)
+                self.assertEqual(set(commands) - {'python-fixtures', 'process-fixture', 'protobuf-fixtures',
+                                                  'python-stubs', 'compiler'}, suites)
+                for name in suites:
+                    command = commands[name]
+                    self.assertIn('QORE_GRPC_TEST_MODULE_DIR=' + str(binary.parent), command)
+                    self.assertIn('QORE_GRPC_TEST_QMOD_DIR=' + str(binary.parent), command)
+                    self.assertIn(str(binary), command)
+                    self.assertIn('-b', command)
+                    self.assertIn('--enable-debug', command)
+                    self.assertEqual(command.count('-l'), 5)
+                    self.assertEqual(command[-2:], [str(directory / 'test' / (name + '.qtest')), '-v'])
+                    self.assertNotIn('qcc', command)
+
+    def test_grpc_rejects_invalid_or_incomplete_installed_module_paths(self):
+        directory = Path('/tmp/grpc fixtures')
+        binary = Path('/usr/lib64/qore-modules/grpc-api-2.0.qmod')
+        files = '\n'.join(str(binary.parent) + suffix for suffix in module.MODULE_PRELOADS['grpc'])
+        for invalid in (None, Path('grpc-api-2.0.qmod'), Path('/usr/lib64/../grpc-api-2.0.qmod'),
+                        Path('/usr/lib64/grpc-api-2.0.so'), Path('/usr/lib64/other.qmod')):
+            with self.subTest(binary=invalid), self.assertRaises(ValueError):
+                module.module_commands('grpc', 'runtime', directory, invalid, installed_files=files)
+        for invalid in ('', files + '\n' + files.splitlines()[0],
+                        files.replace('/usr/lib64/qore-modules/GrpcUtil/', '/wrong/GrpcUtil/')):
+            with self.subTest(files=invalid), self.assertRaises(ValueError):
+                module.module_commands('grpc', 'runtime', directory, binary, installed_files=invalid)
+
+    def test_grpc_runtime_fixture_dependencies_exclude_development_packages(self):
+        for family in ('fedora', 'suse', 'el'):
+            self.assertEqual(module.module_dependencies('grpc', 'runtime', family),
+                             ['python3-grpcio', 'python3-grpcio-tools', 'python3-pyarrow'])
+            self.assertEqual(module.module_dependencies('grpc', 'sdk', family), [])
+
     def test_jni_requires_complete_runtime_and_sdk_dependencies(self):
         self.add_modules()
         self.manifest['modules'] = [entry for entry in self.manifest['modules'] if entry['name'] == 'jni']

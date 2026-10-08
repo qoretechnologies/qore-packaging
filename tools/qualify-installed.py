@@ -19,6 +19,14 @@ import installed_jni
 FIXTURES = {'rpm/tests-installed/' + name for name in ('runtime', 'development', 'tools', 'remote-debuggers')}
 FIXTURES.add('modules/ml/test/data/test_linear.onnx')
 MODULE_FIXTURES = {
+    'grpc': {'debian/tests/compiler', 'test/test.proto', 'test/async-stream.proto',
+             'test/interop/interop_server.py', 'test/pyarrow_flight_client.py',
+             'test/pyarrow_flight_server.py', 'test/certs/server.crt', 'test/certs/server.key'}
+        | {'test/' + name + '.qtest' for name in
+           ('ArrowFlightDataProvider', 'GrpcDataProvider', 'arrow-flight-interop',
+            'arrow-flight', 'arrow-ipc', 'grpc-async-stream', 'grpc-interop',
+            'grpc-limits', 'grpc-reflection', 'grpc-stream-errors', 'grpc-unary',
+            'grpc', 'salesforce-pubsub')},
     'freetds': {'rpm/run-tests.py', 'test/freetds-offline.qtest', 'debian/tests/compiler'},
     'mysql': {'rpm/run-tests.py', 'debian/tests/compiler', 'test/mysql.qtest',
               'test/mysql-error-info.qtest', 'test/mysql-native-bulk-load.qtest'},
@@ -108,6 +116,9 @@ MODULE_FIXTURES = {
              'src/ODBCArraySize.h'},
 }
 MODULE_PRELOADS = {
+    'grpc': ('/GrpcUtil/GrpcUtil.qmod', '/GrpcDataProvider/GrpcDataProvider.qmod',
+             '/ArrowFlightDataProvider/ArrowFlightDataProvider.qmod',
+             '/SalesforcePubSubDataProvider/SalesforcePubSubDataProvider.qmod'),
     'proj': ('/ProjGeos/ProjGeos.qmod',),
     'cairo': ('/CairoDataProvider/CairoDataProvider.qmod',),
     'geos': ('/GEOSDataProvider/GEOSDataProvider.qmod',),
@@ -147,6 +158,8 @@ def validate_modules(manifest):
             raise ValueError('Module fixture URLs must match their pinned repository revision')
         if packages.get('qore-' + name + '-module', {}).get('phase') != 'runtime':
             raise ValueError('Missing module runtime RPM')
+        if name == 'grpc' and packages.get('qore-process-module', {}).get('phase') != 'runtime':
+            raise ValueError('gRPC interoperability requires the process runtime RPM')
         if name == 'xmlsec' and packages.get('qore-xml-module', {}).get('phase') != 'runtime':
             raise ValueError('XML Security requires a pinned XML runtime RPM')
         if name == 'python' and packages.get('qore-xml-module', {}).get('phase') != 'runtime':
@@ -214,6 +227,8 @@ def module_dependencies(name, phase, family):
         raise ValueError('Unknown module suite or phase')
     if family not in ('fedora', 'suse', 'el'):
         raise ValueError('Unsupported fixture distribution')
+    if name == 'grpc' and phase == 'runtime':
+        return ['python3-grpcio', 'python3-grpcio-tools', 'python3-pyarrow']
     if name == 'ssh' and phase == 'runtime':
         return ['openssh-clients']
     if name == 'ssh2' and phase == 'runtime':
@@ -248,6 +263,36 @@ def module_commands(name, phase, directory, binary=None, driver=None, installed_
         raise ValueError('Unknown module suite or phase')
     if name == 'jni':
         return installed_jni.commands(phase, directory, binary)
+    if name == 'grpc':
+        if (binary is None or not binary.is_absolute() or binary.suffix != '.qmod'
+                or not binary.name.startswith('grpc-api-') or '..' in binary.parts):
+            raise ValueError('gRPC checks require the installed native module path')
+        preloads = ['-l', str(binary)]
+        for suffix in MODULE_PRELOADS[name]:
+            path = installed_module_file(name, installed_files, suffix)
+            if path.parent.parent != binary.parent:
+                raise ValueError('gRPC native and AOT modules must share their installed module directory')
+            preloads.extend(['-l', str(path)])
+        test = directory / 'test'
+        interop = test / 'interop'
+        environment = ['env', 'QORE_GRPC_TEST_MODULE_DIR=' + str(binary.parent),
+                       'QORE_GRPC_TEST_QMOD_DIR=' + str(binary.parent)]
+        commands = [
+            ('python-fixtures', ['python3', '-c', 'import grpc, grpc_tools.protoc, pyarrow.flight']),
+            ('process-fixture', ['qore', '-b', '--enable-debug', '-l', 'process', '-e', 'exit(0);']),
+            ('protobuf-fixtures', ['python3', '-m', 'grpc_tools.protoc', '-I' + str(test),
+                                  '--python_out=' + str(interop), '--grpc_python_out=' + str(interop),
+                                  str(test / 'test.proto')]),
+            ('python-stubs', ['env', 'PYTHONPATH=' + str(interop), 'python3', '-c',
+                              'import test_pb2, test_pb2_grpc']),
+        ]
+        for path in sorted(MODULE_FIXTURES[name]):
+            if path.endswith('.qtest'):
+                commands.append((Path(path).stem, environment + ['timeout', '600', 'qore',
+                    '-b', '--enable-debug', *preloads, str(directory / path), '-v']))
+        if phase == 'sdk':
+            commands.append(('compiler', [str(directory / 'debian/tests/compiler')]))
+        return commands
     if name == 'amqp':
         commands = [('tests', ['env', 'QORE_RPM_TEST_TMP=' + str(directory / 'runtime-fixture'),
                               str(directory / 'rpm/tests-installed-runtime')])]
@@ -563,10 +608,10 @@ def qualify(manifest, output, jni_phase=None, jni_fixtures=None):
                         driver_package = 'psqlODBC' if manifest['family'] == 'suse' else 'postgresql-odbc'
                         files = subprocess.check_output(['rpm', '-ql', driver_package], text=True)
                         driver = installed_module_file('PostgreSQL ODBC driver', files, '/psqlodbcw.so')
-                    if name == 'jni':
-                        files = subprocess.check_output(['rpm', '-ql', 'qore-jni-module'], text=True)
+                    if name in ('jni', 'grpc'):
+                        files = subprocess.check_output(['rpm', '-ql', 'qore-' + name + '-module'], text=True)
                         api = subprocess.check_output(['qore', '--latest-module-api'], text=True).strip()
-                        binary = installed_module_file(name, files, '/jni-api-' + api + '.qmod')
+                        binary = installed_module_file(name, files, '/' + name + '-api-' + api + '.qmod')
                     environment = ['runuser', '-u', 'qoretester', '--', 'env']
                     for variable in ('QORE_MODULE_DIR', 'QORE_MODULE_DIR_ONLY', 'QORE_INCLUDE_DIR',
                                      'LD_LIBRARY_PATH', 'LD_PRELOAD'):
