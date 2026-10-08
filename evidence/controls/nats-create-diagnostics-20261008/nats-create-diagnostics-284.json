@@ -1,0 +1,78 @@
+{
+  "source": "work/nats-prepared-52/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-create-diagnostics-284-controls",
+      "target": "fedora",
+      "count": 1,
+      "race": true,
+      "pattern": "^(TestJetStreamCreateDiagnostics|TestRPMCreationLoggerBounds|TestJetStreamAtomicBatchPublishCommitEob)$",
+      "sublist": "work/nats-prepared-52/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-create-diagnostics-284-20261008/jetstream_batching_test.go": "server/jetstream_batching_test.go",
+        "work/nats-create-diagnostics-284-20261008/norace_2_test.go": "server/norace_2_test.go"
+      }
+    },
+    {
+      "name": "fedora-nats-create-diagnostics-284-memory",
+      "target": "fedora",
+      "count": 1,
+      "race": false,
+      "pattern": "^TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart$",
+      "sublist": "work/nats-prepared-52/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-create-diagnostics-284-20261008/jetstream_batching_test.go": "server/jetstream_batching_test.go",
+        "work/nats-create-diagnostics-284-20261008/norace_2_test.go": "server/norace_2_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-create-diagnostics-284-controls",
+      "target": "leap",
+      "count": 1,
+      "race": true,
+      "pattern": "^(TestJetStreamCreateDiagnostics|TestRPMCreationLoggerBounds|TestJetStreamAtomicBatchPublishCommitEob)$",
+      "sublist": "work/nats-prepared-52/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-create-diagnostics-284-20261008/jetstream_batching_test.go": "server/jetstream_batching_test.go",
+        "work/nats-create-diagnostics-284-20261008/norace_2_test.go": "server/norace_2_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-create-diagnostics-284-memory",
+      "target": "leap",
+      "count": 1,
+      "race": false,
+      "pattern": "^TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart$",
+      "sublist": "work/nats-prepared-52/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-create-diagnostics-284-20261008/jetstream_batching_test.go": "server/jetstream_batching_test.go",
+        "work/nats-create-diagnostics-284-20261008/norace_2_test.go": "server/norace_2_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-create-diagnostics-284-controls",
+      "target": "el10",
+      "count": 1,
+      "race": true,
+      "pattern": "^(TestJetStreamCreateDiagnostics|TestRPMCreationLoggerBounds|TestJetStreamAtomicBatchPublishCommitEob)$",
+      "sublist": "work/nats-prepared-52/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-create-diagnostics-284-20261008/jetstream_batching_test.go": "server/jetstream_batching_test.go",
+        "work/nats-create-diagnostics-284-20261008/norace_2_test.go": "server/norace_2_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-create-diagnostics-284-memory",
+      "target": "el10",
+      "count": 1,
+      "race": false,
+      "pattern": "^TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart$",
+      "sublist": "work/nats-prepared-52/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-create-diagnostics-284-20261008/jetstream_batching_test.go": "server/jetstream_batching_test.go",
+        "work/nats-create-diagnostics-284-20261008/norace_2_test.go": "server/norace_2_test.go"
+      }
+    }
+  ]
+}

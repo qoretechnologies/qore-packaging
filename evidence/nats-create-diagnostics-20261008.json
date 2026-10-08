@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Test-only diagnostics qualified; candidate53 prepared for complete RPM matrix. Historical untraced creation timeouts are not claimed fixed.",
+  "patch": "Patch115: nats-server-create-diagnostics-tests.patch",
+  "qualification": [
+    {
+      "version": 283,
+      "target": "fedora",
+      "kind": "controls",
+      "pass": 51,
+      "race": true
+    },
+    {
+      "version": 283,
+      "target": "fedora",
+      "kind": "memory",
+      "pass": 1,
+      "race": false
+    },
+    {
+      "version": 283,
+      "target": "leap",
+      "kind": "controls",
+      "pass": 51,
+      "race": true
+    },
+    {
+      "version": 283,
+      "target": "leap",
+      "kind": "memory",
+      "pass": 1,
+      "race": false
+    },
+    {
+      "version": 283,
+      "target": "el10",
+      "kind": "controls",
+      "pass": 51,
+      "race": true
+    },
+    {
+      "version": 283,
+      "target": "el10",
+      "kind": "memory",
+      "pass": 1,
+      "race": false
+    },
+    {
+      "version": 284,
+      "target": "fedora",
+      "kind": "controls",
+      "pass": 17,
+      "race": true
+    },
+    {
+      "version": 284,
+      "target": "fedora",
+      "kind": "memory",
+      "pass": 1,
+      "race": false
+    },
+    {
+      "version": 284,
+      "target": "leap",
+      "kind": "controls",
+      "pass": 17,
+      "race": true
+    },
+    {
+      "version": 284,
+      "target": "leap",
+      "kind": "memory",
+      "pass": 1,
+      "race": false
+    },
+    {
+      "version": 284,
+      "target": "el10",
+      "kind": "controls",
+      "pass": 17,
+      "race": true
+    },
+    {
+      "version": 284,
+      "target": "el10",
+      "kind": "memory",
+      "pass": 1,
+      "race": false
+    }
+  ],
+  "final_results": 54,
+  "final_race_results": 51,
+  "preliminary_results": 156,
+  "packaging_tests": 225,
+  "patches": 116,
+  "source_sha256": {
+    "jetstream_batching_test.go": "307ddf7951b511c9a0eac71fb5a08d38a9121c8eecc77362c62f314f381d8bb3",
+    "norace_2_test.go": "8e41eec9561787a997a369a75eed5fd640906e7b04f0d8fb0b5b9fae21a336fe"
+  },
+  "limits": [
+    "Per-server snapshots are not an atomic cluster view. Callback return does not establish reply delivery.",
+    "No new runtime change, deadline increase, retry, result override or warning suppression.",
+    "Candidate283 passed; candidate284 additionally preserves all restorations after an error and tolerates a missing group in diagnostics.",
+    "The first packaging runner invocation imported its tests without executing them; the preparation guard rejected its empty report. Correct unittest discovery then ran all seven tests successfully.",
+    "Full combined RPM and native architectures, installed clients/modules, repository lifecycle/signing/publication remain required."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-create-diagnostics-20261008/audit.rst": "c0847d64c360daa8714b4b10b9d27465771907939b4b6baa7cf3fb8deb8f08aa",
+    "evidence/controls/nats-create-diagnostics-20261008/el10-nats-create-diagnostics-283-controls/status.json": "ffcdd40cde58d1c017b4690907c837185fda0429099b835dde5178ea74390e85",
+    "evidence/controls/nats-create-diagnostics-20261008/el10-nats-create-diagnostics-283-controls/tests.log.gz": "b23a2d892c182d573a84a551f6fd01cee8069322b4f1009cf736d870c83b7160",
+    "evidence/controls/nats-create-diagnostics-20261008/el10-nats-create-diagnostics-283-memory/status.json": "184b85daac39b28a69fefb0077c7fabb1428733935750f9c3f27db5d38c19b6a",
+    "evidence/controls/nats-create-diagnostics-20261008/el10-nats-create-diagnostics-283-memory/tests.log.gz": "9a98868ee02d6c86930f50947a990a7187a2bd0403dff8e39761b56ee231ef58",
+    "evidence/controls/nats-create-diagnostics-20261008/el10-nats-create-diagnostics-284-controls/status.json": "5ce3eaf92f1b66ddbb330ae433ded3488e4b6e940edfe6498b3187ff2b3c6ddc",
+    "evidence/controls/nats-create-diagnostics-20261008/el10-nats-create-diagnostics-284-controls/tests.log.gz": "cc91c08d814b0dc2726efb234dc038ad429b4c0552d9332867c3956854bd7e27",
+    "evidence/controls/nats-create-diagnostics-20261008/el10-nats-create-diagnostics-284-memory/status.json": "e5e53ff34fded715eb171b1d65cc2e2707ad19485d6ab6281e9a51c54f9af311",
+    "evidence/controls/nats-create-diagnostics-20261008/el10-nats-create-diagnostics-284-memory/tests.log.gz": "54d0f453eb154879f0775b593b9b9ffe784dec9672ca56d6c076332e81e5963c",
+    "evidence/controls/nats-create-diagnostics-20261008/fedora-nats-create-diagnostics-283-controls/status.json": "3cef097830b764702bed46fb6672d08c57c77d7408009e3a5f465407eb644d8a",
+    "evidence/controls/nats-create-diagnostics-20261008/fedora-nats-create-diagnostics-283-controls/tests.log.gz": "9b58088b128059b7eb397148a1cbeb0424b7d2d15c8b704140d73829e883481b",
+    "evidence/controls/nats-create-diagnostics-20261008/fedora-nats-create-diagnostics-283-memory/status.json": "6e474c77d51627e6d072c4968ee1d122c178697930adec2b97c69aacf5ac88b2",
+    "evidence/controls/nats-create-diagnostics-20261008/fedora-nats-create-diagnostics-283-memory/tests.log.gz": "6917dbec39a4fe1f608828a2738687e7dcf32e103db5b7af0fbbc3b0e2fbfcb6",
+    "evidence/controls/nats-create-diagnostics-20261008/fedora-nats-create-diagnostics-284-controls/status.json": "86d3f9cf83f8be95b861364f400e76faaab7a2a7774f9a160ba4f5a91963aedc",
+    "evidence/controls/nats-create-diagnostics-20261008/fedora-nats-create-diagnostics-284-controls/tests.log.gz": "2db88cf9973dbaa7b7bb7e44f360565aafe231ab805a586c97f3384efe7c5e79",
+    "evidence/controls/nats-create-diagnostics-20261008/fedora-nats-create-diagnostics-284-memory/status.json": "e8c83500054bfac960fd392a3247bf0be5ac423e187cbfbd19946412e531fae2",
+    "evidence/controls/nats-create-diagnostics-20261008/fedora-nats-create-diagnostics-284-memory/tests.log.gz": "87cf2b2dbc5efe97ff8a4ec02f7d131c04ee6a68aee230d1a57b5163fe8d5006",
+    "evidence/controls/nats-create-diagnostics-20261008/integrate-nats-create-diagnostics-20261008.py": "7a384f7776b23c32fecac4bd663ce6692a5285b3bc02464a385218f11fcf7b56",
+    "evidence/controls/nats-create-diagnostics-20261008/jetstream_batching_test.go.gz": "4c7bbf164544217dbbecff7ed82f30ccd65c6391ca46d6a7f869370c798aa6c1",
+    "evidence/controls/nats-create-diagnostics-20261008/leap-nats-create-diagnostics-283-controls/status.json": "315fc7a9938aeb01406baf8a2454b38ea4551d34b2c7c22edd4a4c89eb54ce63",
+    "evidence/controls/nats-create-diagnostics-20261008/leap-nats-create-diagnostics-283-controls/tests.log.gz": "0b1c9d7eceaa5467398386595b4143fbb1f6cb5dbe0c18be15d6dda66f376552",
+    "evidence/controls/nats-create-diagnostics-20261008/leap-nats-create-diagnostics-283-memory/status.json": "a7e461ade34be696a9f53dbd4321987e3ebdc7f03dbcbcca8ca08e7a7fc98dd0",
+    "evidence/controls/nats-create-diagnostics-20261008/leap-nats-create-diagnostics-283-memory/tests.log.gz": "d42d8009a3ec57ece45f80631ee2cf0b537c5af1f1a540524f0033739644fab4",
+    "evidence/controls/nats-create-diagnostics-20261008/leap-nats-create-diagnostics-284-controls/status.json": "7c4567bc1a6f716d80bfda1176bf6bce1c1c1599ddce166df7fc714c8d06877d",
+    "evidence/controls/nats-create-diagnostics-20261008/leap-nats-create-diagnostics-284-controls/tests.log.gz": "ff22be565392458c9fb1387f37be910e662efc6d4d1d09a4623015710e7ce24a",
+    "evidence/controls/nats-create-diagnostics-20261008/leap-nats-create-diagnostics-284-memory/status.json": "f9018a265f185510993a3103c93dfb54f215344634ac7e762f634857ff6cc6fa",
+    "evidence/controls/nats-create-diagnostics-20261008/leap-nats-create-diagnostics-284-memory/tests.log.gz": "81c98a9f434d17f5eb4a920d1712f7710f212b62e98dca7ef74a22f03f9274aa",
+    "evidence/controls/nats-create-diagnostics-20261008/nats-candidate53-patch-verification-20261008.json": "02c0b09717f84330610cfdb31ae1d1ddb5c658a02035995a9acff511ba00a9f9",
+    "evidence/controls/nats-create-diagnostics-20261008/nats-candidate53-patches-20261008.log.gz": "88108cd24df9099f13c3475ddb6ab1af0410b8b6c9d968a7aba7c5df47b4a899",
+    "evidence/controls/nats-create-diagnostics-20261008/nats-candidate53-prepare-20261008.log.gz": "1a53135a5d7e36c630d7fb43f1c71462e1f3f33456e6171c043e88829cf3e303",
+    "evidence/controls/nats-create-diagnostics-20261008/nats-candidate53-runner-tests-20261008.log.gz": "1263e4a504f9a1488d390728f7922dfca5f52292d5d289d7fb0da780eb3bcb97",
+    "evidence/controls/nats-create-diagnostics-20261008/nats-candidate53-tools-tests-20261008.log.gz": "db2cb96822aac15e68585f8abf1dea1df6516372cca562a22af4d7462188f205",
+    "evidence/controls/nats-create-diagnostics-20261008/nats-create-diagnostics-284.json": "e87d6513661e88780ebcb2ed80eace8eec00bbf4f28588c024f052b08b5db03d",
+    "evidence/controls/nats-create-diagnostics-20261008/nats-server-create-diagnostics-tests.patch": "329a220bb7fb652ece860f3caffeca214aab6c714c4ef6bae7e4682ee2e0e0e2",
+    "evidence/controls/nats-create-diagnostics-20261008/nats-server.rst": "6a4ff39e2dd2c9868368823e1da8ceb2db2ce4150367543e2c21818602683249",
+    "evidence/controls/nats-create-diagnostics-20261008/nats-server.spec": "5640a0c20fc1d9ccf6a38e9685e4f88ccf4defac410340ab6b7406b490afbb21",
+    "evidence/controls/nats-create-diagnostics-20261008/norace_2_test.go.gz": "2ed6a75805521b35c245d04531c3d74ae67b70691879904a4436ae389db7c388",
+    "evidence/controls/nats-create-diagnostics-20261008/prepare-nats-candidate53-20261008.py": "c44730b67f54df26165e25c9aeba05e274a0f0d34f6125a18fd3d28e4c9d9985",
+    "evidence/controls/nats-create-diagnostics-20261008/record-nats-create-diagnostics-20261008.py": "14a6aee0a6fd1b861239911603e460f5b0c1df0231c78bf666163f4e5206f183",
+    "evidence/controls/nats-create-diagnostics-20261008/run-nats-focused-38.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a"
+  }
+}

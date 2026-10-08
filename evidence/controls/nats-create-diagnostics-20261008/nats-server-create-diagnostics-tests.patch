@@ -1,0 +1,261 @@
+# Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
+# Record bounded creation callback and assignment diagnostics without changing results or deadlines.
+--- a/server/jetstream_batching_test.go
++++ b/server/jetstream_batching_test.go
+@@ -25,6 +25,7 @@
+ 	"strconv"
+ 	"strings"
+ 	"sync"
++	"sync/atomic"
+ 	"testing"
+ 	"time"
+ 
+@@ -242,25 +243,8 @@
+ 	) {
+ 		c := createJetStreamClusterExplicit(t, "R3S", 3)
+ 		defer c.shutdown()
+-		logs := make([]*rpmCreationLogger, len(c.servers))
+-		for i, srv := range c.servers {
+-			logs[i] = &rpmCreationLogger{}
+-			srv.SetLogger(logs[i], true, false)
+-		}
+-		defer func() {
+-			if t.Failed() {
+-				for i, log := range logs {
+-					log.mu.Lock()
+-					lines := append([]string(nil), log.lines...)
+-					dropped := log.dropped
+-					log.mu.Unlock()
+-					t.Logf("server %s meta_leader=%v dropped=%d", c.servers[i].Name(), c.servers[i].JetStreamIsLeader(), dropped)
+-					for _, line := range lines {
+-						t.Log(line)
+-					}
+-				}
+-			}
+-		}()
++		diagnostics := observeRPMCreates(t, c, []string{"TEST"})
++		defer diagnostics.finish(t)
+ 
+ 		nc, js := jsClientConnect(t, c.randomServer())
+ 		defer nc.Close()
+@@ -276,6 +260,7 @@
+ 		})
+ 		require_NoError(t, err)
+ 
++		diagnostics.stop()
+ 		awaitStreamRouteInterest(t, c, nc, "TEST")
+ 
+ 		// A batch that immediately commits through EOB is an error.
+@@ -5653,3 +5638,179 @@
+ func (l *rpmCreationLogger) Errorf(format string, values ...any) {
+ 	l.record("ERROR", format, values...)
+ }
++
++// Copyright 2026 Qore Technologies, s.r.o.; Apache-2.0.
++type rpmCreateDiagnostics struct {
++	cluster *cluster
++	names   []string
++	logs    []*rpmCreationLogger
++	restore []func()
++	once    sync.Once
++}
++
++// observeRPMCreates records existing diagnostics and real API callback entry and
++// return. It never waits, retries a request or changes its response/deadline.
++func observeRPMCreates(t *testing.T, c *cluster, names []string) *rpmCreateDiagnostics {
++	t.Helper()
++	d := &rpmCreateDiagnostics{cluster: c, names: append([]string(nil), names...)}
++	t.Cleanup(d.stop)
++	for _, srv := range c.servers {
++		log := &rpmCreationLogger{}
++		d.logs = append(d.logs, log)
++		originalLogger := srv.Logger()
++		debug := atomic.LoadInt32(&srv.logging.debug) != 0
++		trace := atomic.LoadInt32(&srv.logging.trace) != 0
++		sysTrace := atomic.LoadInt32(&srv.logging.traceSysAcc) != 0
++		srv.SetLogger(log, true, false)
++		d.restore = append(d.restore, func() { srv.SetLoggerV2(originalLogger, debug, trace, sysTrace) })
++		api := srv.getJetStream().apiSubs
++		matches := api.Match(fmt.Sprintf(JSApiStreamCreateT, "TEST")).psubs
++		require_Equal(t, len(matches), 1)
++		original := matches[0]
++		replacement := &subscription{subject: append([]byte(nil), original.subject...), icb: func(sub *subscription, client *client, acc *Account, subject, reply string, msg []byte) {
++			log.record("API", "create-entry subject=%q reply=%q api_leader=%v", subject, reply, srv.JetStreamIsLeader())
++			original.icb(sub, client, acc, subject, reply, msg)
++			log.record("API", "create-return subject=%q reply=%q api_leader=%v", subject, reply, srv.JetStreamIsLeader())
++		}}
++		require_NoError(t, api.Remove(original))
++		d.restore = append(d.restore, func() {
++			api.Remove(replacement)
++			if err := api.Insert(original); err != nil {
++				t.Errorf("restore stream-create API subscription: %v", err)
++			}
++		})
++		require_NoError(t, api.Insert(replacement))
++	}
++	return d
++}
++
++func (d *rpmCreateDiagnostics) stop() {
++	d.once.Do(func() {
++		for i := len(d.restore) - 1; i >= 0; i-- {
++			d.restore[i]()
++		}
++	})
++}
++
++// snapshot reads assignment metadata under its owning lock. Raft methods are
++// called after releasing that lock. Fields are observations, not an atomic view
++// of the whole cluster; each line carries the server and current term.
++func (d *rpmCreateDiagnostics) snapshot() []string {
++	var lines []string
++	for _, srv := range d.cluster.servers {
++		js := srv.getJetStream()
++		if js == nil {
++			lines = append(lines, fmt.Sprintf("server=%s JetStream=absent", srv.Name()))
++			continue
++		}
++		js.mu.RLock()
++		cc := js.cluster
++		if cc == nil {
++			js.mu.RUnlock()
++			lines = append(lines, fmt.Sprintf("server=%s cluster=absent", srv.Name()))
++			continue
++		}
++		node, term := cc.meta, cc.term
++		for _, name := range d.names {
++			sa := cc.streams[globalAccountName][name]
++			if sa == nil {
++				lines = append(lines, fmt.Sprintf("server=%s term=%d stream=%s assigned=false", srv.Name(), term, name))
++			} else {
++				group := "<nil>"
++				if sa.Group != nil {
++					group = sa.Group.Name
++				}
++				lines = append(lines, fmt.Sprintf("server=%s term=%d stream=%s assigned=true group=%s reply=%q responded=%v recovering=%v error=%v", srv.Name(), term, name, group, sa.Reply, sa.hasResponded(), sa.recovering, sa.err))
++			}
++		}
++		js.mu.RUnlock()
++		if node != nil {
++			index, commit, applied := node.Progress()
++			lines = append(lines, fmt.Sprintf("server=%s api_leader=%v raft_state=%v raft_term=%d raft_leader=%s index=%d commit=%d applied=%d", srv.Name(), srv.JetStreamIsLeader(), node.State(), node.Term(), node.GroupLeader(), index, commit, applied))
++		}
++	}
++	return lines
++}
++
++func (d *rpmCreateDiagnostics) finish(t *testing.T) {
++	t.Helper()
++	if t.Failed() {
++		for _, line := range d.snapshot() {
++			t.Log(line)
++		}
++		for i, log := range d.logs {
++			log.mu.Lock()
++			lines := append([]string(nil), log.lines...)
++			dropped := log.dropped
++			log.mu.Unlock()
++			t.Logf("creation diagnostics server=%s events=%d dropped=%d", d.cluster.servers[i].Name(), len(lines), dropped)
++			for _, line := range lines {
++				t.Log(line)
++			}
++		}
++	}
++	d.stop()
++}
++
++func TestJetStreamCreateDiagnostics(t *testing.T) {
++	for _, replicas := range []int{1, 3} {
++		t.Run(fmt.Sprintf("R%d", replicas), func(t *testing.T) {
++			c := createJetStreamClusterExplicit(t, "CREATE-DIAG", 3)
++			defer c.shutdown()
++			originals := make([]*subscription, len(c.servers))
++			for i, s := range c.servers {
++				originals[i] = s.getJetStream().apiSubs.Match(fmt.Sprintf(JSApiStreamCreateT, "TEST")).psubs[0]
++			}
++			d := observeRPMCreates(t, c, []string{"TEST", "MISSING"})
++			defer d.finish(t)
++			before := strings.Join(d.snapshot(), "\n")
++			require_Equal(t, strings.Count(before, "stream=TEST assigned=false"), 3)
++			nc, js := jsClientConnect(t, c.randomServer())
++			defer nc.Close()
++			info, err := js.AddStream(&nats.StreamConfig{Name: "TEST", Subjects: []string{"foo"}, Replicas: replicas, Storage: nats.MemoryStorage})
++			require_NoError(t, err)
++			require_Equal(t, info.Config.Replicas, replicas)
++			after := strings.Join(d.snapshot(), "\n")
++			require_True(t, strings.Contains(after, "stream=TEST assigned=true"))
++			require_Equal(t, strings.Count(after, "stream=MISSING assigned=false"), 3)
++			entries := 0
++			for _, log := range d.logs {
++				log.mu.Lock()
++				for _, line := range log.lines {
++					if strings.Contains(line, "create-entry ") {
++						entries++
++					}
++				}
++				log.mu.Unlock()
++			}
++			require_True(t, entries > 0)
++			d.stop()
++			d.stop()
++			for i, s := range c.servers {
++				require_True(t, s.getJetStream().apiSubs.Match(fmt.Sprintf(JSApiStreamCreateT, "TEST")).psubs[0] == originals[i])
++			}
++			_, err = js.AddStream(&nats.StreamConfig{Name: "AFTER", Subjects: []string{"after"}, Replicas: replicas, Storage: nats.MemoryStorage})
++			require_NoError(t, err)
++		})
++	}
++}
++
++func TestRPMCreationLoggerBounds(t *testing.T) {
++	log := &rpmCreationLogger{}
++	var workers sync.WaitGroup
++	for writer := 0; writer < 4; writer++ {
++		workers.Add(1)
++		go func() {
++			defer workers.Done()
++			for n := 0; n < 3000; n++ {
++				log.record("CONTROL", "writer=%d event=%d", writer, n)
++			}
++		}()
++	}
++	workers.Wait()
++	require_Equal(t, len(log.lines), 10000)
++	require_Equal(t, log.dropped, 2000)
++	for _, line := range log.lines {
++		require_True(t, strings.Contains(line, " CONTROL writer="))
++	}
++}
+--- a/server/norace_2_test.go
++++ b/server/norace_2_test.go
+@@ -2342,6 +2342,12 @@
+ 	defer nc.Close()
+ 
+ 	numStreams := 250
++	names := make([]string, numStreams)
++	for i := range names {
++		names[i] = fmt.Sprintf("TEST:%d", i+1)
++	}
++	diagnostics := observeRPMCreates(t, c, names)
++	defer diagnostics.finish(t)
+ 	var wg sync.WaitGroup
+ 	results := make(chan error, numStreams)
+ 	// Create every stream before generating the concurrent publish workload.
+@@ -2356,6 +2362,9 @@
+ 				Subjects: []string{fmt.Sprintf("foo.%d.*", n)},
+ 				Replicas: 3,
+ 			}, nats.MaxWait(30*time.Second))
++			if err != nil {
++				err = fmt.Errorf("stream TEST:%d creation: %w", n, err)
++			}
+ 			results <- err
+ 		}(i)
+ 	}
+@@ -2363,6 +2372,7 @@
+ 	for i := 0; i < numStreams; i++ {
+ 		require_NoError(t, <-results)
+ 	}
++	diagnostics.stop()
+ 	for i := 1; i <= numStreams; i++ {
+ 		awaitStreamRouteInterest(t, c, nc, fmt.Sprintf("TEST:%d", i))
+ 	}
