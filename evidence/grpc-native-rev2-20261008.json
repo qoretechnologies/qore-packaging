@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Four native RPM builds and all functional tests pass; two CMake defects require a corrected build. Both Leap builds remain blocked on PyArrow.",
+  "records": [
+    {
+      "repository": "Fedora_44",
+      "arch": "x86_64",
+      "obs_result": "succeeded",
+      "rev": 2,
+      "srcmd5": "48243e31b67baef88ffe0c0b3dbab59b",
+      "suites": 13,
+      "cases": 378,
+      "assertions": 1768,
+      "dependency_parser_tests": 3,
+      "qualification": "Functional pass; CMake defects prevent final warning-free qualification."
+    },
+    {
+      "repository": "AlmaLinux_10",
+      "arch": "x86_64",
+      "obs_result": "succeeded",
+      "rev": 2,
+      "srcmd5": "48243e31b67baef88ffe0c0b3dbab59b",
+      "suites": 13,
+      "cases": 378,
+      "assertions": 1768,
+      "dependency_parser_tests": 3,
+      "qualification": "Functional pass; CMake defects prevent final warning-free qualification."
+    },
+    {
+      "repository": "Fedora_44",
+      "arch": "aarch64",
+      "obs_result": "succeeded",
+      "rev": 2,
+      "srcmd5": "48243e31b67baef88ffe0c0b3dbab59b",
+      "suites": 13,
+      "cases": 378,
+      "assertions": 1768,
+      "dependency_parser_tests": 3,
+      "qualification": "Functional pass; CMake defects prevent final warning-free qualification."
+    },
+    {
+      "repository": "AlmaLinux_10",
+      "arch": "aarch64",
+      "obs_result": "succeeded",
+      "rev": 2,
+      "srcmd5": "48243e31b67baef88ffe0c0b3dbab59b",
+      "suites": 13,
+      "cases": 378,
+      "assertions": 1768,
+      "dependency_parser_tests": 3,
+      "qualification": "Functional pass; CMake defects prevent final warning-free qualification."
+    }
+  ],
+  "root_causes": [
+    "The module omits cmake/cmake_uninstall.cmake.in expected by QoreMacros.cmake.",
+    "The module declares no policy version through CMake 3.31; non-normalized SDK install destinations trigger CMP0177."
+  ],
+  "correction": "The initial summary missed CMake diagnostics. These successful builds establish functional results only, not final warning-free qualification.",
+  "existing_diagnostics": [
+    "Python grpc_tools pkg_resources deprecation is already approved for Fedora and AlmaLinux in evidence/grpc-tools-diagnostic-20261002.json.",
+    "OBS virtual console/bootstrap and missing mkbaselibs messages occur outside package tests and are recorded separately from package code diagnostics."
+  ],
+  "next": "Qualify manifest uninstall template and CMake policy range on all three distributions before committing; deliver corrected committed source and repeat native builds. Signed installed ARM and current core integration remain separate gates.",
+  "files_sha256": {
+    "evidence/controls/grpc-native-rev2-20261008/state.xml": "d3e93d53063b0dd5cfbb18e41d08ee7776b932072df30eb9abe0716ba7199b6f",
+    "evidence/controls/grpc-native-rev2-20261008/AlmaLinux_10-aarch64/buildinfo.xml": "dcff15b71af8b21ea83fb66f3d31d2e1f63fbc34ff76bf6edebdb3b57d535050",
+    "evidence/controls/grpc-native-rev2-20261008/AlmaLinux_10-aarch64/build.log.gz": "4be257314549bbc0a38a06c9060bb17e97036b2634a720a7e69fa956dca16bdf",
+    "evidence/controls/grpc-native-rev2-20261008/Fedora_44-aarch64/buildinfo.xml": "8aa7fcd0dbcf06b85a932e2f367523c6c60e4e216688b5a315bb43bdc6aa2df4",
+    "evidence/controls/grpc-native-rev2-20261008/Fedora_44-aarch64/build.log.gz": "55bfa8da94347e7a9b4723b4080dc6e55f968739a8263808a6e313e0966d736b",
+    "evidence/controls/grpc-native-rev2-20261008/Fedora_44-x86_64/buildinfo.xml": "6667d783f63309421a782ded0e8e1b365023c4a32d4661eec96a289a13adfb75",
+    "evidence/controls/grpc-native-rev2-20261008/Fedora_44-x86_64/build.log.gz": "24a2d9ebd58e619ca5122c41ca1f5b5bde45fe194b490a98f809c61dd826e037",
+    "evidence/controls/grpc-native-rev2-20261008/AlmaLinux_10-x86_64/buildinfo.xml": "85ef3ae0326e10b2ab5ae5dc1e8a959dca506f27d5a683931508a91d2742eca6",
+    "evidence/controls/grpc-native-rev2-20261008/AlmaLinux_10-x86_64/build.log.gz": "22b089c47ffc3e7b6df8176a3ec8fb3fd6df5ade9cd8140e83f60a53bdd16275"
+  }
+}

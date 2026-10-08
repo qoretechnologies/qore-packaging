@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-08",
+  "status": "All three candidate RPM builds pass; audited committed source uploaded as native revision3. Native build and installed gates pending.",
+  "root_causes": [
+    "Required source-uninstall template absent.",
+    "CMake policy range omitted normalized installation destinations."
+  ],
+  "fix": [
+    "Manifest uninstall support with quoted paths, DESTDIR, symlink protection and explicit invalid-input failures.",
+    "Tested CMake 3.21...3.31 policy range; minimum version remains 3.21."
+  ],
+  "tests": {
+    "fedora": {
+      "rpm_exit_code": 0,
+      "suites": 13,
+      "cases": 378,
+      "assertions": 1768,
+      "uninstall_tests": 6,
+      "dependency_parser_tests": 3,
+      "compiler_or_cmake_warnings": 0
+    },
+    "el10": {
+      "rpm_exit_code": 0,
+      "suites": 13,
+      "cases": 378,
+      "assertions": 1768,
+      "uninstall_tests": 6,
+      "dependency_parser_tests": 3,
+      "compiler_or_cmake_warnings": 0
+    },
+    "leap": {
+      "rpm_exit_code": 0,
+      "suites": 13,
+      "cases": 378,
+      "assertions": 1768,
+      "uninstall_tests": 6,
+      "dependency_parser_tests": 3,
+      "compiler_or_cmake_warnings": 0
+    }
+  },
+  "retained_diagnostics": "Only the previously approved Fedora/AlmaLinux grpc_tools pkg_resources deprecation from evidence/grpc-tools-diagnostic-20261002.json. No filtering.",
+  "audit": "module-grpc test/audits/cmake-installation.rst: all 62 checks, 11 Pass, 51 N/A, 0 Fail. No C++ implementation change.",
+  "module_commit": "5f6cc3469e82f98c78c00e32f07d34c41a03a0c5",
+  "source": {
+    "schema": 1,
+    "commit": "5f6cc3469e82f98c78c00e32f07d34c41a03a0c5",
+    "source_date_epoch": 1791434774,
+    "name": "qore-grpc-module",
+    "version": "1.0.0",
+    "exclusions": [],
+    "sources": {
+      "qore-grpc-module-1.0.0.tar.xz": "ec29c55398a69ca353cd2b3f68371eb82ef92ba46823117ab56208ec82aae89d",
+      "qore-grpc-module.spec": "24c2946858223caa18dbad4c39ffa0b9234d8c41b36cdfc03e22b9c8148f4b1c",
+      "qore-grpc-module.changes": "0ab5f30baaa4596849431ca7e6821e89db098eab70f86042e014b7e8987aafea"
+    },
+    "spec": "qore-grpc-module.spec"
+  },
+  "obs": {
+    "name": "qore-grpc-module",
+    "rev": "3",
+    "vrev": "3",
+    "srcmd5": "8a3b51631d9bd3937aca79c8815fbd4f"
+  },
+  "candidate_equivalence": {
+    "matched_regular_files": 170,
+    "additional_audit": [
+      "qore-grpc-module-1.0.0/test/audits/cmake-installation.rst"
+    ],
+    "code_and_recipe_equal": true
+  },
+  "catalog_tests": 227,
+  "publication": "Disabled; package build metadata remains byte-for-byte unchanged.",
+  "remaining": "Native revision3 test/lint review, Leap PyArrow dependency, signed installed ARM qualification, develop integration and final current-core repository lifecycle qualification.",
+  "files_sha256": {
+    "evidence/controls/grpc-cmake-20261008/source.xml": "119a9680aac14b2da7a6559513e8a82b23c34529fed88486d0e7f94fde560f3b",
+    "evidence/controls/grpc-cmake-20261008/metadata-after.xml": "3fdcf16d5b9edf8e46176500ee204fe353a3d034e1a91fe23a77c6fe1a0e699e",
+    "evidence/controls/grpc-cmake-20261008/manifest.json": "f5aa684068367ce6256f9d90148bbd8ef62cc8874afe20f5068f5f08ea41c008",
+    "evidence/controls/grpc-cmake-20261008/leap-build.json.gz": "ca4afa80ae2229f625723d0b5d4068be1b86dfe887cca3f21a645d67634805de",
+    "evidence/controls/grpc-cmake-20261008/grpc-cmake-source-equivalence-20261008.json.gz": "2a06502492af05ae05ea3d4351f88cf3a63dbc5748299b255a9611b92336978a",
+    "evidence/controls/grpc-cmake-20261008/prepare-grpc-cmake-candidate-20261008.py": "439e309168d4bf216ff956dfac9d704073b94a59bb2a2f53525a56807a90ac40",
+    "evidence/controls/grpc-cmake-20261008/metadata-before.xml": "3fdcf16d5b9edf8e46176500ee204fe353a3d034e1a91fe23a77c6fe1a0e699e",
+    "evidence/controls/grpc-cmake-20261008/fedora-build.json.gz": "90d50a3948e15e140ea9405d817aee06f86816226d045d72997ca3c656d294ea",
+    "evidence/controls/grpc-cmake-20261008/grpc-cmake-catalog-tests-20261008.log.gz": "2ec30ef2b0eb2adce5346a16d02c5ddc77174ab47c736b9936d9ebaceb728ee5",
+    "evidence/controls/grpc-cmake-20261008/grpc-cmake-candidate-review-20261008.json.gz": "256bc2084b8b7cdccab2ebcbe1e05b3ee7ec67c5b0e6c1081a26ba9f49e66bab",
+    "evidence/controls/grpc-cmake-20261008/upload-grpc-cmake-20261008.py": "2fa8b2342a45a16517970b264c1475d9d111b8e2bc20e2c38fcccfa44467a63a",
+    "evidence/controls/grpc-cmake-20261008/fedora-build.log.gz": "bbb0abae01a9d0e28341cecffe0ddebcef59e524636cc681d8ed2b09f8e14122",
+    "evidence/controls/grpc-cmake-20261008/upload.log": "691fdafcf9b157cb0682ef6b1c35d533a866a8e5b34ad98072bf9840a3d08487",
+    "evidence/controls/grpc-cmake-20261008/el10-build.json.gz": "b29d70bee8fef0f864768c3c9f243acb9afbb41dc75bc32679766fd7f6996c76",
+    "evidence/controls/grpc-cmake-20261008/el10-build.log.gz": "bb06f55f4086d422f90cc3d0fe94233fea3bf3e85d5c6e49f149c76aaee1a496",
+    "evidence/controls/grpc-cmake-20261008/leap-build.log.gz": "6a580be4465c44837a16df70160be929d4b837c0d1642f71c8257c6d977321eb"
+  }
+}
