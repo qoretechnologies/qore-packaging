@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "date": "2026-10-08T15:32:18.143944+00:00",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "completed",
+  "authorization": "User requested removal of unneeded build artifacts. Only the four completed, reproducible ELF control executables listed here are selected.",
+  "files": [
+    {
+      "path": "work/node-wasm-deopt-review-20261007/original",
+      "size": 2171099096,
+      "allocated_bytes": 2171105280,
+      "sha256": "1c801d7b8ef6cc99a99b32926bb23ae5453263e99b25169c2a5915820b2f02a7",
+      "inode": 44880282,
+      "device": 64512
+    },
+    {
+      "path": "work/node-wasm-deopt-review-20261007/fixed",
+      "size": 2171100960,
+      "allocated_bytes": 2171105280,
+      "sha256": "c4637a8eb3a21021656b5a43afe60e4d41c5eca67f1ffa34121d02f2d2e0d05c",
+      "inode": 44880299,
+      "device": 64512
+    },
+    {
+      "path": "work/node-full-snapshot-helper-20261007/reschedule",
+      "size": 2204201232,
+      "allocated_bytes": 2204266496,
+      "sha256": "9cff478f23dfce6a7eb64dd37ece41aa07b321e5b791bddb16d74fd710666301",
+      "inode": 44223490,
+      "device": 64512
+    },
+    {
+      "path": "work/node-snapshot-copy-control-20261007/control",
+      "size": 2170097824,
+      "allocated_bytes": 2170105856,
+      "sha256": "20c040f281d9a1f30f3675ce0943a372af9190bc2ab6b73bcd960003aa676e61",
+      "inode": 47510312,
+      "device": 64512
+    }
+  ],
+  "verified_evidence_files": 150,
+  "limits": "Sources, object files, scripts, logs, RPMs, current Node/core compiled trees, Docker images and volumes retained. No live process references any selected executable.",
+  "free_before_bytes": 119134478336,
+  "removed_allocated_bytes": 8716582912,
+  "free_after_bytes": 127851147264,
+  "observed_free_increase_bytes": 8716668928,
+  "files_sha256": {
+    "evidence/controls/node-control-cleanup-20261008/cleanup.py": "8adb923c9d798637ab461fc3acad3e6089f579c6bc3719b5b641a21feb61cfb8"
+  },
+  "inventory_note": "The initial nonprivileged process-reference check stopped on a same-user nondumpable process before deleting anything. A read-only privileged inventory then confirmed no executable, mapping or descriptor references. Deletion itself ran as the ordinary user."
+}

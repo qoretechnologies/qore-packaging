@@ -1,0 +1,98 @@
+[
+  {
+    "mode": "release",
+    "name": "configure",
+    "exit_code": 0,
+    "command": [
+      "cmake",
+      "-S",
+      "/home/david/src/qore/git/qore",
+      "-B",
+      "build",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DCMAKE_INSTALL_PREFIX=/usr"
+    ]
+  },
+  {
+    "mode": "release",
+    "name": "build",
+    "exit_code": 0,
+    "command": [
+      "cmake",
+      "--build",
+      "build",
+      "--target",
+      "qore-mongodb-bson-array-test",
+      "-j2"
+    ]
+  },
+  {
+    "mode": "release",
+    "name": "native",
+    "exit_code": 0,
+    "command": [
+      "/home/david/src/qore/git/qore/build/modules/mongodb/qore-mongodb-bson-array-test"
+    ]
+  },
+  {
+    "mode": "release",
+    "name": "valgrind",
+    "exit_code": 0,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=definite,indirect,possible",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "/home/david/src/qore/git/qore/build/modules/mongodb/qore-mongodb-bson-array-test"
+    ]
+  },
+  {
+    "mode": "debug",
+    "name": "configure",
+    "exit_code": 0,
+    "command": [
+      "cmake",
+      "-S",
+      "/home/david/src/qore/git/qore",
+      "-B",
+      "build-debug",
+      "-DCMAKE_BUILD_TYPE=Debug",
+      "-DCMAKE_INSTALL_PREFIX=/usr"
+    ]
+  },
+  {
+    "mode": "debug",
+    "name": "build",
+    "exit_code": 0,
+    "command": [
+      "cmake",
+      "--build",
+      "build-debug",
+      "--target",
+      "qore-mongodb-bson-array-test",
+      "-j2"
+    ]
+  },
+  {
+    "mode": "debug",
+    "name": "native",
+    "exit_code": 0,
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/modules/mongodb/qore-mongodb-bson-array-test"
+    ]
+  },
+  {
+    "mode": "debug",
+    "name": "valgrind",
+    "exit_code": 0,
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=definite,indirect,possible",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "/home/david/src/qore/git/qore/build-debug/modules/mongodb/qore-mongodb-bson-array-test"
+    ]
+  }
+]

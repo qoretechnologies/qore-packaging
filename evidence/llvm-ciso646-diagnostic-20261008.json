@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "approval": {
+    "date": "2026-10-08",
+    "answer": "Allow this exact diagnostic",
+    "scope": "Only the recorded GCC 15 C++20 ciso646 diagnostic from LLVM 19 Threading.h; native ARM and final full-package qualification remain separate gates."
+  },
+  "scope": "The GCC15 preprocessor warning at /usr/include/c++/15/ciso646:49, reached from LLVM19 /usr/include/llvm/Support/Threading.h:21 while building Qore in required C++20 mode.",
+  "root_cause": "LLVM19.1.7 includes the C++20-removed ciso646 header only to detect standard-library macros. GCC15 preserves the header but diagnoses it; its contents add only the already-loaded c++config header plus an include guard. The installed LLVM header is byte-identical to upstream 19.1.7. LLVM20.1.0 removes this include.",
+  "proposal": "Retain the distribution LLVM19 SDK and the exact visible warning. No source patch, compiler flag change, private-header definition, warning suppression or dependency substitution is proposed.",
+  "validation": {
+    "checks_per_run": 8009,
+    "functional_runs": 4,
+    "valgrind_runs": 4,
+    "preprocessed_cpp_identical": true,
+    "only_macro_difference": "_GLIBCXX_CISO646 include guard",
+    "release_machine_code_identical": true,
+    "scope": "Qualification controls only: no installed LLVM header, Qore source or compiler flag changed."
+  },
+  "preprocessor": "Removing only the obsolete include in an isolated control produces identical C++ preprocessed tokens and identical optimized machine code. The sole macro difference is _GLIBCXX_CISO646, the obsolete header include guard.",
+  "functional_checks": 32036,
+  "valgrind_checks": 32036,
+  "memory": "All four controls have zero Valgrind errors and zero definite/indirect/possible loss. LLVM process-lifetime registries remain reachable; no claim that all allocations were freed.",
+  "limits": "Controls run natively on x86_64 using Leap LLVM19.1.7 and GCC15. They prove header-only equivalence and call_once correctness for this configuration, not universal compiler/library/platform behavior. Native ARM package qualification remains a separate gate.",
+  "provider_observation": "The existing Leap16 repo-oss metadata supplies llvm19-devel 19.1.7-160000.2.2; a no-refresh exact search returns no llvm20-devel or llvm21-devel. This is a cached build-image observation, not a claim about all current repositories.",
+  "related": [
+    "evidence/core-combined-candidate-20261008.json"
+  ],
+  "upstream": [
+    "https://github.com/llvm/llvm-project/blob/llvmorg-19.1.7/llvm/include/llvm/Support/Threading.h",
+    "https://github.com/llvm/llvm-project/blob/llvmorg-20.1.0/llvm/include/llvm/Support/Threading.h"
+  ],
+  "files_sha256": {
+    "evidence/controls/llvm-ciso646-20261008/ciso646": "c2ff9b6009594593816c8be8aa592e57e4fcd907757300b71386e51abc16a0a7",
+    "evidence/controls/llvm-ciso646-20261008/control.cpp": "f05d0b52d20828250ede26bf6d503260de05d1ee83ba3dd432491eea235295c5",
+    "evidence/controls/llvm-ciso646-20261008/original-debug-compile.log.gz": "55f42906a52970be5795fae3bedff6bd17b6794de3eaedafb2236613d9272464",
+    "evidence/controls/llvm-ciso646-20261008/original-debug-native.log.gz": "fb6b412e401017322cafbce9b0b9e2732950649083609e4903e68dd2786eb674",
+    "evidence/controls/llvm-ciso646-20261008/original-debug-valgrind.log.gz": "93710c23f6f24fe8f67a4c987c51469b6e3f8cf5f78e318a8eaa02e20b2253b2",
+    "evidence/controls/llvm-ciso646-20261008/original-macros.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/llvm-ciso646-20261008/original-preprocess.log.gz": "55f42906a52970be5795fae3bedff6bd17b6794de3eaedafb2236613d9272464",
+    "evidence/controls/llvm-ciso646-20261008/original-release-compile.log.gz": "55f42906a52970be5795fae3bedff6bd17b6794de3eaedafb2236613d9272464",
+    "evidence/controls/llvm-ciso646-20261008/original-release-native.log.gz": "fb6b412e401017322cafbce9b0b9e2732950649083609e4903e68dd2786eb674",
+    "evidence/controls/llvm-ciso646-20261008/original-release-valgrind.log.gz": "080bffc151890c23c7399d9409af67e001e4835aebac90576f95c3ca81f082fa",
+    "evidence/controls/llvm-ciso646-20261008/original-text.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/llvm-ciso646-20261008/original.macros.gz": "bb7afbab50a754877b174202366c0b29346413c37fe8af923e2aacb75daf863f",
+    "evidence/controls/llvm-ciso646-20261008/original.text": "1bad70370b4f94b46f601b05c5cb10e6556adff486f831a4d4dba6c0dd2019c9",
+    "evidence/controls/llvm-ciso646-20261008/original/llvm/Support/Threading.h": "d528f76628327eb31094050adf1a49d4df7e27041a1a9cd0786e6b0a0ad1cdbb",
+    "evidence/controls/llvm-ciso646-20261008/qualify.py": "ec0a787782e5e033b5e590ffeb8b01f25b7b8dca7cf7cf8936f07661cc9b95b9",
+    "evidence/controls/llvm-ciso646-20261008/status.json": "8baa57e7d0b0bec4ecb1a27a9d6d25f67fac3f1f21a3d10abe6851a96bb2198f",
+    "evidence/controls/llvm-ciso646-20261008/upstream-19.1.7.h": "d528f76628327eb31094050adf1a49d4df7e27041a1a9cd0786e6b0a0ad1cdbb",
+    "evidence/controls/llvm-ciso646-20261008/upstream-20.1.0.h": "a988757f0586a0ea3afe4d1cd837028c5f8a9e144ece0610333ea1df14786258",
+    "evidence/controls/llvm-ciso646-20261008/upstream-include-fix-debug-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/llvm-ciso646-20261008/upstream-include-fix-debug-native.log.gz": "fb6b412e401017322cafbce9b0b9e2732950649083609e4903e68dd2786eb674",
+    "evidence/controls/llvm-ciso646-20261008/upstream-include-fix-debug-valgrind.log.gz": "28de83547eee36d48a1b7b07fc0e9c3815196460d7c6bb4475228a49181a5298",
+    "evidence/controls/llvm-ciso646-20261008/upstream-include-fix-macros.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/llvm-ciso646-20261008/upstream-include-fix-preprocess.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/llvm-ciso646-20261008/upstream-include-fix-release-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/llvm-ciso646-20261008/upstream-include-fix-release-native.log.gz": "fb6b412e401017322cafbce9b0b9e2732950649083609e4903e68dd2786eb674",
+    "evidence/controls/llvm-ciso646-20261008/upstream-include-fix-release-valgrind.log.gz": "d647f93afc056829241e0516d9571805bd42ff83f6bff7a117d5d135e7099344",
+    "evidence/controls/llvm-ciso646-20261008/upstream-include-fix-text.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/llvm-ciso646-20261008/upstream-include-fix.macros.gz": "b5aac3ce0e5975049ac32ae798f021da7cc305c94151fb37e94308dcbf680381",
+    "evidence/controls/llvm-ciso646-20261008/upstream-include-fix.text": "1bad70370b4f94b46f601b05c5cb10e6556adff486f831a4d4dba6c0dd2019c9",
+    "evidence/controls/llvm-ciso646-20261008/upstream-include-fix/llvm/Support/Threading.h": "bd311fa8b8b3cad9ebe2dde88fc90259938fe38a3d3e9d3e2fe0a59b0bc2ef9c",
+    "evidence/controls/llvm-ciso646-20261008/verified.json": "e624305bb45f2c9b747108b4908ea9037e39296da6d881890183d2884833a519"
+  },
+  "status": "User approved the exact Leap LLVM 19 ciso646 diagnostic on 2026-10-08. No suppression, compiler policy, installed-header or dependency change.",
+  "artifact_format": "Raw compiler macro dumps, generated flags and patch receipts are stored as deterministic gzip to preserve their exact whitespace and bytes."
+}
