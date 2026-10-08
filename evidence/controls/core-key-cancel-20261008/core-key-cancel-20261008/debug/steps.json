@@ -1,0 +1,122 @@
+[
+  {
+    "name": "configure",
+    "command": [
+      "cmake",
+      "-S",
+      "/home/david/src/qore/git/qore",
+      "-B",
+      "/home/david/src/qore/git/qore/build-debug",
+      "-DCMAKE_BUILD_TYPE=Debug",
+      "-DCMAKE_INSTALL_PREFIX=/usr"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "build",
+    "command": [
+      "cmake",
+      "--build",
+      "/home/david/src/qore/git/qore/build-debug",
+      "--target",
+      "qore",
+      "qore-hash-key-cancel-test",
+      "qore-hash-lookup-test",
+      "-j2"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "qore-hash-key-cancel-test",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore-hash-key-cancel-test"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "qore-hash-key-cancel-test-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "/home/david/src/qore/git/qore/build-debug/qore-hash-key-cancel-test"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "qore-hash-lookup-test",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore-hash-lookup-test"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "qore-hash-lookup-test-valgrind",
+    "command": [
+      "valgrind",
+      "--error-exitcode=99",
+      "--leak-check=full",
+      "--show-leak-kinds=all",
+      "--errors-for-leak-kinds=definite,indirect,possible",
+      "/home/david/src/qore/git/qore/build-debug/qore-hash-lookup-test"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "hash-key-cancel",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore/examples/test/qore/misc/hash-key-cancel.qtest",
+      "-v"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "hash-lookup-native",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore/examples/test/qore/misc/hash-lookup-native.qtest",
+      "-v"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "hash",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore/examples/test/qore/misc/hash.qtest",
+      "-v"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "hashdecl",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore/examples/test/qore/misc/hashdecl.qtest",
+      "-v"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "hash-key-encoding",
+    "command": [
+      "/home/david/src/qore/git/qore/build-debug/qore",
+      "-b",
+      "--enable-debug",
+      "/home/david/src/qore/git/qore/examples/test/qore/misc/hash-key-encoding/hash-key-encoding.qtest",
+      "-v"
+    ],
+    "exit_code": 0
+  }
+]

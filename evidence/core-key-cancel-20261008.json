@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-08",
+  "status": "Qualified and fully audited; ready to commit.",
+  "base_commit": "94e1c50c34d9fb44c424dd201f7cf969bacbd859",
+  "root_cause": "The new helper scanned an arbitrarily long non-default ASCII-compatible key without a cancellation point. A pending request was left untouched while a 1 MiB lookup returned its value.",
+  "fix": "Scan at most 100 bytes between qore_check_cancel calls and propagate failure before attempting conversion. Default-encoding and inline fast paths are unchanged.",
+  "qualification": {
+    "debug": {
+      "native_cancellation_checks": 172,
+      "native_lookup_checks": 348,
+      "qore_cases": 19,
+      "qore_assertions": 2025,
+      "valgrind_runs": 2,
+      "memory_errors": 0,
+      "lost_bytes": 0
+    },
+    "release": {
+      "native_cancellation_checks": 172,
+      "native_lookup_checks": 348,
+      "qore_cases": 19,
+      "qore_assertions": 2025,
+      "valgrind_runs": 2,
+      "memory_errors": 0,
+      "lost_bytes": 0
+    }
+  },
+  "audit": {
+    "pass": 21,
+    "na": 41,
+    "fail": 0
+  },
+  "approved_diagnostics": [
+    "evidence/ngtcp2-backend-diagnostics-20261008.json",
+    "Previously approved exact GCC/Valgrind missing-DW_AT_abstract_origin diagnostic."
+  ],
+  "limits": [
+    "Cancellation/interruption is injected deterministically before lookup; tests do not race a cancellation request with a timed scan. Source structure bounds subsequent check intervals to 100 bytes.",
+    "Updated RPM qualification and native repository checks remain separate gates."
+  ],
+  "source_sha256": {
+    "CMakeLists.txt": "8addd6c4f45088b34d7d61244bc8b251b797162c752b61908058b2b6e1f24a46",
+    "include/qore/intern/QoreHashKeyHelper.h": "4a2900dc454c2c6dae4efd49bfe7f8bfe5f2ae6f9f39c324cffecfd5b0d47418",
+    "examples/test/qore/misc/hash_key_cancel.cpp": "ead3e083b5fdd08cc927211572d8c7e2859e1d1d6372a671687a4f2bd32499af",
+    "examples/test/qore/misc/hash-key-cancel.qtest": "919a8d216b44873483ad94bac0947f3c765c11dbe9e11e511893b8a053dacff2",
+    "design/cooperative-cancellation.md": "fa499e087435edf2eb96426562a15187fc4b0e4ffd3267d0c1d1b96c337abe92",
+    "doxygen/lang/900_release_notes.dox.tmpl": "a7d312ceb1f1ae6a246e904ff386f217ac4d6012c12a4714080b12ba01c6559f",
+    "examples/test/qore/misc/audits/hash-key-cancel.rst": "3fa17531247f98408c2322e044c7fd80e4b81bc3abd20987deecf1a1c09464cb"
+  },
+  "files_sha256": {
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/debug/build.log.gz": "bc9740de44bacf288e407737050e6123dec38ff2bb11f0d587c13c52f4cc909a",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/debug/configure.log.gz": "6a2e3c06641e6c2285e04cfbb222ee53e5617baf0e6eb6174f266630e5438d98",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/debug/hash-key-cancel.log.gz": "450af7dc4ab1cd2d73d918380f760d7164c2607682fecaf70eefe50aa33f9d0e",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/debug/hash-key-encoding.log.gz": "758143610cc784c3923c341b0a8372e0ca2f92e9e0998b7c4141284ef01b3a5c",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/debug/hash-lookup-native.log.gz": "d5809f9fbbea434c3aadc6e0ebbb3420fe1a04fb42eb56bcb9ba22ae15a00f83",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/debug/hash.log.gz": "bade03c20083f745906cf620adb74b38cd88b145f9ad6e204a527e8edb17184e",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/debug/hashdecl.log.gz": "6610a5a595559a1c387a68d47302caceba387b8c87f30d861f7b676e37ad693c",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/debug/qore-hash-key-cancel-test-valgrind.log.gz": "a7a7c12a6723c8ab700faa52ad276c352fd819a7cac378ed99207d5195c93d90",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/debug/qore-hash-key-cancel-test.log.gz": "72cf7733b0c2157e9f871b1d735e92cc4647712151fc5428fafe2c7abecf54e0",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/debug/qore-hash-lookup-test-valgrind.log.gz": "ebb0da534d43a3d5894bf9ff1cc8d49cdfb098898f8c3655ad4f27b591faf6e2",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/debug/qore-hash-lookup-test.log.gz": "5fa05e54d563ccc4cb4f6d4836a184ebd8f1419b0ecb4e300b1d0b0bd868065f",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/debug/steps.json": "c1ec348a0a70f0627b23ce1c222521b88ea1100c828ae30ad78734b34245648f",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/release/build.log.gz": "552f1a2048ebd95f4f7969b31155cfebe36b0540f5e8cd703ab5f2b083d2e93e",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/release/configure.log.gz": "c5c4d0e22ea70501405bed8e38bcda7f8d2ee04f1766a4df7c903e9b5c551521",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/release/hash-key-cancel.log.gz": "450af7dc4ab1cd2d73d918380f760d7164c2607682fecaf70eefe50aa33f9d0e",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/release/hash-key-encoding.log.gz": "758143610cc784c3923c341b0a8372e0ca2f92e9e0998b7c4141284ef01b3a5c",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/release/hash-lookup-native.log.gz": "d5809f9fbbea434c3aadc6e0ebbb3420fe1a04fb42eb56bcb9ba22ae15a00f83",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/release/hash.log.gz": "bade03c20083f745906cf620adb74b38cd88b145f9ad6e204a527e8edb17184e",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/release/hashdecl.log.gz": "6610a5a595559a1c387a68d47302caceba387b8c87f30d861f7b676e37ad693c",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/release/qore-hash-key-cancel-test-valgrind.log.gz": "16c5b6de8e90e7053029e7ae10637836a966c22b4985efa9cbfdf8cd3ec37df7",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/release/qore-hash-key-cancel-test.log.gz": "72cf7733b0c2157e9f871b1d735e92cc4647712151fc5428fafe2c7abecf54e0",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/release/qore-hash-lookup-test-valgrind.log.gz": "1258cd049c2d96c815dd4675ba8f745a128431005f8fff5b090de921b4e220ff",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/release/qore-hash-lookup-test.log.gz": "5fa05e54d563ccc4cb4f6d4836a184ebd8f1419b0ecb4e300b1d0b0bd868065f",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/release/steps.json": "6ccce98ed4dada986e3de4521f33e4b93091306966ce4b160c295896b522dccd",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/source.json": "8772e74c691238197f5b8f1a781f7c86364c2f995a15ff775b42e8d1feff434f",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-20261008/status.json": "f614fe6aef4072e48625a2647b2c31beac8d50f531a76a0aa5f577239ef98c51",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-control-20261008/compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-control-20261008/fixture-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-control-20261008/fixture-negative.log.gz": "bfbfeab27ce90e5f1528a001e35a5d24cad574e2087c228eb718c6b8c1213c53",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-control-20261008/run.log.gz": "b924f5e7d7508897f698cf299ffe7e4718f8b7139af30b1660758d98ef642667",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-control-20261008/status.json": "dfde28239525c5b167ac0fe216d66efda4fa5289f565b074474ddc7ad3a5a301",
+    "evidence/controls/core-key-cancel-20261008/core-key-cancel-control-20261008.cpp": "047a298bef5dacbf3f8b4cd270f562437d8c2a8441863a2bd1be35936473b6c6",
+    "evidence/controls/core-key-cancel-20261008/hash-key-cancel.rst": "3fa17531247f98408c2322e044c7fd80e4b81bc3abd20987deecf1a1c09464cb",
+    "evidence/controls/core-key-cancel-20261008/qualify-core-key-cancel-20261008.py": "9e1c56fd24a7d362478f43841ecdb150048e36689320b694cfc6154094a1b366",
+    "evidence/controls/core-key-cancel-20261008/record-core-key-cancel-20261008.py": "2f6469ff8611c186145a5e1f789c5ab8c94fcc3230689b1d9672415489ed9996"
+  }
+}

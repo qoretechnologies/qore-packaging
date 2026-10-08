@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-08",
+  "status": "Qualified and fully audited; ready to commit.",
+  "base_commit": "2e272bdd8beef659ecdb29e88be287d2bfff5e35",
+  "root_cause": "The new helper scanned an arbitrarily long non-default ASCII-compatible key without a cancellation point. A pending request was left untouched while a 1 MiB lookup returned its value.",
+  "fix": "Scan at most 100 bytes between qore_check_cancel calls and propagate failure before attempting conversion. Default-encoding and inline fast paths are unchanged.",
+  "qualification": {
+    "debug": {
+      "native_cancellation_checks": 172,
+      "native_lookup_checks": 348,
+      "qore_cases": 19,
+      "qore_assertions": 3449,
+      "valgrind_runs": 2,
+      "memory_errors": 0,
+      "lost_bytes": 0
+    },
+    "release": {
+      "native_cancellation_checks": 172,
+      "native_lookup_checks": 348,
+      "qore_cases": 19,
+      "qore_assertions": 3449,
+      "valgrind_runs": 2,
+      "memory_errors": 0,
+      "lost_bytes": 0
+    }
+  },
+  "audit": {
+    "pass": 21,
+    "na": 41,
+    "fail": 0
+  },
+  "approved_diagnostics": [
+    "evidence/ngtcp2-backend-diagnostics-20261008.json",
+    "Previously approved exact GCC/Valgrind missing-DW_AT_abstract_origin diagnostic."
+  ],
+  "limits": [
+    "Cancellation/interruption is injected deterministically before lookup; tests do not race a cancellation request with a timed scan. Source structure bounds subsequent check intervals to 100 bytes.",
+    "Updated RPM qualification and native repository checks remain separate gates."
+  ],
+  "source_sha256": {
+    "CMakeLists.txt": "a77f8c9143877b083897a73af3fd6b3f739d2a2e4aefa05a283beb9c4ee9d3d4",
+    "include/qore/intern/QoreHashKeyHelper.h": "4a2900dc454c2c6dae4efd49bfe7f8bfe5f2ae6f9f39c324cffecfd5b0d47418",
+    "examples/test/qore/misc/hash_key_cancel.cpp": "ead3e083b5fdd08cc927211572d8c7e2859e1d1d6372a671687a4f2bd32499af",
+    "examples/test/qore/misc/hash-key-cancel.qtest": "919a8d216b44873483ad94bac0947f3c765c11dbe9e11e511893b8a053dacff2",
+    "design/cooperative-cancellation.md": "fa499e087435edf2eb96426562a15187fc4b0e4ffd3267d0c1d1b96c337abe92",
+    "doxygen/lang/900_release_notes.dox.tmpl": "53d070a59863a72835a175e776e0ada0d9075f1c88ba966d8e2ae02848bab3a1",
+    "examples/test/qore/misc/audits/hash-key-cancel.rst": "1fd0b0a1b789b365cf41a40a4c5b3e5ff0a334f94f7020147fd38f3a984e1a78"
+  },
+  "files_sha256": {
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-control-20261008.cpp": "047a298bef5dacbf3f8b4cd270f562437d8c2a8441863a2bd1be35936473b6c6",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/debug/build.log.gz": "6b43c83f221714d93791bcf0f9d1125c94c936bd0c3172f5397e220c89cffc80",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/debug/configure.log.gz": "303f72a30d582cac0ed0881487b04bacd7320965645bd6db48d4538b115d9f10",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/debug/hash-key-cancel.log.gz": "450af7dc4ab1cd2d73d918380f760d7164c2607682fecaf70eefe50aa33f9d0e",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/debug/hash-key-encoding.log.gz": "4d84e63f9d96d5b662c67c7db1ecd98a5f97cc16c4c3d94753131a502fce6d88",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/debug/hash-lookup-native.log.gz": "d5809f9fbbea434c3aadc6e0ebbb3420fe1a04fb42eb56bcb9ba22ae15a00f83",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/debug/hash.log.gz": "bade03c20083f745906cf620adb74b38cd88b145f9ad6e204a527e8edb17184e",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/debug/hashdecl.log.gz": "6610a5a595559a1c387a68d47302caceba387b8c87f30d861f7b676e37ad693c",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/debug/qore-hash-key-cancel-test-valgrind.log.gz": "ba882bb5c61e90226fbd4baa81fa5256ccc76be6496b5ffc6d277dc0b66859dc",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/debug/qore-hash-key-cancel-test.log.gz": "72cf7733b0c2157e9f871b1d735e92cc4647712151fc5428fafe2c7abecf54e0",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/debug/qore-hash-lookup-test-valgrind.log.gz": "da0548da7cdd85f26a254f3394d1afe7494e2c4e508eab56a5ceb657329bdc02",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/debug/qore-hash-lookup-test.log.gz": "5fa05e54d563ccc4cb4f6d4836a184ebd8f1419b0ecb4e300b1d0b0bd868065f",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/debug/steps.json": "c1ec348a0a70f0627b23ce1c222521b88ea1100c828ae30ad78734b34245648f",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/release/build.log.gz": "07d5532d015cf9eb34b9a0664d2cac31ffaf28d03135502d457aed8656778b9e",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/release/configure.log.gz": "c8998ed1d8a08b3b15736fef0710f3715f8b14eea31dcf5feb03c4f40a7dcca1",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/release/hash-key-cancel.log.gz": "450af7dc4ab1cd2d73d918380f760d7164c2607682fecaf70eefe50aa33f9d0e",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/release/hash-key-encoding.log.gz": "4d84e63f9d96d5b662c67c7db1ecd98a5f97cc16c4c3d94753131a502fce6d88",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/release/hash-lookup-native.log.gz": "d5809f9fbbea434c3aadc6e0ebbb3420fe1a04fb42eb56bcb9ba22ae15a00f83",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/release/hash.log.gz": "bade03c20083f745906cf620adb74b38cd88b145f9ad6e204a527e8edb17184e",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/release/hashdecl.log.gz": "6610a5a595559a1c387a68d47302caceba387b8c87f30d861f7b676e37ad693c",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/release/qore-hash-key-cancel-test-valgrind.log.gz": "69f763d578a426b7ddd22b2fed3edbf68b585d26fb220ee873c69dddb3ca03bf",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/release/qore-hash-key-cancel-test.log.gz": "72cf7733b0c2157e9f871b1d735e92cc4647712151fc5428fafe2c7abecf54e0",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/release/qore-hash-lookup-test-valgrind.log.gz": "5fea7e309d6cc3508c342156abe3f861cacf369bceccb3a48691b6c68235929b",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/release/qore-hash-lookup-test.log.gz": "5fa05e54d563ccc4cb4f6d4836a184ebd8f1419b0ecb4e300b1d0b0bd868065f",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/release/steps.json": "6ccce98ed4dada986e3de4521f33e4b93091306966ce4b160c295896b522dccd",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/source.json": "10d03a7baf35ce3fbd2691cb23a2e7a8d64505a8b158c2ff77f4d0beccacdba5",
+    "evidence/controls/core-key-cancel-postpull-20261008/core-key-cancel-postpull-20261008/status.json": "8edefa72c341a3faa3d00134750b3cf6b0105d9874701d4c6a4fa4cda945a958",
+    "evidence/controls/core-key-cancel-postpull-20261008/hash-key-cancel.rst": "1fd0b0a1b789b365cf41a40a4c5b3e5ff0a334f94f7020147fd38f3a984e1a78",
+    "evidence/controls/core-key-cancel-postpull-20261008/qualify-core-key-cancel-postpull-20261008.py": "aa4f70bcb4a6118ad1336ffdcd7b647045bb81e824311311175aef2be8ac2d65",
+    "evidence/controls/core-key-cancel-postpull-20261008/record-core-key-cancel-postpull-20261008.py": "780690082188eca310d03eaa3d633ac8e15115190088085ab098d7a3511f987b"
+  }
+}
