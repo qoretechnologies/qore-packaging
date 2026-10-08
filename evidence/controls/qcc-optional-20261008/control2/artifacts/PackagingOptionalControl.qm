@@ -1,0 +1,15 @@
+# Copyright 2026 Qore Technologies, s.r.o.
+%modern
+%try-module PackagingOptionalFixture
+%define NoOptionalFixture
+%endtry
+module PackagingOptionalControl { version = "1.0"; desc = "Optional compilation control"; author = "Qore"; license = "MIT"; }
+public namespace PackagingOptionalControl {
+    public string sub mode() {
+%ifdef NoOptionalFixture
+        return "absent";
+%else
+        return PackagingOptionalFixture::mode();
+%endif
+    }
+}

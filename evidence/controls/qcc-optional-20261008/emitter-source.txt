@@ -1,0 +1,34 @@
+Source: qore/lib/QoreAOT.cpp at edf340a3a
+
+            // Check for %try-module directive and warn if module not available
+            if (p + 11 <= end && strncmp(p, "%try-module", 11) == 0) {
+                p += 11;
+                while (p < end && (*p == ' ' || *p == '\t')) {
+                    ++p;
+                }
+                const char* mod_start = p;
+                while (p < end && *p != '\n' && *p != ' ' && *p != '\t') {
+                    ++p;
+                }
+                if (p > mod_start) {
+                    std::string mod_name(mod_start, p - mod_start);
+                    // Try to load the module to check if it's available
+                    ExceptionSink xsink;
+                    int rc = MM.runTimeLoadModule(&xsink, mod_name.c_str(), nullptr);
+                    if (rc < 0 || xsink) {
+                        fprintf(stderr, "%swarning: optional module '%s' is not available during compilation\n",
+                            QCC_LOG_PREFIX, mod_name.c_str());
+                        fprintf(stderr, "%s         '%s'-dependent functionality will be disabled in the compiled module\n",
+                            QCC_LOG_PREFIX, mod_name.c_str());
+                    }
+                    xsink.clear();
+                }
+                // Skip to end of line
+                while (p < end && *p != '\n') {
+                    ++p;
+                }
+                if (p < end) {
+                    ++p;
+                }
+                continue;
+            }

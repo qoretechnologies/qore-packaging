@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Exact bootstrap diagnostic proposal; user approval pending. No production changes or suppression.",
+  "scope": [
+    "qcc: warning: optional module 'grpc' is not available during compilation",
+    "qcc: warning: optional module 'imagemagick' is not available during compilation",
+    "qcc: warning: optional module 'msgpack' is not available during compilation",
+    "qcc: warning: optional module 'oracle' is not available during compilation",
+    "qcc: warning: optional module 'process' is not available during compilation",
+    "qcc: warning: optional module 'sysconf' is not available during compilation",
+    "qcc: warning: optional module 'uuid' is not available during compilation",
+    "qcc: warning: optional module 'xml' is not available during compilation",
+    "qcc: warning: optional module 'zip' is not available during compilation"
+  ],
+  "associated_detail": "qcc:          '<module>'-dependent functionality will be disabled in the compiled module",
+  "root_cause": "QoreAOT.cpp deliberately attempts to load every %try-module dependency and emits these messages when it is unavailable. The nine separate module RPMs require qore-devel/qore-rpm-macros, so making them prerequisites of the initial core build creates a bootstrap cycle. Core source modules retain their optional branches; the AOT loader uses source fallback after an optional module becomes available.",
+  "proposal": "Retain the exact nine missing-optional-module build diagnostics, with their explanatory detail. Preserve source installation, normal AOT behavior, all dependency/installed functionality checks and visible warnings. Do not add optional extension RPMs as core bootstrap requirements.",
+  "qualification": {
+    "existing_regression": {
+      "configurations": [
+        "host Release",
+        "host Debug"
+      ],
+      "cases_each": 7,
+      "assertions_each": 20,
+      "cases_total": 14,
+      "assertions_total": 40,
+      "exit_codes": [
+        0,
+        0
+      ]
+    },
+    "paired_control": {
+      "checks": 7,
+      "stages": [
+        "Absent optional module: exactly the expected compiler warning.",
+        "Absent runtime: compiled unavailable branch executes correctly without runtime diagnostic.",
+        "Install optional fixture: runtime source fallback enables functionality.",
+        "Recompile with fixture present: compiler warning disappears.",
+        "Present runtime: compiled available branch works without diagnostic."
+      ],
+      "scope": "Synthetic optional module exercises the unchanged emitter and loader; does not claim real extension behavior."
+    },
+    "package_context": "Original complete core candidate builds passed 405 core suites and 335 executed ML cases on each distribution; final rebuilt canonical source and native/installed gates remain required."
+  },
+  "limits": [
+    "Only the listed core bootstrap warnings; unrecognized warnings, missing required modules and packaging omissions remain failures.",
+    "No exception for a missing source fallback or disabled functionality when its dependency is installed.",
+    "Native ARM and per-extension installed qualifications remain separate gates.",
+    "Initial paired-control harness incorrectly expected a newline from Qore print(); corrected only expected output. Failed first-attempt logs retained."
+  ],
+  "approval": null,
+  "files_sha256": {
+    "evidence/controls/qcc-optional-20261008/AOTOptionalModules.qtest": "5bbb20a7d1453b85c02f4fe77ffc9a8a63e0584f5a48f0274f902e5215f54449",
+    "evidence/controls/qcc-optional-20261008/check-pair.py": "a21b93e9595f0bd17501a89de9643b1b0e35938ea544e59f996f7eadac9418c1",
+    "evidence/controls/qcc-optional-20261008/control/absent-compile.stderr.gz": "99dc49a298cf8f9b4c81822bdd9811486dcaced999d006143509ad04548fd337",
+    "evidence/controls/qcc-optional-20261008/control/absent-compile.stdout.gz": "ab31aaa30f1fb24b9cb60ee18404b449d4370efdf3f212c2a588262dac252f3b",
+    "evidence/controls/qcc-optional-20261008/control/absent-runtime.stderr.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/qcc-optional-20261008/control/absent-runtime.stdout.gz": "b2cf41963ffa609f2b63aa8eb3a35e2ffecd5f4f4b0ae8e7543880ea6cba940f",
+    "evidence/controls/qcc-optional-20261008/control/artifacts/PackagingOptionalControl.qm": "8fbe9ef1cd94a7c8dc07ee71af6c6870f50b9c6e9fa14037907e41fed451b9d4",
+    "evidence/controls/qcc-optional-20261008/control/control.d": "2ac072d3366948ed00ecfb46bbcda4fbe9ace5e0755a8df1ea8069b1569c5225",
+    "evidence/controls/qcc-optional-20261008/control2/absent-compile.stderr.gz": "99dc49a298cf8f9b4c81822bdd9811486dcaced999d006143509ad04548fd337",
+    "evidence/controls/qcc-optional-20261008/control2/absent-compile.stdout.gz": "b099236f89e8cad5eb5dfe6d3c7607913ca30bd45b8387dacf7e012a3bb47237",
+    "evidence/controls/qcc-optional-20261008/control2/absent-runtime.stderr.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/qcc-optional-20261008/control2/absent-runtime.stdout.gz": "b2cf41963ffa609f2b63aa8eb3a35e2ffecd5f4f4b0ae8e7543880ea6cba940f",
+    "evidence/controls/qcc-optional-20261008/control2/artifacts/PackagingOptionalControl.qm": "8fbe9ef1cd94a7c8dc07ee71af6c6870f50b9c6e9fa14037907e41fed451b9d4",
+    "evidence/controls/qcc-optional-20261008/control2/control.d": "481b3261dc5345dc5310d01ce45acae7f18206f09ce2dc307d8d7254a9b3225a",
+    "evidence/controls/qcc-optional-20261008/control2/installed-runtime.stderr.gz": "06f8d88215f43b19b8e505bccd3e625923439e153b40501befbb477e9ab149fe",
+    "evidence/controls/qcc-optional-20261008/control2/installed-runtime.stdout.gz": "3b7d26ea39c4c6469389024da00b3add6fac9e0b1aace815f9795f86c71aa615",
+    "evidence/controls/qcc-optional-20261008/control2/optional/PackagingOptionalFixture.qm": "04b679183439601f677213e24ce6fe068edc0d3d8a1f51841feb870c26217450",
+    "evidence/controls/qcc-optional-20261008/control2/present-compile.stderr.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/qcc-optional-20261008/control2/present-compile.stdout.gz": "e73e4390a2434fc92fe11c45ab8a11adda3e92f55881a4d182e393954e25dc44",
+    "evidence/controls/qcc-optional-20261008/control2/present-runtime.stderr.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/qcc-optional-20261008/control2/present-runtime.stdout.gz": "3b7d26ea39c4c6469389024da00b3add6fac9e0b1aace815f9795f86c71aa615",
+    "evidence/controls/qcc-optional-20261008/control2/status.json": "a363ad9d54820eeeb1130c4ab9d3ef4c693c05360388a4cf18b420b94f0196f5",
+    "evidence/controls/qcc-optional-20261008/debug/native.log.gz": "5975f245ca4f9471eb6c4bf4662b6c56cb6ec8c5bfb106a8aff10781b5ff5910",
+    "evidence/controls/qcc-optional-20261008/debug/status.json": "e630fd01bd264ff561e2c2c39c953e159db5878ad48a3f482150f7ddc8a78a17",
+    "evidence/controls/qcc-optional-20261008/emitter-source.txt": "e816460ea1eee6b27127189a22816b91967f9264fad19370e88f2e23c959c800",
+    "evidence/controls/qcc-optional-20261008/exact-build-warnings.json": "a7b196bdcd5c76f1e84fd290cd4468e9554dec9d3b0fe7184efba42c775d47d5",
+    "evidence/controls/qcc-optional-20261008/module-build-dependencies.json": "795b0db9d039b8f1ff988efb3363c402358c37390d670cce7c118fc628302ed0",
+    "evidence/controls/qcc-optional-20261008/optional-declarations.json": "0ebad3daa8d900c422d5051b168d8dbc697e68440e12e729151a820a3c376604",
+    "evidence/controls/qcc-optional-20261008/release/native.log.gz": "5975f245ca4f9471eb6c4bf4662b6c56cb6ec8c5bfb106a8aff10781b5ff5910",
+    "evidence/controls/qcc-optional-20261008/release/status.json": "7bbc7f21ad31036e29bc8d76806cfd824da87832ae37fd802aded3dacce3ace1",
+    "evidence/controls/qcc-optional-20261008/run-existing-regression.py": "05ed4e661c0dc07bb7aeec575784643d6123a44fcc43e75c66f0e4a02ac2945c",
+    "evidence/controls/qcc-optional-20261008/status.json": "6c00bbecb5c1802d0dcf400240bedf0dc675a57bdec838cf88a0100db89df4c2"
+  }
+}

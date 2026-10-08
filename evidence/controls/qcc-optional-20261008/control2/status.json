@@ -1,0 +1,65 @@
+{
+  "steps": [
+    {
+      "name": "absent-compile",
+      "command": [
+        "/home/david/src/qore/git/qore/build/qcc",
+        "-m",
+        "--depfile=/home/david/src/qore/git/qore-packaging/results/qcc-optional-20261008/control2/control.d",
+        "-o",
+        "/home/david/src/qore/git/qore-packaging/results/qcc-optional-20261008/control2/artifacts/PackagingOptionalControl.qmod",
+        "/home/david/src/qore/git/qore-packaging/results/qcc-optional-20261008/control2/artifacts/PackagingOptionalControl.qm"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "absent-runtime",
+      "command": [
+        "/home/david/src/qore/git/qore/build/qore",
+        "-b",
+        "--enable-debug",
+        "-ne",
+        "%requires PackagingOptionalControl\nprint(PackagingOptionalControl::mode());"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "installed-runtime",
+      "command": [
+        "/home/david/src/qore/git/qore/build/qore",
+        "-b",
+        "--enable-debug",
+        "-ne",
+        "%requires PackagingOptionalControl\nprint(PackagingOptionalControl::mode());"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "present-compile",
+      "command": [
+        "/home/david/src/qore/git/qore/build/qcc",
+        "-m",
+        "--depfile=/home/david/src/qore/git/qore-packaging/results/qcc-optional-20261008/control2/control.d",
+        "-o",
+        "/home/david/src/qore/git/qore-packaging/results/qcc-optional-20261008/control2/artifacts/PackagingOptionalControl.qmod",
+        "/home/david/src/qore/git/qore-packaging/results/qcc-optional-20261008/control2/artifacts/PackagingOptionalControl.qm"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "present-runtime",
+      "command": [
+        "/home/david/src/qore/git/qore/build/qore",
+        "-b",
+        "--enable-debug",
+        "-ne",
+        "%requires PackagingOptionalControl\nprint(PackagingOptionalControl::mode());"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "checks": 7,
+  "result": "pass",
+  "scope": "Synthetic module exercises the unchanged availability detector and source fallback; no real extension functionality is inferred.",
+  "harness_correction": "First control expected a newline from Qore print(), which deliberately emits none. Only expected stdout was corrected; initial logs retained."
+}
