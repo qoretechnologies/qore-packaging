@@ -10,8 +10,9 @@ The testing project is ``home:davidnichols:qore:testing``. Publication remains
 disabled while final module, upgrade and repository checks are completed.
 There is no public installation endpoint qualified by this document yet.
 
-The commands below have been exercised with core release 21 in fresh Fedora 44,
-AlmaLinux 10 and openSUSE Leap 16.0 x86_64 containers. Their repositories contain
+The commands below have been exercised with core release 21 in fresh native
+x86_64 and aarch64 containers on Fedora 44, AlmaLinux 10 and openSUSE Leap 16.0.
+Their repositories contain
 the exact OBS-signed RPMs recorded in
 ``evidence/core21-upgrade-baseline-20261008.json``. Local test metadata is signed
 with a separate, temporary qualification key. These checks establish package
@@ -70,9 +71,10 @@ and that ``rpm -V`` succeeds after both installation phases.
 Each package manager must reject a deliberately modified ``repomd.xml`` with
 its original signature before it refreshes and installs from the valid
 repository. Six prepared repository sets, covering both x86_64 and aarch64,
-also pass direct metadata signature and tamper checks. Package-manager
-installation from these local repositories has been exercised on x86_64;
-equivalent native ARM solver checks remain separate work.
+also pass direct metadata signature and tamper checks. The reusable runner
+passes package-manager discovery, signature rejection and runtime/SDK checks
+on all six native distribution/architecture combinations. ARM jobs run on
+``linux/arm64`` runners and verify the selected RPM identities independently.
 
 The separate removal/reinstallation checks prove that dependency protection
 rejects removal of the Qore library while consumers remain installed, that
@@ -85,6 +87,9 @@ Evidence:
 
 * ``evidence/core21-solver-20261008.json``: exact package-name transactions,
   signing controls, selected versions and installed test logs.
+* ``evidence/repository-runner-20261008.json`` and
+  ``evidence/repository-runner-arm-20261008.json``: the reusable runner's unit
+  tests, x86_64 qualification and three native ARM jobs.
 * ``evidence/core21-removal-20261008.json``: dependency rejection, removal and
   reinstallation.
 * ``evidence/core21-upgrade-baseline-20261008.json``: frozen signed packages and
