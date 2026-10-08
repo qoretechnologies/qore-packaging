@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-08",
+  "status": "The canonical tested PyArrow dependency is uploaded with generated changelog metadata; both Leap native builds enabled and publication disabled.",
+  "source": {
+    "schema": 1,
+    "name": "python-pyarrow",
+    "version": "25.0.1",
+    "commit": "a2d68df4bca986e6ba7c1f1e66fa929e28e98da9",
+    "source_date_epoch": 1790995769,
+    "spec": "python-pyarrow.spec",
+    "upstream": {
+      "url": "https://archive.apache.org/dist/arrow/arrow-25.0.1/apache-arrow-25.0.1.tar.gz",
+      "sha256": "43d5de0a581f43cf63a2c06b4dcf13b9ff6fcd800f023324596e5781093bc500"
+    },
+    "sources": {
+      "apache-arrow-25.0.1.tar.gz": "43d5de0a581f43cf63a2c06b4dcf13b9ff6fcd800f023324596e5781093bc500",
+      "arrow-testing-9ff285c88565f0f6abc855918c6a342e70e4909c.tar.gz": "507609ccd0912a111f2ee89d108176baded8c8f22fd845c1686d7ddd462c3510",
+      "parquet-testing-e74785d85a4ecee829e1e405444d6a1b24b8bc9c.tar.gz": "6b3d9c1d9b9f059cf3b84b10af2b8a861db167f7809ecef555e610d26fd16433",
+      "pyarrow-rank-test-deprecation.patch": "41855ae51995ee5dbd3fe08cac7426da6d13fd92fcc56ee691e3bbb958a5a761",
+      "pyarrow-runtime-test.py": "533964919eaba99fd2887fd62b0dba209468fbed7e26dd933de0a66456c45363",
+      "pyarrow-unused-libcst-build-requirement.patch": "a0e246c03dfe0e3226f82107700dcf1cccc91325b79ef551d495071002273041",
+      "python-pyarrow.changes": "79e70f5e30d372e25efd38589f41e26ac74dacd61aeb235f84d345bd12a166ff",
+      "python-pyarrow.spec": "3eb3c2b1d5792138e06b08861c8ae8d6b3b64a605c18d95366e5d8a84578d801"
+    },
+    "components": [
+      {
+        "url": "https://codeload.github.com/apache/arrow-testing/tar.gz/9ff285c88565f0f6abc855918c6a342e70e4909c",
+        "archive": "arrow-testing-9ff285c88565f0f6abc855918c6a342e70e4909c.tar.gz",
+        "sha256": "507609ccd0912a111f2ee89d108176baded8c8f22fd845c1686d7ddd462c3510",
+        "commit": "9ff285c88565f0f6abc855918c6a342e70e4909c"
+      },
+      {
+        "url": "https://codeload.github.com/apache/parquet-testing/tar.gz/e74785d85a4ecee829e1e405444d6a1b24b8bc9c",
+        "archive": "parquet-testing-e74785d85a4ecee829e1e405444d6a1b24b8bc9c.tar.gz",
+        "sha256": "6b3d9c1d9b9f059cf3b84b10af2b8a861db167f7809ecef555e610d26fd16433",
+        "commit": "e74785d85a4ecee829e1e405444d6a1b24b8bc9c"
+      }
+    ]
+  },
+  "obs": {
+    "name": "python-pyarrow",
+    "rev": "1",
+    "vrev": "1",
+    "srcmd5": "e2eb463bb7a1558db46f5755cb56ef55"
+  },
+  "prior_evidence": "evidence/pyarrow-external-diagnostics-20261003.json",
+  "qualification": {
+    "packaging_cases": 3,
+    "upstream_passed": 6616,
+    "upstream_skipped": 1646,
+    "upstream_xfailed": 13,
+    "upstream_non_strict_xpassed": 1,
+    "rpm_hashes_verified": 4
+  },
+  "unchanged": "Every canonical archive, patch, test and spec byte is unchanged. Only python-pyarrow.changes is added by the tested source preparer.",
+  "pending": "Native build/lint and signed ARM installation; Qore gRPC needs conventional SUSE package-name build requirements because native grpcio-tools lacks python3dist virtual provides.",
+  "files_sha256": {
+    "evidence/controls/pyarrow-obs-submission-20261008/source.xml": "9e42b88d2c8a9c27e566491ed4dc5d7e8f166a14a66e05ca418dc0a16e12675c",
+    "evidence/controls/pyarrow-obs-submission-20261008/manifest.json": "5fc18769087a588a8b962fd9f6ce51645f91cf229dffb58c03dbb4d04a032aa1",
+    "evidence/controls/pyarrow-obs-submission-20261008/initial-metadata.stderr": "146782552c28fc742ba3cff718b19751febcc0960b662058e668a3635e170b1d",
+    "evidence/controls/pyarrow-obs-submission-20261008/upload.log.gz": "bd72798d99052be48dcd315adb322c455e83a4cf91c7a19405f000b957feafec",
+    "evidence/controls/pyarrow-obs-submission-20261008/build.log.gz": "c9e813f5eb530d633977c8b5a4ebdd74a3b11ab9a8153362d6b5e85b54feb9ae",
+    "evidence/controls/pyarrow-obs-submission-20261008/submit.py": "8d7973835ba26eddd0b131ad3d24e825eacb2ebf0982fa7364868047c37e6874",
+    "evidence/controls/pyarrow-obs-submission-20261008/metadata.xml": "cdb7ae8e7ef48aa3a1ed47767ca8ad370da712a6a682e6fb656052ee26f539b7",
+    "evidence/controls/pyarrow-obs-submission-20261008/build.json.gz": "933b7e58fa4af37fad2976cfcda9cb6025b46296d843d8d5cdcc6918c6777731"
+  }
+}
