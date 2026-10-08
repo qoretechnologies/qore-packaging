@@ -1,0 +1,48 @@
+{
+  "ngtcp2": {
+    "native": {
+      "command": [
+        "/home/david/src/qore/git/qore-packaging/results/aot-debug-quic-controls-20261008/ngtcp2/upstream-tests",
+        "--seed",
+        "20261008"
+      ],
+      "exit_code": 0
+    },
+    "valgrind": {
+      "command": [
+        "valgrind",
+        "--error-exitcode=99",
+        "--leak-check=full",
+        "--show-leak-kinds=all",
+        "--errors-for-leak-kinds=definite,indirect,possible",
+        "/home/david/src/qore/git/qore-packaging/results/aot-debug-quic-controls-20261008/ngtcp2/upstream-tests",
+        "--seed",
+        "20261008"
+      ],
+      "exit_code": 0
+    }
+  },
+  "nghttp3": {
+    "native": {
+      "command": [
+        "/home/david/src/qore/git/qore-packaging/results/aot-debug-quic-controls-20261008/nghttp3/upstream-tests",
+        "--seed",
+        "20261008"
+      ],
+      "exit_code": 0
+    },
+    "valgrind": {
+      "command": [
+        "valgrind",
+        "--error-exitcode=99",
+        "--leak-check=full",
+        "--show-leak-kinds=all",
+        "--errors-for-leak-kinds=definite,indirect,possible",
+        "/home/david/src/qore/git/qore-packaging/results/aot-debug-quic-controls-20261008/nghttp3/upstream-tests",
+        "--seed",
+        "20261008"
+      ],
+      "exit_code": 0
+    }
+  }
+}
