@@ -7,7 +7,7 @@ import shlex
 import subprocess
 
 
-def compile_command(receipt, source, output):
+def compile_command(receipt, source, output, *, initialization=False):
     first = receipt.splitlines()[0] if receipt else ''
     key, separator, command = first.partition(' := ')
     if not separator or not key.startswith('cmd_'):
@@ -29,6 +29,10 @@ def compile_command(receipt, source, output):
     # runtime retains its normal LTO; ABI, feature and hardening flags survive.
     args = [arg for arg in args if arg != '-flto' and not arg.startswith('-flto=')
             and arg != '-ffat-lto-objects']
+    if initialization:
+        # This white-box fixture verifies private field initialization. Native
+        # headers, runtime objects and the public Operand test retain access checks.
+        args.append('-fno-access-control')
     return [*args, '-fno-lto', '-Werror']
 
 
@@ -36,6 +40,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source', type=Path, required=True)
     parser.add_argument('--test-source', type=Path, required=True)
+    parser.add_argument('--initialization-test-source', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     root = args.source.resolve()
@@ -48,13 +53,19 @@ def main():
     probe = output.with_suffix('.header.cc')
     probe.write_text('// Copyright 2026 Qore Technologies, s.r.o.; SPDX-License-Identifier: MIT\n'
                      '#include "src/regexp/arm64/regexp-macro-assembler-arm64.h"\n')
-    for source, target in [(probe, output.with_suffix('.header.o')),
-                           (args.test_source.resolve(), output.with_suffix('.o'))]:
-        command = compile_command(receipt, source, target)
+    targets = [(probe, output.with_suffix('.header.o'), False, None),
+               (args.test_source.resolve(), output.with_suffix('.o'), False, output)]
+    if args.initialization_test_source:
+        initialization_output = output.with_name(output.name + '-initialization')
+        targets.append((args.initialization_test_source.resolve(),
+                        initialization_output.with_suffix('.o'), True, initialization_output))
+    for source, target, initialization, executable in targets:
+        command = compile_command(receipt, source, target, initialization=initialization)
         subprocess.run(command, cwd=root / 'out', check=True)
-    subprocess.run([command[0], '-fno-lto', '-pthread', str(output.with_suffix('.o')),
-                    '-o', str(output)], check=True)
-    subprocess.run([str(output)], check=True)
+        if executable is not None:
+            subprocess.run([command[0], '-fno-lto', '-pthread', str(target),
+                            '-o', str(executable)], check=True)
+            subprocess.run([str(executable)], check=True)
 
 
 if __name__ == '__main__':

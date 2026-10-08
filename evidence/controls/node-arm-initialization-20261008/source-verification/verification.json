@@ -1,0 +1,27 @@
+{
+  "patches": 25,
+  "zero_fuzz": true,
+  "new_patches_zero_offset": true,
+  "existing_offset": "Patch16 timezone-index applies one line earlier after Patch14; complete resulting source matches the already qualified canonical build.",
+  "other_qualified_source_files_unchanged": 55,
+  "all_source_hashes_verified": 58,
+  "changed_sources": [
+    "nodejs24-arm-header-test.py",
+    "nodejs24-arm-initialization-test.cc",
+    "nodejs24-arm-operand-initialization.patch",
+    "nodejs24-libnode.changes",
+    "nodejs24-libnode.spec"
+  ],
+  "qualified_source_sha256": {
+    "deps/v8/src/codegen/arm64/assembler-arm64.h": "4b4a2495b3f1ab055d8f99c5cc843acfc5bdcedc4889f878e24bea3e0d4d0986",
+    "deps/v8/src/regexp/arm64/regexp-macro-assembler-arm64.h": "e7f3bc2ca9bc6166ebef55d634191c40e295ad31b04dfc35ac21080769c28174",
+    "deps/v8/src/regexp/arm64/regexp-macro-assembler-arm64.cc": "d8d038ba53785ce48f6b1f2ab2708cd904c1232cab72c659e160ece2de3c7b4a",
+    "deps/v8/third_party/zlib/cpu_features.c": "5475e2d6cfd1ded2d9d90de1c2ed43f0167b571d3739431cdbb0e3092e7e79f8",
+    "test/parallel/test-process-euid-egid.js": "085988171acc62cbb8d80bb27c75dbbdcdd4328721e41199d5ffd757129ef5ef"
+  },
+  "spec_architectures": [
+    "x86_64",
+    "aarch64"
+  ],
+  "native_arm_check_selected_only_on_arm": true
+}

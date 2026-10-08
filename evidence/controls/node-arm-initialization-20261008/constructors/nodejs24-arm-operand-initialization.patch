@@ -1,0 +1,30 @@
+--- a/deps/v8/src/codegen/arm64/assembler-arm64.h
++++ b/deps/v8/src/codegen/arm64/assembler-arm64.h
+@@ -124,9 +124,10 @@
+   std::optional<HeapNumberRequest> heap_number_request_;
+   Immediate immediate_;
+   Register reg_;
+-  Shift shift_;
+-  Extend extend_;
+-  unsigned shift_amount_;
++  // Immediate operands are copied by value; keep inactive members initialized.
++  Shift shift_ = NO_SHIFT;
++  Extend extend_ = NO_EXTEND;
++  unsigned shift_amount_ = 0;
+ };
+ 
+ // MemOperand represents a memory operand in a load or store instruction.
+@@ -159,9 +160,10 @@
+   Register regoffset_;
+   int64_t offset_;
+   AddrMode addrmode_;
+-  Shift shift_;
+-  Extend extend_;
+-  unsigned shift_amount_;
++  // Immediate operands are copied by value; keep inactive members initialized.
++  Shift shift_ = NO_SHIFT;
++  Extend extend_ = NO_EXTEND;
++  unsigned shift_amount_ = 0;
+ };
+ 
+ class AssemblerZone {

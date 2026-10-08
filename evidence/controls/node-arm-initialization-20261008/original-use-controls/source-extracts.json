@@ -1,0 +1,20 @@
+[
+  {
+    "file": "deps/v8/src/codegen/arm64/macro-assembler-arm64-inl.h",
+    "line": 200,
+    "text": "void MacroAssembler::Cmp(const Register& rn, const Operand& operand) {\n  DCHECK(allow_macro_instructions());\n  if (operand.IsShiftedRegister() && operand.shift_amount() == 0) {\n    if (!rn.IsSP() && !operand.reg().IsSP()) {\n      CmpPlainRegister(rn, operand.reg());\n      return;\n    }\n  }\n  Subs(AppropriateZeroRegFor(rn), rn, operand);\n}",
+    "sha256": "7fcccb51f0825bbea49e8e05d92ba448e93784c4bd63b0e62951990edc60514c"
+  },
+  {
+    "file": "deps/v8/src/codegen/arm64/macro-assembler-arm64-inl.h",
+    "line": 1469,
+    "text": "void MacroAssembler::CompareAndBranch(const Register& lhs, const Operand& rhs,\n                                      Condition cond, Label* label) {\n  if (rhs.IsImmediate() && (rhs.ImmediateValue() == 0)) {\n    switch (cond) {\n      case eq:\n      case ls:\n        Cbz(lhs, label);\n        return;\n      case lt:\n        Tbnz(lhs, lhs.SizeInBits() - 1, label);\n        return;\n      case ge:\n        Tbz(lhs, lhs.SizeInBits() - 1, label);\n        return;\n      case ne:\n      case hi:\n        Cbnz(lhs, label);\n        return;\n      default:\n        break;\n    }\n  }\n  Cmp(lhs, rhs);\n  B(cond, label);\n}",
+    "sha256": "67f0b17089415e35a40b46aa989318aeea9179ae65476f55db93c3aa1862952d"
+  },
+  {
+    "file": "deps/v8/src/codegen/arm64/macro-assembler-arm64-inl.h",
+    "line": 1229,
+    "text": "void MacroAssembler::JumpIfLessThan(Register x, int32_t y, Label* dest) {\n  CompareAndBranch(x, y, lt, dest);\n}",
+    "sha256": "f178b00e8a92b749e118c01141ca191824404e64efe2c1a60e9b1ea315acc648"
+  }
+]

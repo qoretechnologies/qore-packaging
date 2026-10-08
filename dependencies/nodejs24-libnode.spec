@@ -46,6 +46,7 @@ Source26: nodejs24-wasm-deopt-test.py
 Source27: nodejs24-wasm-deopt-tests.json
 Source28: nodejs24-arm-operand-test.cc
 Source29: nodejs24-arm-header-test.py
+Source30: nodejs24-arm-initialization-test.cc
 Patch0: nodejs24-cxx-visibility.patch
 Patch1: nodejs24-cppgc-realm-lifetime.patch
 Patch2: nodejs24-compression-cleanup.patch
@@ -70,6 +71,7 @@ Patch20: nodejs24-wasm-deopt-metadata.patch
 Patch21: nodejs24-credential-test-error.patch
 Patch22: nodejs24-arm-header-operand.patch
 Patch23: nodejs24-arm-cpu-feature-guard.patch
+Patch24: nodejs24-arm-operand-initialization.patch
 BuildRequires: gcc-c++
 BuildRequires: make
 BuildRequires: python3
@@ -155,7 +157,8 @@ python3 tools/install.py install --headers-only --dest-dir=%{buildroot} --prefix
 %check
 %ifarch aarch64
 # Keep ARM headers independently usable and test the actual immediate/register types.
-python3 %{SOURCE29} --source . --test-source %{SOURCE28} --output out/arm-operand-control
+python3 %{SOURCE29} --source . --test-source %{SOURCE28} \
+    --initialization-test-source %{SOURCE30} --output out/arm-operand-control
 %endif
 # Link controls to the built file: Node does not create an unversioned build-tree
 # symlink, and an installed libnode-devel must never satisfy these link inputs.
@@ -357,6 +360,8 @@ python3 tools/test.py -j %{_smp_build_ncpus} -p tap --mode=release \
 
 %changelog
 * Thu Oct 08 2026 David Nichols <david@qore.org> - 24.18.1-1.qore
+- Initialize inactive ARM64 operand fields before value copies.
+- Verify all operand constructors and copies in a native white-box regression.
 - Construct the ARM regexp default operand where its inline definition is available.
 - Compile private ARM CPU detection only when its platform caller is selected.
 - Check the standalone ARM regexp header and immediate/register operands per native build.

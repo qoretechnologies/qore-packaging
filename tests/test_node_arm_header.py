@@ -21,6 +21,17 @@ class ArmHeaderCommandTest(unittest.TestCase):
             self.assertIn(flag, command)
         self.assertEqual(command[command.index('-MF') + 1], '/test/test.d')
         self.assertEqual(command[-2:], ['-fno-lto', '-Werror'])
+        self.assertNotIn('-fno-access-control', command)
+
+    def test_private_access_is_scoped_to_constructor_fixture(self):
+        command = control.compile_command(self.prefix + self.suffix,
+                                          Path('/test/constructors.cc'), Path('/test/test.o'),
+                                          initialization=True)
+        self.assertEqual(command.count('-fno-access-control'), 1)
+        self.assertEqual(command[-2:], ['-fno-lto', '-Werror'])
+        for flag in ('-DV8_TARGET_ARCH_ARM64', '-O2', '-Wall', '-Werror=return-type',
+                     '-fstack-protector-strong', '-g'):
+            self.assertIn(flag, command)
 
     def test_lto_modes_use_native_archive_sections(self):
         for lto in ('-flto', '-flto=auto', '-flto=4', '-flto=jobserver'):

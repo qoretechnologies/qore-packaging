@@ -1,0 +1,202 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Constructor defect fixed and focused qualification passed; full native package rebuild remains required.",
+  "root_cause": "Immediate Operand constructors and the Operand-based immediate MemOperand constructor leave shift_, extend_ and shift_amount_ indeterminate. Guarded uses pass runtime checks, but implicit memberwise copies do not provide an unambiguous language guarantee for those fields. The fix gives each inactive field its natural sentinel/default without changing active semantics.",
+  "standards_reference": {
+    "url": "https://www.open-std.org/jtc1/sc22/wg21/docs/cwg_active.html#2264",
+    "title": "CWG 2264: Memberwise copying with indeterminate value",
+    "observed_status": "drafting, revision 120 dated 2026-05-31",
+    "interpretation": "This is not recorded as a proven harmless compiler warning. Initializing the actual fields removes the source ambiguity and the inputs behind the eight ARM diagnostics."
+  },
+  "qualification": {
+    "constructor_checks_per_execution": 459,
+    "use_checks_per_execution": 3390,
+    "modes": [
+      "O2 with release assertions",
+      "Og with release assertions"
+    ],
+    "package_helper_existing_checks": 4491,
+    "package_helper_new_checks": 459,
+    "original_negative_controls": 4,
+    "final_valgrind_runs": 6,
+    "valgrind_errors": 0,
+    "all_allocations_freed": true,
+    "packaging_unit_tests": 224,
+    "source_bundle": {
+      "patches": 25,
+      "zero_fuzz": true,
+      "new_patches_zero_offset": true,
+      "existing_offset": "Patch16 timezone-index applies one line earlier after Patch14; complete resulting source matches the already qualified canonical build.",
+      "other_qualified_source_files_unchanged": 55,
+      "all_source_hashes_verified": 58,
+      "changed_sources": [
+        "nodejs24-arm-header-test.py",
+        "nodejs24-arm-initialization-test.cc",
+        "nodejs24-arm-operand-initialization.patch",
+        "nodejs24-libnode.changes",
+        "nodejs24-libnode.spec"
+      ],
+      "qualified_source_sha256": {
+        "deps/v8/src/codegen/arm64/assembler-arm64.h": "4b4a2495b3f1ab055d8f99c5cc843acfc5bdcedc4889f878e24bea3e0d4d0986",
+        "deps/v8/src/regexp/arm64/regexp-macro-assembler-arm64.h": "e7f3bc2ca9bc6166ebef55d634191c40e295ad31b04dfc35ac21080769c28174",
+        "deps/v8/src/regexp/arm64/regexp-macro-assembler-arm64.cc": "d8d038ba53785ce48f6b1f2ab2708cd904c1232cab72c659e160ece2de3c7b4a",
+        "deps/v8/third_party/zlib/cpu_features.c": "5475e2d6cfd1ded2d9d90de1c2ed43f0167b571d3739431cdbb0e3092e7e79f8",
+        "test/parallel/test-process-euid-egid.js": "085988171acc62cbb8d80bb27c75dbbdcdd4328721e41199d5ffd757129ef5ef"
+      },
+      "spec_architectures": [
+        "x86_64",
+        "aarch64"
+      ],
+      "native_arm_check_selected_only_on_arm": true
+    }
+  },
+  "existing_translation_unit_diagnostics": [
+    {
+      "diagnostic": "../deps/v8/src/builtins/builtins-inl.h:44:1: warning: control reaches end of non-void function [-Wreturn-type]",
+      "occurrences": 1,
+      "same_diagnostic_as_qualified_x86": true,
+      "reference": {
+        "diagnostic": "../deps/v8/src/builtins/builtins-inl.h:44:1: warning: control reaches end of non-void function [-Wreturn-type]",
+        "occurrences": 1,
+        "file": "deps/v8/src/builtins/builtins-inl.h",
+        "line": 44,
+        "family": "-Wreturn-type",
+        "status": "reviewed under approved exhaustive-enum policy",
+        "evidence": [
+          "node-gcc-return-policy-proposal-20261006.json"
+        ]
+      }
+    },
+    {
+      "diagnostic": "../deps/v8/src/builtins/builtins-inl.h:34:1: warning: control reaches end of non-void function [-Wreturn-type]",
+      "occurrences": 1,
+      "same_diagnostic_as_qualified_x86": true,
+      "reference": {
+        "diagnostic": "../deps/v8/src/builtins/builtins-inl.h:34:1: warning: control reaches end of non-void function [-Wreturn-type]",
+        "occurrences": 1,
+        "file": "deps/v8/src/builtins/builtins-inl.h",
+        "line": 34,
+        "family": "-Wreturn-type",
+        "status": "reviewed under approved exhaustive-enum policy",
+        "evidence": [
+          "node-gcc-return-policy-proposal-20261006.json"
+        ]
+      }
+    },
+    {
+      "diagnostic": "../deps/v8/src/wasm/wasm-code-manager.h:109:3: warning: control reaches end of non-void function [-Wreturn-type]",
+      "occurrences": 1,
+      "same_diagnostic_as_qualified_x86": true,
+      "reference": {
+        "diagnostic": "../deps/v8/src/wasm/wasm-code-manager.h:109:3: warning: control reaches end of non-void function [-Wreturn-type]",
+        "occurrences": 1,
+        "file": "deps/v8/src/wasm/wasm-code-manager.h",
+        "line": 109,
+        "family": "-Wreturn-type",
+        "status": "reviewed under approved exhaustive-enum policy",
+        "evidence": [
+          "node-gcc-return-policy-proposal-20261006.json"
+        ]
+      }
+    },
+    {
+      "diagnostic": "../deps/v8/src/builtins/builtins-inl.h:24:1: warning: control reaches end of non-void function [-Wreturn-type]",
+      "occurrences": 1,
+      "same_diagnostic_as_qualified_x86": true,
+      "reference": {
+        "diagnostic": "../deps/v8/src/builtins/builtins-inl.h:24:1: warning: control reaches end of non-void function [-Wreturn-type]",
+        "occurrences": 1,
+        "file": "deps/v8/src/builtins/builtins-inl.h",
+        "line": 24,
+        "family": "-Wreturn-type",
+        "status": "reviewed under approved exhaustive-enum policy",
+        "evidence": [
+          "node-gcc-return-policy-proposal-20261006.json"
+        ]
+      }
+    }
+  ],
+  "limits": [
+    "The smaller original use controls and host-compiled ARM translation units do not reproduce the eight native compiler warnings. They demonstrate behavior and compilation, not disappearance of the native diagnostics. Native ARM compilation and execution remain required.",
+    "The four unchanged host translation-unit exhaustive-enum warnings match previously qualified x86 sites and retain their existing approvals. No new diagnostic exception is requested for this fix.",
+    "The white-box constructor fixture alone uses -fno-access-control to inspect private field representations; runtime compiler flags and all other test flags remain unchanged.",
+    "Initial use control had a signedness warning in its own assertion, corrected with an explicit cast. Its O0 attempt also conflicted with retained FORTIFY flags; the final debug-oriented control uses Og with unchanged hardening. Original output is preserved.",
+    "Expanded rpmspec output is retained as gzip with identical decompressed bytes, preserving generated trailing spaces without treating raw command output as edited source.",
+    "The running OBS revision6 does not contain this new patch and has not been interrupted. Upload a new committed bundle only after the current builds finish. Publication remains disabled."
+  ],
+  "changed_files_sha256": {
+    "dependencies/nodejs24-arm-operand-initialization.patch": "4deef6809dc21182534be0953778a49452ed55c59f931d0b982194f7deedf59c",
+    "dependencies/nodejs24-arm-initialization-test.cc": "37264c5f8d41b6de810eeaae98230123b85a6e6773e56372f1af0f1e39e68414",
+    "dependencies/nodejs24-arm-header-test.py": "05b2e364365ff0eb1e6730bbfcf6de8fbb8933b13d42e2b39334df2205be413a",
+    "dependencies/nodejs24-libnode.spec": "bfc7b22483acf3021fa392d7d4ee244213f3442f5899d7b91fefc7cc7b0fd6ca",
+    "tests/test_node_arm_header.py": "5a2a87a6a1a2db1080fe891fb503994c5e5ef86e8c484f1cf1aae6a7eecd8eff"
+  },
+  "files_sha256": {
+    "evidence/controls/node-arm-initialization-20261008/audit.rst": "af395908e0e7fdaa7ee6b5516578ac35d5e4608008913b7b9b3bc1e23b9a1de0",
+    "evidence/controls/node-arm-initialization-20261008/check-node-arm-initialization-objects-20261008.py": "1a2555cb688f3465c8a14685583688a118d71ffbe4ea81e21cb6bbafc8e969f1",
+    "evidence/controls/node-arm-initialization-20261008/check-node-arm-initialization-package-20261008.py": "20c20805643f59a21fc0dccdc18c682c2b70873b9ec53b035d3a47ba11f9da16",
+    "evidence/controls/node-arm-initialization-20261008/constructors/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-arm-initialization-20261008/constructors/constructor-test.cc": "37264c5f8d41b6de810eeaae98230123b85a6e6773e56372f1af0f1e39e68414",
+    "evidence/controls/node-arm-initialization-20261008/constructors/fixed-debug-optimized-constructor-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-arm-initialization-20261008/constructors/fixed-debug-optimized-constructor-normal.log.gz": "e57d1796166f811fb3feb53b05c853c86b7243205bccc9e38e6376fbff97233e",
+    "evidence/controls/node-arm-initialization-20261008/constructors/fixed-debug-optimized-constructor-valgrind.log.gz": "015b92cc46f6ac93582b59cc301a48f5ef05909944f59899ad07d001c26232d2",
+    "evidence/controls/node-arm-initialization-20261008/constructors/fixed-debug-optimized-use-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-arm-initialization-20261008/constructors/fixed-debug-optimized-use-normal.log.gz": "a0ad5aad0a9d5f2a47d23c1ef11db0f95548a9e0a65326c1b5496d6c83f1f8f1",
+    "evidence/controls/node-arm-initialization-20261008/constructors/fixed-debug-optimized-use-valgrind.log.gz": "df2b41e974fd50a9a5a24f9070e6906186a94727a3bf69d906aec36bf415dffe",
+    "evidence/controls/node-arm-initialization-20261008/constructors/fixed-optimized-constructor-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-arm-initialization-20261008/constructors/fixed-optimized-constructor-normal.log.gz": "e57d1796166f811fb3feb53b05c853c86b7243205bccc9e38e6376fbff97233e",
+    "evidence/controls/node-arm-initialization-20261008/constructors/fixed-optimized-constructor-valgrind.log.gz": "690173f04812849b2a2e0e7bdf05d526cf18ed06932df11db712a9678cd794b3",
+    "evidence/controls/node-arm-initialization-20261008/constructors/fixed-optimized-use-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-arm-initialization-20261008/constructors/fixed-optimized-use-normal.log.gz": "a0ad5aad0a9d5f2a47d23c1ef11db0f95548a9e0a65326c1b5496d6c83f1f8f1",
+    "evidence/controls/node-arm-initialization-20261008/constructors/fixed-optimized-use-valgrind.log.gz": "97d71ccb0f0e72e52e48c0b9be5db5ba8f6cf6984893d1165bfcdf4f064cce75",
+    "evidence/controls/node-arm-initialization-20261008/constructors/nodejs24-arm-operand-initialization.patch": "50a79c6e3d780f77f277b21ad42a71ca233e0224ec61ae7e285e37f9787dd533",
+    "evidence/controls/node-arm-initialization-20261008/constructors/original-debug-optimized-constructor-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-arm-initialization-20261008/constructors/original-debug-optimized-constructor-mem-negative.log.gz": "12263a550d18a840772cacd2b809a41ef75c033d3ac91782b17a5d68d48aa522",
+    "evidence/controls/node-arm-initialization-20261008/constructors/original-debug-optimized-constructor-operand-negative.log.gz": "964d23f494f4a6a5050225c5e413edf8d7944c1fc50dbcd28bf4d760d4cb1691",
+    "evidence/controls/node-arm-initialization-20261008/constructors/original-optimized-constructor-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-arm-initialization-20261008/constructors/original-optimized-constructor-mem-negative.log.gz": "12263a550d18a840772cacd2b809a41ef75c033d3ac91782b17a5d68d48aa522",
+    "evidence/controls/node-arm-initialization-20261008/constructors/original-optimized-constructor-operand-negative.log.gz": "964d23f494f4a6a5050225c5e413edf8d7944c1fc50dbcd28bf4d760d4cb1691",
+    "evidence/controls/node-arm-initialization-20261008/constructors/status.json": "1cd4b312d1824509a021e8bab1a576f6dbec41a0db11bbd34abd62da130e5682",
+    "evidence/controls/node-arm-initialization-20261008/constructors/use-test.cc": "b29468b7dfa79a4805b8bf431bfe69c9e2d459e694b97f7117a8b2062db1d6cf",
+    "evidence/controls/node-arm-initialization-20261008/initial-harness/optimized-compile.log.gz": "e21910377ab69343a0d18021023e34fc0152ffce85982613abadfbd9b3bc5648",
+    "evidence/controls/node-arm-initialization-20261008/initial-harness/optimized-normal.log.gz": "a0ad5aad0a9d5f2a47d23c1ef11db0f95548a9e0a65326c1b5496d6c83f1f8f1",
+    "evidence/controls/node-arm-initialization-20261008/initial-harness/optimized-valgrind.log.gz": "6821aa3730402e6e780f02e1732d302eaaef23010467de9a52e1e9d7b47b1196",
+    "evidence/controls/node-arm-initialization-20261008/initial-harness/unoptimized-compile.log.gz": "9f9bb17b08f543efe9aa98b9313a702a5a804ff1a0753a01e8026f8d9b4f3d8b",
+    "evidence/controls/node-arm-initialization-20261008/initial-harness/unoptimized-normal.log.gz": "a0ad5aad0a9d5f2a47d23c1ef11db0f95548a9e0a65326c1b5496d6c83f1f8f1",
+    "evidence/controls/node-arm-initialization-20261008/initial-harness/unoptimized-valgrind.log.gz": "5e09300ddaad1e4ef4b9208943d9bb31d936a905df877dc587ed3f5bc4e3342e",
+    "evidence/controls/node-arm-initialization-20261008/original-use-controls/V8-LICENSE": "6ab33af8774a0f396ee3aeeb761e3229057682d6f9fa7f572e390c2cb3a6e509",
+    "evidence/controls/node-arm-initialization-20261008/original-use-controls/control.cc": "b29468b7dfa79a4805b8bf431bfe69c9e2d459e694b97f7117a8b2062db1d6cf",
+    "evidence/controls/node-arm-initialization-20261008/original-use-controls/debug-optimized-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-arm-initialization-20261008/original-use-controls/debug-optimized-normal.log.gz": "a0ad5aad0a9d5f2a47d23c1ef11db0f95548a9e0a65326c1b5496d6c83f1f8f1",
+    "evidence/controls/node-arm-initialization-20261008/original-use-controls/debug-optimized-valgrind.log.gz": "7aec88d0767547b73a68a96401e1647ff676f4db07b0297eef19ee4bb942918d",
+    "evidence/controls/node-arm-initialization-20261008/original-use-controls/optimized-compile.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-arm-initialization-20261008/original-use-controls/optimized-normal.log.gz": "a0ad5aad0a9d5f2a47d23c1ef11db0f95548a9e0a65326c1b5496d6c83f1f8f1",
+    "evidence/controls/node-arm-initialization-20261008/original-use-controls/optimized-valgrind.log.gz": "6821aa3730402e6e780f02e1732d302eaaef23010467de9a52e1e9d7b47b1196",
+    "evidence/controls/node-arm-initialization-20261008/original-use-controls/source-extracts.json": "e2a2b6b23c37d4c2114a6c4b4add9f61e2f14405954b3001126eca698d3a6e69",
+    "evidence/controls/node-arm-initialization-20261008/original-use-controls/status.json": "7a9f48ffdc9938546174c64c9cf408169d6a31dfd1ff218a8cd9285912b37651",
+    "evidence/controls/node-arm-initialization-20261008/package-helper/fixed-operand-initialization-valgrind.log.gz": "4664e079181923b7a8206a8ac326ca0fa83145b4f94cc2f8a09d4fdfcb964b8d",
+    "evidence/controls/node-arm-initialization-20261008/package-helper/fixed-operand-valgrind.log.gz": "92d636cd71e653ed9aa7879ab040b1e6f41bec99d300137d3209413eed4846cb",
+    "evidence/controls/node-arm-initialization-20261008/package-helper/fixed-operand.header.cc": "84cb49a945f0a34cede28ce64777c21d427298bcdd514b8cd68f1484313e9054",
+    "evidence/controls/node-arm-initialization-20261008/package-helper/fixed.log.gz": "949dda5bb6e8122e2e2fca2431d9450a949af5eea34b9fd6331af0ed77c61079",
+    "evidence/controls/node-arm-initialization-20261008/package-helper/original-operand.header.cc": "84cb49a945f0a34cede28ce64777c21d427298bcdd514b8cd68f1484313e9054",
+    "evidence/controls/node-arm-initialization-20261008/package-helper/original.log.gz": "94074318dcb4127b1e6c8069fef1c929f91214ea06fc614a2e5509ead9642e02",
+    "evidence/controls/node-arm-initialization-20261008/package-helper/status.json": "100bb31fe5a50464f12169290e0d0f286a3a0eddc11fd82728af64ed7baa77b0",
+    "evidence/controls/node-arm-initialization-20261008/prepare-node-arm-initialization-20261008.py": "f6a79730199a8e8ae65b9c83826a1a2a36f0b1e179b764620fe3ce0b52781bd5",
+    "evidence/controls/node-arm-initialization-20261008/prepare-node-arm-operand-use-20261008.py": "6fc870cd21769016772837d5b36be59e3eaccbe1174f0921de60844fcf41285e",
+    "evidence/controls/node-arm-initialization-20261008/prepare-node-arm-operand-use-final-20261008.py": "ba0e9e566ad1a2d4199f8c94d24b9dd9631e84e809391c97d7ddd792d64d9cc7",
+    "evidence/controls/node-arm-initialization-20261008/record-node-arm-initialization-20261008.py": "5af4ef36f305f7bc0dc8dfc99d113ed82d9b47e085ea3434bd30ac54c0247c28",
+    "evidence/controls/node-arm-initialization-20261008/source-verification/aarch64.spec.gz": "285b94cf2c5e0b8169b0a7e45d4d1935c346d32a83871d2913dfb3bcd60952d9",
+    "evidence/controls/node-arm-initialization-20261008/source-verification/patches.log.gz": "fe90c3dace0819661a75e9d9521dd1c592fed17a964607b9a4ef3e08c11dd86c",
+    "evidence/controls/node-arm-initialization-20261008/source-verification/verification.json": "ab3274cf9fcace12dd97f08c6cfdcee0ad3e491768c14df586b50f5e58ecec59",
+    "evidence/controls/node-arm-initialization-20261008/source-verification/x86_64.spec.gz": "3cc2ec84d062d82e87daa17cbac5b19fd1e1e32d40de2ebf115317b15aa9fa0b",
+    "evidence/controls/node-arm-initialization-20261008/translation-units/code-generator-fixed.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-arm-initialization-20261008/translation-units/code-generator-original.log.gz": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "evidence/controls/node-arm-initialization-20261008/translation-units/macro-assembler-fixed.log.gz": "0db2e2eb15aae7574b516f794e73d39cce5f7e0a7ee32d15b98d932308c938fc",
+    "evidence/controls/node-arm-initialization-20261008/translation-units/macro-assembler-original.log.gz": "0db2e2eb15aae7574b516f794e73d39cce5f7e0a7ee32d15b98d932308c938fc",
+    "evidence/controls/node-arm-initialization-20261008/translation-units/status.json": "a6297c652120ebb9320b9f3df31698b0df35f14d566483a0a149bbe85a9ae738",
+    "evidence/controls/node-arm-initialization-20261008/unit-test-receipt.json": "55969b7f5ff15c327eb78ac6377237a517f416bad11f8ebb3742ff2b568ca4c9",
+    "evidence/controls/node-arm-initialization-20261008/verify-node-arm-initialization-source-20261008.py": "851dead5c7aea3d4f3d9700b9a5f3a68a42b3ffe4bc399d972159a376c7f4c82"
+  }
+}
