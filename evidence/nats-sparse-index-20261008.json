@@ -1,0 +1,404 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Sparse literal delivery index and sequence-range correction focused-qualified; candidate integration, complete RPM/native and installed qualification remain required.",
+  "root_cause": "The memory store narrows literal delivery only to first/last subject bounds, then looks up every intervening sequence. Four matching messages separated by two million unrelated messages cause two million map probes per delivery. Delivery-benchmark-only CPU profiles attribute 62.36-74.73 percent of sampled CPU to this scan.",
+  "fix": "Maintain a compressed AVL sequence set after a subject first contains two messages, update it on every removal, and seek the next matching sequence during literal delivery. Existing subject bounds remain lazy and external SimpleState copies remain unchanged.",
+  "additional_defect": "SequenceSet compared seq >= base + numEntries; the upper bound overflows in the last uint64 block. Guarded seq-base comparisons correct insertion, lookup and deletion. Original code fails the exact maximum-sequence regression on all three targets.",
+  "qualification": {
+    "results": [
+      {
+        "name": "fedora-nats-sparse-index-279-avl",
+        "exit_code": 0,
+        "race": true,
+        "reported_passes": 21,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "fedora-nats-sparse-index-280-memstore",
+        "exit_code": 0,
+        "race": true,
+        "reported_passes": 46,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "fedora-nats-sparse-index-280-perf",
+        "exit_code": 0,
+        "race": false,
+        "reported_passes": 9,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "fedora-nats-sparse-index-281-broad",
+        "exit_code": 0,
+        "race": true,
+        "reported_passes": 249,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "leap-nats-sparse-index-279-avl",
+        "exit_code": 0,
+        "race": true,
+        "reported_passes": 21,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "leap-nats-sparse-index-280-memstore",
+        "exit_code": 0,
+        "race": true,
+        "reported_passes": 46,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "leap-nats-sparse-index-280-perf",
+        "exit_code": 0,
+        "race": false,
+        "reported_passes": 9,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "leap-nats-sparse-index-281-broad",
+        "exit_code": 0,
+        "race": true,
+        "reported_passes": 249,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "el10-nats-sparse-index-279-avl",
+        "exit_code": 0,
+        "race": true,
+        "reported_passes": 21,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "el10-nats-sparse-index-280-memstore",
+        "exit_code": 0,
+        "race": true,
+        "reported_passes": 46,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "el10-nats-sparse-index-280-perf",
+        "exit_code": 0,
+        "race": false,
+        "reported_passes": 9,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "el10-nats-sparse-index-281-broad",
+        "exit_code": 0,
+        "race": true,
+        "reported_passes": 249,
+        "reported_failures": 0,
+        "reported_skips": 0
+      }
+    ],
+    "race_results": 948,
+    "nonrace_results": 27,
+    "delivery_timings": {
+      "fedora": [
+        {
+          "storage": "memory",
+          "samples": 16633,
+          "microseconds_per_operation": 69.191
+        },
+        {
+          "storage": "file",
+          "samples": 12532,
+          "microseconds_per_operation": 92.338
+        },
+        {
+          "storage": "memory",
+          "samples": 16562,
+          "microseconds_per_operation": 73.566
+        },
+        {
+          "storage": "file",
+          "samples": 11164,
+          "microseconds_per_operation": 98.545
+        },
+        {
+          "storage": "memory",
+          "samples": 14722,
+          "microseconds_per_operation": 79.108
+        },
+        {
+          "storage": "file",
+          "samples": 13646,
+          "microseconds_per_operation": 90.251
+        }
+      ],
+      "leap": [
+        {
+          "storage": "memory",
+          "samples": 17282,
+          "microseconds_per_operation": 71.008
+        },
+        {
+          "storage": "file",
+          "samples": 14359,
+          "microseconds_per_operation": 84.9
+        },
+        {
+          "storage": "memory",
+          "samples": 16518,
+          "microseconds_per_operation": 70.567
+        },
+        {
+          "storage": "file",
+          "samples": 14130,
+          "microseconds_per_operation": 84.124
+        },
+        {
+          "storage": "memory",
+          "samples": 15760,
+          "microseconds_per_operation": 75.616
+        },
+        {
+          "storage": "file",
+          "samples": 13540,
+          "microseconds_per_operation": 87.671
+        }
+      ],
+      "el10": [
+        {
+          "storage": "memory",
+          "samples": 17776,
+          "microseconds_per_operation": 69.106
+        },
+        {
+          "storage": "file",
+          "samples": 12828,
+          "microseconds_per_operation": 91.395
+        },
+        {
+          "storage": "memory",
+          "samples": 16345,
+          "microseconds_per_operation": 69.827
+        },
+        {
+          "storage": "file",
+          "samples": 14175,
+          "microseconds_per_operation": 83.363
+        },
+        {
+          "storage": "memory",
+          "samples": 19650,
+          "microseconds_per_operation": 61.293
+        },
+        {
+          "storage": "file",
+          "samples": 14990,
+          "microseconds_per_operation": 79.483
+        }
+      ]
+    }
+  },
+  "controls": [
+    {
+      "name": "fedora-nats-avl-high-negative-279",
+      "exit_code": 1,
+      "race": true,
+      "reported_passes": 0,
+      "reported_failures": 1,
+      "reported_skips": 0
+    },
+    {
+      "name": "fedora-nats-sparse-profile-273",
+      "exit_code": 0,
+      "race": false,
+      "reported_passes": 6,
+      "reported_failures": 0,
+      "reported_skips": 0
+    },
+    {
+      "name": "leap-nats-avl-high-negative-279",
+      "exit_code": 1,
+      "race": true,
+      "reported_passes": 0,
+      "reported_failures": 1,
+      "reported_skips": 0
+    },
+    {
+      "name": "leap-nats-sparse-profile-273",
+      "exit_code": 0,
+      "race": false,
+      "reported_passes": 6,
+      "reported_failures": 0,
+      "reported_skips": 0
+    },
+    {
+      "name": "el10-nats-avl-high-negative-279",
+      "exit_code": 1,
+      "race": true,
+      "reported_passes": 0,
+      "reported_failures": 1,
+      "reported_skips": 0
+    },
+    {
+      "name": "el10-nats-sparse-profile-273",
+      "exit_code": 0,
+      "race": false,
+      "reported_passes": 6,
+      "reported_failures": 0,
+      "reported_skips": 0
+    },
+    {
+      "name": "fedora-nats-sparse-storage-282-original",
+      "exit_code": 0,
+      "race": false,
+      "reported_passes": 0,
+      "reported_failures": 0,
+      "reported_skips": 0
+    },
+    {
+      "name": "fedora-nats-sparse-storage-282-indexed",
+      "exit_code": 0,
+      "race": false,
+      "reported_passes": 0,
+      "reported_failures": 0,
+      "reported_skips": 0
+    }
+  ],
+  "storage_cost": {
+    "original": {
+      "1": {
+        "median_ns_per_10000_stores": 3508905,
+        "median_allocated_bytes_per_10000_stores": 1791945,
+        "median_allocations_per_10000_stores": 20085
+      },
+      "16": {
+        "median_ns_per_10000_stores": 3682481,
+        "median_allocated_bytes_per_10000_stores": 1793272,
+        "median_allocations_per_10000_stores": 20105
+      },
+      "10000": {
+        "median_ns_per_10000_stores": 5173465,
+        "median_allocated_bytes_per_10000_stores": 2895580,
+        "median_allocations_per_10000_stores": 33084
+      }
+    },
+    "indexed": {
+      "1": {
+        "median_ns_per_10000_stores": 3364225,
+        "median_allocated_bytes_per_10000_stores": 1793432,
+        "median_allocations_per_10000_stores": 20091
+      },
+      "16": {
+        "median_ns_per_10000_stores": 3470036,
+        "median_allocated_bytes_per_10000_stores": 1817080,
+        "median_allocations_per_10000_stores": 20201
+      },
+      "10000": {
+        "median_ns_per_10000_stores": 5075263,
+        "median_allocated_bytes_per_10000_stores": 3055580,
+        "median_allocations_per_10000_stores": 33084
+      }
+    }
+  },
+  "audit": {
+    "pass": 10,
+    "na": 52,
+    "fail": 0
+  },
+  "limits": [
+    "The original historical 502/571 ms failures have no original CPU/scheduler trace. Current baseline profiles establish the linear delivery cost; they do not reconstruct those exact historical runs.",
+    "Profiling excludes publication of the two million unrelated messages but includes consumer creation/deletion around the benchmark timer. Map scanning remains the dominant sampled cost.",
+    "Optimization applies to literal filtered delivery. Wildcard and multi-filter behavior is regression-tested but remains algorithmically unchanged.",
+    "Storage microbenchmarks are x86_64 Fedora controls with three samples per case, run sequentially on a shared host. Their allocation counts quantify overhead; timings do not prove absence of regression for every workload.",
+    "Prototype 274 first failed compilation because a shared test accessed the old private state type; 275 preserved results but eagerly changed lazy-bound internals, so that change was withdrawn. 276-278 did not start tests because new bind-mount destinations were absent on a read-only source tree. Tests were merged into existing files for final qualification.",
+    "The final sparse test retains both stores, two million unrelated messages, four delivered messages and the original 500 ms bound. Full combined RPM/native, installed client/module and repository lifecycle gates remain open."
+  ],
+  "source_sha256": {
+    "memstore.go": "a3c758a9666a290d7537bc192ec55421201377ea8631a50e9b2596e9ef1b5c73",
+    "memstore_test.go": "fb53c371f6d605f582b9214ba9381c63670adebd47d0adb5418ccd8219589214",
+    "store_test.go": "8b39a2093929f7113ef16e3e1827baecb0e5204c47c1ced6af41e2c737505feb",
+    "seqset.go": "73d95a7beafc0d26376e6c3ee32a083a86ce9355acb512c76fc804ca35e94716",
+    "seqset_test.go": "b3810855a3411110cce8a686cf6dc6098f5ffe135465ed3867c5eada3bee104b"
+  },
+  "files_sha256": {
+    "evidence/controls/nats-sparse-index-20261008/audit.rst": "1047d2b1829a2dee3d47795f41902cb5134d206885f00bdb7ff004bbda2c9d62",
+    "evidence/controls/nats-sparse-index-20261008/el10-baseline-cpu-top.txt": "dc3f18025cfa262215eddcca7601ad1d4a7a2a9846b1e90f6c6d81e56804e4a1",
+    "evidence/controls/nats-sparse-index-20261008/el10-nats-avl-high-negative-279-status.json": "db6873e2c158b32a984bb49afbe337cd28b82ccd8213358153d473add6722d0e",
+    "evidence/controls/nats-sparse-index-20261008/el10-nats-avl-high-negative-279.log.gz": "104adc6588260b60c424a958849bf6fab0db839097c8a3f9ec12c2e6c089eff2",
+    "evidence/controls/nats-sparse-index-20261008/el10-nats-sparse-index-279-avl-status.json": "eb0903933a717ab832d2a451c787700ed01176a019a29faeb948510edd0b60a6",
+    "evidence/controls/nats-sparse-index-20261008/el10-nats-sparse-index-279-avl.log.gz": "1a385c05238b6c31c18e620cd443ce94884e9162a34660f435b8572217fb4aa3",
+    "evidence/controls/nats-sparse-index-20261008/el10-nats-sparse-index-280-memstore-status.json": "f958934d73d86b9f8e06e1cae9f7bf4c7d568855aebba246b1c6e0011e4bee21",
+    "evidence/controls/nats-sparse-index-20261008/el10-nats-sparse-index-280-memstore.log.gz": "bb22db28cf49248e741c2c2679e61ec35ea807a705924a0ec39929871d8e304b",
+    "evidence/controls/nats-sparse-index-20261008/el10-nats-sparse-index-280-perf-status.json": "834c72525e885241128a3f2f53486a69a10cdcaeacb8e13b8c7d5364eb31cd97",
+    "evidence/controls/nats-sparse-index-20261008/el10-nats-sparse-index-280-perf.log.gz": "f81498c6220da04ea0236647cfd55c64b415de47e12ecc37d1ff62d2886da985",
+    "evidence/controls/nats-sparse-index-20261008/el10-nats-sparse-index-281-broad-status.json": "0a64ed9f9471de99e876ad12b7340e0e19dcd94a8bc36827361c1ce34a5ff27d",
+    "evidence/controls/nats-sparse-index-20261008/el10-nats-sparse-index-281-broad.log.gz": "a95a0322d9f0cd52a2f393bd86f170cf5525aafe4c0e9f52e36ad45dba4f2cc8",
+    "evidence/controls/nats-sparse-index-20261008/el10-nats-sparse-profile-273-status.json": "e2140496cfef06d3d758e8f8c2599b79dbec3957105b62babef55806700ca41e",
+    "evidence/controls/nats-sparse-index-20261008/el10-nats-sparse-profile-273.log.gz": "f2af4c26804461b0e1a96253949a4f20b3277dcf67b24e2b2f208edabbe49fc2",
+    "evidence/controls/nats-sparse-index-20261008/el10-sparse-delivery-1143581466.pprof": "08f55c272f858e3a1a2042428f828965e901094c38bb534f732f97771b6f1587",
+    "evidence/controls/nats-sparse-index-20261008/el10-sparse-delivery-2255738511.pprof": "140bb66dc522a093f38f470ad4aac3537ca86db82623f44e54fe770ec853a4b7",
+    "evidence/controls/nats-sparse-index-20261008/el10-sparse-delivery-666673730.pprof": "cdf7d8d45662069a5da2bcb7552ba5db2738611494214987477fd4ee7ae69eb7",
+    "evidence/controls/nats-sparse-index-20261008/fedora-baseline-cpu-top.txt": "88246e73800306de950319eaf51d6b39e8d8729c15b08860004a9f70959be05c",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-avl-high-negative-279-status.json": "42ac8db5c282e8e96652a73754b552176ad53caed0843d7f75c6ecd0ec2afdce",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-avl-high-negative-279.log.gz": "39dbf05cb8f6e6c114028f9e017b8a1ecb33a4bf3fdeddc6fde0c0f7a17a82c0",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-sparse-index-279-avl-status.json": "1d001041438841b683631352640555684b9ed4ffd11b556a2d293cfaa772bdeb",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-sparse-index-279-avl.log.gz": "c476e27f252554a4989c6c60c163c9133a469036b50202ad6dd5be7873f92036",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-sparse-index-280-memstore-status.json": "4f0d6d2ac0ae4871b517ed2fadf79c65f439ee38d9c4327fe3084cae7792d268",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-sparse-index-280-memstore.log.gz": "80fe293ba3d4bbee5694e4b2ea48ed793435d593dac2294f627a811ca7fb1bd2",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-sparse-index-280-perf-status.json": "46e81a75143b72694710b1b49057d2cd9d156a5effde6e0e616d33ff34d8e336",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-sparse-index-280-perf.log.gz": "5c90a2a941eb28c4b6829ee89e90662955bdfbf809396f49eca0c3818cba5015",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-sparse-index-281-broad-status.json": "5dceb8c420c6ecf850f5e124336115afdba62dde322a60bfc37932b25dfda1df",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-sparse-index-281-broad.log.gz": "8da61baa48c6a32182259d117c38bdcfdf243d8659797caab4e3b231d2cedfe3",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-sparse-profile-273-status.json": "9ef0d0089296a54490173d1b2b64d9a74f04a98d09641d79ae12b97a4de8f926",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-sparse-profile-273.log.gz": "5dbaa424204eb4d4d154b8902dab7ba99ad75b800842dbf03e353fc8f4c9c608",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-sparse-storage-282-indexed-status.json": "7cac20562eb8639b02ae27bc966a65b73549004de1fd04f62cbda9008813a465",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-sparse-storage-282-indexed.log.gz": "d6563bcd0b8324cd89a8caf0cb5f09436be1f5fb2a7a90197f5f7143e2003a11",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-sparse-storage-282-original-status.json": "ee49bf9312fa26b81ae23832ad3b921a2c52b853b01df43983655b54391b9067",
+    "evidence/controls/nats-sparse-index-20261008/fedora-nats-sparse-storage-282-original.log.gz": "d5ee5bfa2bcbe711e5e23c59d850574ea67029534ab530e18713a93ae6ab27dd",
+    "evidence/controls/nats-sparse-index-20261008/fedora-sparse-delivery-1663279317.pprof": "21673fd7c43b8bab5fad2b4e5d7d5b761bf37826af3e55b3644933c01d512a23",
+    "evidence/controls/nats-sparse-index-20261008/fedora-sparse-delivery-3355135450.pprof": "0c8a498ee1046ec97ee3780fdbab9b90a2cef24d59a77bdea99f3aef8414e4b8",
+    "evidence/controls/nats-sparse-index-20261008/fedora-sparse-delivery-4021086387.pprof": "7a75251a05d3596b405189a8077ee5f06d43c8190b69db628709b82fc4f3fc51",
+    "evidence/controls/nats-sparse-index-20261008/leap-baseline-cpu-top.txt": "7d34ee709f0f4f1e7953e0d9a7f8f49f1b3921272b234746859411d1fb319bda",
+    "evidence/controls/nats-sparse-index-20261008/leap-nats-avl-high-negative-279-status.json": "2b8128f20ef6529f432e5131f4be6fc3c129260e63d181cacbd2360ea6eb6d39",
+    "evidence/controls/nats-sparse-index-20261008/leap-nats-avl-high-negative-279.log.gz": "104adc6588260b60c424a958849bf6fab0db839097c8a3f9ec12c2e6c089eff2",
+    "evidence/controls/nats-sparse-index-20261008/leap-nats-sparse-index-279-avl-status.json": "a1e68c5be8fbb6e48ae65118a65c5b56bb78e5892b8f9c200bdfad967678106a",
+    "evidence/controls/nats-sparse-index-20261008/leap-nats-sparse-index-279-avl.log.gz": "860cee5a89a4c1e1f62bf96a73a4c85a89d20fccebb670887ac1c67620c9816d",
+    "evidence/controls/nats-sparse-index-20261008/leap-nats-sparse-index-280-memstore-status.json": "7713d6963d5c9d801ad9e9bc5dac59aeb5ecb027659de57392054fffa5f7da5a",
+    "evidence/controls/nats-sparse-index-20261008/leap-nats-sparse-index-280-memstore.log.gz": "e1d926b373e2c8bfb9d7419eb0cacce45b85a4f0f7472fb15b688d9c73ad3131",
+    "evidence/controls/nats-sparse-index-20261008/leap-nats-sparse-index-280-perf-status.json": "e2d74dd03d32ee8d6ba495708dc60a15284554421a4521c330978a43a8796036",
+    "evidence/controls/nats-sparse-index-20261008/leap-nats-sparse-index-280-perf.log.gz": "60a9e7e85120e66e6ade88625374440e4ba71b98a8ed6530ae504f9bbb9fedad",
+    "evidence/controls/nats-sparse-index-20261008/leap-nats-sparse-index-281-broad-status.json": "d4c69a2d2f260b8672319a0e098c4650027041b0d0d968d0bb79a93ece5023d3",
+    "evidence/controls/nats-sparse-index-20261008/leap-nats-sparse-index-281-broad.log.gz": "1c585d05aa7c69cf43db3062f214b76316cc3c81872bafc8c7bdc0d059e7a80f",
+    "evidence/controls/nats-sparse-index-20261008/leap-nats-sparse-profile-273-status.json": "b7f082179b7cba2e40897a433b23019d81726d3489af5ca68fdc94887f02cd7a",
+    "evidence/controls/nats-sparse-index-20261008/leap-nats-sparse-profile-273.log.gz": "62d16fe6fd0b7cad6fec98c596aad31c34e34d696a05ca94a0024e999eda3355",
+    "evidence/controls/nats-sparse-index-20261008/leap-sparse-delivery-2024687583.pprof": "9e1ad2aa287be15664c3d85be958e61c95940d3d2402a6586ac1249182bffaf6",
+    "evidence/controls/nats-sparse-index-20261008/leap-sparse-delivery-2041160720.pprof": "72e0dfb6f0e08d17e7b81ae3c2b3b46de3cc40bbd98596c14935df91c2593717",
+    "evidence/controls/nats-sparse-index-20261008/leap-sparse-delivery-291807649.pprof": "5d69f2db8abf3800a81b40b629f16546c6ffc8fe920e87e8a9cb7292e1ddd1be",
+    "evidence/controls/nats-sparse-index-20261008/memstore.go.gz": "a974eb2d793a652fe18febff80b28c0a51a470a6671a4d3de2ee25d11a44e1f1",
+    "evidence/controls/nats-sparse-index-20261008/memstore_test.go.gz": "6165b1c0a6a3cd0e2534c1c2a2e0e8f462b8f5f3603073f6c8ff8d3a5f4596e9",
+    "evidence/controls/nats-sparse-index-20261008/nats-server-memory-subject-sequences.patch": "489c90f3811b37466d58826666e50c8e75c377c8dc06c9e5d22c94f61b19a894",
+    "evidence/controls/nats-sparse-index-20261008/nats-sparse-delivery-profile-273.json": "1ce618097a2e0376f86d18ac17ea961c4701e612aeeecf18ffcd50ce714680d8",
+    "evidence/controls/nats-sparse-index-20261008/nats-sparse-index-279.json": "e1cd25046a965b2076059998c175bdbc117b8dbf61f5d3099badc606946b014f",
+    "evidence/controls/nats-sparse-index-20261008/nats-sparse-index-280.json": "c7abea00e9e41cb99546df727eac7454b1eae3256e83e17e0839c8b9d7ecdc09",
+    "evidence/controls/nats-sparse-index-20261008/nats-sparse-index-281.json": "34fb18be2d09761f401aaea3c5fa92889918a01cacb75445c9303077e3fe0aa7",
+    "evidence/controls/nats-sparse-index-20261008/nats-sparse-index-storage-benchmark-282.go": "35bd13612320e50d884d3d5e4c55897c8a1a7427228fe606f1d3b385aad26bbf",
+    "evidence/controls/nats-sparse-index-20261008/nats-sparse-storage-282.json": "5ceec9b44533ceb21ed38a7a4945ee3313ca02da9950c6222ddfe5082f116ce8",
+    "evidence/controls/nats-sparse-index-20261008/profile-overlay.go.gz": "aa7c518241dcb564c8af51aac82370f04a1062544a1d06e4a6b54453c3859b96",
+    "evidence/controls/nats-sparse-index-20261008/record-nats-sparse-index-20261008.py": "b61b23704a0585e1177675ee6a6a9c2a2828a57b9743f12e39bd8dc17ac5554c",
+    "evidence/controls/nats-sparse-index-20261008/run-nats-focused-38.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a",
+    "evidence/controls/nats-sparse-index-20261008/run-nats-sparse-profile-273.py": "34d3d9be336f5cca3cf732fbb7f17172e21881f2843ea54d9a620ff951031d92",
+    "evidence/controls/nats-sparse-index-20261008/run-nats-sparse-storage-282.py": "78f8e89e551710e45056f190ec4c57012e766e2d7193040f5bbaeaaada5c8975",
+    "evidence/controls/nats-sparse-index-20261008/seqset.go.gz": "42d612bd18e12672ab10e3346ce4288528f75b67e2023c31050170985a60d144",
+    "evidence/controls/nats-sparse-index-20261008/seqset_test.go.gz": "aa63b572b2232110893008218e919b664ea232a99bfe7535b9dc242c1667031a",
+    "evidence/controls/nats-sparse-index-20261008/storage-benchmark-overlay.go.gz": "d282abb3ce54bcae9460e6a1a0db73726d6be3faac7ffa572810462e8d535e90",
+    "evidence/controls/nats-sparse-index-20261008/store_test.go.gz": "a265a483ac559e2b1e7fd047266d62223aae24c2d856c295ba58655aa45feb05"
+  }
+}

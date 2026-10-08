@@ -1,0 +1,24 @@
+File: server.test
+Build ID: 782593f377da71e814d69bbb4617cc7ab2234fc1
+Type: cpu
+Time: 2026-10-08 00:17:22 UTC
+Duration: 4.10s, Total samples = 4.71s (114.96%)
+Showing nodes accounting for 4.48s, 95.12% of 4.71s total
+Dropped 35 nodes (cum <= 0.02s)
+Showing top 15 nodes out of 47
+      flat  flat%   sum%        cum   cum%
+     2.47s 52.44% 52.44%      2.47s 52.44%  internal/runtime/maps.ctrlGroup.matchH2 (inline)
+     0.55s 11.68% 64.12%      3.14s 66.67%  runtime.mapaccess2_fast64
+     0.37s  7.86% 71.97%      0.37s  7.86%  runtime.spanClass.sizeclass (inline)
+     0.26s  5.52% 77.49%      3.47s 73.67%  github.com/nats-io/nats-server/v2/server.(*memStore).loadNextMsgLocked
+     0.17s  3.61% 81.10%      0.60s 12.74%  runtime.scanSpan
+     0.15s  3.18% 84.29%      0.35s  7.43%  runtime.scanObjectsSmall
+     0.13s  2.76% 87.05%      0.53s 11.25%  runtime.tryDeferToSpanScan
+     0.11s  2.34% 89.38%      0.11s  2.34%  runtime.extractHeapBitsSmall
+     0.07s  1.49% 90.87%      0.07s  1.49%  internal/runtime/maps.h1 (inline)
+     0.06s  1.27% 92.14%      0.06s  1.27%  memeqbody
+     0.04s  0.85% 92.99%      0.04s  0.85%  runtime.madvise
+     0.03s  0.64% 93.63%      0.03s  0.64%  runtime.(*mspan).moveInlineMarks
+     0.03s  0.64% 94.27%      0.03s  0.64%  runtime.(*spanInlineMarkBits).tryAcquire
+     0.02s  0.42% 94.69%      0.05s  1.06%  runtime.scanObjectSmall
+     0.02s  0.42% 95.12%      0.12s  2.55%  runtime.sweepone

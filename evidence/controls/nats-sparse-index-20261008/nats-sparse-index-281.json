@@ -1,0 +1,54 @@
+{
+  "source": "work/nats-prepared-51/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-sparse-index-281-broad",
+      "target": "fedora",
+      "count": 1,
+      "race": true,
+      "pattern": "^(TestStore|TestJetStreamSnapshotV2MemoryEphemeralConsumerRemainsEphemeral|TestJetStreamMemoryCorruption|TestJetStreamMemoryPurgeClearsSubjectsState)",
+      "package": "./server",
+      "sublist": "work/nats-prepared-51/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-sparse-index-280-20261008/memstore.go": "server/memstore.go",
+        "work/nats-sparse-index-280-20261008/memstore_test.go": "server/memstore_test.go",
+        "work/nats-sparse-index-280-20261008/store_test.go": "server/store_test.go",
+        "work/nats-sparse-index-280-20261008/seqset.go": "server/avl/seqset.go",
+        "work/nats-sparse-index-280-20261008/seqset_test.go": "server/avl/seqset_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-sparse-index-281-broad",
+      "target": "leap",
+      "count": 1,
+      "race": true,
+      "pattern": "^(TestStore|TestJetStreamSnapshotV2MemoryEphemeralConsumerRemainsEphemeral|TestJetStreamMemoryCorruption|TestJetStreamMemoryPurgeClearsSubjectsState)",
+      "package": "./server",
+      "sublist": "work/nats-prepared-51/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-sparse-index-280-20261008/memstore.go": "server/memstore.go",
+        "work/nats-sparse-index-280-20261008/memstore_test.go": "server/memstore_test.go",
+        "work/nats-sparse-index-280-20261008/store_test.go": "server/store_test.go",
+        "work/nats-sparse-index-280-20261008/seqset.go": "server/avl/seqset.go",
+        "work/nats-sparse-index-280-20261008/seqset_test.go": "server/avl/seqset_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-sparse-index-281-broad",
+      "target": "el10",
+      "count": 1,
+      "race": true,
+      "pattern": "^(TestStore|TestJetStreamSnapshotV2MemoryEphemeralConsumerRemainsEphemeral|TestJetStreamMemoryCorruption|TestJetStreamMemoryPurgeClearsSubjectsState)",
+      "package": "./server",
+      "sublist": "work/nats-prepared-51/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-sparse-index-280-20261008/memstore.go": "server/memstore.go",
+        "work/nats-sparse-index-280-20261008/memstore_test.go": "server/memstore_test.go",
+        "work/nats-sparse-index-280-20261008/store_test.go": "server/store_test.go",
+        "work/nats-sparse-index-280-20261008/seqset.go": "server/avl/seqset.go",
+        "work/nats-sparse-index-280-20261008/seqset_test.go": "server/avl/seqset_test.go"
+      }
+    }
+  ]
+}

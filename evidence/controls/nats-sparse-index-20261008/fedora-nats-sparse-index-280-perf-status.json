@@ -1,0 +1,100 @@
+{
+  "exit_code": 0,
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--init",
+    "--network",
+    "8da20e6b2d41c32bef9846580db7c3dfea9af6b7fa18d64cbce2f9f0a45e02de",
+    "--tmpfs",
+    "/tmp:rw,exec,size=4g,mode=1777",
+    "--user",
+    "1019:100",
+    "-e",
+    "GOMAXPROCS=2",
+    "-e",
+    "GOTOOLCHAIN=local",
+    "-e",
+    "GOPROXY=off",
+    "-e",
+    "GOSUMDB=off",
+    "-e",
+    "GOFLAGS=-mod=vendor",
+    "-e",
+    "GOCACHE=/cache",
+    "-e",
+    "GOPATH=/gopath",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-prepared-51/nats-server-2.15.0:/source:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-go-cache:/cache",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-go-path:/gopath",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-prepared-51/nats-server-2.15.0/server/sublist.go:/source/server/sublist.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-sparse-index-280-20261008/memstore.go:/source/server/memstore.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-sparse-index-280-20261008/memstore_test.go:/source/server/memstore_test.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-sparse-index-280-20261008/store_test.go:/source/server/store_test.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-sparse-index-280-20261008/seqset.go:/source/server/avl/seqset.go:ro",
+    "-v",
+    "/home/david/src/qore/git/qore-packaging/work/nats-sparse-index-280-20261008/seqset_test.go:/source/server/avl/seqset_test.go:ro",
+    "-w",
+    "/source",
+    "sha256:f1f889474f303ffe6f98b381e3061e812daa34e9018a00c4a25cb65f9a82fee9",
+    "go",
+    "test",
+    "-v",
+    "-short",
+    "-count=3",
+    "-timeout=20m",
+    "-run",
+    "^TestNoRaceJetStreamSparseConsumers$",
+    "./server"
+  ],
+  "network": {
+    "Name": "qore-rpm-isolated-c7a26f4580b74cc7bd5c3536717088f1",
+    "Id": "8da20e6b2d41c32bef9846580db7c3dfea9af6b7fa18d64cbce2f9f0a45e02de",
+    "Created": "2026-10-08T02:24:05.355748058+02:00",
+    "Scope": "local",
+    "Driver": "bridge",
+    "EnableIPv4": true,
+    "EnableIPv6": false,
+    "IPAM": {
+      "Driver": "default",
+      "Options": {},
+      "Config": [
+        {
+          "Subnet": "192.168.64.0/20"
+        }
+      ]
+    },
+    "Internal": true,
+    "Attachable": false,
+    "Ingress": false,
+    "ConfigFrom": {
+      "Network": ""
+    },
+    "ConfigOnly": false,
+    "Options": {
+      "com.docker.network.bridge.gateway_mode_ipv4": "isolated",
+      "com.docker.network.bridge.gateway_mode_ipv6": "isolated"
+    },
+    "Labels": {},
+    "Containers": {},
+    "Status": {
+      "IPAM": {
+        "Subnets": {
+          "192.168.64.0/20": {
+            "IPsInUse": 2,
+            "DynamicIPsAvailable": 4094
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "source": "work/nats-prepared-51/nats-server-2.15.0",
+  "workers": 1,
+  "cases": [
+    {
+      "name": "fedora-nats-sparse-storage-282-original",
+      "target": "fedora",
+      "count": 3,
+      "race": false,
+      "pattern": "^$",
+      "sublist": "work/nats-prepared-51/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-sparse-index-storage-282-20261008/memstore_test.go": "server/memstore_test.go"
+      }
+    },
+    {
+      "name": "fedora-nats-sparse-storage-282-indexed",
+      "target": "fedora",
+      "count": 3,
+      "race": false,
+      "pattern": "^$",
+      "sublist": "work/nats-prepared-51/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-sparse-index-storage-282-20261008/memstore_test.go": "server/memstore_test.go",
+        "work/nats-sparse-index-280-20261008/memstore.go": "server/memstore.go",
+        "work/nats-sparse-index-280-20261008/seqset.go": "server/avl/seqset.go",
+        "work/nats-sparse-index-280-20261008/store_test.go": "server/store_test.go"
+      }
+    }
+  ]
+}
