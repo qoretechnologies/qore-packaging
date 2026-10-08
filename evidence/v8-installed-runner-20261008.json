@@ -2,7 +2,7 @@
   "schema": 1,
   "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
   "date": "2026-10-08",
-  "status": "Local runtime/SDK commands pass on all three x86_64 distributions; signed clean native ARM qualification remains.",
+  "status": "All local x86_64 phases and all clean signed native ARM phases pass; six distribution/architecture combinations. Final metadata-corrected native revision remains separate.",
   "source_commit": "664eaf58a09f5279532f397c7a48de8b467c1907",
   "runner_scope": [
     "tools/qualify-installed.py",
@@ -72,7 +72,7 @@
   "compiler_diagnostic": {
     "approval": "Existing approval recorded in evidence/v8-external-diagnostics-20261003.json, compiler_diagnostic; no extension or flag change.",
     "control_unchanged_from": "evidence/v8-controls-20261003/delete.cpp",
-    "native_arm": "The same control will run on each native SDK target before accepting the existing Fedora ARM warning sites."
+    "native_arm": "Unchanged control passes all three native SDK targets; Fedora ARM reproduces the approved GCC16 offset16 warning, with zero Valgrind errors and zero lost bytes on each target."
   },
   "fixture_corrections": [
     "Initial Fedora/Leap test images lacked python3; installed the same fixture dependency used by native CI and reran both phases successfully. AlmaLinux had already passed both phases.",
@@ -207,5 +207,6 @@
     "pass": 10,
     "not_applicable": 52,
     "fail": 0
-  }
+  },
+  "native_qualification": "evidence/v8-installed-native-20261008.json"
 }
