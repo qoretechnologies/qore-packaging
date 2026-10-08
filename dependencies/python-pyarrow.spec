@@ -12,7 +12,7 @@
 %endif
 Name: python-pyarrow
 Version: 25.0.1
-Release: 1.qore%{?dist}
+Release: 2.qore%{?dist}
 Summary: Apache Arrow Python bindings with Flight support
 License: Apache-2.0
 URL: https://arrow.apache.org/
@@ -54,11 +54,32 @@ Parquet and Flight RPC. The bindings use shared system Arrow libraries.
 Cloud storage, CUDA, Gandiva, ORC, HDFS, Substrait and Parquet encryption
 bindings are not enabled in this package.
 
+%package devel
+Summary: Development headers for Apache Arrow Python bindings
+# This capability is named python(abi) for every interpreter flavor.
+Requires: %{expand:python(abi)} = %{python_version}
+Requires: python-pyarrow = %{version}-%{release}
+Requires: python-devel
+Requires: python-numpy-devel >= 1.25
+Requires: apache-arrow-devel = %{version}
+
+%description devel
+Public Arrow and PyArrow headers and C++ sources for building extensions that
+interoperate with PyArrow's native objects. Install this package before using
+pyarrow.get_include() to compile an extension.
+
 %prep
 %autosetup -p1 -n apache-arrow-%{version}
 tar -xf %{SOURCE2}
 tar -xf %{SOURCE3}
 cp %{SOURCE1} rpm-runtime-test.py
+# Preserve the Cython package marker and explain why this file is intentional.
+test ! -s python/pyarrow/includes/__init__.pxd
+cat > python/pyarrow/includes/__init__.pxd <<'EOF'
+# Copyright 2026 Qore Technologies, s.r.o.
+# SPDX-License-Identifier: Apache-2.0
+# Package marker for PyArrow's public Cython declarations.
+EOF
 
 %build
 %{?set_build_flags}
@@ -98,9 +119,20 @@ $python -W error -m pytest -v "$test_dir" \
 %license LICENSE.txt NOTICE.txt
 %doc python/README.md
 %{python_sitearch}/pyarrow/
+%exclude %{python_sitearch}/pyarrow/include/
+%exclude %{python_sitearch}/pyarrow/src/
 %{python_sitearch}/pyarrow-%{version}.dist-info/
 
+%files %{python_files devel}
+%license LICENSE.txt NOTICE.txt
+%{python_sitearch}/pyarrow/include/
+%{python_sitearch}/pyarrow/src/
+
 %changelog
+* Thu Oct 08 2026 David Nichols <david@qore.org> - 25.0.1-2.qore
+- Separate native headers and sources with their Python, NumPy and Arrow SDK dependencies.
+- Document and preserve the public Cython package marker.
+
 * Sat Oct 03 2026 David Nichols <david@qore.org> - 25.0.1-1.qore
 - Provide system-linked Python Arrow and Flight fixtures for Leap gRPC builds.
 - Run installed API regressions and upstream tests with pinned offline data.

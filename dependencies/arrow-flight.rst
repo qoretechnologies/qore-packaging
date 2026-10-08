@@ -22,6 +22,19 @@ For example, after configuring the testing repository::
     zypper install python313-pyarrow
     python3 -c 'import pyarrow as pa, pyarrow.compute as pc; print(pc.sum(pa.array([1, None, 3])).as_py())'
 
+Native extension development additionally needs ``python313-pyarrow-devel``::
+
+    zypper install python313-pyarrow-devel
+    python3 -c 'import pyarrow; print(pyarrow.get_include())'
+
+This subpackage owns the public headers and C++ source tree returned by the
+Python SDK. It requires the matching PyArrow runtime and Arrow development
+package, together with the Python and NumPy headers. Runtime imports and Flight servers
+need only ``python313-pyarrow``. Public Cython declarations remain available in
+the runtime; their package marker is retained with an explanatory comment.
+When compiling a Cython extension, include ``pyarrow.get_include()``,
+``numpy.get_include()`` and the interpreter's ``sysconfig.get_path('include')``.
+
 Builds use the SHA-256 pins in sources.json and need no network access.
 Arrow and Parquet fixture archives are fixed upstream commits. Prepare a
 committed recipe with::

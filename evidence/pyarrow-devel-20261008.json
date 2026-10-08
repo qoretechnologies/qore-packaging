@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Final local RPMs and installed artifact qualification pass; audited source ready for committed native OBS delivery.",
+  "root_causes": [
+    "Both native builds shipped 395 development headers in the runtime RPM and a zero-byte Cython marker.",
+    "The new development package needs Python and NumPy headers, matching shared Arrow headers, the exact PyArrow runtime and the interpreter ABI; header-only files do not generate a Python ABI dependency automatically."
+  ],
+  "fix": [
+    "Move pyarrow/include and pyarrow/src to python313-pyarrow-devel; preserve runtime Cython declarations.",
+    "Keep the package marker with an explanatory Apache-licensed comment.",
+    "Declare actual SDK dependencies. Normal RPM expansion preserves the flavor-independent python(abi) capability name."
+  ],
+  "source": {
+    "schema": 1,
+    "name": "python-pyarrow",
+    "version": "25.0.1",
+    "commit": null,
+    "source_date_epoch": 1790812800,
+    "spec": "python-pyarrow.spec",
+    "upstream": {
+      "url": "https://archive.apache.org/dist/arrow/arrow-25.0.1/apache-arrow-25.0.1.tar.gz",
+      "sha256": "43d5de0a581f43cf63a2c06b4dcf13b9ff6fcd800f023324596e5781093bc500"
+    },
+    "sources": {
+      "apache-arrow-25.0.1.tar.gz": "43d5de0a581f43cf63a2c06b4dcf13b9ff6fcd800f023324596e5781093bc500",
+      "arrow-testing-9ff285c88565f0f6abc855918c6a342e70e4909c.tar.gz": "507609ccd0912a111f2ee89d108176baded8c8f22fd845c1686d7ddd462c3510",
+      "parquet-testing-e74785d85a4ecee829e1e405444d6a1b24b8bc9c.tar.gz": "6b3d9c1d9b9f059cf3b84b10af2b8a861db167f7809ecef555e610d26fd16433",
+      "pyarrow-rank-test-deprecation.patch": "41855ae51995ee5dbd3fe08cac7426da6d13fd92fcc56ee691e3bbb958a5a761",
+      "pyarrow-runtime-test.py": "533964919eaba99fd2887fd62b0dba209468fbed7e26dd933de0a66456c45363",
+      "pyarrow-unused-libcst-build-requirement.patch": "a0e246c03dfe0e3226f82107700dcf1cccc91325b79ef551d495071002273041",
+      "python-pyarrow.changes": "f7c593fd8356c0b524856faf4107a82ef750a4f7e358d5092dfcd757f01ee7ed",
+      "python-pyarrow.spec": "d9932749c04416e418ce101f896eaf94c9744b90b06f9cf6ad1b03a9711d3b6f"
+    },
+    "candidate": true,
+    "components": [
+      {
+        "url": "https://codeload.github.com/apache/arrow-testing/tar.gz/9ff285c88565f0f6abc855918c6a342e70e4909c",
+        "archive": "arrow-testing-9ff285c88565f0f6abc855918c6a342e70e4909c.tar.gz",
+        "sha256": "507609ccd0912a111f2ee89d108176baded8c8f22fd845c1686d7ddd462c3510",
+        "commit": "9ff285c88565f0f6abc855918c6a342e70e4909c"
+      },
+      {
+        "url": "https://codeload.github.com/apache/parquet-testing/tar.gz/e74785d85a4ecee829e1e405444d6a1b24b8bc9c",
+        "archive": "parquet-testing-e74785d85a4ecee829e1e405444d6a1b24b8bc9c.tar.gz",
+        "sha256": "6b3d9c1d9b9f059cf3b84b10af2b8a861db167f7809ecef555e610d26fd16433",
+        "commit": "e74785d85a4ecee829e1e405444d6a1b24b8bc9c"
+      }
+    ]
+  },
+  "image": "sha256:9936c6c0ddbdbf7167e3abb97ff2423c3db6e5c933cecbb4235f5bb3b82d42a7",
+  "artifacts": {
+    "rpmbuild/RPMS/x86_64/python-pyarrow-debugsource-25.0.1-2.qore.x86_64.rpm": "1d3ee21bc5981389f098ce5029d678a6f6473d442972b37327cdf8e91b1de3b8",
+    "rpmbuild/RPMS/x86_64/python313-pyarrow-25.0.1-2.qore.x86_64.rpm": "57ab439f67211b1fc759d47a9da84e5a85c23e267f4219a998c67e13df41703f",
+    "rpmbuild/RPMS/x86_64/python313-pyarrow-debuginfo-25.0.1-2.qore.x86_64.rpm": "84f4349825b1910b403c04de2e9e267ea7c68d6879762cb543385db4e964c696",
+    "rpmbuild/RPMS/x86_64/python313-pyarrow-devel-25.0.1-2.qore.x86_64.rpm": "f8399bda366098a01fd139a195fc2bddc2cb32b6f10201483bb3995a69cd62fc",
+    "rpmbuild/SRPMS/python-pyarrow-25.0.1-2.qore.src.rpm": "0f2e086c71d541827d5574fa37598600f0770161c2c87bd5c43ef52dc13c1283"
+  },
+  "tests": {
+    "api": 3,
+    "upstream_passed": 6616,
+    "optional_skips": 1646,
+    "upstream_expected_failures": 13,
+    "upstream_nonstrict_unexpected_pass": 1,
+    "exact_approved_compiler_diagnostics": 24,
+    "installed_runtime_phases": 3,
+    "api_cases_each_phase": 3,
+    "cython_consumer": "Compilation, linking and execution: empty, null, mixed and1024-element arrays plus invalid-type rejection.",
+    "ownership": {
+      "headers": 395,
+      "runtime_files": 452,
+      "devel_files": 456,
+      "requires": [
+        "apache-arrow-devel = 25.0.1",
+        "python(abi) = 3.13",
+        "python313-devel",
+        "python313-numpy-devel >= 1.25",
+        "python313-pyarrow = 25.0.1-2.qore",
+        "rpmlib(CompressedFileNames) <= 3.0.4-1",
+        "rpmlib(FileDigests) <= 4.6.0-1",
+        "rpmlib(PartialHardlinkSets) <= 4.0.4-1",
+        "rpmlib(PayloadFilesHavePrefix) <= 4.0-1",
+        "rpmlib(PayloadIsZstd) <= 5.4.18-1"
+      ]
+    },
+    "lint_errors": 0,
+    "lint_warnings": 0
+  },
+  "controls": [
+    "Original native lint rejects all395 runtime headers and empty marker.",
+    "Initial consumer failed at the missing NumPy header; the corrected SDK and include paths compile and run successfully.",
+    "Initial lint reported one missing ABI requirement despite process exit0; the qualifier now also rejects nonzero diagnostic totals.",
+    "Runtime upgrades without devel, Python headers or compiler; removing devel preserves the three API regressions."
+  ],
+  "fixture_corrections": [
+    "Initial build image lacked build requirements; created a pinned complete image and rebuilt without bypassing dependency checks.",
+    "Corrected the ownership JSON newline encoding before final qualification.",
+    "Cancelled obsolete candidate3 after the ABI requirement was root-caused; source/logs preserved, discarded build scratch removed."
+  ],
+  "retained_diagnostics": "Only the exact24 upstream deprecations accepted in evidence/pyarrow-external-diagnostics-20261003.json; normalized compiler message multisets match exactly.",
+  "limits": "Packaging-only change; no native implementation changes or new Valgrind claim. Native x86_64/aarch64 rebuilds and Leap gRPC integration remain required. No new lint filters.",
+  "changed_files_sha256": {
+    "dependencies/python-pyarrow.spec": "d9932749c04416e418ce101f896eaf94c9744b90b06f9cf6ad1b03a9711d3b6f",
+    "dependencies/arrow-flight.rst": "59213af1a8e7f93749680b9ce00a478c733f231b8574fc230e977cdccce75b73"
+  },
+  "files_sha256": {
+    "evidence/controls/pyarrow-devel-20261008/status.json.gz": "578897fbab278a70e117664ab8e5679bc6f62e46d2d0aaab7a881b1c4b1cc27e",
+    "evidence/controls/pyarrow-devel-20261008/runtime-upgrade.log.gz": "bbc5e0b5b4c3cfd5b23915ac32364c1a955f395bd97a444ffa4bfb6952666008",
+    "evidence/controls/pyarrow-devel-20261008/pyarrow-devel-final-spec-query-20261008.log.gz": "9fee17c21f827b5918c5cc3c7155178892e7c42f7a5c18df1a4c949d18fe6a8d",
+    "evidence/controls/pyarrow-devel-20261008/ownership.log.gz": "7d1dad8dacbb7a26dde91635610cfd71f3d8444c977e9113817950a432d43088",
+    "evidence/controls/pyarrow-devel-20261008/installed-packages.txt.gz": "ea415a90a075a1f5714754291800455a9383859d0b7936e8741369767db12363",
+    "evidence/controls/pyarrow-devel-20261008/pyarrow-native-lint-inventory-20261008.json.gz": "47ea0f92f3fcee2d55559895897691820f93f05a7ee32a636cd153dca01f4323",
+    "evidence/controls/pyarrow-devel-20261008/initial-sdk-missing-numpy.log.gz": "e4e84411e4a53d14c4dec3b5ddf93e016a6eb09ca81720155c02a1a0567bdd32",
+    "evidence/controls/pyarrow-devel-20261008/lint.log.gz": "2812d28730efb46c6f578b498aba432171831190bb10146fa7cd3a114f67fe5e",
+    "evidence/controls/pyarrow-devel-20261008/build.log.gz": "87354125fad977500a806e94ba24ec5b66050b315ab257473303684aadaa74a3",
+    "evidence/controls/pyarrow-devel-20261008/consumer.pyx": "509e2c79d048e13a700331224574071af3eb2c9b68b158055984cbc9fc36aea7",
+    "evidence/controls/pyarrow-devel-20261008/record.py": "7610590de4a0f67ae87478281082f9d189c76fe127b0e1dc7ccc42482b126436",
+    "evidence/controls/pyarrow-devel-20261008/ownership.json.gz": "2bde4bfcda722fda672e12ac72e8da2aa3201576115ec0a94816bb60b011dcc7",
+    "evidence/controls/pyarrow-devel-20261008/qualify.py": "49f9fb37e5e532c37b1756282279e94bd868bee311283aa9a5e5f5cbd63d1787",
+    "evidence/controls/pyarrow-devel-20261008/pyarrow-devel-sdk-prerequisite-control-20261008.log.gz": "8604975e51caf339b643ba5fbcd23e985052d357a4c75dc69fa6f11bc2f080bc",
+    "evidence/controls/pyarrow-devel-20261008/sdk-consumer-and-removal.log.gz": "f705453be649c45baf501fc0d6b0de7f918d954db93f1626ee897500963bb845",
+    "evidence/controls/pyarrow-devel-20261008/build.json.gz": "62780dee79f748939fbe31210589429f174dcd2a5df1c242846c5e97f48487ef",
+    "evidence/controls/pyarrow-devel-20261008/pyarrow-devel-initial-lint-20261008.log.gz": "c9ebdfea842a2ab4cff9b4cafa85f749595a2e530e2537df5bd462d25c094399"
+  }
+}
