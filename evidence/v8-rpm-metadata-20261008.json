@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-08",
+  "status": "Three complete metadata-corrected candidate RPMs pass; final catalog-directory approval and canonical/native qualification remain.",
+  "source_commit": "664eaf58a09f5279532f397c7a48de8b467c1907",
+  "candidate": "work/v8-metadata-candidate-20261008",
+  "targets": {
+    "fedora": {
+      "exit_code": 0,
+      "functional_suites": 14,
+      "reported_cases": 148,
+      "reported_succeeded": 148,
+      "assertions": 1153,
+      "packaging_python_methods": 11,
+      "build": "results/fedora-v8-metadata-candidate-20261008/build.json",
+      "log_sha256": "1ee342c9370f733762fb7255dd0c60f0176e25bda158bb931493e36caf8403e7",
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-v8-module-doc-2.1.0-2.fc44.noarch.rpm": "4c93c1d68e5f7069725e8d3fbdfc1f3981e952aaec2ed4c679d28963e4fe25f6",
+        "rpmbuild/RPMS/x86_64/qore-v8-module-2.1.0-2.fc44.x86_64.rpm": "654904196bcc188ea11bcc828b0853b3de1a5cbed2ab8e6db4b5c7bd6159ed27",
+        "rpmbuild/RPMS/x86_64/qore-v8-module-debuginfo-2.1.0-2.fc44.x86_64.rpm": "2dd53a4aabf91473954b5179c5102d579c9189d8b7f05af6f49993a72f690cdd",
+        "rpmbuild/RPMS/x86_64/qore-v8-module-debugsource-2.1.0-2.fc44.x86_64.rpm": "ce0d307023b8cf3ae4e4ad1c297353b51fe8f9de9512107c1f2769ed3ce719cb",
+        "rpmbuild/SRPMS/qore-v8-module-2.1.0-2.fc44.src.rpm": "82ccdb9f0903f9afe5b1db0d506055ad86d45f44238368b01668445d511c3bf5"
+      }
+    },
+    "leap": {
+      "exit_code": 0,
+      "functional_suites": 14,
+      "reported_cases": 148,
+      "reported_succeeded": 148,
+      "assertions": 1153,
+      "packaging_python_methods": 11,
+      "build": "results/leap-v8-metadata-candidate-20261008/build.json",
+      "log_sha256": "7d385b063b686aaf6f151ae129ce7eb1981b85351b48b5910cfdc27befb2a32e",
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-v8-module-doc-2.1.0-2.noarch.rpm": "9952da138471ca37bd6e8af42d25a0f5ba3960437cf10d2c91f63a9d6fd9b7b8",
+        "rpmbuild/RPMS/x86_64/qore-v8-module-2.1.0-2.x86_64.rpm": "444785f4b0268b97b67074b64ac77d681f06f111eda50933cde2e38172e12c4c",
+        "rpmbuild/RPMS/x86_64/qore-v8-module-debuginfo-2.1.0-2.x86_64.rpm": "03b9202ef43947bb1d3e08f3a138ecb545ae13275d30736e631b67df9aee9465",
+        "rpmbuild/RPMS/x86_64/qore-v8-module-debugsource-2.1.0-2.x86_64.rpm": "6836c190b71a5bdd056f9142c0d137cf1d7d848c1249c97998cdf75385e4c816",
+        "rpmbuild/SRPMS/qore-v8-module-2.1.0-2.src.rpm": "d6c33cf070f4f00e7cfed30769c010def075504a66b27b7e55339faad6bb0bdf"
+      }
+    },
+    "el10": {
+      "exit_code": 0,
+      "functional_suites": 14,
+      "reported_cases": 148,
+      "reported_succeeded": 148,
+      "assertions": 1153,
+      "packaging_python_methods": 11,
+      "build": "results/el10-v8-metadata-candidate-20261008/build.json",
+      "log_sha256": "220399fbc2ca2d4d38228a307426713daaa9034d260c65e159a41ef423a57399",
+      "artifacts": {
+        "rpmbuild/RPMS/noarch/qore-v8-module-doc-2.1.0-2.el10.noarch.rpm": "7d87d5b543d947766498e13704f3edcd510ed76bc27dddf3f160e68ef444f911",
+        "rpmbuild/RPMS/x86_64/qore-v8-module-2.1.0-2.el10.x86_64.rpm": "93259abd29997ac5912128f40842c0b7049d0ca5b019cfc7f9fe01918bec35c3",
+        "rpmbuild/RPMS/x86_64/qore-v8-module-debuginfo-2.1.0-2.el10.x86_64.rpm": "fa15ab9d8fd6d5071f575187a960776010aa91398421b6b64bdeb0307a65715b",
+        "rpmbuild/RPMS/x86_64/qore-v8-module-debugsource-2.1.0-2.el10.x86_64.rpm": "2180c980591ad5c3c431a7e01b8efc361ce77a4b5746fd8fe1691ac3b1409b78",
+        "rpmbuild/SRPMS/qore-v8-module-2.1.0-2.el10.src.rpm": "496174416d1e83c827eb194d84c4f800a1c94794785e9ae4f2e01be12e6a1373"
+      }
+    }
+  },
+  "scope": [
+    "Normalize exact Qore and Node shebangs in installed examples; Enterprise Linux uses /usr/bin/node-24.",
+    "Six actual RPM install-stanza behavior tests per distribution, preserving modes, unrelated bytes, symlinks and repeat application.",
+    "Correct the package description spelling without adding lint filters."
+  ],
+  "lint": {
+    "result": "results/v8-metadata-lint-20261008/status.json",
+    "errors": 0,
+    "warnings": 2,
+    "exact_remaining": "hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests",
+    "approval": "Pending, see evidence/v8-catalog-directory-diagnostic-20261008.json"
+  },
+  "counts_limit": "Each target reports 148 succeeded cases including 10 explicit skips: eight source-only injected-failure hooks and two tests requiring the separately built HubSpot app catalog. Actual executed cases: 138.",
+  "retained_diagnostics": [
+    "Fedora GCC 16 speculative deleting-destructor warnings: existing approved multiple-inheritance control, with unchanged compiler flags.",
+    "Node stripTypeScriptTypes experimental warning: existing user approval in evidence/v8-typescript-diagnostic-20261003.json."
+  ],
+  "harness_failure": "An initial driver started before source preparation completed and failed before building any RPM. Preserved results/v8-metadata-build-status-20261008.json and driver logs. After source preparation returned successfully, results/v8-metadata-build2-status-20261008.json records all three successful builds."
+}

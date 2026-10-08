@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "date": "2026-10-08",
+  "status": "Exact hidden-directory warning qualified; user approval pending.",
+  "scope": [
+    "qore-v8-module.x86_64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests",
+    "qore-v8-module.aarch64: W: hidden-file-or-dir /usr/share/qore/i18n/.qore-catalog-manifests"
+  ],
+  "root_cause": "The hidden directory separates Qore catalog ownership records from catalog discovery. The packaged plain-text qore-v8-module.manifest lists exactly all 1053 installed catalog JSON files, with sorted unique relative paths. The two identical checker emissions refer to this one directory.",
+  "proposal": "Retain the ownership records and visible diagnostic; no lint filter, compiler flag or runtime change. Extend only the existing catalog-directory diagnostic acceptance to V8.",
+  "payload_checks": {
+    "normalized_example_scripts": 22,
+    "catalogs": 1053,
+    "manifest_files": 1,
+    "safe_sorted_unique_exact_ownership": true,
+    "result": "results/v8-doc-payload-20261008/payload-ownership-status.json"
+  },
+  "other_diagnostics": "All 22 env-script errors and three local dictionary spelling errors are fixed. All three refreshed RPM builds succeed. Full openSUSE rpmlint reports 0 errors and only the two exact hidden-directory warnings; see results/v8-metadata-lint-20261008/status.json.",
+  "sha256": {
+    "results/v8-doc-payload-20261008/payload-ownership.json": "eaecd584a92ad80693cb3a8f680400a7042a2e28da1c4fd4d4e41fd3b0852815",
+    "results/v8-doc-payload-20261008/rpmlint.log": "b709030d3fb58e265d21359dd0a89445a85d1721f568302295fa7897f59a2506",
+    "results/v8-metadata-lint-20261008/status.json": "8cb601d9d90175601329c1acc0f417f5307fcab46748847aaa98949b06163a70",
+    "results/v8-metadata-lint-20261008/rpmlint.log": "7566b1e0891e98f3ac62aef82be76cc6bce0e1d7a205a510d1cb544857c5cadd"
+  }
+}
