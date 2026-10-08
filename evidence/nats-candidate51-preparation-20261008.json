@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Candidate51 prepared from focused-qualified stream-create rejection fix. Historical creation/performance review and full combined qualification remain open; no native build or publication claimed.",
+  "qualification": "evidence/nats-create-rejection-20261008.json",
+  "patches": 114,
+  "fuzz": 0,
+  "new_patch_offsets": 0,
+  "changed_go_files": [
+    "server/jetstream_cluster.go",
+    "server/jetstream_cluster_2_test.go"
+  ],
+  "exact_focused_source_identity": true,
+  "tools_tests": 218,
+  "runner_tests": 7,
+  "bundle": "work/nats-server-candidate-51",
+  "prepared_source": "work/nats-prepared-51/nats-server-2.15.0",
+  "documentation": "Dependency guide now describes the current candidate and open gates; the superseded claim about changed distributed response ownership has been removed.",
+  "remaining": [
+    "Establish historical 250-concurrent-stream and atomic initial-create failure paths; proposal rejection fix does not by itself prove those causes.",
+    "Resolve the sparse-consumer performance gate without weakening the workload or bound.",
+    "Run the full combined RPM matrix, native x86_64/aarch64 OBS builds, installed client/Qore module and repository lifecycle/signing/publication qualification."
+  ],
+  "files_sha256": {
+    "evidence/controls/nats-candidate51-preparation-20261008/integrate-nats-create-rejection-20261008.py": "cd659bc2db6a4f102263018abea07d1be28410f8ebe05884524ee22c982a4848",
+    "evidence/controls/nats-candidate51-preparation-20261008/nats-candidate51-patch-verification-20261008.json": "8590a8c073cfff9c57d145abc4cbe02f16f0f3cb6f3c26e14818b8eac77e1b63",
+    "evidence/controls/nats-candidate51-preparation-20261008/nats-candidate51-patches-20261008.log.gz": "bf46ba05524aedfa090ebe1c0bbb33520a30cac43abf111feeded349674a313d",
+    "evidence/controls/nats-candidate51-preparation-20261008/nats-candidate51-prepare-20261008.log.gz": "c43ced36c30af3d64e4d9c8b01a52ec73b5bdae79b014152815f7f4865b0b63e",
+    "evidence/controls/nats-candidate51-preparation-20261008/nats-candidate51-runner-tests-20261008.log.gz": "1263e4a504f9a1488d390728f7922dfca5f52292d5d289d7fb0da780eb3bcb97",
+    "evidence/controls/nats-candidate51-preparation-20261008/nats-candidate51-tools-tests-20261008.log.gz": "096ab1b57c791f27b7f0abc432ac07270198c4445efc92823aee49ccaf2175a4",
+    "evidence/controls/nats-candidate51-preparation-20261008/nats-server.rst": "92f4c849ed45b3ed631e08932b2a2846a364f674e3b2bc993af3e99a623710cf",
+    "evidence/controls/nats-candidate51-preparation-20261008/nats-server.spec": "83e5fc5afad2a878220d7e32ed3cb44ad00b4bb130a69d24db7b6ee9d513d182",
+    "evidence/controls/nats-candidate51-preparation-20261008/prepare-nats-candidate51-20261008.py": "c74945c8ebfcc1130813adb6691a94d27817d6e4b54c10aa0d7a689b1c8ec84c",
+    "evidence/controls/nats-candidate51-preparation-20261008/record-nats-candidate51-preparation-20261008.py": "a7391e6110e39fdb05a1e09b41359c3e5e308e38b6a4960198537e80931a2237"
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "source": "work/nats-prepared-50/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-create-proposal-272-broad",
+      "target": "fedora",
+      "count": 1,
+      "race": true,
+      "pattern": "^(TestJetStreamStreamCreateRejectedProposalResponse|TestJetStreamClusteredStreamCreateIdempotent|TestJetStreamClusteredStreamCreateIdempotentWithSources|TestJetStreamClusterStreamCreateRetryPreservesAssignmentCreated|TestJetStreamClusterMetaSnapshotIdempotentCreatePreservesStream|TestJetStreamClusterAccountMaxStreamsAndConsumersMultipleConcurrentRequests|TestJetStreamClusterServerLimits|TestJetStreamClusterConcurrentAccountLimits|TestJetStreamClusterBalancedPlacement|TestJetStreamClusterNoRestartAdvisories|TestJetStreamClusterR1StreamPlacementNoReservation|TestJetStreamClusterStreamPlacementDistribution|TestJetStreamStreamTagPlacement|TestJetStreamClusterParallelCreateRaftGroupHAAssetsLimit|TestJetStreamClusterMetaSnapshotReCreateConsistency|TestJetStreamAtomicBatchPublishCommitEob|TestJetStreamClusterMetaLeaderRespectsInflight)$",
+      "sublist": "work/nats-prepared-50/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-create-proposal-fix-271-20261008/jetstream_cluster.go": "server/jetstream_cluster.go",
+        "work/nats-create-proposal-fix-271-20261008/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go"
+      }
+    },
+    {
+      "name": "fedora-nats-create-proposal-272-memory",
+      "target": "fedora",
+      "count": 1,
+      "race": false,
+      "pattern": "^TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart$",
+      "sublist": "work/nats-prepared-50/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-create-proposal-fix-271-20261008/jetstream_cluster.go": "server/jetstream_cluster.go",
+        "work/nats-create-proposal-fix-271-20261008/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-create-proposal-272-broad",
+      "target": "leap",
+      "count": 1,
+      "race": true,
+      "pattern": "^(TestJetStreamStreamCreateRejectedProposalResponse|TestJetStreamClusteredStreamCreateIdempotent|TestJetStreamClusteredStreamCreateIdempotentWithSources|TestJetStreamClusterStreamCreateRetryPreservesAssignmentCreated|TestJetStreamClusterMetaSnapshotIdempotentCreatePreservesStream|TestJetStreamClusterAccountMaxStreamsAndConsumersMultipleConcurrentRequests|TestJetStreamClusterServerLimits|TestJetStreamClusterConcurrentAccountLimits|TestJetStreamClusterBalancedPlacement|TestJetStreamClusterNoRestartAdvisories|TestJetStreamClusterR1StreamPlacementNoReservation|TestJetStreamClusterStreamPlacementDistribution|TestJetStreamStreamTagPlacement|TestJetStreamClusterParallelCreateRaftGroupHAAssetsLimit|TestJetStreamClusterMetaSnapshotReCreateConsistency|TestJetStreamAtomicBatchPublishCommitEob|TestJetStreamClusterMetaLeaderRespectsInflight)$",
+      "sublist": "work/nats-prepared-50/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-create-proposal-fix-271-20261008/jetstream_cluster.go": "server/jetstream_cluster.go",
+        "work/nats-create-proposal-fix-271-20261008/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-create-proposal-272-memory",
+      "target": "leap",
+      "count": 1,
+      "race": false,
+      "pattern": "^TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart$",
+      "sublist": "work/nats-prepared-50/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-create-proposal-fix-271-20261008/jetstream_cluster.go": "server/jetstream_cluster.go",
+        "work/nats-create-proposal-fix-271-20261008/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-create-proposal-272-broad",
+      "target": "el10",
+      "count": 1,
+      "race": true,
+      "pattern": "^(TestJetStreamStreamCreateRejectedProposalResponse|TestJetStreamClusteredStreamCreateIdempotent|TestJetStreamClusteredStreamCreateIdempotentWithSources|TestJetStreamClusterStreamCreateRetryPreservesAssignmentCreated|TestJetStreamClusterMetaSnapshotIdempotentCreatePreservesStream|TestJetStreamClusterAccountMaxStreamsAndConsumersMultipleConcurrentRequests|TestJetStreamClusterServerLimits|TestJetStreamClusterConcurrentAccountLimits|TestJetStreamClusterBalancedPlacement|TestJetStreamClusterNoRestartAdvisories|TestJetStreamClusterR1StreamPlacementNoReservation|TestJetStreamClusterStreamPlacementDistribution|TestJetStreamStreamTagPlacement|TestJetStreamClusterParallelCreateRaftGroupHAAssetsLimit|TestJetStreamClusterMetaSnapshotReCreateConsistency|TestJetStreamAtomicBatchPublishCommitEob|TestJetStreamClusterMetaLeaderRespectsInflight)$",
+      "sublist": "work/nats-prepared-50/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-create-proposal-fix-271-20261008/jetstream_cluster.go": "server/jetstream_cluster.go",
+        "work/nats-create-proposal-fix-271-20261008/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-create-proposal-272-memory",
+      "target": "el10",
+      "count": 1,
+      "race": false,
+      "pattern": "^TestNoRaceJetStreamClusterMemoryStreamLastSequenceResetAfterRestart$",
+      "sublist": "work/nats-prepared-50/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-create-proposal-fix-271-20261008/jetstream_cluster.go": "server/jetstream_cluster.go",
+        "work/nats-create-proposal-fix-271-20261008/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go"
+      }
+    }
+  ]
+}

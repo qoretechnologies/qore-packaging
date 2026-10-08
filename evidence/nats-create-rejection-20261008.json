@@ -1,0 +1,202 @@
+{
+  "schema": 1,
+  "date": "2026-10-08",
+  "copyright": "Copyright 2026 Qore Technologies, s.r.o.",
+  "status": "Real stream-create proposal-rejection bug corrected and focused-qualified; combined RPM integration remains required. Historical untraced creation failures remain open.",
+  "root_cause": "Metadata leadership can change after the API handler accepts a create request but before Propose checks the term. Propose then returns errNotLeader. The handler discards that error without a response and without recording any assignment that could answer later; the client waits until its original deadline.",
+  "fix": "Return the existing typed cluster-unavailable API response (HTTP-style code 503, JetStream error 10008) when the initial stream-create metadata proposal is rejected. Do not track an inflight assignment on failure.",
+  "proof": [
+    "A real AddStream request reaches the real Raft proposal boundary. The two nonleader API callbacks finish before an actual Raft StepDown; the original proposal then rejects with errNotLeader. All three original controls verify no stream exists and the client reaches its unchanged 30-second deadline.",
+    "The permanent regression uses a RaftNode wrapper only to synchronize entry to the unchanged real Propose implementation. No assignment or API reply is fabricated, and no error return is mocked. The wrapper is absent from the runtime build.",
+    "The original fails the new exact-API-error regression on all three distributions. Five repetitions per distribution of the fix verify ordinary creation, exact rejection response, absent rejected state and successful fresh creation after real API leadership readiness."
+  ],
+  "qualification": {
+    "results": [
+      {
+        "name": "fedora-nats-create-proposal-271-fixed",
+        "exit_code": 0,
+        "race": true,
+        "reported_passes": 15,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "fedora-nats-create-proposal-272-broad",
+        "exit_code": 0,
+        "race": true,
+        "reported_passes": 31,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "fedora-nats-create-proposal-272-memory",
+        "exit_code": 0,
+        "race": false,
+        "reported_passes": 1,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "leap-nats-create-proposal-271-fixed",
+        "exit_code": 0,
+        "race": true,
+        "reported_passes": 15,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "leap-nats-create-proposal-272-broad",
+        "exit_code": 0,
+        "race": true,
+        "reported_passes": 31,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "leap-nats-create-proposal-272-memory",
+        "exit_code": 0,
+        "race": false,
+        "reported_passes": 1,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "el10-nats-create-proposal-271-fixed",
+        "exit_code": 0,
+        "race": true,
+        "reported_passes": 15,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "el10-nats-create-proposal-272-broad",
+        "exit_code": 0,
+        "race": true,
+        "reported_passes": 31,
+        "reported_failures": 0,
+        "reported_skips": 0
+      },
+      {
+        "name": "el10-nats-create-proposal-272-memory",
+        "exit_code": 0,
+        "race": false,
+        "reported_passes": 1,
+        "reported_failures": 0,
+        "reported_skips": 0
+      }
+    ],
+    "race_enabled_results_including_subtests": 138,
+    "nonrace_full_memory_restart_results": 3,
+    "broader_named_suites_per_distribution": 17
+  },
+  "controls": [
+    {
+      "name": "fedora-nats-create-proposal-control-270",
+      "exit_code": 0,
+      "race": true,
+      "reported_passes": 3,
+      "reported_failures": 0,
+      "reported_skips": 0
+    },
+    {
+      "name": "fedora-nats-create-proposal-271-original",
+      "exit_code": 1,
+      "race": true,
+      "reported_passes": 1,
+      "reported_failures": 2,
+      "reported_skips": 0
+    },
+    {
+      "name": "leap-nats-create-proposal-control-270",
+      "exit_code": 0,
+      "race": true,
+      "reported_passes": 3,
+      "reported_failures": 0,
+      "reported_skips": 0
+    },
+    {
+      "name": "leap-nats-create-proposal-271-original",
+      "exit_code": 1,
+      "race": true,
+      "reported_passes": 1,
+      "reported_failures": 2,
+      "reported_skips": 0
+    },
+    {
+      "name": "el10-nats-create-proposal-control-270",
+      "exit_code": 0,
+      "race": true,
+      "reported_passes": 3,
+      "reported_failures": 0,
+      "reported_skips": 0
+    },
+    {
+      "name": "el10-nats-create-proposal-271-original",
+      "exit_code": 1,
+      "race": true,
+      "reported_passes": 1,
+      "reported_failures": 2,
+      "reported_skips": 0
+    }
+  ],
+  "limits": [
+    "Candidate46 Leap and candidate26 atomic-create failures lack per-request traces. This is a reproducible defect in their shared initial create path, not proof of those exact historical scheduler interleavings; both historical gates remain open.",
+    "A rejected request receives a retriable availability error, not transparent automatic success through failover. This does not guarantee completion for proposals accepted before a later leadership loss.",
+    "The 250-stream test retains its 30-second create deadline, 250 concurrent publishers, 222 messages per stream, snapshots and all five rolling restart rounds. Its pass does not replace complete RPM/native qualification.",
+    "The first trace preparer stopped on ambiguous text anchors before any Go test ran; function-scoped anchors corrected it. All diagnostic overlays are preserved in the preceding trace evidence.",
+    "Full RPM builds, native OBS architectures, installed NATS client/Qore module, package lint/debugger and repository lifecycle/publication remain independent gates."
+  ],
+  "source_sha256": {
+    "jetstream_cluster.go": "ca42c48ca1bef9a7a8f947aca996c4d281e6b3295d1342ddde6249c6b9ab6fc1",
+    "jetstream_cluster_2_test.go": "7077fbef747e26204159582700a4a20ba773aafda1887d1b3bdfe7593f390edc"
+  },
+  "audit": {
+    "pass": 10,
+    "na": 52,
+    "fail": 0
+  },
+  "files_sha256": {
+    "evidence/controls/nats-create-rejection-20261008/audit.rst": "fd047aa30c74293a576546c3d7f1acaa3ff77991167f3c3993b50b9669e1cbfa",
+    "evidence/controls/nats-create-rejection-20261008/diagnostic-control-270.go.gz": "f2165db42c14663b8b63d26f5ef7b6dd4d38f2ff3acd0faeec2186c82f202ae5",
+    "evidence/controls/nats-create-rejection-20261008/el10-nats-create-proposal-271-fixed-status.json": "ca470f87c40c8b30145e321306690b18ba89415807c0bf90ddc0d1bf820a68cd",
+    "evidence/controls/nats-create-rejection-20261008/el10-nats-create-proposal-271-fixed.log.gz": "9bed4bc3d1a13d3cb0d0e3d22a2a64c9f905773c2559906a904cad18d9500fa9",
+    "evidence/controls/nats-create-rejection-20261008/el10-nats-create-proposal-271-original-status.json": "c383de3df208f830701ed85234a662b4fdb69cd24efdca1e17ce38251edfe1de",
+    "evidence/controls/nats-create-rejection-20261008/el10-nats-create-proposal-271-original.log.gz": "711672fd0d5801c9c379306f9532443ed5f0fff3d17ecd3185b90c3e29711b83",
+    "evidence/controls/nats-create-rejection-20261008/el10-nats-create-proposal-272-broad-status.json": "f05d019487fb83928126df7aa5bf9c17c963bf0a1edfb3afc0d1653cd48d21e0",
+    "evidence/controls/nats-create-rejection-20261008/el10-nats-create-proposal-272-broad.log.gz": "c2f1fe1c989269d1edcca65cc365fb3ad44003511903472f5b6d6be8c0a661b7",
+    "evidence/controls/nats-create-rejection-20261008/el10-nats-create-proposal-272-memory-status.json": "ab1ad161cfedf1939835b2ebc2cdd5981211a2a7f3c5362be15131091ec8d08b",
+    "evidence/controls/nats-create-rejection-20261008/el10-nats-create-proposal-272-memory.log.gz": "52231e36364f87bd9fd365747afd4f57e57a7f1cb4dca89c697d6b8eb381d9c3",
+    "evidence/controls/nats-create-rejection-20261008/el10-nats-create-proposal-control-270-status.json": "2f72085d0e6b1c15acad954f2396fef761b98a6360997bfc697d446c6c6258e7",
+    "evidence/controls/nats-create-rejection-20261008/el10-nats-create-proposal-control-270.log.gz": "290d1191bc27a93fd0d7a9de2e28f2cd8d77d3713851833e8902f2fb4122945c",
+    "evidence/controls/nats-create-rejection-20261008/fedora-nats-create-proposal-271-fixed-status.json": "57a4c96c0f9ea031a0a85b77f74039372cdc11e7602868309e6110cf206492be",
+    "evidence/controls/nats-create-rejection-20261008/fedora-nats-create-proposal-271-fixed.log.gz": "f1d3bc42e96fa4a0f1e6bafd2a938b9cb928f3c35f31985d67b10aece62552ef",
+    "evidence/controls/nats-create-rejection-20261008/fedora-nats-create-proposal-271-original-status.json": "f1fd71b9365452f187ae24df941612a702e4fe459fe9773308be02979798b532",
+    "evidence/controls/nats-create-rejection-20261008/fedora-nats-create-proposal-271-original.log.gz": "145cdb5c22a1cb808763259e8082824c3139ca41a0653ed0b6936ada12a021c2",
+    "evidence/controls/nats-create-rejection-20261008/fedora-nats-create-proposal-272-broad-status.json": "277a55938740d8039e63f73fa28108f54a357690e3a3dbd3786b1e786554c32e",
+    "evidence/controls/nats-create-rejection-20261008/fedora-nats-create-proposal-272-broad.log.gz": "3c54bc3c7d2a5c4dba26e85e6f41ee698dbee8d096d405c1088315133903e096",
+    "evidence/controls/nats-create-rejection-20261008/fedora-nats-create-proposal-272-memory-status.json": "60caea492baae35fd687447cc3ef8d8b2d55650817c5a8e17e690e65055a2f1a",
+    "evidence/controls/nats-create-rejection-20261008/fedora-nats-create-proposal-272-memory.log.gz": "7a3c16cf19d385b207816e7be2b83be13174211a65ad0f19a48e19cc4cc4351f",
+    "evidence/controls/nats-create-rejection-20261008/fedora-nats-create-proposal-control-270-status.json": "e6db038e7bfeff7ebf21523f5d9cf04ab9092a96c6d44c78509eefef2bb5a365",
+    "evidence/controls/nats-create-rejection-20261008/fedora-nats-create-proposal-control-270.log.gz": "c4b07ab9b0f9a64d5020d91c052e30804e576acb4f485c42d3774a41d37a7cb0",
+    "evidence/controls/nats-create-rejection-20261008/jetstream_cluster.go.gz": "608f1e21034339b4252b90a7822db57d9bb4a939156043aa0afc3161e231a47f",
+    "evidence/controls/nats-create-rejection-20261008/jetstream_cluster_2_test.go.gz": "1a255653f26995cbba2cfa73297c3f6feca2d268aeb1a324e2f55063a7c8c823",
+    "evidence/controls/nats-create-rejection-20261008/leap-nats-create-proposal-271-fixed-status.json": "88b6a5928b4b472585009b7d07742b80ed395fe5b2a244eb1d1d6961ad306751",
+    "evidence/controls/nats-create-rejection-20261008/leap-nats-create-proposal-271-fixed.log.gz": "6c7083ef4878d87ce9a698dc15b6ef9b10e93466dbc2e0bca60acd7179e3fbcd",
+    "evidence/controls/nats-create-rejection-20261008/leap-nats-create-proposal-271-original-status.json": "a7e76798014e7038e0aef8e089a3570fc14aa184823e3c5ed5d7e34f8f1e7a17",
+    "evidence/controls/nats-create-rejection-20261008/leap-nats-create-proposal-271-original.log.gz": "854daf7c0c80f22f8f05095275a9e9f340066f545b09d7755861a63edec0af5d",
+    "evidence/controls/nats-create-rejection-20261008/leap-nats-create-proposal-272-broad-status.json": "e965c79beb8f41247673a70a3d325b454903df4b51162f08c1aaf3c42c34b021",
+    "evidence/controls/nats-create-rejection-20261008/leap-nats-create-proposal-272-broad.log.gz": "9f8d6a9249f2e040cc289621c0e24d391f887bcfb73e3984fa8751ec2e95f0d1",
+    "evidence/controls/nats-create-rejection-20261008/leap-nats-create-proposal-272-memory-status.json": "785f8aede595847d1e2d704c56c0eb219f8831a2884367602c3a7ec768fa73f4",
+    "evidence/controls/nats-create-rejection-20261008/leap-nats-create-proposal-272-memory.log.gz": "e1c6604c006170641be81577a92ba4320d1f38de42062cc7b9ba0ffb9598e015",
+    "evidence/controls/nats-create-rejection-20261008/leap-nats-create-proposal-control-270-status.json": "3ebd9f3c76de60b43c846d6568ebacbe2cc477cb83cfc32bd45d399c28caae2f",
+    "evidence/controls/nats-create-rejection-20261008/leap-nats-create-proposal-control-270.log.gz": "0f32c9fcbb2735d49c0f1f1f4980e052f6077800f71f7f51483a3114de952957",
+    "evidence/controls/nats-create-rejection-20261008/nats-create-proposal-271.json": "21b3323f92b90bbebab1afb549b342ded6379e2d0e8e6ab9def07855e6b88e8f",
+    "evidence/controls/nats-create-rejection-20261008/nats-create-proposal-272.json": "a5a19ab31476ed41ebe1a9a046e22e19cbbe67113e7f211746dda77f2215364e",
+    "evidence/controls/nats-create-rejection-20261008/nats-create-proposal-control-270.json": "eff5b8642be68356c2bf9e277d7f2f9ba4c87307f0e7498c498e926bc200c67b",
+    "evidence/controls/nats-create-rejection-20261008/nats-server-stream-create-rejection.patch": "985445d3845f4d4b76e3a3d8cd3b80f5dcf89d7a4ef9562068eb96e5391dc2da",
+    "evidence/controls/nats-create-rejection-20261008/prepare-nats-create-proposal-control-270-20261008.py": "a67a507ee386f85cca65c7950b7fa3211d53ab212806f7b65228b705ce2f48fe",
+    "evidence/controls/nats-create-rejection-20261008/prepare-nats-create-proposal-fix-271-20261008.py": "c4c98a31e6e23319adb358679d40d66ac3cfb12b2e56988f546e0820bef4c844",
+    "evidence/controls/nats-create-rejection-20261008/record-nats-create-rejection-20261008.py": "218ab3f50379ff0c475db949384697084e51fffca29bf37e9fa4bca93b952fd1",
+    "evidence/controls/nats-create-rejection-20261008/run-nats-focused-38.py": "7e0171534c6aa1ebe5616ed4acd728fd95f43dd1c32003df8be5d729258d000a"
+  }
+}

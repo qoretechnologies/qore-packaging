@@ -1,0 +1,45 @@
+{
+  "source": "work/nats-prepared-50/nats-server-2.15.0",
+  "workers": 3,
+  "cases": [
+    {
+      "name": "fedora-nats-create-proposal-control-270",
+      "target": "fedora",
+      "count": 1,
+      "race": true,
+      "pattern": "^TestRPMStreamCreateProposalLeadershipWindow$",
+      "sublist": "work/nats-prepared-50/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-memory-create-trace-268-20261008/jetstream_api.go": "server/jetstream_api.go",
+        "work/nats-memory-create-trace-268-20261008/jetstream_cluster.go": "server/jetstream_cluster.go",
+        "work/nats-create-proposal-control-270-20261008/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go"
+      }
+    },
+    {
+      "name": "leap-nats-create-proposal-control-270",
+      "target": "leap",
+      "count": 1,
+      "race": true,
+      "pattern": "^TestRPMStreamCreateProposalLeadershipWindow$",
+      "sublist": "work/nats-prepared-50/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-memory-create-trace-268-20261008/jetstream_api.go": "server/jetstream_api.go",
+        "work/nats-memory-create-trace-268-20261008/jetstream_cluster.go": "server/jetstream_cluster.go",
+        "work/nats-create-proposal-control-270-20261008/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go"
+      }
+    },
+    {
+      "name": "el10-nats-create-proposal-control-270",
+      "target": "el10",
+      "count": 1,
+      "race": true,
+      "pattern": "^TestRPMStreamCreateProposalLeadershipWindow$",
+      "sublist": "work/nats-prepared-50/nats-server-2.15.0/server/sublist.go",
+      "overlays": {
+        "work/nats-memory-create-trace-268-20261008/jetstream_api.go": "server/jetstream_api.go",
+        "work/nats-memory-create-trace-268-20261008/jetstream_cluster.go": "server/jetstream_cluster.go",
+        "work/nats-create-proposal-control-270-20261008/jetstream_cluster_2_test.go": "server/jetstream_cluster_2_test.go"
+      }
+    }
+  ]
+}
